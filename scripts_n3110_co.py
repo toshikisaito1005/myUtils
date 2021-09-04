@@ -154,6 +154,13 @@ class ToolsNGC3110():
             # output txt and png
             self.outpng_irac = self.dir_products + self._read_key("outpng_irac")
             self.outpng_12co10 = self.dir_products + self._read_key("outpng_12co10")
+            self.outpng_12co21 = self.dir_products + self._read_key("outpng_12co21")
+            self.outpng_13co10 = self.dir_products + self._read_key("outpng_13co10")
+            self.outpng_13co21 = self.dir_products + self._read_key("outpng_13co21")
+            self.outpng_c18o21 = self.dir_products + self._read_key("outpng_c18o21")
+
+            self.outpng_b3 = self.dir_products + self._read_key("outpng_b3")
+            self.outpng_b6 = self.dir_products + self._read_key("outpng_b6")
 
     ###############
     # _create_dir #
@@ -197,7 +204,7 @@ class ToolsNGC3110():
 
     def run_ngc3110_co(
         self,
-        do_prepare = False,
+        do_prepare    = False,
         plot_showcase = False,
         ):
 
@@ -205,13 +212,74 @@ class ToolsNGC3110():
             self.align_maps()
 
         if plot_showcase==True:
-            self.showcase()
+            self.showline()
+            self.showcont()
 
     ############
-    # showcase #
+    # showcont #
     ############
 
-    def showcase(
+    def showcont(
+        self,
+        ):
+        """
+        """
+
+        taskname = self.modname + sys._getframe().f_code.co_name
+        check_first(self.outfits_irac,taskname)
+
+        scalebar = 2000. / self.scale_pc
+        label_scalebar = "2 kpc"
+
+        # b3
+        myfig_fits2png(
+            imcolor=self.self.outfits_b3,
+            outfile=self.self.outpng_b3,
+            imcontour1=self.self.outfits_b3,
+            imsize_as=self.imsize,
+            ra_cnt=self.ra_str,
+            dec_cnt=self.dec_str,
+            unit_cont1=0.0418, # 1sigma level in Jy/beam
+            levels_cont1=[-2.5,2.5,5.0,7.5,10.0],
+            width_cont1=[1.5],
+            color_cont1="black",
+            set_title="2.9 mm Continuum",
+            set_cmap="PuBu",
+            colorlog=False,
+            scalebar=scalebar,
+            label_scalebar=label_scalebar,
+            color_scalebar="black",
+            set_cbar=True,
+            label_cbar="mJy beam$^{-1}$",
+            )
+
+        # b6
+        myfig_fits2png(
+            imcolor=self.self.outfits_b6,
+            outfile=self.self.outpng_b6,
+            imcontour1=self.self.outfits_b6,
+            imsize_as=self.imsize,
+            ra_cnt=self.ra_str,
+            dec_cnt=self.dec_str,
+            unit_cont1=0.0627, # 1sigma level in Jy/beam
+            levels_cont1=[-2.5,2.5,5.0,7.5,10.0,15.0,20.0],
+            width_cont1=[1.5],
+            color_cont1="black",
+            set_title="1.3 mm Continuum",
+            set_cmap="PuBu",
+            colorlog=False,
+            scalebar=scalebar,
+            label_scalebar=label_scalebar,
+            color_scalebar="black",
+            set_cbar=True,
+            label_cbar="mJy beam$^{-1}$",
+            )
+
+    ############
+    # showline #
+    ############
+
+    def showline(
         self,
         ):
         """
@@ -225,6 +293,7 @@ class ToolsNGC3110():
         scalebar_irac = 5000. / self.scale_pc
         label_scalebar_irac = "5 kpc"
 
+        # irac and alma b3/b6 fov
         myfig_fits2png(
             imcolor=self.outfits_irac,
             outfile=self.outpng_irac,
@@ -256,6 +325,7 @@ class ToolsNGC3110():
             showbeam=False,
             )
 
+        # 12co10
         myfig_fits2png(
             imcolor=self.outfits_m1_12co10,
             outfile=self.outpng_12co10,
@@ -276,46 +346,89 @@ class ToolsNGC3110():
             clim=[-250,250],
             )
 
-        """
+        # 12co21
         myfig_fits2png(
-            imcolor=self.outfits_map_co10,
-            outfile=self.outpng_map_co,
-            imcontour1=self.outfits_map_ci10,
-            imsize_as=self.imsize_as,
-            ra_cnt=self.ra_agn_str,
-            dec_cnt=self.dec_agn_str,
-            levels_cont1=[0.025, 0.05, 0.1, 0.2, 0.4, 0.8, 0.96],
-            width_cont1=[1.0],
-            set_title="(b) $^{12}CO(1-0) $Integrated Intensity",
-            colorlog=True,
+            imcolor=self.outfits_m1_12co21,
+            outfile=self.outpng_12co21,
+            imcontour1=self.outfits_m0_12co21,
+            imsize_as=self.imsize,
+            ra_cnt=self.ra_str,
+            dec_cnt=self.dec_str,
+            levels_cont1=[0.02,0.04,0.08,0.16,0.32,0.64,0.96],
+            width_cont1=[1.5],
+            color_cont1="black",
+            set_title="$^{12}$CO(2-1)",
+            colorlog=False,
             scalebar=scalebar,
             label_scalebar=label_scalebar,
+            color_scalebar="black",
             set_cbar=True,
-            label_cbar="(K km s$^{-1}$)",
-            numann=1,
-            textann=False,
+            label_cbar="km s$^{-1}$",
+            clim=[-250,250],
             )
 
+        # 13co10
         myfig_fits2png(
-            imcolor=self.outfits_map_cico,
-            outfile=self.outpng_map_cico,
-            imcontour1=self.outfits_map_ci10,
-            imsize_as=self.imsize_as,
-            ra_cnt=self.ra_agn_str,
-            dec_cnt=self.dec_agn_str,
-            levels_cont1=[0.025, 0.05, 0.1, 0.2, 0.4, 0.8, 0.96],
-            width_cont1=[1.0],
-            set_title="(d) [CI]/CO Ratio",
-            colorlog=True,
-            clim=[0.1,2],
+            imcolor=self.outfits_m1_13co10,
+            outfile=self.outpng_13co10,
+            imcontour1=self.outfits_m0_13co10,
+            imsize_as=self.imsize,
+            ra_cnt=self.ra_str,
+            dec_cnt=self.dec_str,
+            levels_cont1=[0.02,0.04,0.08,0.16,0.32,0.64,0.96],
+            width_cont1=[1.5],
+            color_cont1="black",
+            set_title="$^{13}$CO(1-0)",
+            colorlog=False,
             scalebar=scalebar,
             label_scalebar=label_scalebar,
+            color_scalebar="black",
             set_cbar=True,
-            label_cbar="Ratio",
-            numann=1,
-            textann=False,
+            label_cbar="km s$^{-1}$",
+            clim=[-250,250],
             )
-        """
+
+        # 13co21
+        myfig_fits2png(
+            imcolor=self.outfits_m1_13co21,
+            outfile=self.outpng_13co21,
+            imcontour1=self.outfits_m0_13co21,
+            imsize_as=self.imsize,
+            ra_cnt=self.ra_str,
+            dec_cnt=self.dec_str,
+            levels_cont1=[0.02,0.04,0.08,0.16,0.32,0.64,0.96],
+            width_cont1=[1.5],
+            color_cont1="black",
+            set_title="$^{13}$CO(2-1)",
+            colorlog=False,
+            scalebar=scalebar,
+            label_scalebar=label_scalebar,
+            color_scalebar="black",
+            set_cbar=True,
+            label_cbar="km s$^{-1}$",
+            clim=[-250,250],
+            )
+
+        # c18o21
+        myfig_fits2png(
+            imcolor=self.outfits_m1_c18o21,
+            outfile=self.outpng_c18o21,
+            imcontour1=self.outfits_m0_c18o21,
+            imsize_as=self.imsize,
+            ra_cnt=self.ra_str,
+            dec_cnt=self.dec_str,
+            levels_cont1=[0.02,0.04,0.08,0.16,0.32,0.64,0.96],
+            width_cont1=[1.5],
+            color_cont1="black",
+            set_title="C$^{18}$O(2-1)",
+            colorlog=False,
+            scalebar=scalebar,
+            label_scalebar=label_scalebar,
+            color_scalebar="black",
+            set_cbar=True,
+            label_cbar="km s$^{-1}$",
+            clim=[-250,250],
+            )
 
     ##############
     # align_maps #
@@ -392,6 +505,8 @@ class ToolsNGC3110():
         run_imregrid(self.pb_12co21+"_tmp1_b6",self.outfits_b6+"_tmp1",self.pb_12co21+"_tmp2_b6",delin=True)
         run_impbcor(self.outfits_b3+"_tmp1",self.pb_12co10+"_tmp2_b3",self.outfits_b3+"_tmp2",delin=True)
         run_impbcor(self.outfits_b6+"_tmp1",self.pb_12co21+"_tmp2_b6",self.outfits_b6+"_tmp2",delin=True)
+        run_immath_one(self.outfits_b3+"_tmp2",self.outfits_b3+"_tmp3","IM0/1000.",delin=True)
+        run_immath_one(self.outfits_b6+"_tmp2",self.outfits_b6+"_tmp3","IM0/1000.",delin=True)
 
         # casa to fits: co lines
         run_exportfits(self.outfits_12co10+"_tmp2",self.outfits_12co10,True,True,False)
@@ -401,8 +516,8 @@ class ToolsNGC3110():
         run_exportfits(self.outfits_c18o21+"_tmp2",self.outfits_c18o21,True,True,False)
 
         # casa to fits: alma continuum
-        run_exportfits(self.outfits_b3+"_tmp2",self.outfits_b3,True,True,True)
-        run_exportfits(self.outfits_b6+"_tmp2",self.outfits_b6,True,True,True)
+        run_exportfits(self.outfits_b3+"_tmp3",self.outfits_b3,True,True,True)
+        run_exportfits(self.outfits_b6+"_tmp3",self.outfits_b6,True,True,True)
 
         # casa to fits: vlt/naco k-band ssc catalogue
         self._align_one_map(self.outfits_ssc+"_tmp1",self.outfits_12co10+"_tmp2",
