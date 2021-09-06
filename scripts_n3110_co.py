@@ -505,8 +505,8 @@ class ToolsNGC3110():
         # Remove small masks
         beamarea = beam_area(self.cube_12co10)
 
-        ia.open(self.cube_12co10+"_mask")
-        mask=ia.getchunk()
+        myia.open(self.cube_12co10+"_mask")
+        mask=myia.getchunk()
         labeled,j=scipy.ndimage.label(mask)
         myhistogram=scipy.ndimage.measurements.histogram(labeled,0,j+1,j+1)
         object_slices=scipy.ndimage.find_objects(labeled)
@@ -515,8 +515,8 @@ class ToolsNGC3110():
             if myhistogram[i+1]<threshold_area:
                 mask[object_slices[i]]=0
 
-        ia.putchunk(mask)
-        ia.done()
+        myia.putchunk(mask)
+        myia.done()
 
         # create 13co21-based cube mask
         run_roundsmooth(self.cube_13co21,self.cube_13co21+"_mask1",targetbeam=3.0)
@@ -532,8 +532,8 @@ class ToolsNGC3110():
         # Remove small masks
         beamarea = beam_area(self.cube_13co21)
         
-        ia.open(self.cube_13co21+"_mask")
-        mask=ia.getchunk()
+        myia.open(self.cube_13co21+"_mask")
+        mask=myia.getchunk()
         labeled,j=scipy.ndimage.label(mask)
         myhistogram=scipy.ndimage.measurements.histogram(labeled,0,j+1,j+1)
         object_slices=scipy.ndimage.find_objects(labeled)
@@ -542,8 +542,8 @@ class ToolsNGC3110():
             if myhistogram[i+1]<threshold_area:
                 mask[object_slices[i]]=0
 
-        ia.putchunk(mask)
-        ia.done()
+        myia.putchunk(mask)
+        myia.done()
 
         # beam to 2.0 arcsec
         run_roundsmooth(self.cube_12co10,self.outfits_12co10+"_tmp1",targetbeam=self.beam)
