@@ -245,7 +245,7 @@ class ToolsNGC3110():
         run_importfits(outmap,outmap+"_tmp2",True,True)
         run_immath_one(outmap+"_tmp2",outmap+"_tmp3","iif(IM0<100000,1,0)",delin=True)
         boolean_masking(outmap+"_tmp3",outmap+"_tmp4",delin=True)
-        immath_two(outmap+"_tmp",outmap+"_tmp4",outfile=outmap+"_tmp5","iif(IM1>1,IM0,0)",delin=True)
+        immath_two(outmap+"_tmp",outmap+"_tmp4",outmap+"_tmp5","iif(IM1>1,IM0,0)",delin=True)
         run_exportfits(outmap+"_tmp5",outmap+"_tmp",True,True,True)
 
         # ratio error map (only statistical error)
