@@ -242,8 +242,7 @@ class ToolsNGC3110():
         """
 
         # ratio map
-        ratioeq = "IM0/IM1/" + str(ufreq)+"/"+str(ufreq)+"*"+str(lfreq)+"*"+str(lfreq)
-        expr    = "iif( IM1>" + str(denomthres) + "," + ratioeq + ",0 )"
+        expr = "IM0/IM1/" + str(ufreq)+"/"+str(ufreq)+"*"+str(lfreq)+"*"+str(lfreq)
         run_immath_two(umap,uemap,umap+"_tmp_masked","iif(IM0>IM1*"+str(snr)+",IM0/IM1,0)")
         run_immath_two(lmap,lemap,lmap+"_tmp_masked","iif(IM0>IM1*"+str(snr)+",IM0/IM1,0)")
         run_immath_two(umap+"_tmp_masked",lmap+"_tmp_masked",outmap+"_tmp1",expr,delin=True)
