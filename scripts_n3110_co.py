@@ -242,7 +242,7 @@ class ToolsNGC3110():
         run_immath_two(lmap,lemap,lmap+"_tmp_masked","iif(IM0>IM1*"+str(snr)+",IM0,0)")
         run_immath_two(umap+"_tmp_masked",lmap+"_tmp_masked",outmap+"_tmp1",expr,delin=True)
         run_exportfits(outmap+"_tmp1",outmap+"_tmp",True,True,True)
-        run_importfits(outmap,outmap+"_tmp2",True,True)
+        run_importfits(outmap,outmap+"_tmp2",True,True,["RA","Dec","1GHz","Stokes"])
         run_immath_one(outmap+"_tmp2",outmap+"_tmp3","iif(IM0<100000,1,0)",delin=True)
         boolean_masking(outmap+"_tmp3",outmap+"_tmp4",delin=True)
         immath_two(outmap+"_tmp",outmap+"_tmp4",outmap+"_tmp5","iif(IM1>1,IM0,0)",delin=True)
