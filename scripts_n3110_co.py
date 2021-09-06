@@ -162,58 +162,42 @@ class ToolsNGC3110():
             self.outpng_b3 = self.dir_products + self._read_key("outpng_b3")
             self.outpng_b6 = self.dir_products + self._read_key("outpng_b6")
 
-    ###############
-    # _create_dir #
-    ###############
-
-    def _create_dir(self, this_dir):
-
-        if self.refresh==True:
-            print("## refresh " + this_dir)
-            os.system("rm -rf " + this_dir)
-
-        if not glob.glob(this_dir):
-            print("## create " + this_dir)
-            os.mkdir(this_dir)
-
-        else:
-            print("## not refresh " + this_dir)
-
-    #############
-    # _read_key #
-    #############
-
-    def _read_key(self, key, keyfile="fig", delimiter=",,,"):
-
-        if keyfile=="gal":
-            keyfile = self.keyfile_gal
-        elif keyfile=="fig":
-            keyfile = self.keyfile_fig
-
-        keydata  = np.loadtxt(keyfile,dtype="str",delimiter=delimiter)
-        keywords =\
-             np.array([s.replace(" ","") for s in keydata[:,0]])
-        values   = keydata[:,1]
-        value    = values[np.where(keywords==key)[0][0]]
-
-        return value
-
     ##################
-    # run_ci_outflow #
+    # run_ngc3110_co #
     ##################
 
     def run_ngc3110_co(
         self,
         do_prepare    = False,
+        do_lineratios = False,
         plot_showcase = False,
         ):
 
         if do_prepare==True:
             self.align_maps()
 
+        if do_lineratios==True:
+        	self.lineratios()
+
         if plot_showcase==True:
             self.showline()
             self.showcont()
+
+    ##############
+    # lineratios #
+    ##############
+
+    def lineratios(
+        self,
+        ):
+        """
+        """
+
+        taskname = self.modname + sys._getframe().f_code.co_name
+        check_first(self.outfits_m0_12co10,taskname)
+
+        # self.outfits_m0_12co10
+        # self.outfits_em0_12co10
 
     ############
     # showcont #
@@ -642,3 +626,39 @@ class ToolsNGC3110():
 
         if deltmp==True:
             os.system("rm -rf " + template)
+
+    ###############
+    # _create_dir #
+    ###############
+
+    def _create_dir(self, this_dir):
+
+        if self.refresh==True:
+            print("## refresh " + this_dir)
+            os.system("rm -rf " + this_dir)
+
+        if not glob.glob(this_dir):
+            print("## create " + this_dir)
+            os.mkdir(this_dir)
+
+        else:
+            print("## not refresh " + this_dir)
+
+    #############
+    # _read_key #
+    #############
+
+    def _read_key(self, key, keyfile="fig", delimiter=",,,"):
+
+        if keyfile=="gal":
+            keyfile = self.keyfile_gal
+        elif keyfile=="fig":
+            keyfile = self.keyfile_fig
+
+        keydata  = np.loadtxt(keyfile,dtype="str",delimiter=delimiter)
+        keywords =\
+             np.array([s.replace(" ","") for s in keydata[:,0]])
+        values   = keydata[:,1]
+        value    = values[np.where(keywords==key)[0][0]]
+
+        return value

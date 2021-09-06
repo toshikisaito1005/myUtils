@@ -656,6 +656,7 @@ def run_immoments(
         data = imval(imagename)["coords"][:,vdim]
         restfreq = imhead(imagename,mode="list")["restfreq"][0]
         chanwidth = str(np.round(abs(data[1]-data[0])/restfreq * 299792.458, 2))
+        print("# channel width = " + chanwidth + " km/s")
 
         # error map
         run_immath_one(
