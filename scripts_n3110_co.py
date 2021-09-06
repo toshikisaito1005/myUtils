@@ -475,7 +475,7 @@ class ToolsNGC3110():
 
     def align_maps(
         self,
-        pixelmin=1.0,
+        pixelmin=2.0,
         ):
         """
         """
