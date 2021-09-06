@@ -20,6 +20,8 @@ from mycasa_tasks import *
 from mycasa_sampling import *
 from mycasa_plots import *
 
+myia = aU.createCasaTool(iatool)
+
 ###########################
 ### ToolsDense
 ###########################
@@ -473,6 +475,7 @@ class ToolsNGC3110():
 
     def align_maps(
         self,
+        pixelmin=1.0,
         ):
         """
         """
@@ -499,6 +502,22 @@ class ToolsNGC3110():
             self.cube_12co10+"_mask3",self.cube_12co10+"_mask4",self.cube_12co10+"_mask5",
             self.cube_12co10+"_mask",expr=expr,delin=True)
 
+        # Remove small masks
+        beamarea = beam_area(self.cube_12co10)
+
+        ia.open(self.cube_12co10+"_mask")
+        mask=ia.getchunk()
+        labeled,j=scipy.ndimage.label(mask)
+        myhistogram=scipy.ndimage.measurements.histogram(labeled,0,j+1,j+1)
+        object_slices=scipy.ndimage.find_objects(labeled)
+        threshold_area=beamarea*pixelmin
+        for i in range(j):
+            if myhistogram[i+1]<threshold_area:
+                mask[object_slices[i]]=0
+
+        ia.putchunk(mask)
+        ia.done()
+
         # create 13co21-based cube mask
         run_roundsmooth(self.cube_13co21,self.cube_13co21+"_mask1",targetbeam=3.0)
         run_roundsmooth(self.cube_13co21,self.cube_13co21+"_mask2",targetbeam=5.5)
@@ -509,6 +528,22 @@ class ToolsNGC3110():
         run_immath_three(
             self.cube_13co21+"_mask3",self.cube_13co21+"_mask4",self.cube_13co21+"_mask5",
             self.cube_13co21+"_mask",expr=expr,delin=True)
+
+        # Remove small masks
+        beamarea = beam_area(self.cube_13co21)
+        
+        ia.open(self.cube_13co21+"_mask")
+        mask=ia.getchunk()
+        labeled,j=scipy.ndimage.label(mask)
+        myhistogram=scipy.ndimage.measurements.histogram(labeled,0,j+1,j+1)
+        object_slices=scipy.ndimage.find_objects(labeled)
+        threshold_area=beamarea*pixelmin
+        for i in range(j):
+            if myhistogram[i+1]<threshold_area:
+                mask[object_slices[i]]=0
+
+        ia.putchunk(mask)
+        ia.done()
 
         # beam to 2.0 arcsec
         run_roundsmooth(self.cube_12co10,self.outfits_12co10+"_tmp1",targetbeam=self.beam)
