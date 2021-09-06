@@ -131,6 +131,11 @@ class ToolsNGC3110():
             self.outfits_pb_b3 = self.dir_ready + self._read_key("outfits_pb_b3")
             self.outfits_pb_b6 = self.dir_ready + self._read_key("outfits_pb_b6")
 
+            self.outfits_r_21 = self.dir_ready + self._read_key("outfits_r_21")
+            self.outfits_r_t21 = self.dir_ready + self._read_key("outfits_r_t21")
+            self.outfits_r_1213l = self.dir_ready + self._read_key("outfits_r_1213l")
+            self.outfits_r_1213h = self.dir_ready + self._read_key("outfits_r_1213h")
+
             # ngc3110 properties
             self.ra_str = self._read_key("ra", "gal")
             self.ra = float(self.ra_str.replace("deg",""))
@@ -196,8 +201,61 @@ class ToolsNGC3110():
         taskname = self.modname + sys._getframe().f_code.co_name
         check_first(self.outfits_m0_12co10,taskname)
 
+        nu_12co10 = 115.27120180
+        nu_13co10 = 110.20135430
+        nu_12co21 = 230.53800000
+        nu_13co21 = 220.39868420
+        thres_12co10 = 21.64*0.01
+        thres_13co10 = 1.849*0.04
+        thres_13co21 = 5.703*0.02
+
         # self.outfits_m0_12co10
         # self.outfits_em0_12co10
+        self._create_ratios(
+            self.outfits_m0_12co21,
+            self.outfits_m0_12co10,
+            self.outfits_em0_12co21,
+            self.outfits_em0_12co10,
+            nu_12co21,
+            nu_12co10,
+            self.outfits_r_21,
+            self.outfits_r_21.replace(".fits","_error.fits")
+            )
+
+    ##################
+    # _create_ratios #
+    ##################
+
+    def _create_ratios(
+        self,
+        umap,
+        lmap,
+        uemap,
+        lemap,
+        ufreq,
+        lfreq,
+        outmap,
+        outemap,
+        snr=4.0,
+        ):
+        """
+        """
+
+        # ratio map
+        ratioeq = "IM0/IM1/" + str(ufreq)+"/"+str(ufreq)+"*"+str(lfreq)+"*"+str(lfreq)
+        expr    = "iif( IM1>" + str(denomthres) + "," + ratioeq + ",0 )"
+        run_immath_two(umap,uemap,umap+"_tmp_masked","iif(IM0>IM1*"+str(snr)+",IM0/IM1,0)")
+        run_immath_two(lmap,lemap,lmap+"_tmp_masked","iif(IM0>IM1*"+str(snr)+",IM0/IM1,0)")
+        run_immath_two(umap+"_tmp_masked",lmap+"_tmp_masked",outmap+"_tmp1",expr,delin=True)
+        run_exportfits(outmap+"_tmp1",outmap,True,True,True)
+
+        # ratio error map (only statistical error)
+        expr = ""
+        run_immath_two(uemap,umap,"error1.map","iif(IM1>IM0*"+str(snr)+",IM0*IM0/IM1/IM1,0)")
+        run_immath_two(lemap,lmap,"error2.map","iif(IM1>IM0*"+str(snr)+",IM0*IM0/IM1/IM1,0)")
+        run_immath_three(outmap,"error1.map","error2.map",outemap+"_tmp1",expr)
+        run_exportfits(outemap+"_tmp1",outemap,True,True,True)
+        os.system("rm 0-rf error1.map error2.map")
 
     ############
     # showcont #
