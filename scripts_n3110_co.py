@@ -205,12 +205,7 @@ class ToolsNGC3110():
         nu_13co10 = 110.20135430
         nu_12co21 = 230.53800000
         nu_13co21 = 220.39868420
-        thres_12co10 = 21.64*0.01
-        thres_13co10 = 1.849*0.04
-        thres_13co21 = 5.703*0.02
 
-        # self.outfits_m0_12co10
-        # self.outfits_em0_12co10
         self._create_ratios(
             self.outfits_m0_12co21,
             self.outfits_m0_12co10,
@@ -243,8 +238,8 @@ class ToolsNGC3110():
 
         # ratio map
         expr = "IM0/IM1/" + str(ufreq)+"/"+str(ufreq)+"*"+str(lfreq)+"*"+str(lfreq)
-        run_immath_two(umap,uemap,umap+"_tmp_masked","iif(IM0>IM1*"+str(snr)+",IM0/IM1,0)")
-        run_immath_two(lmap,lemap,lmap+"_tmp_masked","iif(IM0>IM1*"+str(snr)+",IM0/IM1,0)")
+        run_immath_two(umap,uemap,umap+"_tmp_masked","iif(IM0>IM1*"+str(snr)+",IM0,0)")
+        run_immath_two(lmap,lemap,lmap+"_tmp_masked","iif(IM0>IM1*"+str(snr)+",IM0,0)")
         run_immath_two(umap+"_tmp_masked",lmap+"_tmp_masked",outmap+"_tmp1",expr,delin=True)
         run_exportfits(outmap+"_tmp1",outmap,True,True,True)
 
@@ -254,7 +249,7 @@ class ToolsNGC3110():
         run_immath_two(lemap,lmap,"error2.map","iif(IM1>IM0*"+str(snr)+",IM0*IM0/IM1/IM1,0)")
         run_immath_three(outmap,"error1.map","error2.map",outemap+"_tmp1",expr)
         run_exportfits(outemap+"_tmp1",outemap,True,True,True)
-        os.system("rm 0-rf error1.map error2.map")
+        os.system("rm -rf error1.map error2.map")
 
     ############
     # showcont #
