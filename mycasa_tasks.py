@@ -176,8 +176,10 @@ def remove_small_masks(
     check_first(imagename, taskname)
 
     if imagename==None:
+        print("# measure beam area of " + maskname)
         beamarea = beam_area(maskname)
     else:
+        print("# measure beam area of " + imagename)
         beamarea = beam_area(imagename)
 
     if output!=None:
