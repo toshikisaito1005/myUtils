@@ -175,7 +175,7 @@ def remove_small_masks(
     taskname = modname + sys._getframe().f_code.co_name
     check_first(imagename, taskname)
 
-    if imagename!=None:
+    if imagename==None:
         beamarea = beam_area(maskname)
     else:
         beamarea = beam_area(imagename)
