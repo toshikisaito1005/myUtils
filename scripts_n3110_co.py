@@ -249,7 +249,7 @@ class ToolsNGC3110():
         run_exportfits(outmap+"_tmp1",outmap,True,True,True)
 
         # ratio error map (only statistical error)
-        expr = ""
+        expr = "IM0*sqrt(IM1+IM2)"
         run_immath_two(uemap,umap,"error1.map","iif(IM1>IM0*"+str(snr)+",IM0*IM0/IM1/IM1,0)")
         run_immath_two(lemap,lmap,"error2.map","iif(IM1>IM0*"+str(snr)+",IM0*IM0/IM1/IM1,0)")
         run_immath_three(outmap,"error1.map","error2.map",outemap+"_tmp1",expr)
