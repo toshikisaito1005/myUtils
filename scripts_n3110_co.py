@@ -219,6 +219,17 @@ class ToolsNGC3110():
             self.outfits_r_21.replace(".fits","_error.fits")
             )
 
+        self._create_ratios(
+            self.outfits_m0_13co21,
+            self.outfits_m0_13co10,
+            self.outfits_em0_13co21,
+            self.outfits_em0_13co10,
+            nu_13co21,
+            nu_13co10,
+            self.outfits_r_t21,
+            self.outfits_r_t21.replace(".fits","_error.fits")
+            )
+
     ##################
     # _create_ratios #
     ##################
@@ -597,8 +608,10 @@ class ToolsNGC3110():
             self.outfits_c18o21,self.cube_13co21+"_mask2",rms_c18o21,
             self.outfits_m0_c18o21,self.outfits_em0_c18o21,self.outfits_m1_c18o21)
 
-        os.system("rm -rf " + self.cube_12co10 + "_mask")
-        os.system("rm -rf " + self.cube_13co21 + "_mask")
+        #os.system("rm -rf " + self.cube_12co10 + "_mask")
+        run_exportfits(self.cube_12co10+"_mask",self.cube_12co10.replace(".fits","_mask.fits"),True,True,True)
+        #os.system("rm -rf " + self.cube_13co21 + "_mask")
+        run_exportfits(self.cube_13co21+"_mask",self.cube_13co21.replace(".fits","_mask.fits"),True,True,True)
         os.system("rm -rf " + self.cube_13co21 + "_mask2")
         os.system("rm -rf " + self.outfits_12co10 + "_tmp2")
         os.system("rm -rf " + self.outfits_c18o21 + "_tmp2")
