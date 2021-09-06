@@ -609,9 +609,9 @@ class ToolsNGC3110():
             self.outfits_m0_c18o21,self.outfits_em0_c18o21,self.outfits_m1_c18o21)
 
         #os.system("rm -rf " + self.cube_12co10 + "_mask")
-        run_exportfits(self.cube_12co10+"_mask",self.cube_12co10.replace(".fits","_mask.fits"),True,True,True)
+        run_exportfits(self.cube_12co10+"_mask","b3.mask",True,True,True)
         #os.system("rm -rf " + self.cube_13co21 + "_mask")
-        run_exportfits(self.cube_13co21+"_mask",self.cube_13co21.replace(".fits","_mask.fits"),True,True,True)
+        run_exportfits(self.cube_13co21+"_mask","b6.mask",True,True,True)
         os.system("rm -rf " + self.cube_13co21 + "_mask2")
         os.system("rm -rf " + self.outfits_12co10 + "_tmp2")
         os.system("rm -rf " + self.outfits_c18o21 + "_tmp2")
