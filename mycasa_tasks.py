@@ -3,6 +3,7 @@ Standalone routines that take input and soemtimes output using CASA.
 
 contents:
     relabelimage
+    remove_small_masks
     beam_area
     imval_all
     measure_rms
@@ -22,6 +23,7 @@ history:
 2021-07-21   major updates
 2021-09-02   add run_run_impbcor, handle data containing nan when measure_rms
 2021-09-02   remove ":mask0" from inpmask@makemask
+2021-09-06   add remove_small_masks
 Toshiki Saito@Nichidai/NAOJ
 
 references:
@@ -155,6 +157,46 @@ def relabelimage(
 
     myia.setcoordsys(mycs)
     myia.close()
+
+########################################
+### remove_small_masks
+########################################
+
+def remove_small_masks(
+    maskname,
+    output=None,
+    imagename=None,
+    pixelmin=1.0,
+    ):
+    """
+    remove small masks from a mask image or cube based on beam size info.
+    """
+
+    taskname = modname + sys._getframe().f_code.co_name
+    check_first(imagename, taskname)
+
+    if imagename!=None:
+        beamarea = beam_area(maskname)
+    else:
+        beamarea = beam_area(imagename)
+
+    if output!=None:
+        os.system("cp -r " + maskname + " " + output)
+    else:
+        output = maskname
+
+    myia.open(output)
+    mask=myia.getchunk()
+    labeled,j=scipy.ndimage.label(mask)
+    myhistogram=scipy.ndimage.measurements.histogram(labeled,0,j+1,j+1)
+    object_slices=scipy.ndimage.find_objects(labeled)
+    threshold_area=beamarea*pixelmin
+    for i in range(j):
+        if myhistogram[i+1]<threshold_area:
+            mask[object_slices[i]]=0
+
+    myia.putchunk(mask)
+    myia.done()
 
 ########################################
 ### beam_area

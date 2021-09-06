@@ -502,21 +502,7 @@ class ToolsNGC3110():
             self.cube_12co10+"_mask3",self.cube_12co10+"_mask4",self.cube_12co10+"_mask5",
             self.cube_12co10+"_mask",expr=expr,delin=True)
 
-        # Remove small masks
-        beamarea = beam_area(self.cube_12co10)
-
-        myia.open(self.cube_12co10+"_mask")
-        mask=myia.getchunk()
-        labeled,j=scipy.ndimage.label(mask)
-        myhistogram=scipy.ndimage.measurements.histogram(labeled,0,j+1,j+1)
-        object_slices=scipy.ndimage.find_objects(labeled)
-        threshold_area=beamarea*pixelmin
-        for i in range(j):
-            if myhistogram[i+1]<threshold_area:
-                mask[object_slices[i]]=0
-
-        myia.putchunk(mask)
-        myia.done()
+        remove_small_masks(self.cube_12co10+"_mask",None,self.cube_12co10,pixelmin)
 
         # create 13co21-based cube mask
         run_roundsmooth(self.cube_13co21,self.cube_13co21+"_mask1",targetbeam=3.0)
@@ -529,21 +515,7 @@ class ToolsNGC3110():
             self.cube_13co21+"_mask3",self.cube_13co21+"_mask4",self.cube_13co21+"_mask5",
             self.cube_13co21+"_mask",expr=expr,delin=True)
 
-        # Remove small masks
-        beamarea = beam_area(self.cube_13co21)
-        
-        myia.open(self.cube_13co21+"_mask")
-        mask=myia.getchunk()
-        labeled,j=scipy.ndimage.label(mask)
-        myhistogram=scipy.ndimage.measurements.histogram(labeled,0,j+1,j+1)
-        object_slices=scipy.ndimage.find_objects(labeled)
-        threshold_area=beamarea*pixelmin
-        for i in range(j):
-            if myhistogram[i+1]<threshold_area:
-                mask[object_slices[i]]=0
-
-        myia.putchunk(mask)
-        myia.done()
+        remove_small_masks(self.cube_12co10+"_mask",None,self.cube_12co10,pixelmin)
 
         # beam to 2.0 arcsec
         run_roundsmooth(self.cube_12co10,self.outfits_12co10+"_tmp1",targetbeam=self.beam)
@@ -683,10 +655,6 @@ class ToolsNGC3110():
                 )
             template = template.replace(".fits",".image")
             deltmp   = True
-
-        # make sure ICRS
-        #relabelimage(imagename, j2000_to_icrs=True)
-        #relabelimage(template, j2000_to_icrs=True)
 
         # regrid
         run_imregrid(
