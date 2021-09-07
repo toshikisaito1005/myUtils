@@ -685,16 +685,16 @@ class ToolsNGC3110():
 
         os.system("rm -rf " + outmom0 + "_tmp3")
         immath(
-            imagename = outmom0 + "_tmp1",
-            expr      = "IM0",
+            imagename = [outmom0+"_tmp1","this_mask.image"],
+            expr      = "IM0*IM1",
             outfile   = outmom0 + "_tmp3",
             mask      = 'mask("this_mask.image")',
             )
         os.system("rm -rf " + outemom0 + "_tmp3")
         immath(
-            imagename = outmom0 + "_tmp1",
-            expr      = "IM0",
-            outfile   = outmom0 + "_tmp3",
+            imagename = [outemom0+"_tmp1","this_mask.image"],
+            expr      = "IM0*IM1",
+            outfile   = outemom0 + "_tmp3",
             mask      = 'mask("this_mask.image")',
             )
         os.system("rm -rf " + outmom0 + "_tmp1")
@@ -711,8 +711,8 @@ class ToolsNGC3110():
         run_immoments(imagename+"_tmp2",mask,outmom1+"_tmp1",1,rms,self.snr_mom,vdim=3)
         os.system("rm -rf " + outemom1 + "_tmp3")
         immath(
-            imagename = outmom1 + "_tmp1",
-            expr      = "IM0",
+            imagename = [outmom1+"_tmp1","this_mask.image"],
+            expr      = "IM0*IM1",
             outfile   = outmom1 + "_tmp3",
             mask      = 'mask("this_mask.image")',
             )
