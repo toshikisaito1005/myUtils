@@ -586,7 +586,6 @@ class ToolsNGC3110():
             self.outfits_12co10,self.cube_12co10+"_mask",rms_12co10,
             self.outfits_m0_12co10,self.outfits_em0_12co10,self.outfits_m1_12co10)
 
-        """
         self._create_moments(
             self.outfits_12co21,self.cube_12co10+"_mask",rms_12co21,
             self.outfits_m0_12co21,self.outfits_em0_12co21,self.outfits_m1_12co21)
@@ -604,7 +603,6 @@ class ToolsNGC3110():
         self._create_moments(
             self.outfits_c18o21,self.cube_13co21+"_mask2",rms_c18o21,
             self.outfits_m0_c18o21,self.outfits_em0_c18o21,self.outfits_m1_c18o21)
-        """
 
         os.system("rm -rf " + self.cube_12co10 + "_mask")
         os.system("rm -rf " + self.cube_13co21 + "_mask")
@@ -681,11 +679,6 @@ class ToolsNGC3110():
         os.system("rm -rf this_mask.image")
         os.system("cp -r " + outmom0 + "_tmp2 this_mask.image")
         os.system("rm -rf " + outmom0 + "_tmp2")
-        #myia.open("this_mask.image")
-        #data = myia.getchunk()
-        #myia.calcmask("this_mask.image>0")  
-        #myia.done()
-        #os.system("rm -rf " + outmom0+ " _tmp2")
 
         os.system("rm -rf " + outmom0 + "_tmp3")
         immath(
