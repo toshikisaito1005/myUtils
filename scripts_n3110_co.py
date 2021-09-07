@@ -287,7 +287,7 @@ class ToolsNGC3110():
             data_ssc    = self._eazy_imval(self.outfits_ssc,this_aperture)
 
             # export to txt file
-            f = open(output_hexlist, "a")
+            f = open(self.outtxt_hexdata, "a")
             data = \
                 str(data_ra).rjust(9) + " " + \
                 str(data_dec).rjust(10) + " " + \
