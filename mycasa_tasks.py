@@ -682,7 +682,7 @@ def run_immoments(
     os.system("cp -r " + maskimage +  " " + maskimage + "_tmp1")
     myia.open(maskimage+"_tmp1")
     data = myia.getchunk()
-    ia.calcmask(maskimage+"_tmp1>0")  
+    myia.calcmask(maskimage+"_tmp1>0")  
     myia.done()
 
     # moment
