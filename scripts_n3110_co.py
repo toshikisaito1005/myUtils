@@ -165,7 +165,7 @@ class ToolsNGC3110():
             self.step           = float(self._read_key("step"))
             self.ra_blc         = float(self._read_key("ra_blc"))
             self.decl_blc       = float(self._read_key("decl_blc"))
-            self.num_aperture   = int(self._read_key("step"))
+            self.num_aperture   = int(self._read_key("num_aperture"))
 
             # output txt and png
             self.outpng_irac = self.dir_products + self._read_key("outpng_irac")
