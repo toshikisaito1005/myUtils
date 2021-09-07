@@ -678,6 +678,7 @@ class ToolsNGC3110():
 
         os.system("rm -rf this_mask.image")
         os.system("cp -r " + outmom0 + "_tmp2 this_mask.image")
+        os.system("rm -rf " + outmom0 + "_tmp2")
         #myia.open("this_mask.image")
         #data = myia.getchunk()
         #myia.calcmask("this_mask.image>0")  
@@ -687,14 +688,14 @@ class ToolsNGC3110():
         os.system("rm -rf " + outmom0 + "_tmp3")
         immath(
             imagename = [outmom0+"_tmp1","this_mask.image"],
-            expr      = "IM0*IM1",
+            expr      = "iif(IM1>0,IM0*IM1,0)",
             outfile   = outmom0 + "_tmp3",
             mask      = 'mask("this_mask.image")',
             )
         os.system("rm -rf " + outemom0 + "_tmp3")
         immath(
             imagename = [outemom0+"_tmp1","this_mask.image"],
-            expr      = "IM0*IM1",
+            expr      = "iif(IM1>0,IM0*IM1,0)",
             outfile   = outemom0 + "_tmp3",
             mask      = 'mask("this_mask.image")',
             )
@@ -709,7 +710,7 @@ class ToolsNGC3110():
         os.system("rm -rf " + outmom1 + "_tmp3")
         immath(
             imagename = [outmom1+"_tmp1","this_mask.image"],
-            expr      = "IM0*IM1",
+            expr      = "iif(IM1>0,IM0*IM1,0)",
             outfile   = outmom1 + "_tmp3",
             mask      = 'mask("this_mask.image")',
             )
