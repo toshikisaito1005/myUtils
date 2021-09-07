@@ -672,7 +672,8 @@ class ToolsNGC3110():
             run_importfits(
                 fitsimage   = imagename,
                 imagename   = imagename.replace(".fits",".image"),
-                defaultaxes = False,
+                defaultaxes = True,
+                defaultaxesvalues = ["RA","Dec","1GHz","Stokes"],
                 )
             imagename = imagename.replace(".fits",".image")
             delim     = True
@@ -682,6 +683,8 @@ class ToolsNGC3110():
             run_importfits(
                 fitsimage   = template,
                 imagename   = template.replace(".fits",".image"),
+                defaultaxes = True,
+                defaultaxesvalues = ["RA","Dec","1GHz","Stokes"],
                 )
             template = template.replace(".fits",".image")
             deltmp   = True
@@ -698,8 +701,8 @@ class ToolsNGC3110():
         run_exportfits(
             imagename = imagename + ".regrid",
             fitsimage = outfits,
-            dropdeg    = True,
-            dropstokes = True,
+            dropdeg    = False,
+            dropstokes = False,
             delin      = True,
             )
 
