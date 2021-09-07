@@ -582,7 +582,6 @@ class ToolsNGC3110():
             self.outfits_12co10,self.cube_12co10+"_mask",rms_12co10,
             self.outfits_m0_12co10,self.outfits_em0_12co10,self.outfits_m1_12co10)
 
-        """
         self._create_moments(
             self.outfits_12co21,self.cube_12co10+"_mask",rms_12co21,
             self.outfits_m0_12co21,self.outfits_em0_12co21,self.outfits_m1_12co21)
@@ -600,7 +599,6 @@ class ToolsNGC3110():
         self._create_moments(
             self.outfits_c18o21,self.cube_13co21+"_mask2",rms_c18o21,
             self.outfits_m0_c18o21,self.outfits_em0_c18o21,self.outfits_m1_c18o21)
-        """
 
         os.system("rm -rf " + self.cube_12co10 + "_mask")
         os.system("rm -rf " + self.cube_13co21 + "_mask")
