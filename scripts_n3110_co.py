@@ -225,7 +225,7 @@ class ToolsNGC3110():
         check_first(self.outfits_m0_12co10,taskname)
 
         # create apertures with CASA region format
-        _create_casa_apertures(
+        self._create_casa_apertures(
             self.ra_blc,
             self.decl_blc,
             self.num_aperture,
@@ -253,38 +253,38 @@ class ToolsNGC3110():
             # measure fluxes and positions
             data_ra, data_dec = _casa2radec(this_aperture)
 
-            data_12co10 = _eazy_imval(self.outfits_m0_12co10,this_aperture)
-            err_12co10  = _eazy_imval(self.outfits_em0_12co10,this_aperture)
+            data_12co10 = self._eazy_imval(self.outfits_m0_12co10,this_aperture)
+            err_12co10  = self._eazy_imval(self.outfits_em0_12co10,this_aperture)
             err_12co10  = np.sqrt(err_12co10**2 + (data_12co10*0.05)**2)
 
-            data_12co21 = _eazy_imval(self.outfits_m0_12co21,this_aperture)
-            err_12co21  = _eazy_imval(self.outfits_em0_12co21,this_aperture)
+            data_12co21 = self._eazy_imval(self.outfits_m0_12co21,this_aperture)
+            err_12co21  = self._eazy_imval(self.outfits_em0_12co21,this_aperture)
             err_12co21  = np.sqrt(err_12co21**2 + (data_12co21*0.10)**2)
 
-            data_13co10 = _eazy_imval(self.outfits_m0_13co10,this_aperture)
-            err_13co10  = _eazy_imval(self.outfits_em0_13co10,this_aperture)
+            data_13co10 = self._eazy_imval(self.outfits_m0_13co10,this_aperture)
+            err_13co10  = self._eazy_imval(self.outfits_em0_13co10,this_aperture)
             err_13co10  = np.sqrt(err_13co10**2 + (data_13co10*0.05)**2)
 
-            data_13co21 = _eazy_imval(self.outfits_m0_13co21,this_aperture)
-            err_13co21  = _eazy_imval(self.outfits_em0_13co21,this_aperture)
+            data_13co21 = self._eazy_imval(self.outfits_m0_13co21,this_aperture)
+            err_13co21  = self._eazy_imval(self.outfits_em0_13co21,this_aperture)
             err_13co21  = np.sqrt(err_13co21**2 + (data_13co21*0.10)**2)
 
-            data_c18o21 = _eazy_imval(self.outfits_m0_c18o21,this_aperture)
-            err_c18o21  = _eazy_imval(self.outfits_em0_c18o21,this_aperture)
+            data_c18o21 = self._eazy_imval(self.outfits_m0_c18o21,this_aperture)
+            err_c18o21  = self._eazy_imval(self.outfits_em0_c18o21,this_aperture)
             err_c18o21  = np.sqrt(err_c18o21**2 + (data_c18o21*0.10)**2)
 
-            data_vla    = _eazy_imval(self.outfits_vla,this_aperture,rms=rms_vla,roundval=5)
+            data_vla    = self._eazy_imval(self.outfits_vla,this_aperture,rms=rms_vla,roundval=5)
             err_vla     = np.sqrt(rms_vla**2 + (data_vla*0.03)**2)
 
-            data_b3     = _eazy_imval(self.outfits_b3,this_aperture,rms=rms_b3,snr=1,roundval=6)
+            data_b3     = self._eazy_imval(self.outfits_b3,this_aperture,rms=rms_b3,snr=1,roundval=6)
             err_b3      = np.sqrt(rms_b3**2 + (data_b3*0.05)**2)
 
-            data_b6     = _eazy_imval(self.outfits_b6,this_aperture,rms=rms_b6,snr=1,roundval=6)
+            data_b6     = self._eazy_imval(self.outfits_b6,this_aperture,rms=rms_b6,snr=1,roundval=6)
             err_b6      = np.sqrt(rms_b6**2 + (data_b6*0.05)**2)
 
-            data_halpha = _eazy_imval(self.outfits_halpha,this_aperture,rms=rms_halpha,roundval=20)
+            data_halpha = self._eazy_imval(self.outfits_halpha,this_aperture,rms=rms_halpha,roundval=20)
 
-            data_ssc    = _eazy_imval(self.outfits_ssc,this_aperture)
+            data_ssc    = self._eazy_imval(self.outfits_ssc,this_aperture)
 
             # export to txt file
             f = open(output_hexlist, "a")
