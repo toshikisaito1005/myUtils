@@ -687,7 +687,7 @@ def run_immoments(
         includepix = [rms*snr,1e11],
         outfile    = outfile,
         )
-    myia.open(output)
+    myia.open(outfile)
     data = myia.getchunk()
     data = np.where(data!=0,data,False)
     myia.putchunk(data)
