@@ -190,7 +190,7 @@ class ToolsNGC3110():
         if plot_showcase==True:
             self.showline()
             self.showcont()
-            self.showratio()
+            #self.showratio()
 
     ##############
     # lineratios #
@@ -518,7 +518,11 @@ class ToolsNGC3110():
         expr = "iif( IM0+IM1+IM2>=2.0, 1.0, 0.0 )"
         run_immath_three(
             self.cube_13co21+"_mask3",self.cube_13co21+"_mask4",self.cube_13co21+"_mask5",
-            self.cube_13co21+"_mask",expr=expr,delin=True)
+            self.cube_13co21+"_mask6",expr=expr,delin=True)
+        expr = "iif( IM1>0, IM0, 0 )"
+        run_immath_two(self.cube_13co21+"_mask6",self.cube_12co10+"_mask",
+            self.cube_13co21+"_mask",expr)
+        os.system("rm -rf " + self.cube_13co21+"_mask6")
 
         remove_small_masks(self.cube_13co21+"_mask",None,self.cube_13co21,self.pixelmin)
         run_exportfits(self.cube_13co21+"_mask",self.cube_13co21+"_mask2",False,False,True)
