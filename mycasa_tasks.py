@@ -686,8 +686,12 @@ def run_immoments(
         moments    = [mom],
         includepix = [rms*snr,1e11],
         outfile    = outfile,
-        mask       = 'mask("' + maskimage + '")',
         )
+    myia.open(output)
+    data = myia.getchunk()
+    data = np.where(data!=0,data,False)
+    myia.putchunk(data)
+    myia.done()
 
     # mom0 err
     if mom==0 and outfile_err!=None:
@@ -709,7 +713,6 @@ def run_immoments(
         run_immath_one(
             outfile_err + "_tmp1",
             outfile_err,
-            str(rms) + "*" + chanwidth + "*sqrt(IM0/" + chanwidth + ")",
             delin=True,
             )
 
