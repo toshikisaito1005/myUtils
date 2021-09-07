@@ -170,6 +170,11 @@ class ToolsNGC3110():
             self.outpng_b3 = self.dir_products + self._read_key("outpng_b3")
             self.outpng_b6 = self.dir_products + self._read_key("outpng_b6")
 
+            self.outpng_r_21    = self.dir_products + self._read_key("outpng_r_21")
+            self.outpng_r_t21   = self.dir_products + self._read_key("outpng_r_t21")
+            self.outpng_r_1213l = self.dir_products + self._read_key("outpng_r_1213l")
+            self.outpng_r_1213h = self.dir_products + self._read_key("outpng_r_1213h")
+
     ##################
     # run_ngc3110_co #
     ##################
@@ -190,72 +195,85 @@ class ToolsNGC3110():
         if plot_showcase==True:
             self.showline()
             self.showcont()
-            #self.showratio()
+            self.showratio()
 
-    ##############
-    # lineratios #
-    ##############
+    ############
+    # showcont #
+    ############
 
-    def lineratios(
+    def showratio(
         self,
         ):
         """
         """
 
         taskname = self.modname + sys._getframe().f_code.co_name
-        check_first(self.outfits_m0_12co10,taskname)
+        check_first(self.outfits_irac,taskname)
 
-        nu_12co10 = 115.27120180
-        nu_13co10 = 110.20135430
-        nu_12co21 = 230.53800000
-        nu_13co21 = 220.39868420
+        scalebar = 2000. / self.scale_pc
+        label_scalebar = "2 kpc"
 
         # 12co21 12co10 ratio
-        self._create_ratios(
-            self.outfits_m0_12co21,
-            self.outfits_m0_12co10,
-            self.outfits_em0_12co21,
-            self.outfits_em0_12co10,
-            nu_12co21,
-            nu_12co10,
-            self.outfits_r_21,
-            self.outfits_r_21.replace(".fits","_error.fits")
+        myfig_fits2png(
+            imcolor=self.outfits_r_21,
+            outfile=self.outpng_r_21,
+            imcontour1=self.outfits_m0_12co10,
+            imsize_as=self.imsize,
+            ra_cnt=self.ra_str,
+            dec_cnt=self.dec_str,
+            levels_cont1=[0.02,0.04,0.08,0.16,0.32,0.64,0.96],
+            width_cont1=[1.5],
+            color_cont1="black",
+            set_title="$^{12}$CO(2-1)/$^{12}$CO(1-0) Ratio ($^{12}R_{21/10}$)",
+            colorlog=False,
+            scalebar=scalebar,
+            label_scalebar=label_scalebar,
+            color_scalebar="black",
+            set_cbar=True,
+            label_cbar="Ratio",
+            clim=[0.0,1.5],
             )
 
-        # 13co21 13co10 ratio
-        self._create_ratios(
-            self.outfits_m0_13co21,
-            self.outfits_m0_13co10,
-            self.outfits_em0_13co21,
-            self.outfits_em0_13co10,
-            nu_13co21,
-            nu_13co10,
-            self.outfits_r_t21,
-            self.outfits_r_t21.replace(".fits","_error.fits")
+        # 12co21 12co10 ratio
+        myfig_fits2png(
+            imcolor=self.outfits_r_t21,
+            outfile=self.outpng_r_t21,
+            imcontour1=self.outfits_m0_12co10,
+            imsize_as=self.imsize,
+            ra_cnt=self.ra_str,
+            dec_cnt=self.dec_str,
+            levels_cont1=[0.02,0.04,0.08,0.16,0.32,0.64,0.96],
+            width_cont1=[1.5],
+            color_cont1="black",
+            set_title="$^{13}$CO(2-1)/$^{13}$CO(1-0) Ratio ($^{13}R_{21/10}$)",
+            colorlog=False,
+            scalebar=scalebar,
+            label_scalebar=label_scalebar,
+            color_scalebar="black",
+            set_cbar=True,
+            label_cbar="Ratio",
+            clim=[0.0,1.5],
             )
 
-        # 12co21 13co21 ratio
-        self._create_ratios(
-            self.outfits_m0_12co21,
-            self.outfits_m0_13co21,
-            self.outfits_em0_12co21,
-            self.outfits_em0_13co21,
-            nu_12co21,
-            nu_13co21,
-            self.outfits_r_1213h,
-            self.outfits_r_1213h.replace(".fits","_error.fits")
-            )
-
-        # 12co10 13co10 ratio
-        self._create_ratios(
-            self.outfits_m0_12co10,
-            self.outfits_m0_13co10,
-            self.outfits_em0_12co10,
-            self.outfits_em0_13co10,
-            nu_12co10,
-            nu_13co10,
-            self.outfits_r_1213l,
-            self.outfits_r_1213l.replace(".fits","_error.fits")
+        # 12co21 12co10 ratio
+        myfig_fits2png(
+            imcolor=self.outfits_r_1213l,
+            outfile=self.outpng_r_t21,
+            imcontour1=self.outfits_m0_12co10,
+            imsize_as=self.imsize,
+            ra_cnt=self.ra_str,
+            dec_cnt=self.dec_str,
+            levels_cont1=[0.02,0.04,0.08,0.16,0.32,0.64,0.96],
+            width_cont1=[1.5],
+            color_cont1="black",
+            set_title="$^{12}$CO(1-0)/$^{13}$CO(1-0) Ratio ($^{12/13}R_{10}$)",
+            colorlog=False,
+            scalebar=scalebar,
+            label_scalebar=label_scalebar,
+            color_scalebar="black",
+            set_cbar=True,
+            label_cbar="Ratio",
+            clim=[7.5,30.0],
             )
 
     ############
@@ -294,6 +312,7 @@ class ToolsNGC3110():
             color_scalebar="black",
             set_cbar=True,
             label_cbar="mJy beam$^{-1}$",
+            set_bg_color=cm.PuBu(0),
             )
 
         # b6
@@ -316,6 +335,7 @@ class ToolsNGC3110():
             color_scalebar="black",
             set_cbar=True,
             label_cbar="mJy beam$^{-1}$",
+            set_bg_color=cm.PuBu(0),
             )
 
     ############
@@ -376,7 +396,7 @@ class ToolsNGC3110():
             imsize_as=self.imsize,
             ra_cnt=self.ra_str,
             dec_cnt=self.dec_str,
-            levels_cont1=[0.02,0.04,0.08,0.16,0.32,0.64,0.96],
+            levels_cont1=[0.01,0.02,0.04,0.08,0.16,0.32,0.64,0.96],
             width_cont1=[1.5],
             color_cont1="black",
             set_title="$^{12}$CO(1-0)",
@@ -397,7 +417,7 @@ class ToolsNGC3110():
             imsize_as=self.imsize,
             ra_cnt=self.ra_str,
             dec_cnt=self.dec_str,
-            levels_cont1=[0.02,0.04,0.08,0.16,0.32,0.64,0.96],
+            levels_cont1=[0.01,0.02,0.04,0.08,0.16,0.32,0.64,0.96],
             width_cont1=[1.5],
             color_cont1="black",
             set_title="$^{12}$CO(2-1)",
@@ -471,6 +491,72 @@ class ToolsNGC3110():
             set_cbar=True,
             label_cbar="km s$^{-1}$",
             clim=[-250,250],
+            )
+
+    ##############
+    # lineratios #
+    ##############
+
+    def lineratios(
+        self,
+        ):
+        """
+        """
+
+        taskname = self.modname + sys._getframe().f_code.co_name
+        check_first(self.outfits_m0_12co10,taskname)
+
+        nu_12co10 = 115.27120180
+        nu_13co10 = 110.20135430
+        nu_12co21 = 230.53800000
+        nu_13co21 = 220.39868420
+
+        # 12co21 12co10 ratio
+        self._create_ratios(
+            self.outfits_m0_12co21,
+            self.outfits_m0_12co10,
+            self.outfits_em0_12co21,
+            self.outfits_em0_12co10,
+            nu_12co21,
+            nu_12co10,
+            self.outfits_r_21,
+            self.outfits_r_21.replace(".fits","_error.fits")
+            )
+
+        # 13co21 13co10 ratio
+        self._create_ratios(
+            self.outfits_m0_13co21,
+            self.outfits_m0_13co10,
+            self.outfits_em0_13co21,
+            self.outfits_em0_13co10,
+            nu_13co21,
+            nu_13co10,
+            self.outfits_r_t21,
+            self.outfits_r_t21.replace(".fits","_error.fits")
+            )
+
+        # 12co21 13co21 ratio
+        self._create_ratios(
+            self.outfits_m0_12co21,
+            self.outfits_m0_13co21,
+            self.outfits_em0_12co21,
+            self.outfits_em0_13co21,
+            nu_12co21,
+            nu_13co21,
+            self.outfits_r_1213h,
+            self.outfits_r_1213h.replace(".fits","_error.fits")
+            )
+
+        # 12co10 13co10 ratio
+        self._create_ratios(
+            self.outfits_m0_12co10,
+            self.outfits_m0_13co10,
+            self.outfits_em0_12co10,
+            self.outfits_em0_13co10,
+            nu_12co10,
+            nu_13co10,
+            self.outfits_r_1213l,
+            self.outfits_r_1213l.replace(".fits","_error.fits")
             )
 
     ##############
