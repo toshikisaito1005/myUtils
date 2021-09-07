@@ -664,8 +664,7 @@ class ToolsNGC3110():
         run_importfits(imagename+"_tmp1",imagename+"_tmp2",True,True,["RA","Dec","1GHz","Stokes"])
 
         # mom0
-        run_immoments(imagename+"_tmp2",mask,outmom0+"_tmp1",0,rms,self.snr_mom,outemom0+"_tmp1")
-        return None
+        run_immoments(imagename+"_tmp2",mask,outmom0+"_tmp1",0,rms,self.snr_mom,outemom0+"_tmp1",vdim=3)
         run_exportfits(outmom0+"_tmp1",outmom0+"_tmp2",False,False,True)
         run_importfits(outmom0+"_tmp2",outmom0+"_tmp1",True,True,["RA","Dec","1GHz","Stokes"])
         run_exportfits(outemom0+"_tmp1",outemom0+"_tmp2",False,False,True)
@@ -677,14 +676,14 @@ class ToolsNGC3110():
 
         run_immath_two(outmom0+"_tmp1",outmom0+"_tmp2",outmom0+"_tmp3",expr)
         run_immath_two(outemom0+"_tmp1",outmom0+"_tmp2",outemom0+"_tmp3",expr)
-        #os.system("rm -rf " + outmom0 + "_tmp1") # all masked...
-        #os.system("rm -rf " + outemom0 + "_tmp1")
+        os.system("rm -rf " + outmom0 + "_tmp1")
+        os.system("rm -rf " + outemom0 + "_tmp1")
 
         run_exportfits(outmom0+"_tmp3",outmom0,True,True,True)
         run_exportfits(outemom0+"_tmp3",outemom0,True,True,True)
 
         # mom1
-        run_immoments(imagename+"_tmp2",mask,outmom1+"_tmp1",1,rms,self.snr_mom)
+        run_immoments(imagename+"_tmp2",mask,outmom1+"_tmp1",1,rms,self.snr_mom,vdim=3)
         run_immath_two(outmom1+"_tmp1",outmom0+"_tmp2",outmom1+"_tmp3",expr,delin=True)
         run_exportfits(outmom1+"_tmp3",outmom1,True,True,True)
 
