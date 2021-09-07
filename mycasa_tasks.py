@@ -335,7 +335,7 @@ def signal_masking(
 
     os.system("rm -rf " + outfile)
     os.system("rm -rf " + outfile + "_tmp0_signal_masking")
-    expr = "iif(IM0 >= " + str(threshold) + ", 1.0, 0.0)"
+    expr = "iif(IM0 > " + str(threshold) + ", 1.0, 0.0)"
     immath(
         imagename = imagename,
         mode      = "evalexpr",
