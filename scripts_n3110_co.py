@@ -632,7 +632,7 @@ class ToolsNGC3110():
         expr = "iif( IM1>0, IM0, 0 )"
 
         run_exportfits(imagename,imagename+"_tmp1",False,False,False)
-        run_importfits(imagename+"_tmp1",imagename+"_tmp2",False,True,["RA","Dec","1GHz","Stokes"])
+        run_importfits(imagename+"_tmp1",imagename+"_tmp2",True,True,["RA","Dec","1GHz","Stokes"])
 
         # mom0
         run_immoments(imagename+"_tmp2",mask,outmom0+"_tmp1",0,rms,self.snr_mom,outemom0+"_tmp1")
