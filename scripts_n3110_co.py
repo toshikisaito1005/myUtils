@@ -665,12 +665,12 @@ class ToolsNGC3110():
         run_immath_one(self.pb_12co21,self.pb_12co21+"_tmp1_b6","IM0","10")
         run_imregrid(self.pb_12co10+"_tmp1_b3",self.outfits_b3+"_tmp1",self.pb_12co10+"_tmp2_b3",delin=True)
         run_imregrid(self.pb_12co21+"_tmp1_b6",self.outfits_b6+"_tmp1",self.pb_12co21+"_tmp2_b6",delin=True)
-        run_impbcor(self.outfits_b3+"_tmp1",self.pb_12co10+"_tmp2_b3",self.outfits_b3+"_tmp2",delin=False)
-        run_impbcor(self.outfits_b6+"_tmp1",self.pb_12co21+"_tmp2_b6",self.outfits_b6+"_tmp2",delin=False)
-        run_immath_one(self.outfits_b3+"_tmp2",self.outfits_b3+"_tmp3","IM0*1000.",delin=True)
-        run_immath_one(self.outfits_b6+"_tmp2",self.outfits_b6+"_tmp3","IM0*1000.",delin=True)
-        run_exportfits(self.outfits_b3+"_tmp1",self.outfits_b3.replace(".fits","_nopbcor.fits"),True,True,True)
-        run_exportfits(self.outfits_b6+"_tmp1",self.outfits_b6.replace(".fits","_nopbcor.fits"),True,True,True)
+        run_immath_one(self.outfits_b3+"_tmp1",self.outfits_b3+"_tmp2","IM0*1000.",delin=True)
+        run_immath_one(self.outfits_b6+"_tmp1",self.outfits_b6+"_tmp2","IM0*1000.",delin=True)
+        run_impbcor(self.outfits_b3+"_tmp2",self.pb_12co10+"_tmp2_b3",self.outfits_b3+"_tmp3",delin=False)
+        run_impbcor(self.outfits_b6+"_tmp2",self.pb_12co21+"_tmp2_b6",self.outfits_b6+"_tmp3",delin=False)
+        run_exportfits(self.outfits_b3+"_tmp2",self.outfits_b3.replace(".fits","_nopbcor.fits"),True,True,True)
+        run_exportfits(self.outfits_b6+"_tmp2",self.outfits_b6.replace(".fits","_nopbcor.fits"),True,True,True)
 
         # casa to fits: co lines
         run_exportfits(self.outfits_12co10+"_tmp2",self.outfits_12co10,True,True,False)
