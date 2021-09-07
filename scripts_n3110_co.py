@@ -631,8 +631,12 @@ class ToolsNGC3110():
         print("# run _create_moments")
         expr = "iif( IM1>0, IM0, 0 )"
 
+        run_exportfits(imagename,imagename+"_tmp1",False,False,False)
+        run_importfits(imagename+"_tmp1",imagename+"_tmp2",defaultaxes=False,
+            delin=True,["RA","Dec","1GHz","Stokes"])
+
         # mom0
-        run_immoments(imagename,mask,outmom0+"_tmp1",0,rms,self.snr_mom,outemom0+"_tmp1")
+        run_immoments(imagename+"_tmp2",mask,outmom0+"_tmp1",0,rms,self.snr_mom,outemom0+"_tmp1")
 
         signal_masking(outmom0+"_tmp1",outmom0+"_tmp2",0,delin=False)
         signal_masking(outemom0+"_tmp1",outemom0+"_tmp2",0,delin=False)
@@ -647,11 +651,13 @@ class ToolsNGC3110():
         run_exportfits(outemom0+"_tmp3",outemom0,True,True,True)
 
         # mom1
-        run_immoments(imagename,mask,outmom1+"_tmp1",1,rms,self.snr_mom)
+        run_immoments(imagename+"_tmp2",mask,outmom1+"_tmp1",1,rms,self.snr_mom)
         signal_masking(outmom1+"_tmp1",outmom1+"_tmp2",0,delin=False)
         remove_small_masks(outmom1+"_tmp2",None,outmom1+"_tmp1",1.0)
         run_immath_two(outmom1+"_tmp1",outmom1+"_tmp2",outmom1+"_tmp3",expr,delin=True)
         run_exportfits(outmom1+"_tmp3",outmom1,True,True,True)
+
+        os.system("rm -rf " + imagename + "_tmp2")
 
     ##################
     # _align_one_map #
