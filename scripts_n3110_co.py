@@ -225,7 +225,7 @@ class ToolsNGC3110():
         check_first(self.outfits_m0_12co10,taskname)
 
         # create apertures with CASA region format
-        create_casa_apertures(
+        _create_casa_apertures(
             self.ra_blc,
             self.decl_blc,
             self.num_aperture,
