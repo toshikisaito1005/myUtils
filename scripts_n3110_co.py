@@ -506,6 +506,8 @@ class ToolsNGC3110():
             self.cube_12co10+"_mask",expr=expr,delin=True)
 
         remove_small_masks(self.cube_12co10+"_mask",None,self.cube_12co10,self.pixelmin)
+        run_exportfits(self.cube_12co10+"_mask",self.cube_12co10+"_mask2",False,False,True)
+        run_importfits(self.cube_12co10+"_mask2",self.cube_12co10+"_mask",True,True,["RA","Dec","1GHz","Stokes"])
 
         # create 13co21-based cube mask
         run_roundsmooth(self.cube_13co21,self.cube_13co21+"_mask1",targetbeam=3.0)
@@ -518,7 +520,9 @@ class ToolsNGC3110():
             self.cube_13co21+"_mask3",self.cube_13co21+"_mask4",self.cube_13co21+"_mask5",
             self.cube_13co21+"_mask",expr=expr,delin=True)
 
-        remove_small_masks(self.cube_12co10+"_mask",None,self.cube_12co10,self.pixelmin)
+        remove_small_masks(self.cube_13co21+"_mask",None,self.cube_13co21,self.pixelmin)
+        run_exportfits(self.cube_13co21+"_mask",self.cube_13co21+"_mask2",False,False,True)
+        run_importfits(self.cube_13co21+"_mask2",self.cube_13co21+"_mask",True,True,["RA","Dec","1GHz","Stokes"])
 
         # beam to 2.0 arcsec
         run_roundsmooth(self.cube_12co10,self.outfits_12co10+"_tmp1",targetbeam=self.beam)
