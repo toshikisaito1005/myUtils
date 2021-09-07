@@ -125,6 +125,8 @@ class ToolsNGC3110():
 
             self.outfits_b3 = self.dir_ready + self._read_key("outfits_b3")
             self.outfits_b6 = self.dir_ready + self._read_key("outfits_b6")
+            self.outfits_b3_nopbcor = self.outfits_b3.replace(".fits","_nopbcor.fits")
+            self.outfits_b6_nopbcor = self.outfits_b6.replace(".fits","_nopbcor.fits")
 
             self.outfits_ssc = self.dir_ready + self._read_key("outfits_ssc")
             self.outfits_halpha = self.dir_ready + self._read_key("outfits_halpha")
@@ -154,7 +156,8 @@ class ToolsNGC3110():
 
             # input parameters
             self.beam = float(self._read_key("beam"))
-            self.snr_mom = float(self._read_key("snr_mom"))
+            self.snr_mom_strong = float(self._read_key("snr_mom_strong"))
+            self.snr_mom_weak = float(self._read_key("snr_mom_weak"))
             self.imsize = int(self._read_key("imsize"))
             self.imsize_irac = int(self._read_key("imsize_irac"))
             self.pixelmin = 2.0
@@ -315,9 +318,9 @@ class ToolsNGC3110():
 
         # b3
         myfig_fits2png(
-            imcolor=self.outfits_b3,
+            imcolor=self.outfits_b3_nopbcor,
             outfile=self.outpng_b3,
-            imcontour1=self.outfits_b3,
+            imcontour1=self.outfits_b3_nopbcor,
             imsize_as=self.imsize,
             ra_cnt=self.ra_str,
             dec_cnt=self.dec_str,
@@ -338,9 +341,9 @@ class ToolsNGC3110():
 
         # b6
         myfig_fits2png(
-            imcolor=self.outfits_b6,
+            imcolor=self.outfits_b6_nopbcor,
             outfile=self.outpng_b6,
-            imcontour1=self.outfits_b6,
+            imcontour1=self.outfits_b6_nopbcor,
             imsize_as=self.imsize,
             ra_cnt=self.ra_str,
             dec_cnt=self.dec_str,
@@ -669,8 +672,8 @@ class ToolsNGC3110():
         run_immath_one(self.outfits_b6+"_tmp1",self.outfits_b6+"_tmp2","IM0*1000.",delin=True)
         run_impbcor(self.outfits_b3+"_tmp2",self.pb_12co10+"_tmp2_b3",self.outfits_b3+"_tmp3",delin=False)
         run_impbcor(self.outfits_b6+"_tmp2",self.pb_12co21+"_tmp2_b6",self.outfits_b6+"_tmp3",delin=False)
-        run_exportfits(self.outfits_b3+"_tmp2",self.outfits_b3.replace(".fits","_nopbcor.fits"),True,True,True)
-        run_exportfits(self.outfits_b6+"_tmp2",self.outfits_b6.replace(".fits","_nopbcor.fits"),True,True,True)
+        run_exportfits(self.outfits_b3+"_tmp2",self.outfits_b3_nopbcor,True,True,True)
+        run_exportfits(self.outfits_b6+"_tmp2",self.outfits_b6_nopbcor,True,True,True)
 
         # casa to fits: co lines
         run_exportfits(self.outfits_12co10+"_tmp2",self.outfits_12co10,True,True,False)
@@ -697,25 +700,25 @@ class ToolsNGC3110():
         # moment map (skip imrebin with factor=[2,2,1,1])
         self._create_moments(
             self.outfits_12co10,self.cube_12co10+"_mask",rms_12co10,
-            self.outfits_m0_12co10,self.outfits_em0_12co10,self.outfits_m1_12co10)
+            self.outfits_m0_12co10,self.outfits_em0_12co10,self.outfits_m1_12co10, self.snr_mom_strong)
 
         self._create_moments(
             self.outfits_12co21,self.cube_12co10+"_mask",rms_12co21,
-            self.outfits_m0_12co21,self.outfits_em0_12co21,self.outfits_m1_12co21)
+            self.outfits_m0_12co21,self.outfits_em0_12co21,self.outfits_m1_12co21, self.snr_mom_strong)
 
         self._create_moments(
             self.outfits_13co10,self.cube_13co21+"_mask",rms_13co10,
-            self.outfits_m0_13co10,self.outfits_em0_13co10,self.outfits_m1_13co10)
+            self.outfits_m0_13co10,self.outfits_em0_13co10,self.outfits_m1_13co10, self.snr_mom_weak)
 
         self._create_moments(
             self.outfits_13co21,self.cube_13co21+"_mask",rms_13co21,
-            self.outfits_m0_13co21,self.outfits_em0_13co21,self.outfits_m1_13co21)
+            self.outfits_m0_13co21,self.outfits_em0_13co21,self.outfits_m1_13co21, self.snr_mom_weak)
 
         self._align_one_map(self.cube_13co21+"_mask",self.outfits_c18o21+"_tmp2",
             self.cube_13co21+"_mask2",axes=-1)
         self._create_moments(
             self.outfits_c18o21,self.cube_13co21+"_mask2",rms_c18o21,
-            self.outfits_m0_c18o21,self.outfits_em0_c18o21,self.outfits_m1_c18o21)
+            self.outfits_m0_c18o21,self.outfits_em0_c18o21,self.outfits_m1_c18o21, self.snr_mom_weak)
 
         os.system("rm -rf " + self.cube_12co10 + "_mask")
         os.system("rm -rf " + self.cube_13co21 + "_mask")
@@ -769,7 +772,7 @@ class ToolsNGC3110():
     # _create_moments #
     ###################
 
-    def _create_moments(self, imagename, mask, rms, outmom0, outemom0, outmom1):
+    def _create_moments(self, imagename, mask, rms, outmom0, outemom0, outmom1, snr_mom):
         """
         """
         print("# run _create_moments")
@@ -779,7 +782,7 @@ class ToolsNGC3110():
         run_importfits(imagename+"_tmp1",imagename+"_tmp2",True,True,["RA","Dec","1GHz","Stokes"])
 
         # mom0
-        run_immoments(imagename+"_tmp2",mask,outmom0+"_tmp1",0,rms,self.snr_mom,outemom0+"_tmp1",vdim=3)
+        run_immoments(imagename+"_tmp2",mask,outmom0+"_tmp1",0,rms,snr_mom,outemom0+"_tmp1",vdim=3)
         run_exportfits(outmom0+"_tmp1",outmom0+"_tmp2",False,False,True)
         run_importfits(outmom0+"_tmp2",outmom0+"_tmp1",True,True,["RA","Dec","1GHz","Stokes"])
         run_exportfits(outemom0+"_tmp1",outemom0+"_tmp2",False,False,True)
@@ -814,7 +817,7 @@ class ToolsNGC3110():
         run_exportfits(outemom0+"_tmp3",outemom0,True,True,True)
 
         # mom1
-        run_immoments(imagename+"_tmp2",mask,outmom1+"_tmp1",1,rms,self.snr_mom,vdim=3)
+        run_immoments(imagename+"_tmp2",mask,outmom1+"_tmp1",1,rms,snr_mom,vdim=3)
         os.system("rm -rf " + outmom1 + "_tmp3")
         immath(
             imagename = [outmom1+"_tmp1","this_mask.image"],
