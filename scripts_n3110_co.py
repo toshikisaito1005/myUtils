@@ -194,6 +194,7 @@ class ToolsNGC3110():
         do_prepare    = False,
         do_lineratios = False,
         plot_showcase = False,
+        do_sampling   = False,
         ):
 
         if do_prepare==True:
