@@ -679,10 +679,10 @@ def run_immoments(
         "IM0*IM1",
         )
 
-    os.system("cp -r " + maskimage +  " " + maskimage + "_tmp1")
-    myia.open(maskimage+"_tmp1")
+    os.system("cp -r " + maskimage +  " this_mask.image")
+    myia.open("this_mask.image")
     data = myia.getchunk()
-    myia.calcmask(maskimage+"_tmp1>0")  
+    myia.calcmask("this_mask.image>0")  
     myia.done()
 
     # moment
@@ -692,9 +692,8 @@ def run_immoments(
         moments    = [mom],
         includepix = [rms*snr,1e11],
         outfile    = outfile,
-        mask       = maskimage+"_tmp1",
+        mask       = "this_mask.image",
         )
-    #os.system("rm -rf " + maskimage + "_tmp1")
 
     # mom0 err
     if mom==0 and outfile_err!=None:
@@ -703,7 +702,7 @@ def run_immoments(
             imagename = maskimage,
             moments   = [0],
             outfile   = outfile_err + "_tmp1",
-            mask      = 'mask("' + maskimage + '")',
+            mask      = "this_mask.image",
             )
 
         # measure channel width
@@ -728,6 +727,8 @@ def run_immoments(
                 "IM0/IM1",
                 outfile_snr,
                 )
+
+    os.system("rm -rf this_mask.image")
 
 ########################################
 ### run_impbcor
