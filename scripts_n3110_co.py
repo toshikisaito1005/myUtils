@@ -190,6 +190,7 @@ class ToolsNGC3110():
         if plot_showcase==True:
             self.showline()
             self.showcont()
+            self.showratio()
 
     ##############
     # lineratios #
@@ -209,6 +210,7 @@ class ToolsNGC3110():
         nu_12co21 = 230.53800000
         nu_13co21 = 220.39868420
 
+        # 12co21 12co10 ratio
         self._create_ratios(
             self.outfits_m0_12co21,
             self.outfits_m0_12co10,
@@ -220,6 +222,7 @@ class ToolsNGC3110():
             self.outfits_r_21.replace(".fits","_error.fits")
             )
 
+        # 13co21 13co10 ratio
         self._create_ratios(
             self.outfits_m0_13co21,
             self.outfits_m0_13co10,
@@ -231,40 +234,29 @@ class ToolsNGC3110():
             self.outfits_r_t21.replace(".fits","_error.fits")
             )
 
-    ##################
-    # _create_ratios #
-    ##################
+        # 12co21 13co21 ratio
+        self._create_ratios(
+            self.outfits_m0_12co21,
+            self.outfits_m0_13co21,
+            self.outfits_em0_12co21,
+            self.outfits_em0_13co21,
+            nu_12co21,
+            nu_13co21,
+            self.outfits_r_1213h,
+            self.outfits_r_1213h.replace(".fits","_error.fits")
+            )
 
-    def _create_ratios(
-        self,
-        umap,
-        lmap,
-        uemap,
-        lemap,
-        ufreq,
-        lfreq,
-        outmap,
-        outemap,
-        snr=4.0,
-        ):
-        """
-        """
-
-        # ratio map
-        expr = "IM0/IM1/" + str(ufreq)+"/"+str(ufreq)+"*"+str(lfreq)+"*"+str(lfreq)
-        run_immath_two(umap,uemap,umap+"_tmp_masked","iif(IM0>IM1*"+str(snr)+",IM0,0)")
-        run_immath_two(lmap,lemap,lmap+"_tmp_masked","iif(IM0>IM1*"+str(snr)+",IM0,0)")
-        run_immath_two(umap+"_tmp_masked",lmap+"_tmp_masked",outmap+"_tmp1",expr,delin=True)
-        run_immath_one(outmap+"_tmp1",outmap+"_tmp2","iif(IM0<100000,IM0,0)",delin=True)
-        run_exportfits(outmap+"_tmp2",outmap,True,True,True)
-
-        # ratio error map (only statistical error)
-        expr = "IM0*sqrt(IM1+IM2)"
-        run_immath_two(uemap,umap,"error1.map","iif(IM1>IM0*"+str(snr)+",IM0*IM0/IM1/IM1,0)")
-        run_immath_two(lemap,lmap,"error2.map","iif(IM1>IM0*"+str(snr)+",IM0*IM0/IM1/IM1,0)")
-        run_immath_three(outmap,"error1.map","error2.map",outemap+"_tmp1",expr)
-        run_exportfits(outemap+"_tmp1",outemap,True,True,True)
-        os.system("rm -rf error1.map error2.map")
+        # 12co10 13co10 ratio
+        self._create_ratios(
+            self.outfits_m0_12co10,
+            self.outfits_m0_13co10,
+            self.outfits_em0_12co10,
+            self.outfits_em0_13co10,
+            nu_12co10,
+            nu_13co10,
+            self.outfits_r_1213l,
+            self.outfits_r_1213l.replace(".fits","_error.fits")
+            )
 
     ############
     # showcont #
@@ -590,6 +582,7 @@ class ToolsNGC3110():
             self.outfits_12co10,self.cube_12co10+"_mask",rms_12co10,
             self.outfits_m0_12co10,self.outfits_em0_12co10,self.outfits_m1_12co10)
 
+        """
         self._create_moments(
             self.outfits_12co21,self.cube_12co10+"_mask",rms_12co21,
             self.outfits_m0_12co21,self.outfits_em0_12co21,self.outfits_m1_12co21)
@@ -607,6 +600,7 @@ class ToolsNGC3110():
         self._create_moments(
             self.outfits_c18o21,self.cube_13co21+"_mask2",rms_c18o21,
             self.outfits_m0_c18o21,self.outfits_em0_c18o21,self.outfits_m1_c18o21)
+        """
 
         os.system("rm -rf " + self.cube_12co10 + "_mask")
         os.system("rm -rf " + self.cube_13co21 + "_mask")
@@ -620,6 +614,41 @@ class ToolsNGC3110():
         run_imregrid(self.pb_12co21+"_tmp2_b6",self.map_irac,self.pb_12co21+"_tmp3_b6",delin=True)
         run_exportfits(self.pb_12co10+"_tmp3_b3",self.outfits_pb_b3,True,True,True)
         run_exportfits(self.pb_12co21+"_tmp3_b6",self.outfits_pb_b6,True,True,True)
+
+    ##################
+    # _create_ratios #
+    ##################
+
+    def _create_ratios(
+        self,
+        umap,
+        lmap,
+        uemap,
+        lemap,
+        ufreq,
+        lfreq,
+        outmap,
+        outemap,
+        snr=4.0,
+        ):
+        """
+        """
+
+        # ratio map
+        expr = "IM0/IM1/" + str(ufreq)+"/"+str(ufreq)+"*"+str(lfreq)+"*"+str(lfreq)
+        run_immath_two(umap,uemap,umap+"_tmp_masked","iif(IM0>IM1*"+str(snr)+",IM0,0)")
+        run_immath_two(lmap,lemap,lmap+"_tmp_masked","iif(IM0>IM1*"+str(snr)+",IM0,0)")
+        run_immath_two(umap+"_tmp_masked",lmap+"_tmp_masked",outmap+"_tmp1",expr,delin=True)
+        run_immath_one(outmap+"_tmp1",outmap+"_tmp2","iif(IM0<100000,IM0,0)",delin=True)
+        run_exportfits(outmap+"_tmp2",outmap,True,True,True)
+
+        # ratio error map (only statistical error)
+        expr = "IM0*sqrt(IM1+IM2)"
+        run_immath_two(uemap,umap,"error1.map","iif(IM1>IM0*"+str(snr)+",IM0*IM0/IM1/IM1,0)")
+        run_immath_two(lemap,lmap,"error2.map","iif(IM1>IM0*"+str(snr)+",IM0*IM0/IM1/IM1,0)")
+        run_immath_three(outmap,"error1.map","error2.map",outemap+"_tmp1",expr)
+        run_exportfits(outemap+"_tmp1",outemap,True,True,True)
+        os.system("rm -rf error1.map error2.map")
 
     ###################
     # _create_moments #
@@ -647,8 +676,8 @@ class ToolsNGC3110():
 
         run_immath_two(outmom0+"_tmp1",outmom0+"_tmp2",outmom0+"_tmp3",expr)
         run_immath_two(outemom0+"_tmp1",outmom0+"_tmp2",outemom0+"_tmp3",expr)
-        os.system("rm -rf " + outmom0 + "_tmp1")
-        os.system("rm -rf " + outemom0 + "_tmp1")
+        #os.system("rm -rf " + outmom0 + "_tmp1")
+        #os.system("rm -rf " + outemom0 + "_tmp1")
 
         run_exportfits(outmom0+"_tmp3",outmom0,True,True,True)
         run_exportfits(outemom0+"_tmp3",outemom0,True,True,True)
