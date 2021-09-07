@@ -317,6 +317,7 @@ class ToolsNGC3110():
     ###############
 
     def _eazy_imval(
+        self,
         imagename,
         casa_aperture,
         rms=0,
@@ -343,7 +344,7 @@ class ToolsNGC3110():
     # _casa2radec #
     ###############
 
-    def _casa2radec(casa_aperture):
+    def _casa2radec(self,casa_aperture):
 
         # import ra and dec
         f = open(casa_aperture)
@@ -360,6 +361,7 @@ class ToolsNGC3110():
     ##########################
 
     def _create_casa_apertures(
+        self,
         ra_blc,
         decl_blc,
         numx,
