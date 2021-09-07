@@ -635,7 +635,7 @@ class ToolsNGC3110():
         run_immoments(imagename,mask,outmom0+"_tmp1",0,rms,self.snr_mom,outemom0+"_tmp1")
 
         signal_masking(outmom0+"_tmp1",outmom0+"_tmp2",0,delin=False)
-        signal_masking(outemom0+"_tmp1",outemom0+"_tmp2",0,delin=False)
+        signal_masking(outemom0+"_tmp1",outmom0+"_tmp2",0,delin=False)
 
         remove_small_masks(outmom0+"_tmp2",None,outmom0+"_tmp1",1.0)
         remove_small_masks(outemom0+"_tmp2",None,outemom0+"_tmp1",1.0)
