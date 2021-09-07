@@ -249,7 +249,8 @@ class ToolsNGC3110():
         f.write("#x y co10 err co21 err 13co10 err 13co21 err c18o21 err 1.45GHz err b3 err b6 err halpha(log err=0.3) ssc_density\n")
         f.close()
 
-        for this_aperture in casa_apertures:
+        for i, this_aperture in enumerate(casa_apertures):
+            print("# get values at " + str(i+1) + "th aperture (total=" + str(len(casa_apertures)) + ")")
             # measure fluxes and positions
             data_ra, data_dec = self._casa2radec(this_aperture)
 
