@@ -686,6 +686,7 @@ def run_immoments(
         moments    = [mom],
         includepix = [rms*snr,1e11],
         outfile    = outfile,
+        mask       = 'mask("' + maskimage + '")',
         )
 
     # mom0 err
@@ -695,6 +696,7 @@ def run_immoments(
             imagename = maskimage,
             moments   = [0],
             outfile   = outfile_err + "_tmp1",
+            mask      = 'mask("' + maskimage + '")',
             )
 
         # measure channel width

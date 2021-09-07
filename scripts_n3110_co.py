@@ -605,7 +605,7 @@ class ToolsNGC3110():
         os.system("rm -rf " + self.cube_13co21 + "_mask2")
         os.system("rm -rf " + self.outfits_12co10 + "_tmp2")
         os.system("rm -rf " + self.outfits_c18o21 + "_tmp2")
-        #os.system("rm -rf " + self.dir_ready + "*_tmp1")
+        os.system("rm -rf " + self.dir_ready + "*_tmp1")
 
         # pb for figure 1 (irac map)
         run_imregrid(self.pb_12co10+"_tmp2_b3",self.map_irac,self.pb_12co10+"_tmp3_b3",delin=True)
