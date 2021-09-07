@@ -638,22 +638,20 @@ class ToolsNGC3110():
         run_immoments(imagename+"_tmp2",mask,outmom0+"_tmp1",0,rms,self.snr_mom,outemom0+"_tmp1")
 
         signal_masking(outmom0+"_tmp1",outmom0+"_tmp2",0,delin=False)
-        signal_masking(outemom0+"_tmp1",outemom0+"_tmp2",0,delin=False)
 
         remove_small_masks(outmom0+"_tmp2",None,outmom0+"_tmp1",1.0)
-        remove_small_masks(outemom0+"_tmp2",None,outmom0+"_tmp1",1.0)
 
-        run_immath_two(outmom0+"_tmp1",outmom0+"_tmp2",outmom0+"_tmp3",expr,delin=True)
-        run_immath_two(outemom0+"_tmp1",outemom0+"_tmp2",outemom0+"_tmp3",expr,delin=True)
+        run_immath_two(outmom0+"_tmp1",outmom0+"_tmp2",outmom0+"_tmp3",expr)
+        run_immath_two(outemom0+"_tmp1",outmom0+"_tmp2",outemom0+"_tmp3",expr)
+        os.system("rm -rf " + outmom0 + "_tmp1")
+        os.system("rm -rf " + outemom0 + "_tmp1")
 
         run_exportfits(outmom0+"_tmp3",outmom0,True,True,True)
         run_exportfits(outemom0+"_tmp3",outemom0,True,True,True)
 
         # mom1
         run_immoments(imagename+"_tmp2",mask,outmom1+"_tmp1",1,rms,self.snr_mom)
-        signal_masking(outmom1+"_tmp1",outmom1+"_tmp2",0,delin=False)
-        remove_small_masks(outmom1+"_tmp2",None,outmom1+"_tmp1",1.0)
-        run_immath_two(outmom1+"_tmp1",outmom1+"_tmp2",outmom1+"_tmp3",expr,delin=True)
+        run_immath_two(outmom1+"_tmp1",outmom0+"_tmp2",outmom1+"_tmp3",expr,delin=True)
         run_exportfits(outmom1+"_tmp3",outmom1,True,True,True)
 
         os.system("rm -rf " + imagename + "_tmp2")
