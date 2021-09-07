@@ -636,6 +636,10 @@ class ToolsNGC3110():
 
         # mom0
         run_immoments(imagename+"_tmp2",mask,outmom0+"_tmp1",0,rms,self.snr_mom,outemom0+"_tmp1")
+        run_exportfits(outmom0+"_tmp1",outmom0+"_tmp2",False,False,True)
+        run_importfits(outmom0+"_tmp2",outmom0+"_tmp1",True,True,["RA","Dec","1GHz","Stokes"])
+        run_exportfits(outemom0+"_tmp1",outemom0+"_tmp2",False,False,True)
+        run_importfits(outemom0+"_tmp2",outemom0+"_tmp1",True,True,["RA","Dec","1GHz","Stokes"])
 
         signal_masking(outmom0+"_tmp1",outmom0+"_tmp2",0,delin=False)
 
@@ -701,8 +705,8 @@ class ToolsNGC3110():
         run_exportfits(
             imagename = imagename + ".regrid",
             fitsimage = outfits,
-            dropdeg    = False,
-            dropstokes = False,
+            dropdeg    = True,
+            dropstokes = True,
             delin      = True,
             )
 
