@@ -679,6 +679,12 @@ def run_immoments(
         "IM0*IM1",
         )
 
+    os.system("cp -r " + maskimage +  " " + maskimage + "_tmp1")
+    myia.open(maskimage+"_tmp1")
+    data = myia.getchunk()
+    ia.calcmask(maskimage+"_tmp1>0")  
+    myia.done()
+
     # moment
     os.system("rm -rf " + outfile)
     immoments(
@@ -686,12 +692,9 @@ def run_immoments(
         moments    = [mom],
         includepix = [rms*snr,1e11],
         outfile    = outfile,
+        mask       = maskimage+"_tmp1",
         )
-    myia.open(outfile)
-    data = myia.getchunk()
-    data = np.where(data!=0,data,False)
-    myia.putchunk(data)
-    myia.done()
+    #os.system("rm -rf " + maskimage + "_tmp1")
 
     # mom0 err
     if mom==0 and outfile_err!=None:
