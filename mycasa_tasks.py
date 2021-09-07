@@ -348,7 +348,7 @@ def signal_masking(
         mode      = "del",
         hdkey     = "beammajor",
         )
-    
+
     boolean_masking(
         imagename = outfile + "_tmp0_signal_masking",
         outfile   = outfile,

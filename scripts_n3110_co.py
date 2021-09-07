@@ -157,6 +157,7 @@ class ToolsNGC3110():
             self.snr_mom = float(self._read_key("snr_mom"))
             self.imsize = int(self._read_key("imsize"))
             self.imsize_irac = int(self._read_key("imsize_irac"))
+            self.pixelmin = 2.0
 
             # output txt and png
             self.outpng_irac = self.dir_products + self._read_key("outpng_irac")
@@ -486,7 +487,6 @@ class ToolsNGC3110():
 
     def align_maps(
         self,
-        pixelmin=2.0,
         ):
         """
         """
@@ -513,7 +513,7 @@ class ToolsNGC3110():
             self.cube_12co10+"_mask3",self.cube_12co10+"_mask4",self.cube_12co10+"_mask5",
             self.cube_12co10+"_mask",expr=expr,delin=True)
 
-        remove_small_masks(self.cube_12co10+"_mask",None,self.cube_12co10,pixelmin)
+        remove_small_masks(self.cube_12co10+"_mask",None,self.cube_12co10,self.pixelmin)
 
         # create 13co21-based cube mask
         run_roundsmooth(self.cube_13co21,self.cube_13co21+"_mask1",targetbeam=3.0)
@@ -526,7 +526,7 @@ class ToolsNGC3110():
             self.cube_13co21+"_mask3",self.cube_13co21+"_mask4",self.cube_13co21+"_mask5",
             self.cube_13co21+"_mask",expr=expr,delin=True)
 
-        remove_small_masks(self.cube_12co10+"_mask",None,self.cube_12co10,pixelmin)
+        remove_small_masks(self.cube_12co10+"_mask",None,self.cube_12co10,self.pixelmin)
 
         # beam to 2.0 arcsec
         run_roundsmooth(self.cube_12co10,self.outfits_12co10+"_tmp1",targetbeam=self.beam)
@@ -643,7 +643,7 @@ class ToolsNGC3110():
 
         signal_masking(outmom0+"_tmp1",outmom0+"_tmp2",0,delin=False)
 
-        remove_small_masks(outmom0+"_tmp2",None,outmom0+"_tmp1",1.0)
+        remove_small_masks(outmom0+"_tmp2",None,outmom0+"_tmp1",self.pixelmin)
 
         run_immath_two(outmom0+"_tmp1",outmom0+"_tmp2",outmom0+"_tmp3",expr)
         run_immath_two(outemom0+"_tmp1",outmom0+"_tmp2",outemom0+"_tmp3",expr)
