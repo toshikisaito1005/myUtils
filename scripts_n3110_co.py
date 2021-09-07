@@ -200,6 +200,24 @@ class ToolsNGC3110():
             self.showcont()
             self.showratio()
 
+        if do_sampling==True:
+            self.hex_sampling_casa()
+
+    #####################
+    # hex_sampling_casa #
+    #####################
+
+    def hex_sampling_casa(
+        self,
+        ):
+        """
+        """
+
+        taskname = self.modname + sys._getframe().f_code.co_name
+        #check_first(self.outfits_irac,taskname)
+
+
+
     ############
     # showcont #
     ############
