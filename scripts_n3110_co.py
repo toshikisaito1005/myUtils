@@ -675,7 +675,8 @@ class ToolsNGC3110():
         signal_masking(outmom0+"_tmp1",outmom0+"_tmp2",0,delin=False)
 
         remove_small_masks(outmom0+"_tmp2",None,outmom0+"_tmp1",self.pixelmin)
-        os.system("cp -r " + outmom0 + "_tmp1 this_mask.image")
+
+        os.system("cp -r " + outmom0 + "_tmp2 this_mask.image")
         myia.open("this_mask.image")
         data = myia.getchunk()
         myia.calcmask("this_mask.image>0")  
@@ -687,14 +688,14 @@ class ToolsNGC3110():
             imagename = outmom0 + "_tmp1",
             expr      = "IM0",
             outfile   = outmom0 + "_tmp3",
-            mask      = "this_mask.image",
+            mask      = 'mask("this_mask.image")',
             )
         os.system("rm -rf " + outemom0 + "_tmp3")
         immath(
             imagename = outmom0 + "_tmp1",
             expr      = "IM0",
             outfile   = outmom0 + "_tmp3",
-            mask      = "this_mask.image",
+            mask      = 'mask("this_mask.image")',
             )
         os.system("rm -rf " + outmom0 + "_tmp1")
         os.system("rm -rf " + outemom0 + "_tmp1")
@@ -713,7 +714,7 @@ class ToolsNGC3110():
             imagename = outmom1 + "_tmp1",
             expr      = "IM0",
             outfile   = outmom1 + "_tmp3",
-            mask      = "this_mask.image",
+            mask      = 'mask("this_mask.image")',
             )
         #run_immath_two(outmom1+"_tmp1",outmom0+"_tmp2",outmom1+"_tmp3",expr,delin=True)
         run_exportfits(outmom1+"_tmp3",outmom1,True,True,True)
