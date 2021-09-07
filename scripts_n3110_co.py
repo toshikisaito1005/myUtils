@@ -210,6 +210,21 @@ class ToolsNGC3110():
 
         if do_sampling==True:
             self.hex_sampling_casa()
+            self.hex_sampling_phys()
+
+    #####################
+    # hex_sampling_phys #
+    #####################
+
+    def hex_sampling_phys(
+        self,
+        ):
+        """
+        """
+
+        taskname = self.modname + sys._getframe().f_code.co_name
+        check_first(self.outfits_m0_12co10,taskname)
+
 
     #####################
     # hex_sampling_casa #
@@ -236,6 +251,8 @@ class ToolsNGC3110():
         casa_apertures = glob.glob(self.dir_casaregion + "*.region")
         casa_apertures.sort()
 
+        total = str(self.num_aperture * self.num_aperture * 2)
+
         # measure rms
         rms_vla = measure_rms(self.outfits_vla)
         rms_b3 = measure_rms(self.outfits_b3_nopbcor)
@@ -250,7 +267,7 @@ class ToolsNGC3110():
         f.close()
 
         for i, this_aperture in enumerate(casa_apertures):
-            print("# get values at " + str(i+1) + "th aperture (total=" + str(len(casa_apertures)) + ")")
+            print("# get values at " + str(i+1) + "th aperture (total=" + total + ")")
             # measure fluxes and positions
             data_ra, data_dec = self._casa2radec(this_aperture)
 
