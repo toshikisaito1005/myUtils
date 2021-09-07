@@ -276,9 +276,9 @@ class ToolsNGC3110():
 
         # b3
         myfig_fits2png(
-            imcolor=self.self.outfits_b3,
-            outfile=self.self.outpng_b3,
-            imcontour1=self.self.outfits_b3,
+            imcolor=self.outfits_b3,
+            outfile=self.outpng_b3,
+            imcontour1=self.outfits_b3,
             imsize_as=self.imsize,
             ra_cnt=self.ra_str,
             dec_cnt=self.dec_str,
@@ -298,9 +298,9 @@ class ToolsNGC3110():
 
         # b6
         myfig_fits2png(
-            imcolor=self.self.outfits_b6,
-            outfile=self.self.outpng_b6,
-            imcontour1=self.self.outfits_b6,
+            imcolor=self.outfits_b6,
+            outfile=self.outpng_b6,
+            imcontour1=self.outfits_b6,
             imsize_as=self.imsize,
             ra_cnt=self.ra_str,
             dec_cnt=self.dec_str,
