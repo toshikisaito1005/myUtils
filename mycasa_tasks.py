@@ -227,18 +227,23 @@ def beam_area(
 ########################################
 def imval_all(
     imagename,
+    region=None,
     ):
 
     taskname = modname + sys._getframe().f_code.co_name
     check_first(imagename, taskname)
     
     # imval
-    shape = imhead(imagename,mode="list")["shape"]
-    box   = "0,0," + str(shape[0]-1) + "," + str(shape[1]-1)
-    data  = imval(imagename,box=box)
-    
-    return data, box
+    if region==None:
+        shape = imhead(imagename,mode="list")["shape"]
+        box   = "0,0," + str(shape[0]-1) + "," + str(shape[1]-1)
+        data  = imval(imagename,box=box)
+        return data, box
 
+    else:
+        data  = imval(imagename,region=region)
+        return data
+    
 ########################################
 ### measure_rms
 ########################################

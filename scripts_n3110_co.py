@@ -155,12 +155,17 @@ class ToolsNGC3110():
             self.scale_kpc = float(self._read_key("scale", "gal")) / 1000.
 
             # input parameters
-            self.beam = float(self._read_key("beam"))
+            self.beam           = float(self._read_key("beam"))
             self.snr_mom_strong = float(self._read_key("snr_mom_strong"))
-            self.snr_mom_weak = float(self._read_key("snr_mom_weak"))
-            self.imsize = int(self._read_key("imsize"))
-            self.imsize_irac = int(self._read_key("imsize_irac"))
-            self.pixelmin = 2.0
+            self.snr_mom_weak   = float(self._read_key("snr_mom_weak"))
+            self.imsize         = int(self._read_key("imsize"))
+            self.imsize_irac    = int(self._read_key("imsize_irac"))
+            self.pixelmin       = 2.0
+            self.aperture_r     = float(self._read_key("aperture")) / 2.0
+            self.step           = float(self._read_key("step"))
+            self.ra_blc         = float(self._read_key("ra_blc"))
+            self.decl_blc       = float(self._read_key("decl_blc"))
+            self.num_aperture   = int(self._read_key("step"))
 
             # output txt and png
             self.outpng_irac = self.dir_products + self._read_key("outpng_irac")
@@ -177,6 +182,8 @@ class ToolsNGC3110():
             self.outpng_r_t21   = self.dir_products + self._read_key("outpng_r_t21")
             self.outpng_r_1213l = self.dir_products + self._read_key("outpng_r_1213l")
             self.outpng_r_1213h = self.dir_products + self._read_key("outpng_r_1213h")
+
+            self.outtxt_hexdata = self.dir_ready + self._read_key("outtxt_hexdata")
 
     ##################
     # run_ngc3110_co #
@@ -214,9 +221,191 @@ class ToolsNGC3110():
         """
 
         taskname = self.modname + sys._getframe().f_code.co_name
-        #check_first(self.outfits_irac,taskname)
+        check_first(self.outfits_m0_12co10,taskname)
 
+        # create apertures with CASA region format
+        create_casa_apertures(
+            self.ra_blc,
+            self.decl_blc,
+            self.num_aperture,
+            self.num_aperture,
+            self.aperture_r,
+            self.step,
+            )
+        casa_apertures = glob.glob(self.dir_casaregion + "*.region")
+        casa_apertures.sort()
 
+        # measure rms
+        rms_vla = measure_rms(self.outfits_vla)
+        rms_b3 = measure_rms(self.outfits_b3_nopbcor)
+        rms_b6 = measure_rms(self.outfits_b6_nopbcor)
+        rms_halpha = 6.0e-19
+
+        # sampling using CASA apertures
+        os.system("rm -rf " + self.outtxt_hexdata)
+
+        f = open(self.outtxt_hexdata, "a")
+        f.write("#x y co10 err co21 err 13co10 err 13co21 err c18o21 err 1.45GHz err b3 err b6 err halpha(log err=0.3) ssc_density\n")
+        f.close()
+
+        for this_aperture in casa_apertures:
+            # measure fluxes and positions
+            data_ra, data_dec = _casa2radec(this_aperture)
+
+            data_12co10 = _eazy_imval(self.outfits_m0_12co10,this_aperture)
+            err_12co10  = _eazy_imval(self.outfits_em0_12co10,this_aperture)
+            err_12co10  = np.sqrt(err_12co10**2 + (data_12co10*0.05)**2)
+
+            data_12co21 = _eazy_imval(self.outfits_m0_12co21,this_aperture)
+            err_12co21  = _eazy_imval(self.outfits_em0_12co21,this_aperture)
+            err_12co21  = np.sqrt(err_12co21**2 + (data_12co21*0.10)**2)
+
+            data_13co10 = _eazy_imval(self.outfits_m0_13co10,this_aperture)
+            err_13co10  = _eazy_imval(self.outfits_em0_13co10,this_aperture)
+            err_13co10  = np.sqrt(err_13co10**2 + (data_13co10*0.05)**2)
+
+            data_13co21 = _eazy_imval(self.outfits_m0_13co21,this_aperture)
+            err_13co21  = _eazy_imval(self.outfits_em0_13co21,this_aperture)
+            err_13co21  = np.sqrt(err_13co21**2 + (data_13co21*0.10)**2)
+
+            data_c18o21 = _eazy_imval(self.outfits_m0_c18o21,this_aperture)
+            err_c18o21  = _eazy_imval(self.outfits_em0_c18o21,this_aperture)
+            err_c18o21  = np.sqrt(err_c18o21**2 + (data_c18o21*0.10)**2)
+
+            data_vla    = _eazy_imval(self.outfits_vla,this_aperture,rms=rms_vla,roundval=5)
+            err_vla     = np.sqrt(rms_vla**2 + (data_vla*0.03)**2)
+
+            data_b3     = _eazy_imval(self.outfits_b3,this_aperture,rms=rms_b3,snr=1,roundval=6)
+            err_b3      = np.sqrt(rms_b3**2 + (data_b3*0.05)**2)
+
+            data_b6     = _eazy_imval(self.outfits_b6,this_aperture,rms=rms_b6,snr=1,roundval=6)
+            err_b6      = np.sqrt(rms_b6**2 + (data_b6*0.05)**2)
+
+            data_halpha = _eazy_imval(self.outfits_halpha,this_aperture,rms=rms_halpha,roundval=20)
+
+            data_ssc    = _eazy_imval(self.outfits_ssc,this_aperture)
+
+            # export to txt file
+            f = open(output_hexlist, "a")
+            data = \
+                str(data_ra).rjust(9) + " " + \
+                str(data_dec).rjust(10) + " " + \
+                str(data_12co10).rjust(6) + " " + \
+                str(err_12co10).rjust(6) + " " + \
+                str(data_12co21).rjust(6) + " " + \
+                str(err_12co21).rjust(6) + " " + \
+                str(data_13co10).rjust(5) + " " + \
+                str(err_13co10).rjust(5) + " " + \
+                str(data_13co21).rjust(6) + " " + \
+                str(err_13co21).rjust(6) + " " + \
+                str(data_c18o21).rjust(5) + " " + \
+                str(err_c18o21).rjust(5) + " " + \
+                str(data_vla).rjust(7) + " " + \
+                str(err_vla).rjust(7) + " " + \
+                str(data_b3).rjust(8) + " " + \
+                str(err_b3).rjust(8) + " " + \
+                str(data_b6).rjust(8) + " " + \
+                str(err_b6).rjust(8) + " " + \
+                str(data_halpha).rjust(9) + " " + \
+                str(data_ssc).rjust(5)
+            f.write(data + "\n")
+            f.close()
+
+    ###############
+    # _eazy_imval #
+    ###############
+
+    def _eazy_imval(
+        imagename,
+        casa_aperture,
+        rms=0,
+        snr=3,
+        roundval=3,
+        ):
+
+        value        = imval(imagename=imagename,region=casa_aperture)
+        value_masked = value["data"] * value["mask"]
+        value_masked[np.isnan(value_masked)] = 0
+        value_masked[np.isinf(value_masked)] = 0
+
+        data         = value_masked.sum(axis = (0, 1))
+        data_1d      = value_masked.flatten()
+        num_all      = float(len(data_1d))
+        num_detect   = len(data_1d[data_1d>rms*snr])
+
+        if num_detect/num_all < 0.5:
+            data = 0.0
+
+        return np.round(data,roundval)
+
+    ###############
+    # _casa2radec #
+    ###############
+
+    def _casa2radec(casa_aperture):
+
+        # import ra and dec
+        f = open(casa_aperture)
+        lines = f.readlines()
+        f.close()
+        str_xy = lines[3].replace("circle[[","").replace("deg","").replace("]","")
+        data_ra = str_xy.split(",")[0]
+        data_dec = str_xy.split(",")[1].replace(" ", "")
+
+        return data_ra, data_dec
+
+    ##########################
+    # _create_casa_apertures #
+    ##########################
+
+    def _create_casa_apertures(
+        ra_blc,
+        decl_blc,
+        numx,
+        numy,
+        aperture_r,
+        step,
+        ):
+        """
+        """
+
+        step_ra   = step / 3600.
+        step_decl = step / 3600. * np.sqrt(3)
+        ra_deg    = ra_blc + step_ra
+        decl_deg  = decl_blc - step_decl
+
+        # replace with itertools.product(numx, numy)
+        for i in range(numx):
+            ra_deg   = ra_deg - step_ra
+            ra_deg2  = ra_deg - step_ra / 2.
+            decl_deg = decl_blc
+
+            for j in range(numy):
+                decl_deg = decl_deg + step_decl
+                region_name = "_"+str(i).zfill(2)+"_"+str(j).zfill(2)+".region"
+
+                # region A
+                region_file = self.dir_casaregion + "A" + region_name
+                f = open(region_file, "w")
+                f.write("#CRTFv0\n")
+                f.write("global coord=J2000\n")
+                f.write("\n")
+                f.write("circle[[" + str(round(ra_deg, 5)) + "deg, " + \
+                    str(round(decl_deg,7)) + "deg], " + str(aperture_r) +"arcsec]")
+                f.write("")
+                f.close()
+
+                # region B
+                region_file2 = self.dir_casaregion + "B" + region_name
+                decl_deg2 = decl_deg + step_decl / 2.
+                f = open(region_file2, "w")
+                f.write("#CRTFv0\n")
+                f.write("global coord=J2000\n")
+                f.write("\n")
+                f.write("circle[[" + str(round(ra_deg2, 5)) + "deg, " + \
+                    str(round(decl_deg2,7)) + "deg], " + str(aperture_r) +"arcsec]")
+                f.write("")
+                f.close()
 
     ############
     # showcont #
@@ -355,6 +544,7 @@ class ToolsNGC3110():
             set_cbar=True,
             label_cbar="mJy beam$^{-1}$",
             set_bg_color=cm.PuBu(0),
+            clim=[0,0.50],
             )
 
         # b6
@@ -378,6 +568,7 @@ class ToolsNGC3110():
             set_cbar=True,
             label_cbar="mJy beam$^{-1}$",
             set_bg_color=cm.PuBu(0),
+            clim=[0,1.70],
             )
 
     ############
@@ -793,6 +984,7 @@ class ToolsNGC3110():
     def _create_moments(self, imagename, mask, rms, outmom0, outemom0, outmom1, snr_mom):
         """
         """
+
         print("# run _create_moments")
         expr = "iif( IM1>0, IM0, 0 )"
 
