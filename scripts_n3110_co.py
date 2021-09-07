@@ -586,6 +586,7 @@ class ToolsNGC3110():
             self.outfits_12co10,self.cube_12co10+"_mask",rms_12co10,
             self.outfits_m0_12co10,self.outfits_em0_12co10,self.outfits_m1_12co10)
 
+        """
         self._create_moments(
             self.outfits_12co21,self.cube_12co10+"_mask",rms_12co21,
             self.outfits_m0_12co21,self.outfits_em0_12co21,self.outfits_m1_12co21)
@@ -603,6 +604,7 @@ class ToolsNGC3110():
         self._create_moments(
             self.outfits_c18o21,self.cube_13co21+"_mask2",rms_c18o21,
             self.outfits_m0_c18o21,self.outfits_em0_c18o21,self.outfits_m1_c18o21)
+        """
 
         os.system("rm -rf " + self.cube_12co10 + "_mask")
         os.system("rm -rf " + self.cube_13co21 + "_mask")
@@ -688,14 +690,14 @@ class ToolsNGC3110():
         os.system("rm -rf " + outmom0 + "_tmp3")
         immath(
             imagename = [outmom0+"_tmp1","this_mask.image"],
-            expr      = "iif(IM1>0,IM0*IM1,0)",
+            expr      = "iif(IM1>0,IM0*IM1,IM1)",
             outfile   = outmom0 + "_tmp3",
             mask      = 'mask("this_mask.image")',
             )
         os.system("rm -rf " + outemom0 + "_tmp3")
         immath(
             imagename = [outemom0+"_tmp1","this_mask.image"],
-            expr      = "iif(IM1>0,IM0*IM1,0)",
+            expr      = "iif(IM1>0,IM0*IM1,IM1)",
             outfile   = outemom0 + "_tmp3",
             mask      = 'mask("this_mask.image")',
             )
@@ -710,7 +712,7 @@ class ToolsNGC3110():
         os.system("rm -rf " + outmom1 + "_tmp3")
         immath(
             imagename = [outmom1+"_tmp1","this_mask.image"],
-            expr      = "iif(IM1>0,IM0*IM1,0)",
+            expr      = "iif(IM1>0,IM0*IM1,IM1)",
             outfile   = outmom1 + "_tmp3",
             mask      = 'mask("this_mask.image")',
             )
