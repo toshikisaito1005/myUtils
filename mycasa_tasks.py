@@ -713,6 +713,7 @@ def run_immoments(
         run_immath_one(
             outfile_err + "_tmp1",
             outfile_err,
+            str(rms) + "*" + chanwidth + "*sqrt(IM0/" + chanwidth + ")",
             delin=True,
             )
 
