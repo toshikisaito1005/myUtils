@@ -251,7 +251,7 @@ class ToolsNGC3110():
 
         for this_aperture in casa_apertures:
             # measure fluxes and positions
-            data_ra, data_dec = _casa2radec(this_aperture)
+            data_ra, data_dec = self._casa2radec(this_aperture)
 
             data_12co10 = self._eazy_imval(self.outfits_m0_12co10,this_aperture)
             err_12co10  = self._eazy_imval(self.outfits_em0_12co10,this_aperture)
