@@ -93,10 +93,14 @@ class ToolsNGC3110():
             self.map_b3 = dir_raw + self._read_key("map_b3")
             self.map_b6 = dir_raw + self._read_key("map_b6")
 
-            self.map_ssc = dir_raw + self._read_key("map_ssc")
+            self.map_ssc    = dir_raw + self._read_key("map_ssc")
             self.map_halpha = dir_raw + self._read_key("map_halpha")
-            self.map_vla = dir_raw + self._read_key("map_vla")
-            self.map_irac = dir_raw + self._read_key("map_irac")
+            self.map_vla    = dir_raw + self._read_key("map_vla")
+            self.map_irac   = dir_raw + self._read_key("map_irac")
+
+            # input files
+            self.table_tkin = dir_other + self._read_key("table_tkin")
+            self.table_nh2  = dir_other + self._read_key("table_nh2")
 
             # output maps
             self.outfits_12co10 = self.dir_ready + self._read_key("outfits_12co10")
@@ -128,30 +132,34 @@ class ToolsNGC3110():
             self.outfits_b3_nopbcor = self.outfits_b3.replace(".fits","_nopbcor.fits")
             self.outfits_b6_nopbcor = self.outfits_b6.replace(".fits","_nopbcor.fits")
 
-            self.outfits_ssc = self.dir_ready + self._read_key("outfits_ssc")
+            self.outfits_ssc    = self.dir_ready + self._read_key("outfits_ssc")
             self.outfits_halpha = self.dir_ready + self._read_key("outfits_halpha")
-            self.outfits_vla = self.dir_ready + self._read_key("outfits_vla")
-            self.outfits_irac = self.dir_ready + self._read_key("outfits_irac")
-            self.outfits_pb_b3 = self.dir_ready + self._read_key("outfits_pb_b3")
-            self.outfits_pb_b6 = self.dir_ready + self._read_key("outfits_pb_b6")
+            self.outfits_vla    = self.dir_ready + self._read_key("outfits_vla")
+            self.outfits_irac   = self.dir_ready + self._read_key("outfits_irac")
+            self.outfits_pb_b3  = self.dir_ready + self._read_key("outfits_pb_b3")
+            self.outfits_pb_b6  = self.dir_ready + self._read_key("outfits_pb_b6")
 
-            self.outfits_r_21 = self.dir_ready + self._read_key("outfits_r_21")
-            self.outfits_r_t21 = self.dir_ready + self._read_key("outfits_r_t21")
+            self.outfits_r_21    = self.dir_ready + self._read_key("outfits_r_21")
+            self.outfits_r_t21   = self.dir_ready + self._read_key("outfits_r_t21")
             self.outfits_r_1213l = self.dir_ready + self._read_key("outfits_r_1213l")
             self.outfits_r_1213h = self.dir_ready + self._read_key("outfits_r_1213h")
 
             # ngc3110 properties
-            self.ra_str = self._read_key("ra", "gal")
-            self.ra = float(self.ra_str.replace("deg",""))
+            self.z       = float(self._read_key("z", "gal"))
+            self.dist    = float(self._read_key("distance", "gal"))
+            self.dist_cm = self.dist * 10**6 * 3.86*10**18
+
+            self.ra_str  = self._read_key("ra", "gal")
+            self.ra      = float(self.ra_str.replace("deg",""))
             self.dec_str = self._read_key("dec", "gal")
-            self.dec = float(self.dec_str.replace("deg",""))
+            self.dec     = float(self.dec_str.replace("deg",""))
 
-            self.ra_irac_str = self._read_key("ra_irac", "gal")
-            self.ra_irac = float(self.ra_irac_str.replace("deg",""))
+            self.ra_irac_str  = self._read_key("ra_irac", "gal")
+            self.ra_irac      = float(self.ra_irac_str.replace("deg",""))
             self.dec_irac_str = self._read_key("dec_irac", "gal")
-            self.dec_irac = float(self.dec_irac_str.replace("deg",""))
+            self.dec_irac     = float(self.dec_irac_str.replace("deg",""))
 
-            self.scale_pc = float(self._read_key("scale", "gal"))
+            self.scale_pc  = float(self._read_key("scale", "gal"))
             self.scale_kpc = float(self._read_key("scale", "gal")) / 1000.
 
             # input parameters
@@ -168,7 +176,7 @@ class ToolsNGC3110():
             self.num_aperture   = int(self._read_key("num_aperture"))
 
             # output txt and png
-            self.outpng_irac = self.dir_products + self._read_key("outpng_irac")
+            self.outpng_irac   = self.dir_products + self._read_key("outpng_irac")
             self.outpng_12co10 = self.dir_products + self._read_key("outpng_12co10")
             self.outpng_12co21 = self.dir_products + self._read_key("outpng_12co21")
             self.outpng_13co10 = self.dir_products + self._read_key("outpng_13co10")
@@ -184,6 +192,7 @@ class ToolsNGC3110():
             self.outpng_r_1213h = self.dir_products + self._read_key("outpng_r_1213h")
 
             self.outtxt_hexdata = self.dir_ready + self._read_key("outtxt_hexdata")
+            self.outtxt_hexphys = self.dir_ready + self._read_key("outtxt_hexphys")
 
     ##################
     # run_ngc3110_co #
@@ -225,6 +234,14 @@ class ToolsNGC3110():
         taskname = self.modname + sys._getframe().f_code.co_name
         check_first(self.outfits_m0_12co10,taskname)
 
+        # import observed data
+        data = np.loadtxt(self.outtxt_hexdata)
+        data[:,0] = data[:,0] - self.ra
+        data[:,1] = data[:,1] - self.dec
+        data_tkin = np.loadtxt(self.table_tkin)
+        data_nh2  = np.loadtxt(self.table_nh2)
+
+        # physical paramters
 
     #####################
     # hex_sampling_casa #
@@ -329,104 +346,6 @@ class ToolsNGC3110():
                 str(data_ssc).rjust(5)
             f.write(data + "\n")
             f.close()
-
-    ###############
-    # _eazy_imval #
-    ###############
-
-    def _eazy_imval(
-        self,
-        imagename,
-        casa_aperture,
-        rms=0,
-        snr=3,
-        roundval=3,
-        ):
-
-        value        = imval(imagename=imagename,region=casa_aperture)
-        value_masked = value["data"] * value["mask"]
-        value_masked[np.isnan(value_masked)] = 0
-        value_masked[np.isinf(value_masked)] = 0
-
-        data         = value_masked.sum(axis = (0, 1))
-        data_1d      = value_masked.flatten()
-        num_all      = float(len(data_1d))
-        num_detect   = len(data_1d[data_1d>rms*snr])
-
-        if num_detect/num_all < 0.5:
-            data = 0.0
-
-        return np.round(data,roundval)
-
-    ###############
-    # _casa2radec #
-    ###############
-
-    def _casa2radec(self,casa_aperture):
-
-        # import ra and dec
-        f = open(casa_aperture)
-        lines = f.readlines()
-        f.close()
-        str_xy = lines[3].replace("circle[[","").replace("deg","").replace("]","")
-        data_ra = str_xy.split(",")[0]
-        data_dec = str_xy.split(",")[1].replace(" ", "")
-
-        return data_ra, data_dec
-
-    ##########################
-    # _create_casa_apertures #
-    ##########################
-
-    def _create_casa_apertures(
-        self,
-        ra_blc,
-        decl_blc,
-        numx,
-        numy,
-        aperture_r,
-        step,
-        ):
-        """
-        """
-
-        step_ra   = step / 3600.
-        step_decl = step / 3600. * np.sqrt(3)
-        ra_deg    = ra_blc + step_ra
-        decl_deg  = decl_blc - step_decl
-
-        # replace with itertools.product(numx, numy)
-        for i in range(numx):
-            ra_deg   = ra_deg - step_ra
-            ra_deg2  = ra_deg - step_ra / 2.
-            decl_deg = decl_blc
-
-            for j in range(numy):
-                decl_deg = decl_deg + step_decl
-                region_name = "_"+str(i).zfill(2)+"_"+str(j).zfill(2)+".region"
-
-                # region A
-                region_file = self.dir_casaregion + "A" + region_name
-                f = open(region_file, "w")
-                f.write("#CRTFv0\n")
-                f.write("global coord=J2000\n")
-                f.write("\n")
-                f.write("circle[[" + str(round(ra_deg, 5)) + "deg, " + \
-                    str(round(decl_deg,7)) + "deg], " + str(aperture_r) +"arcsec]")
-                f.write("")
-                f.close()
-
-                # region B
-                region_file2 = self.dir_casaregion + "B" + region_name
-                decl_deg2 = decl_deg + step_decl / 2.
-                f = open(region_file2, "w")
-                f.write("#CRTFv0\n")
-                f.write("global coord=J2000\n")
-                f.write("\n")
-                f.write("circle[[" + str(round(ra_deg2, 5)) + "deg, " + \
-                    str(round(decl_deg2,7)) + "deg], " + str(aperture_r) +"arcsec]")
-                f.write("")
-                f.close()
 
     ############
     # showcont #
@@ -962,6 +881,104 @@ class ToolsNGC3110():
         run_imregrid(self.pb_12co21+"_tmp2_b6",self.map_irac,self.pb_12co21+"_tmp3_b6",delin=True)
         run_exportfits(self.pb_12co10+"_tmp3_b3",self.outfits_pb_b3,True,True,True)
         run_exportfits(self.pb_12co21+"_tmp3_b6",self.outfits_pb_b6,True,True,True)
+
+    ###############
+    # _eazy_imval #
+    ###############
+
+    def _eazy_imval(
+        self,
+        imagename,
+        casa_aperture,
+        rms=0,
+        snr=3,
+        roundval=3,
+        ):
+
+        value        = imval(imagename=imagename,region=casa_aperture)
+        value_masked = value["data"] * value["mask"]
+        value_masked[np.isnan(value_masked)] = 0
+        value_masked[np.isinf(value_masked)] = 0
+
+        data         = value_masked.sum(axis = (0, 1))
+        data_1d      = value_masked.flatten()
+        num_all      = float(len(data_1d))
+        num_detect   = len(data_1d[data_1d>rms*snr])
+
+        if num_detect/num_all < 0.5:
+            data = 0.0
+
+        return np.round(data,roundval)
+
+    ###############
+    # _casa2radec #
+    ###############
+
+    def _casa2radec(self,casa_aperture):
+
+        # import ra and dec
+        f = open(casa_aperture)
+        lines = f.readlines()
+        f.close()
+        str_xy = lines[3].replace("circle[[","").replace("deg","").replace("]","")
+        data_ra = str_xy.split(",")[0]
+        data_dec = str_xy.split(",")[1].replace(" ", "")
+
+        return data_ra, data_dec
+
+    ##########################
+    # _create_casa_apertures #
+    ##########################
+
+    def _create_casa_apertures(
+        self,
+        ra_blc,
+        decl_blc,
+        numx,
+        numy,
+        aperture_r,
+        step,
+        ):
+        """
+        """
+
+        step_ra   = step / 3600.
+        step_decl = step / 3600. * np.sqrt(3)
+        ra_deg    = ra_blc + step_ra
+        decl_deg  = decl_blc - step_decl
+
+        # replace with itertools.product(numx, numy)
+        for i in range(numx):
+            ra_deg   = ra_deg - step_ra
+            ra_deg2  = ra_deg - step_ra / 2.
+            decl_deg = decl_blc
+
+            for j in range(numy):
+                decl_deg = decl_deg + step_decl
+                region_name = "_"+str(i).zfill(2)+"_"+str(j).zfill(2)+".region"
+
+                # region A
+                region_file = self.dir_casaregion + "A" + region_name
+                f = open(region_file, "w")
+                f.write("#CRTFv0\n")
+                f.write("global coord=J2000\n")
+                f.write("\n")
+                f.write("circle[[" + str(round(ra_deg, 5)) + "deg, " + \
+                    str(round(decl_deg,7)) + "deg], " + str(aperture_r) +"arcsec]")
+                f.write("")
+                f.close()
+
+                # region B
+                region_file2 = self.dir_casaregion + "B" + region_name
+                decl_deg2 = decl_deg + step_decl / 2.
+                f = open(region_file2, "w")
+                f.write("#CRTFv0\n")
+                f.write("global coord=J2000\n")
+                f.write("\n")
+                f.write("circle[[" + str(round(ra_deg2, 5)) + "deg, " + \
+                    str(round(decl_deg2,7)) + "deg], " + str(aperture_r) +"arcsec]")
+                f.write("")
+                f.close()
 
     ##################
     # _create_ratios #
