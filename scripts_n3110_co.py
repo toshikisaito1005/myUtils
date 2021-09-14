@@ -359,11 +359,11 @@ class ToolsNGC3110():
         data_science_ready[np.isnan(data_science_ready)] = 0
         data_science_ready[np.isinf(data_science_ready)] = 0
 
-        os.system("rm -rf " + table_output)
+        os.system("rm -rf " + self.outtxt_hexphys)
         fmt    = "%12.9f %10.7f %2.0f %7.0f %.2f %.2f %.4f %5.2f %9.0f %9.0f %7.4f %8.4f %8.4f %.2f %5.2f %5.2f %5.2f"
         header = \
             "ra dec Tkin nH2 Index err Sig_SFR Sig_SSC Lco10 err SFE Sig_H2 err a_LTE_Trot a_LTE_Tkin a_ISM_Trot a_ISM_Tkin"
-        np.savetxt(table_output, data_science_ready, fmt=fmt, header=header)
+        np.savetxt(self.outtxt_hexphys, data_science_ready, fmt=fmt, header=header)
 
     ##############################
     # _factor_contin_to_ism_mass #
