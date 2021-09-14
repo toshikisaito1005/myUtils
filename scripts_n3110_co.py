@@ -174,6 +174,14 @@ class ToolsNGC3110():
             self.ra_blc         = float(self._read_key("ra_blc"))
             self.decl_blc       = float(self._read_key("decl_blc"))
             self.num_aperture   = int(self._read_key("num_aperture"))
+            self.alpha_co       = 1.5
+
+            self.nu_12co10 = 115.27120180
+            self.nu_13co10 = 110.20135430
+            self.nu_12co21 = 230.53800000
+            self.nu_13co21 = 220.39868420
+            self.nu_b6     = 234.6075
+            self.nu_b3     = 104.024625
 
             # output txt and png
             self.outpng_irac   = self.dir_products + self._read_key("outpng_irac")
@@ -218,8 +226,13 @@ class ToolsNGC3110():
             self.showratio()
 
         if do_sampling==True:
-            self.hex_sampling_casa()
-            self.hex_sampling_phys()
+        	done = glob.glob(self.outtxt_hexdata)
+        	if not done:
+                self.hex_sampling_casa()
+
+            done = glob.glob(self.outtxt_hexphys)
+            if not done:
+                self.hex_sampling_phys()
 
     #####################
     # hex_sampling_phys #
@@ -242,6 +255,229 @@ class ToolsNGC3110():
         data_nh2  = np.loadtxt(self.table_nh2)
 
         # physical paramters
+        area_kpc = np.pi * (3./2. * self.scale_kpc)**2
+        area_pc  = np.pi * (3./2. * self.scale_pc)**2
+        tkin     = data_tkin[:,5]
+        nh2      = data_nh2[:,5]
+
+        # spectral index
+        index     = np.log10(data[:,14]/data[:,16]) / np.log10(self.nu_b6/self.nu_b3)
+        err_index = np.log(10) / np.log10(self.nu_b6/self.nu_b3)
+        err_index = err_index * np.sqrt( (data[:,15]/data[:,14])**2 + (data[:,17]/data[:,16])**2 )
+
+        # ssc density
+        sscd     = data[:,19] / area_kpc / (1.99**2*np.pi/np.sqrt(4*np.log(2))/0.5**2)
+
+        # extinction-corrected sfr and sfr density
+        l_halpha = data[:,18] * (36.5*4.*np.pi) * self.dist_cm**2 * 0.4**2
+        beamcorr = 26.7658
+        l_vla    = data[:,12] / beamcorr * 0.32**2 * 1.e-23 * (4.*np.pi*self.dist_cm**2)
+        sfr      = (l_halpha + 0.39e+13 * l_vla) / 10. ** 41.27
+        sfrd     = sfr / area_kpc
+
+        # err_sfr = 0.3 dex of sfr
+
+        # co luminosity
+        beamarea = beam_area(self.outfits_m0_12co10)
+        data_12co10_Jykms = data[:,2] / beamarea
+        nu_obs_12co10 = self.nu_12co10 / (1+self.z)
+        lumi_co10 = 3.25e+7 * data_12co10_Jykms / nu_obs_12co10**2 * \
+            self.dist**2 / (1+self.z)**2
+
+        err_12co10_Jykms = data[:,3] / beamarea
+        err_lumi_co10 = 3.25e+7 * err_12co10_Jykms / nu_obs_12co10**2 * \
+            self.dist**2 / (1+self.z)**2
+
+        # sfe
+        gmass = lumi_co10 * self.alpha_co
+        sfe   = sfr / gmass * 10**9
+        dh2   = gmass / area_pc
+
+        err_gmass = err_lumi_co10 * self.alpha_co
+        err_dh2   = err_gmass / area_pc
+
+        # alpha_LTE
+        nu_obs_13co21 = self.nu_13co21 / (1+self.z)
+        kelvin_13co21 = data[:,8] * (1.222e6 / 2.0**2 / nu_obs_13co21**2)
+        kelvin_12co10 = data[:,2] * (1.222e6 / 2.0**2 / nu_obs_12co10**2)
+
+        list_alpha_lte_trot = []
+        list_alpha_lte_tkin = []
+        Xco    = 3e-4
+        Rcotco = 70
+        X13co   = Xco / Rcotco
+
+        for i in range(len(kelvin_13co21)):
+            logN_rot, Qrot = _trot_from_rotation_diagram_13co(
+                15.0, kelvin_13co21[i], txtdata = "keys/Qrot_CDMS.txt")
+            Xco = 10**logN_rot / X13co / kelvin_12co10[i]
+            a_lte_trot = 4.3 * Xco / 2e+20
+            list_alpha_lte_trot.append(a_lte_trot)
+
+            logN_rot, Qrot = _trot_from_rotation_diagram_13co(
+                tkin[i], kelvin_13co21[i], txtdata = "keys/Qrot_CDMS.txt")
+            Xco = 10**logN_rot / X13co / kelvin_12co10[i]
+            a_lte_tkin = 4.3 * Xco / 2e+20
+            list_alpha_lte_tkin.append(a_lte_tkin)
+
+        # alpha_ISM
+        list_alpha_ism_trot = []
+        list_alpha_ism_tkin = []
+        beamarea = beam_area(self.outfits_b6)
+
+        for i in range(len(data[:,16])):
+            factor     = _factor_contin_to_ism_mass(15., self.dist, self.z)
+            ism_mass   = data[:,16][i]/beamarea * 1000 * factor
+            a_ism_trot = ism_mass / lumi_co10[i]
+            list_alpha_ism_trot.append(a_ism_trot)
+
+            factor     = _factor_contin_to_ism_mass(tkin[i], self.dist, self.z)
+            ism_mass   = data[:,16][i]/beamarea * 1000 * factor
+            a_ism_tkin = ism_mass / lumi_co10[i]
+            list_alpha_ism_tkin.append(a_ism_tkin)
+
+        # combine
+        data_science_ready = np.c_[
+            data[:,0], # err = n/a
+            data[:,1], # err = n/a
+            tkin,
+            nh2,
+            index,
+            err_index,
+            sfrd, # err = 0.3 dex
+            sscd, # err = n/a
+            lumi_co10,
+            err_lumi_co10,
+            sfe, # err = 0.3 dex
+            dh2,
+            err_dh2,
+            list_alpha_lte_trot,
+            list_alpha_lte_tkin,
+            list_alpha_ism_trot,
+            list_alpha_ism_tkin,
+            ]
+        data_science_ready[np.isnan(data_science_ready)] = 0
+        data_science_ready[np.isinf(data_science_ready)] = 0
+
+        os.system("rm -rf " + table_output)
+        fmt    = "%12.9f %10.7f %2.0f %7.0f %.2f %.2f %.4f %5.2f %9.0f %9.0f %7.4f %8.4f %8.4f %.2f %5.2f %5.2f %5.2f"
+        header = \
+            "ra dec Tkin nH2 Index err Sig_SFR Sig_SSC Lco10 err SFE Sig_H2 err a_LTE_Trot a_LTE_Tkin a_ISM_Trot a_ISM_Tkin"
+        np.savetxt(table_output, data_science_ready, fmt=fmt, header=header)
+
+    ##############################
+    # _factor_contin_to_ism_mass #
+    ##############################
+
+    def _factor_contin_to_ism_mass(
+        Td,
+        D_L, # Mpc
+        z,
+        ):
+        """
+        """
+
+        h = 6.626e-27 # erg.s
+        k = 1.38e-16 # erg/K
+        nu_obs = 234.6075e+9 / (1 + z) #GHz
+        nu_0   = 352.6970094e+9
+        a850   = 6.7e+19
+
+        factor = h * nu_obs * (1+z) / (k * Td)
+        factor_0 = h * 352.6970094e+9 * (1+0) / (k * Td)
+        gamma_rj = factor / (np.exp(factor) - 1)
+        gamma_0 = factor_0 / (np.exp(factor_0) - 1)
+        fac = 1.78 * (1+z)**-4.8 * (nu_obs/nu_0)**-3.8 * (6.7e+19/a850)
+        fac = fac * gamma_0/gamma_rj * (D_L/1000.)**2 * 1e+10
+
+        return fac
+
+    ###################
+    # _partition_func #
+    ###################
+
+    def _partition_func(Trot, datacol, txtdata = "Qrot_CDMS.txt"):
+        """
+        Derive partition funcition of a molecule at a given temperature
+        using the CDMS table under LTE.  Interpolating 2 nearest values.
+        (http://www.astro.uni-koeln.de/site/vorhersagen/catalog/
+        partition_function.html)
+
+        Parameters
+        ----------
+        Trot (K): int, float
+            rotation temperature your molecule under LTE
+        datacol: int
+            column of "../Qrot_CDMS.txt" which contains descrete partition
+            functions of your molecule
+        data: str
+            txt file containing partition function, otherwise use
+            "../Qrot_CDMS.txt"
+
+        Returns
+        ----------
+        Qrot: float
+            derived partition function
+
+        reference
+        ----------
+        Mueller, H. S. P. et al. 2001, A&A, 370, L49
+        Mueller, H. S. P. et al. 2005, JMoSt, 742, 215
+        """
+
+        table = np.loadtxt(txtdata, usecols = (0,datacol))
+        row = np.sum(table[:,0] < Trot) - 1
+        t1 = table[:,0][row]
+        t2 = table[:,0][row + 1]
+        logQ1 = table[:,1][row]
+        logQ2 = table[:,1][row + 1]
+        a = (logQ1 - logQ2) / (t1 - t2)
+        b = (t2*logQ1 - t1*logQ2) / (t2 - t1)
+        Qrot = np.exp(a*Trot + b)
+
+        return Qrot
+
+    ####################################
+    # _trot_from_rotation_diagram_13co #
+    ####################################
+
+    def _trot_from_rotation_diagram_13co(
+        Trot,
+        flux_hj,
+        txtdata,
+        lj_upp = 1,
+        hj_upp = 2,
+        ):
+
+        k_B = 1.38064852e-16 # erg/K
+        h_p = 6.6260755e-27 # erg/s
+        Tbg = 2.73 # K
+        Eu = {
+            1: 5.28880,
+            2: 15.86618,
+            3: 31.73179,
+            4: 52.88517,
+            5: 79.32525,
+            6: 111.05126,
+            }
+        Snu2 = {
+            1: 0.02436,
+            2: 0.04869,
+            3: 0.07297,
+            4: 0.09717,
+            5: 0.12124,
+            6: 0.14518,
+            } # Debye^2
+
+        y_hj = 3 * k_B * flux_hj / (8 * np.pi * Snu2[hj_upp] * 110.20135 \
+               * hj_upp) * 1e32 # cm^2
+        b = np.log(y_hj) + Eu[hj_upp] / Trot
+        Qrot = _partition_func(Trot, datacol=1, txtdata=txtdata)
+        exp_rot = np.exp(h_p * 110.20135e+9 * hj_upp / k_B / Trot) - 1.
+        exp_bg = np.exp(h_p * 110.20135e+9 * hj_upp / k_B / Tbg) - 1.
+        log_Ntot = (b + Qrot - np.log(1 - (exp_rot / exp_bg))) / np.log(10)
+
+        return round(log_Ntot, 2), round(Qrot, 2)
 
     #####################
     # hex_sampling_casa #
@@ -679,19 +915,14 @@ class ToolsNGC3110():
         taskname = self.modname + sys._getframe().f_code.co_name
         check_first(self.outfits_m0_12co10,taskname)
 
-        nu_12co10 = 115.27120180
-        nu_13co10 = 110.20135430
-        nu_12co21 = 230.53800000
-        nu_13co21 = 220.39868420
-
         # 12co21 12co10 ratio
         self._create_ratios(
             self.outfits_m0_12co21,
             self.outfits_m0_12co10,
             self.outfits_em0_12co21,
             self.outfits_em0_12co10,
-            nu_12co21,
-            nu_12co10,
+            self.nu_12co21,
+            self.nu_12co10,
             self.outfits_r_21,
             self.outfits_r_21.replace(".fits","_error.fits")
             )
@@ -702,8 +933,8 @@ class ToolsNGC3110():
             self.outfits_m0_13co10,
             self.outfits_em0_13co21,
             self.outfits_em0_13co10,
-            nu_13co21,
-            nu_13co10,
+            self.nu_13co21,
+            self.nu_13co10,
             self.outfits_r_t21,
             self.outfits_r_t21.replace(".fits","_error.fits")
             )
@@ -714,8 +945,8 @@ class ToolsNGC3110():
             self.outfits_m0_13co21,
             self.outfits_em0_12co21,
             self.outfits_em0_13co21,
-            nu_12co21,
-            nu_13co21,
+            self.nu_12co21,
+            self.nu_13co21,
             self.outfits_r_1213h,
             self.outfits_r_1213h.replace(".fits","_error.fits")
             )
@@ -726,8 +957,8 @@ class ToolsNGC3110():
             self.outfits_m0_13co10,
             self.outfits_em0_12co10,
             self.outfits_em0_13co10,
-            nu_12co10,
-            nu_13co10,
+            self.nu_12co10,
+            self.nu_13co10,
             self.outfits_r_1213l,
             self.outfits_r_1213l.replace(".fits","_error.fits")
             )
