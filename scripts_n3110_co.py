@@ -370,6 +370,7 @@ class ToolsNGC3110():
     ##############################
 
     def _factor_contin_to_ism_mass(
+    	self,
         Td,
         D_L, # Mpc
         z,
@@ -396,7 +397,7 @@ class ToolsNGC3110():
     # _partition_func #
     ###################
 
-    def _partition_func(Trot, datacol, txtdata = "Qrot_CDMS.txt"):
+    def _partition_func(self, Trot, datacol, txtdata = "Qrot_CDMS.txt"):
         """
         Derive partition funcition of a molecule at a given temperature
         using the CDMS table under LTE.  Interpolating 2 nearest values.
@@ -442,6 +443,7 @@ class ToolsNGC3110():
     ####################################
 
     def _trot_from_rotation_diagram_13co(
+    	self,
         Trot,
         flux_hj,
         txtdata,
