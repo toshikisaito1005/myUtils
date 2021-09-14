@@ -226,8 +226,8 @@ class ToolsNGC3110():
             self.showratio()
 
         if do_sampling==True:
-        	done = glob.glob(self.outtxt_hexdata)
-        	if not done:
+            done = glob.glob(self.outtxt_hexdata)
+            if not done:
                 self.hex_sampling_casa()
 
             done = glob.glob(self.outtxt_hexphys)
