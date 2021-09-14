@@ -210,8 +210,9 @@ class ToolsNGC3110():
         self,
         do_prepare    = False,
         do_lineratios = False,
-        plot_showcase = False,
         do_sampling   = False,
+        plot_showcase = False,
+        plot_figures  = False,
         ):
 
         if do_prepare==True:
@@ -229,10 +230,171 @@ class ToolsNGC3110():
             done = glob.glob(self.outtxt_hexdata)
             if not done:
                 self.hex_sampling_casa()
+            else:
+                print("# skip hex_sampling_casa()")
 
             done = glob.glob(self.outtxt_hexphys)
             if not done:
                 self.hex_sampling_phys()
+            else:
+                print("# skip hex_sampling_phys()")
+
+        if plot_figures==True:
+            self.plot_radial()
+
+    ###############
+    # plot_radial #
+    ###############
+
+    def plot_radial(
+        self,
+        ):
+        """
+        """
+
+        taskname = self.modname + sys._getframe().f_code.co_name
+        check_first(self.outtxt_hexdata,taskname)
+
+        # import data
+        data        = np.loadtxt(outtxt_hexdata)
+        data_ra     = data[:,0] - self.ra
+        data_dec    = data[:,1] - self.dec
+        data_12co10 = data[:,2]
+        err_12co10  = data[:,3]
+        data_12co21 = data[:,4]
+        err_12co21  = data[:,5]
+        data_13co10 = data[:,6]
+        err_13co10  = data[:,7]
+        data_13co21 = data[:,8]
+        err_13co21  = data[:,9]
+
+        # process data
+        dist_kpc  = np.sqrt(data_ra**2+data_dec**2) * 3600 * self.scale_kpc
+        
+        # r21
+        cut  = np.where((data_12co10!=0) & (data_12co21!=0))
+        x    = data_12co21[cut]
+        y    = data_12co10[cut]
+        errx = err_12co21[cut]
+        erry = err_12co10[cut]
+
+        dist_r21 = dist_kpc[cut]
+        data_r21 = x / y
+        err_r21  = data_r21 * np.sqrt((errx/x)**2 + (erry/y)**2)
+
+        # rt21
+        cut  = np.where((data_13co10!=0) & (data_13co21!=0))
+        x    = data_13co21[cut]
+        y    = data_13co10[cut]
+        errx = err_13co21[cut]
+        erry = err_13co10[cut]
+        
+        dist_rt21 = dist_kpc[cut]
+        data_rt21 = x / y
+        err_rt21  = data_rt21 * np.sqrt((errx/x)**2 + (erry/y)**2)
+
+        # r1213l
+        cut  = np.where((data_12co10!=0) & (data_13co10!=0))
+        x    = data_12co10[cut]
+        y    = data_13co10[cut]
+        errx = err_12co10[cut]
+        erry = err_13co10[cut]
+        
+        dist_r1213l = dist_kpc[cut]
+        data_r1213l = x / y
+        err_r1213l  = data_r1213l * np.sqrt((errx/x)**2 + (erry/y)**2)
+
+        # r1213h
+        cut  = np.where((data_12co21!=0) & (data_13co21!=0))
+        x    = data_12co21[cut]
+        y    = data_13co21[cut]
+        errx = err_12co21[cut]
+        erry = err_13co21[cut]
+        
+        dist_r1213h = dist_kpc[cut]
+        data_r1213h = x / y
+        err_r1213h  = data_r1213h * np.sqrt((errx/x)**2 + (erry/y)**2)
+
+        # plot
+        plt.figure()
+        plt.rcParams["font.size"] = 16
+        plt.subplots_adjust(bottom = 0.15)
+        gs  = gridspec.GridSpec(nrows=30, ncols=30)
+        ax1 = plt.subplot(gs[0:30,0:30])
+        ax1.set_aspect('equal', adjustable='box')
+        ax2 = plt.axes([0,0,1,1])
+        ip = InsetPosition(ax1, [0.15,0.13,0.5,0.33])
+        ax2.set_axes_locator(ip)
+
+"""
+ax1.scatter(dist1, value1, s=30, c="tomato", linewidths=0, alpha=0.5)
+ax1.scatter(dist2, value2, s=30, c="deepskyblue", linewidths=0, alpha=0.5)
+#
+histdata = np.histogram(10**value1, bins=50, range=range)
+x, y = histdata[1][:-1], histdata[0]/float(np.sum(histdata[0]))
+ax2.bar(x, y, lw=0, color="tomato", width=x[1]-x[0], alpha=0.5)
+histdata = np.histogram(10**value2, bins=50, range=range)
+x, y = histdata[1][:-1], histdata[0]/float(np.sum(histdata[0]))
+ax2.bar(x, y, lw=0, color="deepskyblue", width=x[1]-x[0], alpha=0.5)
+#
+ax1.set_xlim(xlim)
+ax1.set_ylim(ylim)
+ax1.grid(which="both")
+ax1.set_xlabel("log Deprojected Distance (kpc)")
+ax1.set_ylabel("log Ratio")
+#
+ax2.set_xlim(range)
+ax2.set_xticks(xticks)
+ax2.set_xlabel("Ratio")
+#
+t=ax1.text(0.05, 0.90, comment1, size=16, weight="bold",
+	color="tomato", transform=ax1.transAxes)
+t.set_bbox(dict(facecolor="white", alpha=0.8, lw=0))
+t=ax1.text(0.05, 0.82, comment2, size=16, weight="bold",
+	color="deepskyblue", transform=ax1.transAxes)
+t.set_bbox(dict(facecolor="white", alpha=0.8, lw=0))
+#
+value1_p50 = np.percentile(10**value1,50)
+value2_p50 = np.percentile(10**value2,50)
+value1_p16 = value1_p50 - np.percentile(10**value1,16)
+value2_p16 = value2_p50 - np.percentile(10**value2,16)
+value1_p84 = np.percentile(10**value1,84) - value1_p50
+value2_p84 = np.percentile(10**value2,84) - value2_p50
+if num_round!=0:
+	text = "$" + str(np.round(value1_p50,num_round)).ljust(4,"0") + \
+		 "_{-" + str(np.round(value1_p16,num_round)).ljust(4,"0") + "}" + \
+		 "^{+" + str(np.round(value1_p84,num_round)).ljust(4,"0") + "}$"
+elif num_round==0:
+	text = "$" + str(int(value1_p50)) + \
+		 "_{-" + str(int(value1_p16)) + "}" + \
+		 "^{+" + str(int(value1_p84)) + "}$"
+ax2.text(0.9, 0.80, text, size=14, color="tomato",
+transform=ax2.transAxes, horizontalalignment='right')
+#
+if num_round!=0:
+	text = "$" + str(np.round(value2_p50,num_round)).ljust(4,"0") + \
+		 "_{-" + str(np.round(value2_p16,num_round)).ljust(4,"0") + "}" + \
+		 "^{+" + str(np.round(value2_p84,num_round)).ljust(4,"0") + "}$"
+elif num_round==0:
+	text = "$" + str(int(value2_p50)) + \
+		 "_{-" + str(int(value2_p16)) + "}" + \
+		 "^{+" + str(int(value2_p84)) + "}$"
+ax2.text(0.9, 0.60, text, size=14, color="deepskyblue",
+transform=ax2.transAxes, horizontalalignment='right')
+#
+os.system("rm -rf " + output)
+plt.savefig(output, dpi=300)
+"""
+
+    ################
+    # _plot_radial #
+    ################
+
+    def _plot_radial(
+        self,
+        ):
+        """
+        """
 
     #####################
     # hex_sampling_phys #
@@ -364,122 +526,6 @@ class ToolsNGC3110():
         header = \
             "ra dec Tkin nH2 Index err Sig_SFR Sig_SSC Lco10 err SFE Sig_H2 err a_LTE_Trot a_LTE_Tkin a_ISM_Trot a_ISM_Tkin"
         np.savetxt(self.outtxt_hexphys, data_science_ready, fmt=fmt, header=header)
-
-    ##############################
-    # _factor_contin_to_ism_mass #
-    ##############################
-
-    def _factor_contin_to_ism_mass(
-    	self,
-        Td,
-        D_L, # Mpc
-        z,
-        ):
-        """
-        """
-
-        h = 6.626e-27 # erg.s
-        k = 1.38e-16 # erg/K
-        nu_obs = 234.6075e+9 / (1 + z) #GHz
-        nu_0   = 352.6970094e+9
-        a850   = 6.7e+19
-
-        factor = h * nu_obs * (1+z) / (k * Td)
-        factor_0 = h * 352.6970094e+9 * (1+0) / (k * Td)
-        gamma_rj = factor / (np.exp(factor) - 1)
-        gamma_0 = factor_0 / (np.exp(factor_0) - 1)
-        fac = 1.78 * (1+z)**-4.8 * (nu_obs/nu_0)**-3.8 * (6.7e+19/a850)
-        fac = fac * gamma_0/gamma_rj * (D_L/1000.)**2 * 1e+10
-
-        return fac
-
-    ###################
-    # _partition_func #
-    ###################
-
-    def _partition_func(self, Trot, datacol, txtdata = "Qrot_CDMS.txt"):
-        """
-        Derive partition funcition of a molecule at a given temperature
-        using the CDMS table under LTE.  Interpolating 2 nearest values.
-        (http://www.astro.uni-koeln.de/site/vorhersagen/catalog/
-        partition_function.html)
-
-        Parameters
-        ----------
-        Trot (K): int, float
-            rotation temperature your molecule under LTE
-        datacol: int
-            column of "../Qrot_CDMS.txt" which contains descrete partition
-            functions of your molecule
-        data: str
-            txt file containing partition function, otherwise use
-            "../Qrot_CDMS.txt"
-
-        Returns
-        ----------
-        Qrot: float
-            derived partition function
-
-        reference
-        ----------
-        Mueller, H. S. P. et al. 2001, A&A, 370, L49
-        Mueller, H. S. P. et al. 2005, JMoSt, 742, 215
-        """
-
-        table = np.loadtxt(txtdata, usecols = (0,datacol))
-        row = np.sum(table[:,0] < Trot) - 1
-        t1 = table[:,0][row]
-        t2 = table[:,0][row + 1]
-        logQ1 = table[:,1][row]
-        logQ2 = table[:,1][row + 1]
-        a = (logQ1 - logQ2) / (t1 - t2)
-        b = (t2*logQ1 - t1*logQ2) / (t2 - t1)
-        Qrot = np.exp(a*Trot + b)
-
-        return Qrot
-
-    ####################################
-    # _trot_from_rotation_diagram_13co #
-    ####################################
-
-    def _trot_from_rotation_diagram_13co(
-    	self,
-        Trot,
-        flux_hj,
-        txtdata,
-        lj_upp = 1,
-        hj_upp = 2,
-        ):
-
-        k_B = 1.38064852e-16 # erg/K
-        h_p = 6.6260755e-27 # erg/s
-        Tbg = 2.73 # K
-        Eu = {
-            1: 5.28880,
-            2: 15.86618,
-            3: 31.73179,
-            4: 52.88517,
-            5: 79.32525,
-            6: 111.05126,
-            }
-        Snu2 = {
-            1: 0.02436,
-            2: 0.04869,
-            3: 0.07297,
-            4: 0.09717,
-            5: 0.12124,
-            6: 0.14518,
-            } # Debye^2
-
-        y_hj = 3 * k_B * flux_hj / (8 * np.pi * Snu2[hj_upp] * 110.20135 \
-               * hj_upp) * 1e32 # cm^2
-        b = np.log(y_hj) + Eu[hj_upp] / Trot
-        Qrot = self._partition_func(Trot, datacol=1, txtdata=txtdata)
-        exp_rot = np.exp(h_p * 110.20135e+9 * hj_upp / k_B / Trot) - 1.
-        exp_bg = np.exp(h_p * 110.20135e+9 * hj_upp / k_B / Tbg) - 1.
-        log_Ntot = (b + Qrot - np.log(1 - (exp_rot / exp_bg))) / np.log(10)
-
-        return round(log_Ntot, 2), round(Qrot, 2)
 
     #####################
     # hex_sampling_casa #
@@ -1114,6 +1160,122 @@ class ToolsNGC3110():
         run_imregrid(self.pb_12co21+"_tmp2_b6",self.map_irac,self.pb_12co21+"_tmp3_b6",delin=True)
         run_exportfits(self.pb_12co10+"_tmp3_b3",self.outfits_pb_b3,True,True,True)
         run_exportfits(self.pb_12co21+"_tmp3_b6",self.outfits_pb_b6,True,True,True)
+
+    ##############################
+    # _factor_contin_to_ism_mass #
+    ##############################
+
+    def _factor_contin_to_ism_mass(
+    	self,
+        Td,
+        D_L, # Mpc
+        z,
+        ):
+        """
+        """
+
+        h = 6.626e-27 # erg.s
+        k = 1.38e-16 # erg/K
+        nu_obs = 234.6075e+9 / (1 + z) #GHz
+        nu_0   = 352.6970094e+9
+        a850   = 6.7e+19
+
+        factor = h * nu_obs * (1+z) / (k * Td)
+        factor_0 = h * 352.6970094e+9 * (1+0) / (k * Td)
+        gamma_rj = factor / (np.exp(factor) - 1)
+        gamma_0 = factor_0 / (np.exp(factor_0) - 1)
+        fac = 1.78 * (1+z)**-4.8 * (nu_obs/nu_0)**-3.8 * (6.7e+19/a850)
+        fac = fac * gamma_0/gamma_rj * (D_L/1000.)**2 * 1e+10
+
+        return fac
+
+    ###################
+    # _partition_func #
+    ###################
+
+    def _partition_func(self, Trot, datacol, txtdata = "Qrot_CDMS.txt"):
+        """
+        Derive partition funcition of a molecule at a given temperature
+        using the CDMS table under LTE.  Interpolating 2 nearest values.
+        (http://www.astro.uni-koeln.de/site/vorhersagen/catalog/
+        partition_function.html)
+
+        Parameters
+        ----------
+        Trot (K): int, float
+            rotation temperature your molecule under LTE
+        datacol: int
+            column of "../Qrot_CDMS.txt" which contains descrete partition
+            functions of your molecule
+        data: str
+            txt file containing partition function, otherwise use
+            "../Qrot_CDMS.txt"
+
+        Returns
+        ----------
+        Qrot: float
+            derived partition function
+
+        reference
+        ----------
+        Mueller, H. S. P. et al. 2001, A&A, 370, L49
+        Mueller, H. S. P. et al. 2005, JMoSt, 742, 215
+        """
+
+        table = np.loadtxt(txtdata, usecols = (0,datacol))
+        row = np.sum(table[:,0] < Trot) - 1
+        t1 = table[:,0][row]
+        t2 = table[:,0][row + 1]
+        logQ1 = table[:,1][row]
+        logQ2 = table[:,1][row + 1]
+        a = (logQ1 - logQ2) / (t1 - t2)
+        b = (t2*logQ1 - t1*logQ2) / (t2 - t1)
+        Qrot = np.exp(a*Trot + b)
+
+        return Qrot
+
+    ####################################
+    # _trot_from_rotation_diagram_13co #
+    ####################################
+
+    def _trot_from_rotation_diagram_13co(
+    	self,
+        Trot,
+        flux_hj,
+        txtdata,
+        lj_upp = 1,
+        hj_upp = 2,
+        ):
+
+        k_B = 1.38064852e-16 # erg/K
+        h_p = 6.6260755e-27 # erg/s
+        Tbg = 2.73 # K
+        Eu = {
+            1: 5.28880,
+            2: 15.86618,
+            3: 31.73179,
+            4: 52.88517,
+            5: 79.32525,
+            6: 111.05126,
+            }
+        Snu2 = {
+            1: 0.02436,
+            2: 0.04869,
+            3: 0.07297,
+            4: 0.09717,
+            5: 0.12124,
+            6: 0.14518,
+            } # Debye^2
+
+        y_hj = 3 * k_B * flux_hj / (8 * np.pi * Snu2[hj_upp] * 110.20135 \
+               * hj_upp) * 1e32 # cm^2
+        b = np.log(y_hj) + Eu[hj_upp] / Trot
+        Qrot = self._partition_func(Trot, datacol=1, txtdata=txtdata)
+        exp_rot = np.exp(h_p * 110.20135e+9 * hj_upp / k_B / Trot) - 1.
+        exp_bg = np.exp(h_p * 110.20135e+9 * hj_upp / k_B / Tbg) - 1.
+        log_Ntot = (b + Qrot - np.log(1 - (exp_rot / exp_bg))) / np.log(10)
+
+        return round(log_Ntot, 2), round(Qrot, 2)
 
     ###############
     # _eazy_imval #
