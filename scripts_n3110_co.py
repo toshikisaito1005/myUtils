@@ -308,13 +308,13 @@ class ToolsNGC3110():
         X13co   = Xco / Rcotco
 
         for i in range(len(kelvin_13co21)):
-            logN_rot, Qrot = _trot_from_rotation_diagram_13co(
+            logN_rot, Qrot = self._trot_from_rotation_diagram_13co(
                 15.0, kelvin_13co21[i], txtdata = "keys/Qrot_CDMS.txt")
             Xco = 10**logN_rot / X13co / kelvin_12co10[i]
             a_lte_trot = 4.3 * Xco / 2e+20
             list_alpha_lte_trot.append(a_lte_trot)
 
-            logN_rot, Qrot = _trot_from_rotation_diagram_13co(
+            logN_rot, Qrot = self._trot_from_rotation_diagram_13co(
                 tkin[i], kelvin_13co21[i], txtdata = "keys/Qrot_CDMS.txt")
             Xco = 10**logN_rot / X13co / kelvin_12co10[i]
             a_lte_tkin = 4.3 * Xco / 2e+20
@@ -326,12 +326,12 @@ class ToolsNGC3110():
         beamarea = beam_area(self.outfits_b6)
 
         for i in range(len(data[:,16])):
-            factor     = _factor_contin_to_ism_mass(15., self.dist, self.z)
+            factor     = self._factor_contin_to_ism_mass(15., self.dist, self.z)
             ism_mass   = data[:,16][i]/beamarea * 1000 * factor
             a_ism_trot = ism_mass / lumi_co10[i]
             list_alpha_ism_trot.append(a_ism_trot)
 
-            factor     = _factor_contin_to_ism_mass(tkin[i], self.dist, self.z)
+            factor     = self._factor_contin_to_ism_mass(tkin[i], self.dist, self.z)
             ism_mass   = data[:,16][i]/beamarea * 1000 * factor
             a_ism_tkin = ism_mass / lumi_co10[i]
             list_alpha_ism_tkin.append(a_ism_tkin)
@@ -472,7 +472,7 @@ class ToolsNGC3110():
         y_hj = 3 * k_B * flux_hj / (8 * np.pi * Snu2[hj_upp] * 110.20135 \
                * hj_upp) * 1e32 # cm^2
         b = np.log(y_hj) + Eu[hj_upp] / Trot
-        Qrot = _partition_func(Trot, datacol=1, txtdata=txtdata)
+        Qrot = self._partition_func(Trot, datacol=1, txtdata=txtdata)
         exp_rot = np.exp(h_p * 110.20135e+9 * hj_upp / k_B / Trot) - 1.
         exp_bg = np.exp(h_p * 110.20135e+9 * hj_upp / k_B / Tbg) - 1.
         log_Ntot = (b + Qrot - np.log(1 - (exp_rot / exp_bg))) / np.log(10)
