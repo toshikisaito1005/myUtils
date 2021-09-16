@@ -202,6 +202,9 @@ class ToolsNGC3110():
             self.outtxt_hexdata = self.dir_ready + self._read_key("outtxt_hexdata")
             self.outtxt_hexphys = self.dir_ready + self._read_key("outtxt_hexphys")
 
+            self.outpng_radial_21 = self.dir_products + self._read_key("outpng_radial_21")
+            self.outpng_radial_1213 = self.dir_products + self._read_key("outpng_radial_1213")
+
     ##################
     # run_ngc3110_co #
     ##################
@@ -241,6 +244,35 @@ class ToolsNGC3110():
 
         if plot_figures==True:
             self.plot_radial()
+            self.showhex()
+
+    ###########
+    # showhex #
+    ###########
+
+    def showhex(
+        self,
+        ):
+        """
+        """
+
+        taskname = self.modname + sys._getframe().f_code.co_name
+        check_first(self.outtxt_hexphys,taskname)
+
+        # import data
+        data        = np.loadtxt(self.outtxt_hexphys)
+        data_ra     = data[:,0] - self.ra
+        data_dec    = data[:,1] - self.dec
+        tkin        = data[:,2]
+        nh2         = data[:,3]
+        index       = data[:,4]
+        err_index   = data[:,5]
+        sfrd        = data[:,6]
+        sscd        = data[:,7]
+        co10        = data[:,8]
+        err_co10    = data[:,9]
+        sfe         = data[:,10] # err = 0.3dex
+        aco         = data[:,13]
 
     ###############
     # plot_radial #
@@ -256,7 +288,7 @@ class ToolsNGC3110():
         check_first(self.outtxt_hexdata,taskname)
 
         # import data
-        data        = np.loadtxt(outtxt_hexdata)
+        data        = np.loadtxt(self.outtxt_hexdata)
         data_ra     = data[:,0] - self.ra
         data_dec    = data[:,1] - self.dec
         data_12co10 = data[:,2]
@@ -316,6 +348,53 @@ class ToolsNGC3110():
         err_r1213h  = data_r1213h * np.sqrt((errx/x)**2 + (erry/y)**2)
 
         # plot
+        self._plot_radial(
+            self.outpng_radial_21,dist_r21,dist_rt21,data_r21,data_rt21,err_r21,err_rt21,
+            comment1="$^{12}R_{21/10}$",comment2="$^{13}R_{21/10}$")
+
+        self._plot_radial(
+            self.outpng_radial_1213,dist_r1213l,dist_r1213h,data_r1213l,data_r1213h,err_r1213l,err_r1213h,
+            ylim=[-0.5, 2.2],histrange=[0,50],comment1="$^{12/13}R_{10}$",comment2="$^{12/13}R_{21}$",
+            xticks=[10,20,30,40,50],num_round=0)
+
+    ################
+    # _plot_radial #
+    ################
+
+    def _plot_radial(
+        self,
+        outpng,
+        dist1,
+        dist2,
+        value1,
+        value2,
+        err1,
+        err2,
+        xlim=[-1.3,1.4],
+        ylim=[-2.0,0.7],
+        histrange=[0,1.6],
+        xticks=[0.4,0.8,1.2,1.6],
+        num_round=2,
+        comment1,
+        comment2,
+        ):
+        """
+        """
+
+        histdata  = np.histogram(10**value1, bins=50, range=histrange)
+        histx1, histy1 = histdata[1][:-1], histdata[0]/float(np.sum(histdata[0]))
+
+        histdata = np.histogram(10**value2, bins=50, range=range)
+        histx2, histy2 = histdata[1][:-1], histdata[0]/float(np.sum(histdata[0]))
+
+        value1_p50 = np.percentile(10**value1,50)
+        value2_p50 = np.percentile(10**value2,50)
+        value1_p16 = value1_p50 - np.percentile(10**value1,16)
+        value2_p16 = value2_p50 - np.percentile(10**value2,16)
+        value1_p84 = np.percentile(10**value1,84) - value1_p50
+        value2_p84 = np.percentile(10**value2,84) - value2_p50
+
+        # plot
         plt.figure()
         plt.rcParams["font.size"] = 16
         plt.subplots_adjust(bottom = 0.15)
@@ -326,75 +405,51 @@ class ToolsNGC3110():
         ip = InsetPosition(ax1, [0.15,0.13,0.5,0.33])
         ax2.set_axes_locator(ip)
 
-"""
-ax1.scatter(dist1, value1, s=30, c="tomato", linewidths=0, alpha=0.5)
-ax1.scatter(dist2, value2, s=30, c="deepskyblue", linewidths=0, alpha=0.5)
-#
-histdata = np.histogram(10**value1, bins=50, range=range)
-x, y = histdata[1][:-1], histdata[0]/float(np.sum(histdata[0]))
-ax2.bar(x, y, lw=0, color="tomato", width=x[1]-x[0], alpha=0.5)
-histdata = np.histogram(10**value2, bins=50, range=range)
-x, y = histdata[1][:-1], histdata[0]/float(np.sum(histdata[0]))
-ax2.bar(x, y, lw=0, color="deepskyblue", width=x[1]-x[0], alpha=0.5)
-#
-ax1.set_xlim(xlim)
-ax1.set_ylim(ylim)
-ax1.grid(which="both")
-ax1.set_xlabel("log Deprojected Distance (kpc)")
-ax1.set_ylabel("log Ratio")
-#
-ax2.set_xlim(range)
-ax2.set_xticks(xticks)
-ax2.set_xlabel("Ratio")
-#
-t=ax1.text(0.05, 0.90, comment1, size=16, weight="bold",
-	color="tomato", transform=ax1.transAxes)
-t.set_bbox(dict(facecolor="white", alpha=0.8, lw=0))
-t=ax1.text(0.05, 0.82, comment2, size=16, weight="bold",
-	color="deepskyblue", transform=ax1.transAxes)
-t.set_bbox(dict(facecolor="white", alpha=0.8, lw=0))
-#
-value1_p50 = np.percentile(10**value1,50)
-value2_p50 = np.percentile(10**value2,50)
-value1_p16 = value1_p50 - np.percentile(10**value1,16)
-value2_p16 = value2_p50 - np.percentile(10**value2,16)
-value1_p84 = np.percentile(10**value1,84) - value1_p50
-value2_p84 = np.percentile(10**value2,84) - value2_p50
-if num_round!=0:
-	text = "$" + str(np.round(value1_p50,num_round)).ljust(4,"0") + \
-		 "_{-" + str(np.round(value1_p16,num_round)).ljust(4,"0") + "}" + \
-		 "^{+" + str(np.round(value1_p84,num_round)).ljust(4,"0") + "}$"
-elif num_round==0:
-	text = "$" + str(int(value1_p50)) + \
-		 "_{-" + str(int(value1_p16)) + "}" + \
-		 "^{+" + str(int(value1_p84)) + "}$"
-ax2.text(0.9, 0.80, text, size=14, color="tomato",
-transform=ax2.transAxes, horizontalalignment='right')
-#
-if num_round!=0:
-	text = "$" + str(np.round(value2_p50,num_round)).ljust(4,"0") + \
-		 "_{-" + str(np.round(value2_p16,num_round)).ljust(4,"0") + "}" + \
-		 "^{+" + str(np.round(value2_p84,num_round)).ljust(4,"0") + "}$"
-elif num_round==0:
-	text = "$" + str(int(value2_p50)) + \
-		 "_{-" + str(int(value2_p16)) + "}" + \
-		 "^{+" + str(int(value2_p84)) + "}$"
-ax2.text(0.9, 0.60, text, size=14, color="deepskyblue",
-transform=ax2.transAxes, horizontalalignment='right')
-#
-os.system("rm -rf " + output)
-plt.savefig(output, dpi=300)
-"""
+        ax1.scatter(dist1, value1, s=30, c="tomato", linewidths=0, alpha=0.5)
+        ax1.scatter(dist2, value2, s=30, c="deepskyblue", linewidths=0, alpha=0.5)
 
-    ################
-    # _plot_radial #
-    ################
+        ax2.bar(histx1, histy1, lw=0, color="tomato", width=x[1]-x[0], alpha=0.5)
+        ax2.bar(histx2, histy2, lw=0, color="deepskyblue", width=x[1]-x[0], alpha=0.5)
 
-    def _plot_radial(
-        self,
-        ):
-        """
-        """
+        ax1.set_xlim(xlim)
+        ax1.set_ylim(ylim)
+        ax1.grid(which="both")
+        ax1.set_xlabel("log Deprojected Distance (kpc)")
+        ax1.set_ylabel("log Ratio")
+
+        ax2.set_xlim(range)
+        ax2.set_xticks(xticks)
+        ax2.set_xlabel("Ratio")
+
+        t=ax1.text(0.05,0.90,comment1,size=16,weight="bold",color="tomato", transform=ax1.transAxes)
+        t.set_bbox(dict(facecolor="white", alpha=0.8, lw=0))
+        t=ax1.text(0.05,0.82,comment2,size=16,weight="bold",color="deepskyblue", transform=ax1.transAxes)
+        t.set_bbox(dict(facecolor="white", alpha=0.8, lw=0))
+
+        if num_round!=0:
+            text = "$" + str(np.round(value1_p50,num_round)).ljust(4,"0") + \
+                "_{-" + str(np.round(value1_p16,num_round)).ljust(4,"0") + "}" + \
+                "^{+" + str(np.round(value1_p84,num_round)).ljust(4,"0") + "}$"
+        elif num_round==0:
+            text = "$" + str(int(value1_p50)) + \
+                "_{-" + str(int(value1_p16)) + "}" + \
+                "^{+" + str(int(value1_p84)) + "}$"
+
+        ax2.text(0.9,0.80,text,size=14,color="tomato",transform=ax2.transAxes,horizontalalignment='right')
+
+        if num_round!=0:
+            text = "$" + str(np.round(value2_p50,num_round)).ljust(4,"0") + \
+                "_{-" + str(np.round(value2_p16,num_round)).ljust(4,"0") + "}" + \
+                "^{+" + str(np.round(value2_p84,num_round)).ljust(4,"0") + "}$"
+        elif num_round==0:
+            text = "$" + str(int(value2_p50)) + \
+                "_{-" + str(int(value2_p16)) + "}" + \
+                "^{+" + str(int(value2_p84)) + "}$"
+
+        ax2.text(0.9,0.60,text,size=14,color="deepskyblue",transform=ax2.transAxes,horizontalalignment='right')
+
+        os.system("rm -rf " + outpng)
+        plt.savefig(outpng, dpi=300)
 
     #####################
     # hex_sampling_phys #
