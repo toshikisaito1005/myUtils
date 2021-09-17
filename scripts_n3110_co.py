@@ -162,6 +162,9 @@ class ToolsNGC3110():
             self.scale_pc  = float(self._read_key("scale", "gal"))
             self.scale_kpc = float(self._read_key("scale", "gal")) / 1000.
 
+            self.pa = np.radians(171.)
+            self.incl = np.radians(65.)
+
             # input parameters
             self.beam           = float(self._read_key("beam"))
             self.snr_mom_strong = float(self._read_key("snr_mom_strong"))
@@ -205,6 +208,13 @@ class ToolsNGC3110():
             self.outpng_radial_21 = self.dir_products + self._read_key("outpng_radial_21")
             self.outpng_radial_1213 = self.dir_products + self._read_key("outpng_radial_1213")
 
+            self.outpng_hex_index = self.dir_products + self._read_key("outpng_hex_index")
+            self.outpng_hex_tkin = self.dir_products + self._read_key("outpng_hex_tkin")
+            self.outpng_hex_nh2 = self.dir_products + self._read_key("outpng_hex_nh2")
+
+            self.outpng_aco_radial = self.dir_products + self._read_key("outpng_aco_radial")
+            self.outpng_aco_hist = self.dir_products + self._read_key("outpng_aco_hist")
+
     ##################
     # run_ngc3110_co #
     ##################
@@ -243,8 +253,85 @@ class ToolsNGC3110():
                 print("# skip hex_sampling_phys()")
 
         if plot_figures==True:
-            self.plot_radial()
+            self.plot_radial_ratio()
             self.showhex()
+            self.plot_radial_aco()
+
+    ###################
+    # plot_radial_aco #
+    ###################
+
+    def plot_radial_aco(
+        self,
+        ):
+        """
+        """
+
+        taskname = self.modname + sys._getframe().f_code.co_name
+        check_first(self.outtxt_hexphys,taskname)
+
+        # import data
+        data         = np.loadtxt(self.outtxt_hexdata)
+        data_ra      = data[:,0] - self.ra
+        data_dec     = data[:,1] - self.dec
+        data_ra2     = ( data_ra*np.cos(self.pa) - data_dec*np.sin(self.pa) ) / np.cos(self.incl)
+        data_dec2    = data_ra*np.sin(self.pa) + data_dec*np.cos(self.incl)
+        aco_lte_trot = data[:,13]
+        aco_lte_tkin = data[:,14]
+        aco_ism_trot = data[:,15]
+        aco_ism_tkin = data[:,16]
+
+        # process data
+        dist_kpc  = np.sqrt(data_ra2**2+data_dec2**2) * 3600 * self.scale_kpc
+
+        cut = np.where((aco_lte_trot>0) & (aco_lte_tkin>0) & (aco_lte_trot<aco_lte_tkin))
+        dist_lte_trot = dist_kpc[cut]
+        aco_lte_trot  = np.log10(aco_lte_trot[cut])
+
+        cut = np.where((aco_ism_trot>0) & (aco_ism_tkin>0) & (aco_ism_trot<aco_ism_tkin))
+        dist_ism_trot = dist_kpc[cut] # np.log10(dist[cut])
+        aco_ism_trot  = np.log10(aco_ism_trot[cut])
+
+        # plot
+        plt.figure()
+        plt.rcParams["font.size"] = 16
+        plt.subplots_adjust(left=0.23,right=0.78,bottom = 0.15)
+        #plt.subplots_adjust(bottom=0.10, left=0.19, right=0.99, top=0.90)
+        gs = gridspec.GridSpec(nrows=30, ncols=30)
+        ax = plt.subplot(gs[0:30,0:30])
+        ax.grid(which="both")
+
+        xlim = [0.0, 10**1.0] # [-1.0+0.1,1.0+0.1]
+        ax.set_xlim(xlim)
+        ax.set_ylim([-1.0+0.4,1.0+0.4])
+        ax.set_xlabel("Deprojected Distance (kpc)")
+        ax.set_ylabel(r"log $\alpha_{CO}$ ($M_{\odot}$ (K km s$^{-1}$ pc$^2$)$^{-1}$)")
+        ax.scatter(dist_lte_trot, aco_lte_trot, s=100, c="tomato", linewidths=0, alpha=0.5)
+        ax.scatter(dist_ism_trot, aco_ism_trot, s=100, c="deepskyblue",linewidths=0, alpha=0.5)
+
+        ax.plot(xlim, [np.log10(0.8),np.log10(0.8)], "k-", lw=3)
+        ax.plot(xlim, [np.log10(4.3),np.log10(4.3)], "k-", lw=3)
+
+        aco_lte_trot = 10**aco_lte_trot
+        lte_p50 = np.percentile(aco_lte_trot,50)
+        lte_p16 = str(np.round(lte_p50 - np.percentile(aco_lte_trot,16), 2))
+        lte_p84 = str(np.round(np.percentile(aco_lte_trot,84) - lte_p50, 2))
+        lte_p50 = str(np.round(lte_p50, 2))
+        value = "$" + lte_p50 + "_{-"+lte_p16+"}^{+"+lte_p84+"}$"
+        t=ax.text(0.05,0.90,r"$\alpha_{LTE}$ = "+value,color="tomato",transform=ax.transAxes)
+        t.set_bbox(dict(facecolor="white", alpha=0.8, lw=0))
+
+        aco_ism_trot = 10**aco_ism_trot
+        lte_p50 = np.percentile(aco_ism_trot,50)
+        lte_p16 = str(np.round(lte_p50 - np.percentile(aco_ism_trot,16), 2))
+        lte_p84 = str(np.round(np.percentile(aco_ism_trot,84) - lte_p50, 2))
+        lte_p50 = str(np.round(lte_p50, 2))
+        value = "$" + lte_p50 + "_{-"+lte_p16+"}^{+"+lte_p84+"}$"
+        t=ax.text(0.05,0.82,r"$\alpha_{ISM}$ = "+value,color="deepskyblue",transform=ax.transAxes)
+        t.set_bbox(dict(facecolor="white", alpha=0.8, lw=0))
+
+        os.system("rm -rf " + self.outpng_aco_radial)
+        plt.savefig(self.outpng_aco_radial, dpi=300)
 
     ###########
     # showhex #
@@ -274,11 +361,103 @@ class ToolsNGC3110():
         sfe         = data[:,10] # err = 0.3dex
         aco         = data[:,13]
 
+        # co10
+        cut  = np.where(co10>0)
+        X,Y,C = data_ra[cut],data_dec[cut],co10[cut]
+
+        # spectral index
+        cut = np.where((co10>0) & (index>0))
+        x,y,c,title = data_ra[cut],data_dec[cut],index[cut],"Spectral Index"
+        self._plot_hexmap(self.outpng_hex_index,x,y,c,X,Y,C,title,title)
+
+        # tkin
+        cut = np.where((co10>0) & (tkin>0))
+        x,y,c,title = data_ra[cut],data_dec[cut],tkin[cut],"Kinetic Temperature ($T_{kin}$)"
+        self._plot_hexmap(self.outpng_hex_tkin,x,y,c,X,Y,C,title,"(K)")
+
+        # nh2
+        cut = np.where((co10>0) & (nh2>0))
+        x,y,c,title = data_ra[cut],data_dec[cut],np.log10(nh2[cut]),"log H$_2$ Volume Density ($n_{H_2}$)"
+        self._plot_hexmap(self.outpng_hex_nh2,x,y,c,X,Y,C,title,"log (cm$^{-3}$)",True)
+
+        # sfr density
+        cut = np.where((co10>0) & (sfrd>0))
+        x,y,c,title = data_ra[cut],data_dec[cut],np.log10(sfrd[cut]),"log Extinction-corrected SFR Density ($\Sigma_{SFR}$)"
+        self._plot_hexmap(self.outpng_hex_sfrd,x,y,c,X,Y,C,title,"log ($M_{\odot}$ kpc$^{-2}$ yr$^{-1}$)")
+
+        # ssc density
+        cut = np.where((co10>0) & (sscd>0))
+        x,y,c,title = data_ra[cut],data_dec[cut],np.log10(sscd[cut]),"SSC Density ($\Sigma_{SSC}$)"
+        self._plot_hexmap(self.outpng_hex_sscd,x,y,c,X,Y,C,title,"(kpc$^{-2}$)")
+
+        # sfe
+        cut = np.where((sfe>0) & (co10>np.percentile(co10,67)))
+        x,y,c,title = data_ra[cut],data_dec[cut],np.log10(sfe[cut]),"log SFE"
+        self._plot_hexmap(self.outpng_hex_sfe,x,y,c,X,Y,C,title,"log (yr$^{-1}$)")
+
+        # aco
+        cut = np.where((co10>0) & (aco>0))
+        x,y,c,title = data_ra[cut],data_dec[cut],np.log10(aco[cut]),r"CO-to-H$_2$ Conversion Factor ($\alpha_{LTE}$)"
+        self._plot_hexmap(self.outpng_hex_aco,x,y,c,X,Y,C,title,"($M_{\odot}$ (K km s$^{-1}$ pc$^2$)$^{-1}$)")
+
+    ################
+    # _plot_hexmap #
+    ################
+
+    def _plot_hexmap(
+        self,
+        outpng,
+        x,y,c,
+        X,Y,C,
+        title,
+        title_cbar,
+        nH2=False,
+        ):
+        """
+        """
+
+        # set plt, ax
+        plt.figure(figsize=(13,10))
+        plt.rcParams["font.size"] = 16
+        plt.subplots_adjust(bottom=0.10, left=0.19, right=0.99, top=0.90)
+        gs = gridspec.GridSpec(nrows=10, ncols=10)
+        ax = plt.subplot(gs[0:10,0:10])
+
+        # set ax parameter
+        myax_set(
+        ax,
+        grid="both",
+        xlim=[32.5, -32.5],
+        ylim=[-32.5, 32.5],
+        title=title,
+        xlabel="x-offset (arcsec)",
+        ylabel="y-offset (arcsec)",
+        )
+
+        contour_levels = map(lambda x: x * np.max(C), [0.02,0.04,0.08,0.16,0.32,0.64,0.96])
+        ax.tricontour(X, Y, C, colors=["black"], levels=contour_levels)
+        cax = ax.scatter(x, y, s=240, c=c, cmap="rainbow", marker="h", linewidths=0)
+        ax.set_aspect('equal', adjustable='box')
+
+        # cbar
+        cbar = plt.colorbar(cax)
+        cbar.set_label(title_cbar)
+        if nH2==True:
+            cbar.set_ticks([2.5,3.0,3.5,4.0,4.5,5.0,5.5,6.0,6.5])
+        cbar.outline.set_linewidth(2.5)
+
+        # circle
+        circ = patches.Ellipse(xy=(6.5,-18), width=8.0, height=8.0, angle=0, fill=False, edgecolor="tomato", alpha=1.0, lw=4)
+        ax.add_patch(circ)
+
+        os.system("rm -rf " + outpng)
+        plt.savefig(outpng, dpi=300)
+
     ###############
     # plot_radial #
     ###############
 
-    def plot_radial(
+    def plot_radial_ratio(
         self,
         ):
         """
@@ -291,6 +470,8 @@ class ToolsNGC3110():
         data        = np.loadtxt(self.outtxt_hexdata)
         data_ra     = data[:,0] - self.ra
         data_dec    = data[:,1] - self.dec
+        data_ra2    = ( data_ra*np.cos(self.pa) - data_dec*np.sin(self.pa) ) / np.cos(self.incl)
+        data_dec2   = data_ra*np.sin(self.pa) + data_dec*np.cos(self.incl)
         data_12co10 = data[:,2]
         err_12co10  = data[:,3]
         data_12co21 = data[:,4]
@@ -301,7 +482,7 @@ class ToolsNGC3110():
         err_13co21  = data[:,9]
 
         # process data
-        dist_kpc  = np.sqrt(data_ra**2+data_dec**2) * 3600 * self.scale_kpc
+        dist_kpc  = np.sqrt(data_ra2**2+data_dec2**2) * 3600 * self.scale_kpc
         
         # r21
         cut  = np.where((data_12co10!=0) & (data_12co21!=0))
