@@ -138,11 +138,19 @@ class ProposalsALMA():
             self.outfits_missingflux+"_tmp1",expr,delin=True)
 
         signal_masking(self.outfits_missingflux+"_tmp1",self.outfits_missingflux+"_tmp2",0)
+        os.system("rm -rf " + self.outfits_missingflux+"_tmp3")
+        makemask(
+            mode      = "copy",
+            inpimage  = self.outfits_missingflux+"_tmp2",
+            inpmask   = self.outfits_missingflux+"_tmp2:mask0", # + ":mask0",
+            output    = self.outfits_missingflux+"_tmp3",
+            overwrite = True,
+            )
 
-        immath(self.outfits_missingflux+"_tmp1",expr="IM0",mask=self.outfits_missingflux+"_tmp2",
-            outfile=self.outfits_missingflux+"_tmp3")
+        immath(self.outfits_missingflux+"_tmp1",expr="IM0",mask=self.outfits_missingflux+"_tmp3",
+            outfile=self.outfits_missingflux+"_tmp4")
 
-        run_exportfits(self.outfits_missingflux+"_tmp3",self.outfits_missingflux,True,True,True)
+        run_exportfits(self.outfits_missingflux+"_tmp4",self.outfits_missingflux,True,True,True)
 
     ######################
     # create_figure_spws #
