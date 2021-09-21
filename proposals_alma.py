@@ -213,9 +213,9 @@ class ProposalsALMA():
 
         # plot
         plt.figure(figsize=(10,6))
-        gs = gridspec.GridSpec(nrows=5, ncols=20)
-        ax1 = plt.subplot(gs[0:3,1:20])
-        ax2 = plt.subplot(gs[3:5,1:20])
+        gs = gridspec.GridSpec(nrows=5, ncols=30)
+        ax1 = plt.subplot(gs[0:3,1:30])
+        ax2 = plt.subplot(gs[3:5,1:30])
 
         # ax setup
         myax_set(ax1,xlim=[209,277],ylim=[0.0,10.0],labelbottom=False,labelleft=False)
@@ -370,9 +370,9 @@ class ProposalsALMA():
 
         # plot
         plt.figure(figsize=(10,6))
-        gs = gridspec.GridSpec(nrows=5, ncols=20)
-        ax1 = plt.subplot(gs[0:3,1:20])
-        ax2 = plt.subplot(gs[3:5,1:20])
+        gs = gridspec.GridSpec(nrows=5, ncols=30)
+        ax1 = plt.subplot(gs[0:3,1:30])
+        ax2 = plt.subplot(gs[3:5,1:30])
 
         # ax setup
         myax_set(ax1,xlim=[83,117],ylim=[0.0,10.0],labelbottom=False,labelleft=False)
@@ -411,11 +411,11 @@ class ProposalsALMA():
         # text
         ax1.text(0.50,0.90,"ALMA Band 3 Coverage",
             color="black",weight="bold",transform=ax1.transAxes,fontsize=16,ha="center")
-        ax2.text(0.95,0.05,"proposed B3 7m+TP SPWs",
+        ax2.text(0.95,0.05,"proposed 7m+TP SPWs",
             color="blue",weight="bold",transform=ax2.transAxes,fontsize=13,ha="right")
-        ax2.text(0.95,0.25,"archival B3 12m SPWs",
+        ax2.text(0.95,0.25,"archival 12m SPWs",
             color="black",transform=ax2.transAxes,fontsize=13,ha="right")
-        ax2.text(0.95,0.16,"archival B3 7m SPWs",
+        ax2.text(0.95,0.16,"archival 7m SPWs",
             color="tomato",transform=ax2.transAxes,fontsize=13,ha="right")
 
         # ax1 grid
