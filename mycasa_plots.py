@@ -1010,6 +1010,7 @@ def combine_two_png(
     done2 = glob.glob(infile2)
     if done1:
         if done2:
+            os.system("rm -rf " + outfile)
             immagick_crop(infile1, infile1+"_tmp1.png", box=box1, delin=delin)
             immagick_crop(infile2, infile2+"_tmp1.png", box=box2, delin=delin)
             immagick_append(infile1+"_tmp1.png", infile2+"_tmp1.png", outfile, axis=axis, delin=delin)
