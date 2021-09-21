@@ -217,9 +217,9 @@ class ProposalsALMA():
             ax2.plot(x,y,color="blue",lw=5)
 
         # text
-        ax2.text(0.92,0.10,"proposed B3 7m+TP observations",color="blue",weight="bold",transform=ax2.transAxes,fontsize=14,ha="right")
-        ax2.text(0.92,0.30,"archival B3 12m data",color="grey",transform=ax2.transAxes,fontsize=14,ha="right")
-        ax2.text(0.92,0.20,"archival B3 7m data",color="tomato",transform=ax2.transAxes,fontsize=14,ha="right")
+        ax2.text(0.88,0.05,"proposed B3 7m+TP observations",color="blue",weight="bold",transform=ax2.transAxes,fontsize=14,ha="right")
+        ax2.text(0.88,0.25,"archival B3 12m data",color="grey",transform=ax2.transAxes,fontsize=14,ha="right")
+        ax2.text(0.88,0.16,"archival B3 7m data",color="tomato",transform=ax2.transAxes,fontsize=14,ha="right")
 
         plt.savefig(self.png_specscan_b3, dpi=self.fig_dpi)
 
