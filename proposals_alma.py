@@ -161,8 +161,8 @@ class ProposalsALMA():
             this_spws  = this_freq.split(" U ")
 
             if this_array=="12m":
-                this_color = "grey"
-                this_lw = 1.2
+                this_color = "black"
+                this_lw = 1.0
             else:
                 this_color = "tomato"
                 this_lw = 1.5
@@ -229,7 +229,7 @@ class ProposalsALMA():
 
         # text
         ax2.text(0.95,0.05,"proposed B3 7m+TP SPWs",color="blue",weight="bold",transform=ax2.transAxes,fontsize=11,ha="right")
-        ax2.text(0.95,0.25,"archival B3 12m SPWs",color="grey",transform=ax2.transAxes,fontsize=11,ha="right")
+        ax2.text(0.95,0.25,"archival B3 12m SPWs",color="black",transform=ax2.transAxes,fontsize=11,ha="right")
         ax2.text(0.95,0.16,"archival B3 7m SPWs",color="tomato",transform=ax2.transAxes,fontsize=11,ha="right")
 
         plt.savefig(self.png_specscan_b3, dpi=self.fig_dpi)
