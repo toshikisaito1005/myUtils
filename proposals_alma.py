@@ -240,7 +240,7 @@ class ProposalsALMA():
             color="tomato",transform=ax2.transAxes,fontsize=13,ha="right")
 
         # ax1 grid
-        width = 0.3
+        width = 0.4
         ax1.plot([84,116],[1,1],lw=2,color="black",zorder=1e9)
         ax1.plot([85,85],[1.0-width,1.0+width],lw=2,color="black",zorder=1e9)
         ax1.plot([95,95],[1.0-width,1.0+width],lw=2,color="black",zorder=1e9)
@@ -252,6 +252,9 @@ class ProposalsALMA():
         ax1.text(105,1.0-width-0.1,"105",ha="center",va="top",fontsize=11)
         ax1.text(115,1.0-width-0.1,"115",ha="center",va="top",fontsize=11)
         ax1.text(115,1.0-width-0.1,"115",ha="center",va="top",fontsize=11)
+
+        # ax2 rectangle
+        e1 = patches.FancyBboxPatch(xy=(84,0),width=116-84,height=100,boxstyle="round",color="skyblue")
 
         plt.savefig(self.png_specscan_b3, dpi=self.fig_dpi)
 
