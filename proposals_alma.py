@@ -77,7 +77,10 @@ class ProposalsALMA():
                 self.b6_spw_setup = [float(s) for s in l.split(",")]
 
                 # ngc1068
-                self.z = float(self._read_key("z"))
+                self.z       = float(self._read_key("z"))
+                self.scale   = float(self._read_key("scale"))
+                self.ra_agn  = float(self._read_key("ra_agn"))
+                self.dec_agn = float(self._read_key("dec_agn"))
 
                 # output fits
                 self.outfits_missingflux = self.dir_ready + self._read_key("outfits_missingflux")
@@ -85,7 +88,9 @@ class ProposalsALMA():
                 # output png
                 self.png_specscan_b3 = self.dir_products + self._read_key("png_specscan_b3")
                 self.png_specscan_b6 = self.dir_products + self._read_key("png_specscan_b6")
+
                 self.png_missingflux = self.dir_products + self._read_key("png_missingflux")
+                self.imsize_as = float(self._read_key("imsize_as"))
 
                 # final products
                 self.final_specscan = self.dir_final + self._read_key("final_specscan")
@@ -133,7 +138,7 @@ class ProposalsALMA():
         run_imregrid(self.image_co10_12m7m+"_tmp1",self.image_co10_12m+"_tmp1",
             self.image_co10_12m7m+"_tmp2",delin=True)
 
-        expr = "iif(IM1>0,(IM0-IM1)/IM0,0)"
+        expr = "iif(IM1>0,(IM0-IM1)/IM0*100,0)"
         run_immath_two(self.image_co10_12m7m+"_tmp2",self.image_co10_12m+"_tmp1",
             self.outfits_missingflux+"_tmp1",expr,delin=True)
 
@@ -144,6 +149,41 @@ class ProposalsALMA():
             self.outfits_missingflux+"_tmp3",expr,delin=True)
 
         run_exportfits(self.outfits_missingflux+"_tmp3",self.outfits_missingflux,True,True,True)
+
+        # plot
+        scalebar = 2000 / self.scale
+        
+        myfig_fits2png(
+        # general
+        self.outfits_missingflux,
+        self.png_missingflux,
+        imcontour1=self.image_co10_12m7m,
+        imsize_as=self.imsize_as,
+        ra_cnt=self.ra_agn,
+        dec_cnt=self.dec_agn,
+        # contour 1
+        unit_cont1=None,
+        levels_cont1=[0.01,0.02,0.04,0.08,0.16,0.32,0.64,0.96],
+        width_cont1=[1.0],
+        color_cont1="black",
+        # imshow
+        fig_dpi=200,
+        set_grid="both",
+        set_title="CO(1-0) missing flux map",
+        showzero=False,
+        showbeam=True,
+        color_beam="black",
+        scalebar=scalebar,
+        label_scalebar="2 kpc",
+        color_scalebar="black",
+        # imshow colorbar
+        set_cbar=True,
+        clim=[0,100],
+        label_cbar="missing flux (%)",
+        # annotation
+        numann=None,
+        textann=True,
+        )
 
     ######################
     # create_figure_spws #
