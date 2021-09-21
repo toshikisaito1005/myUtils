@@ -125,8 +125,8 @@ class ProposalsALMA():
         taskname = self.modname + sys._getframe().f_code.co_name
         check_first(self.image_co10_12m7m,taskname)
 
-        run_importfits(self.image_co10_12m7m,self.image_co10_12m7m+"_tmp1")
-        run_importfits(self.image_co10_12m,self.image_co10_12m+"_tmp1")
+        run_importfits(self.image_co10_12m7m,self.image_co10_12m7m+"_tmp1",defaultaxes=True)
+        run_importfits(self.image_co10_12m,self.image_co10_12m+"_tmp1",defaultaxes=True)
 
         run_imregrid(self.image_co10_12m7m+"_tmp1",self.image_co10_12m+"_tmp1",
             self.image_co10_12m7m+"_tmp2",delin=True)
