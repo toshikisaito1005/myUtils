@@ -84,18 +84,47 @@ class ProposalsALMA():
                 self.png_specscan_b6 = self.dir_products + self._read_key("png_specscan_b6")
                 self.png_missingflux = self.dir_products + self._read_key("png_missingflux")
 
+                # final products
+                self.final_specscan = self.dir_final + self._read_key("final_specscan")
+                self.box_specscan = self._read_key("box_specscan")
+
     #################
     # run_cycle_8p5 #
     #################
 
     def run_cycle_8p5(
         self,
-        plot_spw_setup = False,
+        plot_spw_setup  = False,
+        combine_figures = False,
         ):
 
         if plot_spw_setup==True:
             self.plot_spw_setup_b3()
             self.plot_spw_setup_b6()
+
+        if combine_figures==True:
+            self.figure_spws()
+
+    ###############
+    # figure_spws #
+    ###############
+
+    def figure_spws(
+        self,
+        ):
+        """
+        """
+
+        taskname = self.modname + sys._getframe().f_code.co_name
+        check_first(self.png_specscan_b6,taskname)
+
+        combine_two_png(
+        self.png_specscan_b3,
+        self.png_specscan_b6,
+        self.final_specscan,
+        self.box_specscan,
+        self.box_specscan,
+        )
 
     #####################
     # plot_spw_setup_b6 #
@@ -246,7 +275,6 @@ class ProposalsALMA():
         ax1.plot([250,250],[1.0-width,1.0+width],lw=2,color="black",zorder=1e9)
         ax1.plot([260,260],[1.0-width,1.0+width],lw=2,color="black",zorder=1e9)
         ax1.plot([270,270],[1.0-width,1.0+width],lw=2,color="black",zorder=1e9)
-        ax1.text(210,1.0-width-0.1,"210",ha="center",va="top",fontsize=11)
         ax1.text(220,1.0-width-0.1,"220",ha="center",va="top",fontsize=11)
         ax1.text(230,1.0-width-0.1,"230",ha="center",va="top",fontsize=11)
         ax1.text(240,1.0-width-0.1,"240",ha="center",va="top",fontsize=11)

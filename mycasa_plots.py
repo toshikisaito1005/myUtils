@@ -957,3 +957,63 @@ def _get_contour_levels(fitsimage,unit_contour,levels_contour):
     output_contours = map(lambda x: x * unit_contour, levels_contour)
 
     return contour_data, output_contours
+
+################
+# image magick #
+################
+
+def immagick_crop(
+    infile,
+    outfile,
+    box,
+    delin=False,
+    convert="/usr/bin/convert ",
+    ):
+    print("# run immagick_crop")
+    os.system(convert + " -crop " + box + " " + infile + " " + outfile)
+
+    if delin==True:
+        os.system("rm -rf " + infile)
+
+def immagick_append(
+    infile1,
+    infile2,
+    outfile,
+    axis="row",
+    delin=False,
+    convert="/usr/bin/convert ",
+    ):
+    print("# run immagick_append")
+    
+    if axis=="row":
+        axis="+"
+    elif axis=="column":
+        axis="-"
+    
+    os.system(convert + " " + axis + "append -border 0x0 " + infile1 + " " + infile2 + " " + outfile)
+    
+    if delin==True:
+        os.system("rm -rf " + infile1)
+        os.system("rm -rf " + infile2)
+
+def combine_two_png(
+    infile1,
+    infile2,
+    outfile,
+    box1,
+    box2,
+    axis="row",
+    delin=False,
+    ):
+    print("# run combine_two_png")
+    done1 = glob.glob(infile1)
+    done2 = glob.glob(infile2)
+    if done1:
+        if done2:
+            immagick_crop(infile1, infile1+"_tmp1.png", box=box1, detete_input=detete_input)
+            immagick_crop(infile2, infile2+"_tmp1.png", box=box2, detete_input=detete_input)
+            immagick_append(infile1+"_tmp1.png", infile2+"_tmp1.png", outfile, axis=axis, detete_input=detete_input)
+    
+    if delin==True:
+        os.system("rm -rf " + infile1 + " " + infile1 + "_tmp1.png")
+        os.system("rm -rf " + infile2 + " " + infile2 + "_tmp1.png")
