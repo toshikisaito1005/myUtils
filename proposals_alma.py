@@ -94,13 +94,13 @@ class ProposalsALMA():
         ):
 
         if plot_spw_setup==True:
-            self.plot_spw_setup()
+            self.plot_spw_setup_b3()
 
-    ##################
-    # plot_spw_setup #
-    ##################
+    #####################
+    # plot_spw_setup_b3 #
+    #####################
 
-    def plot_spw_setup(
+    def plot_spw_setup_b3(
         self,
         ):
         """
@@ -142,22 +142,19 @@ class ProposalsALMA():
         array     = array[mask]
 
         # get data
-        b3,b6 = [],[]
+        sci_band = []
         for i in range(len(band)):
             this_band = band[i]
             if this_band=="3":
-                b3.append(i)
-            elif this_band=="6":
-                b6.append(i)
+                sci_band.append(i)
 
-        data_b3 = np.c_[project[b3], freq_info[b3], ang_res[b3], pi_name[b3], galname[b3], array[b3]]
-        data_b6 = np.c_[project[b6], freq_info[b6], ang_res[b6], pi_name[b6], galname[b6], array[b6]]
+        data = np.c_[project[sci_band], freq_info[sci_band], ang_res[sci_band], pi_name[sci_band], galname[sci_band], array[sci_band]]
 
-        # prepare for plot: b3 spws
+        # prepare for plot: sci_band spws
         list_spw,list_color,list_lw = [],[],[]
-        for i in range(len(data_b3[:,1])):
-            this_freq  = data_b3[i,1]
-            this_array = data_b3[i,5]
+        for i in range(len(data[:,1])):
+            this_freq  = data[i,1]
+            this_array = data[i,5]
             this_spws  = this_freq.split(" U ")
 
             if this_array=="12m":
@@ -175,10 +172,10 @@ class ProposalsALMA():
                 list_color.append(this_color)
                 list_lw.append(this_lw)
 
-        list_b3data = np.c_[list_spw,list_color]
-        list_b3data = list_b3data[np.argsort(list_b3data[:, 0].astype(np.float64))]
+        list_data = np.c_[list_spw,list_color]
+        list_data = list_data[np.argsort(list_data[:, 0].astype(np.float64))]
 
-        # prepare for plot: b3 lines
+        # prepare for plot: lines
         list_line = np.loadtxt(self.line_key,dtype="str")
         list_linefreq = [float(s[2]) for s in list_line if "b3" in s[0]]
         list_linename = [s[0].split("line_b3_")[1] for s in list_line if "b3" in s[0]]
@@ -219,9 +216,9 @@ class ProposalsALMA():
         	    rotation=60,fontsize=11,ha="left",va="bottom")
 
         # ax2: arcival spw
-        for i in range(len(list_b3data)):
-            x = [float(list_b3data[i][0]),float(list_b3data[i][1])]
-            ax2.plot(x,[i+1,i+1],"-",color=list_b3data[i][2],lw=list_lw[i])
+        for i in range(len(list_data)):
+            x = [float(list_data[i][0]),float(list_data[i][1])]
+            ax2.plot(x,[i+1,i+1],"-",color=list_data[i][2],lw=list_lw[i])
 
         # ax2: proposed spw
         for j in range(len(self.b3_spw_setup)):
