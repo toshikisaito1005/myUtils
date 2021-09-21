@@ -227,11 +227,11 @@ class ProposalsALMA():
         ax1.tick_params("x", length=0, which="major")
         ax1.tick_params("y", length=0, which="major")
 
-        myax_set(ax2,xlim=[209,277],ylim=[-5,100],labelbottom=False,labelleft=False)
-        ax2.spines["right"].set_visible(False)
-        ax2.spines["top"].set_visible(False)
-        ax2.spines["bottom"].set_visible(False)
-        ax2.spines["left"].set_visible(False)
+        myax_set(ax2,xlim=[209,277],ylim=[-5,100],labelbottom=False,labelleft=False,lw_outline=1.0)
+        #ax2.spines["right"].set_visible(False)
+        #ax2.spines["top"].set_visible(False)
+        #ax2.spines["bottom"].set_visible(False)
+        #ax2.spines["left"].set_visible(False)
         ax2.tick_params("x", length=0, which="major")
         ax2.tick_params("y", length=0, which="major")
 
@@ -283,8 +283,8 @@ class ProposalsALMA():
         ax1.text(270,1.0-width-0.1,"270",ha="center",va="top",fontsize=11)
 
         # ax2 rectangle
-        e1 = patches.Rectangle(xy=(211,-5),width=275-211,height=105,color="grey",alpha=0.1,zorder=0,lw=0)
-        ax2.add_patch(e1)
+        #e1 = patches.Rectangle(xy=(211,-5),width=275-211,height=105,color="grey",alpha=0.1,zorder=0,lw=0)
+        #ax2.add_patch(e1)
 
         plt.savefig(self.png_specscan_b6, dpi=self.fig_dpi)
 
@@ -389,11 +389,11 @@ class ProposalsALMA():
         ax1.tick_params("x", length=0, which="major")
         ax1.tick_params("y", length=0, which="major")
 
-        myax_set(ax2,xlim=[83,117],ylim=[-5,100],labelbottom=False,labelleft=False)
-        ax2.spines["right"].set_visible(False)
-        ax2.spines["top"].set_visible(False)
-        ax2.spines["bottom"].set_visible(False)
-        ax2.spines["left"].set_visible(False)
+        myax_set(ax2,xlim=[83,117],ylim=[-5,100],labelbottom=False,labelleft=False,lw_outline=1.0)
+        #ax2.spines["right"].set_visible(False)
+        #ax2.spines["top"].set_visible(False)
+        #ax2.spines["bottom"].set_visible(False)
+        #ax2.spines["left"].set_visible(False)
         ax2.tick_params("x", length=0, which="major")
         ax2.tick_params("y", length=0, which="major")
 
@@ -443,8 +443,8 @@ class ProposalsALMA():
         ax1.text(115,1.0-width-0.1,"115",ha="center",va="top",fontsize=11)
 
         # ax2 rectangle
-        e1 = patches.Rectangle(xy=(84,-5),width=116-84,height=105,color="grey",alpha=0.1,zorder=0,lw=0)
-        ax2.add_patch(e1)
+        #e1 = patches.Rectangle(xy=(84,-5),width=116-84,height=105,color="grey",alpha=0.1,zorder=0,lw=0)
+        #ax2.add_patch(e1)
 
         plt.savefig(self.png_specscan_b3, dpi=self.fig_dpi)
 
