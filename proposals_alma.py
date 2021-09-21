@@ -79,8 +79,8 @@ class ProposalsALMA():
                 # ngc1068
                 self.z       = float(self._read_key("z"))
                 self.scale   = float(self._read_key("scale"))
-                self.ra_agn  = float(self._read_key("ra_agn").split("deg")[0])
-                self.dec_agn = float(self._read_key("dec_agn").split("deg")[0])
+                self.ra_agn  = self._read_key("ra_agn")
+                self.dec_agn = self._read_key("dec_agn")
 
                 # output fits
                 self.outfits_missingflux = self.dir_ready + self._read_key("outfits_missingflux")
