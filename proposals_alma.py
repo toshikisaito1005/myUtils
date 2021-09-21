@@ -187,8 +187,8 @@ class ProposalsALMA():
 
         # ax2
         for i in range(len(list_b3data)):
-            x = [float(list_spwdata[i][0]),float(list_spwdata[i][1])]
-            ax2.plot(x, [i+1,i+1], "-", color=list_spwdata[i][2],lw=2)
+            x = [float(list_b3data[i][0]),float(list_b3data[i][1])]
+            ax2.plot(x, [i+1,i+1], "-", color=list_b3data[i][2],lw=2)
 
         # ax3
         for j in range(len(self.b3_spw_setup)):
