@@ -176,8 +176,8 @@ class ProposalsALMA():
         list_b3data = list_b3data[np.argsort(list_b3data[:, 0].astype(np.float64))]
 
         # plot
-        plt.figure(figsize=(10,10))
-        plt.subplots_adjust(bottom=0.15,left=0.07,right=0.98,top=0.90)
+        plt.figure(figsize=(10,8))
+        plt.subplots_adjust(bottom=0.01,left=0.01,right=0.99,top=0.99)
         gs = gridspec.GridSpec(nrows=3, ncols=1)
         ax1 = plt.subplot(gs[0:1,0:1])
         ax2 = plt.subplot(gs[1:2,0:1])
