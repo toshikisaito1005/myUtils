@@ -133,13 +133,13 @@ class ProposalsALMA():
 
         expr = "iif(IM1>0,(IM0-IM1)/IM0,0)"
         run_immath_two(self.image_co10_12m7m+"_tmp2",self.image_co10_12m+"_tmp1",
-            self.outfits_missingflux+"tmp1",expr,delin=True)
+            self.outfits_missingflux+"_tmp1",expr,delin=True)
 
         expr = "iif(IM0>0,IM0,0)"
-        run_immath_one(self.outfits_missingflux+"tmp1",
-            self.outfits_missingflux+"tmp2",expr,delin=True)
+        run_immath_one(self.outfits_missingflux+"_tmp1",
+            self.outfits_missingflux+"_tmp2",expr,delin=True)
 
-        run_exportfits(self.outfits_missingflux+"tmp1",self.outfits_missingflux,True,True,True)
+        run_exportfits(self.outfits_missingflux+"_tmp1",self.outfits_missingflux,True,True,True)
 
     ######################
     # create_figure_spws #
