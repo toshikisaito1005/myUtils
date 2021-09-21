@@ -135,7 +135,7 @@ class ProposalsALMA():
             defaultaxesvalues=["RA","Dec","1GHz","Stokes"])
         run_importfits(self.image_co10_12m,self.image_co10_12m+"_tmp1",defaultaxes=True,
             defaultaxesvalues=["RA","Dec","1GHz","Stokes"])
-        run_exportfits(self.image_co10_12m+"_tmp1",self.outfits_co10,True,True,True)
+        run_exportfits(self.image_co10_12m+"_tmp1",self.outfits_co10,True,True,False)
 
         run_imregrid(self.image_co10_12m7m+"_tmp1",self.image_co10_12m+"_tmp1",
             self.image_co10_12m7m+"_tmp2",delin=True)
