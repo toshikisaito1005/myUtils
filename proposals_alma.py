@@ -89,12 +89,12 @@ class ProposalsALMA():
                 self.png_specscan_b3 = self.dir_products + self._read_key("png_specscan_b3")
                 self.png_specscan_b6 = self.dir_products + self._read_key("png_specscan_b6")
 
-                self.png_missingflux = self.dir_products + self._read_key("png_missingflux")
-                self.imsize_as = float(self._read_key("imsize_as"))
-
                 # final products
                 self.final_specscan = self.dir_final + self._read_key("final_specscan")
                 self.box_specscan = self._read_key("box_specscan")
+
+                self.final_missingflux = self.dir_final + self._read_key("final_missingflux")
+                self.imsize_as = float(self._read_key("imsize_as"))
 
     #################
     # run_cycle_8p5 #
@@ -148,6 +148,9 @@ class ProposalsALMA():
         run_immath_two(self.outfits_missingflux+"_tmp1",self.outfits_missingflux+"_tmp2",
             self.outfits_missingflux+"_tmp3",expr,delin=True)
 
+        imhead(self.outfits_missingflux+"_tmp3",mode="put",hdkey="beammajor",hdvalue="0.8arcsec")
+        imhead(self.outfits_missingflux+"_tmp3",mode="put",hdkey="beamminor",hdvalue="0.8arcsec")
+
         run_exportfits(self.outfits_missingflux+"_tmp3",self.outfits_missingflux,True,True,True)
 
         # plot
@@ -156,7 +159,7 @@ class ProposalsALMA():
         myfig_fits2png(
         # general
         self.outfits_missingflux,
-        self.png_missingflux,
+        self.final_missingflux,
         imcontour1=self.image_co10_12m7m,
         imsize_as=self.imsize_as,
         ra_cnt=self.ra_agn,
