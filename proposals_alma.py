@@ -179,9 +179,9 @@ class ProposalsALMA():
         plt.figure(figsize=(10,6))
         plt.subplots_adjust(bottom=0.01,left=0.01,right=0.99,top=0.99)
         gs = gridspec.GridSpec(nrows=5, ncols=1)
-        ax1 = plt.subplot(gs[0:2,0:1])
-        ax2 = plt.subplot(gs[2:4,0:1])
-        ax3 = plt.subplot(gs[4:5,0:1])
+        ax1 = plt.subplot(gs[0:3,0:1])
+        ax2 = plt.subplot(gs[3:5,0:1])
+        #ax3 = plt.subplot(gs[4:5,0:1])
 
         # ax setup
         myax_set(ax1,xlim=[84,116],ylim=None,labelbottom=False,labelleft=False)
@@ -200,32 +200,23 @@ class ProposalsALMA():
         ax2.tick_params("x", length=0, which="major")
         ax2.tick_params("y", length=0, which="major")
 
-        myax_set(ax3,xlim=[84,116],ylim=[0,len(self.b3_spw_setup)+2],labelbottom=False,labelleft=False)
-        ax3.spines["right"].set_visible(False)
-        ax3.spines["top"].set_visible(False)
-        ax3.spines["bottom"].set_visible(False)
-        ax3.spines["left"].set_visible(False)
-        ax3.tick_params("x", length=0, which="major")
-        ax3.tick_params("y", length=0, which="major")
-
         # ax1
 
-        # ax2
+        # ax2: arcival spw
         for i in range(len(list_b3data)):
             x = [float(list_b3data[i][0]),float(list_b3data[i][1])]
             ax2.plot(x, [i+1,i+1], "-", color=list_b3data[i][2],lw=2)
 
-        # ax3
+        # ax2: proposed spw
         for j in range(len(self.b3_spw_setup)):
             x = [self.b3_spw_setup[j]-1.875/2.0, self.b3_spw_setup[j]+1.875/2.0]
-            y = [j+1,j+1]
-            ax3.plot(x,y,color="deepskyblue",lw=9)
+            y = [j*3+75,j*3+75]
+            ax2.plot(x,y,color="deepskyblue",lw=9)
 
         # text
-        ax2.text(0.02,0.90,"archival 12m data",color="lightgrey",transform=ax2.transAxes,fontsize=16)
-        ax2.text(0.02,0.80,"archival 7m data",color="tomato",transform=ax2.transAxes,fontsize=16)
-
-        ax3.text(0.02,0.90,"proposed 7m+TP observations",color="deepskyblue",transform=ax3.transAxes,fontsize=16)
+        ax2.text(0.02,0.90,"proposed 7m+TP observations",color="deepskyblue",transform=ax2.transAxes,fontsize=16)
+        ax2.text(0.02,0.80,"archival 12m data",color="lightgrey",transform=ax2.transAxes,fontsize=16)
+        ax2.text(0.02,0.70,"archival 7m data",color="tomato",transform=ax2.transAxes,fontsize=16)
 
         plt.savefig(self.png_specscan_b3, dpi=self.fig_dpi)
 
