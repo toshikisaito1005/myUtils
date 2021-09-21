@@ -200,7 +200,7 @@ class ProposalsALMA():
         data     = data.flatten()
         data     = data[data>0]
 
-        data_hist = np.histogram(data, bins=20, range=[0,100], weights=None)
+        data_hist = np.histogram(data, bins=100, range=[0,100], weights=None)
         x = np.delete(data_hist[1],-1)
         y = data_hist[0] / float(np.sum(data_hist[0]))
 
