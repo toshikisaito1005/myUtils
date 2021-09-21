@@ -69,13 +69,19 @@ class ProposalsALMA():
                 self.image_co10_12m = dir_raw + self._read_key("image_co10_12m")
                 self.archive_csv = dir_raw + self._read_key("archive_csv")
 
-                # lines
+                # spectral scan setup
                 self.line_key = self.dir_proj + "scripts/keys/key_lines.txt"
+                l = self._read_key("b3_spw_setup")
+                self.b3_spw_setup = [float(s) for s in l.split(",")]
+                l = self._read_key("b6_spw_setup")
+                self.b6_spw_setup = [float(s) for s in l.split(",")]
 
                 # ngc1068
                 self.z = float(self._read_key("z"))
 
                 # output png
+                self.png_specscan_b3 = self.dir_products + self._read_key("png_specscan_b3")
+                self.png_specscan_b6 = self.dir_products + self._read_key("png_specscan_b6")
                 self.png_missingflux = self.dir_products + self._read_key("png_missingflux")
 
     #################
@@ -104,7 +110,7 @@ class ProposalsALMA():
         check_first(self.archive_csv,taskname)
 
         # read csv
-        with open(this_csv) as f:
+        with open(self.archive_csv) as f:
             reader = csv.reader(f)
             l = [row for row in reader]
 
@@ -147,7 +153,50 @@ class ProposalsALMA():
         data_b3 = np.c_[project[b3], freq_info[b3], ang_res[b3], pi_name[b3], galname[b3], array[b3]]
         data_b6 = np.c_[project[b6], freq_info[b6], ang_res[b6], pi_name[b6], galname[b6], array[b6]]
 
+        # prepare for plot: b3
+        list_spw,list_color = [],[]
+        for i in range(len(data_b3[:,1])):
+            this_freq  = data_b3[i,1]
+            this_array = data_b3[i,5]
+            this_spws  = this_freq.split(" U ")
+
+            if this_array=="12m":
+                this_color = "lightgrey"
+            else:
+                this_color = "tomato"
+
+            for j in range(len(this_spws)):
+                this_spw = this_spws[j].split(",")[0].lstrip("[")
+                this_spw = this_spw.rstrip("GHz").split("..")
+                this_spw = [float(this_spw[0])*(1+self.z),float(this_spw[1])*(1+self.z)]
+                list_spw.append(this_spw)
+                list_color.append(this_color)
+
+        list_b3data = np.c_[list_spw,list_color]
+        list_b3data = list_b3data[np.argsort(list_b3data[:, 0].astype(np.float64))]
+
         # plot
+        plt.figure(figsize=(10,10))
+        plt.subplots_adjust(bottom=0.15,left=0.07,right=0.98,top=0.90)
+        gs = gridspec.GridSpec(nrows=3, ncols=1)
+        ax1 = plt.subplot(gs[0:1,0:1])
+        ax2 = plt.subplot(gs[1:2,0:1])
+        ax3 = plt.subplot(gs[2:3,0:1])
+        myax_set(ax2,xlim=[84,116],ylim=[0,100],labelbottom=False,labelleft=False)
+        myax_set(ax3,xlim=[84,116],ylim=[0,len(self.b3_spw_setup)+2],labelbottom=False,labelleft=False)
+
+        # ax2
+        for i in range(len(list_b3data)):
+            x = [float(list_spwdata[i][0]),float(list_spwdata[i][1])]
+            ax2.plot(x, [i+1,i+1], "-", color=list_spwdata[i][2],lw=2)
+
+        # ax3
+        for j in range(len(self.b3_spw_setup)):
+            x = [self.b3_spw_setup[j]-1.875/2.0, self.b3_spw_setup[j]+1.875/2.0]
+            y = [j+1,j+1]
+            ax3.plot(x,y,color="deepskyblue",alpha=0.3,lw=3)
+
+        plt.savefig(self.png_specscan_b3, dpi=self.fig_dpi)
 
     ###############
     # _create_dir #
