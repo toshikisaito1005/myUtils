@@ -148,8 +148,8 @@ class ProposalsALMA():
         self.png_missingflux,
         self.png_histogram,
         self.final_missingflux,
-        "3000x3000+0+0",
-        "3000x3000+0+0",
+        "3000000x3000000+0+0",
+        "3000000x3000000+0+0",
         )
 
     ####################
