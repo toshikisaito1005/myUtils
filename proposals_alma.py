@@ -210,7 +210,11 @@ class ProposalsALMA():
         ax1.plot([100,100],[1.0-width,1.0+width],lw=2,color="black")
         ax1.plot([110,110],[1.0-width,1.0+width],lw=2,color="black")
         ax1.plot([120,120],[1.0-width,1.0+width],lw=2,color="black")
-        ax1.text(80,1.0-width,"80",ha="center",va="top")
+        ax1.text(80,1.0-width-0.1,"80",ha="center",va="top",fontsize=9)
+        ax1.text(90,1.0-width-0.1,"90",ha="center",va="top",fontsize=9)
+        ax1.text(100,1.0-width-0.1,"100",ha="center",va="top",fontsize=9)
+        ax1.text(110,1.0-width-0.1,"110",ha="center",va="top",fontsize=9)
+        ax1.text(120,1.0-width-0.1,"120",ha="center",va="top",fontsize=9)
 
         # ax2: arcival#spw
         for i in range(len(list_b3data)):
@@ -224,9 +228,9 @@ class ProposalsALMA():
             ax2.plot(x,y,color="blue",lw=5)
 
         # text
-        ax2.text(0.90,0.05,"proposed B3 7m+TP SPWs",color="blue",weight="bold",transform=ax2.transAxes,fontsize=11,ha="right")
-        ax2.text(0.90,0.25,"archival B3 12m SPWs",color="grey",transform=ax2.transAxes,fontsize=11,ha="right")
-        ax2.text(0.90,0.16,"archival B3 7m SPWs",color="tomato",transform=ax2.transAxes,fontsize=11,ha="right")
+        ax2.text(0.95,0.05,"proposed B3 7m+TP SPWs",color="blue",weight="bold",transform=ax2.transAxes,fontsize=11,ha="right")
+        ax2.text(0.95,0.25,"archival B3 12m SPWs",color="grey",transform=ax2.transAxes,fontsize=11,ha="right")
+        ax2.text(0.95,0.16,"archival B3 7m SPWs",color="tomato",transform=ax2.transAxes,fontsize=11,ha="right")
 
         plt.savefig(self.png_specscan_b3, dpi=self.fig_dpi)
 
