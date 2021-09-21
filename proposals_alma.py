@@ -176,7 +176,7 @@ class ProposalsALMA():
         list_b3data = list_b3data[np.argsort(list_b3data[:, 0].astype(np.float64))]
 
         # plot
-        plt.figure(figsize=(10,8))
+        plt.figure(figsize=(10,6))
         plt.subplots_adjust(bottom=0.01,left=0.01,right=0.99,top=0.99)
         gs = gridspec.GridSpec(nrows=5, ncols=1)
         ax1 = plt.subplot(gs[0:2,0:1])
@@ -222,10 +222,10 @@ class ProposalsALMA():
             ax3.plot(x,y,color="deepskyblue",lw=9)
 
         # text
-        ax2.text(0.02,0.90,"archival 12m data",color="lightgrey",transform=ax2.transAxes)
-        ax2.text(0.02,0.80,"archival 7m data",color="tomato",transform=ax2.transAxes)
+        ax2.text(0.02,0.90,"archival 12m data",color="lightgrey",transform=ax2.transAxes,fontsize=16)
+        ax2.text(0.02,0.80,"archival 7m data",color="tomato",transform=ax2.transAxes,fontsize=16)
 
-        ax3.text(0.02,0.90,"proposed 7m+TP observations",color="deepskyblue")
+        ax3.text(0.02,0.90,"proposed 7m+TP observations",color="deepskyblue",transform=ax3.transAxes,fontsize=16)
 
         plt.savefig(self.png_specscan_b3, dpi=self.fig_dpi)
 
