@@ -131,8 +131,9 @@ class ProposalsALMA():
         run_imregrid(self.image_co10_12m7m+"_tmp1",self.image_co10_12m+"_tmp1",
             self.image_co10_12m7m+"_tmp2",delin=True)
 
+        expr = "iif(IM1>0,(IM0-IM1)/IM0,0)"
         run_immath_two(self.image_co10_12m7m+"_tmp2",self.image_co10_12m+"_tmp1",
-            self.outfits_missingflux+"tmp1","(IM0-IM1)/IM0",delin=True)
+            self.outfits_missingflux+"tmp1",expr,delin=True)
 
         run_exportfits(self.outfits_missingflux+"tmp1",self.outfits_missingflux,True,True,True)
 
