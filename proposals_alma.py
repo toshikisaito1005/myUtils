@@ -180,8 +180,9 @@ class ProposalsALMA():
 
         # prepare for plot: b3 lines
         list_line = np.loadtxt(self.line_key,dtype="str")
-        list_linefreq = [float(s[1]) for s in list_line if "b3" in s[0]]
+        list_linefreq = [float(s[2]) for s in list_line if "b3" in s[0]]
         list_linename = [s[0].split("line_b3_")[1] for s in list_line if "b3" in s[0]]
+        list_lineoffset = [float(s[1]) for s in list_line if "b3" in s[0]]
 
         # plot
         plt.figure(figsize=(10,6))
@@ -210,10 +211,12 @@ class ProposalsALMA():
         # ax1
         list_text = []
         for i in range(len(list_linename)):
-        	this_name = list_linename[i]
-        	this_freq = list_linefreq[i]
+        	this_name   = list_linename[i]
+        	this_freq   = list_linefreq[i]
+        	this_offset = list_lineoffset[i]
         	ax1.plot([this_freq,this_freq],[1.0,6.0],color="green",lw=2)
-        	this_text = ax1.text(this_freq,6.0,this_name,rotation=60,fontsize=11,ha="left",va="bottom")
+        	this_text = ax1.text(this_freq,6.0+this_offset,this_name,
+        	    rotation=60,fontsize=11,ha="left",va="bottom")
 
         # ax2: arcival spw
         for i in range(len(list_b3data)):
@@ -227,10 +230,14 @@ class ProposalsALMA():
             ax2.plot(x,y,color="blue",lw=5)
 
         # text
-        ax1.text(0.50,0.90,"ALMA Band 3 Coverage",color="black",weight="bold",transform=ax1.transAxes,fontsize=16,ha="center")
-        ax2.text(0.95,0.05,"proposed B3 7m+TP SPWs",color="blue",weight="bold",transform=ax2.transAxes,fontsize=13,ha="right")
-        ax2.text(0.95,0.25,"archival B3 12m SPWs",color="black",transform=ax2.transAxes,fontsize=13,ha="right")
-        ax2.text(0.95,0.16,"archival B3 7m SPWs",color="tomato",transform=ax2.transAxes,fontsize=13,ha="right")
+        ax1.text(0.50,0.90,"ALMA Band 3 Coverage",
+            color="black",weight="bold",transform=ax1.transAxes,fontsize=16,ha="center")
+        ax2.text(0.95,0.05,"proposed B3 7m+TP SPWs",
+            color="blue",weight="bold",transform=ax2.transAxes,fontsize=13,ha="right")
+        ax2.text(0.95,0.25,"archival B3 12m SPWs",
+            color="black",transform=ax2.transAxes,fontsize=13,ha="right")
+        ax2.text(0.95,0.16,"archival B3 7m SPWs",
+            color="tomato",transform=ax2.transAxes,fontsize=13,ha="right")
 
         # ax1 grid
         width = 0.3
