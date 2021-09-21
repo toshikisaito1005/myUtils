@@ -200,6 +200,10 @@ class ProposalsALMA():
         data     = data.flatten()
         data     = data[data>0]
 
+        p16 = np.percentile(data,16)
+        p50 = np.percentile(data,50)
+        p84 = np.percentile(data,84)
+
         data_hist = np.histogram(data, bins=100, range=[0,100], weights=None)
         x = np.delete(data_hist[1],-1)
         y = data_hist[0] / float(np.sum(data_hist[0]))
@@ -209,11 +213,14 @@ class ProposalsALMA():
         gs = gridspec.GridSpec(nrows=10, ncols=10)
         ax = plt.subplot(gs[0:10,0:10])
         ad = [0.215,0.83,0.10,0.90]
-        myax_set(ax,grid=None,xlim=[0,100],ylim=None,title="CO(1-0) missing flux histogram",
+        myax_set(ax,grid=None,xlim=[0,100],ylim=[0,0.03],title="CO(1-0) missing flux histogram",
             xlabel="missing flux (%)",ylabel="count density",adjust=ad)
 
         width = abs(x[1] - x[0])
         ax.bar(x, y, lw=0, color="black", alpha=0.2, width=width, align="center")
+
+        ax.plot([p50,p50],[0.027,0.027],"o",colro="black",lw=0,s=30)
+        ax.plot([p16,p84],[0.027,0.027],"-",colro="black",lw=2)
 
         plt.savefig(self.png_histogram, dpi=self.fig_dpi)
 
