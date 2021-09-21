@@ -210,15 +210,15 @@ class ProposalsALMA():
         # ax1
         width = 0.3
         ax1.plot([84,116],[1,1],lw=2,color="black")
-        ax1.plot([84,84],[1.0-width,1.0+width],lw=2,color="black")
-        ax1.plot([90,90],[1.0-width,1.0+width],lw=2,color="black")
-        ax1.plot([100,100],[1.0-width,1.0+width],lw=2,color="black")
-        ax1.plot([110,110],[1.0-width,1.0+width],lw=2,color="black")
-        ax1.plot([116,116],[1.0-width,1.0+width],lw=2,color="black")
+        ax1.plot([85,85],[1.0-width,1.0+width],lw=2,color="black")
+        ax1.plot([95,95],[1.0-width,1.0+width],lw=2,color="black")
+        ax1.plot([105,105],[1.0-width,1.0+width],lw=2,color="black")
+        ax1.plot([115,115],[1.0-width,1.0+width],lw=2,color="black")
+        ax1.plot([115,115],[1.0-width,1.0+width],lw=2,color="black")
         ax1.text(85,1.0-width-0.1,"85",ha="center",va="top",fontsize=9)
-        ax1.text(90,1.0-width-0.1,"90",ha="center",va="top",fontsize=9)
-        ax1.text(100,1.0-width-0.1,"100",ha="center",va="top",fontsize=9)
-        ax1.text(110,1.0-width-0.1,"110",ha="center",va="top",fontsize=9)
+        ax1.text(95,1.0-width-0.1,"95",ha="center",va="top",fontsize=9)
+        ax1.text(105,1.0-width-0.1,"105",ha="center",va="top",fontsize=9)
+        ax1.text(115,1.0-width-0.1,"115",ha="center",va="top",fontsize=9)
         ax1.text(115,1.0-width-0.1,"115",ha="center",va="top",fontsize=9)
 
         for i in range(len(list_linename)):
