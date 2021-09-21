@@ -165,7 +165,7 @@ class ProposalsALMA():
                 this_lw = 1.0
             else:
                 this_color = "tomato"
-                this_lw = 1.5
+                this_lw = 2.0
 
             for j in range(len(this_spws)):
                 this_spw = this_spws[j].split(",")[0].lstrip("[")
@@ -254,7 +254,7 @@ class ProposalsALMA():
         ax1.text(115,1.0-width-0.1,"115",ha="center",va="top",fontsize=11)
 
         # ax2 rectangle
-        e1 = patches.FancyBboxPatch(xy=(84,0),width=116-84,height=100,boxstyle="round,pad=10",color="grey",alpha=0.3,zorder=0)
+        e1 = patches.FancyBboxPatch(xy=(84,0),width=116-84,height=100,boxstyle="round,pad=0.1,rounding_size=0.2",color="grey",alpha=0.3,zorder=0)
         ax2.add_patch(e1)
 
         plt.savefig(self.png_specscan_b3, dpi=self.fig_dpi)
