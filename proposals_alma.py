@@ -95,6 +95,171 @@ class ProposalsALMA():
 
         if plot_spw_setup==True:
             self.plot_spw_setup_b3()
+            self.plot_spw_setup_b6()
+
+    #####################
+    # plot_spw_setup_b6 #
+    #####################
+
+    def plot_spw_setup_b6(
+        self,
+        ):
+        """
+        """
+
+        taskname = self.modname + sys._getframe().f_code.co_name
+        check_first(self.archive_csv,taskname)
+
+        # read csv
+        with open(self.archive_csv) as f:
+            reader = csv.reader(f)
+            l = [row for row in reader]
+
+        l = np.array(l)
+
+        ### get info
+        header    = l[0]
+        project   = l[:,0]
+        galname   = l[:,1]
+        band      = l[:,4]
+        freq_info = l[:,6]
+        ang_res   = l[:,9]
+        pi_name   = l[:,23]
+        array     = l[:,11]
+
+        # exclude ToO projects
+        mask = []
+        for i in range(len(project)):
+            this_project = project[i]
+            if ".S" in this_project:
+                mask.append(i)
+
+        project   = project[mask]
+        galname   = galname[mask]
+        band      = band[mask]
+        freq_info = freq_info[mask]
+        ang_res   = ang_res[mask]
+        pi_name   = np.array([s.split(",")[0] for s in pi_name[mask]])
+        array     = array[mask]
+
+        # get data
+        sci_band = []
+        for i in range(len(band)):
+            this_band = band[i]
+            if this_band=="6":
+                sci_band.append(i)
+
+        data = np.c_[project[sci_band], freq_info[sci_band], ang_res[sci_band], pi_name[sci_band], galname[sci_band], array[sci_band]]
+
+        # prepare for plot: sci_band spws
+        list_spw,list_color,list_lw = [],[],[]
+        for i in range(len(data[:,1])):
+            this_freq  = data[i,1]
+            this_array = data[i,5]
+            this_spws  = this_freq.split(" U ")
+
+            if this_array=="12m":
+                this_color = "black"
+                this_lw = 1.0
+            else:
+                this_color = "tomato"
+                this_lw = 2.0
+
+            for j in range(len(this_spws)):
+                this_spw = this_spws[j].split(",")[0].lstrip("[")
+                this_spw = this_spw.rstrip("GHz").split("..")
+                this_spw = [float(this_spw[0])*(1+self.z),float(this_spw[1])*(1+self.z)]
+                list_spw.append(this_spw)
+                list_color.append(this_color)
+                list_lw.append(this_lw)
+
+        list_data = np.c_[list_spw,list_color]
+        list_data = list_data[np.argsort(list_data[:, 0].astype(np.float64))]
+
+        # prepare for plot: lines
+        list_line = np.loadtxt(self.line_key,dtype="str")
+        list_linefreq = [float(s[2]) for s in list_line if "b6" in s[0]]
+        list_linename = [s[0].split("line_b6_")[1] for s in list_line if "b6" in s[0]]
+        list_lineoffset = [float(s[1]) for s in list_line if "b6" in s[0]]
+
+        # plot
+        plt.figure(figsize=(10,6))
+        plt.subplots_adjust(bottom=0.01,left=0.01,right=0.99,top=0.99)
+        gs = gridspec.GridSpec(nrows=5, ncols=1)
+        ax1 = plt.subplot(gs[0:3,0:1])
+        ax2 = plt.subplot(gs[3:5,0:1])
+
+        # ax setup
+        myax_set(ax1,xlim=[210,276],ylim=[0.0,10.0],labelbottom=False,labelleft=False)
+        ax1.spines["right"].set_visible(False)
+        ax1.spines["top"].set_visible(False)
+        ax1.spines["bottom"].set_visible(False)
+        ax1.spines["left"].set_visible(False)
+        ax1.tick_params("x", length=0, which="major")
+        ax1.tick_params("y", length=0, which="major")
+
+        myax_set(ax2,xlim=[210,276],ylim=[-5,100],labelbottom=False,labelleft=False)
+        ax2.spines["right"].set_visible(False)
+        ax2.spines["top"].set_visible(False)
+        ax2.spines["bottom"].set_visible(False)
+        ax2.spines["left"].set_visible(False)
+        ax2.tick_params("x", length=0, which="major")
+        ax2.tick_params("y", length=0, which="major")
+
+        # ax1
+        list_text = []
+        for i in range(len(list_linename)):
+        	this_name   = list_linename[i]
+        	this_freq   = list_linefreq[i]
+        	this_offset = list_lineoffset[i]
+        	ax1.plot([this_freq,this_freq],[1.0,6.0],color="green",lw=2)
+        	this_text = ax1.text(this_freq+this_offset,6.0,this_name,
+        	    rotation=60,fontsize=11,ha="left",va="bottom")
+
+        # ax2: arcival spw
+        for i in range(len(list_data)):
+            x = [float(list_data[i][0]),float(list_data[i][1])]
+            ax2.plot(x,[i+1,i+1],"-",color=list_data[i][2],lw=list_lw[i])
+
+        # ax2: proposed spw
+        for j in range(len(self.b6_spw_setup)):
+            x = [self.b6_spw_setup[j]-1.875/2.0, self.b6_spw_setup[j]+1.875/2.0]
+            y = [j*2+65,j*2+65]
+            ax2.plot(x,y,color="blue",lw=5)
+
+        # text
+        ax1.text(0.50,0.90,"ALMA Band 6 Coverage",
+            color="black",weight="bold",transform=ax1.transAxes,fontsize=16,ha="center")
+        ax2.text(0.95,0.05,"proposed 7m+TP SPWs",
+            color="blue",weight="bold",transform=ax2.transAxes,fontsize=13,ha="right")
+        ax2.text(0.95,0.25,"archival 12m SPWs",
+            color="black",transform=ax2.transAxes,fontsize=13,ha="right")
+        ax2.text(0.95,0.16,"archival 7m SPWs",
+            color="tomato",transform=ax2.transAxes,fontsize=13,ha="right")
+
+        # ax1 grid
+        width = 0.4
+        ax1.plot([210,276],[1,1],lw=2,color="black",zorder=1e9)
+        ax1.plot([210,210],[1.0-width,1.0+width],lw=2,color="black",zorder=1e9)
+        ax1.plot([220,220],[1.0-width,1.0+width],lw=2,color="black",zorder=1e9)
+        ax1.plot([230,230],[1.0-width,1.0+width],lw=2,color="black",zorder=1e9)
+        ax1.plot([240,240],[1.0-width,1.0+width],lw=2,color="black",zorder=1e9)
+        ax1.plot([250,250],[1.0-width,1.0+width],lw=2,color="black",zorder=1e9)
+        ax1.plot([260,260],[1.0-width,1.0+width],lw=2,color="black",zorder=1e9)
+        ax1.plot([270,270],[1.0-width,1.0+width],lw=2,color="black",zorder=1e9)
+        ax1.text(210,1.0-width-0.1,"210",ha="center",va="top",fontsize=11)
+        ax1.text(220,1.0-width-0.1,"220",ha="center",va="top",fontsize=11)
+        ax1.text(230,1.0-width-0.1,"230",ha="center",va="top",fontsize=11)
+        ax1.text(240,1.0-width-0.1,"240",ha="center",va="top",fontsize=11)
+        ax1.text(250,1.0-width-0.1,"250",ha="center",va="top",fontsize=11)
+        ax1.text(260,1.0-width-0.1,"260",ha="center",va="top",fontsize=11)
+        ax1.text(270,1.0-width-0.1,"270",ha="center",va="top",fontsize=11)
+
+        # ax2 rectangle
+        e1 = patches.Rectangle(xy=(210,-5),width=276-210,height=105,color="grey",alpha=0.1,zorder=0,lw=0)
+        ax2.add_patch(e1)
+
+        plt.savefig(self.png_specscan_b6, dpi=self.fig_dpi)
 
     #####################
     # plot_spw_setup_b3 #
@@ -251,7 +416,7 @@ class ProposalsALMA():
         ax1.text(115,1.0-width-0.1,"115",ha="center",va="top",fontsize=11)
 
         # ax2 rectangle
-        e1 = patches.Rectangle(xy=(84,-5),width=116-84,height=105,color="grey",alpha=0.2,zorder=0,lw=0)
+        e1 = patches.Rectangle(xy=(84,-5),width=116-84,height=105,color="grey",alpha=0.1,zorder=0,lw=0)
         ax2.add_patch(e1)
 
         plt.savefig(self.png_specscan_b3, dpi=self.fig_dpi)
