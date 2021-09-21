@@ -255,6 +255,7 @@ class ProposalsALMA():
 
         # ax2 rectangle
         e1 = patches.FancyBboxPatch(xy=(84,0),width=116-84,height=100,boxstyle="round",color="skyblue")
+        ax2.add_patch(e1)
 
         plt.savefig(self.png_specscan_b3, dpi=self.fig_dpi)
 
