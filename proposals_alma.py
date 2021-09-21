@@ -6,7 +6,7 @@ history:
 Toshiki Saito@Nichidai/NAOJ
 """
 
-import os, sys, glob
+import os, sys, glob, csv
 import numpy as np
 
 from mycasa_tasks import *
@@ -102,6 +102,52 @@ class ProposalsALMA():
 
         taskname = self.modname + sys._getframe().f_code.co_name
         check_first(self.archive_csv,taskname)
+
+        # read csv
+        with open(this_csv) as f:
+            reader = csv.reader(f)
+            l = [row for row in reader]
+
+        l = np.array(l)
+
+        ### get info
+        header    = l[0]
+        project   = l[:,0]
+        galname   = l[:,1]
+        band      = l[:,4]
+        freq_info = l[:,6]
+        ang_res   = l[:,9]
+        pi_name   = l[:,23]
+        array     = l[:,11]
+
+        # exclude ToO projects
+        mask = []
+        for i in range(len(project)):
+            this_project = project[i]
+            if ".S" in this_project:
+                mask.append(i)
+
+        project   = project[mask]
+        galname   = galname[mask]
+        band      = band[mask]
+        freq_info = freq_info[mask]
+        ang_res   = ang_res[mask]
+        pi_name   = np.array([s.split(",")[0] for s in pi_name[mask]])
+        array     = array[mask]
+
+        # get data
+        b3,b6 = [],[]
+        for i in range(len(band)):
+            this_band = band[i]
+            if this_band=="3":
+                b3.append(i)
+            elif this_band=="6":
+                b6.append(i)
+
+        data_b3 = np.c_[project[b3], freq_info[b3], ang_res[b3], pi_name[b3], galname[b3], array[b3]]
+        data_b6 = np.c_[project[b6], freq_info[b6], ang_res[b6], pi_name[b6], galname[b6], array[b6]]
+
+        # plot
 
     ###############
     # _create_dir #
