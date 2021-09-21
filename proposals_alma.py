@@ -43,7 +43,7 @@ class ProposalsALMA():
         self.delete_inter = delete_inter
         self.taskname     = None
 
-        self.fig_dpi = 300
+        self.fig_dpi = 500
 
         # import parameters
         if keyfile_fig is not None:
@@ -208,19 +208,6 @@ class ProposalsALMA():
         ax2.tick_params("y", length=0, which="major")
 
         # ax1
-        width = 0.3
-        ax1.plot([84,116],[1,1],lw=2,color="black")
-        ax1.plot([85,85],[1.0-width,1.0+width],lw=2,color="black")
-        ax1.plot([95,95],[1.0-width,1.0+width],lw=2,color="black")
-        ax1.plot([105,105],[1.0-width,1.0+width],lw=2,color="black")
-        ax1.plot([115,115],[1.0-width,1.0+width],lw=2,color="black")
-        ax1.plot([115,115],[1.0-width,1.0+width],lw=2,color="black")
-        ax1.text(85,1.0-width-0.1,"85",ha="center",va="top",fontsize=9)
-        ax1.text(95,1.0-width-0.1,"95",ha="center",va="top",fontsize=9)
-        ax1.text(105,1.0-width-0.1,"105",ha="center",va="top",fontsize=9)
-        ax1.text(115,1.0-width-0.1,"115",ha="center",va="top",fontsize=9)
-        ax1.text(115,1.0-width-0.1,"115",ha="center",va="top",fontsize=9)
-
         for i in range(len(list_linename)):
         	this_name = list_linename[i]
         	this_freq = list_linefreq[i]
@@ -238,10 +225,24 @@ class ProposalsALMA():
             ax2.plot(x,y,color="blue",lw=5)
 
         # text
-        ax1.text(0.50,0.90,"ALMA Band 3 Coverage",color="black",weight="bold",transform=ax1.transAxes,fontsize=11,ha="center")
-        ax2.text(0.95,0.05,"proposed B3 7m+TP SPWs",color="blue",weight="bold",transform=ax2.transAxes,fontsize=11,ha="right")
-        ax2.text(0.95,0.25,"archival B3 12m SPWs",color="black",transform=ax2.transAxes,fontsize=11,ha="right")
-        ax2.text(0.95,0.16,"archival B3 7m SPWs",color="tomato",transform=ax2.transAxes,fontsize=11,ha="right")
+        ax1.text(0.50,0.90,"ALMA Band 3 Coverage",color="black",weight="bold",transform=ax1.transAxes,fontsize=16,ha="center")
+        ax2.text(0.95,0.05,"proposed B3 7m+TP SPWs",color="blue",weight="bold",transform=ax2.transAxes,fontsize=13,ha="right")
+        ax2.text(0.95,0.25,"archival B3 12m SPWs",color="black",transform=ax2.transAxes,fontsize=13,ha="right")
+        ax2.text(0.95,0.16,"archival B3 7m SPWs",color="tomato",transform=ax2.transAxes,fontsize=13,ha="right")
+
+        # ax1 grid
+        width = 0.3
+        ax1.plot([84,116],[1,1],lw=2,color="black",zorder=1e9)
+        ax1.plot([85,85],[1.0-width,1.0+width],lw=2,color="black",zorder=1e9)
+        ax1.plot([95,95],[1.0-width,1.0+width],lw=2,color="black",zorder=1e9)
+        ax1.plot([105,105],[1.0-width,1.0+width],lw=2,color="black",zorder=1e9)
+        ax1.plot([115,115],[1.0-width,1.0+width],lw=2,color="black",zorder=1e9)
+        ax1.plot([115,115],[1.0-width,1.0+width],lw=2,color="black",zorder=1e9)
+        ax1.text(85,1.0-width-0.1,"85",ha="center",va="top",fontsize=11)
+        ax1.text(95,1.0-width-0.1,"95",ha="center",va="top",fontsize=11)
+        ax1.text(105,1.0-width-0.1,"105",ha="center",va="top",fontsize=11)
+        ax1.text(115,1.0-width-0.1,"115",ha="center",va="top",fontsize=11)
+        ax1.text(115,1.0-width-0.1,"115",ha="center",va="top",fontsize=11)
 
         plt.savefig(self.png_specscan_b3, dpi=self.fig_dpi)
 
