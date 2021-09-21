@@ -101,26 +101,58 @@ class ProposalsALMA():
 
                 self.final_missingflux = self.dir_final + self._read_key("final_missingflux")
 
-    #################
-    # run_cycle_8p5 #
-    #################
+    ############################################################################################
+    ############################################################################################
+    ##############################                                ##############################
+    ############################## ALMA cycle 8 supplemental call ##############################
+    ##############################                                ##############################
+    ############################################################################################
+    ############################################################################################
 
-    def run_cycle_8p5(
-        self,
-        plot_spw_setup   = False,
-        plot_missingflux = False,
-        combine_figures  = False,
-        ):
+    if self.cycle=="cycle08p5":
 
-        if plot_spw_setup==True:
-            self.plot_spw_setup_b3()
-            self.plot_spw_setup_b6()
+        #################
+        # run_cycle_8p5 #
+        #################
+    
+        def run_cycle_8p5(
+            self,
+            plot_spw_setup   = False,
+            plot_missingflux = False,
+            combine_figures  = False,
+            ):
 
-        if plot_missingflux==True:
-            self.plot_missingflux()
+            if plot_spw_setup==True:
+                self.plot_spw_setup_b3()
+                self.plot_spw_setup_b6()
 
-        if combine_figures==True:
-            self.create_figure_spws()
+            if plot_missingflux==True:
+                self.plot_missingflux()
+
+            if combine_figures==True:
+                self.create_figure_spws()
+                self.create_figure_missingflux()
+
+        #############################
+        # create_figure_missingflux #
+        #############################
+
+        def create_figure_missingflux(
+            self,
+            ):
+            """
+            """
+
+            taskname = self.modname + sys._getframe().f_code.co_name
+            check_first(self.png_missingflux,taskname)
+
+            combine_two_png(
+            self.png_missingflux,
+            self.png_histogram,
+            self.final_missingflux,
+            "3000x3000+0+0",
+            "3000x3000+0+0",
+            )
 
     ####################
     # plot_missingflux #
@@ -222,10 +254,10 @@ class ProposalsALMA():
         ax.plot([p50,p50],[0.027,0.027],"o",color="black",lw=0,markersize=15)
         ax.plot([p16,p84],[0.027,0.027],"-",color="black",lw=2)
 
-        ax.text(p50,0.026,"median = "+str(int(p50))+"%",fontsize=22,ha="center",va="top")
+        ax.text(p50,0.0265,"median = "+str(int(p50))+"%",fontsize=22,ha="center",va="top")
 
-        ax.text(p16,0.028,"16$^{th}$ pctl. = "+str(int(p16))+"%",fontsize=22,ha="center",va="bottom")
-        ax.text(p84,0.028,"84$^{th}$ pctl. = "+str(int(p84))+"%",fontsize=22,ha="center",va="bottom")
+        ax.text(p16,0.0275,"16$^{th}$ pctl. = "+str(int(p16))+"%",fontsize=22,ha="center",va="bottom")
+        ax.text(p84,0.0275,"84$^{th}$ pctl. = "+str(int(p84))+"%",fontsize=22,ha="center",va="bottom")
 
         plt.savefig(self.png_histogram, dpi=self.fig_dpi)
 
