@@ -191,7 +191,7 @@ class ProposalsALMA():
         ax2 = plt.subplot(gs[3:5,0:1])
 
         # ax setup
-        myax_set(ax1,xlim=[79,121],ylim=[0.0,10.0],labelbottom=False,labelleft=False)
+        myax_set(ax1,xlim=[83,117],ylim=[0.0,10.0],labelbottom=False,labelleft=False)
         ax1.spines["right"].set_visible(False)
         ax1.spines["top"].set_visible(False)
         ax1.spines["bottom"].set_visible(False)
@@ -199,7 +199,7 @@ class ProposalsALMA():
         ax1.tick_params("x", length=0, which="major")
         ax1.tick_params("y", length=0, which="major")
 
-        myax_set(ax2,xlim=[79,121],ylim=[0,100],labelbottom=False,labelleft=False)
+        myax_set(ax2,xlim=[83,117],ylim=[0,100],labelbottom=False,labelleft=False)
         ax2.spines["right"].set_visible(False)
         ax2.spines["top"].set_visible(False)
         ax2.spines["bottom"].set_visible(False)
@@ -209,17 +209,17 @@ class ProposalsALMA():
 
         # ax1
         width = 0.3
-        ax1.plot([80,120],[1,1],lw=2,color="black")
-        ax1.plot([80,80],[1.0-width,1.0+width],lw=2,color="black")
+        ax1.plot([84,116],[1,1],lw=2,color="black")
+        ax1.plot([84,84],[1.0-width,1.0+width],lw=2,color="black")
         ax1.plot([90,90],[1.0-width,1.0+width],lw=2,color="black")
         ax1.plot([100,100],[1.0-width,1.0+width],lw=2,color="black")
         ax1.plot([110,110],[1.0-width,1.0+width],lw=2,color="black")
-        ax1.plot([120,120],[1.0-width,1.0+width],lw=2,color="black")
-        ax1.text(80,1.0-width-0.1,"80",ha="center",va="top",fontsize=9)
+        ax1.plot([116,116],[1.0-width,1.0+width],lw=2,color="black")
+        ax1.text(85,1.0-width-0.1,"85",ha="center",va="top",fontsize=9)
         ax1.text(90,1.0-width-0.1,"90",ha="center",va="top",fontsize=9)
         ax1.text(100,1.0-width-0.1,"100",ha="center",va="top",fontsize=9)
         ax1.text(110,1.0-width-0.1,"110",ha="center",va="top",fontsize=9)
-        ax1.text(120,1.0-width-0.1,"120",ha="center",va="top",fontsize=9)
+        ax1.text(115,1.0-width-0.1,"115",ha="center",va="top",fontsize=9)
 
         for i in range(len(list_linename)):
         	this_name = list_linename[i]
