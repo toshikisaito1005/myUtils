@@ -161,7 +161,7 @@ class ProposalsALMA():
             this_spws  = this_freq.split(" U ")
 
             if this_array=="12m":
-                this_color = "lightgrey"
+                this_color = "tomato"
             else:
                 this_color = "tomato"
 
@@ -204,7 +204,7 @@ class ProposalsALMA():
         # ax2: arcival spw
         for i in range(len(list_b3data)):
             x = [float(list_b3data[i][0]),float(list_b3data[i][1])]
-            ax2.plot(x, [i+1,i+1], "-", color=list_b3data[i][2],lw=2)
+            ax2.plot(x, [i+1,i+1], "-", color=list_b3data[i][2],lw=1)
 
         # ax2: proposed spw
         for j in range(len(self.b3_spw_setup)):
@@ -214,7 +214,7 @@ class ProposalsALMA():
 
         # text
         ax2.text(0.02,0.90,"proposed 7m+TP observations",color="deepskyblue",transform=ax2.transAxes,fontsize=16)
-        ax2.text(0.02,0.80,"archival 12m data",color="lightgrey",transform=ax2.transAxes,fontsize=16)
+        ax2.text(0.02,0.80,"archival 12m data",color="black",transform=ax2.transAxes,fontsize=16)
         ax2.text(0.02,0.70,"archival 7m data",color="tomato",transform=ax2.transAxes,fontsize=16)
 
         plt.savefig(self.png_specscan_b3, dpi=self.fig_dpi)
