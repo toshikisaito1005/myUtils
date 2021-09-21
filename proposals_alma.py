@@ -200,9 +200,9 @@ class ProposalsALMA():
         data     = data.flatten()
         data     = data[data>0]
 
-        p16 = np.round(np.percentile(data,16),2)
-        p50 = np.round(np.percentile(data,50),2)
-        p84 = np.round(np.percentile(data,84),2)
+        p16 = np.percentile(data,16)
+        p50 = np.percentile(data,50)
+        p84 = np.percentile(data,84)
 
         data_hist = np.histogram(data, bins=100, range=[0,100], weights=None)
         x = np.delete(data_hist[1],-1)
@@ -222,10 +222,10 @@ class ProposalsALMA():
         ax.plot([p50,p50],[0.027,0.027],"o",color="black",lw=0,markersize=15)
         ax.plot([p16,p84],[0.027,0.027],"-",color="black",lw=2)
 
-        ax.text(p50,0.028,"median = "+str(p50),fontsize=12,ha="center",va="bottom")
+        ax.text(p50,0.028,"median = "+str(int(p50)),fontsize=18,ha="center",va="bottom")
 
-        ax.text(p16,0.026,"median = "+str(p16),fontsize=12,ha="center",va="top")
-        ax.text(p84,0.026,"median = "+str(p84),fontsize=12,ha="center",va="top")
+        ax.text(p16,0.026,"median = "+str(int(p16)),fontsize=18,ha="center",va="top")
+        ax.text(p84,0.026,"median = "+str(int(p84)),fontsize=18,ha="center",va="top")
 
         plt.savefig(self.png_histogram, dpi=self.fig_dpi)
 
