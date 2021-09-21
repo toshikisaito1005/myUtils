@@ -219,7 +219,7 @@ class ProposalsALMA():
         ax2 = plt.subplot(gs[3:5,0:1])
 
         # ax setup
-        myax_set(ax1,xlim=[210,276],ylim=[0.0,10.0],labelbottom=False,labelleft=False)
+        myax_set(ax1,xlim=[209,277],ylim=[0.0,10.0],labelbottom=False,labelleft=False)
         ax1.spines["right"].set_visible(False)
         ax1.spines["top"].set_visible(False)
         ax1.spines["bottom"].set_visible(False)
@@ -227,7 +227,7 @@ class ProposalsALMA():
         ax1.tick_params("x", length=0, which="major")
         ax1.tick_params("y", length=0, which="major")
 
-        myax_set(ax2,xlim=[210,276],ylim=[-5,100],labelbottom=False,labelleft=False)
+        myax_set(ax2,xlim=[209,277],ylim=[-5,100],labelbottom=False,labelleft=False)
         ax2.spines["right"].set_visible(False)
         ax2.spines["top"].set_visible(False)
         ax2.spines["bottom"].set_visible(False)
