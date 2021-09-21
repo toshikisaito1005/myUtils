@@ -224,8 +224,8 @@ class ProposalsALMA():
 
         ax.text(p50,0.028,"median = "+str(int(p50))+"%",fontsize=18,ha="center",va="bottom")
 
-        ax.text(p16,0.026,"16$^{th}$ = "+str(int(p16))+"%",fontsize=18,ha="center",va="top")
-        ax.text(p84,0.026,"84$^{th}$ = "+str(int(p84))+"%",fontsize=18,ha="center",va="top")
+        ax.text(p16,0.026,"16$^{th}$ pctl. = "+str(int(p16))+"%",fontsize=18,ha="center",va="top")
+        ax.text(p84,0.026,"84$^{th}$ pctl. = "+str(int(p84))+"%",fontsize=18,ha="center",va="top")
 
         plt.savefig(self.png_histogram, dpi=self.fig_dpi)
 
