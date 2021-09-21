@@ -8,7 +8,6 @@ Toshiki Saito@Nichidai/NAOJ
 
 import os, sys, glob, csv
 import numpy as np
-from numpy.random import *
 
 from mycasa_tasks import *
 from mycasa_sampling import *
@@ -213,7 +212,7 @@ class ProposalsALMA():
         for i in range(len(list_linename)):
         	this_name = list_linename[i]
         	this_freq = list_linefreq[i]
-        	ymax = 7.0 - randint(0,4)
+        	ymax = 7.0 - i%1
         	ax1.plot([this_freq,this_freq],[1.0,ymax],color="green",lw=2)
         	this_text = ax1.text(this_freq,ymax,this_name,rotation=60,fontsize=11,ha="left",va="bottom")
 
