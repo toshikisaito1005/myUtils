@@ -109,50 +109,48 @@ class ProposalsALMA():
     ############################################################################################
     ############################################################################################
 
-    if self.cycle=="cycle08p5":
-
-        #################
-        # run_cycle_8p5 #
-        #################
+    #################
+    # run_cycle_8p5 #
+    #################
     
-        def run_cycle_8p5(
-            self,
-            plot_spw_setup   = False,
-            plot_missingflux = False,
-            combine_figures  = False,
-            ):
+    def run_cycle_8p5(
+        self,
+        plot_spw_setup   = False,
+        plot_missingflux = False,
+        combine_figures  = False,
+        ):
 
-            if plot_spw_setup==True:
-                self.plot_spw_setup_b3()
-                self.plot_spw_setup_b6()
+        if plot_spw_setup==True:
+            self.plot_spw_setup_b3()
+            self.plot_spw_setup_b6()
 
-            if plot_missingflux==True:
-                self.plot_missingflux()
+        if plot_missingflux==True:
+            self.plot_missingflux()
 
-            if combine_figures==True:
-                self.create_figure_spws()
-                self.create_figure_missingflux()
+        if combine_figures==True:
+            self.create_figure_spws()
+            self.create_figure_missingflux()
 
-        #############################
-        # create_figure_missingflux #
-        #############################
+    #############################
+    # create_figure_missingflux #
+    #############################
 
-        def create_figure_missingflux(
-            self,
-            ):
-            """
-            """
+    def create_figure_missingflux(
+        self,
+        ):
+        """
+        """
 
-            taskname = self.modname + sys._getframe().f_code.co_name
-            check_first(self.png_missingflux,taskname)
+        taskname = self.modname + sys._getframe().f_code.co_name
+        check_first(self.png_missingflux,taskname)
 
-            combine_two_png(
-            self.png_missingflux,
-            self.png_histogram,
-            self.final_missingflux,
-            "3000x3000+0+0",
-            "3000x3000+0+0",
-            )
+        combine_two_png(
+        self.png_missingflux,
+        self.png_histogram,
+        self.final_missingflux,
+        "3000x3000+0+0",
+        "3000x3000+0+0",
+        )
 
     ####################
     # plot_missingflux #
