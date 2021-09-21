@@ -219,7 +219,7 @@ class ProposalsALMA():
         width = abs(x[1] - x[0])
         ax.bar(x, y, lw=0, color="black", alpha=0.2, width=width, align="center")
 
-        ax.plot([p50,p50],[0.027,0.027],"o",color="black",lw=0,s=30)
+        ax.plot([p50,p50],[0.027,0.027],"o",color="black",lw=0,markersize=30)
         ax.plot([p16,p84],[0.027,0.027],"-",color="black",lw=2)
 
         plt.savefig(self.png_histogram, dpi=self.fig_dpi)
