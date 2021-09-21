@@ -219,7 +219,13 @@ class ProposalsALMA():
         for j in range(len(self.b3_spw_setup)):
             x = [self.b3_spw_setup[j]-1.875/2.0, self.b3_spw_setup[j]+1.875/2.0]
             y = [j+1,j+1]
-            ax3.plot(x,y,color="deepskyblue",alpha=0.3,lw=10)
+            ax3.plot(x,y,color="deepskyblue",lw=9)
+
+        # text
+        ax2.text(0.02,0.90,"archival 12m data",color="lightgrey",transform=ax2.transAxes)
+        ax2.text(0.02,0.80,"archival 7m data",color="tomato",transform=ax2.transAxes)
+
+        ax3.text(0.02,0.90,"proposed 7m+TP observations",color="deepskyblue")
 
         plt.savefig(self.png_specscan_b3, dpi=self.fig_dpi)
 
