@@ -187,18 +187,18 @@ class ProposalsALMA():
 
         # ax setup
         myax_set(ax1,xlim=[79,121],ylim=[0.0,10.0],labelbottom=False,labelleft=False)
-        #ax1.spines["right"].set_visible(False)
-        #ax1.spines["top"].set_visible(False)
-        #ax1.spines["bottom"].set_visible(False)
-        #ax1.spines["left"].set_visible(False)
+        ax1.spines["right"].set_visible(False)
+        ax1.spines["top"].set_visible(False)
+        ax1.spines["bottom"].set_visible(False)
+        ax1.spines["left"].set_visible(False)
         ax1.tick_params("x", length=0, which="major")
         ax1.tick_params("y", length=0, which="major")
 
         myax_set(ax2,xlim=[79,121],ylim=[0,100],labelbottom=False,labelleft=False)
-        #ax2.spines["right"].set_visible(False)
-        #ax2.spines["top"].set_visible(False)
-        #ax2.spines["bottom"].set_visible(False)
-        #ax2.spines["left"].set_visible(False)
+        ax2.spines["right"].set_visible(False)
+        ax2.spines["top"].set_visible(False)
+        ax2.spines["bottom"].set_visible(False)
+        ax2.spines["left"].set_visible(False)
         ax2.tick_params("x", length=0, which="major")
         ax2.tick_params("y", length=0, which="major")
 
