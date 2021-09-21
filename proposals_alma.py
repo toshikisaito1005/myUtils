@@ -213,9 +213,9 @@ class ProposalsALMA():
 
         # plot
         plt.figure(figsize=(10,6))
-        gs = gridspec.GridSpec(nrows=5, ncols=10)
-        ax1 = plt.subplot(gs[0:3,1:10])
-        ax2 = plt.subplot(gs[3:5,1:10])
+        gs = gridspec.GridSpec(nrows=5, ncols=20)
+        ax1 = plt.subplot(gs[0:3,1:20])
+        ax2 = plt.subplot(gs[3:5,1:20])
 
         # ax setup
         myax_set(ax1,xlim=[209,277],ylim=[0.0,10.0],labelbottom=False,labelleft=False)
@@ -227,10 +227,6 @@ class ProposalsALMA():
         ax1.tick_params("y", length=0, which="major")
 
         myax_set(ax2,xlim=[209,277],ylim=[-5,100],labelbottom=False,labelleft=False,lw_outline=1.0)
-        #ax2.spines["right"].set_visible(False)
-        #ax2.spines["top"].set_visible(False)
-        #ax2.spines["bottom"].set_visible(False)
-        #ax2.spines["left"].set_visible(False)
         ax2.tick_params("x", length=0, which="major")
         ax2.tick_params("y", length=0, which="major")
 
@@ -374,9 +370,9 @@ class ProposalsALMA():
 
         # plot
         plt.figure(figsize=(10,6))
-        gs = gridspec.GridSpec(nrows=5, ncols=10)
-        ax1 = plt.subplot(gs[0:3,1:10])
-        ax2 = plt.subplot(gs[3:5,1:10])
+        gs = gridspec.GridSpec(nrows=5, ncols=20)
+        ax1 = plt.subplot(gs[0:3,1:20])
+        ax2 = plt.subplot(gs[3:5,1:20])
 
         # ax setup
         myax_set(ax1,xlim=[83,117],ylim=[0.0,10.0],labelbottom=False,labelleft=False)
@@ -388,10 +384,6 @@ class ProposalsALMA():
         ax1.tick_params("y", length=0, which="major")
 
         myax_set(ax2,xlim=[83,117],ylim=[-5,100],labelbottom=False,labelleft=False,lw_outline=1.0)
-        #ax2.spines["right"].set_visible(False)
-        #ax2.spines["top"].set_visible(False)
-        #ax2.spines["bottom"].set_visible(False)
-        #ax2.spines["left"].set_visible(False)
         ax2.tick_params("x", length=0, which="major")
         ax2.tick_params("y", length=0, which="major")
 
