@@ -208,7 +208,7 @@ class ProposalsALMA():
         plt.figure(figsize=(13,10))
         gs = gridspec.GridSpec(nrows=10, ncols=10)
         ax = plt.subplot(gs[0:10,0:10])
-        ad = [0.19,0.99,0.10,0.90]
+        ad = [0.23,0.80,0.10,0.90]
         myax_set(ax,grid=None,xlim=[0,100],ylim=None,title="CO(1-0) missing flux histogram",
             xlabel="missing flux (%)",ylabel="count density",adjust=ad)
 
