@@ -156,7 +156,7 @@ class ProposalsALMA():
         run_exportfits(self.outfits_missingflux+"_tmp3",self.outfits_missingflux,True,True,True)
 
         # plot
-        scalebar = 2000 / self.scale
+        scalebar = 500 / self.scale
 
         myfig_fits2png(
         # general
@@ -179,7 +179,7 @@ class ProposalsALMA():
         showbeam=True,
         color_beam="black",
         scalebar=scalebar,
-        label_scalebar="2 kpc",
+        label_scalebar="500 pc",
         color_scalebar="black",
         # imshow colorbar
         set_cbar=True,
