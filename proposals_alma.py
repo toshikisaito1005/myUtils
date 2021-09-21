@@ -182,7 +182,11 @@ class ProposalsALMA():
         ax1 = plt.subplot(gs[0:1,0:1])
         ax2 = plt.subplot(gs[1:2,0:1])
         ax3 = plt.subplot(gs[2:3,0:1])
+
+        # ax setup
         myax_set(ax2,xlim=[84,116],ylim=[0,100],labelbottom=False,labelleft=False)
+        ax2.gca().spines['right'].set_visible(False)
+
         myax_set(ax3,xlim=[84,116],ylim=[0,len(self.b3_spw_setup)+2],labelbottom=False,labelleft=False)
 
         # ax2
