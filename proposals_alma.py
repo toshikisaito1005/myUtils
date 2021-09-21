@@ -184,6 +184,14 @@ class ProposalsALMA():
         ax3 = plt.subplot(gs[2:3,0:1])
 
         # ax setup
+        myax_set(ax1,xlim=[84,116],ylim=None,labelbottom=False,labelleft=False)
+        ax1.spines["right"].set_visible(False)
+        ax1.spines["top"].set_visible(False)
+        ax1.spines["bottom"].set_visible(False)
+        ax1.spines["left"].set_visible(False)
+        ax1.tick_params("x", length=0, which="major")
+        ax1.tick_params("y", length=0, which="major")
+
         myax_set(ax2,xlim=[84,116],ylim=[0,100],labelbottom=False,labelleft=False)
         ax2.spines["right"].set_visible(False)
         ax2.spines["top"].set_visible(False)
@@ -193,6 +201,12 @@ class ProposalsALMA():
         ax2.tick_params("y", length=0, which="major")
 
         myax_set(ax3,xlim=[84,116],ylim=[0,len(self.b3_spw_setup)+2],labelbottom=False,labelleft=False)
+        ax3.spines["right"].set_visible(False)
+        ax3.spines["top"].set_visible(False)
+        ax3.spines["bottom"].set_visible(False)
+        ax3.spines["left"].set_visible(False)
+        ax3.tick_params("x", length=0, which="major")
+        ax3.tick_params("y", length=0, which="major")
 
         # ax2
         for i in range(len(list_b3data)):
@@ -203,7 +217,7 @@ class ProposalsALMA():
         for j in range(len(self.b3_spw_setup)):
             x = [self.b3_spw_setup[j]-1.875/2.0, self.b3_spw_setup[j]+1.875/2.0]
             y = [j+1,j+1]
-            ax3.plot(x,y,color="deepskyblue",alpha=0.3,lw=3)
+            ax3.plot(x,y,color="deepskyblue",alpha=0.3,lw=10)
 
         plt.savefig(self.png_specscan_b3, dpi=self.fig_dpi)
 
