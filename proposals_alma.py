@@ -254,7 +254,7 @@ class ProposalsALMA():
         ax1.text(115,1.0-width-0.1,"115",ha="center",va="top",fontsize=11)
 
         # ax2 rectangle
-        e1 = patches.FancyBboxPatch(xy=(89,0),width=116-84-30,height=100-30,boxstyle="round,pad=1,rounding_size=1",color="grey",alpha=0.3,zorder=0,lw=0)
+        e1 = patches.FancyBboxPatch(xy=(89,0),width=116-84-30,height=100-30,boxstyle="round,pad=0.3,rounding_size=0.1",color="grey",alpha=0.3,zorder=0,lw=0)
         ax2.add_patch(e1)
 
         plt.savefig(self.png_specscan_b3, dpi=self.fig_dpi)
