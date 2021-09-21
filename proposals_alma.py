@@ -208,15 +208,12 @@ class ProposalsALMA():
         plt.figure(figsize=(13,10))
         gs = gridspec.GridSpec(nrows=10, ncols=10)
         ax = plt.subplot(gs[0:10,0:10])
+        ad = [0.19,0.99,0.10,0.90]
+        myax_set(ax,grid=None,xlim=[0,100],ylim=ylim,title="CO(1-0) missing flux histogram",
+            xlabel="missing flux (%)",ylabel="count density",adjust=ad)
 
         width = abs(x[1] - x[0])
         ax.bar(x, y, lw=0, color="black", alpha=0.2, width=width, align="center")
-        print(x,y)
-
-        ax.set_title("CO(1-0) missing flux histogram")
-        ax.set_xlabel("missing flux (%)")
-        ax.set_ylabel("count density")
-        ax.set_xlim([0,100])
 
         plt.savefig(self.png_histogram, dpi=self.fig_dpi)
 
