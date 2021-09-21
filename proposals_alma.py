@@ -79,6 +79,9 @@ class ProposalsALMA():
                 # ngc1068
                 self.z = float(self._read_key("z"))
 
+                # output fits
+                self.outfits_missingflux = self.dir_ready + self._read_key("outfits_missingflux")
+
                 # output png
                 self.png_specscan_b3 = self.dir_products + self._read_key("png_specscan_b3")
                 self.png_specscan_b6 = self.dir_products + self._read_key("png_specscan_b6")
@@ -94,22 +97,44 @@ class ProposalsALMA():
 
     def run_cycle_8p5(
         self,
-        plot_spw_setup  = False,
-        combine_figures = False,
+        plot_spw_setup   = False,
+        plot_missingflux = False,
+        combine_figures  = False,
         ):
 
         if plot_spw_setup==True:
             self.plot_spw_setup_b3()
             self.plot_spw_setup_b6()
 
+        if plot_missingflux==True:
+            self.plot_missingflux()
+
         if combine_figures==True:
-            self.figure_spws()
+            self.create_figure_spws()
 
-    ###############
-    # figure_spws #
-    ###############
+    ####################
+    # plot_missingflux #
+    ####################
 
-    def figure_spws(
+    def plot_missingflux(
+        self,
+        ):
+        """
+        """
+
+        taskname = self.modname + sys._getframe().f_code.co_name
+        check_first(self.image_co10_12m7m,taskname)
+
+        run_immath_two(self.image_co10_12m7m,self.image_co10_12m,
+        	self.outfits_missingflux+"tmp1","(IM0-IM1)/IM0")
+
+        run_exportfits(self.outfits_missingflux+"tmp1",self.outfits_missingflux,True,True,True)
+
+    ######################
+    # create_figure_spws #
+    ######################
+
+    def create_figure_spws(
         self,
         ):
         """
@@ -226,7 +251,7 @@ class ProposalsALMA():
         ax1.tick_params("x", length=0, which="major")
         ax1.tick_params("y", length=0, which="major")
 
-        myax_set(ax2,xlim=[209,277],ylim=[-5,100],labelbottom=False,labelleft=False,lw_outline=1.0)
+        myax_set(ax2,xlim=[209,277],ylim=[-5,100],labelbottom=False,labelleft=False,lw_outline=1.5)
         ax2.tick_params("x", length=0, which="major")
         ax2.tick_params("y", length=0, which="major")
 
@@ -276,10 +301,6 @@ class ProposalsALMA():
         ax1.text(250,1.0-width-0.1,"250",ha="center",va="top",fontsize=11)
         ax1.text(260,1.0-width-0.1,"260",ha="center",va="top",fontsize=11)
         ax1.text(270,1.0-width-0.1,"270",ha="center",va="top",fontsize=11)
-
-        # ax2 rectangle
-        #e1 = patches.Rectangle(xy=(211,-5),width=275-211,height=105,color="grey",alpha=0.1,zorder=0,lw=0)
-        #ax2.add_patch(e1)
 
         plt.savefig(self.png_specscan_b6, dpi=self.fig_dpi)
 
@@ -383,7 +404,7 @@ class ProposalsALMA():
         ax1.tick_params("x", length=0, which="major")
         ax1.tick_params("y", length=0, which="major")
 
-        myax_set(ax2,xlim=[83,117],ylim=[-5,100],labelbottom=False,labelleft=False,lw_outline=1.0)
+        myax_set(ax2,xlim=[83,117],ylim=[-5,100],labelbottom=False,labelleft=False,lw_outline=1.5)
         ax2.tick_params("x", length=0, which="major")
         ax2.tick_params("y", length=0, which="major")
 
@@ -431,10 +452,6 @@ class ProposalsALMA():
         ax1.text(105,1.0-width-0.1,"105",ha="center",va="top",fontsize=11)
         ax1.text(115,1.0-width-0.1,"115",ha="center",va="top",fontsize=11)
         ax1.text(115,1.0-width-0.1,"115",ha="center",va="top",fontsize=11)
-
-        # ax2 rectangle
-        #e1 = patches.Rectangle(xy=(84,-5),width=116-84,height=105,color="grey",alpha=0.1,zorder=0,lw=0)
-        #ax2.add_patch(e1)
 
         plt.savefig(self.png_specscan_b3, dpi=self.fig_dpi)
 
