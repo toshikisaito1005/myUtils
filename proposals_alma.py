@@ -178,10 +178,10 @@ class ProposalsALMA():
         # plot
         plt.figure(figsize=(10,8))
         plt.subplots_adjust(bottom=0.01,left=0.01,right=0.99,top=0.99)
-        gs = gridspec.GridSpec(nrows=3, ncols=1)
-        ax1 = plt.subplot(gs[0:1,0:1])
-        ax2 = plt.subplot(gs[1:2,0:1])
-        ax3 = plt.subplot(gs[2:3,0:1])
+        gs = gridspec.GridSpec(nrows=5, ncols=1)
+        ax1 = plt.subplot(gs[0:2,0:1])
+        ax2 = plt.subplot(gs[2:4,0:1])
+        ax3 = plt.subplot(gs[4:5,0:1])
 
         # ax setup
         myax_set(ax1,xlim=[84,116],ylim=None,labelbottom=False,labelleft=False)
@@ -207,6 +207,8 @@ class ProposalsALMA():
         ax3.spines["left"].set_visible(False)
         ax3.tick_params("x", length=0, which="major")
         ax3.tick_params("y", length=0, which="major")
+
+        # ax1
 
         # ax2
         for i in range(len(list_b3data)):
