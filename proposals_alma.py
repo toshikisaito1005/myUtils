@@ -211,6 +211,7 @@ class ProposalsALMA():
 
         width = abs(x[1] - x[0])
         ax.bar(x, y, lw=0, color="black", alpha=0.2, width=width, align="center")
+        print(x,y)
 
         ax.set_title("CO(1-0) missing flux histogram")
         ax.set_xlabel("missing flux (%)")
