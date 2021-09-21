@@ -213,10 +213,9 @@ class ProposalsALMA():
 
         # plot
         plt.figure(figsize=(10,6))
-        plt.subplots_adjust(bottom=0.01,left=0.85,right=0.99,top=0.99)
-        gs = gridspec.GridSpec(nrows=5, ncols=1)
-        ax1 = plt.subplot(gs[0:3,0:1])
-        ax2 = plt.subplot(gs[3:5,0:1])
+        gs = gridspec.GridSpec(nrows=5, ncols=10)
+        ax1 = plt.subplot(gs[0:3,1:10])
+        ax2 = plt.subplot(gs[3:5,1:10])
 
         # ax setup
         myax_set(ax1,xlim=[209,277],ylim=[0.0,10.0],labelbottom=False,labelleft=False)
@@ -375,10 +374,9 @@ class ProposalsALMA():
 
         # plot
         plt.figure(figsize=(10,6))
-        plt.subplots_adjust(bottom=0.01,left=0.30,right=0.99,top=0.99)
-        gs = gridspec.GridSpec(nrows=5, ncols=1)
-        ax1 = plt.subplot(gs[0:3,0:1])
-        ax2 = plt.subplot(gs[3:5,0:1])
+        gs = gridspec.GridSpec(nrows=5, ncols=10)
+        ax1 = plt.subplot(gs[0:3,1:10])
+        ax2 = plt.subplot(gs[3:5,1:10])
 
         # ax setup
         myax_set(ax1,xlim=[83,117],ylim=[0.0,10.0],labelbottom=False,labelleft=False)
