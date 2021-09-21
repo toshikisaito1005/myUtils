@@ -239,8 +239,7 @@ class ProposalsALMA():
 
         # ax1 grid
         width = 0.4
-        ax1.plot([210,276],[1,1],lw=2,color="black",zorder=1e9)
-        ax1.plot([210,210],[1.0-width,1.0+width],lw=2,color="black",zorder=1e9)
+        ax1.plot([211,275],[1,1],lw=2,color="black",zorder=1e9)
         ax1.plot([220,220],[1.0-width,1.0+width],lw=2,color="black",zorder=1e9)
         ax1.plot([230,230],[1.0-width,1.0+width],lw=2,color="black",zorder=1e9)
         ax1.plot([240,240],[1.0-width,1.0+width],lw=2,color="black",zorder=1e9)
@@ -256,7 +255,7 @@ class ProposalsALMA():
         ax1.text(270,1.0-width-0.1,"270",ha="center",va="top",fontsize=11)
 
         # ax2 rectangle
-        e1 = patches.Rectangle(xy=(210,-5),width=276-210,height=105,color="grey",alpha=0.1,zorder=0,lw=0)
+        e1 = patches.Rectangle(xy=(211,-5),width=275-211,height=105,color="grey",alpha=0.1,zorder=0,lw=0)
         ax2.add_patch(e1)
 
         plt.savefig(self.png_specscan_b6, dpi=self.fig_dpi)
