@@ -210,12 +210,13 @@ class ProposalsALMA():
         ax = plt.subplot(gs[0:10,0:10])
 
         width = abs(x[1] - x[0])
-        ax.bar(x, y, lw=0, color="black", alpha=0.2, width=width, align="center")
+        ax.bar(x, y, lw=0, color="black", alpha=0.2, width=width, align="right")
         print(x,y)
 
         ax.set_title("CO(1-0) missing flux histogram")
         ax.set_xlabel("missing flux (%)")
         ax.set_ylabel("count density")
+        ax.set_xlim([0,100])
 
         plt.savefig(self.png_histogram, dpi=self.fig_dpi)
 
