@@ -196,6 +196,7 @@ class ProposalsALMA():
 
         # plt histogram
         data,box = imval_all(self.outfits_missingflux)
+        data     = data["data"] * data["mask"]
         data     = data.flatten()
         data     = data[data>0]
 
