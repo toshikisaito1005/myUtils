@@ -185,7 +185,12 @@ class ProposalsALMA():
 
         # ax setup
         myax_set(ax2,xlim=[84,116],ylim=[0,100],labelbottom=False,labelleft=False)
-        ax2.gca().spines['right'].set_visible(False)
+        ax2.spines["right"].set_visible(False)
+        ax2.spines["top"].set_visible(False)
+        ax2.spines["bottom"].set_visible(False)
+        ax2.spines["left"].set_visible(False)
+        ax2.tick_params("x", length=0, which="major")
+        ax2.tick_params("y", length=0, which="major")
 
         myax_set(ax3,xlim=[84,116],ylim=[0,len(self.b3_spw_setup)+2],labelbottom=False,labelleft=False)
 
