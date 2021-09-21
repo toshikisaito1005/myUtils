@@ -125,8 +125,11 @@ class ProposalsALMA():
         taskname = self.modname + sys._getframe().f_code.co_name
         check_first(self.image_co10_12m7m,taskname)
 
-        run_immath_two(self.image_co10_12m7m,self.image_co10_12m,
-        	self.outfits_missingflux+"tmp1","(IM0-IM1)/IM0")
+        run_importfits(self.image_co10_12m7m,self.image_co10_12m7m+"_tmp1")
+        run_importfits(self.image_co10_12m,self.image_co10_12m+"_tmp1")
+
+        run_immath_two(self.image_co10_12m7m+"_tmp1",self.image_co10_12m+"_tmp1",
+        	self.outfits_missingflux+"tmp1","(IM0-IM1)/IM0",delin=True)
 
         run_exportfits(self.outfits_missingflux+"tmp1",self.outfits_missingflux,True,True,True)
 
