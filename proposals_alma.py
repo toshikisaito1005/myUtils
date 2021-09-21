@@ -186,7 +186,7 @@ class ProposalsALMA():
         ax2 = plt.subplot(gs[3:5,0:1])
 
         # ax setup
-        myax_set(ax1,xlim=[80,120],ylim=None,labelbottom=False,labelleft=False)
+        myax_set(ax1,xlim=[79,121],ylim=None,labelbottom=False,labelleft=False)
         #ax1.spines["right"].set_visible(False)
         #ax1.spines["top"].set_visible(False)
         #ax1.spines["bottom"].set_visible(False)
@@ -194,7 +194,7 @@ class ProposalsALMA():
         ax1.tick_params("x", length=0, which="major")
         ax1.tick_params("y", length=0, which="major")
 
-        myax_set(ax2,xlim=[80,120],ylim=[0,100],labelbottom=False,labelleft=False)
+        myax_set(ax2,xlim=[79,121],ylim=[0,100],labelbottom=False,labelleft=False)
         #ax2.spines["right"].set_visible(False)
         #ax2.spines["top"].set_visible(False)
         #ax2.spines["bottom"].set_visible(False)
@@ -203,7 +203,12 @@ class ProposalsALMA():
         ax2.tick_params("y", length=0, which="major")
 
         # ax1
-        ax1.plot([84,116],[1,1],lw=2,color="black")
+        ax1.plot([80,120],[1,1],lw=2)
+        ax1.plot([80,80],[-0.1,0.1],lw=2)
+        ax1.plot([90,90],[-0.1,0.1],lw=2)
+        ax1.plot([100,100],[-0.1,0.1],lw=2)
+        ax1.plot([110,110],[-0.1,0.1],lw=2)
+        ax1.plot([120,120],[-0.1,0.1],lw=2)
 
         # ax2: arcival#spw
         for i in range(len(list_b3data)):
