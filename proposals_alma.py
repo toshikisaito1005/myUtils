@@ -181,7 +181,6 @@ class ProposalsALMA():
         gs = gridspec.GridSpec(nrows=5, ncols=1)
         ax1 = plt.subplot(gs[0:3,0:1])
         ax2 = plt.subplot(gs[3:5,0:1])
-        #ax3 = plt.subplot(gs[4:5,0:1])
 
         # ax setup
         myax_set(ax1,xlim=[84,116],ylim=None,labelbottom=False,labelleft=False)
@@ -210,7 +209,7 @@ class ProposalsALMA():
         # ax2: proposed spw
         for j in range(len(self.b3_spw_setup)):
             x = [self.b3_spw_setup[j]-1.875/2.0, self.b3_spw_setup[j]+1.875/2.0]
-            y = [j*3+75,j*3+75]
+            y = [j*2+65,j*2+65]
             ax2.plot(x,y,color="deepskyblue",lw=9)
 
         # text
