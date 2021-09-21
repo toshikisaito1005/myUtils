@@ -222,10 +222,10 @@ class ProposalsALMA():
         ax.plot([p50,p50],[0.027,0.027],"o",color="black",lw=0,markersize=15)
         ax.plot([p16,p84],[0.027,0.027],"-",color="black",lw=2)
 
-        ax.text(p50,0.028,"median = "+str(int(p50))+"%",fontsize=18,ha="center",va="bottom")
+        ax.text(p50,0.026,"median = "+str(int(p50))+"%",fontsize=22,ha="center",va="top")
 
-        ax.text(p16,0.026,"16$^{th}$ pctl. = "+str(int(p16))+"%",fontsize=18,ha="center",va="top")
-        ax.text(p84,0.026,"84$^{th}$ pctl. = "+str(int(p84))+"%",fontsize=18,ha="center",va="top")
+        ax.text(p16,0.028,"16$^{th}$ pctl. = "+str(int(p16))+"%",fontsize=22,ha="center",va="bottom")
+        ax.text(p84,0.028,"84$^{th}$ pctl. = "+str(int(p84))+"%",fontsize=22,ha="center",va="bottom")
 
         plt.savefig(self.png_histogram, dpi=self.fig_dpi)
 
