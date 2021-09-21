@@ -90,12 +90,16 @@ class ProposalsALMA():
                 self.png_specscan_b3 = self.dir_products + self._read_key("png_specscan_b3")
                 self.png_specscan_b6 = self.dir_products + self._read_key("png_specscan_b6")
 
+                self.png_missingflux = self.dir_products + self._read_key("png_missingflux")
+                self.imsize_as       = float(self._read_key("imsize_as"))
+
+                self.png_histogram   = self.dir_products + self._read_key("png_histogram")
+
                 # final products
                 self.final_specscan = self.dir_final + self._read_key("final_specscan")
                 self.box_specscan = self._read_key("box_specscan")
 
                 self.final_missingflux = self.dir_final + self._read_key("final_missingflux")
-                self.imsize_as = float(self._read_key("imsize_as"))
 
     #################
     # run_cycle_8p5 #
@@ -155,13 +159,13 @@ class ProposalsALMA():
 
         run_exportfits(self.outfits_missingflux+"_tmp3",self.outfits_missingflux,True,True,True)
 
-        # plot
+        # plot map
         scalebar = 500 / self.scale
 
         myfig_fits2png(
         # general
         self.outfits_missingflux,
-        self.final_missingflux,
+        self.png_missingflux,
         imcontour1=self.outfits_co10,
         imsize_as=self.imsize_as,
         ra_cnt=self.ra_agn,
@@ -172,7 +176,7 @@ class ProposalsALMA():
         width_cont1=[1.0],
         color_cont1="black",
         # imshow
-        fig_dpi=200,
+        fig_dpi=self.fig_dpi,
         set_grid="both",
         set_title="CO(1-0) missing flux map",
         showzero=False,
@@ -189,6 +193,29 @@ class ProposalsALMA():
         numann=None,
         textann=True,
         )
+
+        # plt histogram
+        data,box = imval_all(self.outfits_missingflux)
+        data     = data.flatten()
+        data     = data[data>0]
+
+        data_hist = np.histogram(data, bins=20, range=[0,100], weights=None)
+        x = np.delete(data_hist[1],-1)
+        y = data_hist[0] / np.sum(data_hist[0])
+
+        # plot
+        plt.figure(figsize=(13,10))
+        gs = gridspec.GridSpec(nrows=10, ncols=10)
+        ax = plt.subplot(gs[0:10,0:10])
+
+        width = abs(x[1] - x[0])
+        ax.bar(x, y, lw=0, color="black", alpha=0.2, width=width, align="center")
+
+        ax.set_title("CO(1-0) missing flux histogram")
+        ax.set_xlabel("missing flux (%)")
+        ax.set_ylabel("count density")
+
+        plt.savefig(self.png_histogram, dpi=self.fig_dpi)
 
     ######################
     # create_figure_spws #
