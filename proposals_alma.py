@@ -213,9 +213,9 @@ class ProposalsALMA():
         	this_name = list_linename[i]
         	this_freq = list_linefreq[i]
         	ax1.plot([this_freq,this_freq],[1.0,6.0],color="green",lw=2)
-        	this_text = ax1.text(this_freq,6.0+i%2,this_name,rotation=60,fontsize=11,ha="left",va="bottom")
+        	this_text = ax1.text(this_freq,6.0-i%2+0.5,this_name,rotation=60,fontsize=11,ha="left",va="bottom")
 
-        # ax2: arcival#spw
+        # ax2: arcival spw
         for i in range(len(list_b3data)):
             x = [float(list_b3data[i][0]),float(list_b3data[i][1])]
             ax2.plot(x,[i+1,i+1],"-",color=list_b3data[i][2],lw=list_lw[i])
