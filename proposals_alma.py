@@ -135,11 +135,12 @@ class ProposalsALMA():
         run_immath_two(self.image_co10_12m7m+"_tmp2",self.image_co10_12m+"_tmp1",
             self.outfits_missingflux+"_tmp1",expr,delin=True)
 
-        expr = "iif(IM0>0,IM0,0)"
-        run_immath_one(self.outfits_missingflux+"_tmp1",
-            self.outfits_missingflux+"_tmp2",expr,delin=True)
+        signal_masking(self.outfits_missingflux+"_tmp1",self.outfits_missingflux+"_tmp2",0,True)
 
-        run_exportfits(self.outfits_missingflux+"_tmp1",self.outfits_missingflux,True,True,True)
+        immath(self.outfits_missingflux+"_tmp1",expr="IM0",mask=self.outfits_missingflux+"_tmp2",
+            outfile=self.outfits_missingflux+"_tmp3")
+
+        run_exportfits(self.outfits_missingflux+"_tmp3",self.outfits_missingflux,True,True,True)
 
     ######################
     # create_figure_spws #
