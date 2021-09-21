@@ -154,7 +154,7 @@ class ProposalsALMA():
         data_b6 = np.c_[project[b6], freq_info[b6], ang_res[b6], pi_name[b6], galname[b6], array[b6]]
 
         # prepare for plot: b3
-        list_spw,list_color = [],[]
+        list_spw,list_color,list_lw = [],[],[]
         for i in range(len(data_b3[:,1])):
             this_freq  = data_b3[i,1]
             this_array = data_b3[i,5]
@@ -162,8 +162,10 @@ class ProposalsALMA():
 
             if this_array=="12m":
                 this_color = "grey"
+                this_lw = 1.2
             else:
                 this_color = "tomato"
+                this_lw = 1.5
 
             for j in range(len(this_spws)):
                 this_spw = this_spws[j].split(",")[0].lstrip("[")
@@ -171,6 +173,7 @@ class ProposalsALMA():
                 this_spw = [float(this_spw[0])*(1+self.z),float(this_spw[1])*(1+self.z)]
                 list_spw.append(this_spw)
                 list_color.append(this_color)
+                list_lw.append(this_lw)
 
         list_b3data = np.c_[list_spw,list_color]
         list_b3data = list_b3data[np.argsort(list_b3data[:, 0].astype(np.float64))]
@@ -200,12 +203,12 @@ class ProposalsALMA():
         ax2.tick_params("y", length=0, which="major")
 
         # ax1
-        ax1.plot([84,116],[1,1],lw=5,color="black")
+        ax1.plot([84,116],[1,1],lw=2,color="black")
 
         # ax2: arcival spw
         for i in range(len(list_b3data)):
             x = [float(list_b3data[i][0]),float(list_b3data[i][1])]
-            ax2.plot(x, [i+1,i+1], "-", color=list_b3data[i][2],lw=1.2)
+            ax2.plot(x,[i+1,i+1],"-",color=list_b3data[i][2],lw=list_lw[i])
 
         # ax2: proposed spw
         for j in range(len(self.b3_spw_setup)):
@@ -214,9 +217,9 @@ class ProposalsALMA():
             ax2.plot(x,y,color="blue",lw=5)
 
         # text
-        ax2.text(0.98,0.30,"proposed B3 7m+TP observations",color="blue",weight="bold",transform=ax2.transAxes,fontsize=14,ha="right")
-        ax2.text(0.98,0.20,"archival B3 12m data",color="grey",transform=ax2.transAxes,fontsize=14,ha="right")
-        ax2.text(0.98,0.10,"archival B3 7m data",color="tomato",transform=ax2.transAxes,fontsize=14,ha="right")
+        ax2.text(0.92,0.10,"proposed B3 7m+TP observations",color="blue",weight="bold",transform=ax2.transAxes,fontsize=14,ha="right")
+        ax2.text(0.92,0.30,"archival B3 12m data",color="grey",transform=ax2.transAxes,fontsize=14,ha="right")
+        ax2.text(0.92,0.20,"archival B3 7m data",color="tomato",transform=ax2.transAxes,fontsize=14,ha="right")
 
         plt.savefig(self.png_specscan_b3, dpi=self.fig_dpi)
 
