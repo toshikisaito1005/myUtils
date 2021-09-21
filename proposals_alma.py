@@ -43,7 +43,7 @@ class ProposalsALMA():
         self.delete_inter = delete_inter
         self.taskname     = None
 
-        self.fig_dpi = 200
+        self.fig_dpi = 300
 
         # import parameters
         if keyfile_fig is not None:
