@@ -238,6 +238,7 @@ class ProposalsALMA():
             ax2.plot(x,y,color="blue",lw=5)
 
         # text
+        ax1.text(0.50,0.90,"ALMA Band 3 Coverage",color="black",weight="bold",transform=ax1.transAxes,fontsize=11,ha="center")
         ax2.text(0.95,0.05,"proposed B3 7m+TP SPWs",color="blue",weight="bold",transform=ax2.transAxes,fontsize=11,ha="right")
         ax2.text(0.95,0.25,"archival B3 12m SPWs",color="black",transform=ax2.transAxes,fontsize=11,ha="right")
         ax2.text(0.95,0.16,"archival B3 7m SPWs",color="tomato",transform=ax2.transAxes,fontsize=11,ha="right")
