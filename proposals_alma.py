@@ -8,7 +8,6 @@ Toshiki Saito@Nichidai/NAOJ
 
 import os, sys, glob, csv
 import numpy as np
-from adjustText import adjust_text
 
 from mycasa_tasks import *
 from mycasa_sampling import *
@@ -214,10 +213,7 @@ class ProposalsALMA():
         	this_name = list_linename[i]
         	this_freq = list_linefreq[i]
         	ax1.plot([this_freq,this_freq],[1.0,6.0],color="green",lw=2)
-        	this_text = ax1.text(this_freq,6.0,this_name)
-        	list_text.append(this_text)
-
-        adjust_text(list_text)
+        	this_text = ax1.text(this_freq,6.0,this_name,rotation=30)
 
         # ax2: arcival#spw
         for i in range(len(list_b3data)):
