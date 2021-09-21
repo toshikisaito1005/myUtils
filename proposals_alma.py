@@ -186,7 +186,7 @@ class ProposalsALMA():
         ax2 = plt.subplot(gs[3:5,0:1])
 
         # ax setup
-        myax_set(ax1,xlim=[79,121],ylim=[-0.2,10.0],labelbottom=False,labelleft=False)
+        myax_set(ax1,xlim=[79,121],ylim=[0.8,10.0],labelbottom=False,labelleft=False)
         #ax1.spines["right"].set_visible(False)
         #ax1.spines["top"].set_visible(False)
         #ax1.spines["bottom"].set_visible(False)
@@ -204,11 +204,11 @@ class ProposalsALMA():
 
         # ax1
         ax1.plot([80,120],[1,1],lw=2)
-        ax1.plot([80,80],[-1.1,1.1],lw=2)
-        ax1.plot([90,90],[-1.1,1.1],lw=2)
-        ax1.plot([100,100],[-1.1,1.1],lw=2)
-        ax1.plot([110,110],[-1.1,1.1],lw=2)
-        ax1.plot([120,120],[-1.1,1.1],lw=2)
+        ax1.plot([80,80],[1.0-0.1,1.0+0.1],lw=2)
+        ax1.plot([90,90],[1.0-0.1,1.0+0.1],lw=2)
+        ax1.plot([100,100],[1.0-0.1,1.0+0.1],lw=2)
+        ax1.plot([110,110],[1.0-0.1,1.0+0.1],lw=2)
+        ax1.plot([120,120],[1.0-0.1,1.0+0.1],lw=2)
 
         # ax2: arcival#spw
         for i in range(len(list_b3data)):
