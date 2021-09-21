@@ -79,8 +79,8 @@ class ProposalsALMA():
                 # ngc1068
                 self.z       = float(self._read_key("z"))
                 self.scale   = float(self._read_key("scale"))
-                self.ra_agn  = float(self._read_key("ra_agn"))
-                self.dec_agn = float(self._read_key("dec_agn"))
+                self.ra_agn  = float(self._read_key("ra_agn").split("deg")[0])
+                self.dec_agn = float(self._read_key("dec_agn").split("deg")[0])
 
                 # output fits
                 self.outfits_missingflux = self.dir_ready + self._read_key("outfits_missingflux")
@@ -152,7 +152,7 @@ class ProposalsALMA():
 
         # plot
         scalebar = 2000 / self.scale
-        
+
         myfig_fits2png(
         # general
         self.outfits_missingflux,
