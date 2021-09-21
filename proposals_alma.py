@@ -153,7 +153,7 @@ class ProposalsALMA():
         data_b3 = np.c_[project[b3], freq_info[b3], ang_res[b3], pi_name[b3], galname[b3], array[b3]]
         data_b6 = np.c_[project[b6], freq_info[b6], ang_res[b6], pi_name[b6], galname[b6], array[b6]]
 
-        # prepare for plot: b3
+        # prepare for plot: b3 spws
         list_spw,list_color,list_lw = [],[],[]
         for i in range(len(data_b3[:,1])):
             this_freq  = data_b3[i,1]
@@ -177,6 +177,11 @@ class ProposalsALMA():
 
         list_b3data = np.c_[list_spw,list_color]
         list_b3data = list_b3data[np.argsort(list_b3data[:, 0].astype(np.float64))]
+
+        # prepare for plot: b3 lines
+        list_line = np.loadtxt(self.line_key,dtype="str")
+        list_linefreq = [float(s[1]) for s in list_line if "b3" in s[0]]
+        list_linename = [s[0].split("line_b3_")[1] for s in list_line if "b3" in s[0]]
 
         # plot
         plt.figure(figsize=(10,6))
@@ -215,6 +220,11 @@ class ProposalsALMA():
         ax1.text(100,1.0-width-0.1,"100",ha="center",va="top",fontsize=9)
         ax1.text(110,1.0-width-0.1,"110",ha="center",va="top",fontsize=9)
         ax1.text(120,1.0-width-0.1,"120",ha="center",va="top",fontsize=9)
+
+        for i in range(len(list_linename)):
+        	this_name = list_linename[i]
+        	this_freq = list_linefreq[i]
+        	ax1.plot([this_freq,this_freq],[1.0,6.0],color="green",lw=2)
 
         # ax2: arcival#spw
         for i in range(len(list_b3data)):
