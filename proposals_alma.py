@@ -251,7 +251,7 @@ class ProposalsALMA():
         data,box = imval_all(self.outfits_missingflux)
         data     = data["data"] * data["mask"]
         data     = data.flatten()
-        data     = data[data>0]
+        data     = data[np.where((data>0) & (data<100))]
 
         p16 = np.percentile(data,16)
         p50 = np.percentile(data,50)
