@@ -67,7 +67,10 @@ class ProposalsALMA():
                 # input data
                 self.image_co10_12m7m = dir_raw + self._read_key("image_co10_12m7m")
                 self.image_co10_12m = dir_raw + self._read_key("image_co10_12m")
+                self.image_cs21 = dir_raw + self._read_key("image_cs21")
                 self.archive_csv = dir_raw + self._read_key("archive_csv")
+                self.txt_fov_b3 = self._read_key("fov_b3")
+                self.txt_fov_b6 = self._read_key("fov_b6")
 
                 # spectral scan setup
                 self.line_key = self.dir_proj + "scripts/keys/key_lines.txt"
@@ -109,10 +112,6 @@ class ProposalsALMA():
     ############################################################################################
     ############################################################################################
 
-    #################
-    # run_cycle_8p5 #
-    #################
-    
     def run_cycle_8p5(
         self,
         plot_spw_setup   = False,
@@ -121,21 +120,35 @@ class ProposalsALMA():
         ):
 
         if plot_spw_setup==True:
-            self.plot_spw_setup_b3()
-            self.plot_spw_setup_b6()
+            self.c8p5_plot_spw_setup_b3()
+            self.c8p5_plot_spw_setup_b6()
 
         if plot_missingflux==True:
-            self.plot_missingflux()
+            self.c8p5_plot_missingflux()
 
         if combine_figures==True:
-            self.create_figure_spws()
-            self.create_figure_missingflux()
+            self.c8p5_create_figure_spws()
+            self.c8p5_create_figure_missingflux()
+            self.c8p5_fov_with_map()
 
-    #############################
-    # create_figure_missingflux #
-    #############################
+    #####################
+    # c8p5_fov_with_map #
+    #####################
 
-    def create_figure_missingflux(
+    def c8p5_fov_with_map(
+        self,
+        ):
+        """
+        """
+
+        taskname = self.modname + sys._getframe().f_code.co_name
+        check_first(self.image_cs21,taskname)
+
+    ##################################
+    # c8p5_create_figure_missingflux #
+    ##################################
+
+    def c8p5_create_figure_missingflux(
         self,
         ):
         """
@@ -152,11 +165,11 @@ class ProposalsALMA():
         "3000000x3000000+0+0",
         )
 
-    ####################
-    # plot_missingflux #
-    ####################
+    #########################
+    # c8p5_plot_missingflux #
+    #########################
 
-    def plot_missingflux(
+    def c8p5_plot_missingflux(
         self,
         ):
         """
@@ -176,7 +189,7 @@ class ProposalsALMA():
 
         expr = "iif(IM1>0,(IM0-IM1)/IM0*100,0)"
         run_immath_two(self.image_co10_12m7m+"_tmp2",self.image_co10_12m+"_tmp1",
-            self.outfits_missingflux+"_tmp1",expr,delin=True)
+            self.outfits_missingflux+"_tmp1",expr)
 
         signal_masking(self.outfits_missingflux+"_tmp1",self.outfits_missingflux+"_tmp2",0)
 
@@ -184,8 +197,18 @@ class ProposalsALMA():
         run_immath_two(self.outfits_missingflux+"_tmp1",self.outfits_missingflux+"_tmp2",
             self.outfits_missingflux+"_tmp3",expr,delin=True)
 
-        imhead(self.outfits_missingflux+"_tmp3",mode="put",hdkey="beammajor",hdvalue="0.8arcsec")
-        imhead(self.outfits_missingflux+"_tmp3",mode="put",hdkey="beamminor",hdvalue="0.8arcsec")
+        signal_masking(self.image_co10_12m7m+"_tmp2",self.image_co10_12m7m+"_tmp3",0,True)
+        signal_masking(self.image_co10_12m+"_tmp1",self.image_co10_12m+"_tmp2",0,True)
+        expr = "iif(IM0>0,IM0-IM1,0)"
+        run_immath_two(self.image_co10_12m7m+"_tmp3",self.image_co10_12m+"_tmp2",
+            self.outfits_missingflux+"_tmp4",expr,delin=True)
+
+        expr = "iif(IM1>0,100,IM0)"
+        run_immath_two(self.outfits_missingflux+"_tmp3",self.outfits_missingflux+"_tmp4",
+            self.outfits_missingflux+"_tmp5",expr,delin=True)
+
+        imhead(self.outfits_missingflux+"_tmp5",mode="put",hdkey="beammajor",hdvalue="0.8arcsec")
+        imhead(self.outfits_missingflux+"_tmp5",mode="put",hdkey="beamminor",hdvalue="0.8arcsec")
 
         run_exportfits(self.outfits_missingflux+"_tmp3",self.outfits_missingflux,True,True,True)
 
@@ -259,11 +282,11 @@ class ProposalsALMA():
 
         plt.savefig(self.png_histogram, dpi=self.fig_dpi)
 
-    ######################
-    # create_figure_spws #
-    ######################
+    ###########################
+    # c8p5_create_figure_spws #
+    ###########################
 
-    def create_figure_spws(
+    def c8p5_create_figure_spws(
         self,
         ):
         """
@@ -280,11 +303,11 @@ class ProposalsALMA():
         self.box_specscan,
         )
 
-    #####################
-    # plot_spw_setup_b6 #
-    #####################
+    ##########################
+    # c8p5_plot_spw_setup_b6 #
+    ##########################
 
-    def plot_spw_setup_b6(
+    def c8p5_plot_spw_setup_b6(
         self,
         ):
         """
@@ -433,11 +456,11 @@ class ProposalsALMA():
 
         plt.savefig(self.png_specscan_b6, dpi=self.fig_dpi)
 
-    #####################
-    # plot_spw_setup_b3 #
-    #####################
+    ##########################
+    # c8p5_plot_spw_setup_b3 #
+    ##########################
 
-    def plot_spw_setup_b3(
+    def c8p5_plot_spw_setup_b3(
         self,
         ):
         """
