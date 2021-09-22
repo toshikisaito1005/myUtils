@@ -850,7 +850,7 @@ def myax_fig2png_ann(ax,number,add_text=True):
     ###########################################
     if number==3:
         # plot CND outer radius
-        cnd_radius = 4.0 # racsec
+        cnd_radius = 7.0 # racsec
         e_cnd = patches.Ellipse(xy=(-0,0), width=cnd_radius,
             height=cnd_radius, angle=0, fill=False, edgecolor="black",
             alpha=1.0, lw=2.5, ls="dashed")
@@ -860,9 +860,14 @@ def myax_fig2png_ann(ax,number,add_text=True):
         sbr_radius = 36.0 # racsec
         e_sbr = patches.Ellipse(xy=(-0,0), width=sbr_radius,
             height=sbr_radius, angle=0, fill=False, edgecolor="black",
-            alpha=1.0, lw=2.5, ls="dashed")
+            alpha=1.0, lw=3.5, ls="dashed")
 
         ax.add_patch(e_sbr)
+
+        if add_text==True:
+            t = ax.text(0, 4.0, "circumnuclear disk (CND)", color="white",
+                horizontalalignment="center", verticalalignment="bottom", weight="bold")
+            t.set_bbox(dict(facecolor="white", alpha=0.2, lw=0))
 
 def _myax_comment(ax,dec_cnt,xlim,ylim,comment_color):
     if float(dec_cnt.replace("deg",""))>0:
