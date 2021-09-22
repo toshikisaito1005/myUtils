@@ -892,7 +892,7 @@ def myax_fig2png_ann(ax,number,ra_cnt,dec_cnt,add_text=True,txtfiles=None):
             b6_fov = f.readlines()[2:]
             f.close()
             b6_fov = [s.split(",")[0:2] for s in b6_fov]
-            b6_size = 35.0 * 300 / 213.755 # 243.854
+            b6_size = 35.0 * 300 / 224.844215
 
             # plot B3 FoV
             for this_fov in b3_fov:
