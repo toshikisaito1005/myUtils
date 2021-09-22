@@ -171,6 +171,7 @@ class ProposalsALMA():
             set_grid=None,
             set_title="12m-only CS(2-1) intensity map",
             colorlog=True,
+            clim=[10**0.1,10**2],
             set_cmap="PuBu",
             showzero=False,
             showbeam=False,
