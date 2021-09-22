@@ -794,7 +794,7 @@ def myfig_fits2png(
 
     # annotation
     if numann!=None:
-        myax_fig2png_ann(ax,numann,ra_cnt,dec_cnt,textann,txtfile)
+        myax_fig2png_ann(ax,numann,ra_cnt,dec_cnt,textann,txtfiles)
 
     # save
     plt.savefig(outfile, dpi=fig_dpi)
