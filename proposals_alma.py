@@ -545,7 +545,7 @@ class ProposalsALMA():
         list_lineoffset = [float(s[1]) for s in list_line if "b3" in s[0]]
 
         # plot
-        plt.figure(figsize=(10,6))
+        plt.figure(figsize=(10,8))
         gs = gridspec.GridSpec(nrows=5, ncols=30)
         ax1 = plt.subplot(gs[0:3,1:30])
         ax2 = plt.subplot(gs[3:5,1:30])
