@@ -210,7 +210,7 @@ class ProposalsALMA():
         imhead(self.outfits_missingflux+"_tmp5",mode="put",hdkey="beammajor",hdvalue="0.8arcsec")
         imhead(self.outfits_missingflux+"_tmp5",mode="put",hdkey="beamminor",hdvalue="0.8arcsec")
 
-        run_exportfits(self.outfits_missingflux+"_tmp3",self.outfits_missingflux,True,True,True)
+        run_exportfits(self.outfits_missingflux+"_tmp5",self.outfits_missingflux,True,True,True)
 
         # plot map
         scalebar = 500 / self.scale
