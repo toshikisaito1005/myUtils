@@ -238,7 +238,7 @@ class ProposalsALMA():
         showbeam=True,
         color_beam="black",
         scalebar=scalebar,
-        label_scalebar="500 pc",
+        label_scalebar="0.5 kpc",
         color_scalebar="black",
         # imshow colorbar
         set_cbar=True,
@@ -272,12 +272,9 @@ class ProposalsALMA():
             xlabel="missing flux (%)",ylabel="count density",adjust=ad)
 
         width = abs(x[1] - x[0])
-        ax.bar(x[np.where((x>=0) & (x<33))], y[np.where((x>=0) & (x<33))], lw=0,
-            color="blue", alpha=1.0, width=width, align="center")
-        ax.bar(x[np.where((x>=33) & (x<67))], y[np.where((x>=33) & (x<67))], lw=0,
-            color="green", alpha=1.0, width=width, align="center")
-        ax.bar(x[np.where((x>=67) & (x<100))], y[np.where((x>=67) & (x<100))], lw=0,
-            color="red", alpha=1.0, width=width, align="center")
+        for i in range(100):
+            ax.bar(x[np.where((x>=i) & (x<i+1))], y[np.where((x>=i) & (x<i+1))], lw=0,
+                color=cm.rainbow(i/100.), alpha=1.0, width=width, align="center")       
 
         ax.plot([p50,p50],[0.027,0.027],"o",color="black",lw=0,markersize=15)
         ax.plot([p16,p84],[0.027,0.027],"-",color="black",lw=2)
