@@ -853,7 +853,7 @@ def myax_fig2png_ann(ax,number,add_text=True):
         cnd_radius = 4.0 # racsec
         e_cnd = patches.Ellipse(xy=(-0,0), width=fov_diamter,
             height=fov_diamter, angle=0, fill=False, edgecolor="black",
-            alpha=1.0, lw=3.5, ls="--")
+            alpha=1.0, lw=3.5, ls="dashed")
 
         ax.add_patch(e_cnd)
 
