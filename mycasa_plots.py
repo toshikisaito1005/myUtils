@@ -620,6 +620,7 @@ def myfig_fits2png(
     # annotation
     numann=None,
     textann=True,
+    txtfiles=None,
     ):
     """
     Parameters
@@ -793,12 +794,12 @@ def myfig_fits2png(
 
     # annotation
     if numann!=None:
-        myax_fig2png_ann(ax,numann,textann)
+        myax_fig2png_ann(ax,numann,ra_cnt,dec_cnt,textann,txtfile)
 
     # save
     plt.savefig(outfile, dpi=fig_dpi)
 
-def myax_fig2png_ann(ax,number,add_text=True):
+def myax_fig2png_ann(ax,number,ra_cnt,dec_cnt,add_text=True,txtfiles=None):
     """
     This is annotation sets for specific figures. For example,
     number==1 is used for Figure 1 of the NGC 1068 CI outflow paper.
@@ -808,11 +809,12 @@ def myax_fig2png_ann(ax,number,add_text=True):
     #######################################
     # Figure 1 of the NGC 1068 CI outflow #
     #######################################
-    theta1      = -10.0 # degree
-    theta2      = 70.0 # degree
-    fov_diamter = 16.5 # arcsec (12m+7m Band 8)
 
     if number==1:
+        theta1      = -10.0 # degree
+        theta2      = 70.0 # degree
+        fov_diamter = 16.5 # arcsec (12m+7m Band 8)
+
         fov_diamter = 16.5
         efov1 = patches.Ellipse(xy=(-0,0), width=fov_diamter,
             height=fov_diamter, angle=0, fill=False, edgecolor="black",
@@ -846,7 +848,7 @@ def myax_fig2png_ann(ax,number,add_text=True):
                 horizontalalignment="right", verticalalignment="center", weight="bold")
 
     ###########################################
-    # Figure 1 of C8.5 spectral scan proposal #
+    # Figure 2 of C8.5 spectral scan proposal #
     ###########################################
     if number==3:
         # plot CND outer radius
@@ -872,6 +874,59 @@ def myax_fig2png_ann(ax,number,add_text=True):
             t = ax.text(0, 18.0, "Starburst Ring", color="black",
                 horizontalalignment="center", verticalalignment="bottom", weight="bold")
             t.set_bbox(dict(facecolor="white", alpha=0.8, lw=0))
+
+    ###########################################
+    # Figure 3 of C8.5 spectral scan proposal #
+    ###########################################
+    if number==4:
+        if txtfiles!=None:
+            # b3 fov
+            f = open(txtfiles[0],"r")
+            b3_fov = f.readlines()[2:]
+            f.close()
+            b3_fov = [s.split(",")[0:2] for s in b3_fov]
+            b3_size = 35.0 * 300 / 97.99845
+
+            # b6 fov
+            f = open(txtfiles[1],"r")
+            b6_fov = f.readlines()[2:]
+            f.close()
+            b6_fov = [s.split(",")[0:2] for s in b6_fov]
+            b6_size = 35.0 * 300 / 243.854
+
+            # plot B3 FoV
+            for this_fov in b3_fov:
+                x = this_fov[0].replace(":","h",1).replace(":","m",1)+"s"
+                y = this_fov[1].replace(".","d",1).replace(".","m",1)+"s"
+                c = SkyCoord(x, y)
+                ra_dgr = c.ra.degree
+                dec_dgr = c.dec.degree
+
+                thisx = (float(ra_cnt.split("deg")[0]) - ra_dgr) * 3600.
+                thisy = (float(dec_cnt.split("deg")[0]) - dec_dgr) * 3600.
+
+                this_e = patches.Ellipse(xy=(-thisx,thisy), width=b3_size,
+                    height=b3_size, angle=0, fill=False, edgecolor="black",
+                    alpha=1.0, lw=2.5)
+
+                ax.add_patch(this_e)
+
+            # plot B3 FoV
+            for this_fov in b6_fov:
+                x = this_fov[0].replace(":","h",1).replace(":","m",1)+"s"
+                y = this_fov[1].replace(".","d",1).replace(".","m",1)+"s"
+                c = SkyCoord(x, y)
+                ra_dgr = c.ra.degree
+                dec_dgr = c.dec.degree
+
+                thisx = (float(ra_cnt.split("deg")[0]) - ra_dgr) * 3600.
+                thisy = (float(dec_cnt.split("deg")[0]) - dec_dgr) * 3600.
+
+                this_e = patches.Ellipse(xy=(-thisx,thisy), width=b6_size,
+                    height=b6_size, angle=0, fill=False, edgecolor="black",
+                    alpha=1.0, lw=2.5)
+
+                ax.add_patch(this_e)
 
 def _myax_comment(ax,dec_cnt,xlim,ylim,comment_color):
     if float(dec_cnt.replace("deg",""))>0:

@@ -98,6 +98,8 @@ class ProposalsALMA():
 
                 self.png_histogram   = self.dir_products + self._read_key("png_histogram")
 
+                self.png_fov_map    = self.dir_products + self._read_key("png_fov_map")
+
                 # final products
                 self.final_specscan = self.dir_final + self._read_key("final_specscan")
                 self.box_specscan = self._read_key("box_specscan")
@@ -107,6 +109,7 @@ class ProposalsALMA():
                 self.box_missingflux2 = self._read_key("box_missingflux2")
 
                 self.final_fov = self.dir_final + self._read_key("final_fov")
+                self.box_fov_map = self._read_key("box_fov_map")
 
     ############################################################################################
     ############################################################################################
@@ -157,7 +160,7 @@ class ProposalsALMA():
         myfig_fits2png(
             # general
             self.image_cs21,
-            self.final_fov,
+            self.png_fov_map,
             imsize_as=self.imsize_as,
             ra_cnt=self.ra_agn,
             dec_cnt=self.dec_agn,
@@ -173,9 +176,25 @@ class ProposalsALMA():
             label_scalebar="0.5 kpc",
             color_scalebar="black",
             # annotation
-            numann=3,
+            numann=4,
             textann=True,
+            txtfiles=[self.png_specscan_b3,self.png_specscan_b6],
             )
+
+    ##########################
+    # c8p5_create_figure_fov #
+    ##########################
+
+    def c8p5_create_figure_fov(
+        self,
+        ):
+        """
+        """
+
+        taskname = self.modname + sys._getframe().f_code.co_name
+        check_first(self.png_missingflux,taskname)
+
+        immagick_crop(self.png_fov_map,self.final_fov,self.box_fov_map,True)
 
     ##################################
     # c8p5_create_figure_missingflux #
