@@ -168,7 +168,7 @@ class ProposalsALMA():
             dec_cnt=self.dec_agn,
             # imshow
             fig_dpi=self.fig_dpi,
-            set_grid="both",
+            set_grid=None,
             set_title="12m-only CS(2-1) intensity map",
             colorlog=True,
             set_cmap="PuBu",
@@ -285,7 +285,7 @@ class ProposalsALMA():
             color_cont1="black",
             # imshow
             fig_dpi=self.fig_dpi,
-            set_grid="both",
+            set_grid=None,
             set_title="CO(1-0) missing flux map",
             showzero=False,
             showbeam=True,

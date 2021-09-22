@@ -907,7 +907,7 @@ def myax_fig2png_ann(ax,number,ra_cnt,dec_cnt,add_text=True,txtfiles=None):
 
                 this_e = patches.Ellipse(xy=(-thisx,thisy), width=b3_size,
                     height=b3_size, angle=0, fill=False, edgecolor="grey",
-                    alpha=1.0, lw=2.0)
+                    alpha=1.0, lw=1.0)
 
                 ax.add_patch(this_e)
 
@@ -924,12 +924,6 @@ def myax_fig2png_ann(ax,number,ra_cnt,dec_cnt,add_text=True,txtfiles=None):
 
                 this_e = patches.Ellipse(xy=(-thisx,-thisy), width=b6_size,
                     height=b6_size, angle=0, fill=False, edgecolor="black",
-                    alpha=1.0, lw=2.0)
-
-                ax.add_patch(this_e)
-
-                this_e = patches.Ellipse(xy=(-thisx,-thisy), width=b6_size/3.,
-                    height=b6_size/3., angle=0, fill=False, edgecolor="black",
                     alpha=1.0, lw=1.0, ls="dashed")
 
                 ax.add_patch(this_e)
