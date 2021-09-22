@@ -69,8 +69,8 @@ class ProposalsALMA():
                 self.image_co10_12m = dir_raw + self._read_key("image_co10_12m")
                 self.image_cs21 = dir_raw + self._read_key("image_cs21")
                 self.archive_csv = dir_raw + self._read_key("archive_csv")
-                self.txt_fov_b3 = self._read_key("fov_b3")
-                self.txt_fov_b6 = self._read_key("fov_b6")
+                self.txt_fov_b3 = dir_raw + self._read_key("fov_b3")
+                self.txt_fov_b6 = dir_raw + self._read_key("fov_b6")
 
                 # spectral scan setup
                 self.line_key = self.dir_proj + "scripts/keys/key_lines.txt"
