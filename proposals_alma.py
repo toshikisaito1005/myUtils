@@ -274,15 +274,17 @@ class ProposalsALMA():
         width = abs(x[1] - x[0])
         for i in range(100):
             ax.bar(x[np.where((x>=i) & (x<i+1))], y[np.where((x>=i) & (x<i+1))], lw=0,
-                color=cm.rainbow(i/100.), alpha=1.0, width=width, align="center")       
+                color=cm.rainbow(i/100.), alpha=1.0, width=width, align="edge")       
 
         ax.plot([p50,p50],[0.027,0.027],"o",color="black",lw=0,markersize=15)
         ax.plot([p16,p84],[0.027,0.027],"-",color="black",lw=2)
 
         ax.text(p50,0.0265,"median = "+str(int(p50))+"%",fontsize=22,ha="center",va="top")
 
-        ax.text(p16,0.0275,"16$^{th}$ pctl. = "+str(int(p16))+"%",fontsize=22,ha="center",va="bottom")
-        ax.text(p84,0.0275,"84$^{th}$ pctl. = "+str(int(p84))+"%",fontsize=22,ha="center",va="bottom")
+        ax.text(p16,0.0275,"16$^{th}$ pctl. = "+str(int(p16))+"%",
+            fontsize=22,ha="center",va="bottom")
+        ax.text(p84,0.0275,"84$^{th}$ pctl. = "+str(int(p84))+"%",
+            fontsize=22,ha="center",va="bottom")
 
         plt.savefig(self.png_histogram, dpi=self.fig_dpi)
 
