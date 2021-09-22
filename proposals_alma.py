@@ -427,8 +427,8 @@ class ProposalsALMA():
             x = [self.b6_spw_setup[j]-1.875/2.0, self.b6_spw_setup[j]+1.875/2.0]
             y = [j*2*4/5.+65,j*2*4/5.+65]
             if j>19:
-                y = [j*2*4/5.+65-19,j*2*4/5.+65-19]
-                
+                y = [j*2*4/5.+65-19*2,j*2*4/5.+65-19*2]
+
             ax2.plot(x,y,color="blue",lw=5)
 
         # text
