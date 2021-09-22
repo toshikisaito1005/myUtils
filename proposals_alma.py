@@ -178,7 +178,7 @@ class ProposalsALMA():
             # annotation
             numann=4,
             textann=True,
-            txtfiles=[self.png_specscan_b3,self.png_specscan_b6],
+            txtfiles=[self.txt_fov_b3,self.txt_fov_b6],
             )
 
     ##########################

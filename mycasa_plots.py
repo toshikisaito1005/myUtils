@@ -880,24 +880,24 @@ def myax_fig2png_ann(ax,number,ra_cnt,dec_cnt,add_text=True,txtfiles=None):
     ###########################################
     if number==4:
         if txtfiles!=None:
-            print(txtfiles)
             # b3 fov
             f = open(txtfiles[0],"r")
             b3_fov = f.readlines()[2:]
             f.close()
+            b3_fov = [s.split(",")[0:2] for s in b3_fov]
             b3_size = 35.0 * 300 / 97.99845
-            print(b3_fov)
 
             # b6 fov
             f = open(txtfiles[1],"r")
             b6_fov = f.readlines()[2:]
             f.close()
+            b6_fov = [s.split(",")[0:2] for s in b6_fov]
             b6_size = 35.0 * 300 / 243.854
 
             # plot B3 FoV
             for this_fov in b3_fov:
-                x = this_fov.split(",")[0].replace(":","h",1).replace(":","m",1)+"s"
-                y = this_fov.split(",")[1].replace(".","d",1).replace(".","m",1)+"s"
+                x = this_fov[0].replace(":","h",1).replace(":","m",1)+"s"
+                y = this_fov[1].replace(".","d",1).replace(".","m",1)+"s"
                 c = SkyCoord(x, y)
                 ra_dgr = c.ra.degree
                 dec_dgr = c.dec.degree
@@ -913,8 +913,8 @@ def myax_fig2png_ann(ax,number,ra_cnt,dec_cnt,add_text=True,txtfiles=None):
 
             # plot B3 FoV
             for this_fov in b6_fov:
-                x = this_fov.split(",")[0].replace(":","h",1).replace(":","m",1)+"s"
-                y = this_fov.split(",")[1].replace(".","d",1).replace(".","m",1)+"s"
+                x = this_fov[0].replace(":","h",1).replace(":","m",1)+"s"
+                y = this_fov[1].replace(".","d",1).replace(".","m",1)+"s"
                 c = SkyCoord(x, y)
                 ra_dgr = c.ra.degree
                 dec_dgr = c.dec.degree
