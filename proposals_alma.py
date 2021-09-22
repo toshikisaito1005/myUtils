@@ -218,36 +218,36 @@ class ProposalsALMA():
         scalebar = 500 / self.scale
 
         myfig_fits2png(
-        # general
-        self.outfits_missingflux,
-        self.png_missingflux,
-        imcontour1=self.outfits_co10,
-        imsize_as=self.imsize_as,
-        ra_cnt=self.ra_agn,
-        dec_cnt=self.dec_agn,
-        # contour 1
-        unit_cont1=None,
-        levels_cont1=[0.01,0.02,0.04,0.08,0.16,0.32,0.64,0.96],
-        width_cont1=[1.0],
-        color_cont1="black",
-        # imshow
-        fig_dpi=self.fig_dpi,
-        set_grid="both",
-        set_title="CO(1-0) missing flux map",
-        showzero=False,
-        showbeam=True,
-        color_beam="black",
-        scalebar=scalebar,
-        label_scalebar="0.5 kpc",
-        color_scalebar="black",
-        # imshow colorbar
-        set_cbar=True,
-        clim=[0,100],
-        label_cbar="missing flux (%)",
-        # annotation
-        numann=None,
-        textann=True,
-        )
+            # general
+            self.outfits_missingflux,
+            self.png_missingflux,
+            imcontour1=self.outfits_co10,
+            imsize_as=self.imsize_as,
+            ra_cnt=self.ra_agn,
+            dec_cnt=self.dec_agn,
+            # contour 1
+            unit_cont1=None,
+            levels_cont1=[0.01,0.02,0.04,0.08,0.16,0.32,0.64,0.96],
+            width_cont1=[1.0],
+            color_cont1="black",
+            # imshow
+            fig_dpi=self.fig_dpi,
+            set_grid="both",
+            set_title="CO(1-0) missing flux map",
+            showzero=False,
+            showbeam=True,
+            color_beam="black",
+            scalebar=scalebar,
+            label_scalebar="0.5 kpc",
+            color_scalebar="black",
+            # imshow colorbar
+            set_cbar=True,
+            clim=[0,100],
+            label_cbar="missing flux (%)",
+            # annotation
+            numann=None,
+            textann=True,
+            )
 
         # plt histogram
         data,box = imval_all(self.outfits_missingflux)
@@ -273,7 +273,7 @@ class ProposalsALMA():
 
         width = abs(x[1] - x[0])
         for i in range(100):
-            ax.bar(x[np.where((x>=i) & (x<i+1))], y[np.where((x>=i) & (x<i+1))], lw=0,
+            ax.bar(x[np.where((x>=i) & (x<i+1))]+width, y[np.where((x>=i) & (x<i+1))], lw=0,
                 color=cm.rainbow(i/100.), alpha=1.0, width=width, align="edge")       
 
         ax.plot([p50,p50],[0.027,0.027],"o",color="black",lw=0,markersize=15)
