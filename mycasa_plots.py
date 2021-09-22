@@ -851,18 +851,18 @@ def myax_fig2png_ann(ax,number,add_text=True):
     if number==3:
         # plot CND outer radius
         cnd_radius = 4.0 # racsec
-        e_cnd = patches.Ellipse(xy=(-0,0), width=fov_diamter,
-            height=fov_diamter, angle=0, fill=False, edgecolor="black",
+        e_cnd = patches.Ellipse(xy=(-0,0), width=cnd_radius,
+            height=cnd_radius, angle=0, fill=False, edgecolor="black",
             alpha=1.0, lw=2.5, ls="dashed")
 
-        #ax.add_patch(e_cnd)
+        ax.add_patch(e_cnd)
 
-        cnd_radius = 36.0 # racsec
-        e_sbr = patches.Ellipse(xy=(-0,0), width=fov_diamter,
-            height=fov_diamter, angle=0, fill=False, edgecolor="black",
+        sbr_radius = 36.0 # racsec
+        e_sbr = patches.Ellipse(xy=(-0,0), width=sbr_radius,
+            height=sbr_radius, angle=0, fill=False, edgecolor="black",
             alpha=1.0, lw=2.5, ls="dashed")
 
-        #ax.add_patch(e_sbr)
+        ax.add_patch(e_sbr)
 
 def _myax_comment(ax,dec_cnt,xlim,ylim,comment_color):
     if float(dec_cnt.replace("deg",""))>0:
