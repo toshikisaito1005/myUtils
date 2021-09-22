@@ -245,7 +245,7 @@ class ProposalsALMA():
             clim=[0,100],
             label_cbar="missing flux (%)",
             # annotation
-            numann=None,
+            numann=3,
             textann=True,
             )
 
