@@ -929,7 +929,7 @@ def myax_fig2png_ann(ax,number,ra_cnt,dec_cnt,add_text=True,txtfiles=None):
                 ax.add_patch(this_e)
 
         if add_text==True:
-            t = ax.text(-18, 20, "Proposed Band 6 FoV", color="black", roration=-30
+            t = ax.text(-18, 20, "Proposed Band 6 FoV", color="black", roration=-30,
                 horizontalalignment="center", verticalalignment="center", weight="bold")
             t.set_bbox(dict(facecolor="white", alpha=0.8, lw=0))
 
