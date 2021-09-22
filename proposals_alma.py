@@ -106,6 +106,8 @@ class ProposalsALMA():
                 self.box_missingflux = self._read_key("box_missingflux")
                 self.box_missingflux2 = self._read_key("box_missingflux2")
 
+                self.final_fov = self.dir_final + self._read_key("final_fov")
+
     ############################################################################################
     ############################################################################################
     ##############################                                ##############################
@@ -116,9 +118,10 @@ class ProposalsALMA():
 
     def run_cycle_8p5(
         self,
-        plot_spw_setup   = False,
-        plot_missingflux = False,
-        combine_figures  = False,
+        plot_spw_setup    = False,
+        plot_missingflux  = False,
+        plot_proposed_fov = False,
+        combine_figures   = False,
         ):
 
         if plot_spw_setup==True:
@@ -128,10 +131,12 @@ class ProposalsALMA():
         if plot_missingflux==True:
             self.c8p5_plot_missingflux()
 
+        if plot_proposed_fov==True:
+            self.c8p5_fov_with_map()
+
         if combine_figures==True:
             self.c8p5_create_figure_spws()
             self.c8p5_create_figure_missingflux()
-            self.c8p5_fov_with_map()
 
     #####################
     # c8p5_fov_with_map #
@@ -145,6 +150,32 @@ class ProposalsALMA():
 
         taskname = self.modname + sys._getframe().f_code.co_name
         check_first(self.image_cs21,taskname)
+
+        # map
+        scalebar = 500 / self.scale
+
+        myfig_fits2png(
+            # general
+            self.image_cs21,
+            self.final_fov,
+            imsize_as=self.imsize_as,
+            ra_cnt=self.ra_agn,
+            dec_cnt=self.dec_agn,
+            # imshow
+            fig_dpi=self.fig_dpi,
+            set_grid="both",
+            set_title="12m-only CS(2-1) integrated intensity map",
+            set_cmap="PuBu",
+            showzero=False,
+            showbeam=False,
+            color_beam="black",
+            scalebar=scalebar,
+            label_scalebar="0.5 kpc",
+            color_scalebar="black",
+            # annotation
+            numann=3,
+            textann=True,
+            )
 
     ##################################
     # c8p5_create_figure_missingflux #
