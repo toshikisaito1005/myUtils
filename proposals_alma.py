@@ -162,13 +162,13 @@ class ProposalsALMA():
             # general
             self.image_cs21,
             self.png_fov_map,
-            imsize_as=self.imsize_as,
+            imsize_as=self.imsize_as*1.5,
             ra_cnt=self.ra_agn,
             dec_cnt=self.dec_agn,
             # imshow
             fig_dpi=self.fig_dpi,
             set_grid="both",
-            set_title="12m-only CS(2-1) integrated intensity map",
+            set_title="12m-only CS(2-1) intensity map",
             colorlog=True,
             set_cmap="PuBu",
             showzero=False,
