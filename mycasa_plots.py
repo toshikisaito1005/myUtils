@@ -897,7 +897,7 @@ def myax_fig2png_ann(ax,number,ra_cnt,dec_cnt,add_text=True,txtfiles=None):
             # plot B3 FoV
             for this_fov in b3_fov:
                 x = this_fov[0].replace(":","h",1).replace(":","m",1)+"s"
-                y = this_fov[1].replace(".","d",1).replace(".","m",1)+"s"
+                y = this_fov[1].replace(":","d",1).replace(":","m",1)+"s"
                 c = SkyCoord(x, y)
                 ra_dgr = c.ra.degree
                 dec_dgr = c.dec.degree
@@ -914,7 +914,7 @@ def myax_fig2png_ann(ax,number,ra_cnt,dec_cnt,add_text=True,txtfiles=None):
             # plot B3 FoV
             for this_fov in b6_fov:
                 x = this_fov[0].replace(":","h",1).replace(":","m",1)+"s"
-                y = this_fov[1].replace(".","d",1).replace(".","m",1)+"s"
+                y = this_fov[1].replace(":","d",1).replace(":","m",1)+"s"
                 c = SkyCoord(x, y)
                 ra_dgr = c.ra.degree
                 dec_dgr = c.dec.degree
