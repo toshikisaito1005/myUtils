@@ -103,6 +103,7 @@ class ProposalsALMA():
                 self.box_specscan = self._read_key("box_specscan")
 
                 self.final_missingflux = self.dir_final + self._read_key("final_missingflux")
+                self.box_missingflux = self._read_key("box_missingflux")
 
     ############################################################################################
     ############################################################################################
@@ -161,8 +162,8 @@ class ProposalsALMA():
         self.png_missingflux,
         self.png_histogram,
         self.final_missingflux,
-        "3000000x3000000+0+0",
-        "3000000x3000000+0+0",
+        self.box_missingflux,
+        self.box_missingflux,
         )
 
     #########################
