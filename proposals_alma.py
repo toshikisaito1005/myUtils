@@ -99,6 +99,7 @@ class ProposalsALMA():
                 self.png_histogram   = self.dir_products + self._read_key("png_histogram")
 
                 self.png_fov_map    = self.dir_products + self._read_key("png_fov_map")
+                self.imsize_fov_as  = float(self._read_key("imsize_fov_as"))
 
                 # final products
                 self.final_specscan = self.dir_final + self._read_key("final_specscan")
@@ -162,7 +163,7 @@ class ProposalsALMA():
             # general
             self.image_cs21,
             self.png_fov_map,
-            imsize_as=self.imsize_as*1.5,
+            imsize_as=self.imsize_fov_as,
             ra_cnt=self.ra_agn,
             dec_cnt=self.dec_agn,
             # imshow
