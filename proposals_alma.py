@@ -389,7 +389,7 @@ class ProposalsALMA():
         list_lineoffset = [float(s[1]) for s in list_line if "b6" in s[0]]
 
         # plot
-        plt.figure(figsize=(10,6))
+        plt.figure(figsize=(10,8))
         gs = gridspec.GridSpec(nrows=5, ncols=30)
         ax1 = plt.subplot(gs[0:3,1:30])
         ax2 = plt.subplot(gs[3:5,1:30])
@@ -427,7 +427,7 @@ class ProposalsALMA():
             x = [self.b6_spw_setup[j]-1.875/2.0, self.b6_spw_setup[j]+1.875/2.0]
             y = [j*2*4/5.+65,j*2*4/5.+65]
             if j>19:
-                y = [j*2*4/5.+65-19*2+2,j*2*4/5.+65-19*2+2]
+                y = [j*2*4/5.+65-17*2,j*2*4/5.+65-17*2]
 
             ax2.plot(x,y,color="blue",lw=5)
 
