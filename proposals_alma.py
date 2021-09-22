@@ -415,7 +415,7 @@ class ProposalsALMA():
         	this_offset = list_lineoffset[i]
         	ax1.plot([this_freq,this_freq],[1.0,6.0],color="green",lw=2)
         	this_text = ax1.text(this_freq+this_offset,6.0,this_name,
-        	    rotation=60,fontsize=11,ha="left",va="bottom")
+        	    rotation=60,fontsize=15,ha="left",va="bottom")
 
         # ax2: arcival spw
         for i in range(len(list_data)):
@@ -433,13 +433,13 @@ class ProposalsALMA():
 
         # text
         ax1.text(0.50,0.90,"ALMA Band 6 Coverage",
-            color="black",weight="bold",transform=ax1.transAxes,fontsize=16,ha="center")
+            color="black",weight="bold",transform=ax1.transAxes,fontsize=20,ha="center")
         ax2.text(0.95,0.05,"proposed 7m+TP SPWs",
-            color="blue",weight="bold",transform=ax2.transAxes,fontsize=13,ha="right")
+            color="blue",weight="bold",transform=ax2.transAxes,fontsize=17,ha="right")
         ax2.text(0.95,0.25,"archival 12m SPWs",
-            color="black",transform=ax2.transAxes,fontsize=13,ha="right")
+            color="black",transform=ax2.transAxes,fontsize=17,ha="right")
         ax2.text(0.95,0.16,"archival 7m SPWs",
-            color="tomato",transform=ax2.transAxes,fontsize=13,ha="right")
+            color="tomato",transform=ax2.transAxes,fontsize=17,ha="right")
 
         # ax1 grid
         width = 0.4
@@ -450,12 +450,12 @@ class ProposalsALMA():
         ax1.plot([250,250],[1.0-width,1.0+width],lw=2,color="black",zorder=1e9)
         ax1.plot([260,260],[1.0-width,1.0+width],lw=2,color="black",zorder=1e9)
         ax1.plot([270,270],[1.0-width,1.0+width],lw=2,color="black",zorder=1e9)
-        ax1.text(220,1.0-width-0.1,"220",ha="center",va="top",fontsize=11)
-        ax1.text(230,1.0-width-0.1,"230",ha="center",va="top",fontsize=11)
-        ax1.text(240,1.0-width-0.1,"240",ha="center",va="top",fontsize=11)
-        ax1.text(250,1.0-width-0.1,"250",ha="center",va="top",fontsize=11)
-        ax1.text(260,1.0-width-0.1,"260",ha="center",va="top",fontsize=11)
-        ax1.text(270,1.0-width-0.1,"270",ha="center",va="top",fontsize=11)
+        ax1.text(220,1.0-width-0.1,"220",ha="center",va="top",fontsize=15)
+        ax1.text(230,1.0-width-0.1,"230",ha="center",va="top",fontsize=15)
+        ax1.text(240,1.0-width-0.1,"240",ha="center",va="top",fontsize=15)
+        ax1.text(250,1.0-width-0.1,"250",ha="center",va="top",fontsize=15)
+        ax1.text(260,1.0-width-0.1,"260",ha="center",va="top",fontsize=15)
+        ax1.text(270,1.0-width-0.1,"270",ha="center",va="top",fontsize=15)
 
         plt.savefig(self.png_specscan_b6, dpi=self.fig_dpi)
 
@@ -571,7 +571,7 @@ class ProposalsALMA():
         	this_offset = list_lineoffset[i]
         	ax1.plot([this_freq,this_freq],[1.0,6.0],color="green",lw=2)
         	this_text = ax1.text(this_freq+this_offset,6.0,this_name,
-        	    rotation=60,fontsize=11,ha="left",va="bottom")
+        	    rotation=60,fontsize=15,ha="left",va="bottom")
 
         # ax2: arcival spw
         for i in range(len(list_data)):
@@ -586,13 +586,13 @@ class ProposalsALMA():
 
         # text
         ax1.text(0.50,0.90,"ALMA Band 3 Coverage",
-            color="black",weight="bold",transform=ax1.transAxes,fontsize=16,ha="center")
+            color="black",weight="bold",transform=ax1.transAxes,fontsize=20,ha="center")
         ax2.text(0.95,0.05,"proposed 7m+TP SPWs",
-            color="blue",weight="bold",transform=ax2.transAxes,fontsize=13,ha="right")
+            color="blue",weight="bold",transform=ax2.transAxes,fontsize=17,ha="right")
         ax2.text(0.95,0.25,"archival 12m SPWs",
-            color="black",transform=ax2.transAxes,fontsize=13,ha="right")
+            color="black",transform=ax2.transAxes,fontsize=17,ha="right")
         ax2.text(0.95,0.16,"archival 7m SPWs",
-            color="tomato",transform=ax2.transAxes,fontsize=13,ha="right")
+            color="tomato",transform=ax2.transAxes,fontsize=17,ha="right")
 
         # ax1 grid
         width = 0.4
@@ -602,11 +602,11 @@ class ProposalsALMA():
         ax1.plot([105,105],[1.0-width,1.0+width],lw=2,color="black",zorder=1e9)
         ax1.plot([115,115],[1.0-width,1.0+width],lw=2,color="black",zorder=1e9)
         ax1.plot([115,115],[1.0-width,1.0+width],lw=2,color="black",zorder=1e9)
-        ax1.text(85,1.0-width-0.1,"85",ha="center",va="top",fontsize=11)
-        ax1.text(95,1.0-width-0.1,"95",ha="center",va="top",fontsize=11)
-        ax1.text(105,1.0-width-0.1,"105",ha="center",va="top",fontsize=11)
-        ax1.text(115,1.0-width-0.1,"115",ha="center",va="top",fontsize=11)
-        ax1.text(115,1.0-width-0.1,"115",ha="center",va="top",fontsize=11)
+        ax1.text(85,1.0-width-0.1,"85",ha="center",va="top",fontsize=15)
+        ax1.text(95,1.0-width-0.1,"95",ha="center",va="top",fontsize=15)
+        ax1.text(105,1.0-width-0.1,"105",ha="center",va="top",fontsize=15)
+        ax1.text(115,1.0-width-0.1,"115",ha="center",va="top",fontsize=15)
+        ax1.text(115,1.0-width-0.1,"115",ha="center",va="top",fontsize=15)
 
         plt.savefig(self.png_specscan_b3, dpi=self.fig_dpi)
 
