@@ -272,7 +272,12 @@ class ProposalsALMA():
             xlabel="missing flux (%)",ylabel="count density",adjust=ad)
 
         width = abs(x[1] - x[0])
-        ax.bar(x, y, lw=0, color="black", alpha=1.0, width=width, align="center")
+        ax.bar(x[np.where((x>=0) & (x<33))], y[np.where((x>=0) & (x<33))], lw=0,
+            color="blue", alpha=1.0, width=width, align="center")
+        ax.bar(x[np.where((x>=33) & (x<67))], y[np.where((x>=33) & (x<67))], lw=0,
+            color="green", alpha=1.0, width=width, align="center")
+        ax.bar(x[np.where((x>=67) & (x<100))], y[np.where((x>=67) & (x<100))], lw=0,
+            color="red", alpha=1.0, width=width, align="center")
 
         ax.plot([p50,p50],[0.027,0.027],"o",color="black",lw=0,markersize=15)
         ax.plot([p16,p84],[0.027,0.027],"-",color="black",lw=2)
