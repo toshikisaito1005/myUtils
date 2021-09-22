@@ -880,6 +880,7 @@ def myax_fig2png_ann(ax,number,ra_cnt,dec_cnt,add_text=True,txtfiles=None):
     ###########################################
     if number==4:
         if txtfiles!=None:
+            print(txtfiles)
             # b3 fov
             f = open(txtfiles[0],"r")
             b3_fov = f.readlines()[2:]
@@ -895,7 +896,6 @@ def myax_fig2png_ann(ax,number,ra_cnt,dec_cnt,add_text=True,txtfiles=None):
 
             # plot B3 FoV
             for this_fov in b3_fov:
-                print(this_fov)
                 x = this_fov.split(",")[0].replace(":","h",1).replace(":","m",1)+"s"
                 y = this_fov.split(",")[1].replace(".","d",1).replace(".","m",1)+"s"
                 c = SkyCoord(x, y)
