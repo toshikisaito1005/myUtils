@@ -140,6 +140,7 @@ class ProposalsALMA():
         if combine_figures==True:
             self.c8p5_create_figure_spws()
             self.c8p5_create_figure_missingflux()
+            self.c8p5_create_figure_fov()
 
     #####################
     # c8p5_fov_with_map #
@@ -168,6 +169,7 @@ class ProposalsALMA():
             fig_dpi=self.fig_dpi,
             set_grid="both",
             set_title="12m-only CS(2-1) integrated intensity map",
+            colorlog=True,
             set_cmap="PuBu",
             showzero=False,
             showbeam=False,
