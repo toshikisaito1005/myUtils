@@ -190,7 +190,7 @@ class ProposalsALMA():
             # contour 1
             unit_cont1=0.07, # 0.100 mK / (4*0.7)
             levels_cont1=[5],
-            width_cont1=[1.0,1.5],
+            width_cont1=[2.5],
             color_cont1="black",
             # imshow
             fig_dpi=self.fig_dpi,
