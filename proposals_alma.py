@@ -186,6 +186,11 @@ class ProposalsALMA():
             imsize_as=self.imsize_as,
             ra_cnt=self.ra_agn,
             dec_cnt=self.dec_agn,
+            # contour 1
+            unit_cont1=0.036, # 0.100 mJy / (4*0.7)
+            levels_cont1=[-3,3,5,7,9],
+            width_cont1=[1.0],
+            color_cont1="black",
             # imshow
             fig_dpi=self.fig_dpi,
             set_grid=None,
