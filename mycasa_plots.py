@@ -960,14 +960,14 @@ def myax_fig2png_ann(ax,number,ra_cnt,dec_cnt,add_text=True,txtfiles=None):
                 thisx = (float(ra_cnt.split("deg")[0]) - ra_dgr) * 3600.
                 thisy = (float(dec_cnt.split("deg")[0]) - dec_dgr) * 3600.
 
-                this_e = patches.Ellipse(xy=(-thisx,thisy), width=b10_size,
+                this_e = patches.Ellipse(xy=(thisx,ーthisy), width=b10_size,
                     height=b10_size, angle=0, fill=False, edgecolor="grey",
                     alpha=1.0, lw=1.0)
 
                 ax.add_patch(this_e)
 
         if add_text==True:
-            t = ax.text(-15, 17, "Proposed Band 6 FoV", color="black", rotation=-32,
+            t = ax.text(-15, 17, "Proposed Band 10 FoV", color="black", rotation=-32,
                 horizontalalignment="center", verticalalignment="center", weight="bold")
             #t.set_bbox(dict(facecolor="white", alpha=0.8, lw=0))
 
