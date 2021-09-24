@@ -64,6 +64,8 @@ class ProposalsALMA():
 
             # cycle 8p5
             if self.cycle=="cycle08p5":
+            	### proposal specscan
+
                 # input data
                 self.image_co10_12m7m = dir_raw + self._read_key("image_co10_12m7m")
                 self.image_co10_12m = dir_raw + self._read_key("image_co10_12m")
@@ -112,6 +114,15 @@ class ProposalsALMA():
                 self.final_fov = self.dir_final + self._read_key("final_fov")
                 self.box_fov_map = self._read_key("box_fov_map")
 
+                ### proposal catom21
+
+                # input data
+                self.tpeak_ci10 = dir_raw + self._read_key("tpeak_ci10")
+
+                # output png
+                self.png_expected_catom21 = self.dir_products + self._read_key("png_expected_catom21")
+                self.box_expected_catom21 = self._read_key("box_expected_catom21")
+
     ############################################################################################
     ############################################################################################
     ##############################                                ##############################
@@ -120,7 +131,7 @@ class ProposalsALMA():
     ############################################################################################
     ############################################################################################
 
-    def run_cycle_8p5(
+    def run_cycle_8p5a_specscan(
         self,
         plot_spw_setup    = False,
         plot_missingflux  = False,
@@ -142,6 +153,55 @@ class ProposalsALMA():
             self.c8p5_create_figure_spws()
             self.c8p5_create_figure_missingflux()
             self.c8p5_create_figure_fov()
+
+    def run_cycle_8p5b_catom21(
+        self,
+        plot_expected_catom21 = False,
+        ):
+
+        if plot_expected_catom21==True:
+            self.c8p5b_plot_expected_catom21()
+
+    ###############################
+    # c8p5b_plot_expected_catom21 #
+    ###############################
+
+    def c8p5b_plot_expected_catom21(
+        self,
+        ):
+        """
+        """
+
+        taskname = self.modname + sys._getframe().f_code.co_name
+        check_first(self.image_cs21,taskname)
+
+        # map
+        scalebar = 500 / self.scale
+
+        myfig_fits2png(
+            # general
+            self.tpeak_ci10,
+            self.png_expected_catom21,
+            imsize_as=self.imsize_as,
+            ra_cnt=self.ra_agn,
+            dec_cnt=self.dec_agn,
+            # imshow
+            fig_dpi=self.fig_dpi,
+            set_grid=None,
+            set_title="Expected [CI] $^3$P_1$-$^3$P_0$ intensity map",
+            colorlog=True,
+            set_cmap="rainbow",
+            showzero=False,
+            showbeam=True,
+            color_beam="black",
+            scalebar=scalebar,
+            label_scalebar="0.5 kpc",
+            color_scalebar="black",
+            # annotation
+            #numann=4,
+            #textann=True,
+            #txtfiles=[self.txt_fov_b3,self.txt_fov_b6],
+            )
 
     #####################
     # c8p5_fov_with_map #
