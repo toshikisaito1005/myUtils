@@ -937,6 +937,40 @@ def myax_fig2png_ann(ax,number,ra_cnt,dec_cnt,add_text=True,txtfiles=None):
                 horizontalalignment="center", verticalalignment="bottom", weight="bold")
             t.set_bbox(dict(facecolor="white", alpha=0.8, lw=0))
 
+    #####################################
+    # Figure 1 of C8.5 catom21 proposal #
+    #####################################
+    if number==5:
+        if txtfiles!=None:
+            # 10 fov
+            f = open(txtfiles[0],"r")
+            b10_fov = f.readlines()[2:]
+            f.close()
+            b10_fov = [s.split(",")[0:2] for s in b10_fov]
+            b10_size = 12.381 # 35.0 * 300 / 97.99845
+
+            # plot B10 FoV
+            for this_fov in b10_fov:
+                x = this_fov[0].replace(":","h",1).replace(":","m",1)+"s"
+                y = this_fov[1].replace(":","d",1).replace(":","m",1)+"s"
+                c = SkyCoord(x, y)
+                ra_dgr = c.ra.degree
+                dec_dgr = c.dec.degree
+
+                thisx = (float(ra_cnt.split("deg")[0]) - ra_dgr) * 3600.
+                thisy = (float(dec_cnt.split("deg")[0]) - dec_dgr) * 3600.
+
+                this_e = patches.Ellipse(xy=(-thisx,thisy), width=b10_size,
+                    height=b10_size, angle=0, fill=False, edgecolor="grey",
+                    alpha=1.0, lw=1.0)
+
+                ax.add_patch(this_e)
+
+        if add_text==True:
+            t = ax.text(-15, 17, "Proposed Band 6 FoV", color="black", rotation=-32,
+                horizontalalignment="center", verticalalignment="center", weight="bold")
+            #t.set_bbox(dict(facecolor="white", alpha=0.8, lw=0))
+
 def _myax_comment(ax,dec_cnt,xlim,ylim,comment_color):
     if float(dec_cnt.replace("deg",""))>0:
         t = ax.text(min(xlim)*-0.9, max(ylim)*-0.9,
