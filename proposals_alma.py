@@ -183,6 +183,7 @@ class ProposalsALMA():
             # general
             self.tpeak_ci10,
             self.png_expected_catom21,
+            self.tpeak_ci10,
             imsize_as=self.imsize_as,
             ra_cnt=self.ra_agn,
             dec_cnt=self.dec_agn,
