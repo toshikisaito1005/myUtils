@@ -189,8 +189,8 @@ class ProposalsALMA():
             dec_cnt=self.dec_agn,
             # contour 1
             unit_cont1=0.07, # 0.100 mK / (4*0.7)
-            levels_cont1=[-3,3,5,7,9],
-            width_cont1=[1.0],
+            levels_cont1=[3,5],
+            width_cont1=[1.0,1.5],
             color_cont1="black",
             # imshow
             fig_dpi=self.fig_dpi,
