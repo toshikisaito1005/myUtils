@@ -188,7 +188,7 @@ class ProposalsALMA():
             # imshow
             fig_dpi=self.fig_dpi,
             set_grid=None,
-            set_title="Expected [CI] $^3$P_1$-$^3$P_0$ intensity map",
+            set_title="Expected [CI] $^3$P$_1$-$^3$P$_0$ intensity map",
             colorlog=True,
             set_cmap="rainbow",
             showzero=False,
