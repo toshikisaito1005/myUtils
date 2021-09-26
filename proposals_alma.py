@@ -118,7 +118,8 @@ class ProposalsALMA():
 
                 # input data
                 self.tpeak_ci10 = dir_raw + self._read_key("tpeak_ci10")
-                self.txt_fov_b10 = dir_raw + self._read_key("fov_b10")
+                self.txt_fov_b10_fov1 = dir_raw + self._read_key("fov_b10_fov1")
+                self.txt_fov_b10_fov2 = dir_raw + self._read_key("fov_b10_fov2")
 
                 # output png
                 self.png_expected_catom21 = self.dir_products + self._read_key("png_expected_catom21")
@@ -207,7 +208,7 @@ class ProposalsALMA():
             # annotation
             numann=5,
             textann=True,
-            txtfiles=[self.txt_fov_b10],
+            txtfiles=[self.txt_fov_b10_fov1,self.txt_fov_b10_fov2],
             )
 
     #####################
