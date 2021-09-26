@@ -941,9 +941,9 @@ def myax_fig2png_ann(ax,number,ra_cnt,dec_cnt,add_text=True,txtfiles=None):
     # Figure 1 of C8.5 catom21 proposal #
     #####################################
     if number==5:
-        if txtfiles!=None:
+        for this_txt in txtfiles:
             # 10 fov
-            f = open(txtfiles[0],"r")
+            f = open(this_txt,"r")
             b10_fov = f.readlines()[2:]
             f.close()
             b10_fov = [s.split(",")[0:2] for s in b10_fov]
@@ -969,7 +969,6 @@ def myax_fig2png_ann(ax,number,ra_cnt,dec_cnt,add_text=True,txtfiles=None):
         if add_text==True:
             t = ax.text(-8, 10, "Proposed Band 10 FoV", color="black", rotation=-38,
                 horizontalalignment="center", verticalalignment="center", weight="bold")
-            #t.set_bbox(dict(facecolor="white", alpha=0.8, lw=0))
 
 def _myax_comment(ax,dec_cnt,xlim,ylim,comment_color):
     if float(dec_cnt.replace("deg",""))>0:
