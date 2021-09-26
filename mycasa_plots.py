@@ -962,7 +962,7 @@ def myax_fig2png_ann(ax,number,ra_cnt,dec_cnt,add_text=True,txtfiles=None):
 
                 i = 0
 
-                if==0:
+                if i==0:
                     color = "red"
                 elif i==1:
                     color = "blue"
