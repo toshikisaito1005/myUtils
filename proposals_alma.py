@@ -121,6 +121,9 @@ class ProposalsALMA():
                 self.txt_fov_b10_fov1 = dir_raw + self._read_key("fov_b10_fov1")
                 self.txt_fov_b10_fov2 = dir_raw + self._read_key("fov_b10_fov2")
 
+                # output fits
+                self.outfits_expected_ci21_tpeak = self.dir_ready + self._read_key("outfits_expected_ci21_tpeak")
+
                 # output png
                 self.png_expected_catom21 = self.dir_products + self._read_key("png_expected_catom21")
                 self.box_expected_catom21 = self._read_key("box_expected_catom21")
@@ -177,20 +180,24 @@ class ProposalsALMA():
         taskname = self.modname + sys._getframe().f_code.co_name
         check_first(self.image_cs21,taskname)
 
+        #
+        run_immath_one(self.tpeak_ci10,self.outfits_expected_ci21_tpeak+"_tmp1","IM0*0.7",delin=True)
+        run_exportfits(self.outfits_expected_ci21_tpeak+"_tmp1",self.outfits_expected_ci21_tpeak,True,True,True)
+
         # map
         scalebar = 500 / self.scale
 
         myfig_fits2png(
             # general
-            self.tpeak_ci10,
+            self.outfits_expected_ci21_tpeak,
             self.png_expected_catom21,
-            self.tpeak_ci10,
+            self.outfits_expected_ci21_tpeak,
             imsize_as=self.imsize_as,
             ra_cnt=self.ra_agn,
             dec_cnt=self.dec_agn,
             # contour 1
-            unit_cont1=0.07, # 0.100 mK / (4*0.7)
-            levels_cont1=[5],
+            unit_cont1=0.1, # required rms = 0.1 K
+            levels_cont1=[3,5],
             width_cont1=[2.5],
             color_cont1="black",
             # imshow
