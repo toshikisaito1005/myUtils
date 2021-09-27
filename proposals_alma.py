@@ -203,8 +203,9 @@ class ProposalsALMA():
             # imshow
             fig_dpi=self.fig_dpi,
             set_grid=None,
-            set_title="Expected Band 10 [CI] tpeak map",
+            set_title="Expected [CI](2-1) peak temperature",
             colorlog=True,
+            set_bg_color=cm.rainbow(0),
             set_cmap="rainbow",
             showzero=False,
             showbeam=True,
