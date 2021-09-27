@@ -209,10 +209,10 @@ class ProposalsALMA():
             set_cmap="rainbow",
             showzero=False,
             showbeam=True,
-            color_beam="black",
+            color_beam="white",
             scalebar=scalebar,
             label_scalebar="0.5 kpc",
-            color_scalebar="black",
+            color_scalebar="white",
             # annotation
             numann=5,
             textann=True,
