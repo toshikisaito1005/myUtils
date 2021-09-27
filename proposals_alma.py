@@ -181,7 +181,7 @@ class ProposalsALMA():
         check_first(self.image_cs21,taskname)
 
         #
-        run_immath_one(self.tpeak_ci10,self.outfits_expected_ci21_tpeak+"_tmp1","IM0*0.7",delin=True)
+        run_immath_one(self.tpeak_ci10,self.outfits_expected_ci21_tpeak+"_tmp1","IM0*0.7",False)
         run_exportfits(self.outfits_expected_ci21_tpeak+"_tmp1",self.outfits_expected_ci21_tpeak,True,True,True)
 
         # map
