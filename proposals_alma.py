@@ -128,6 +128,9 @@ class ProposalsALMA():
                 self.png_expected_catom21 = self.dir_products + self._read_key("png_expected_catom21")
                 self.box_expected_catom21 = self._read_key("box_expected_catom21")
 
+                # final products
+                self.final_catom21 = self.dir_final + self._read_key("final_catom21")
+
     ############################################################################################
     ############################################################################################
     ##############################                                ##############################
@@ -162,10 +165,29 @@ class ProposalsALMA():
     def run_cycle_8p5b_catom21(
         self,
         plot_expected_catom21 = False,
+        combine_figures       = False,
         ):
 
         if plot_expected_catom21==True:
             self.c8p5b_plot_expected_catom21()
+
+        if combine_figures==True:
+            self.c8p5b_create_figure_catom21()
+
+    ###############################
+    # c8p5b_create_figure_catom21 #
+    ###############################
+
+    def c8p5b_create_figure_catom21(
+        self,
+        ):
+        """
+        """
+
+        taskname = self.modname + sys._getframe().f_code.co_name
+        check_first(self.png_expected_catom21,taskname)
+
+        immagick_crop(self.png_expected_catom21,self.final_catom21,self.box_expected_catom21,True)
 
     ###############################
     # c8p5b_plot_expected_catom21 #
