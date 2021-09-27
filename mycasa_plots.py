@@ -967,12 +967,12 @@ def myax_fig2png_ann(ax,number,ra_cnt,dec_cnt,add_text=True,txtfiles=None):
                 ax.add_patch(this_e)
 
         if add_text==True:
-            t = ax.text(-5, 13, "Proposed Band 10", color="white", rotation=0,
+            t = ax.text(0, 14, "Proposed Band 10", color="white", rotation=0,
                 horizontalalignment="center", verticalalignment="center", weight="bold")
-            t = ax.text(-5, 11, "mosaic-1", color="white", rotation=0,
+            t = ax.text(0, 12, "mosaic-1", color="white", rotation=0,
                 horizontalalignment="center", verticalalignment="center", weight="bold")
 
-            t = ax.text(20, 16, "mosaic-2", color="white", rotation=0,
+            t = ax.text(20, 17, "mosaic-2", color="white", rotation=0,
                 horizontalalignment="center", verticalalignment="center", weight="bold")
 
 def _myax_comment(ax,dec_cnt,xlim,ylim,comment_color):
