@@ -84,6 +84,8 @@ class ProposalsALMA():
                 # ngc1068
                 self.z       = float(self._read_key("z"))
                 self.scale   = float(self._read_key("scale"))
+                self.ra      = self._read_key("ra")
+                self.dec     = self._read_key("dec")
                 self.ra_agn  = self._read_key("ra_agn")
                 self.dec_agn = self._read_key("dec_agn")
 
@@ -120,6 +122,7 @@ class ProposalsALMA():
                 self.tpeak_ci10 = dir_raw + self._read_key("tpeak_ci10")
                 self.txt_fov_b10_fov1 = dir_raw + self._read_key("fov_b10_fov1")
                 self.txt_fov_b10_fov2 = dir_raw + self._read_key("fov_b10_fov2")
+                self.imsize_catom_as  = float(self._read_key("imsize_catom_as"))
 
                 # output fits
                 self.outfits_expected_ci21_tpeak = self.dir_ready + self._read_key("outfits_expected_ci21_tpeak")
@@ -214,9 +217,9 @@ class ProposalsALMA():
             self.outfits_expected_ci21_tpeak,
             self.png_expected_catom21,
             self.outfits_expected_ci21_tpeak,
-            imsize_as=self.imsize_as,
-            ra_cnt=self.ra_agn,
-            dec_cnt=self.dec_agn,
+            imsize_as=self.imsize_catom_as,
+            ra_cnt=self.ra,
+            dec_cnt=self.dec,
             # contour 1
             unit_cont1=0.1, # required rms = 0.1 K
             levels_cont1=[3,5],
