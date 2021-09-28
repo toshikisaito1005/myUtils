@@ -136,10 +136,10 @@ class ProposalsALMA():
                 self.box_expected_catom21 = self._read_key("box_expected_catom21")
 
                 self.png_ci10_1p64 = self.dir_products + self._read_key("png_ci10_1p64")
-                self.box_ci10_1p64 = self.dir_products + self._read_key("box_ci10_1p64")
+                self.box_ci10_1p64 = self._read_key("box_ci10_1p64")
 
                 self.png_ci_co_ratio_1p64 = self.dir_products + self._read_key("png_ci_co_ratio_1p64")
-                self.box_ci_co_ratio_1p64 = self.dir_products + self._read_key("box_ci_co_ratio_1p64")
+                self.box_ci_co_ratio_1p64 = self._read_key("box_ci_co_ratio_1p64")
 
                 # final products
                 self.final_catom10 = self.dir_final + self._read_key("final_catom10")
@@ -217,7 +217,7 @@ class ProposalsALMA():
 
         # plot
         scalebar = 500 / self.scale
-        
+
         myfig_fits2png(
             # general
             self.image_ci10_1p64,
