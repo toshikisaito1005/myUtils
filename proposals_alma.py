@@ -207,7 +207,9 @@ class ProposalsALMA():
         check_first(self.image_ci10_1p64,taskname)
 
         #
-        run_imregrid(self.image_co10_1p64,self.image_ci10_1p64,self.image_co10_1p64+"_tmp1")
+        run_importfits(self.image_ci10_1p64,"template.image")
+        run_imregrid(self.image_co10_1p64,"template.image",self.image_co10_1p64+"_tmp1")
+        os.system("rm -rf template.image")
         expr = "iif( IM1>0, IM1/IM0, 0 )"
         run_immath_two(self.image_co10_1p64+"_tmp1",self.image_ci10_1p64,self.outfits_ci_co_ratio+"_tmp1",expr)
         os.system("rm -rf " + self.image_co10_1p64 + "_tmp1")
