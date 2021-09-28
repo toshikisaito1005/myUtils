@@ -191,6 +191,7 @@ class ProposalsALMA():
 
         if combine_figures==True:
             self.c8p5b_create_figure_catom21()
+            self.c8p5b_create_figure_catom10()
 
     ##########################
     # c8p5b_plot_ci_co_ratio #
@@ -273,6 +274,22 @@ class ProposalsALMA():
             #textann=True,
             #txtfiles=[self.txt_fov_b10_fov1,self.txt_fov_b10_fov2],
             )
+
+    ###############################
+    # c8p5b_create_figure_catom10 #
+    ###############################
+
+    def c8p5b_create_figure_catom10(
+        self,
+        ):
+        """
+        """
+
+        taskname = self.modname + sys._getframe().f_code.co_name
+        check_first(self.png_ci_co_ratio_1p64,taskname)
+
+        combine_two_png(self.png_ci10_1p64,self.png_ci_co_ratio_1p64,
+            self.final_catom10,self.box_ci10_1p64,self.box_ci_co_ratio_1p64,,delin=True)
 
     ###############################
     # c8p5b_create_figure_catom21 #
