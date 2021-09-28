@@ -289,7 +289,7 @@ class ProposalsALMA():
         check_first(self.png_ci_co_ratio_1p64,taskname)
 
         combine_two_png(self.png_ci10_1p64,self.png_ci_co_ratio_1p64,
-            self.final_catom10,self.box_ci10_1p64,self.box_ci_co_ratio_1p64,,delin=True)
+            self.final_catom10,self.box_ci10_1p64,self.box_ci_co_ratio_1p64,delin=True)
 
     ###############################
     # c8p5b_create_figure_catom21 #
