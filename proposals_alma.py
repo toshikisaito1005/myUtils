@@ -135,10 +135,14 @@ class ProposalsALMA():
                 self.png_expected_catom21 = self.dir_products + self._read_key("png_expected_catom21")
                 self.box_expected_catom21 = self._read_key("box_expected_catom21")
 
-                self.png_ci10_1p64 = self.dir_products + self._read_key("png_ci10")
-                self.png_ci_co_ratio_1p64 = self.dir_products + self._read_key("png_ci_co_ratio")
+                self.png_ci10_1p64 = self.dir_products + self._read_key("png_ci10_1p64")
+                self.box_ci10_1p64 = self.dir_products + self._read_key("box_ci10_1p64")
+
+                self.png_ci_co_ratio_1p64 = self.dir_products + self._read_key("png_ci_co_ratio_1p64")
+                self.box_ci_co_ratio_1p64 = self.dir_products + self._read_key("box_ci_co_ratio_1p64")
 
                 # final products
+                self.final_catom10 = self.dir_final + self._read_key("final_catom10")
                 self.final_catom21 = self.dir_final + self._read_key("final_catom21")
 
     ############################################################################################
