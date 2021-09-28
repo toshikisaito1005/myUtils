@@ -215,6 +215,9 @@ class ProposalsALMA():
         os.system("rm -rf " + self.image_co10_1p64 + "_tmp1")
         run_exportfits(self.outfits_ci_co_ratio+"_tmp1",self.outfits_ci_co_ratio,True,True,True)
 
+        # plot
+        scalebar = 500 / self.scale
+        
         myfig_fits2png(
             # general
             self.image_ci10_1p64,
