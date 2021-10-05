@@ -402,6 +402,7 @@ class ToolsNGC3110():
         # aco
         cut = np.where((co10>0) & (aco>0))
         x,y,c,title = data_ra[cut],data_dec[cut],aco[cut],r"CO-to-H$_2$ Conversion Factor ($\alpha_{LTE}$)"
+        c[c>2.8] = 2.8 # change high values in order to change color range of the hex map.
         self._plot_hexmap(self.outpng_hex_aco,x,y,c,X,Y,C,title,"($M_{\odot}$ (K km s$^{-1}$ pc$^2$)$^{-1}$)")
 
     ################
@@ -670,7 +671,7 @@ class ToolsNGC3110():
         err_index = err_index * np.sqrt( (data[:,15]/data[:,14])**2 + (data[:,17]/data[:,16])**2 )
 
         # ssc density
-        sscd     = data[:,19] / area_kpc / (1.99**2*np.pi/np.sqrt(4*np.log(2))/0.25**2)
+        sscd     = data[:,19] / area_kpc / (1.99**2*np.pi/np.sqrt(4*np.log(2))/0.25**2) # divided by beam area
 
         # extinction-corrected sfr and sfr density
         l_halpha = data[:,18] * (36.5*4.*np.pi) * self.dist_cm**2 * 0.4**2
