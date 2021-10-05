@@ -440,7 +440,7 @@ class ToolsNGC3110():
 
         contour_levels = map(lambda x: x * np.max(C), [0.02,0.04,0.08,0.16,0.32,0.64,0.96])
         ax.tricontour(X, Y, C, colors=["black"], levels=contour_levels)
-        cax = ax.scatter(x, y, s=260, c=c, cmap="rainbow", marker="h", linewidths=0)
+        cax = ax.scatter(x, y, s=270, c=c, cmap="rainbow", marker="h", linewidths=0)
         ax.set_aspect('equal', adjustable='box')
 
         # cbar
