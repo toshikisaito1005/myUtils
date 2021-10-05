@@ -561,6 +561,13 @@ class ToolsNGC3110():
         ):
         """
         """
+        print(type(outpng))
+        print(type(dist1))
+        print(type(dist2))
+        print(type(value1))
+        print(type(value2))
+        print(type(err1))
+        print(type(err2))
 
         histdata  = np.histogram(10**value1, bins=50, range=histrange)
         histx1, histy1 = histdata[1][:-1], histdata[0]/float(np.sum(histdata[0]))
