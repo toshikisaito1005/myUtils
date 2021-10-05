@@ -391,7 +391,7 @@ class ToolsNGC3110():
 
         # ssc density
         cut = np.where((co10>0) & (sscd>0))
-        x,y,c,title = data_ra[cut],data_dec[cut],np.log10(sscd[cut]),"SSC Density ($\Sigma_{SSC}$)"
+        x,y,c,title = data_ra[cut],data_dec[cut],sscd[cut],"SSC Density ($\Sigma_{SSC}$)"
         self._plot_hexmap(self.outpng_hex_sscd,x,y,c,X,Y,C,title,"(kpc$^{-2}$)")
 
         # sfe
