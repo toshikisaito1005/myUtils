@@ -365,14 +365,12 @@ class ToolsNGC3110():
         sfe         = data[:,10] # err = 0.3dex
         aco         = data[:,13]
 
-        print(index[index>-10])
-
         # co10
         cut  = np.where(co10>0)
         X,Y,C = data_ra[cut],data_dec[cut],co10[cut]
 
         # spectral index
-        cut = np.where((co10>0) & (index>-10))
+        cut = np.where((co10>0) & (index!=0))
         x,y,c,title = data_ra[cut],data_dec[cut],index[cut],"Spectral Index"
         self._plot_hexmap(self.outpng_hex_index,x,y,c,X,Y,C,title,title)
 
@@ -442,7 +440,7 @@ class ToolsNGC3110():
 
         contour_levels = map(lambda x: x * np.max(C), [0.02,0.04,0.08,0.16,0.32,0.64,0.96])
         ax.tricontour(X, Y, C, colors=["black"], levels=contour_levels)
-        cax = ax.scatter(x, y, s=250, c=c, cmap="rainbow", marker="h", linewidths=0)
+        cax = ax.scatter(x, y, s=260, c=c, cmap="rainbow", marker="h", linewidths=0)
         ax.set_aspect('equal', adjustable='box')
 
         # cbar
