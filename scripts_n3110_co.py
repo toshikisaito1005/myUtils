@@ -352,8 +352,8 @@ class ToolsNGC3110():
 
         # import data
         data        = np.loadtxt(self.outtxt_hexphys)
-        data_ra     = data[:,0]
-        data_dec    = data[:,1]
+        data_ra     = data[:,0] * 3600
+        data_dec    = data[:,1] * 3600
         tkin        = data[:,2]
         nh2         = data[:,3]
         index       = data[:,4]
@@ -372,7 +372,6 @@ class ToolsNGC3110():
         # spectral index
         cut = np.where((co10>0) & (index>0))
         x,y,c,title = data_ra[cut],data_dec[cut],index[cut],"Spectral Index"
-        print(np.sum(cut))
         self._plot_hexmap(self.outpng_hex_index,x,y,c,X,Y,C,title,title)
 
         # tkin
