@@ -556,8 +556,8 @@ class ToolsNGC3110():
         histrange=[0,1.6],
         xticks=[0.4,0.8,1.2,1.6],
         num_round=2,
-        comment1,
-        comment2,
+        comment1=None,
+        comment2=None,
         ):
         """
         """
