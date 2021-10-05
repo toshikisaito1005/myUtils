@@ -365,7 +365,7 @@ class ToolsNGC3110():
         sfe         = data[:,10] # err = 0.3dex
         aco         = data[:,13]
 
-        print(index[index>0])
+        print(index[index>-10])
 
         # co10
         cut  = np.where(co10>0)
