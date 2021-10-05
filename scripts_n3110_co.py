@@ -401,7 +401,7 @@ class ToolsNGC3110():
 
         # aco
         cut = np.where((co10>0) & (aco>0))
-        x,y,c,title = data_ra[cut],data_dec[cut],np.log10(aco[cut]),r"CO-to-H$_2$ Conversion Factor ($\alpha_{LTE}$)"
+        x,y,c,title = data_ra[cut],data_dec[cut],aco[cut],r"CO-to-H$_2$ Conversion Factor ($\alpha_{LTE}$)"
         self._plot_hexmap(self.outpng_hex_aco,x,y,c,X,Y,C,title,"($M_{\odot}$ (K km s$^{-1}$ pc$^2$)$^{-1}$)")
 
     ################
