@@ -352,8 +352,8 @@ class ToolsNGC3110():
 
         # import data
         data        = np.loadtxt(self.outtxt_hexphys)
-        data_ra     = data[:,0] - self.ra
-        data_dec    = data[:,1] - self.dec
+        data_ra     = data[:,0]
+        data_dec    = data[:,1]
         tkin        = data[:,2]
         nh2         = data[:,3]
         index       = data[:,4]
