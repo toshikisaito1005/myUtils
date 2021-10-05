@@ -565,8 +565,6 @@ class ToolsNGC3110():
         ):
         """
         """
-        print(value1)
-        print(value2)
 
         histdata  = np.histogram(10**value1, bins=50, range=histrange)
         histx1, histy1 = histdata[1][:-1], histdata[0]/float(np.sum(histdata[0]))
@@ -592,8 +590,8 @@ class ToolsNGC3110():
         ip = InsetPosition(ax1, [0.15,0.13,0.5,0.33])
         ax2.set_axes_locator(ip)
 
-        ax1.scatter(dist1, value1, s=30, c="tomato", linewidths=0, alpha=0.5)
-        ax1.scatter(dist2, value2, s=30, c="deepskyblue", linewidths=0, alpha=0.5)
+        ax1.scatter(dist1, np.log10(value1), s=30, c="tomato", linewidths=0, alpha=0.5)
+        ax1.scatter(dist2, np.log10(value2), s=30, c="deepskyblue", linewidths=0, alpha=0.5)
 
         ax2.bar(histx1, histy1, lw=0, color="tomato", width=histx1[1]-histx1[0], alpha=0.5)
         ax2.bar(histx2, histy2, lw=0, color="deepskyblue", width=histx2[1]-histx2[0], alpha=0.5)
