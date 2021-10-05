@@ -396,7 +396,7 @@ class ToolsNGC3110():
 
         # sfe
         cut = np.where((sfe>0) & (co10>np.percentile(co10,67)))
-        x,y,c,title = data_ra[cut],data_dec[cut],np.log10(sfe[cut]),"log SFE"
+        x,y,c,title = data_ra[cut],data_dec[cut],np.log10(sfe[cut]/1e9),"log SFE"
         self._plot_hexmap(self.outpng_hex_sfe,x,y,c,X,Y,C,title,"log (yr$^{-1}$)")
 
         # aco
