@@ -367,6 +367,7 @@ class ToolsNGC3110():
 
         # co10
         cut  = np.where(co10>0)
+        print(co10)
         X,Y,C = data_ra[cut],data_dec[cut],co10[cut]
 
         # spectral index
