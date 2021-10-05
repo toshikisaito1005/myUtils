@@ -126,7 +126,7 @@ def myax_set(
 
     # title
     if title is not None:
-        ax.set_title(title, x=0.5, y=1.02, weight="bold")
+        ax.set_title(title, x=0.5, y=1.015, weight="bold")
 
 ##############
 # _myax_cbar #
