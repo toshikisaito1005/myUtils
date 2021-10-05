@@ -590,8 +590,8 @@ class ToolsNGC3110():
         ip = InsetPosition(ax1, [0.15,0.13,0.5,0.33])
         ax2.set_axes_locator(ip)
 
-        ax1.errorbar(np.log10(dist1), np.log10(value1), yerr=1/np.log(10)*err1/value1, fmt="o", capsize=0, markersize=30, markeredgewidth=0, c="tomato", linewidth=1, alpha=0.5)
-        ax1.errorbar(np.log10(dist2), np.log10(value2), yerr=1/np.log(10)*err2/value2, fmt="o", capsize=0, markersize=30, markeredgewidth=0, c="deepskyblue", linewidth=1, alpha=0.5)
+        ax1.errorbar(np.log10(dist1), np.log10(value1), yerr=1/np.log(10)*err1/value1, fmt="o", capsize=0, markersize=5, markeredgewidth=0, c="tomato", linewidth=1, alpha=0.5)
+        ax1.errorbar(np.log10(dist2), np.log10(value2), yerr=1/np.log(10)*err2/value2, fmt="o", capsize=0, markersize=5, markeredgewidth=0, c="deepskyblue", linewidth=1, alpha=0.5)
 
         ax2.bar(histx1, histy1, lw=0, color="tomato", width=histx1[1]-histx1[0], alpha=0.5)
         ax2.bar(histx2, histy2, lw=0, color="deepskyblue", width=histx2[1]-histx2[0], alpha=0.5)
