@@ -402,7 +402,9 @@ class ToolsNGC3110():
         # aco
         cut = np.where((co10>0) & (aco>0))
         x,y,c,title = data_ra[cut],data_dec[cut],aco[cut],r"CO-to-H$_2$ Conversion Factor ($\alpha_{LTE}$)"
-        c[c>2.8] = 2.8 # change high values in order to change color range of the hex map.
+        # change high values in order to change color range of the hex map.
+        # this should not affect any other analysis.
+        c[c>2.8] = 2.8
         self._plot_hexmap(self.outpng_hex_aco,x,y,c,X,Y,C,title,"($M_{\odot}$ (K km s$^{-1}$ pc$^2$)$^{-1}$)")
 
     ################
