@@ -665,7 +665,7 @@ class ToolsNGC3110():
         nh2      = data_nh2[:,5]
 
         # spectral index
-        index     = np.log10(data[:,14]/data[:,16]) / np.log10(self.nu_b6/self.nu_b3)
+        index     = np.log10(data[:,16]/data[:,14]) / np.log10(self.nu_b6/self.nu_b3)
         err_index = np.log(10) / np.log10(self.nu_b6/self.nu_b3)
         err_index = err_index * np.sqrt( (data[:,15]/data[:,14])**2 + (data[:,17]/data[:,16])**2 )
 
