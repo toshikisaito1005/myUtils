@@ -589,8 +589,8 @@ class ToolsNGC3110():
         ax1.scatter(dist1, value1, s=30, c="tomato", linewidths=0, alpha=0.5)
         ax1.scatter(dist2, value2, s=30, c="deepskyblue", linewidths=0, alpha=0.5)
 
-        ax2.bar(histx1, histy1, lw=0, color="tomato", width=x[1]-x[0], alpha=0.5)
-        ax2.bar(histx2, histy2, lw=0, color="deepskyblue", width=x[1]-x[0], alpha=0.5)
+        ax2.bar(histx1, histy1, lw=0, color="tomato", width=histx1[1]-histx1[0], alpha=0.5)
+        ax2.bar(histx2, histy2, lw=0, color="deepskyblue", width=histx2[1]-histx2[0], alpha=0.5)
 
         ax1.set_xlim(xlim)
         ax1.set_ylim(ylim)
