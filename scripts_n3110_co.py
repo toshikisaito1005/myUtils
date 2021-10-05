@@ -496,10 +496,8 @@ class ToolsNGC3110():
         erry = err_12co10[cut]
 
         dist_r21 = dist_kpc[cut]
-        data_r21 = x / y
+        data_r21 = x / y / (self.nu_12co21/self.nu_12co10)**2
         err_r21  = data_r21 * np.sqrt((errx/x)**2 + (erry/y)**2)
-
-        print(data_r21)
 
         # rt21
         cut  = np.where((data_13co10!=0) & (data_13co21!=0))
@@ -509,7 +507,7 @@ class ToolsNGC3110():
         erry = err_13co10[cut]
         
         dist_rt21 = dist_kpc[cut]
-        data_rt21 = x / y
+        data_rt21 = x / y / (self.nu_13co21/self.nu_13co10)**2
         err_rt21  = data_rt21 * np.sqrt((errx/x)**2 + (erry/y)**2)
 
         # r1213l
@@ -520,7 +518,7 @@ class ToolsNGC3110():
         erry = err_13co10[cut]
         
         dist_r1213l = dist_kpc[cut]
-        data_r1213l = x / y
+        data_r1213l = x / y / (self.nu_12co10/self.nu_13co10)**2
         err_r1213l  = data_r1213l * np.sqrt((errx/x)**2 + (erry/y)**2)
 
         # r1213h
@@ -531,7 +529,7 @@ class ToolsNGC3110():
         erry = err_13co21[cut]
         
         dist_r1213h = dist_kpc[cut]
-        data_r1213h = x / y
+        data_r1213h = x / y / (self.nu_12co21/self.nu_13co21)**2
         err_r1213h  = data_r1213h * np.sqrt((errx/x)**2 + (erry/y)**2)
 
         # plot
@@ -567,6 +565,8 @@ class ToolsNGC3110():
         ):
         """
         """
+        print(value1)
+        print(value2)
 
         histdata  = np.histogram(10**value1, bins=50, range=histrange)
         histx1, histy1 = histdata[1][:-1], histdata[0]/float(np.sum(histdata[0]))
