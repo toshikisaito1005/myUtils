@@ -211,6 +211,10 @@ class ToolsNGC3110():
             self.outpng_hex_index = self.dir_products + self._read_key("outpng_hex_index")
             self.outpng_hex_tkin = self.dir_products + self._read_key("outpng_hex_tkin")
             self.outpng_hex_nh2 = self.dir_products + self._read_key("outpng_hex_nh2")
+            self.outpng_hex_sfrd = self.dir_products + self._read_key("outpng_hex_sfrd")
+            self.outpng_hex_sscd = self.dir_products + self._read_key("outpng_hex_sscd")
+            self.outpng_hex_sfe = self.dir_products + self._read_key("outpng_hex_sfe")
+            self.outpng_hex_aco = self.dir_products + self._read_key("outpng_hex_aco")
 
             self.outpng_aco_radial = self.dir_products + self._read_key("outpng_aco_radial")
             self.outpng_aco_hist = self.dir_products + self._read_key("outpng_aco_hist")
