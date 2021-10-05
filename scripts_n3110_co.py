@@ -598,7 +598,7 @@ class ToolsNGC3110():
         ax1.set_xlabel("log Deprojected Distance (kpc)")
         ax1.set_ylabel("log Ratio")
 
-        ax2.set_xlim(range)
+        ax2.set_xlim(histrange)
         ax2.set_xticks(xticks)
         ax2.set_xlabel("Ratio")
 
