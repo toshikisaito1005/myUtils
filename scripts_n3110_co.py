@@ -566,18 +566,18 @@ class ToolsNGC3110():
         """
         """
 
-        histdata  = np.histogram(10**value1, bins=50, range=histrange)
+        histdata  = np.histogram(value1, bins=50, range=histrange)
         histx1, histy1 = histdata[1][:-1], histdata[0]/float(np.sum(histdata[0]))
 
-        histdata = np.histogram(10**value2, bins=50, range=histrange)
+        histdata = np.histogram(value2, bins=50, range=histrange)
         histx2, histy2 = histdata[1][:-1], histdata[0]/float(np.sum(histdata[0]))
 
-        value1_p50 = np.percentile(10**value1,50)
-        value2_p50 = np.percentile(10**value2,50)
-        value1_p16 = value1_p50 - np.percentile(10**value1,16)
-        value2_p16 = value2_p50 - np.percentile(10**value2,16)
-        value1_p84 = np.percentile(10**value1,84) - value1_p50
-        value2_p84 = np.percentile(10**value2,84) - value2_p50
+        value1_p50 = np.percentile(value1,50)
+        value2_p50 = np.percentile(value2,50)
+        value1_p16 = value1_p50 - np.percentile(value1,16)
+        value2_p16 = value2_p50 - np.percentile(value2,16)
+        value1_p84 = np.percentile(value1,84) - value1_p50
+        value2_p84 = np.percentile(value2,84) - value2_p50
 
         # plot
         plt.figure()
