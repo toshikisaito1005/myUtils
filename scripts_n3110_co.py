@@ -499,6 +499,8 @@ class ToolsNGC3110():
         data_r21 = x / y
         err_r21  = data_r21 * np.sqrt((errx/x)**2 + (erry/y)**2)
 
+        print(data_r21)
+
         # rt21
         cut  = np.where((data_13co10!=0) & (data_13co21!=0))
         x    = data_13co21[cut]
