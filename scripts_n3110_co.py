@@ -372,7 +372,7 @@ class ToolsNGC3110():
         # spectral index
         cut = np.where((co10>0) & (index>0))
         x,y,c,title = data_ra[cut],data_dec[cut],index[cut],"Spectral Index"
-        print(x,y,c)
+        print(x,y,c, self.ra)
         self._plot_hexmap(self.outpng_hex_index,x,y,c,X,Y,C,title,title)
 
         # tkin
