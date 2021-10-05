@@ -160,6 +160,9 @@ class ProposalsALMA():
         plot_proposed_fov = False,
         combine_figures   = False,
         ):
+        """
+        Submitted (2021.2.00049.S). Band 3 and 6 spectral scans with 7m+TP toward NGC 1068.
+        """
 
         if plot_spw_setup==True:
             self.c8p5_plot_spw_setup_b3()
@@ -182,6 +185,11 @@ class ProposalsALMA():
         plot_expected_catom21 = False,
         combine_figures       = False,
         ):
+        """
+        this proposal (7m-only Band 10 mosaic toward NGC 1068) was not submitted in Cycle8.5,
+        because Cycle 8 did not offer Band 10 mosaic. This proposal will be modified and then
+        submitted in the future main call (e.g., 12m+7m array).
+        """
 
         if plot_ci_co_ratio==True:
             self.c8p5b_plot_ci_co_ratio()
