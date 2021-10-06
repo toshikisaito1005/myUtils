@@ -342,8 +342,8 @@ class ToolsNGC3110():
         t=ax.text(0.05,0.82,r"$\alpha_{ISM}$ = "+value,color="deepskyblue",transform=ax.transAxes)
         t.set_bbox(dict(facecolor="white", alpha=0.8, lw=0))
 
-        ax.text(10,np.log10(4.3),"MW value",color="black",ha="right",va="bottom")
-        ax.text(10,np.log10(0.8),"ULIRG value",color="black",ha="right",va="top")
+        ax.text(10*0.95,np.log10(4.3)+0.03,"MW value",color="black",ha="right",va="bottom")
+        ax.text(10*0.95,np.log10(0.8)-0.03,"ULIRG value",color="black",ha="right",va="top")
 
         os.system("rm -rf " + self.outpng_aco_radial)
         plt.savefig(self.outpng_aco_radial, dpi=300)
