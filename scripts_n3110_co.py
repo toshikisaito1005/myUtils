@@ -371,7 +371,7 @@ class ToolsNGC3110():
         best_fit   = self._func(x2, popt[0],popt[1],popt[2])
         ax.plot(x2, best_fit, "tomato", lw=5, alpha=0.5)
         ax.text(0.03, 0.92,
-            r"best-fit $\mu$ = " + str(np.round(popt[1],2)) + r", $\sigma$ = " + str(np.round(popt[2],2))+"0",
+            r"best-fit $\mu$ = " + str(np.round(popt[1],2)) + r", $\sigma$ = " + str(np.round(popt[2],2)),
             color="black", transform=ax.transAxes)
         
         os.system("rm -rf " + self.outpng_aco_hist)
