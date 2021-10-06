@@ -317,10 +317,10 @@ class ToolsNGC3110():
         ax.set_xlabel("Deprojected Distance (kpc)")
         ax.set_ylabel(r"log $\alpha_{CO}$ ($M_{\odot}$ (K km s$^{-1}$ pc$^2$)$^{-1}$)")
 
-        ax.scatter(dist_lte_trot, aco_lte_trot, s=100, c="tomato", linewidths=0, alpha=0.5)
-        ax.scatter(dist_ism_trot, aco_ism_trot, s=100, c="deepskyblue",linewidths=0, alpha=0.5)
-        ax.errorbar(dist_lte_trot,aco_lte_trot,yerr=aco_lte_trot_err,fmt="o",c="tomato",capsize=0)
-        ax.errorbar(dist_ism_trot,aco_ism_trot,yerr=aco_ism_trot_err,fmt="o",c="deepskyblue",capsize=0)
+        #ax.scatter(dist_lte_trot, aco_lte_trot, s=100, c="tomato", linewidths=0, alpha=0.5)
+        #ax.scatter(dist_ism_trot, aco_ism_trot, s=100, c="deepskyblue",linewidths=0, alpha=0.5)
+        ax.errorbar(dist_lte_trot,aco_lte_trot,yerr=aco_lte_trot_err,fmt="o",c="tomato",capsize=0,alpha=0.5,markeredgewidth=0)
+        ax.errorbar(dist_ism_trot,aco_ism_trot,yerr=aco_ism_trot_err,fmt="o",c="deepskyblue",capsize=0,alpha=0.5,markeredgewidth=0)
 
         ax.plot(xlim, [np.log10(0.8),np.log10(0.8)], "k-", lw=3)
         ax.plot(xlim, [np.log10(4.3),np.log10(4.3)], "k-", lw=3)
