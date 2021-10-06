@@ -292,12 +292,12 @@ class ToolsNGC3110():
         # process data
         dist_kpc  = np.sqrt(data_ra2**2+data_dec2**2) * 3600 * self.scale_kpc
 
-        cut = np.where((aco_lte_trot>0) & (aco_lte_tkin>0))# & (aco_lte_trot<aco_lte_tkin))
+        cut = np.where((aco_lte_trot>0) & (aco_lte_tkin>0) & (aco_lte_trot<aco_lte_tkin))
         dist_lte_trot = dist_kpc[cut]
         aco_lte_trot_err = 1/np.log(10) * aco_lte_trot_err[cut]/aco_lte_trot[cut]
         aco_lte_trot  = np.log10(aco_lte_trot[cut])
 
-        cut = np.where((aco_ism_trot>0) & (aco_ism_tkin>0))# & (aco_ism_trot<aco_ism_tkin))
+        cut = np.where((aco_ism_trot>0) & (aco_ism_tkin>0) & (aco_ism_trot<aco_ism_tkin))
         dist_ism_trot = dist_kpc[cut] # np.log10(dist[cut])
         aco_ism_trot_err = 1/np.log(10) * aco_ism_trot_err[cut]/aco_ism_trot[cut]
         aco_ism_trot  = np.log10(aco_ism_trot[cut])
