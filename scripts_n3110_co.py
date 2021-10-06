@@ -285,6 +285,8 @@ class ToolsNGC3110():
         aco_ism_trot = data[:,15]
         aco_ism_tkin = data[:,16]
 
+        print(aco_ism_trot[aco_ism_trot>0])
+
         # process data
         dist_kpc  = np.sqrt(data_ra2**2+data_dec2**2) * 3600 * self.scale_kpc
 
