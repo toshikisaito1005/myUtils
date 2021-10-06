@@ -736,12 +736,12 @@ class ToolsNGC3110():
 
         for i in range(len(data[:,16])):
             factor     = self._factor_contin_to_ism_mass(15., self.dist, self.z)
-            ism_mass   = data[:,16][i]/beamarea * 1000 * factor
+            ism_mass   = data[:,16][i]/beamarea * factor
             a_ism_trot = ism_mass / lumi_co10[i]
             list_alpha_ism_trot.append(a_ism_trot)
 
             factor     = self._factor_contin_to_ism_mass(tkin[i], self.dist, self.z)
-            ism_mass   = data[:,16][i]/beamarea * 1000 * factor
+            ism_mass   = data[:,16][i]/beamarea * factor
             a_ism_tkin = ism_mass / lumi_co10[i]
             list_alpha_ism_tkin.append(a_ism_tkin)
 
