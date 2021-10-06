@@ -275,7 +275,7 @@ class ToolsNGC3110():
         check_first(self.outtxt_hexphys,taskname)
 
         # import data
-        data         = np.loadtxt(self.outtxt_hexdata)
+        data         = np.loadtxt(self.outtxt_hexphys)
         data_ra      = data[:,0] - self.ra
         data_dec     = data[:,1] - self.dec
         data_ra2     = ( data_ra*np.cos(self.pa) - data_dec*np.sin(self.pa) ) / np.cos(self.incl)
@@ -284,7 +284,6 @@ class ToolsNGC3110():
         aco_lte_tkin = data[:,14]
         aco_ism_trot = data[:,15]
         aco_ism_tkin = data[:,16]
-        print(aco_lte_trot[aco_lte_trot>0])
 
         # process data
         dist_kpc  = np.sqrt(data_ra2**2+data_dec2**2) * 3600 * self.scale_kpc
