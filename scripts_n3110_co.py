@@ -259,13 +259,13 @@ class ToolsNGC3110():
         if plot_figures==True:
             self.plot_radial_ratio()
             self.showhex()
-            self.plot_radial_aco()
+            self.plot_aco()
 
-    ###################
-    # plot_radial_aco #
-    ###################
+    ############
+    # plot_aco #
+    ############
 
-    def plot_radial_aco(
+    def plot_aco(
         self,
         ):
         """
@@ -302,7 +302,7 @@ class ToolsNGC3110():
         aco_ism_trot_err = 1/np.log(10) * aco_ism_trot_err[cut_ism]/aco_ism_trot[cut_ism]
         aco_ism_trot  = np.log10(aco_ism_trot[cut_ism])
 
-        # plot
+        # plot radial dist
         plt.figure()
         plt.rcParams["font.size"] = 16
         plt.subplots_adjust(left=0.23,right=0.78,bottom=0.15)
@@ -347,6 +347,42 @@ class ToolsNGC3110():
 
         os.system("rm -rf " + self.outpng_aco_radial)
         plt.savefig(self.outpng_aco_radial, dpi=300)
+
+        # plot hist
+        histdata = np.histogram(aco_lte_trot, bins=25, range=[0.5,3.5])
+        x1, y1 = histdata[1][:-1], histdata[0]/float(np.sum(histdata[0]))
+        histdata = np.histogram(aco_ism_trot, bins=25, range=[0.5,3.5])
+        x2, y2 = histdata[1][:-1], histdata[0]/float(np.sum(histdata[0]))
+
+        plt.figure()
+        plt.rcParams["font.size"] = 16
+        plt.subplots_adjust(bottom = 0.15)
+        gs = gridspec.GridSpec(nrows=30, ncols=30)
+        ax = plt.subplot(gs[0:30,0:30])
+        ax.grid(which="x")
+        ax.set_xlim([0.1,3.4])
+        ax.set_ylim([0,0.3])
+        ax.set_xlabel(r"$\alpha_{CO}$ ($M_{\odot}$ (K km s$^{-1}$ pc$^2$)$^{-1}$)")
+
+        #
+        ax.bar(x1, y1+y2, lw=0, color="black", width=x1[1]-x1[0], alpha=0.5)
+        
+        popt, pcov = curve_fit(self._func, x1, y1+y2, p0=[0.3,1.5,0.5])
+        best_fit   = self._func(x2, popt[0],popt[1],popt[2])
+        ax.plot(x2, best_fit, "tomato", lw=5, alpha=0.5)
+        ax.text(0.03, 0.92,
+            r"best-fit $\mu$ = " + str(np.round(popt[1],2)) + r", $\sigma$ = " + str(np.round(popt[2],2))+"0",
+            color="black", transform=ax.transAxes)
+        
+        os.system("rm -rf " + self.outpng_aco_hist)
+        plt.savefig(self.outpng_aco_hist, dpi=300)
+
+    #########
+    # _func #
+    #########
+
+    def _func(self, x, a, mu, sigma):
+        return a*np.exp(-(x-mu)**2/(2*sigma**2))
 
     ###########
     # showhex #
