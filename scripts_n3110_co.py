@@ -360,7 +360,7 @@ class ToolsNGC3110():
         gs = gridspec.GridSpec(nrows=30, ncols=30)
         ax = plt.subplot(gs[0:30,0:30])
         ax.grid(which="x")
-        ax.set_xlim([0.1,3.4])
+        ax.set_xlim([0.1,3.3])
         ax.set_ylim([0,0.3])
         ax.set_xlabel(r"$\alpha_{CO}$ ($M_{\odot}$ (K km s$^{-1}$ pc$^2$)$^{-1}$)")
 
