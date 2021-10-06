@@ -276,8 +276,8 @@ class ToolsNGC3110():
 
         # import data
         data         = np.loadtxt(self.outtxt_hexphys)
-        data_ra      = data[:,0] - self.ra
-        data_dec     = data[:,1] - self.dec
+        data_ra      = data[:,0]
+        data_dec     = data[:,1]
         data_ra2     = ( data_ra*np.cos(self.pa) - data_dec*np.sin(self.pa) ) / np.cos(self.incl)
         data_dec2    = data_ra*np.sin(self.pa) + data_dec*np.cos(self.incl)
         aco_lte_trot = data[:,13]
