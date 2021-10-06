@@ -284,18 +284,22 @@ class ToolsNGC3110():
         aco_lte_tkin = data[:,14]
         aco_ism_trot = data[:,15]
         aco_ism_tkin = data[:,16]
-
-        print(aco_ism_trot[aco_ism_trot>0])
+        aco_lte_trot_err = data[:,17]
+        aco_lte_tkin_err = data[:,18]
+        aco_ism_trot_err = data[:,19]
+        aco_ism_tkin_err = data[:,20]
 
         # process data
         dist_kpc  = np.sqrt(data_ra2**2+data_dec2**2) * 3600 * self.scale_kpc
 
         cut = np.where((aco_lte_trot>0) & (aco_lte_tkin>0) & (aco_lte_trot<aco_lte_tkin))
         dist_lte_trot = dist_kpc[cut]
+        aco_lte_trot_err = 1/np.log(10) * aco_lte_trot_err[cut]/aco_lte_trot[cut]
         aco_lte_trot  = np.log10(aco_lte_trot[cut])
 
         cut = np.where((aco_ism_trot>0) & (aco_ism_tkin>0) & (aco_ism_trot<aco_ism_tkin))
         dist_ism_trot = dist_kpc[cut] # np.log10(dist[cut])
+        aco_lte_trot_err = 1/np.log(10) * aco_ism_trot_err[cut]/aco_ism_trot[cut]
         aco_ism_trot  = np.log10(aco_ism_trot[cut])
 
         # plot
@@ -314,6 +318,8 @@ class ToolsNGC3110():
         ax.set_ylabel(r"log $\alpha_{CO}$ ($M_{\odot}$ (K km s$^{-1}$ pc$^2$)$^{-1}$)")
         ax.scatter(dist_lte_trot, aco_lte_trot, s=100, c="tomato", linewidths=0, alpha=0.5)
         ax.scatter(dist_ism_trot, aco_ism_trot, s=100, c="deepskyblue",linewidths=0, alpha=0.5)
+        ax.errorbar(dist_lte_trot,aco_lte_trot,yerr=aco_lte_trot_err, "o", c="tomato", capsize=0)
+        ax.errorbar(dist_ism_trot,aco_ism_trot,yerr=aco_ism_trot_err, "o", c="deepskyblue", capsize=0)
 
         ax.plot(xlim, [np.log10(0.8),np.log10(0.8)], "k-", lw=3)
         ax.plot(xlim, [np.log10(4.3),np.log10(4.3)], "k-", lw=3)
@@ -708,42 +714,81 @@ class ToolsNGC3110():
         # alpha_LTE
         nu_obs_13co21 = self.nu_13co21 / (1+self.z)
         kelvin_13co21 = data[:,8] * (1.222e6 / 2.0**2 / nu_obs_13co21**2)
+        kelvin_13co21_err = data[:,9] * (1.222e6 / 2.0**2 / nu_obs_13co21**2)
         kelvin_12co10 = data[:,2] * (1.222e6 / 2.0**2 / nu_obs_12co10**2)
+        kelvin_12co10_err = data[:,3] * (1.222e6 / 2.0**2 / nu_obs_12co10**2)
 
         list_alpha_lte_trot = []
         list_alpha_lte_tkin = []
+        list_alpha_lte_trot_err = []
+        list_alpha_lte_tkin_err = []
         Xco    = 3e-4
         Rcotco = 70
         X13co   = Xco / Rcotco
 
         for i in range(len(kelvin_13co21)):
+            this_k_13co21 = kelvin_13co21[i]
+            err_k_13co21 = kelvin_13co21_err[i]
+            this_k_12co10 = kelvin_12co10[i]
+            err_k_12co10 = kelvin_12co10_err[i]
+
+            # a_lte(trot)
             logN_rot, Qrot = self._trot_from_rotation_diagram_13co(
-                15.0, kelvin_13co21[i], txtdata = "keys/Qrot_CDMS.txt")
-            Xco = 10**logN_rot / X13co / kelvin_12co10[i]
+                15.0, this_k_13co21, txtdata = "keys/Qrot_CDMS.txt")
+            N_tot = 10**logN_rot
+            Xco = N_tot / X13co / this_k_12co10
             a_lte_trot = 4.3 * Xco / 2e+20
             list_alpha_lte_trot.append(a_lte_trot)
 
+            # a_lte(trot) error
+            N_tot_err = N_tot * err_k_13co21 / this_k_13co21
+            Xco_err = Xco * np.sqrt((err_k_12co10/this_k_12co10)**2 + (N_tot_err/N_tot)**2)
+            a_lte_trot_err = 4.3 * Xco_err / 2e+20
+            list_alpha_lte_trot_err.append(a_lte_trot_err)
+
+            # a_lte(tkin)
             logN_rot, Qrot = self._trot_from_rotation_diagram_13co(
-                tkin[i], kelvin_13co21[i], txtdata = "keys/Qrot_CDMS.txt")
-            Xco = 10**logN_rot / X13co / kelvin_12co10[i]
+                tkin[i], this_k_13co21, txtdata = "keys/Qrot_CDMS.txt")
+            N_tot = 10**logN_rot
+            Xco = N_tot / X13co / this_k_12co10
             a_lte_tkin = 4.3 * Xco / 2e+20
             list_alpha_lte_tkin.append(a_lte_tkin)
+
+            # a_lte(tkin) error
+            N_tot_err = N_tot * err_k_13co21 / this_k_13co21
+            Xco_err = Xco * np.sqrt((err_k_12co10/this_k_12co10)**2 + (N_tot_err/N_tot)**2)
+            a_lte_tkin_err = 4.3 * Xco_err / 2e+20
+            list_alpha_lte_tkin_err.append(a_lte_tkin_err)
 
         # alpha_ISM
         list_alpha_ism_trot = []
         list_alpha_ism_tkin = []
+        list_alpha_ism_trot_err = []
+        list_alpha_ism_tkin_err = []
         beamarea = beam_area(self.outfits_b6)
 
         for i in range(len(data[:,16])):
+        	# a_ims(trot)
             factor     = self._factor_contin_to_ism_mass(15., self.dist, self.z)
             ism_mass   = data[:,16][i]/beamarea * factor
             a_ism_trot = ism_mass / lumi_co10[i]
             list_alpha_ism_trot.append(a_ism_trot)
 
+            # a_ism(trot) err
+            ism_mass_err = ism_mass * data[:,17][i] / data[:,16][i]
+            a_ism_trot_err = a_ism_trot * np.sqrt((ism_mass_err/ism_mass)**2 + (err_lumi_co10[i]/lumi_co10[i])**2)
+            list_alpha_ism_trot_err.append(a_ism_trot_err)
+
+            # a_ism(tkin)
             factor     = self._factor_contin_to_ism_mass(tkin[i], self.dist, self.z)
             ism_mass   = data[:,16][i]/beamarea * factor
             a_ism_tkin = ism_mass / lumi_co10[i]
             list_alpha_ism_tkin.append(a_ism_tkin)
+
+            # a_ism(tkin) err
+            ism_mass_err = ism_mass * data[:,17][i] / data[:,16][i]
+            a_ism_tkin_err = a_ism_trot * np.sqrt((ism_mass_err/ism_mass)**2 + (err_lumi_co10[i]/lumi_co10[i])**2)
+            list_alpha_ism_trot_err.append(a_ism_tkin_err)
 
         # combine
         data_science_ready = np.c_[
@@ -764,6 +809,10 @@ class ToolsNGC3110():
             list_alpha_lte_tkin,
             list_alpha_ism_trot,
             list_alpha_ism_tkin,
+            list_alpha_lte_trot_err,
+            list_alpha_lte_tkin_err,
+            list_alpha_ism_trot_err,
+            list_alpha_ism_tkin_err,
             ]
         data_science_ready[np.isnan(data_science_ready)] = 0
         data_science_ready[np.isinf(data_science_ready)] = 0
