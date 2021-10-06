@@ -296,11 +296,10 @@ class ToolsNGC3110():
         dist_lte_trot = dist_kpc[cut]
         aco_lte_trot_err = 1/np.log(10) * aco_lte_trot_err[cut]/aco_lte_trot[cut]
         aco_lte_trot  = np.log10(aco_lte_trot[cut])
-        print(np.c_[aco_lte_trot,aco_lte_trot_err])
 
         cut = np.where((aco_ism_trot>0) & (aco_ism_tkin>0) & (aco_ism_trot<aco_ism_tkin))
         dist_ism_trot = dist_kpc[cut] # np.log10(dist[cut])
-        aco_lte_trot_err = 1/np.log(10) * aco_ism_trot_err[cut]/aco_ism_trot[cut]
+        aco_ism_trot_err = 1/np.log(10) * aco_ism_trot_err[cut]/aco_ism_trot[cut]
         aco_ism_trot  = np.log10(aco_ism_trot[cut])
 
         # plot
@@ -317,10 +316,11 @@ class ToolsNGC3110():
         ax.set_ylim([-1.0+0.4,1.0+0.4])
         ax.set_xlabel("Deprojected Distance (kpc)")
         ax.set_ylabel(r"log $\alpha_{CO}$ ($M_{\odot}$ (K km s$^{-1}$ pc$^2$)$^{-1}$)")
+
         ax.scatter(dist_lte_trot, aco_lte_trot, s=100, c="tomato", linewidths=0, alpha=0.5)
         ax.scatter(dist_ism_trot, aco_ism_trot, s=100, c="deepskyblue",linewidths=0, alpha=0.5)
-        ax.errorbar(dist_lte_trot,aco_lte_trot,yerr=aco_lte_trot_err,c="tomato",capsize=0)
-        ax.errorbar(dist_ism_trot,aco_ism_trot,yerr=aco_ism_trot_err,c="deepskyblue",capsize=0)
+        ax.errorbar(dist_lte_trot,aco_lte_trot,yerr=aco_lte_trot_err,fmt="o",c="tomato",capsize=0)
+        ax.errorbar(dist_ism_trot,aco_ism_trot,yerr=aco_ism_trot_err,fmt="o",c="deepskyblue",capsize=0)
 
         ax.plot(xlim, [np.log10(0.8),np.log10(0.8)], "k-", lw=3)
         ax.plot(xlim, [np.log10(4.3),np.log10(4.3)], "k-", lw=3)
