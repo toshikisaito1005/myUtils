@@ -205,19 +205,19 @@ class ToolsNGC3110():
             self.outtxt_hexdata = self.dir_ready + self._read_key("outtxt_hexdata")
             self.outtxt_hexphys = self.dir_ready + self._read_key("outtxt_hexphys")
 
-            self.outpng_radial_21 = self.dir_products + self._read_key("outpng_radial_21")
+            self.outpng_radial_21   = self.dir_products + self._read_key("outpng_radial_21")
             self.outpng_radial_1213 = self.dir_products + self._read_key("outpng_radial_1213")
 
             self.outpng_hex_index = self.dir_products + self._read_key("outpng_hex_index")
-            self.outpng_hex_tkin = self.dir_products + self._read_key("outpng_hex_tkin")
-            self.outpng_hex_nh2 = self.dir_products + self._read_key("outpng_hex_nh2")
-            self.outpng_hex_sfrd = self.dir_products + self._read_key("outpng_hex_sfrd")
-            self.outpng_hex_sscd = self.dir_products + self._read_key("outpng_hex_sscd")
-            self.outpng_hex_sfe = self.dir_products + self._read_key("outpng_hex_sfe")
-            self.outpng_hex_aco = self.dir_products + self._read_key("outpng_hex_aco")
+            self.outpng_hex_tkin  = self.dir_products + self._read_key("outpng_hex_tkin")
+            self.outpng_hex_nh2   = self.dir_products + self._read_key("outpng_hex_nh2")
+            self.outpng_hex_sfrd  = self.dir_products + self._read_key("outpng_hex_sfrd")
+            self.outpng_hex_sscd  = self.dir_products + self._read_key("outpng_hex_sscd")
+            self.outpng_hex_sfe   = self.dir_products + self._read_key("outpng_hex_sfe")
+            self.outpng_hex_aco   = self.dir_products + self._read_key("outpng_hex_aco")
 
             self.outpng_aco_radial = self.dir_products + self._read_key("outpng_aco_radial")
-            self.outpng_aco_hist = self.dir_products + self._read_key("outpng_aco_hist")
+            self.outpng_aco_hist   = self.dir_products + self._read_key("outpng_aco_hist")
 
     ##################
     # run_ngc3110_co #
@@ -284,6 +284,11 @@ class ToolsNGC3110():
         aco_lte_tkin = data[:,14]
         aco_ism_trot = data[:,15]
         aco_ism_tkin = data[:,16]
+        print(aco_lte_trot[aco_lte_trot>0])
+        print(aco_lte_tkin[aco_lte_tkin>0])
+        print(aco_ism_trot[aco_ism_trot>0])
+        print(aco_ism_tkin[aco_ism_tkin>0])
+
 
         # process data
         dist_kpc  = np.sqrt(data_ra2**2+data_dec2**2) * 3600 * self.scale_kpc
