@@ -791,6 +791,14 @@ class ToolsNGC3110():
             list_alpha_ism_trot_err.append(a_ism_tkin_err)
 
         # combine
+        print(np.shape(list_alpha_lte_trot))
+        print(np.shape(list_alpha_lte_tkin))
+        print(np.shape(list_alpha_ism_trot))
+        print(np.shape(list_alpha_ism_tkin))
+        print(np.shape(list_alpha_lte_trot_err))
+        print(np.shape(list_alpha_lte_tkin_err))
+        print(np.shape(list_alpha_ism_trot_err))
+        print(np.shape(list_alpha_ism_tkin_err))
         data_science_ready = np.c_[
             data[:,0], # err = n/a
             data[:,1], # err = n/a
