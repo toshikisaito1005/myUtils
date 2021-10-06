@@ -296,6 +296,9 @@ class ToolsNGC3110():
         dist_lte_trot = dist_kpc[cut]
         aco_lte_trot_err = 1/np.log(10) * aco_lte_trot_err[cut]/aco_lte_trot[cut]
         aco_lte_trot  = np.log10(aco_lte_trot[cut])
+        print(np.shape(dist_lte_trot))
+        print(np.shape(aco_lte_trot_err))
+        print(np.shape(aco_lte_trot))
 
         cut = np.where((aco_ism_trot>0) & (aco_ism_tkin>0) & (aco_ism_trot<aco_ism_tkin))
         dist_ism_trot = dist_kpc[cut] # np.log10(dist[cut])
