@@ -302,15 +302,6 @@ class ToolsNGC3110():
         aco_ism_trot_err = 1/np.log(10) * aco_ism_trot_err[cut_ism]/aco_ism_trot[cut_ism]
         aco_ism_trot  = np.log10(aco_ism_trot[cut_ism])
 
-        # more
-        dist_lte_tkin = dist_kpc[cut_lte]
-        aco_lte_tkin_err = 1/np.log(10) * aco_lte_tkin_err[cut_lte]/aco_lte_tkin[cut_lte]
-        aco_lte_tkin  = np.log10(aco_lte_tkin[cut_lte])
-
-        dist_ism_tkin = dist_kpc[cut_ism] # np.log10(dist[cut_ism])
-        aco_ism_tkin_err = 1/np.log(10) * aco_ism_tkin_err[cut_ism]/aco_ism_tkin[cut_ism]
-        aco_ism_tkin  = np.log10(aco_ism_tkin[cut_ism])
-
         # plot
         plt.figure()
         plt.rcParams["font.size"] = 16
@@ -328,11 +319,6 @@ class ToolsNGC3110():
         _, _, bars = ax.errorbar(dist_lte_trot,aco_lte_trot,yerr=aco_lte_trot_err,fmt="o",c="tomato",capsize=0,alpha=0.5,markeredgewidth=0)
         [bar.set_alpha(0.5) for bar in bars]
         _, _, bars = ax.errorbar(dist_ism_trot,aco_ism_trot,yerr=aco_ism_trot_err,fmt="o",c="deepskyblue",capsize=0,alpha=0.5,markeredgewidth=0)
-        [bar.set_alpha(0.5) for bar in bars]
-
-        _, _, bars = ax.errorbar(dist_lte_tkin,aco_lte_tkin,yerr=aco_lte_tkin_err,fmt="o",c="black",capsize=0,alpha=0.5,markeredgewidth=0)
-        [bar.set_alpha(0.5) for bar in bars]
-        _, _, bars = ax.errorbar(dist_ism_tkin,aco_ism_tkin,yerr=aco_ism_tkin_err,fmt="o",c="green",capsize=0,alpha=0.5,markeredgewidth=0)
         [bar.set_alpha(0.5) for bar in bars]
 
         ax.plot(xlim, [np.log10(0.8),np.log10(0.8)], "k-", lw=3)
