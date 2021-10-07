@@ -333,7 +333,7 @@ class ToolsNGC3110():
         ax.set_ylabel(r"log $\Sigma_{SFR}$ ($M_{\odot}$ kpc$^{-2}$ yr$^{-1}$)")
         ax.set_aspect('equal', adjustable='box')
 
-        print(np.max(dist_kpc))
+        print(dist_kpc)
 
         cax = ax.scatter(dh2_fix, sfrd, s=100, c=dist_kpc, cmap="rainbow_r", linewidths=0, alpha=0.7)
         for i in range(len(dh2_fix)):
