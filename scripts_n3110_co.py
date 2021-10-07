@@ -219,7 +219,8 @@ class ToolsNGC3110():
             self.outpng_aco_radial = self.dir_products + self._read_key("outpng_aco_radial")
             self.outpng_aco_hist   = self.dir_products + self._read_key("outpng_aco_hist")
 
-            self.output_ks_fix = self.dir_products + self._read_key("output_ks_fix")
+            self.output_ks_fix  = self.dir_products + self._read_key("output_ks_fix")
+            self.output_ks_vary = self.dir_products + self._read_key("output_ks_vary")
 
     ##################
     # run_ngc3110_co #
@@ -325,7 +326,6 @@ class ToolsNGC3110():
         ax = plt.subplot(gs[0:30,0:30])
         ax.grid(which="both")
 
-        # set ax parameter
         xlim = [0.3,3.3]
         ax.set_xlim(xlim)
         ax.set_ylim([-2.8,0.2])
@@ -353,11 +353,52 @@ class ToolsNGC3110():
         ax.plot(xlim,[xlim[0]-2.0,xlim[1]-2.0], "k--")
 
         ax.set_title(r"KS Relation ($\alpha_{CO}$ = "+str(aco_fix)+")")
-        ax.text(0.5, -2.5+0.4, "SFE = 10$^{-9}$ yr$^{-1}$", rotation=45, fontsize=12, weight="bold")
-        ax.text(0.5, -1.5+0.8, "SFE = 10$^{-8}$ yr$^{-1}$", rotation=45, fontsize=12, weight="bold")
+        ax.text(0.5, -2.5+0.4, "SFE = 10$^{-9}$ yr$^{-1}$", rotation=45, fontsize=12, weight="bold", zorder=1e10)
+        ax.text(0.5, -1.5+0.8, "SFE = 10$^{-8}$ yr$^{-1}$", rotation=45, fontsize=12, weight="bold", zorder=1e10)
 
         os.system("rm -rf " + self.output_ks_fix)
         plt.savefig(self.output_ks_fix, dpi=300)
+
+        # plot ks with varying aco
+        plt.figure()
+        plt.rcParams["font.size"] = 16
+        plt.subplots_adjust(bottom = 0.15)
+        gs = gridspec.GridSpec(nrows=30, ncols=30)
+        ax = plt.subplot(gs[0:30,0:30])
+        ax.grid(which="both")
+
+        xlim = [0.3,3.3]
+        ax.set_xlim(xlim)
+        ax.set_ylim([-2.8,0.2])
+        ax.set_xlabel(r"log $\Sigma_{H_2}$ ($M_{\odot}$ pc$^{-2}$)")
+        ax.set_ylabel(r"log $\Sigma_{SFR}$ ($M_{\odot}$ kpc$^{-2}$ yr$^{-1}$)")
+        ax.set_aspect('equal', adjustable='box')
+
+        cax = ax.scatter(dh2_fix, sfrd, s=100, c=dist_kpc, cmap="rainbow_r", linewidths=0, alpha=0.7,zorder=1e9)
+        for i in range(len(dh2_fix)):
+            x    = dh2_vary[i]
+            y    = sfrd[i]
+            xerr = dh2_err_vary[i]
+            yerr = sfrd_err
+            c    = cm.rainbow_r( dist_kpc[i] / 12.0 )
+
+            _, _, bars = ax.errorbar(x,y,xerr=xerr,yerr=yerr,fmt="o",c=c,capsize=5,markeredgewidth=0,markersize=0)
+            [bar.set_alpha(0.5) for bar in bars]
+
+        cbar = plt.colorbar(cax)
+        cbar.set_label("Deprojected Distance (kpc)")
+        cbar.set_clim([0,12])
+        cbar.outline.set_linewidth(1.0)
+
+        ax.plot(xlim,[xlim[0]-3.0,xlim[1]-3.0], "k--")
+        ax.plot(xlim,[xlim[0]-2.0,xlim[1]-2.0], "k--")
+
+        ax.set_title(r"KS Relation ($\alpha_{CO}$ = $\alpha_{LTE}$)")
+        ax.text(0.5, -2.5+0.4, "SFE = 10$^{-9}$ yr$^{-1}$", rotation=45, fontsize=12, weight="bold", zorder=1e10)
+        ax.text(0.5, -1.5+0.8, "SFE = 10$^{-8}$ yr$^{-1}$", rotation=45, fontsize=12, weight="bold", zorder=1e10)
+
+        os.system("rm -rf " + self.output_ks_vary)
+        plt.savefig(self.output_ks_vary, dpi=300)
 
     ############
     # plot_aco #
