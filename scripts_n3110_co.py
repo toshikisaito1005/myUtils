@@ -862,7 +862,7 @@ class ToolsNGC3110():
         cbar.outline.set_linewidth(2.5)
 
         # circle
-        circ = patches.Ellipse(xy=(6.5,-18), width=self.r_speak_as*2, height=self.r_speak_as*2, angle=0, fill=False, edgecolor="tomato", alpha=1.0, lw=4)
+        circ = patches.Ellipse(xy=(5.0,-22), width=self.r_speak_as*2, height=self.r_speak_as*2, angle=0, fill=False, edgecolor="tomato", alpha=1.0, lw=4)
         ax.add_patch(circ)
 
         os.system("rm -rf " + outpng)
