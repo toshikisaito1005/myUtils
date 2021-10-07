@@ -180,7 +180,7 @@ class ToolsNGC3110():
             self.alpha_co       = 1.7
             self.ra_speak       = 151.0105833333333 # degree
             self.dec_speak      = -6.480116111111111 # degree
-            self.r_speak_as     = 4.0 # arcsec
+            self.r_speak_as     = 3.0 # arcsec
 
             self.nu_12co10 = 115.27120180
             self.nu_13co10 = 110.20135430
@@ -368,15 +368,15 @@ class ToolsNGC3110():
             _, _, bars = ax.errorbar(x,y,xerr=xerr,yerr=yerr,fmt="o",c=c,capsize=5,markeredgewidth=0,markersize=0,lw=2)
             [bar.set_alpha(0.7) for bar in bars]
 
-        #cax2 = ax.scatter(dh2_fix_speak, sfrd_speak, s=100, c=dist_kpc_speak, cmap="rainbow_r", linewidths=1, alpha=1.0,zorder=1e11)
+        cax2 = ax.scatter(dh2_fix_speak, sfrd_speak, s=100, c=dist_kpc_speak, cmap="rainbow_r", linewidths=1, alpha=1.0,zorder=1e11)
 
         cbar = plt.colorbar(cax)
         cbar.set_label("Deprojected Distance (kpc)")
         cbar.set_clim([0,clim])
         cbar.outline.set_linewidth(1.0)
 
-        #cbar = plt.colorbar(cax2)
-        #cbar.set_clim([0,clim])
+        cbar = plt.colorbar(cax2)
+        cbar.set_clim([0,clim])
 
         ax.plot(xlim,[xlim[0]-3.0,xlim[1]-3.0], "k--")
         ax.plot(xlim,[xlim[0]-2.0,xlim[1]-2.0], "k--")
@@ -818,7 +818,7 @@ class ToolsNGC3110():
         cbar.outline.set_linewidth(2.5)
 
         # circle
-        circ = patches.Ellipse(xy=(6.5,-18), width=8.0, height=8.0, angle=0, fill=False, edgecolor="tomato", alpha=1.0, lw=4)
+        circ = patches.Ellipse(xy=(6.5,-18), width=self.r_speak_as*2, height=self.r_speak_as*2, angle=0, fill=False, edgecolor="tomato", alpha=1.0, lw=4)
         ax.add_patch(circ)
 
         os.system("rm -rf " + outpng)
