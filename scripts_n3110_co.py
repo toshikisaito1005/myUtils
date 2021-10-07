@@ -422,6 +422,7 @@ class ToolsNGC3110():
         ax.set_aspect('equal', adjustable='box')
 
         print(index[index!=0])
+        print(sfe_fix[index!=0])
 
         cax = ax.scatter(index, sfe_fix, s=100, c=dist_kpc, cmap="rainbow_r", linewidths=0, alpha=0.7,zorder=1e9)
         for i in range(len(dh2_fix)):
