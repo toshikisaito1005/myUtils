@@ -333,8 +333,8 @@ class ToolsNGC3110():
         ax.set_ylabel(r"log $\Sigma_{SFR}$ ($M_{\odot}$ kpc$^{-2}$ yr$^{-1}$)")
         ax.set_aspect('equal', adjustable='box')
 
-        cax = ax.scatter(dh2_fix, sfrd, s=100, c=dist_kpc, cmap="rainbow_r", linewidths=0, alpha=0.7)
-
+        _, _, bars = ax.errorbar(dh2_fix,sfrd,xerr=dh2_err_fix,yerr=sfrd_err,fmt="o",c=dist_kpc,cmap="rainbow_r",capsize=0,alpha=0.7,markeredgewidth=0)
+        [bar.set_alpha(0.5) for bar in bars]
 
         cbar = plt.colorbar(cax)
         cbar.set_label("Deprojected Distance (kpc)")
