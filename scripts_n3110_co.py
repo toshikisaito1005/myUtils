@@ -223,6 +223,7 @@ class ToolsNGC3110():
             self.output_ks_vary = self.dir_products + self._read_key("output_ks_vary")
 
             self.output_index_vs_sfe_fix = self.dir_products + self._read_key("output_index_vs_sfe_fix")
+            self.output_index_vs_sfe_vary = self.dir_products + self._read_key("output_index_vs_sfe_vary")
 
     ##################
     # run_ngc3110_co #
@@ -439,10 +440,48 @@ class ToolsNGC3110():
         cbar.set_clim([0,10])
         cbar.outline.set_linewidth(1.0)
 
-        ax.set_title(r"log SFE vs. log Index ($\alpha_{CO}$ = 1.5)")
+        ax.set_title(r"log SFE vs. log Index ($\alpha_{CO}$ = "+str(aco_fix)+")")
 
         os.system("rm -rf " + self.output_index_vs_sfe_fix)
         plt.savefig(self.output_index_vs_sfe_fix, dpi=300)
+
+
+        # plot sfe vs index with varying aco
+        plt.figure()
+        plt.rcParams["font.size"] = 16
+        plt.subplots_adjust(bottom = 0.15)
+        gs = gridspec.GridSpec(nrows=30, ncols=30)
+        ax = plt.subplot(gs[0:30,0:30])
+        ax.grid(which="both")
+
+        xlim = [-1.0+0.2,0.5+0.2]
+        ylim = [-9.5-0.2,-8.0-0.2]
+        ax.set_xlim(xlim)
+        ax.set_ylim(ylim)
+        ax.set_xlabel(r"log Spectral Index")
+        ax.set_ylabel(r"log SFE (yr$^{-1}$)")
+        ax.set_aspect('equal', adjustable='box')
+
+        cax = ax.scatter(index, sfe_vary, s=100, c=dist_kpc, cmap="rainbow_r", linewidths=0, alpha=0.7,zorder=1e9)
+        for i in range(len(dh2_vary)):
+            x    = index[i]
+            y    = sfe_vary[i]
+            xerr = index_err[i]
+            yerr = sfe_err_vary
+            c    = cm.rainbow_r( dist_kpc[i] / 12.0 )
+
+            _, _, bars = ax.errorbar(x,y,xerr=xerr,yerr=yerr,fmt="o",c=c,capsize=5,markeredgewidth=0,markersize=0,lw=2)
+            [bar.set_alpha(0.7) for bar in bars]
+
+        cbar = plt.colorbar(cax)
+        cbar.set_label("Deprojected Distance (kpc)")
+        cbar.set_clim([0,10])
+        cbar.outline.set_linewidth(1.0)
+
+        ax.set_title(r"log SFE vs. log Index ($\alpha_{CO}$ = $\alpha_{LTE}$)")
+
+        os.system("rm -rf " + self.output_index_vs_sfe_vary)
+        plt.savefig(self.output_index_vs_sfe_vary, dpi=300)
 
     ############
     # plot_aco #
