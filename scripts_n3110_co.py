@@ -372,7 +372,7 @@ class ToolsNGC3110():
             yerr = sfrd_err
             c    = cm.rainbow_r( dist_kpc[i] / clim )
 
-            _, _, bars = ax.errorbar(x,y,xerr=xerr,yerr=yerr,fmt="o",c=c,capsize=5,markeredgewidth=0,markersize=0,lw=2)
+            _, _, bars = ax.errorbar(x,y,xerr=xerr,yerr=yerr,fmt="o",c=c,capsize=5,markeredgewidth=0,markersize=0,lw=2,zorder=1e8)
             [bar.set_alpha(0.7) for bar in bars]
 
         for i in range(len(dh2_fix_speak)):
@@ -422,7 +422,7 @@ class ToolsNGC3110():
             yerr = sfrd_err
             c    = cm.rainbow_r( dist_kpc[i] / clim )
 
-            _, _, bars = ax.errorbar(x,y,xerr=xerr,yerr=yerr,fmt="o",c=c,capsize=5,markeredgewidth=0,markersize=0,lw=2)
+            _, _, bars = ax.errorbar(x,y,xerr=xerr,yerr=yerr,fmt="o",c=c,capsize=5,markeredgewidth=0,markersize=0,lw=2,zorder=1e8)
             [bar.set_alpha(0.7) for bar in bars]
 
         for i in range(len(dh2_vary_speak)):
