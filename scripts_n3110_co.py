@@ -408,8 +408,8 @@ class ToolsNGC3110():
 
 
         # sfe vs iindex
-        xlim = [-0.8,0.5]
-        ylim = [-10.0,-8.2]
+        xlim = [-1.0+0.2,0.5+0.2]
+        ylim = [-9.5-0.2,-8.0-0.2]
 
         # plot sfe vs index with a fixed aco
         plt.figure()
