@@ -334,8 +334,9 @@ class ToolsNGC3110():
         data_dec_from_speak = data_dec - dec_speak
         data_r_from_speak   = np.sqrt(data_ra_from_speak**2 + data_dec_from_speak**2) * 3600
 
-        dh2_fix_speak = dh2_fix[data_r_from_speak<self.r_speak_as]
-        sfrd_speak    = sfrd[data_r_from_speak<self.r_speak_as]
+        dh2_fix_speak  = dh2_fix[data_r_from_speak<self.r_speak_as]
+        sfrd_speak     = sfrd[data_r_from_speak<self.r_speak_as]
+        dist_kpc_speak = dist_kpc[data_r_from_speak<self.r_speak_as]
 
         ### ks relation
         xlim = [0.3,3.3]
@@ -367,7 +368,7 @@ class ToolsNGC3110():
             _, _, bars = ax.errorbar(x,y,xerr=xerr,yerr=yerr,fmt="o",c=c,capsize=5,markeredgewidth=0,markersize=0,lw=2)
             [bar.set_alpha(0.7) for bar in bars]
 
-        ax.scatter(dh2_fix_speak, sfrd_speak, s=100, c=dist_kpc, cmap="rainbow_r", linewidths=1, alpha=1.0,zorder=1e11)
+        ax.scatter(dh2_fix_speak, sfrd_speak, s=100, c=dist_kpc_speak, cmap="rainbow_r", linewidths=1, alpha=1.0,zorder=1e11)
 
         cbar = plt.colorbar(cax)
         cbar.set_label("Deprojected Distance (kpc)")
