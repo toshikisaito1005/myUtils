@@ -317,7 +317,7 @@ class ToolsNGC3110():
         index        = np.log10(index)
         index_err    = 1/np.log(10) * err_index/index
 
-        print(np.c_[index[index_err!=0],index_err[index_err!=0]])
+        print(index_err[index_err!=0]/index[index_err!=0])
 
         sscd         = np.log10(sscd)
         sfrd         = np.log10(sfrd)
