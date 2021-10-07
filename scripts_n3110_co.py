@@ -368,15 +368,16 @@ class ToolsNGC3110():
             _, _, bars = ax.errorbar(x,y,xerr=xerr,yerr=yerr,fmt="o",c=c,capsize=5,markeredgewidth=0,markersize=0,lw=2)
             [bar.set_alpha(0.7) for bar in bars]
 
-        cax2 = ax.scatter(dh2_fix_speak, sfrd_speak, s=100, c=dist_kpc_speak, cmap="rainbow_r", linewidths=1, alpha=1.0,zorder=1e11)
+        for i in range(len(dh2_fix_speak)):
+        	x = dh2_fix_speak[i]
+        	y = sfrd_speak[i]
+        	c = cm.rainbow_r( dist_kpc_speak[i] / clim )
+            ax.scatter(x, y, s=100, c=c, cmap="rainbow_r", linewidths=1, alpha=1.0,zorder=1e11)
 
         cbar = plt.colorbar(cax)
         cbar.set_label("Deprojected Distance (kpc)")
         cbar.set_clim([0,clim])
         cbar.outline.set_linewidth(1.0)
-
-        cbar = plt.colorbar(cax2)
-        cbar.set_clim([0,clim])
 
         ax.plot(xlim,[xlim[0]-3.0,xlim[1]-3.0], "k--")
         ax.plot(xlim,[xlim[0]-2.0,xlim[1]-2.0], "k--")
