@@ -339,7 +339,7 @@ class ToolsNGC3110():
             y    = sfrd[i]
             xerr = dh2_err_fix[i]
             yerr = sfrd_err
-            c    = cm.rainbow_r( dist_kpc[i] / np.max(dist_kpc) )
+            c    = cm.rainbow_r( dist_kpc[i] / 12.0 )
 
             _, _, bars = ax.errorbar(x,y,xerr=xerr,yerr=yerr,fmt="o",c=c,capsize=5,markeredgewidth=0,markersize=0)
             [bar.set_alpha(0.5) for bar in bars]
