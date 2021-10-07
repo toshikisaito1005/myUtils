@@ -520,7 +520,41 @@ class ToolsNGC3110():
         cbar.set_clim([0,clim])
         cbar.outline.set_linewidth(1.0)
 
-        ax.set_title(r"log SFE vs. log $\Sigma_{SSC}$ ($\alpha_{CO}$ = 1.5)")
+        ax.set_title(r"log SFE vs. log $\Sigma_{SSC}$ ($\alpha_{CO}$ = "+str(aco_fix)+")")
+
+        os.system("rm -rf " + self.output_sfe_vs_ssc_fix)
+        plt.savefig(self.output_sfe_vs_ssc_fix, dpi=300)
+
+        # plot sfe vs ssc with varying aco
+        plt.figure()
+        plt.rcParams["font.size"] = 16
+        plt.subplots_adjust(bottom = 0.15)
+        gs = gridspec.GridSpec(nrows=30, ncols=30)
+        ax = plt.subplot(gs[0:30,0:30])
+        ax.grid(which="both")
+
+        ax.set_xlim(xlim)
+        ax.set_ylim(ylim)
+        ax.set_xlabel(r"log $\Sigma_{SSC}$ (kpc$^{-2}$)")
+        ax.set_ylabel(r"log SFE (yr$^{-1}$)")
+        ax.set_aspect('equal', adjustable='box')
+
+        cax = ax.scatter(sscd, sfe_vary, s=100, c=dist_kpc, cmap="rainbow_r", linewidths=0, alpha=0.7,zorder=1e9)
+        for i in range(len(sfe_vary)):
+            x    = sscd[i]
+            y    = sfe_vary[i]
+            yerr = sfe_err_vary
+            c    = cm.rainbow_r( dist_kpc[i] / clim )
+
+            _, _, bars = ax.errorbar(x,y,yerr=yerr,fmt="o",c=c,capsize=5,markeredgewidth=0,markersize=0,lw=2)
+            [bar.set_alpha(0.7) for bar in bars]
+
+        cbar = plt.colorbar(cax)
+        cbar.set_label("Deprojected Distance (kpc)")
+        cbar.set_clim([0,clim])
+        cbar.outline.set_linewidth(1.0)
+
+        ax.set_title(r"log SFE vs. log $\Sigma_{SSC}$ ($\alpha_{CO}$ = $\alpha_{LTE}$)")
 
         os.system("rm -rf " + self.output_sfe_vs_ssc_fix)
         plt.savefig(self.output_sfe_vs_ssc_fix, dpi=300)
