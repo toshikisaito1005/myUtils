@@ -556,8 +556,8 @@ class ToolsNGC3110():
 
         ax.set_title(r"log SFE vs. log $\Sigma_{SSC}$ ($\alpha_{CO}$ = $\alpha_{LTE}$)")
 
-        os.system("rm -rf " + self.output_sfe_vs_ssc_fix)
-        plt.savefig(self.output_sfe_vs_ssc_fix, dpi=300)
+        os.system("rm -rf " + self.output_sfe_vs_ssc_vary)
+        plt.savefig(self.output_sfe_vs_ssc_vary, dpi=300)
 
     ############
     # plot_aco #
