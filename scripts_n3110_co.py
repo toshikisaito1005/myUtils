@@ -315,7 +315,7 @@ class ToolsNGC3110():
         sfe_err_vary = 0.3
 
         index        = np.log10(index)
-        index_err    = 1/np.log(10) * err_index/index
+        index_err    = 1/np.log(10) * err_index/10**index
 
         print(index_err[index_err!=0]/index[index_err!=0])
 
