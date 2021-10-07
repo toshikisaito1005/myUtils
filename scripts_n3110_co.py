@@ -426,7 +426,7 @@ class ToolsNGC3110():
             x    = index[i]
             y    = sfe_fix[i]
             xerr = index_err[i]
-            yerr = sfe_err_fix[i]
+            yerr = sfe_err_fix
             c    = cm.rainbow_r( dist_kpc[i] / 12.0 )
 
             _, _, bars = ax.errorbar(x,y,xerr=xerr,yerr=yerr,fmt="o",c=c,capsize=5,markeredgewidth=0,markersize=0)
