@@ -375,8 +375,8 @@ class ToolsNGC3110():
         cbar.set_clim([0,clim])
         cbar.outline.set_linewidth(1.0)
 
-        cbar = plt.colorbar(cax2)
-        cbar.set_clim([0,clim])
+        #cbar = plt.colorbar(cax2)
+        #cbar.set_clim([0,clim])
 
         ax.plot(xlim,[xlim[0]-3.0,xlim[1]-3.0], "k--")
         ax.plot(xlim,[xlim[0]-2.0,xlim[1]-2.0], "k--")
