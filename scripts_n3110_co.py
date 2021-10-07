@@ -381,8 +381,8 @@ class ToolsNGC3110():
             y    = sfrd_speak[i]
             yerr = sfrd_err
             c    = cm.rainbow_r( dist_kpc_speak[i] / clim )
-            ax.scatter(x, y, s=100, c=c, cmap="rainbow_r", linewidths=1.5, zorder=1e12)
-            ax.errorbar(x,y,xerr=xerr,yerr=yerr,fmt="o",c="black",capsize=5,markeredgewidth=0,markersize=0,lw=2,zorder=0.9e12)
+            ax.scatter(x, y, s=100, c=c, cmap="rainbow_r", linewidths=1.5, zorder=2e12)
+            ax.errorbar(x,y,xerr=xerr,yerr=yerr,fmt="o",c="black",capsize=5,markeredgewidth=0,markersize=0,lw=2,zorder=1e12)
 
         cbar = plt.colorbar(cax)
         cbar.set_label("Deprojected Distance (kpc)")
