@@ -347,11 +347,11 @@ class ToolsNGC3110():
             c    = cm.rainbow_r( dist_kpc[i] / 12.0 )
 
             _, _, bars = ax.errorbar(x,y,xerr=xerr,yerr=yerr,fmt="o",c=c,capsize=5,markeredgewidth=0,markersize=0)
-            [bar.set_alpha(0.5) for bar in bars]
+            [bar.set_alpha(0.7) for bar in bars]
 
         cbar = plt.colorbar(cax)
         cbar.set_label("Deprojected Distance (kpc)")
-        cbar.set_clim([0,12])
+        cbar.set_clim([0,10])
         cbar.outline.set_linewidth(1.0)
 
         ax.plot(xlim,[xlim[0]-3.0,xlim[1]-3.0], "k--")
@@ -389,11 +389,11 @@ class ToolsNGC3110():
             c    = cm.rainbow_r( dist_kpc[i] / 12.0 )
 
             _, _, bars = ax.errorbar(x,y,xerr=xerr,yerr=yerr,fmt="o",c=c,capsize=5,markeredgewidth=0,markersize=0)
-            [bar.set_alpha(0.5) for bar in bars]
+            [bar.set_alpha(0.7) for bar in bars]
 
         cbar = plt.colorbar(cax)
         cbar.set_label("Deprojected Distance (kpc)")
-        cbar.set_clim([0,12])
+        cbar.set_clim([0,10])
         cbar.outline.set_linewidth(1.0)
 
         ax.plot(xlim,[xlim[0]-3.0,xlim[1]-3.0], "k--")
@@ -432,11 +432,11 @@ class ToolsNGC3110():
             c    = cm.rainbow_r( dist_kpc[i] / 12.0 )
 
             _, _, bars = ax.errorbar(x,y,xerr=xerr,yerr=yerr,fmt="o",c=c,capsize=5,markeredgewidth=0,markersize=0)
-            [bar.set_alpha(0.5) for bar in bars]
+            [bar.set_alpha(0.7) for bar in bars]
 
         cbar = plt.colorbar(cax)
         cbar.set_label("Deprojected Distance (kpc)")
-        cbar.set_clim([0,12])
+        cbar.set_clim([0,10])
         cbar.outline.set_linewidth(1.0)
 
         ax.set_title(r"log SFE vs. log Index ($\alpha_{CO}$ = 1.5)")
