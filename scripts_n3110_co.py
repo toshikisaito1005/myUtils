@@ -225,6 +225,9 @@ class ToolsNGC3110():
             self.output_index_vs_sfe_fix = self.dir_products + self._read_key("output_index_vs_sfe_fix")
             self.output_index_vs_sfe_vary = self.dir_products + self._read_key("output_index_vs_sfe_vary")
 
+            self.output_sfe_vs_ssc_fix = self.dir_products + self._read_key("output_sfe_vs_ssc_fix")
+            self.output_sfe_vs_ssc_vary = self.dir_products + self._read_key("output_sfe_vs_ssc_vary")
+
     ##################
     # run_ngc3110_co #
     ##################
@@ -482,6 +485,45 @@ class ToolsNGC3110():
 
         os.system("rm -rf " + self.output_index_vs_sfe_vary)
         plt.savefig(self.output_index_vs_sfe_vary, dpi=300)
+
+
+        # sfe vs ssc
+        xlim = [-2.0+0.2,1.0+0.2]
+        ylim = [-10.0-0.2,-7.0-0.2]
+
+        # plot sfe vs ssc with a fixed aco
+        plt.figure()
+        plt.rcParams["font.size"] = 16
+        plt.subplots_adjust(bottom = 0.15)
+        gs = gridspec.GridSpec(nrows=30, ncols=30)
+        ax = plt.subplot(gs[0:30,0:30])
+        ax.grid(which="both")
+
+        ax.set_xlim(xlim)
+        ax.set_ylim(ylim)
+        ax.set_xlabel(r"log $\Sigma_{SSC}$ (kpc$^{-2}$)")
+        ax.set_ylabel(r"log SFE (yr$^{-1}$)")
+        ax.set_aspect('equal', adjustable='box')
+
+        cax = ax.scatter(dssc, sfe_fix, s=100, c=dist_kpc, cmap="rainbow_r", linewidths=0, alpha=0.7,zorder=1e9)
+        for i in range(len(sfe_fix)):
+            x    = dssc[i]
+            y    = sfe_fix[i]
+            yerr = sfe_err_fix
+            c    = cm.rainbow_r( dist_kpc[i] / clim )
+
+            _, _, bars = ax.errorbar(x,y,yerr=yerr,fmt="o",c=c,capsize=5,markeredgewidth=0,markersize=0,lw=2)
+            [bar.set_alpha(0.7) for bar in bars]
+
+        cbar = plt.colorbar(cax)
+        cbar.set_label("Deprojected Distance (kpc)")
+        cbar.set_clim([0,clim])
+        cbar.outline.set_linewidth(1.0)
+
+        ax.set_title(r"log SFE vs. log $\Sigma_{SSC}$ ($\alpha_{CO}$ = 1.5)")
+
+        os.system("rm -rf " + self.output_sfe_vs_ssc_fix)
+        plt.savefig(self.output_sfe_vs_ssc_fix, dpi=300)
 
     ############
     # plot_aco #
