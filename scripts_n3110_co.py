@@ -310,16 +310,6 @@ class ToolsNGC3110():
         aco_ism_trot_err = data[:,19]
         aco_fix = self.alpha_co
 
-        # data of the peak S
-        ra_speak  = self.ra_speak - self.ra
-        dec_speak = self.dec_speak - self.dec
-        data_ra_from_speak  = data_ra - ra_speak
-        data_dec_from_speak = data_dec - dec_speak
-        data_r_from_speak   = np.sqrt(data_ra_from_speak**2 + data_dec_from_speak**2) * 3600
-
-        dh2_fix_speak = dh2_fix[data_r_from_speak<self.r_speak_as]
-        sfrd_speak    = sfrd[data_r_from_speak<self.r_speak_as]
-
         # process data
         dh2_fix      = np.log10(dh2)
         dh2_err_fix  = 1/np.log(10) * err_dh2/dh2
@@ -336,6 +326,16 @@ class ToolsNGC3110():
 
         sscd         = np.log10(sscd)
         sfrd         = np.log10(sfrd)
+
+        # data of the peak S
+        ra_speak  = self.ra_speak - self.ra
+        dec_speak = self.dec_speak - self.dec
+        data_ra_from_speak  = data_ra - ra_speak
+        data_dec_from_speak = data_dec - dec_speak
+        data_r_from_speak   = np.sqrt(data_ra_from_speak**2 + data_dec_from_speak**2) * 3600
+
+        dh2_fix_speak = dh2_fix[data_r_from_speak<self.r_speak_as]
+        sfrd_speak    = sfrd[data_r_from_speak<self.r_speak_as]
 
         ### ks relation
         xlim = [0.3,3.3]
