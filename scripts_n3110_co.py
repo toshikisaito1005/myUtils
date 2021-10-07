@@ -558,7 +558,7 @@ class ToolsNGC3110():
             _, _, bars = ax.errorbar(x,y,yerr=yerr,fmt="o",c=c,capsize=5,markeredgewidth=0,markersize=0,lw=2)
             [bar.set_alpha(0.7) for bar in bars]
 
-        for i in range(len(sfe_fix)):
+        for i in range(len(sscd_speak)):
             x = sscd_speak[i]
             y = sfe_fix_speak[i]
             c = cm.rainbow_r( dist_kpc_speak[i] / clim )
@@ -598,7 +598,7 @@ class ToolsNGC3110():
             _, _, bars = ax.errorbar(x,y,yerr=yerr,fmt="o",c=c,capsize=5,markeredgewidth=0,markersize=0,lw=2)
             [bar.set_alpha(0.7) for bar in bars]
 
-        for i in range(len(sfe_vary)):
+        for i in range(len(sscd_speak)):
             x = sscd_speak[i]
             y = sfe_vary_speak[i]
             c = cm.rainbow_r( dist_kpc_speak[i] / clim )
