@@ -312,13 +312,11 @@ class ToolsNGC3110():
 
         sfe_fix      = np.log10(sfe) - 9
         sfe_err_fix  = 0.3
-        sfe_vary     = np.log10(sfe * aco_lte_trot/aco_fix)
+        sfe_vary     = np.log10(sfe * aco_lte_trot/aco_fix) - 9
         sfe_err_vary = 0.3
 
         index        = np.log10(index)
         index_err    = 1/np.log(10) * err_index/10**index
-
-        print(index_err[index_err!=0]/index[index_err!=0])
 
         sscd         = np.log10(sscd)
         sfrd         = np.log10(sfrd)
