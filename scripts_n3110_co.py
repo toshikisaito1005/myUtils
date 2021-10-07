@@ -346,7 +346,7 @@ class ToolsNGC3110():
             yerr = sfrd_err
             c    = cm.rainbow_r( dist_kpc[i] / 12.0 )
 
-            _, _, bars = ax.errorbar(x,y,xerr=xerr,yerr=yerr,fmt="o",c=c,capsize=5,markeredgewidth=0,markersize=0)
+            _, _, bars = ax.errorbar(x,y,xerr=xerr,yerr=yerr,fmt="o",c=c,capsize=5,markeredgewidth=0,markersize=0,lw=2)
             [bar.set_alpha(0.7) for bar in bars]
 
         cbar = plt.colorbar(cax)
@@ -388,7 +388,7 @@ class ToolsNGC3110():
             yerr = sfrd_err
             c    = cm.rainbow_r( dist_kpc[i] / 12.0 )
 
-            _, _, bars = ax.errorbar(x,y,xerr=xerr,yerr=yerr,fmt="o",c=c,capsize=5,markeredgewidth=0,markersize=0)
+            _, _, bars = ax.errorbar(x,y,xerr=xerr,yerr=yerr,fmt="o",c=c,capsize=5,markeredgewidth=0,markersize=0,lw=2)
             [bar.set_alpha(0.7) for bar in bars]
 
         cbar = plt.colorbar(cax)
@@ -431,7 +431,7 @@ class ToolsNGC3110():
             yerr = sfe_err_fix
             c    = cm.rainbow_r( dist_kpc[i] / 12.0 )
 
-            _, _, bars = ax.errorbar(x,y,xerr=xerr,yerr=yerr,fmt="o",c=c,capsize=5,markeredgewidth=0,markersize=0)
+            _, _, bars = ax.errorbar(x,y,xerr=xerr,yerr=yerr,fmt="o",c=c,capsize=5,markeredgewidth=0,markersize=0,lw=2)
             [bar.set_alpha(0.7) for bar in bars]
 
         cbar = plt.colorbar(cax)
