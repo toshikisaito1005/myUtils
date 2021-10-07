@@ -333,15 +333,13 @@ class ToolsNGC3110():
         ax.set_ylabel(r"log $\Sigma_{SFR}$ ($M_{\odot}$ kpc$^{-2}$ yr$^{-1}$)")
         ax.set_aspect('equal', adjustable='box')
 
-        print(dist_kpc)
-
         cax = ax.scatter(dh2_fix, sfrd, s=100, c=dist_kpc, cmap="rainbow_r", linewidths=0, alpha=0.7)
         for i in range(len(dh2_fix)):
             x    = dh2_fix[i]
             y    = sfrd[i]
             xerr = dh2_err_fix[i]
             yerr = sfrd_err
-            c    = cm.rainbow( dist_kpc[i] / np.max(dist_kpc) )
+            c    = cm.rainbow_r( dist_kpc[i] / np.max(dist_kpc) )
 
             _, _, bars = ax.errorbar(x,y,xerr=xerr,yerr=yerr,fmt="o",c=c,capsize=5,markeredgewidth=0,markersize=0)
             [bar.set_alpha(0.5) for bar in bars]
