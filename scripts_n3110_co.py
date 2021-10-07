@@ -180,7 +180,7 @@ class ToolsNGC3110():
             self.alpha_co       = 1.7
             self.ra_speak       = 151.0105833333333 # degree
             self.dec_speak      = -6.480116111111111 # degree
-            self.r_speak_as     = 3.0 # arcsec
+            self.r_speak_as     = 4.0 # arcsec
 
             self.nu_12co10 = 115.27120180
             self.nu_13co10 = 110.20135430
@@ -316,7 +316,9 @@ class ToolsNGC3110():
         data_ra_from_speak  = data_ra - ra_speak
         data_dec_from_speak = data_dec - dec_speak
         data_r_from_speak   = np.sqrt(data_ra_from_speak**2 + data_dec_from_speak**2) * 3600
-        print(data_r_from_speak[data_r_from_speak<self.r_speak_as])
+
+        dh2_fix_speak = dh2_fix[data_r_from_speak<self.r_speak_as]
+        sfrd_speak    = sfrd[data_r_from_speak<self.r_speak_as]
 
         # process data
         dh2_fix      = np.log10(dh2)
@@ -364,6 +366,8 @@ class ToolsNGC3110():
 
             _, _, bars = ax.errorbar(x,y,xerr=xerr,yerr=yerr,fmt="o",c=c,capsize=5,markeredgewidth=0,markersize=0,lw=2)
             [bar.set_alpha(0.7) for bar in bars]
+
+        ax.scatter(dh2_fix_speak, sfrd_speak, s=100, c=dist_kpc, cmap="rainbow_r", linewidths=1, alpha=1.0,zorder=1e11)
 
         cbar = plt.colorbar(cax)
         cbar.set_label("Deprojected Distance (kpc)")
