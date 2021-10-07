@@ -316,7 +316,7 @@ class ToolsNGC3110():
         data_ra_from_speak  = data_ra - ra_speak
         data_dec_from_speak = data_dec - dec_speak
         data_r_from_speak   = np.sqrt(data_ra_from_speak**2 + data_dec_from_speak**2) * 3600
-        print(data_r_from_speak < self.r_speak_as)
+        print(data_r_from_speak[data_r_from_speak<self.r_speak_as])
 
         # process data
         dh2_fix      = np.log10(dh2)
