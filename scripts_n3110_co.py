@@ -178,6 +178,9 @@ class ToolsNGC3110():
             self.decl_blc       = float(self._read_key("decl_blc"))
             self.num_aperture   = int(self._read_key("num_aperture"))
             self.alpha_co       = 1.7
+            self.ra_speak       = 151.0105833333333 # degree
+            self.dec_speak      = -6.480116111111111 # degree
+            self.r_speak_as     = 3.0 # arcsec
 
             self.nu_12co10 = 115.27120180
             self.nu_13co10 = 110.20135430
@@ -293,7 +296,7 @@ class ToolsNGC3110():
         dist_kpc     = np.sqrt(data_ra2**2+data_dec2**2) * 3600 * self.scale_kpc
         index        = data[:,4]
         err_index    = data[:,5]
-        sfrd         = data[:,6] # err = 0.3 dex
+        sfrd         = data[:,6]
         sfrd_err     = 0.3
         sscd         = data[:,7]
         dh2          = data[:,11]
@@ -306,6 +309,14 @@ class ToolsNGC3110():
         aco_ism_trot = data[:,15]
         aco_ism_trot_err = data[:,19]
         aco_fix = self.alpha_co
+
+        # data of the peak S
+        ra_speak  = self.ra_speak - self.ra
+        dec_speak = self.dec_speak - self.dec
+        data_ra_from_speak  = data_ra - ra_speak
+        data_dec_from_speak = data_dec - dec_speak
+        data_r_from_speak   = np.sqrt(data_ra_from_speak**2 + data_dec_from_speak**2) * 3600
+        print(data_r_from_speak < self.r_speak_as)
 
         # process data
         dh2_fix      = np.log10(dh2)
