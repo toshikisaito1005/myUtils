@@ -505,9 +505,9 @@ class ToolsNGC3110():
         ax.set_ylabel(r"log SFE (yr$^{-1}$)")
         ax.set_aspect('equal', adjustable='box')
 
-        cax = ax.scatter(dssc, sfe_fix, s=100, c=dist_kpc, cmap="rainbow_r", linewidths=0, alpha=0.7,zorder=1e9)
+        cax = ax.scatter(sscd, sfe_fix, s=100, c=dist_kpc, cmap="rainbow_r", linewidths=0, alpha=0.7,zorder=1e9)
         for i in range(len(sfe_fix)):
-            x    = dssc[i]
+            x    = sscd[i]
             y    = sfe_fix[i]
             yerr = sfe_err_fix
             c    = cm.rainbow_r( dist_kpc[i] / clim )
