@@ -314,7 +314,8 @@ class ToolsNGC3110():
         index        = np.log10(index)
         index_err    = 1/np.log(10) * err_index/index
 
-        sscd         = np.log(sscd)
+        sscd         = np.log10(sscd)
+        sfrd         = np.log10(sfrd)
 
         # plot ks with a fixed aco
         plt.figure()
