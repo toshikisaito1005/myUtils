@@ -369,9 +369,9 @@ class ToolsNGC3110():
             [bar.set_alpha(0.7) for bar in bars]
 
         for i in range(len(dh2_fix_speak)):
-        	x = dh2_fix_speak[i]
-        	y = sfrd_speak[i]
-        	c = cm.rainbow_r( dist_kpc_speak[i] / clim )
+            x = dh2_fix_speak[i]
+            y = sfrd_speak[i]
+            c = cm.rainbow_r( dist_kpc_speak[i] / clim )
             ax.scatter(x, y, s=100, c=c, cmap="rainbow_r", linewidths=1, alpha=1.0,zorder=1e11)
 
         cbar = plt.colorbar(cax)
