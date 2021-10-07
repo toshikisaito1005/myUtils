@@ -321,6 +321,9 @@ class ToolsNGC3110():
         sscd         = np.log10(sscd)
         sfrd         = np.log10(sfrd)
 
+        ### ks relation
+        xlim = [0.3,3.3]
+        ylim = [-2.8,0.2]
 
         # plot ks with a fixed aco
         plt.figure()
@@ -330,9 +333,8 @@ class ToolsNGC3110():
         ax = plt.subplot(gs[0:30,0:30])
         ax.grid(which="both")
 
-        xlim = [0.3,3.3]
         ax.set_xlim(xlim)
-        ax.set_ylim([-2.8,0.2])
+        ax.set_ylim(ylim)
         ax.set_xlabel(r"log $\Sigma_{H_2}$ ($M_{\odot}$ pc$^{-2}$)")
         ax.set_ylabel(r"log $\Sigma_{SFR}$ ($M_{\odot}$ kpc$^{-2}$ yr$^{-1}$)")
         ax.set_aspect('equal', adjustable='box')
@@ -372,9 +374,8 @@ class ToolsNGC3110():
         ax = plt.subplot(gs[0:30,0:30])
         ax.grid(which="both")
 
-        xlim = [0.3,3.3]
         ax.set_xlim(xlim)
-        ax.set_ylim([-2.8,0.2])
+        ax.set_ylim(ylim)
         ax.set_xlabel(r"log $\Sigma_{H_2}$ ($M_{\odot}$ pc$^{-2}$)")
         ax.set_ylabel(r"log $\Sigma_{SFR}$ ($M_{\odot}$ kpc$^{-2}$ yr$^{-1}$)")
         ax.set_aspect('equal', adjustable='box')
@@ -406,6 +407,10 @@ class ToolsNGC3110():
         plt.savefig(self.output_ks_vary, dpi=300)
 
 
+        # sfe vs iindex
+        xlim = [-0.8,0.5]
+        ylim = [-10.0,-8.2]
+
         # plot sfe vs index with a fixed aco
         plt.figure()
         plt.rcParams["font.size"] = 16
@@ -414,8 +419,6 @@ class ToolsNGC3110():
         ax = plt.subplot(gs[0:30,0:30])
         ax.grid(which="both")
 
-        xlim = [-1.0+0.2,0.5+0.2]
-        ylim = [-9.5-0.2,-8.0-0.2]
         ax.set_xlim(xlim)
         ax.set_ylim(ylim)
         ax.set_xlabel(r"log Spectral Index")
@@ -452,8 +455,6 @@ class ToolsNGC3110():
         ax = plt.subplot(gs[0:30,0:30])
         ax.grid(which="both")
 
-        xlim = [-1.0+0.2,0.5+0.2]
-        ylim = [-9.5-0.2,-8.0-0.2]
         ax.set_xlim(xlim)
         ax.set_ylim(ylim)
         ax.set_xlabel(r"log Spectral Index")
