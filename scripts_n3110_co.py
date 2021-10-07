@@ -421,6 +421,8 @@ class ToolsNGC3110():
         ax.set_ylabel(r"log SFE (yr$^{-1}$)")
         ax.set_aspect('equal', adjustable='box')
 
+        print(index)
+
         cax = ax.scatter(index, sfe_fix, s=100, c=dist_kpc, cmap="rainbow_r", linewidths=0, alpha=0.7,zorder=1e9)
         for i in range(len(dh2_fix)):
             x    = index[i]
