@@ -309,7 +309,7 @@ class ToolsNGC3110():
         dh2_vary     = np.log10(dh2 * aco_lte_trot/aco_fix)
         dh2_err_vary = 1/np.log(10) * err_dh2/dh2 * aco_lte_trot/aco_fix
 
-        sfe_fix      = np.log10(sfe)
+        sfe_fix      = np.log10(sfe) - 9
         sfe_err_fix  = 0.3
         sfe_vary     = np.log10(sfe * aco_lte_trot/aco_fix)
         sfe_err_vary = 0.3
@@ -420,9 +420,6 @@ class ToolsNGC3110():
         ax.set_xlabel(r"log Spectral Index")
         ax.set_ylabel(r"log SFE (yr$^{-1}$)")
         ax.set_aspect('equal', adjustable='box')
-
-        print(index[index!=0])
-        print(sfe_fix[index!=0])
 
         cax = ax.scatter(index, sfe_fix, s=100, c=dist_kpc, cmap="rainbow_r", linewidths=0, alpha=0.7,zorder=1e9)
         for i in range(len(dh2_fix)):
