@@ -368,7 +368,7 @@ class ToolsNGC3110():
             _, _, bars = ax.errorbar(x,y,xerr=xerr,yerr=yerr,fmt="o",c=c,capsize=5,markeredgewidth=0,markersize=0,lw=2)
             [bar.set_alpha(0.7) for bar in bars]
 
-        cax2 = ax.scatter(dh2_fix_speak, sfrd_speak, s=100, c=dist_kpc_speak, cmap="rainbow_r", linewidths=1, alpha=1.0,zorder=1e11)
+        #cax2 = ax.scatter(dh2_fix_speak, sfrd_speak, s=100, c=dist_kpc_speak, cmap="rainbow_r", linewidths=1, alpha=1.0,zorder=1e11)
 
         cbar = plt.colorbar(cax)
         cbar.set_label("Deprojected Distance (kpc)")
