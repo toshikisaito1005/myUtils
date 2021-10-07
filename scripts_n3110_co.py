@@ -178,8 +178,8 @@ class ToolsNGC3110():
             self.decl_blc       = float(self._read_key("decl_blc"))
             self.num_aperture   = int(self._read_key("num_aperture"))
             self.alpha_co       = 1.7
-            self.ra_speak       = 151.0105833333333 # degree
-            self.dec_speak      = -6.480116111111111 # degree
+            self.ra_speak       = 151.01025833 # degree
+            self.dec_speak      = -6.48121361 # degree
             self.r_speak_as     = 3.0 # arcsec
 
             self.nu_12co10 = 115.27120180
