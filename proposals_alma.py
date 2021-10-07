@@ -63,6 +63,10 @@ class ProposalsALMA():
             self._create_dir(self.dir_final)
 
             # cycle 8p5
+            if self.cycle=="cycle09":
+                print("# write __init__ for cycle09")
+
+            # cycle 8p5
             if self.cycle=="cycle08p5":
             	### proposal specscan
 
