@@ -491,7 +491,8 @@ class ToolsNGC3110():
             self.box_hex3,
             axis="column",
             )
-        os.system("rm -rf " + self.final_showhex + "_tmp?.png")
+        os.system("rm -rf " + self.final_showhex + "_tmp1.png")
+        os.system("rm -rf " + self.final_showhex + "_tmp2.png")
 
 
     ################
