@@ -47,7 +47,7 @@ history:
 2021-06-11   circulate v2 draft to the whole team
 2021-06-28   move to ADC because of issues with new laptop
 2021-07-02   submit to ApJ!
-2021-09-01   major update in order to revise the draft
+2021-09-01   major update based on the 1st referee report
 Toshiki Saito@Nichidai/NAOJ
 """
 
@@ -296,6 +296,8 @@ class ToolsNGC3110():
             self.box_ratio_bl = self._read_key("box_ratio_bl")
             self.box_ratio_br = self._read_key("box_ratio_br")
 
+            self.box_radial   = self._read_key("box_radial")
+
     ##################
     # run_ngc3110_co #
     ##################
@@ -451,8 +453,8 @@ class ToolsNGC3110():
             self.outpng_radial_21,
             self.outpng_radial_1213,
             self.final_radial,
-            self.box_ratio_tl,
-            self.box_ratio_tr,
+            self.box_radial,
+            self.box_radial,
             delin=delin,
             )
 
