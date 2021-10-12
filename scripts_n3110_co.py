@@ -12,7 +12,7 @@ Date        Filename                         To
 2021-10-??  draft_v2_2110??_1st_revised.zip  journal
 
 data:
-ALMA line and cont data  2013.0.01172.S
+ALMA line and cont data  2013.0.01172.S (https://almascience.nrao.edu/aq/?result_view=observation&projectCode=2013.1.01172.S)
 OAO H-alpha FITS         T. Hattori et al. 2004, AJ, 127, 736
 VLA FITS                 https://archive.nrao.edu/archive/archiveimage.html
 VLT Ks-band FITS         Z. Randriamanakoto et al. 2013, MNRAS, 431, 554
@@ -24,8 +24,8 @@ usage:
 > # key (prepare two keys)
 > tl = tools(
 >     refresh     = False,
->     keyfile_gal = "keys_n3110_co/key_ngc3110.txt",
->     keyfile_fig = "keys_n3110_co/key_figures.txt",
+>     keyfile_gal = "/home02/saitots/myUtils/keys_n3110_co/key_ngc3110.txt",
+>     keyfile_fig = "/home02/saitots/myUtils/keys_n3110_co/key_figures.txt",
 >     )
 > 
 > # main
