@@ -5,10 +5,11 @@ requirements:
 CASA Version 5.4.0-70, ananlysisUtils, astropy
 
 paper draft under paper_versions/:
-Date        filename                                        to whom
-2021-06-10  overleaf_v0_210610_n3110_alma_co.zip            all
-2021-07-02  overleaf_v1_210702_n3110_alma_co_submitted.zip  journal
-2021-10-??  reply_1st.pdf
+Date        filename                         to whom
+2021-06-10  draft_v0_210610.zip              all co-Is
+2021-07-02  draft_v1_210702_submitted.zip    journal
+2021-10-??  reply_2110??_1st_revised.pdf     journal
+2021-10-??  draft_v2_2110??_1st_revised.zip  journal
 
 data:
 ALMA line and cont data  2013.0.01172.S
