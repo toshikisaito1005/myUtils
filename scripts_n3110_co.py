@@ -243,15 +243,20 @@ class ToolsNGC3110():
             self.final_appendix1 = self.dir_final + self._read_key("final_appendix1")
 
             # box
-            self.box_irac   = self._read_key("box_irac")
+            self.box_irac     = self._read_key("box_irac")
 
-            self.box_line_tl = self._read_key("box_line_tl")
-            self.box_line_tr = self._read_key("box_line_tr")
-            self.box_line_bl = self._read_key("box_line_bl")
-            self.box_line_br = self._read_key("box_line_br")
+            self.box_line_tl  = self._read_key("box_line_tl")
+            self.box_line_tr  = self._read_key("box_line_tr")
+            self.box_line_bl  = self._read_key("box_line_bl")
+            self.box_line_br  = self._read_key("box_line_br")
 
-            self.box_cont_b3 = self._read_key("box_cont_b3")
-            self.box_cont_b6 = self._read_key("box_cont_b6")
+            self.box_cont_b3  = self._read_key("box_cont_b3")
+            self.box_cont_b6  = self._read_key("box_cont_b6")
+
+            self.box_ratio_tl = self._read_key("box_ratio_tl")
+            self.box_ratio_tr = self._read_key("box_ratio_tr")
+            self.box_ratio_bl = self._read_key("box_ratio_bl")
+            self.box_ratio_br = self._read_key("box_ratio_br")
 
     ##################
     # run_ngc3110_co #
@@ -322,6 +327,7 @@ class ToolsNGC3110():
         immagick_crop(self.outpng_irac,self.final_irac,self.box_irac,delin=delin)
 
         # final_showline
+        print("")
         print("#########################")
         print("# create final_showline #")
         print("#########################")
@@ -353,10 +359,11 @@ class ToolsNGC3110():
             )
 
         # final_showcont
+        print("")
         print("#########################")
         print("# create final_showcont #")
         print("#########################")
-        
+
         combine_two_png(
             self.outpng_b3,
             self.outpng_b6,
@@ -364,6 +371,36 @@ class ToolsNGC3110():
             self.box_cont_b3,
             self.box_cont_b6,
             delin=delin,
+            )
+
+        # final_showratio
+        print("")
+        print("##########################")
+        print("# create final_showratio #")
+        print("##########################")
+        
+        combine_two_png(
+            self.outpng_r_21,
+            self.outpng_r_t21,
+            self.final_showratio+"_tmp1.png",
+            self.box_ratio_tl,
+            self.box_ratio_tr,
+            delin=delin,
+            )
+        combine_two_png(
+            self.outpng_r_1213l,
+            self.outpng_r_1213h,
+            self.final_showratio+"_tmp2.png",
+            self.box_ratio_bl,
+            self.box_ratio_br,
+            delin=delin,
+            )
+        immagick_append(
+            self.final_showratio+"_tmp1.png",
+            self.final_showratio+"_tmp2.png",
+            self.final_showratio,
+            axis="column",
+            delin=True,
             )
 
     ################
