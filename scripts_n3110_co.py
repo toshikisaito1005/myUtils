@@ -41,7 +41,8 @@ Date         Filename                          To
 history:
 Date         Action
 2016-04-01   start project with Kawana-san, Okumura-san, and Kawabe-san
-2021-06-07   start re-analysis, write this README
+2018-03-31   take over all the data and results from Kawana-san
+2021-06-07   start re-analysis, write this preamble
 2021-06-08   start to create paper-ready figures
 2021-06-09   start up-dating the draft
 2021-06-11   circulate v2 draft to the whole team
@@ -323,6 +324,9 @@ class ToolsNGC3110():
         plot_figures    = False,
         combine_figures = False,
         ):
+        """
+        This method runs all the methods which will create figures in the paper.
+        """
 
         if do_prepare==True:
             self.align_maps()
@@ -366,6 +370,7 @@ class ToolsNGC3110():
         delin=False,
         ):
         """
+        Re-shape and combine all the png files into the figures in the paper.
         """
 
         taskname = self.modname + sys._getframe().f_code.co_name
@@ -569,6 +574,8 @@ class ToolsNGC3110():
         self,
         ):
         """
+        Plot the KS relation, SFE vs. spectral index, and SFE vs. SSC density with two alpha_co:
+        a constant alpha_co of 1.7 nad varying alpha_co (= alpha_lte(Trot=15K)).
         """
 
         taskname = self.modname + sys._getframe().f_code.co_name
@@ -917,6 +924,8 @@ class ToolsNGC3110():
         self,
         ):
         """
+        Plot alpha_lte(Trot) and alpha_ism(Trot). Flag data points when alpha_co(Tkin) < 
+        alpha_co(Trot) (i.e., non-thermal equilibrium).
         """
 
         taskname = self.modname + sys._getframe().f_code.co_name
@@ -1033,6 +1042,7 @@ class ToolsNGC3110():
         self,
         ):
         """
+        Plot hex-sampled physical parameter maps.
         """
 
         taskname = self.modname + sys._getframe().f_code.co_name
@@ -1106,6 +1116,7 @@ class ToolsNGC3110():
         self,
         ):
         """
+        Plot radial CO line ratio distributions and their histograms with some stats.
         """
 
         taskname = self.modname + sys._getframe().f_code.co_name
@@ -1191,10 +1202,11 @@ class ToolsNGC3110():
         self,
         ):
         """
+        Derive physical paramters using the hex-sampled catalog. See self.outtxt_hexdata.
         """
 
         taskname = self.modname + sys._getframe().f_code.co_name
-        check_first(self.outfits_m0_12co10,taskname)
+        check_first(self.outtxt_hexdata,taskname)
 
         # import observed data
         data = np.loadtxt(self.outtxt_hexdata)
@@ -1365,6 +1377,7 @@ class ToolsNGC3110():
         self,
         ):
         """
+        Hex-sample ALMA, OAO, VLA, and VLA SSC maps.
         """
 
         taskname = self.modname + sys._getframe().f_code.co_name
@@ -1471,6 +1484,7 @@ class ToolsNGC3110():
         self,
         ):
         """
+        Plot line ratio maps. 
         """
 
         taskname = self.modname + sys._getframe().f_code.co_name
@@ -1571,6 +1585,7 @@ class ToolsNGC3110():
         self,
         ):
         """
+        Plot ALMA continuum maps.
         """
 
         taskname = self.modname + sys._getframe().f_code.co_name
@@ -1635,6 +1650,7 @@ class ToolsNGC3110():
         self,
         ):
         """
+        Plot ALMA line maps.
         """
 
         taskname = self.modname + sys._getframe().f_code.co_name
@@ -1790,6 +1806,7 @@ class ToolsNGC3110():
         self,
         ):
         """
+        create line ratio FITS maps.
         """
 
         taskname = self.modname + sys._getframe().f_code.co_name
@@ -1851,6 +1868,11 @@ class ToolsNGC3110():
         self,
         ):
         """
+        Covolve all the ALMA line cubes and cont maps to 2.0 arcsec resolution.
+        Regrid all the datacubes to the grid of the 12CO(1-0) map (pixel=0.25 arcsec).
+        Primary beam correction.
+        Create moment maps after masking datacubes by 12CO(1-0)-SNR-based mask.
+        Leave other facility data as is (i.e., different grid and resolution).
         """
 
         taskname = self.modname + sys._getframe().f_code.co_name
