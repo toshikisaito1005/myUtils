@@ -136,27 +136,9 @@ box_hex2     ,,,3590x2710+615+0
 box_hex3     ,,,3910x3080+0+0
 box_aco1     ,,,1700x1550+250+150
 box_aco2     ,,,1920x1550+250+150
+box_scatter1 ,,,1670x1620+130+80
+box_scatter2 ,,,2100x1620+130+80
 
-
-
-
-######################################################
-### n1068ciplot.scatters
-######################################################
-f05_ks_1p5      ,,,figtmp_ks_relation_1p5.png
-f05_index_1p5   ,,,figtmp_sfe_vs_index_1p5.png
-f05_ssc_1p5     ,,,figtmp_sfe_vs_ssc_1p5.png
-f05_ks_vary     ,,,figtmp_ks_relation_vary.png
-f05_index_vary  ,,,figtmp_sfe_vs_index_vary.png
-f05_ssc_vary    ,,,figtmp_sfe_vs_ssc_vary.png
-f05_box_crop    ,,,1670x1620+130+80
-f05_box_crop2   ,,,2100x1620+130+80
-
-######################################################
-### n1068ciplot.compare_alpha_co
-######################################################
-f04_aco_radial ,,,figtmp_aco_radial.png
-f04_aco_hist   ,,,figtmp_aco_hist.png
-f04_box_crop   ,,,1700x1550+250+150
-f04_box_crop2  ,,,1920x1550+250+150
-
+#######
+# end #
+#######

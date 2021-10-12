@@ -30,12 +30,12 @@ usage:
 > 
 > # main
 > tl.run_ngc3110_co(
->     do_prepare      = True,
->     do_lineratios   = True,
->     do_sampling     = True,
->     plot_showcase   = True,
->     plot_figures    = True,
->     combine_figures = True,
+>     do_prepare      = True, # align FITS maps (ready for CASA analysis)
+>     do_lineratios   = True, # create line ratio maps
+>     do_sampling     = True, # hex-sample maps (automatically skip if txt files exist)
+>     plot_showcase   = True, # plot line, cont, and ratio maps with png format
+>     plot_figures    = True, # plot all the other figures with png format
+>     combine_figures = True, # combine png figures using image magick (ready for paper)
 >     )
 > 
 > # cleanup
@@ -48,7 +48,7 @@ history:
 2021-06-09   start up-dating the draft
 2021-06-11   circulate v2 draft to the whole team
 2021-06-28   move to ADC because of issues with new laptop
-2021-07-02   submit to ApJ!
+2021-07-02   1st submit to ApJ!
 2021-09-01   major update based on the 1st referee report
 Toshiki Saito@Nichidai/NAOJ
 """
@@ -301,12 +301,15 @@ class ToolsNGC3110():
 
             self.box_radial   = self._read_key("box_radial")
 
-            self.box_hex1   = self._read_key("box_hex1")
-            self.box_hex2   = self._read_key("box_hex2")
-            self.box_hex3   = self._read_key("box_hex3")
+            self.box_hex1     = self._read_key("box_hex1")
+            self.box_hex2     = self._read_key("box_hex2")
+            self.box_hex3     = self._read_key("box_hex3")
 
-            self.box_aco1   = self._read_key("box_aco1")
-            self.box_aco2   = self._read_key("box_aco2")
+            self.box_aco1     = self._read_key("box_aco1")
+            self.box_aco2     = self._read_key("box_aco2")
+
+            self.box_scatter1 = self._read_key("box_scatter1")
+            self.box_scatter2 = self._read_key("box_scatter2")
 
     ##################
     # run_ngc3110_co #
@@ -512,6 +515,52 @@ class ToolsNGC3110():
             self.box_aco1,
             self.box_aco2,
             )
+
+        # final_scatter
+        print("")
+        print("########################")
+        print("# create final_scatter #")
+        print("########################")
+
+        combine_two_png(
+            self.output_ks_fix,
+            self.output_index_vs_sfe_fix,
+            self.final_aco+"_tmp1.png",
+            self.box_scatter1,
+            self.box_scatter1,
+            )
+        combine_two_png(
+            self.final_aco+"_tmp1.png",
+            self.output_sfe_vs_ssc_fix,
+            self.final_aco,
+            "100000x100000+0+0",
+            self.box_scatter2,
+            axis="column",
+            )
+        os.system("rm -rf " + self.final_aco + "_tmp1.png")
+
+        # final_appendix1
+        print("")
+        print("##########################")
+        print("# create final_appendix1 #")
+        print("##########################")
+
+        combine_two_png(
+            self.output_ks_vary,
+            self.output_index_vs_sfe_vary,
+            self.final_appendix1+"_tmp1.png",
+            self.box_scatter1,
+            self.box_scatter1,
+            )
+        combine_two_png(
+            self.final_appendix1+"_tmp1.png",
+            self.output_sfe_vs_ssc_vary,
+            self.final_appendix1,
+            "100000x100000+0+0",
+            self.box_scatter2,
+            axis="column",
+            )
+        os.system("rm -rf " + self.final_appendix1 + "_tmp1.png")
 
     ################
     # plot_scatter #
