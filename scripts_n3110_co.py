@@ -5,7 +5,7 @@ requirements:
 CASA Version 5.4.0-70, ananlysisUtils, astropy
 
 paper draft under paper_versions/:
-Date        filename                         to whom
+Date        Filename                         To
 2021-06-10  draft_v0_210610.zip              all co-Is
 2021-07-02  draft_v1_210702_submitted.zip    journal
 2021-10-??  reply_2110??_1st_revised.pdf     journal
@@ -1021,8 +1021,11 @@ class ToolsNGC3110():
         self._plot_hexmap(self.outpng_hex_sfrd,x,y,c,X,Y,C,title,"log ($M_{\odot}$ kpc$^{-2}$ yr$^{-1}$)")
 
         # ssc density
-        cut = np.where((co10>0) & (sscd>0))
+        cut = np.where((co10>0) & (sscd>0.0))
         x,y,c,title = data_ra[cut],data_dec[cut],sscd[cut],"SSC Density ($\Sigma_{SSC}$)"
+        # clip lowest sscd in order to change color range of the hex map.
+        # this should not affect any other analysis.
+        c[c>0.5] = 0.5
         self._plot_hexmap(self.outpng_hex_sscd,x,y,c,X,Y,C,title,"(kpc$^{-2}$)")
 
         # sfe
@@ -1033,7 +1036,7 @@ class ToolsNGC3110():
         # aco
         cut = np.where((co10>0) & (aco>0))
         x,y,c,title = data_ra[cut],data_dec[cut],aco[cut],r"CO-to-H$_2$ Conversion Factor ($\alpha_{LTE}$)"
-        # change high values in order to change color range of the hex map.
+        # clip lowest aco in order to change color range of the hex map.
         # this should not affect any other analysis.
         c[c>2.8] = 2.8
         self._plot_hexmap(self.outpng_hex_aco,x,y,c,X,Y,C,title,"($M_{\odot}$ (K km s$^{-1}$ pc$^2$)$^{-1}$)")
