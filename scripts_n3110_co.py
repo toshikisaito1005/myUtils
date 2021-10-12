@@ -312,16 +312,35 @@ class ToolsNGC3110():
 
         # final_irac
         print("### create final_irac png")
-        immagick_crop(self.outpng_irac,self.final_irac,self.box_irac,delin)
+        immagick_crop(self.outpng_irac,self.final_irac,self.box_irac,delin=delin)
 
         # final_showline
         print("### create final_showline png")
-        combine_two_png(self.outpng_12co10,self.outpng_13co10,
-            self.final_showline+"_tmp1.png",self.box_line_tl,self.box_line_tr,delin)
-        combine_three_png(self.outpng_12co21,self.outpng_13co21,self.outpng_c18o21,
-            self.final_showline+"_tmp2.png",box_line_bl,box_line_br,box_line_br,delin)
-        immagick_append(self.final_showline+"_tmp1.png",self.final_showline+"_tmp2.png",
-            self.final_showline,"column",False)
+        combine_two_png(
+            self.outpng_12co10,
+            self.outpng_13co10,
+            self.final_showline+"_tmp1.png",
+            self.box_line_tl,
+            self.box_line_tr,
+            delin=delin,
+            )
+        combine_three_png(
+            self.outpng_12co21,
+            self.outpng_13co21,
+            self.outpng_c18o21,
+            self.final_showline+"_tmp2.png",
+            self.box_line_bl,
+            self.box_line_br,
+            self.box_line_br,
+            delin=delin,
+            )
+        immagick_append(
+            self.final_showline+"_tmp1.png",
+            self.final_showline+"_tmp2.png",
+            self.final_showline,
+            "column",
+            delin=False,
+            )
 
     ################
     # plot_scatter #
