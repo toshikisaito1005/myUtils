@@ -1,5 +1,6 @@
 # my own
 scripts_n1068_dense_not_yet
+.DS_Store
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

@@ -1,0 +1,7 @@
+ra       ,,,151.008708333deg
+dec      ,,,-6.47489deg
+ra_irac  ,,,150.998deg
+dec_irac ,,,-6.48482deg
+scale    ,,,325
+distance ,,,69.4
+z        ,,,0.01686

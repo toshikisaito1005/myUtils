@@ -1,6 +1,44 @@
 """
 Class to analyze Cycle 2 ALMA CO line datasets toward NGC 3110
 
+requirements:
+CASA Version 5.4.0-70, ananlysisUtils, astropy
+
+paper draft under paper_versions/:
+Date        filename                                        to whom
+2021-06-10  overleaf_v0_210610_n3110_alma_co.zip            all
+2021-07-02  overleaf_v1_210702_n3110_alma_co_submitted.zip  ApJ
+
+data:
+ALMA line and cont data  2013.0.01172.S
+OAO H-alpha FITS         T. Hattori et al. 2004, AJ, 127, 736
+VLA FITS                 https://archive.nrao.edu/archive/archiveimage.html
+VLT Ks-band FITS         Z. Randriamanakoto et al. 2013, MNRAS, 431, 554
+
+usage:
+> import os
+> from scripts_n3110_co import ToolsNGC3110 as tools
+> 
+> # key (prepare two keys)
+> tl = tools(
+>     refresh     = False,
+>     keyfile_gal = "keys_n3110_co/key_ngc3110.txt",
+>     keyfile_fig = "keys_n3110_co/key_figures.txt",
+>     )
+> 
+> # main
+> tl.run_ngc3110_co(
+>     do_prepare      = True,
+>     do_lineratios   = True,
+>     do_sampling     = True,
+>     plot_showcase   = True,
+>     plot_figures    = True,
+>     combine_figures = True,
+>     )
+> 
+> # cleanup
+> os.system("rm -rf *.last")
+
 history:
 2016-04-01   start project with Kawana-san, Okumura-san, and Kawabe-san
 2021-06-07   start re-analysis, write this README
@@ -401,6 +439,21 @@ class ToolsNGC3110():
             self.final_showratio,
             axis="column",
             delin=True,
+            )
+
+        # final_radial
+        print("")
+        print("#######################")
+        print("# create final_radial #")
+        print("#######################")
+        
+        combine_two_png(
+            self.outpng_radial_21,
+            self.outpng_radial_1213,
+            self.final_radial,
+            self.box_ratio_tl,
+            self.box_ratio_tr,
+            delin=delin,
             )
 
     ################
@@ -1490,7 +1543,7 @@ class ToolsNGC3110():
             color_scalebar="black",
             set_cbar=True,
             label_cbar="Ratio",
-            clim=[0.0,1.5],
+            clim=[0.1,1.5],
             )
 
         # 12co21 12co10 ratio
@@ -1511,7 +1564,7 @@ class ToolsNGC3110():
             color_scalebar="black",
             set_cbar=True,
             label_cbar="Ratio",
-            clim=[0.0,1.5],
+            clim=[0.1,1.5],
             )
 
         # 12co10 13co10 ratio
