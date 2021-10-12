@@ -338,8 +338,8 @@ class ToolsNGC3110():
             self.final_showline+"_tmp1.png",
             self.final_showline+"_tmp2.png",
             self.final_showline,
-            "column",
-            delin=False,
+            axis="column",
+            delin=True,
             )
 
     ################
