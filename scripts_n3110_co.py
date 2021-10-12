@@ -244,10 +244,14 @@ class ToolsNGC3110():
 
             # box
             self.box_irac   = self._read_key("box_irac")
+
             self.box_line_tl = self._read_key("box_line_tl")
             self.box_line_tr = self._read_key("box_line_tr")
             self.box_line_bl = self._read_key("box_line_bl")
             self.box_line_br = self._read_key("box_line_br")
+
+            self.box_cont_b3 = self._read_key("box_cont_b3")
+            self.box_cont_b6 = self._read_key("box_cont_b6")
 
     ##################
     # run_ngc3110_co #
@@ -311,11 +315,17 @@ class ToolsNGC3110():
         check_first(self.outpng_irac,taskname)
 
         # final_irac
-        print("### create final_irac png")
+        print("#####################")
+        print("# create final_irac #")
+        print("#####################")
+
         immagick_crop(self.outpng_irac,self.final_irac,self.box_irac,delin=delin)
 
         # final_showline
-        print("### create final_showline png")
+        print("#########################")
+        print("# create final_showline #")
+        print("#########################")
+
         combine_two_png(
             self.outpng_12co10,
             self.outpng_13co10,
@@ -340,6 +350,20 @@ class ToolsNGC3110():
             self.final_showline,
             axis="column",
             delin=True,
+            )
+
+        # final_showcont
+        print("#########################")
+        print("# create final_showcont #")
+        print("#########################")
+        
+        combine_two_png(
+            self.outpng_b3,
+            self.outpng_b6,
+            self.final_showcont,
+            self.box_cont_b3,
+            self.box_cont_b6,
+            delin=delin,
             )
 
     ################
@@ -1627,7 +1651,7 @@ class ToolsNGC3110():
             color_scalebar="black",
             set_cbar=True,
             label_cbar="km s$^{-1}$",
-            clim=[-250,250],
+            clim=[-245,245],
             )
 
         # 12co21
@@ -1648,7 +1672,7 @@ class ToolsNGC3110():
             color_scalebar="black",
             set_cbar=True,
             label_cbar="km s$^{-1}$",
-            clim=[-250,250],
+            clim=[-245,245],
             )
 
         # 13co10
@@ -1669,7 +1693,7 @@ class ToolsNGC3110():
             color_scalebar="black",
             set_cbar=True,
             label_cbar="km s$^{-1}$",
-            clim=[-250,250],
+            clim=[-245,245],
             )
 
         # 13co21
@@ -1690,7 +1714,7 @@ class ToolsNGC3110():
             color_scalebar="black",
             set_cbar=True,
             label_cbar="km s$^{-1}$",
-            clim=[-250,250],
+            clim=[-245,245],
             )
 
         # c18o21
@@ -1711,7 +1735,7 @@ class ToolsNGC3110():
             color_scalebar="black",
             set_cbar=True,
             label_cbar="km s$^{-1}$",
-            clim=[-250,250],
+            clim=[-245,245],
             )
 
     ##############
