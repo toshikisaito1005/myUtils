@@ -162,7 +162,7 @@ class ToolsNGC3110():
             self.scale_pc  = float(self._read_key("scale", "gal"))
             self.scale_kpc = float(self._read_key("scale", "gal")) / 1000.
 
-            self.pa = np.radians(171.)
+            self.pa   = np.radians(171.)
             self.incl = np.radians(65.)
 
             # input parameters
@@ -225,11 +225,25 @@ class ToolsNGC3110():
             self.output_ks_fix  = self.dir_products + self._read_key("output_ks_fix")
             self.output_ks_vary = self.dir_products + self._read_key("output_ks_vary")
 
-            self.output_index_vs_sfe_fix = self.dir_products + self._read_key("output_index_vs_sfe_fix")
+            self.output_index_vs_sfe_fix  = self.dir_products + self._read_key("output_index_vs_sfe_fix")
             self.output_index_vs_sfe_vary = self.dir_products + self._read_key("output_index_vs_sfe_vary")
 
-            self.output_sfe_vs_ssc_fix = self.dir_products + self._read_key("output_sfe_vs_ssc_fix")
+            self.output_sfe_vs_ssc_fix  = self.dir_products + self._read_key("output_sfe_vs_ssc_fix")
             self.output_sfe_vs_ssc_vary = self.dir_products + self._read_key("output_sfe_vs_ssc_vary")
+
+            # final product
+            self.final_irac      = self.dir_final + self._read_key("final_irac")
+            self.final_showline  = self.dir_final + self._read_key("final_showline")
+            self.final_showcont  = self.dir_final + self._read_key("final_showcont")
+            self.final_showratio = self.dir_final + self._read_key("final_showratio")
+            self.final_radial    = self.dir_final + self._read_key("final_radial")
+            self.final_showhex   = self.dir_final + self._read_key("final_showhex")
+            self.final_aco       = self.dir_final + self._read_key("final_aco")
+            self.final_scatter   = self.dir_final + self._read_key("final_scatter")
+            self.final_appendix1 = self.dir_final + self._read_key("final_appendix1")
+
+            # box
+            self.box_irac = self._read_key("box_irac")
 
     ##################
     # run_ngc3110_co #
@@ -237,11 +251,12 @@ class ToolsNGC3110():
 
     def run_ngc3110_co(
         self,
-        do_prepare    = False,
-        do_lineratios = False,
-        do_sampling   = False,
-        plot_showcase = False,
-        plot_figures  = False,
+        do_prepare      = False,
+        do_lineratios   = False,
+        do_sampling     = False,
+        plot_showcase   = False,
+        plot_figures    = False,
+        combine_figures = False,
         ):
 
         if do_prepare==True:
@@ -273,6 +288,24 @@ class ToolsNGC3110():
             self.showhex()
             self.plot_aco()
             self.plot_scatter()
+
+        if combine_figures==True:
+            self.immagick_figures()
+
+    ####################
+    # immagick_figures #
+    ####################
+
+    def immagick_figures(
+        self,
+        ):
+        """
+        """
+
+        taskname = self.modname + sys._getframe().f_code.co_name
+        check_first(self.outpng_irac,taskname)
+
+        immagick_crop(self.outpng_irac,self.final_irac,self.box_irac,False)
 
     ################
     # plot_scatter #
