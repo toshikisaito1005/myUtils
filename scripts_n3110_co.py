@@ -311,9 +311,11 @@ class ToolsNGC3110():
         check_first(self.outpng_irac,taskname)
 
         # final_irac
+        print("### create final_irac png")
         immagick_crop(self.outpng_irac,self.final_irac,self.box_irac,delin)
 
         # final_showline
+        print("### create final_showline png")
         combine_two_png(self.outpng_12co10,self.outpng_13co10,
             self.final_showline+"_tmp1.png",self.box_line_tl,self.box_line_tr,delin)
         combine_three_png(self.outpng_12co21,self.outpng_13co21,self.outpng_c18o21,
