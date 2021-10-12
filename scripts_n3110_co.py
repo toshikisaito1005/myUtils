@@ -298,6 +298,7 @@ class ToolsNGC3110():
 
     def immagick_figures(
         self,
+        delin=False,
         ):
         """
         """
@@ -305,7 +306,7 @@ class ToolsNGC3110():
         taskname = self.modname + sys._getframe().f_code.co_name
         check_first(self.outpng_irac,taskname)
 
-        immagick_crop(self.outpng_irac,self.final_irac,self.box_irac,False)
+        immagick_crop(self.outpng_irac,self.final_irac,self.box_irac,delin)
 
     ################
     # plot_scatter #
