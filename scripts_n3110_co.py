@@ -49,6 +49,7 @@ history:
 2021-06-11   circulate v2 draft to the whole team
 2021-06-28   move to ADC because of issues with new laptop
 2021-07-02   1st submit to ApJ!
+2021-08-17   receive the 1st referee report
 2021-09-01   major update based on the 1st referee report
 Toshiki Saito@Nichidai/NAOJ
 """
