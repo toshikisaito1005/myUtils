@@ -183,25 +183,29 @@ class ToolsNGC3110():
             self.outfits_r_1213h = self.dir_ready + self._read_key("outfits_r_1213h")
 
             # ngc3110 properties
-            self.z       = float(self._read_key("z", "gal"))
-            self.dist    = float(self._read_key("distance", "gal"))
-            self.dist_cm = self.dist * 10**6 * 3.86*10**18
+            self.z            = float(self._read_key("z", "gal"))
+            self.dist         = float(self._read_key("distance", "gal"))
+            self.dist_cm      = self.dist * 10**6 * 3.86*10**18
 
-            self.ra_str  = self._read_key("ra", "gal")
-            self.ra      = float(self.ra_str.replace("deg",""))
-            self.dec_str = self._read_key("dec", "gal")
-            self.dec     = float(self.dec_str.replace("deg",""))
+            self.ra_str       = self._read_key("ra", "gal")
+            self.ra           = float(self.ra_str.replace("deg",""))
+            self.dec_str      = self._read_key("dec", "gal")
+            self.dec          = float(self.dec_str.replace("deg",""))
 
             self.ra_irac_str  = self._read_key("ra_irac", "gal")
             self.ra_irac      = float(self.ra_irac_str.replace("deg",""))
             self.dec_irac_str = self._read_key("dec_irac", "gal")
             self.dec_irac     = float(self.dec_irac_str.replace("deg",""))
 
-            self.scale_pc  = float(self._read_key("scale", "gal"))
-            self.scale_kpc = float(self._read_key("scale", "gal")) / 1000.
+            self.ra_speak     = float(self._read_key("ra_speak", "gal").replace("deg",""))
+            self.dec_speak    = float(self._read_key("dec_speak", "gal").replace("deg",""))
+            self.r_speak_as   = float(self._read_key("r_speak", "gal").replace("arcsec",""))
 
-            self.pa   = np.radians(171.)
-            self.incl = np.radians(65.)
+            self.scale_pc     = float(self._read_key("scale", "gal"))
+            self.scale_kpc    = float(self._read_key("scale", "gal")) / 1000.
+
+            self.pa           = np.radians(float(self._read_key("pa", "gal")))
+            self.incl         = np.radians(float(self._read_key("incl", "gal")))
 
             # input parameters
             self.beam           = float(self._read_key("beam"))
@@ -216,9 +220,6 @@ class ToolsNGC3110():
             self.decl_blc       = float(self._read_key("decl_blc"))
             self.num_aperture   = int(self._read_key("num_aperture"))
             self.alpha_co       = 1.7
-            self.ra_speak       = 151.01025833 # degree
-            self.dec_speak      = -6.48121361 # degree
-            self.r_speak_as     = 3.0 # arcsec
 
             self.nu_12co10 = 115.27120180
             self.nu_13co10 = 110.20135430
@@ -298,6 +299,10 @@ class ToolsNGC3110():
 
             self.box_radial   = self._read_key("box_radial")
 
+            self.box_hex1   = self._read_key("box_hex1")
+            self.box_hex2   = self._read_key("box_hex2")
+            self.box_hex3   = self._read_key("box_hex3")
+
     ##################
     # run_ngc3110_co #
     ##################
@@ -364,7 +369,7 @@ class ToolsNGC3110():
         print("# create final_irac #")
         print("#####################")
 
-        immagick_crop(self.outpng_irac,self.final_irac,self.box_irac,delin=delin)
+        immagick_crop(self.outpng_irac,self.final_irac,self.box_irac)
 
         # final_showline
         print("")
@@ -378,7 +383,6 @@ class ToolsNGC3110():
             self.final_showline+"_tmp1.png",
             self.box_line_tl,
             self.box_line_tr,
-            delin=delin,
             )
         combine_three_png(
             self.outpng_12co21,
@@ -388,7 +392,6 @@ class ToolsNGC3110():
             self.box_line_bl,
             self.box_line_br,
             self.box_line_br,
-            delin=delin,
             )
         immagick_append(
             self.final_showline+"_tmp1.png",
@@ -410,7 +413,6 @@ class ToolsNGC3110():
             self.final_showcont,
             self.box_cont_b3,
             self.box_cont_b6,
-            delin=delin,
             )
 
         # final_showratio
@@ -425,7 +427,6 @@ class ToolsNGC3110():
             self.final_showratio+"_tmp1.png",
             self.box_ratio_tl,
             self.box_ratio_tr,
-            delin=delin,
             )
         combine_two_png(
             self.outpng_r_1213l,
@@ -433,7 +434,6 @@ class ToolsNGC3110():
             self.final_showratio+"_tmp2.png",
             self.box_ratio_bl,
             self.box_ratio_br,
-            delin=delin,
             )
         immagick_append(
             self.final_showratio+"_tmp1.png",
@@ -455,8 +455,44 @@ class ToolsNGC3110():
             self.final_radial,
             self.box_radial,
             self.box_radial,
-            delin=delin,
             )
+
+        # final_showhex
+        print("")
+        print("########################")
+        print("# create final_showhex #")
+        print("########################")
+
+        combine_three_png(
+            self.outpng_hex_tkin,
+            self.outpng_hex_nh2,
+            self.outpng_hex_index,
+            self.final_showhex+"_tmp1.png",
+            self.box_hex1,
+            self.box_hex2,
+            self.box_hex2,
+            )
+        combine_three_png(
+            self.outpng_hex_sfrd,
+            self.outpng_hex_sscd,
+            self.outpng_hex_sfe,
+            self.final_showhex+"_tmp2.png",
+            self.box_hex1,
+            self.box_hex2,
+            self.box_hex2,
+            )
+        combine_three_png(
+            self.final_showhex+"_tmp1.png",
+            self.final_showhex+"_tmp2.png",
+            self.outpng_hex_aco,
+            self.final_showhex,
+            "100000x100000+0+0",
+            "100000x100000+0+0",
+            self.box_hex3,
+            axis="column",
+            )
+        os.system("rm -rf " + self.final_showhex + "_tmp?.png")
+
 
     ################
     # plot_scatter #
@@ -1510,6 +1546,8 @@ class ToolsNGC3110():
                 str(data_ssc).rjust(5)
             f.write(data + "\n")
             f.close()
+
+        os.system("rm -rf " + self.dir_casaregion)
 
     ############
     # showcont #
