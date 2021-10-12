@@ -305,6 +305,9 @@ class ToolsNGC3110():
             self.box_hex2   = self._read_key("box_hex2")
             self.box_hex3   = self._read_key("box_hex3")
 
+            self.box_aco1   = self._read_key("box_aco1")
+            self.box_aco2   = self._read_key("box_aco2")
+
     ##################
     # run_ngc3110_co #
     ##################
@@ -496,6 +499,19 @@ class ToolsNGC3110():
         os.system("rm -rf " + self.final_showhex + "_tmp1.png")
         os.system("rm -rf " + self.final_showhex + "_tmp2.png")
 
+        # final_aco
+        print("")
+        print("####################")
+        print("# create final_aco #")
+        print("####################")
+
+        combine_two_png(
+            self.outpng_aco_radial,
+            self.outpng_aco_hist,
+            self.final_aco,
+            self.box_aco1,
+            self.box_aco2,
+            )
 
     ################
     # plot_scatter #
