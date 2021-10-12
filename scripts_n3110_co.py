@@ -4,13 +4,6 @@ Class to analyze Cycle 2 ALMA CO line datasets toward NGC 3110
 requirements:
 CASA Version 5.4.0-70, ananlysisUtils, astropy
 
-paper draft under paper_versions/:
-Date        Filename                         To
-2021-06-10  draft_v0_210610.zip              all co-Is
-2021-07-02  draft_v1_210702_submitted.zip    journal
-2021-10-??  reply_2110??_1st_revised.pdf     journal
-2021-10-??  draft_v2_2110??_1st_revised.zip  journal
-
 data:
 ALMA line and cont data  2013.0.01172.S (https://almascience.nrao.edu/aq/?result_view=observation&projectCode=2013.1.01172.S)
 OAO H-alpha FITS         T. Hattori et al. 2004, AJ, 127, 736
@@ -21,14 +14,12 @@ usage:
 > import os
 > from scripts_n3110_co import ToolsNGC3110 as tools
 > 
-> # key (prepare two keys)
 > tl = tools(
 >     refresh     = False,
 >     keyfile_gal = "/home02/saitots/myUtils/keys_n3110_co/key_ngc3110.txt",
 >     keyfile_fig = "/home02/saitots/myUtils/keys_n3110_co/key_figures.txt",
 >     )
 > 
-> # main
 > tl.run_ngc3110_co(
 >     do_prepare      = True, # align FITS maps (ready for CASA analysis)
 >     do_lineratios   = True, # create line ratio maps
@@ -38,10 +29,17 @@ usage:
 >     combine_figures = True, # combine png figures using image magick (ready for paper)
 >     )
 > 
-> # cleanup
 > os.system("rm -rf *.last")
 
+paper drafts:
+Date         Filename                          To
+2021-06-10   draft_v0_210610.zip               all co-Is
+2021-07-02   draft_v1_210702_submitted.zip     journal
+2021-10-??   reply_2110??_1st_revised.pdf      referee
+2021-10-??   draft_v2_2110??_1st_revised.zip   journal
+
 history:
+Date         Action
 2016-04-01   start project with Kawana-san, Okumura-san, and Kawabe-san
 2021-06-07   start re-analysis, write this README
 2021-06-08   start to create paper-ready figures
@@ -1027,13 +1025,6 @@ class ToolsNGC3110():
         os.system("rm -rf " + self.outpng_aco_hist)
         plt.savefig(self.outpng_aco_hist, dpi=300)
 
-    #########
-    # _func #
-    #########
-
-    def _func(self, x, a, mu, sigma):
-        return a*np.exp(-(x-mu)**2/(2*sigma**2))
-
     ###########
     # showhex #
     ###########
@@ -1106,59 +1097,6 @@ class ToolsNGC3110():
         # this should not affect any other analysis.
         c[c>2.8] = 2.8
         self._plot_hexmap(self.outpng_hex_aco,x,y,c,X,Y,C,title,"($M_{\odot}$ (K km s$^{-1}$ pc$^2$)$^{-1}$)")
-
-    ################
-    # _plot_hexmap #
-    ################
-
-    def _plot_hexmap(
-        self,
-        outpng,
-        x,y,c,
-        X,Y,C,
-        title,
-        title_cbar,
-        nH2=False,
-        ):
-        """
-        """
-
-        # set plt, ax
-        plt.figure(figsize=(13,10))
-        plt.rcParams["font.size"] = 16
-        plt.subplots_adjust(bottom=0.10, left=0.19, right=0.99, top=0.90)
-        gs = gridspec.GridSpec(nrows=10, ncols=10)
-        ax = plt.subplot(gs[0:10,0:10])
-
-        # set ax parameter
-        myax_set(
-        ax,
-        grid="both",
-        xlim=[32.5, -32.5],
-        ylim=[-32.5, 32.5],
-        title=title,
-        xlabel="x-offset (arcsec)",
-        ylabel="y-offset (arcsec)",
-        )
-
-        contour_levels = map(lambda x: x * np.max(C), [0.02,0.04,0.08,0.16,0.32,0.64,0.96])
-        ax.tricontour(X, Y, C, colors=["black"], levels=contour_levels)
-        cax = ax.scatter(x, y, s=270, c=c, cmap="rainbow", marker="h", linewidths=0)
-        ax.set_aspect('equal', adjustable='box')
-
-        # cbar
-        cbar = plt.colorbar(cax)
-        cbar.set_label(title_cbar)
-        if nH2==True:
-            cbar.set_ticks([2.5,3.0,3.5,4.0,4.5,5.0,5.5,6.0,6.5])
-        cbar.outline.set_linewidth(2.5)
-
-        # circle
-        circ = patches.Ellipse(xy=(5.0,-22), width=self.r_speak_as*2, height=self.r_speak_as*2, angle=0, fill=False, edgecolor="tomato", alpha=1.0, lw=4)
-        ax.add_patch(circ)
-
-        os.system("rm -rf " + outpng)
-        plt.savefig(outpng, dpi=300)
 
     ###############
     # plot_radial #
@@ -1244,102 +1182,6 @@ class ToolsNGC3110():
             self.outpng_radial_1213,dist_r1213l,dist_r1213h,data_r1213l,data_r1213h,err_r1213l,err_r1213h,
             ylim=[-0.5, 2.2],histrange=[0,50],comment1="$^{12/13}R_{10}$",comment2="$^{12/13}R_{21}$",
             xticks=[10,20,30,40,50],num_round=0)
-
-    ################
-    # _plot_radial #
-    ################
-
-    def _plot_radial(
-        self,
-        outpng,
-        dist1,
-        dist2,
-        value1,
-        value2,
-        err1,
-        err2,
-        xlim=[-1.3,1.4],
-        ylim=[-2.0,0.7],
-        histrange=[0,1.6],
-        xticks=[0.4,0.8,1.2,1.6],
-        num_round=2,
-        comment1=None,
-        comment2=None,
-        ):
-        """
-        """
-
-        histdata  = np.histogram(value1, bins=25, range=histrange)
-        histx1, histy1 = histdata[1][:-1], histdata[0]/float(np.sum(histdata[0]))
-
-        histdata = np.histogram(value2, bins=25, range=histrange)
-        histx2, histy2 = histdata[1][:-1], histdata[0]/float(np.sum(histdata[0]))
-
-        value1_p50 = np.percentile(value1,50)
-        value2_p50 = np.percentile(value2,50)
-        value1_p16 = value1_p50 - np.percentile(value1,16)
-        value2_p16 = value2_p50 - np.percentile(value2,16)
-        value1_p84 = np.percentile(value1,84) - value1_p50
-        value2_p84 = np.percentile(value2,84) - value2_p50
-
-        # plot
-        plt.figure()
-        plt.rcParams["font.size"] = 16
-        plt.subplots_adjust(bottom = 0.15)
-        gs  = gridspec.GridSpec(nrows=30, ncols=30)
-        ax1 = plt.subplot(gs[0:30,0:30])
-        ax1.set_aspect('equal', adjustable='box')
-        ax2 = plt.axes([0,0,1,1])
-        ip = InsetPosition(ax1, [0.15,0.13,0.5,0.33])
-        ax2.set_axes_locator(ip)
-
-        _, _, bars = ax1.errorbar(np.log10(dist1), np.log10(value1), yerr=1/np.log(10)*err1/value1, fmt="o", capsize=0, markersize=5, markeredgewidth=0, c="tomato", linewidth=1, alpha=0.5)
-        [bar.set_alpha(0.5) for bar in bars]
-        _, _, bars = ax1.errorbar(np.log10(dist2), np.log10(value2), yerr=1/np.log(10)*err2/value2, fmt="o", capsize=0, markersize=5, markeredgewidth=0, c="deepskyblue", linewidth=1, alpha=0.5)
-        [bar.set_alpha(0.5) for bar in bars]
-
-        ax2.bar(histx1, histy1, lw=0, color="tomato", width=histx1[1]-histx1[0], alpha=0.5)
-        ax2.bar(histx2, histy2, lw=0, color="deepskyblue", width=histx2[1]-histx2[0], alpha=0.5)
-
-        ax1.set_xlim(xlim)
-        ax1.set_ylim(ylim)
-        ax1.grid(which="both")
-        ax1.set_xlabel("log Deprojected Distance (kpc)")
-        ax1.set_ylabel("log Ratio")
-
-        ax2.set_xlim(histrange)
-        ax2.set_xticks(xticks)
-        ax2.set_xlabel("Ratio")
-
-        t=ax1.text(0.05,0.90,comment1,size=16,weight="bold",color="tomato", transform=ax1.transAxes)
-        t.set_bbox(dict(facecolor="white", alpha=0.8, lw=0))
-        t=ax1.text(0.05,0.82,comment2,size=16,weight="bold",color="deepskyblue", transform=ax1.transAxes)
-        t.set_bbox(dict(facecolor="white", alpha=0.8, lw=0))
-
-        if num_round!=0:
-            text = "$" + str(np.round(value1_p50,num_round)).ljust(4,"0") + \
-                "_{-" + str(np.round(value1_p16,num_round)).ljust(4,"0") + "}" + \
-                "^{+" + str(np.round(value1_p84,num_round)).ljust(4,"0") + "}$"
-        elif num_round==0:
-            text = "$" + str(int(value1_p50)) + \
-                "_{-" + str(int(value1_p16)) + "}" + \
-                "^{+" + str(int(value1_p84)) + "}$"
-
-        ax2.text(0.9,0.80,text,size=14,color="tomato",transform=ax2.transAxes,horizontalalignment='right')
-
-        if num_round!=0:
-            text = "$" + str(np.round(value2_p50,num_round)).ljust(4,"0") + \
-                "_{-" + str(np.round(value2_p16,num_round)).ljust(4,"0") + "}" + \
-                "^{+" + str(np.round(value2_p84,num_round)).ljust(4,"0") + "}$"
-        elif num_round==0:
-            text = "$" + str(int(value2_p50)) + \
-                "_{-" + str(int(value2_p16)) + "}" + \
-                "^{+" + str(int(value2_p84)) + "}$"
-
-        ax2.text(0.9,0.60,text,size=14,color="deepskyblue",transform=ax2.transAxes,horizontalalignment='right')
-
-        os.system("rm -rf " + outpng)
-        plt.savefig(outpng, dpi=300)
 
     #####################
     # hex_sampling_phys #
@@ -2150,6 +1992,162 @@ class ToolsNGC3110():
         run_imregrid(self.pb_12co21+"_tmp2_b6",self.map_irac,self.pb_12co21+"_tmp3_b6",delin=True)
         run_exportfits(self.pb_12co10+"_tmp3_b3",self.outfits_pb_b3,True,True,True)
         run_exportfits(self.pb_12co21+"_tmp3_b6",self.outfits_pb_b6,True,True,True)
+
+    #########
+    # _func #
+    #########
+
+    def _func(self, x, a, mu, sigma):
+        return a*np.exp(-(x-mu)**2/(2*sigma**2))
+
+    ################
+    # _plot_hexmap #
+    ################
+
+    def _plot_hexmap(
+        self,
+        outpng,
+        x,y,c,
+        X,Y,C,
+        title,
+        title_cbar,
+        nH2=False,
+        ):
+        """
+        """
+
+        # set plt, ax
+        plt.figure(figsize=(13,10))
+        plt.rcParams["font.size"] = 16
+        plt.subplots_adjust(bottom=0.10, left=0.19, right=0.99, top=0.90)
+        gs = gridspec.GridSpec(nrows=10, ncols=10)
+        ax = plt.subplot(gs[0:10,0:10])
+
+        # set ax parameter
+        myax_set(
+        ax,
+        grid="both",
+        xlim=[32.5, -32.5],
+        ylim=[-32.5, 32.5],
+        title=title,
+        xlabel="x-offset (arcsec)",
+        ylabel="y-offset (arcsec)",
+        )
+
+        contour_levels = map(lambda x: x * np.max(C), [0.02,0.04,0.08,0.16,0.32,0.64,0.96])
+        ax.tricontour(X, Y, C, colors=["black"], levels=contour_levels)
+        cax = ax.scatter(x, y, s=270, c=c, cmap="rainbow", marker="h", linewidths=0)
+        ax.set_aspect('equal', adjustable='box')
+
+        # cbar
+        cbar = plt.colorbar(cax)
+        cbar.set_label(title_cbar)
+        if nH2==True:
+            cbar.set_ticks([2.5,3.0,3.5,4.0,4.5,5.0,5.5,6.0,6.5])
+        cbar.outline.set_linewidth(2.5)
+
+        # circle
+        circ = patches.Ellipse(xy=(5.0,-22), width=self.r_speak_as*2, height=self.r_speak_as*2, angle=0, fill=False, edgecolor="tomato", alpha=1.0, lw=4)
+        ax.add_patch(circ)
+
+        os.system("rm -rf " + outpng)
+        plt.savefig(outpng, dpi=300)
+
+    ################
+    # _plot_radial #
+    ################
+
+    def _plot_radial(
+        self,
+        outpng,
+        dist1,
+        dist2,
+        value1,
+        value2,
+        err1,
+        err2,
+        xlim=[-1.3,1.4],
+        ylim=[-2.0,0.7],
+        histrange=[0,1.6],
+        xticks=[0.4,0.8,1.2,1.6],
+        num_round=2,
+        comment1=None,
+        comment2=None,
+        ):
+        """
+        """
+
+        histdata  = np.histogram(value1, bins=25, range=histrange)
+        histx1, histy1 = histdata[1][:-1], histdata[0]/float(np.sum(histdata[0]))
+
+        histdata = np.histogram(value2, bins=25, range=histrange)
+        histx2, histy2 = histdata[1][:-1], histdata[0]/float(np.sum(histdata[0]))
+
+        value1_p50 = np.percentile(value1,50)
+        value2_p50 = np.percentile(value2,50)
+        value1_p16 = value1_p50 - np.percentile(value1,16)
+        value2_p16 = value2_p50 - np.percentile(value2,16)
+        value1_p84 = np.percentile(value1,84) - value1_p50
+        value2_p84 = np.percentile(value2,84) - value2_p50
+
+        # plot
+        plt.figure()
+        plt.rcParams["font.size"] = 16
+        plt.subplots_adjust(bottom = 0.15)
+        gs  = gridspec.GridSpec(nrows=30, ncols=30)
+        ax1 = plt.subplot(gs[0:30,0:30])
+        ax1.set_aspect('equal', adjustable='box')
+        ax2 = plt.axes([0,0,1,1])
+        ip = InsetPosition(ax1, [0.15,0.13,0.5,0.33])
+        ax2.set_axes_locator(ip)
+
+        _, _, bars = ax1.errorbar(np.log10(dist1), np.log10(value1), yerr=1/np.log(10)*err1/value1, fmt="o", capsize=0, markersize=5, markeredgewidth=0, c="tomato", linewidth=1, alpha=0.5)
+        [bar.set_alpha(0.5) for bar in bars]
+        _, _, bars = ax1.errorbar(np.log10(dist2), np.log10(value2), yerr=1/np.log(10)*err2/value2, fmt="o", capsize=0, markersize=5, markeredgewidth=0, c="deepskyblue", linewidth=1, alpha=0.5)
+        [bar.set_alpha(0.5) for bar in bars]
+
+        ax2.bar(histx1, histy1, lw=0, color="tomato", width=histx1[1]-histx1[0], alpha=0.5)
+        ax2.bar(histx2, histy2, lw=0, color="deepskyblue", width=histx2[1]-histx2[0], alpha=0.5)
+
+        ax1.set_xlim(xlim)
+        ax1.set_ylim(ylim)
+        ax1.grid(which="both")
+        ax1.set_xlabel("log Deprojected Distance (kpc)")
+        ax1.set_ylabel("log Ratio")
+
+        ax2.set_xlim(histrange)
+        ax2.set_xticks(xticks)
+        ax2.set_xlabel("Ratio")
+
+        t=ax1.text(0.05,0.90,comment1,size=16,weight="bold",color="tomato", transform=ax1.transAxes)
+        t.set_bbox(dict(facecolor="white", alpha=0.8, lw=0))
+        t=ax1.text(0.05,0.82,comment2,size=16,weight="bold",color="deepskyblue", transform=ax1.transAxes)
+        t.set_bbox(dict(facecolor="white", alpha=0.8, lw=0))
+
+        if num_round!=0:
+            text = "$" + str(np.round(value1_p50,num_round)).ljust(4,"0") + \
+                "_{-" + str(np.round(value1_p16,num_round)).ljust(4,"0") + "}" + \
+                "^{+" + str(np.round(value1_p84,num_round)).ljust(4,"0") + "}$"
+        elif num_round==0:
+            text = "$" + str(int(value1_p50)) + \
+                "_{-" + str(int(value1_p16)) + "}" + \
+                "^{+" + str(int(value1_p84)) + "}$"
+
+        ax2.text(0.9,0.80,text,size=14,color="tomato",transform=ax2.transAxes,horizontalalignment='right')
+
+        if num_round!=0:
+            text = "$" + str(np.round(value2_p50,num_round)).ljust(4,"0") + \
+                "_{-" + str(np.round(value2_p16,num_round)).ljust(4,"0") + "}" + \
+                "^{+" + str(np.round(value2_p84,num_round)).ljust(4,"0") + "}$"
+        elif num_round==0:
+            text = "$" + str(int(value2_p50)) + \
+                "_{-" + str(int(value2_p16)) + "}" + \
+                "^{+" + str(int(value2_p84)) + "}$"
+
+        ax2.text(0.9,0.60,text,size=14,color="deepskyblue",transform=ax2.transAxes,horizontalalignment='right')
+
+        os.system("rm -rf " + outpng)
+        plt.savefig(outpng, dpi=300)
 
     ##############################
     # _factor_contin_to_ism_mass #
