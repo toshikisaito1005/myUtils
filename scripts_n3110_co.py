@@ -526,19 +526,19 @@ class ToolsNGC3110():
         combine_two_png(
             self.output_ks_fix,
             self.output_index_vs_sfe_fix,
-            self.final_aco+"_tmp1.png",
+            self.final_scatter+"_tmp1.png",
             self.box_scatter1,
             self.box_scatter1,
             )
         combine_two_png(
-            self.final_aco+"_tmp1.png",
+            self.final_scatter+"_tmp1.png",
             self.output_sfe_vs_ssc_fix,
-            self.final_aco,
+            self.final_scatter,
             "100000x100000+0+0",
             self.box_scatter2,
             axis="column",
             )
-        os.system("rm -rf " + self.final_aco + "_tmp1.png")
+        os.system("rm -rf " + self.final_scatter + "_tmp1.png")
 
         # final_appendix1
         print("")
