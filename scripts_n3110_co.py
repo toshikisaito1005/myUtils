@@ -319,7 +319,7 @@ class ToolsNGC3110():
         combine_three_png(self.outpng_12co21,self.outpng_13co21,self.outpng_c18o21,
             self.final_showline+"_tmp2.png",box_line_bl,box_line_br,box_line_br,delin)
         immagick_append(self.final_showline+"_tmp1.png",self.final_showline+"_tmp2.png",
-            self.final_showline,"column",True)
+            self.final_showline,"column",False)
 
     ################
     # plot_scatter #
