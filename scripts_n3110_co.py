@@ -1041,7 +1041,7 @@ class ToolsNGC3110():
         x,y,c,title = data_ra[cut],data_dec[cut],sscd[cut],"SSC Density ($\Sigma_{SSC}$)"
         # clip lowest sscd in order to change color range of the hex map.
         # this should not affect any other analysis.
-        c[c>0.5] = 0.5
+        c[c<0.5] = 0.5
         self._plot_hexmap(self.outpng_hex_sscd,x,y,c,X,Y,C,title,"(kpc$^{-2}$)")
 
         # sfe
@@ -1052,7 +1052,7 @@ class ToolsNGC3110():
         # aco
         cut = np.where((co10>0) & (aco>0))
         x,y,c,title = data_ra[cut],data_dec[cut],aco[cut],r"CO-to-H$_2$ Conversion Factor ($\alpha_{LTE}$)"
-        # clip lowest aco in order to change color range of the hex map.
+        # clip highest aco in order to change color range of the hex map.
         # this should not affect any other analysis.
         c[c>2.8] = 2.8
         self._plot_hexmap(self.outpng_hex_aco,x,y,c,X,Y,C,title,"($M_{\odot}$ (K km s$^{-1}$ pc$^2$)$^{-1}$)")
