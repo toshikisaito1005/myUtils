@@ -1126,6 +1126,29 @@ def immagick_append(
         os.system("rm -rf " + infile1)
         os.system("rm -rf " + infile2)
 
+def immagick_append_three(
+    infile1,
+    infile2,
+    infile3,
+    outfile,
+    axis="row",
+    delin=False,
+    convert="/usr/bin/convert ",
+    ):
+    print("# run immagick_append_three")
+
+    if axis=="row":
+        axis="+"
+    elif axis=="column":
+        axis="-"
+
+    os.system(convert + " " + axis + "append -border 0x0 " + infile1 + " " + infile2 + " " + infile3 + " " + outfile)
+
+    if delin==True:
+        os.system("rm -rf " + infile1)
+        os.system("rm -rf " + infile2)
+        os.system("rm -rf " + infile3)
+
 def combine_two_png(
     infile1,
     infile2,
@@ -1148,3 +1171,31 @@ def combine_two_png(
     if delin==True:
         os.system("rm -rf " + infile1 + " " + infile1 + "_tmp1.png")
         os.system("rm -rf " + infile2 + " " + infile2 + "_tmp1.png")
+
+def combine_three_png(
+    infile1,
+    infile2,
+    infile3,
+    outfile,
+    box1,
+    box2,
+    box3,
+    axis="row",
+    delin=False,
+    ):
+    print("# run combine_two_png")
+    done1 = glob.glob(infile1)
+    done2 = glob.glob(infile2)
+    done3 = glob.glob(infile3)
+    if done1:
+        if done2:
+            if done3:
+                immagick_crop(infile1, infile1+"_tmp1.png", box=box1, delin=delin)
+                immagick_crop(infile2, infile2+"_tmp1.png", box=box2, delin=delin)
+                immagick_crop(infile3, infile3+"_tmp1.png", box=box3, delin=delin)
+                immagick_append_three(infile1+"_tmp1.png", infile2+"_tmp1.png", infile3+"_tmp1.png", outfile, axis=axis, delin=delin)
+
+    if delin==True:
+        os.system("rm -rf " + infile1 + " " + infile1 + "_tmp1.png")
+        os.system("rm -rf " + infile2 + " " + infile2 + "_tmp1.png")
+        os.system("rm -rf " + infile3 + " " + infile3 + "_tmp1.png")

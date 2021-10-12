@@ -243,7 +243,11 @@ class ToolsNGC3110():
             self.final_appendix1 = self.dir_final + self._read_key("final_appendix1")
 
             # box
-            self.box_irac = self._read_key("box_irac")
+            self.box_irac   = self._read_key("box_irac")
+            self.box_line_tl = self._read_key("box_line_tl")
+            self.box_line_tr = self._read_key("box_line_tr")
+            self.box_line_bl = self._read_key("box_line_bl")
+            self.box_line_br = self._read_key("box_line_br")
 
     ##################
     # run_ngc3110_co #
@@ -306,7 +310,16 @@ class ToolsNGC3110():
         taskname = self.modname + sys._getframe().f_code.co_name
         check_first(self.outpng_irac,taskname)
 
+        # final_irac
         immagick_crop(self.outpng_irac,self.final_irac,self.box_irac,delin)
+
+        # final_showline
+        combine_two_png(self.outpng_12co10,self.outpng_13co10,
+            self.final_showline+"_tmp1.png",self.box_line_tl,self.box_line_tr,delin)
+        combine_three_png(self.outpng_12co21,self.outpng_13co21,self.outpng_c18o21,
+            self.final_showline+"_tmp2.png",box_line_bl,box_line_br,box_line_br,delin)
+        immagick_append(self.final_showline+"_tmp1.png",self.final_showline+"_tmp2.png",
+            self.final_showline,"column",True)
 
     ################
     # plot_scatter #
