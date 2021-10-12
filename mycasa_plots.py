@@ -1167,10 +1167,13 @@ def combine_two_png(
             immagick_crop(infile1, infile1+"_tmp1.png", box=box1, delin=delin)
             immagick_crop(infile2, infile2+"_tmp1.png", box=box2, delin=delin)
             immagick_append(infile1+"_tmp1.png", infile2+"_tmp1.png", outfile, axis=axis, delin=delin)
+
+    os.system("rm -rf " + infile1 + "_tmp1.png")
+    os.system("rm -rf " + infile2 + "_tmp1.png")
     
     if delin==True:
-        os.system("rm -rf " + infile1 + " " + infile1 + "_tmp1.png")
-        os.system("rm -rf " + infile2 + " " + infile2 + "_tmp1.png")
+        os.system("rm -rf " + infile1)
+        os.system("rm -rf " + infile2)
 
 def combine_three_png(
     infile1,
@@ -1195,7 +1198,11 @@ def combine_three_png(
                 immagick_crop(infile3, infile3+"_tmp1.png", box=box3, delin=delin)
                 immagick_append_three(infile1+"_tmp1.png", infile2+"_tmp1.png", infile3+"_tmp1.png", outfile, axis=axis, delin=delin)
 
+    os.system("rm -rf " + infile1 + "_tmp1.png")
+    os.system("rm -rf " + infile2 + "_tmp1.png")
+    os.system("rm -rf " + infile3 + "_tmp1.png")
+
     if delin==True:
-        os.system("rm -rf " + infile1 + " " + infile1 + "_tmp1.png")
-        os.system("rm -rf " + infile2 + " " + infile2 + "_tmp1.png")
-        os.system("rm -rf " + infile3 + " " + infile3 + "_tmp1.png")
+        os.system("rm -rf " + infile1)
+        os.system("rm -rf " + infile2)
+        os.system("rm -rf " + infile3)

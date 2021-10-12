@@ -7,7 +7,8 @@ CASA Version 5.4.0-70, ananlysisUtils, astropy
 paper draft under paper_versions/:
 Date        filename                                        to whom
 2021-06-10  overleaf_v0_210610_n3110_alma_co.zip            all
-2021-07-02  overleaf_v1_210702_n3110_alma_co_submitted.zip  ApJ
+2021-07-02  overleaf_v1_210702_n3110_alma_co_submitted.zip  journal
+2021-10-??  reply_1st.pdf
 
 data:
 ALMA line and cont data  2013.0.01172.S
