@@ -1,8 +1,15 @@
 """
 Class for ALMA proposals.
 
+requirements:
+CASA Version 5.4.0-70, ananlysisUtils, astropy
+
+ALMA deadlines:
+C8supp   2021-10-06
+
 history:
-2021-09-21   wrote by TS
+2021-09-21   start by TS
+2021-10-05   submit the 8p5a proposal (see run_cycle_8p5a_specscan)
 Toshiki Saito@Nichidai/NAOJ
 """
 
@@ -62,8 +69,8 @@ class ProposalsALMA():
             self._create_dir(self.dir_products)
             self._create_dir(self.dir_final)
 
-            # cycle 8p5
             if self.cycle=="cycle09":
+            # cycle 8p5
                 print("# write __init__ for cycle09")
 
             # cycle 8p5

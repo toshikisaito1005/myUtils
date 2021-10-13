@@ -1,0 +1,96 @@
+###############
+# directories #
+###############
+this_cycle   ,,,cycle08p5
+dir_proj     ,,,/lfs13/saitots/proposals_alma/
+dir_raw      ,,,data_raw/
+dir_ready    ,,,data_ready/
+dir_products ,,,products_png/
+dir_final    ,,,images/
+
+##################
+# final products #
+##################
+# proposal specscan
+final_specscan    ,,,fig_specscan.png
+final_missingflux ,,,fig_missingflux.png
+final_fov         ,,,fig_fov.png
+
+# proposal catom21
+final_catom10     ,,,fig_observed_ci10.png
+final_catom21     ,,,fig_expected_ci21.png
+
+##############
+# input data #
+##############
+# proposal specscan
+image_co10_12m7m ,,,ngc1068_b3_12m+7m_co10_0p8as_strict_mom0.fits
+image_co10_12m   ,,,ngc1068_b3_12m_co10_0p8as_strict_mom0.fits
+image_cs21       ,,,ngc1068_b3_12m_cs21_0p8as_strict_mom0.fits
+fov_b3           ,,,ot_specscan_b3_7m.pointings
+fov_b6           ,,,ot_specscan_b6_7m.pointings
+archive_csv      ,,,observation_1631582488.csv
+b3_spw_setup     ,,,86.0375,87.7406,98.0375,99.7406,89.4438,91.1469,101.4438,103.1469,92.8500,94.5531,104.8500,106.5531,96.2563,97.9594,108.2563,109.9594
+b6_spw_setup     ,,,213.7555,215.4586,229.7555,231.4586,217.1618,218.8649,233.1618,234.8649,220.5680,222.2711,236.5680,238.2711,223.9743,225.6774,239.9743,241.6774,227.3805,229.0836,243.3805,245.0836,242.6244,244.3275,258.6244,260.3275,246.0306,247.7338,262.0306,263.7338,249.4369,251.1400,265.4369,267.1400,252.8431,254.5463,268.8431,270.5463,256.2494,257.9525,272.2494,273.9525
+
+# proposal catom21
+tpeak_ci10_1p64   ,,,ngc1068_b8_12m+7m_ci10_1p64as_broad_tpeak.fits
+image_ci10_1p64   ,,,ngc1068_b8_12m+7m_ci10_1p64as_broad_mom0.fits
+image_co10_1p64   ,,,ngc1068_b3_12m_co10_1p64as_broad_mom0.fits
+fov_b10_fov1 ,,,ot_specscan_b10_7m_fov_1.pointings
+fov_b10_fov2 ,,,ot_specscan_b10_7m_fov_2.pointings
+
+##########################################
+# input parameters and target properties #
+##########################################
+# target = ngc1068
+ra         ,,,40.67144167deg
+dec        ,,,-0.0150275deg
+ra_agn     ,,,40.669625deg
+dec_agn    ,,,-0.01331667deg
+vsys       ,,,1116kms
+z          ,,,0.00379
+distance   ,,,13.97
+scale      ,,,67.7
+
+# output parameters
+imsize_as       ,,,65
+imsize_fov_as   ,,,120
+imsize_catom_as ,,,45
+
+###############
+# output data #
+###############
+# proposal specscan
+outfits_co10        ,,,ngc1068_co10_12m+7m.fits
+outfits_missingflux ,,,ngc1068_co10_missingflux.fits
+
+# proposal catom21
+outfits_expected_ci21_tpeak ,,,ngc1068_expected_ci21_1p64_tpeak.fits
+outfits_ci_co_ratio         ,,,ngc1068_ci_co_ratio_1p64.fits
+
+##############
+# output png #
+##############
+# proposal specscan
+png_specscan_b3  ,,,fig_specscan_b3.png
+png_specscan_b6  ,,,fig_specscan_b6.png
+box_specscan     ,,,5000x3550+550+100
+
+png_missingflux ,,,fig_missingflux.png
+box_missingflux  ,,,5700x4800+750+100
+box_missingflux2 ,,,5000x4800+750+100
+
+png_histogram   ,,,fig_histogram.png
+
+png_fov_map     ,,,fig_fov.png
+box_fov_map     ,,,4800x4800+750+100
+
+# proposal catom21
+png_expected_catom21 ,,,fig_expected_catom21.png
+box_expected_catom21 ,,,4800x4800+750+100
+
+png_ci10_1p64        ,,,fig_catom10_1p64.png
+box_ci10_1p64        ,,,4800x4800+750+100
+png_ci_co_ratio_1p64 ,,,fig_co_co_ratio_1p64.png
+box_ci_co_ratio_1p64 ,,,5500x4800+750+10
