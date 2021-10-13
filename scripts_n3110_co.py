@@ -2052,8 +2052,8 @@ class ToolsNGC3110():
         xlim=[32.5, -32.5],
         ylim=[-32.5, 32.5],
         title=title,
-        xlabel="x-offset (arcsec)",
-        ylabel="y-offset (arcsec)",
+        xlabel="R.A. offset (arcsec)",
+        ylabel="Decl. offset (arcsec)",
         )
 
         contour_levels = map(lambda x: x * np.max(C), [0.02,0.04,0.08,0.16,0.32,0.64,0.96])
@@ -2578,3 +2578,4 @@ class ToolsNGC3110():
         value    = values[np.where(keywords==key)[0][0]]
 
         return value
+
