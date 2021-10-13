@@ -4,6 +4,27 @@ Class for ALMA proposals.
 requirements:
 CASA Version 5.4.0-70, ananlysisUtils, astropy
 
+usage:
+> import os
+> from proposals_alma import ProposalsALMA as tools
+> 
+> tl = tools(
+>     refresh     = False,
+>     keyfile_fig = "/home02/saitots/myUtils/keys_alma_proposal/key_cyle08p5.txt",
+>     )
+> 
+> ### Cycle 8 supplemental call
+> # 2021.2.00049.S
+> # Band 3 and 6 spectral scans with 7m+TP toward NGC 1068.
+> tl.run_cycle_8p5a_specscan(
+>     plot_spw_setup    = True,
+>     plot_missingflux  = True,
+>     plot_proposed_fov = True,
+>     combine_figures   = True,
+>     )
+> 
+> os.system("rm -rf *.last")
+
 ALMA deadlines:
 C8supp   2021-10-06
 
