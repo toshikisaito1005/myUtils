@@ -1,5 +1,5 @@
 """
-Class to analyze Cycle 2 ALMA CO line datasets toward NGC 3110
+Class to analyze Cycle 2 ALMA CO line datasets toward NGC 3110 (Kawana, Saito et al. 2021)
 
 requirements:
 CASA Version 5.4.0-70, ananlysisUtils, astropy
