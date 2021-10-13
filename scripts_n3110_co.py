@@ -682,7 +682,7 @@ class ToolsNGC3110():
             yerr = sfrd_err
             c    = "black"
             ax.scatter(x, y, s=100, c=c, linewidth=2.0, zorder=1e9)
-            ax.errorbar(x, y, xerr=xerr, yerr=yerr, capsize=0, c=c, linewidth=2.0, zorder=1e9)
+            ax.errorbar(x, y, xerr=xerr, yerr=yerr, capsize=0, c=c, zorder=1e9)
 
         ax.plot(xlim,[xlim[0]-3.0,xlim[1]-3.0], "k--")
         ax.plot(xlim,[xlim[0]-2.0,xlim[1]-2.0], "k--")
@@ -709,7 +709,7 @@ class ToolsNGC3110():
         ax.set_ylabel(r"log $\Sigma_{SFR}$ ($M_{\odot}$ kpc$^{-2}$ yr$^{-1}$)")
         ax.set_aspect('equal', adjustable='box')
 
-        cax = ax.scatter(dh2_vary, sfrd, s=100, c=dist_kpc, cmap="rainbow_r", linewidths=0, alpha=0.7,zorder=1e9)
+        cax = ax.scatter(dh2_vary, sfrd, s=100, c=dist_kpc, cmap="rainbow_r", linewidths=0, alpha=0.7,zorder=-1e9)
         for i in range(len(dh2_fix)):
             x    = dh2_vary[i]
             y    = sfrd[i]
@@ -717,7 +717,7 @@ class ToolsNGC3110():
             yerr = sfrd_err
             c    = cm.rainbow_r( dist_kpc[i] / clim )
 
-            _, _, bars = ax.errorbar(x,y,xerr=xerr,yerr=yerr,fmt="o",c=c,capsize=5,markeredgewidth=0,markersize=0,lw=2,zorder=1e8)
+            _, _, bars = ax.errorbar(x,y,xerr=xerr,yerr=yerr,fmt="o",c=c,capsize=5,markeredgewidth=0,markersize=0,lw=2,zorder=-1e9)
             [bar.set_alpha(0.7) for bar in bars]
 
         for i in range(len(dh2_vary_speak)):
@@ -726,8 +726,8 @@ class ToolsNGC3110():
             y    = sfrd_speak[i]
             yerr = sfrd_err
             c    = "black"
-            ax.scatter(x, y, s=100, c=c, linewidth=2.0, zorder=2e12)
-            ax.errorbar(x, y, xerr=xerr, yerr=yerr, capsize=5, markersize=100, c=c, linewidth=2.0, zorder=2e12)
+            ax.scatter(x, y, s=100, c=c, linewidth=2.0, zorder=1e9)
+            ax.errorbar(x, y, xerr=xerr, yerr=yerr, capsize=0, c=c, zorder=1e9)
 
         cbar = plt.colorbar(cax)
         cbar.set_label("Deprojected Distance (kpc)")
@@ -763,7 +763,7 @@ class ToolsNGC3110():
         ax.set_ylabel(r"log SFE (yr$^{-1}$)")
         ax.set_aspect('equal', adjustable='box')
 
-        cax = ax.scatter(index, sfe_fix, s=100, c=dist_kpc, cmap="rainbow_r", linewidths=0, alpha=0.7,zorder=1e9)
+        cax = ax.scatter(index, sfe_fix, s=100, c=dist_kpc, cmap="rainbow_r", linewidths=0, alpha=0.7,zorder=-1e9)
         for i in range(len(dh2_fix)):
             x    = index[i]
             y    = sfe_fix[i]
@@ -771,7 +771,7 @@ class ToolsNGC3110():
             yerr = sfe_err_fix
             c    = cm.rainbow_r( dist_kpc[i] / clim )
 
-            _, _, bars = ax.errorbar(x,y,xerr=xerr,yerr=yerr,fmt="o",c=c,capsize=5,markeredgewidth=0,markersize=0,lw=2)
+            _, _, bars = ax.errorbar(x,y,xerr=xerr,yerr=yerr,fmt="o",c=c,capsize=5,markeredgewidth=0,markersize=0,lw=2,zorder=-1e9)
             [bar.set_alpha(0.7) for bar in bars]
 
         for i in range(len(index_speak)):
@@ -780,8 +780,8 @@ class ToolsNGC3110():
             xerr = index_err_speak[i]
             yerr = sfe_err_fix
             c    = "black"
-            ax.scatter(x, y, s=100, c=c, linewidth=2.0, zorder=2e12)
-            ax.errorbar(x, y, xerr=xerr, yerr=yerr, capsize=5, markersize=100, c=c, linewidth=2.0, zorder=2e12)
+            ax.scatter(x, y, s=100, c=c, linewidth=2.0, zorder=1e9)
+            ax.errorbar(x, y, xerr=xerr, yerr=yerr, capsize=0, c=c, zorder=1e9)
 
         cbar = plt.colorbar(cax)
         cbar.set_label("Deprojected Distance (kpc)")
@@ -808,7 +808,7 @@ class ToolsNGC3110():
         ax.set_ylabel(r"log SFE (yr$^{-1}$)")
         ax.set_aspect('equal', adjustable='box')
 
-        cax = ax.scatter(index, sfe_vary, s=100, c=dist_kpc, cmap="rainbow_r", linewidths=0, alpha=0.7,zorder=1e9)
+        cax = ax.scatter(index, sfe_vary, s=100, c=dist_kpc, cmap="rainbow_r", linewidths=0, alpha=0.7,zorder=-1e9)
         for i in range(len(dh2_vary)):
             x    = index[i]
             y    = sfe_vary[i]
@@ -816,7 +816,7 @@ class ToolsNGC3110():
             yerr = sfe_err_vary
             c    = cm.rainbow_r( dist_kpc[i] / clim )
 
-            _, _, bars = ax.errorbar(x,y,xerr=xerr,yerr=yerr,fmt="o",c=c,capsize=5,markeredgewidth=0,markersize=0,lw=2)
+            _, _, bars = ax.errorbar(x,y,xerr=xerr,yerr=yerr,fmt="o",c=c,capsize=5,markeredgewidth=0,markersize=0,lw=2,zorder=-1e9)
             [bar.set_alpha(0.7) for bar in bars]
 
         for i in range(len(index_speak)):
@@ -825,8 +825,8 @@ class ToolsNGC3110():
             c    = "black"
             xerr = index_err_speak[i]
             yerr = sfe_err_vary
-            ax.scatter(x, y, s=100, c=c, linewidth=2.0, zorder=2e12)
-            ax.errorbar(x, y, xerr=xerr, yerr=yerr, capsize=5, markersize=100, c=c, linewidth=2.0, zorder=2e12)
+            ax.scatter(x, y, s=100, c=c, linewidth=2.0, zorder=1e9)
+            ax.errorbar(x, y, xerr=xerr, yerr=yerr, capsize=0, c=c, zorder=1e9)
 
         cbar = plt.colorbar(cax)
         cbar.set_label("Deprojected Distance (kpc)")
@@ -857,14 +857,14 @@ class ToolsNGC3110():
         ax.set_ylabel(r"log SFE (yr$^{-1}$)")
         ax.set_aspect('equal', adjustable='box')
 
-        cax = ax.scatter(sscd, sfe_fix, s=100, c=dist_kpc, cmap="rainbow_r", linewidths=0, alpha=0.7,zorder=1e9)
+        cax = ax.scatter(sscd, sfe_fix, s=100, c=dist_kpc, cmap="rainbow_r", linewidths=0, alpha=0.7,zorder=-1e9)
         for i in range(len(sfe_fix)):
             x    = sscd[i]
             y    = sfe_fix[i]
             yerr = sfe_err_fix
             c    = cm.rainbow_r( dist_kpc[i] / clim )
 
-            _, _, bars = ax.errorbar(x,y,yerr=yerr,fmt="o",c=c,capsize=5,markeredgewidth=0,markersize=0,lw=2)
+            _, _, bars = ax.errorbar(x,y,yerr=yerr,fmt="o",c=c,capsize=5,markeredgewidth=0,markersize=0,lw=2,zorder=-1e9)
             [bar.set_alpha(0.7) for bar in bars]
 
         for i in range(len(sscd_speak)):
@@ -872,8 +872,8 @@ class ToolsNGC3110():
             y    = sfe_fix_speak[i]
             yerr = sfe_err_fix
             c    = "black"
-            ax.scatter(x, y, s=100, c=c, linewidth=2.0, zorder=2e12)
-            ax.errorbar(x, y, yerr=yerr, capsize=5, markersize=100, c=c, linewidth=2.0, zorder=2e12)
+            ax.scatter(x, y, s=100, c=c, linewidth=2.0, zorder=1e9)
+            ax.errorbar(x, y, yerr=yerr, capsize=0, c=c, zorder=1e9)
 
         cbar = plt.colorbar(cax)
         cbar.set_label("Deprojected Distance (kpc)")
@@ -899,14 +899,14 @@ class ToolsNGC3110():
         ax.set_ylabel(r"log SFE (yr$^{-1}$)")
         ax.set_aspect('equal', adjustable='box')
 
-        cax = ax.scatter(sscd, sfe_vary, s=100, c=dist_kpc, cmap="rainbow_r", linewidths=0, alpha=0.7,zorder=1e9)
+        cax = ax.scatter(sscd, sfe_vary, s=100, c=dist_kpc, cmap="rainbow_r", linewidths=0, alpha=0.7,zorder=-1e9)
         for i in range(len(sfe_vary)):
             x    = sscd[i]
             y    = sfe_vary[i]
             yerr = sfe_err_vary
             c    = cm.rainbow_r( dist_kpc[i] / clim )
 
-            _, _, bars = ax.errorbar(x,y,yerr=yerr,fmt="o",c=c,capsize=5,markeredgewidth=0,markersize=0,lw=2)
+            _, _, bars = ax.errorbar(x,y,yerr=yerr,fmt="o",c=c,capsize=5,markeredgewidth=0,markersize=0,lw=2,zorder=-1e9)
             [bar.set_alpha(0.7) for bar in bars]
 
         for i in range(len(sscd_speak)):
@@ -914,8 +914,8 @@ class ToolsNGC3110():
             y    = sfe_vary_speak[i]
             yerr = sfe_err_fix
             c    = "black"
-            ax.scatter(x, y, s=100, c=c, linewidth=2.0, zorder=2e12)
-            ax.errorbar(x, y, yerr=yerr, capsize=5, markersize=100, c=c, linewidth=2.0, zorder=2e12)
+            ax.scatter(x, y, s=100, c=c, linewidth=2.0, zorder=1e9)
+            ax.errorbar(x, y, yerr=yerr, capsize=0, c=c, zorder=1e9)
 
         cbar = plt.colorbar(cax)
         cbar.set_label("Deprojected Distance (kpc)")
