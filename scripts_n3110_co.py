@@ -637,6 +637,7 @@ class ToolsNGC3110():
         sfrd_speak          = sfrd[data_r_from_speak<self.r_speak_as]
         dist_kpc_speak      = dist_kpc[data_r_from_speak<self.r_speak_as]
         index_speak         = index[data_r_from_speak<self.r_speak_as]
+        index_err_speak     = index_err[data_r_from_speak<self.r_speak_as]
         sscd_speak          = sscd[data_r_from_speak<self.r_speak_as]
 
         ### ks relation
@@ -679,9 +680,8 @@ class ToolsNGC3110():
             xerr = dh2_err_fix_speak[i]
             y    = sfrd_speak[i]
             yerr = sfrd_err
-            c    = cm.rainbow_r( dist_kpc_speak[i] / clim )
-            ax.scatter(x, y, s=100, c=c, cmap="rainbow_r", linewidths=1.5, zorder=2e12)
-            #ax.errorbar(x,y,xerr=xerr,yerr=yerr,fmt="o",c="black",capsize=5,markeredgewidth=0,markersize=0,lw=2,zorder=1e12)
+            c    = "black"
+            ax.errorbar(x, y, xerr=xerr, yerr=yerr, capsize=5, s=100, c=c, linewidths=2.0, zorder=2e12)
 
         ax.plot(xlim,[xlim[0]-3.0,xlim[1]-3.0], "k--")
         ax.plot(xlim,[xlim[0]-2.0,xlim[1]-2.0], "k--")
@@ -724,9 +724,8 @@ class ToolsNGC3110():
             xerr = dh2_err_vary_speak[i]
             y    = sfrd_speak[i]
             yerr = sfrd_err
-            c    = cm.rainbow_r( dist_kpc_speak[i] / clim )
-            ax.scatter(x, y, s=100, c=c, cmap="rainbow_r", linewidths=1.5, zorder=1e12)
-            #ax.errorbar(x,y,xerr=xerr,yerr=yerr,fmt="o",c="black",capsize=5,markeredgewidth=0,markersize=0,lw=2,zorder=0.9e12)
+            c    = "black"
+            ax.errorbar(x, y, xerr=xerr, yerr=yerr, capsize=5, s=100, c=c, linewidths=2.0, zorder=2e12)
 
         cbar = plt.colorbar(cax)
         cbar.set_label("Deprojected Distance (kpc)")
@@ -774,10 +773,12 @@ class ToolsNGC3110():
             [bar.set_alpha(0.7) for bar in bars]
 
         for i in range(len(index_speak)):
-            x = index_speak[i]
-            y = sfe_fix_speak[i]
-            c = cm.rainbow_r( dist_kpc_speak[i] / clim )
-            ax.scatter(x, y, s=100, c=c, cmap="rainbow_r", linewidths=1.5, zorder=1e11)
+            x    = index_speak[i]
+            y    = sfe_fix_speak[i]
+            xerr = index_err_speak[i]
+            yerr = sfe_err_fix
+            c    = "black"
+            ax.errorbar(x, y, xerr=xerr, yerr=yerr, capsize=5, s=100, c=c, linewidths=2.0, zorder=2e12)
 
         cbar = plt.colorbar(cax)
         cbar.set_label("Deprojected Distance (kpc)")
@@ -816,10 +817,12 @@ class ToolsNGC3110():
             [bar.set_alpha(0.7) for bar in bars]
 
         for i in range(len(index_speak)):
-            x = index_speak[i]
-            y = sfe_vary_speak[i]
-            c = cm.rainbow_r( dist_kpc_speak[i] / clim )
-            ax.scatter(x, y, s=100, c=c, cmap="rainbow_r", linewidths=1.5, zorder=1e11)
+            x    = index_speak[i]
+            y    = sfe_vary_speak[i]
+            c    = "black"
+            xerr = index_err_speak[i]
+            yerr = sfe_err_vary
+            ax.errorbar(x, y, xerr=xerr, yerr=yerr, capsize=5, s=100, c=c, linewidths=2.0, zorder=2e12)
 
         cbar = plt.colorbar(cax)
         cbar.set_label("Deprojected Distance (kpc)")
@@ -861,10 +864,11 @@ class ToolsNGC3110():
             [bar.set_alpha(0.7) for bar in bars]
 
         for i in range(len(sscd_speak)):
-            x = sscd_speak[i]
-            y = sfe_fix_speak[i]
-            c = cm.rainbow_r( dist_kpc_speak[i] / clim )
-            ax.scatter(x, y, s=100, c=c, cmap="rainbow_r", linewidths=1.5, zorder=1e11)
+            x    = sscd_speak[i]
+            y    = sfe_fix_speak[i]
+            yerr = sfe_err_fix
+            c    = "black"
+            ax.errorbar(x, y, yerr=yerr, capsize=5, s=100, c=c, linewidths=2.0, zorder=2e12)
 
         cbar = plt.colorbar(cax)
         cbar.set_label("Deprojected Distance (kpc)")
@@ -901,10 +905,11 @@ class ToolsNGC3110():
             [bar.set_alpha(0.7) for bar in bars]
 
         for i in range(len(sscd_speak)):
-            x = sscd_speak[i]
-            y = sfe_vary_speak[i]
-            c = cm.rainbow_r( dist_kpc_speak[i] / clim )
-            ax.scatter(x, y, s=100, c=c, cmap="rainbow_r", linewidths=1.5, zorder=1e11)
+            x    = sscd_speak[i]
+            y    = sfe_vary_speak[i]
+            yerr = sfe_err_fix
+            c    = "black"
+            ax.errorbar(x, y, yerr=yerr, capsize=5, s=100, c=c, linewidths=2.0, zorder=2e12)
 
         cbar = plt.colorbar(cax)
         cbar.set_label("Deprojected Distance (kpc)")
