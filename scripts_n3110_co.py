@@ -681,7 +681,7 @@ class ToolsNGC3110():
             y    = sfrd_speak[i]
             yerr = sfrd_err
             c    = "black"
-            ax.scatter(x, y, markersize=100, c=c, linewidth=2.0, zorder=2e12)
+            ax.scatter(x, y, s=100, c=c, linewidth=2.0, zorder=2e12)
             ax.errorbar(x, y, xerr=xerr, yerr=yerr, capsize=0, c=c, linewidth=2.0, zorder=2e12)
 
         ax.plot(xlim,[xlim[0]-3.0,xlim[1]-3.0], "k--")
@@ -726,7 +726,7 @@ class ToolsNGC3110():
             y    = sfrd_speak[i]
             yerr = sfrd_err
             c    = "black"
-            ax.scatter(x, y, markersize=100, c=c, linewidth=2.0, zorder=2e12)
+            ax.scatter(x, y, s=100, c=c, linewidth=2.0, zorder=2e12)
             ax.errorbar(x, y, xerr=xerr, yerr=yerr, capsize=5, markersize=100, c=c, linewidth=2.0, zorder=2e12)
 
         cbar = plt.colorbar(cax)
@@ -780,7 +780,7 @@ class ToolsNGC3110():
             xerr = index_err_speak[i]
             yerr = sfe_err_fix
             c    = "black"
-            ax.scatter(x, y, markersize=100, c=c, linewidth=2.0, zorder=2e12)
+            ax.scatter(x, y, s=100, c=c, linewidth=2.0, zorder=2e12)
             ax.errorbar(x, y, xerr=xerr, yerr=yerr, capsize=5, markersize=100, c=c, linewidth=2.0, zorder=2e12)
 
         cbar = plt.colorbar(cax)
@@ -825,7 +825,7 @@ class ToolsNGC3110():
             c    = "black"
             xerr = index_err_speak[i]
             yerr = sfe_err_vary
-            ax.scatter(x, y, markersize=100, c=c, linewidth=2.0, zorder=2e12)
+            ax.scatter(x, y, s=100, c=c, linewidth=2.0, zorder=2e12)
             ax.errorbar(x, y, xerr=xerr, yerr=yerr, capsize=5, markersize=100, c=c, linewidth=2.0, zorder=2e12)
 
         cbar = plt.colorbar(cax)
@@ -872,7 +872,7 @@ class ToolsNGC3110():
             y    = sfe_fix_speak[i]
             yerr = sfe_err_fix
             c    = "black"
-            ax.scatter(x, y, markersize=100, c=c, linewidth=2.0, zorder=2e12)
+            ax.scatter(x, y, s=100, c=c, linewidth=2.0, zorder=2e12)
             ax.errorbar(x, y, yerr=yerr, capsize=5, markersize=100, c=c, linewidth=2.0, zorder=2e12)
 
         cbar = plt.colorbar(cax)
@@ -914,7 +914,7 @@ class ToolsNGC3110():
             y    = sfe_vary_speak[i]
             yerr = sfe_err_fix
             c    = "black"
-            ax.scatter(x, y, markersize=100, c=c, linewidth=2.0, zorder=2e12)
+            ax.scatter(x, y, s=100, c=c, linewidth=2.0, zorder=2e12)
             ax.errorbar(x, y, yerr=yerr, capsize=5, markersize=100, c=c, linewidth=2.0, zorder=2e12)
 
         cbar = plt.colorbar(cax)
