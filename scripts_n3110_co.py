@@ -682,7 +682,7 @@ class ToolsNGC3110():
             yerr = sfrd_err
             c    = "black"
             ax.scatter(x, y, s=100, c=c, linewidth=2.0, zorder=2e12)
-            ax.errorbar(x, y, xerr=xerr, yerr=yerr, capsize=0, c=c, linewidth=2.0, zorder=2e12)
+            ax.errorbar(x, y, xerr=xerr, yerr=yerr, capsize=0, c=c, linewidth=2.0, zorder=-1e9)
 
         ax.plot(xlim,[xlim[0]-3.0,xlim[1]-3.0], "k--")
         ax.plot(xlim,[xlim[0]-2.0,xlim[1]-2.0], "k--")
