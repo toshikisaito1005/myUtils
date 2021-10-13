@@ -1,15 +1,55 @@
 """
-Python class for the NGC 1068 CI outflow project
-using CASA.
+Class for the NGC 1068 CI outflow project
 
-run_ci_outflow
-	align_maps
-	ci_fov_masking
-	ratio_map
-	ratio_cube
-	compare_7m_cubes
+requirements:
+CASA Version 5.4.0-70, ananlysisUtils, astropy
+
+data:
+ALMA [CI](1-0)        2017.1.00586.S (PI: Takano Shuro, 12m+7m, 3-pointing)
+                      processed at ADC:/home02/saitots/scripts/phangs_imaging_scripts/keys_ngc1068_b8/
+                      products at ADC:/lfs02/saitots/proj_n1068_b8/derived/ngc1068_b8/
+ALMA CO(1-0)          2018.1.01684.S (PI: Tosaki Tomoka, 12m+7m)
+                      processed at ADC:/home02/saitots/scripts/phangs_imaging_scripts/keys_ngc1068_b3/
+                      products at ADC:/lfs02/saitots/proj_n1068_b3/derived/ngc1068_b3/
+imaging script        all processed by phangs pipeline v2
+                      Leroy et al. 2021, ApJS, 255, 19 (https://arxiv.org/abs/2104.07739)
+ancillary MUSE FITS   Mingozzi et al. 2019, A&A, 622, 146 (https://ui.adsabs.harvard.edu/abs/2019A%26A...622A.146M)
+                      SIII/SII ratio map (ionization parameter), ionized gas density, AV maps
+                      http://cdsarc.u-strasbg.fr/viz-bin/qcat?J/A+A/622/A146
+ancillary HST FITS    https://hla.stsci.edu/
+ancillary VLA FITS    https://archive.nrao.edu/archive/archiveimage.html
+
+usage:
+> import os
+> from scripts_n1068_outflow import ToolsOutflow as tools
+> 
+> tl = tools(
+>     refresh     = False,
+>     keyfile_gal = "/home02/saitots/myUtils/keys_n1068_outflow/key_ngc1068.txt",
+>     keyfile_fig = "/home02/saitots/myUtils/keys_n1068_outflow/key_figures.txt",
+>     )
+> 
+> tl.run_ci_outflow(
+>     do_prepare    = True, # align maps to the [CI](1-0) grid, and mask by [CI] FoVs
+>     do_ratio_map  = True,
+>     do_compare_7m = True,
+>     plot_scatters = True,
+>     plot_showcase = True,
+>     plot_channel  = True,
+>     )
+> 
+> os.system("rm -rf *.last")
+
+paper drafts:
+Date         Filename                          To
+2021-06-04   draft_v0_210604.zip               Takano,Nakajima,Harada
 
 history:
+2021-04-22   start project, write README
+2021-05-17   start to create paper-ready figures
+2021-05-26   start writing draft
+2021-06-04   circulate v0 draft to the paper team
+2021-06-25   move to ADC due to issues with new laptop
 2021-08-06   created
 Toshiki Saito@Nichidai/NAOJ
 """

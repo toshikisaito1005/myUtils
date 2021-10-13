@@ -1,0 +1,180 @@
+###############
+# directories #
+###############
+dir_proj     ,,,/lfs13/saitots/proj_n1068_ci_outflow/
+dir_raw_co   ,,,data_raw/b3_co10_0p8as/
+dir_raw_ci   ,,,data_raw/b8_ci10_0p8as/
+dir_hst      ,,,data_other/hst/
+dir_vla      ,,,data_other/vla/
+dir_magnum   ,,,data_other/magnum/
+#
+dir_ready    ,,,data_ready/
+dir_products ,,,products_png/
+dir_chan     ,,,data_chan/
+dir_final    ,,,images/
+
+##################
+# final products #
+##################
+### process_png
+process_showcase        ,,,fig_showcase.png
+process_scatter         ,,,fig_scatter.png
+process_magnum          ,,,fig_magnum.png
+process_radial          ,,,fig_radial.png
+process_channel         ,,,fig_channel.png
+process_chan_model_best ,,,fig_channel_best.png
+process_chan_model_decv ,,,fig_channel_decv.png
+process_chan_model_cnst ,,,fig_channel_cnst.png
+process_showcase_multi  ,,,fig_showcase_multi.png
+
+############
+# raw maps #
+############
+image_co10    ,,,ngc1068_b3_12m+7m_co10_0p8as_strict_mom0.fits
+image_ci10    ,,,ngc1068_b8_12m+7m_ci10_strict_mom0.fits
+image_eco10   ,,,ngc1068_b3_12m+7m_co10_0p8as_strict_emom0.fits
+image_eci10   ,,,ngc1068_b8_12m+7m_ci10_strict_emom0.fits
+cube_co10     ,,,ngc1068_b3_12m+7m_co10_0p8as.fits
+cube_ci10     ,,,ngc1068_b8_12m+7m_ci10.fits
+ncube_co10    ,,,ngc1068_b3_12m+7m_co10_0p8as_noise.fits
+ncube_ci10    ,,,ngc1068_b8_12m+7m_ci10_noise.fits
+image_siiisii ,,,NGC1068_siiisii_ratio.fits
+image_av      ,,,NGC1068_extinction.fits
+hst_oiii      ,,,ngc1068_hst_oiii.fits
+vla_radio     ,,,8.49I0.23_AC0467_1999SEP08_1_61.8U28.0S.imfits
+
+###############
+# output maps #
+###############
+out_map_co10    ,,,n1068_co10.image
+out_map_ci10    ,,,n1068_ci10.image
+out_map_eco10   ,,,n1068_co10_err.image
+out_map_eci10   ,,,n1068_ci10_err.image
+out_cube_co10   ,,,n1068_co10.cube
+out_cube_ci10   ,,,n1068_ci10.cube
+out_ncube_co10  ,,,n1068_co10.cube.noise
+out_ncube_ci10  ,,,n1068_ci10.cube.noise
+out_map_siiisii ,,,n1068_siii_sii.image
+out_map_av      ,,,n1068_av.image
+out_map_oiii    ,,,ngc1068_oiii.image
+out_map_radio   ,,,ngc1068_8p49GHz.image
+#
+out_map_cico          ,,,n1068_ci_co_ratio.image
+out_cube_cico         ,,,n1068_ci_co_ratio.cube
+out_ci10_outflow_mom0 ,,,n1068_ci_outflow_mom0.image
+out_ci10_outflow_mom1 ,,,n1068_ci_outflow_mom1.image
+
+###################
+# input paramters #
+###################
+imsize_as      ,,,18
+fov_radius_as  ,,,8.05
+snr_cube       ,,,2.5
+snr_ratio      ,,,6.0
+snr_chan       ,,,10.0
+imrebin_factor ,,,2,2,1
+chans_num      ,,,68,81,94,107,120,133,146,159,172
+chans_text     ,,,+124.3 km s$^{-1}$,+93.4 km s$^{-1}$,+62.4 km s$^{-1}$,+31.5 km s$^{-1}$,+0.6 km s$^{-1}$ ($V_{sys}$),-30.4 km s$^{-1}$,-61.3 km s$^{-1}$,-92.3 km s$^{-1}$,-123.2 km s$^{-1}$
+chans_color    ,,,red,red,red,red,black,blue,blue,blue,blue
+r_cnd_as       ,,,3.0
+r_sbr_as       ,,,10.0
+
+######################
+# output txt and png #
+######################
+txt_slopes          ,,,data_slopefit_7m_cubes.txt
+png_slopes          ,,,data_slopefit_7m_cubes.png
+png_ci_vs_co        ,,,fig_scatter_ci_vs_co.png
+png_cico_vs_siiisii ,,,fig_scatter_cico_vs_siiisii.png
+png_map_ci          ,,,fig_map_ci.png
+png_map_co          ,,,fig_map_co.png
+png_map_cico        ,,,fig_map_cico.png
+png_outflow_mom0    ,,,fig_map_ci_outflow_mom0.png
+png_outflow_mom1    ,,,fig_map_ci_outflow_mom1.png
+png_outflow_chans   ,,,fig_map_ci_outflow_chan_?.png
+
+
+
+
+
+
+
+######################################################
+### n1068ciplot.stats_per_area
+######################################################
+### input
+f08_co ,,,n1068_co10.masked.fits
+f08_ci ,,,n1068_ci10.fits
+
+######################################################
+### n1068ciplot.bicone_modeling
+######################################################
+### input
+f06_length       ,,,300.0
+f06_pa           ,,,30.0
+f06_incl         ,,,5.0
+f06_theta_in     ,,,20
+f06_theta_out    ,,,40
+f06_maxvel_const ,,,250
+f06_maxvel_decv  ,,,250
+f06_maxvel_best  ,,,250
+f06_cnd_rout     ,,,100
+f06_chanlist     ,,,-123.2,-92.3,-61.3,-30.4,0,31.5,62.4,93.4,124.3
+### output
+f06_output        ,,,model_thismodel_vthisvel.png
+f06_cloplist         ,,,1,1,1,3,1,2,0,0,0
+f06_box_crop1        ,,,1790x1640+380+170
+f06_box_crop2        ,,,1620x1640+550+170
+f06_box_crop3        ,,,1790x1760+380+170
+f06_box_crop4        ,,,2000x1760+550+170
+f06_box_crop5        ,,,1900x1760+550+170
+
+######################################################
+### n1068ciplot.channelmap
+######################################################
+f05_cloplist         ,,,1,1,1,3,1,2,0,0,0
+f05_box_crop1        ,,,1790x1640+380+170
+f05_box_crop2        ,,,1620x1640+550+170
+f05_box_crop3        ,,,1790x1760+380+170
+f05_box_crop4        ,,,2000x1760+550+170
+f05_box_crop5        ,,,1900x1760+550+170
+
+######################################################
+### n1068ciplot.multi_pvd
+######################################################
+### input
+f04_co_cube         ,,,n1068_co10.cube.fits
+f04_ci_cube         ,,,n1068_ci10.cube.fits
+f04_pv_pa           ,,,-20deg,-10deg,0deg,10deg,20deg,30deg,40deg,50deg,60deg
+### output
+f04_output          ,,,figtmp_pvd.png
+
+######################################################
+### n1068ciplot.radial_profile
+######################################################
+### input
+f03_co              ,,,n1068_co10.masked.fits
+f03_ci              ,,,n1068_ci10.fits
+f03_siii_sii        ,,,n1068_siii_sii.masked.fits
+f03_co_cube         ,,,n1068_co10.cube.fits
+f03_ci_cube         ,,,n1068_ci10.cube.fits
+### output
+f03_output          ,,,figtmp_radial.png
+#
+f03_box_crop        ,,,5000x5000+0+0
+
+######################################################
+### n1068ciplot.scatters
+######################################################
+### output
+f02_cico_vs_co      ,,,figtmp_scatter_cicoratio_vs_co.png
+f02_cico_vs_siiisii ,,,figtmp_scatter_cicoratio_vs_ionization.png
+#
+f02_box_crop        ,,,1900x1900+80+80
+f02_box_crop_ratio  ,,,2200x1850+350+80
+
+######################################################
+### n1068ciplot.showcase
+######################################################
+f01_box_crop_map        ,,,1850x1850+350+80
+f01_box_crop_ratio      ,,,2200x1850+350+80
