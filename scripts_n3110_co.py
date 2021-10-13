@@ -659,7 +659,7 @@ class ToolsNGC3110():
         ax.set_ylabel(r"log $\Sigma_{SFR}$ ($M_{\odot}$ kpc$^{-2}$ yr$^{-1}$)")
         ax.set_aspect('equal', adjustable='box')
 
-        cax = ax.scatter(dh2_fix, sfrd, s=100, c=dist_kpc, cmap="rainbow_r", linewidths=0, alpha=0.7,zorder=1e9)
+        cax = ax.scatter(dh2_fix, sfrd, s=100, c=dist_kpc, cmap="rainbow_r", linewidths=0, alpha=0.7,zorder=-1e9)
         for i in range(len(dh2_fix)):
             x    = dh2_fix[i]
             y    = sfrd[i]
@@ -667,7 +667,7 @@ class ToolsNGC3110():
             yerr = sfrd_err
             c    = cm.rainbow_r( dist_kpc[i] / clim )
 
-            _, _, bars = ax.errorbar(x,y,xerr=xerr,yerr=yerr,fmt="o",c=c,capsize=5,markeredgewidth=0,markersize=0,lw=2,zorder=1e8)
+            _, _, bars = ax.errorbar(x,y,xerr=xerr,yerr=yerr,fmt="o",c=c,capsize=5,markeredgewidth=0,markersize=0,lw=2,zorder=-1e9)
             [bar.set_alpha(0.7) for bar in bars]
 
         cbar = plt.colorbar(cax)
@@ -681,8 +681,8 @@ class ToolsNGC3110():
             y    = sfrd_speak[i]
             yerr = sfrd_err
             c    = "black"
-            ax.scatter(x, y, s=100, c=c, linewidth=2.0, zorder=2e12)
-            ax.errorbar(x, y, xerr=xerr, yerr=yerr, capsize=0, c=c, linewidth=2.0, zorder=-1e9)
+            ax.scatter(x, y, s=100, c=c, linewidth=2.0, zorder=1e9)
+            ax.errorbar(x, y, xerr=xerr, yerr=yerr, capsize=0, c=c, linewidth=2.0, zorder=1e9)
 
         ax.plot(xlim,[xlim[0]-3.0,xlim[1]-3.0], "k--")
         ax.plot(xlim,[xlim[0]-2.0,xlim[1]-2.0], "k--")
