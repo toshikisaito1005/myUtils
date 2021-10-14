@@ -855,6 +855,12 @@ def myax_fig2png_ann(ax,number,ra_cnt,dec_cnt,add_text=True,txtfiles=None):
 
         ax.add_patch(this_e)
 
+        ax.scatter(-8,4,"+",c="black",s=100,lw=5)
+
+        if add_text==True:
+            ax.text(15, -25, "thin southern arm", color="white", rotation=90,
+                horizontalalignment="center", verticalalignment="bottom", weight="bold")
+
     ###########################################
     # Figure 2 of C8.5 spectral scan proposal #
     ###########################################
