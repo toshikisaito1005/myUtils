@@ -1763,6 +1763,7 @@ class ToolsNGC3110():
             label_cbar="km s$^{-1}$",
             clim=[-245,245],
             numann="n3110_co_moms",
+            textann=True,
             )
 
         # 12co21
