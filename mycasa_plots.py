@@ -861,7 +861,7 @@ def myax_fig2png_ann(ax,number,ra_cnt,dec_cnt,add_text=True,txtfiles=None):
             ax.text(15, -25, "thin southern arm", color="black", rotation=90,
                 horizontalalignment="center", verticalalignment="bottom", weight="bold")
 
-            ax.plot([-8,-20],[4,8],marker="+",c="black",s=500,lw=5)
+            ax.plot([-8,-20],[4,8],"-",c="black",lw=2)
             ax.text(-21, 9, "northern blob", color="black",
                 horizontalalignment="left", verticalalignment="bottom", weight="bold")
 
