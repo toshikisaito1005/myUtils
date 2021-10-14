@@ -851,18 +851,18 @@ def myax_fig2png_ann(ax,number,ra_cnt,dec_cnt,add_text=True,txtfiles=None):
         # highlight speak
         this_e = patches.Arc(xy=(3,-14), width=20, height=40, angle=-10,
             theta1=-55, theta2=35,
-            fill=False, edgecolor="black", alpha=1.0, lw=5.0)
+            fill=False, edgecolor="black", alpha=1.0, lw=4)
 
         ax.add_patch(this_e)
 
-        ax.scatter(-8,4,marker="+",c="black",s=500,lw=5)
+        ax.scatter(-8,4,marker="+",c="black",s=700,lw=4)
 
         if add_text==True:
             ax.text(15, -25, "thin southern arm", color="black", rotation=90,
                 horizontalalignment="center", verticalalignment="bottom", weight="bold")
 
-            ax.plot([-8,-20],[4,8],"-",c="black",lw=2)
-            ax.text(-21, 9, "northern\nblob", color="black",
+            ax.plot([-8,-29],[4,8],"-",c="black",lw=2)
+            ax.text(-18, 9, "northern\nblob", color="black",
                 horizontalalignment="left", verticalalignment="bottom", weight="bold")
 
     ###########################################
