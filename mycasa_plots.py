@@ -849,8 +849,8 @@ def myax_fig2png_ann(ax,number,ra_cnt,dec_cnt,add_text=True,txtfiles=None):
 
     if number=="n3110_co_moms":
         # highlight speak
-        this_e = patches.Arc(xy=(-8,-12), width=20, height=20, angle=0,
-            theta1=-25, theta2=45,
+        this_e = patches.Arc(xy=(-8,-12), width=20, height=30, angle=0,
+            theta1=-25, theta2=65,
             fill=False, edgecolor="black", alpha=1.0, lw=3.0)
 
         ax.add_patch(this_e)
