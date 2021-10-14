@@ -856,10 +856,9 @@ def myax_fig2png_ann(ax,number,ra_cnt,dec_cnt,add_text=True,txtfiles=None):
             this_y = (float(data[data[:,0]=="dec_speak"][0,1].replace(",,,","").replace("deg","")) \
                 - float(dec_cnt.split("deg")[0])) * 3600
             this_r = float(data[data[:,0]=="r_speak"][0,1].replace(",,,","").replace("arcsec",""))
-            print(-this_x,this_y)
 
-            this_e = patches.Ellipse(xy=(this_x,this_y), width=this_r,
-                height=this_r, angle=0, fill=False, edgecolor="tomato",
+            this_e = patches.Ellipse(xy=(this_x,this_y), width=this_r*2,
+                height=this_r*2, angle=0, fill=False, edgecolor="tomato",
                 alpha=1.0, lw=2.0)
 
             ax.add_patch(this_e)
