@@ -851,8 +851,8 @@ def myax_fig2png_ann(ax,number,ra_cnt,dec_cnt,add_text=True,txtfiles=None):
         # highlight speak
         if txtfiles!=None:
             data   = np.loadtxt(txtfiles,dtype="str")
-            this_x = float(data[data[:,0]=="ra_speak"][0,1].replace(",,,","").replace("deg","") - ra_cnt) * 3600
-            this_y = float(data[data[:,0]=="dec_speak"][0,1].replace(",,,","").replace("deg","") - dec_cnt) * 3600
+            this_x = (float(data[data[:,0]=="ra_speak"][0,1].replace(",,,","").replace("deg","")) - ra_cnt) * 3600
+            this_y = (float(data[data[:,0]=="dec_speak"][0,1].replace(",,,","").replace("deg","")) - dec_cnt) * 3600
             this_r = float(data[data[:,0]=="r_speak"][0,1].replace(",,,","").replace("arcsec",""))
 
             this_e = patches.Ellipse(xy=(-thisx,thisy), width=this_r,
