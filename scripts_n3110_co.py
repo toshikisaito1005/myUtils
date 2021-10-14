@@ -359,7 +359,10 @@ class ToolsNGC3110():
             self.plot_scatter()
 
         if combine_figures==True:
-            self.immagick_figures()
+            self.immagick_figures(
+                do_all=False,
+                do_final_showline=True,
+                )
 
     ####################
     # immagick_figures #
@@ -367,6 +370,16 @@ class ToolsNGC3110():
 
     def immagick_figures(
         self,
+        do_all=False,
+        do_final_irac=False,
+        do_final_showline=False,
+        do_final_showcont=False,
+        do_final_showratio=False,
+        do_final_radial=False,
+        do_final_showhex=False,
+        do_final_aco=False,
+        do_final_scatter=False,
+        do_final_appendix1=False,
         delin=False,
         ):
         """
@@ -376,195 +389,215 @@ class ToolsNGC3110():
         taskname = self.modname + sys._getframe().f_code.co_name
         check_first(self.outpng_irac,taskname)
 
-        # final_irac
-        print("#####################")
-        print("# create final_irac #")
-        print("#####################")
+        if do_all==True:
+            do_final_irac      = True
+            do_final_showline  = True
+            do_final_showcont  = True
+            do_final_showratio = True
+            do_final_radial    = True
+            do_final_showhex   = True
+            do_final_aco       = True
+            do_final_scatter   = True
+            do_final_appendix1 = True
 
-        immagick_crop(self.outpng_irac,self.final_irac,self.box_irac)
+        # final_irac
+        if do_final_irac==True:
+            print("#####################")
+            print("# create final_irac #")
+            print("#####################")
+
+            immagick_crop(self.outpng_irac,self.final_irac,self.box_irac)
 
         # final_showline
-        print("")
-        print("#########################")
-        print("# create final_showline #")
-        print("#########################")
+        if do_final_showline==True:
+            print("")
+            print("#########################")
+            print("# create final_showline #")
+            print("#########################")
 
-        combine_two_png(
-            self.outpng_12co10,
-            self.outpng_13co10,
-            self.final_showline+"_tmp1.png",
-            self.box_line_tl,
-            self.box_line_tr,
-            )
-        combine_three_png(
-            self.outpng_12co21,
-            self.outpng_13co21,
-            self.outpng_c18o21,
-            self.final_showline+"_tmp2.png",
-            self.box_line_bl,
-            self.box_line_br,
-            self.box_line_br,
-            )
-        immagick_append(
-            self.final_showline+"_tmp1.png",
-            self.final_showline+"_tmp2.png",
-            self.final_showline,
-            axis="column",
-            delin=True,
-            )
+            combine_two_png(
+                self.outpng_12co10,
+                self.outpng_13co10,
+                self.final_showline+"_tmp1.png",
+                self.box_line_tl,
+                self.box_line_tr,
+                )
+            combine_three_png(
+                self.outpng_12co21,
+                self.outpng_13co21,
+                self.outpng_c18o21,
+                self.final_showline+"_tmp2.png",
+                self.box_line_bl,
+                self.box_line_br,
+                self.box_line_br,
+                )
+            immagick_append(
+                self.final_showline+"_tmp1.png",
+                self.final_showline+"_tmp2.png",
+                self.final_showline,
+                axis="column",
+                delin=True,
+                )
 
         # final_showcont
-        print("")
-        print("#########################")
-        print("# create final_showcont #")
-        print("#########################")
+        if do_final_showcont==True:
+            print("")
+            print("#########################")
+            print("# create final_showcont #")
+            print("#########################")
 
-        combine_two_png(
-            self.outpng_b3,
-            self.outpng_b6,
-            self.final_showcont,
-            self.box_cont_b3,
-            self.box_cont_b6,
-            )
+            combine_two_png(
+                self.outpng_b3,
+                self.outpng_b6,
+                self.final_showcont,
+                self.box_cont_b3,
+                self.box_cont_b6,
+                )
 
         # final_showratio
-        print("")
-        print("##########################")
-        print("# create final_showratio #")
-        print("##########################")
+        if do_final_showratio==True:
+            print("")
+            print("##########################")
+            print("# create final_showratio #")
+            print("##########################")
         
-        combine_two_png(
-            self.outpng_r_21,
-            self.outpng_r_t21,
-            self.final_showratio+"_tmp1.png",
-            self.box_ratio_tl,
-            self.box_ratio_tr,
-            )
-        combine_two_png(
-            self.outpng_r_1213l,
-            self.outpng_r_1213h,
-            self.final_showratio+"_tmp2.png",
-            self.box_ratio_bl,
-            self.box_ratio_br,
-            )
-        immagick_append(
-            self.final_showratio+"_tmp1.png",
-            self.final_showratio+"_tmp2.png",
-            self.final_showratio,
-            axis="column",
-            delin=True,
-            )
+            combine_two_png(
+                self.outpng_r_21,
+                self.outpng_r_t21,
+                self.final_showratio+"_tmp1.png",
+                self.box_ratio_tl,
+                self.box_ratio_tr,
+                )
+            combine_two_png(
+                self.outpng_r_1213l,
+                self.outpng_r_1213h,
+                self.final_showratio+"_tmp2.png",
+                self.box_ratio_bl,
+                self.box_ratio_br,
+                )
+            immagick_append(
+                self.final_showratio+"_tmp1.png",
+                self.final_showratio+"_tmp2.png",
+                self.final_showratio,
+                axis="column",
+                delin=True,
+                )
 
         # final_radial
-        print("")
-        print("#######################")
-        print("# create final_radial #")
-        print("#######################")
+        if do_final_radial==True:
+            print("")
+            print("#######################")
+            print("# create final_radial #")
+            print("#######################")
         
-        combine_two_png(
-            self.outpng_radial_21,
-            self.outpng_radial_1213,
-            self.final_radial,
-            self.box_radial,
-            self.box_radial,
-            )
+            combine_two_png(
+                self.outpng_radial_21,
+                self.outpng_radial_1213,
+                self.final_radial,
+                self.box_radial,
+                self.box_radial,
+                )
 
         # final_showhex
-        print("")
-        print("########################")
-        print("# create final_showhex #")
-        print("########################")
+        if do_final_showhex==True:
+            print("")
+            print("########################")
+            print("# create final_showhex #")
+            print("########################")
 
-        combine_three_png(
-            self.outpng_hex_tkin,
-            self.outpng_hex_nh2,
-            self.outpng_hex_index,
-            self.final_showhex+"_tmp1.png",
-            self.box_hex1,
-            self.box_hex2,
-            self.box_hex2,
-            )
-        combine_three_png(
-            self.outpng_hex_sfrd,
-            self.outpng_hex_sscd,
-            self.outpng_hex_sfe,
-            self.final_showhex+"_tmp2.png",
-            self.box_hex1,
-            self.box_hex2,
-            self.box_hex2,
-            )
-        combine_three_png(
-            self.final_showhex+"_tmp1.png",
-            self.final_showhex+"_tmp2.png",
-            self.outpng_hex_aco,
-            self.final_showhex,
-            "100000x100000+0+0",
-            "100000x100000+0+0",
-            self.box_hex3,
-            axis="column",
-            )
-        os.system("rm -rf " + self.final_showhex + "_tmp1.png")
-        os.system("rm -rf " + self.final_showhex + "_tmp2.png")
+            combine_three_png(
+                self.outpng_hex_tkin,
+                self.outpng_hex_nh2,
+                self.outpng_hex_index,
+                self.final_showhex+"_tmp1.png",
+                self.box_hex1,
+                self.box_hex2,
+                self.box_hex2,
+                )
+            combine_three_png(
+                self.outpng_hex_sfrd,
+                self.outpng_hex_sscd,
+                self.outpng_hex_sfe,
+                self.final_showhex+"_tmp2.png",
+                self.box_hex1,
+                self.box_hex2,
+                self.box_hex2,
+                )
+            combine_three_png(
+                self.final_showhex+"_tmp1.png",
+                self.final_showhex+"_tmp2.png",
+                self.outpng_hex_aco,
+                self.final_showhex,
+                "100000x100000+0+0",
+                "100000x100000+0+0",
+                self.box_hex3,
+                axis="column",
+                )
+            os.system("rm -rf " + self.final_showhex + "_tmp1.png")
+            os.system("rm -rf " + self.final_showhex + "_tmp2.png")
 
         # final_aco
-        print("")
-        print("####################")
-        print("# create final_aco #")
-        print("####################")
+        if do_final_aco==True:
+            print("")
+            print("####################")
+            print("# create final_aco #")
+            print("####################")
 
-        combine_two_png(
-            self.outpng_aco_radial,
-            self.outpng_aco_hist,
-            self.final_aco,
-            self.box_aco1,
-            self.box_aco2,
-            )
+            combine_two_png(
+                self.outpng_aco_radial,
+                self.outpng_aco_hist,
+                self.final_aco,
+                self.box_aco1,
+                self.box_aco2,
+                )
 
         # final_scatter
-        print("")
-        print("########################")
-        print("# create final_scatter #")
-        print("########################")
+        if do_final_scatter==True:
+            print("")
+            print("########################")
+            print("# create final_scatter #")
+            print("########################")
 
-        combine_two_png(
-            self.output_ks_fix,
-            self.output_index_vs_sfe_fix,
-            self.final_scatter+"_tmp1.png",
-            self.box_scatter1,
-            self.box_scatter1,
-            )
-        combine_two_png(
-            self.final_scatter+"_tmp1.png",
-            self.output_sfe_vs_ssc_fix,
-            self.final_scatter,
-            "100000x100000+0+0",
-            self.box_scatter2,
-            axis="column",
-            )
-        os.system("rm -rf " + self.final_scatter + "_tmp1.png")
+            combine_two_png(
+                self.output_ks_fix,
+                self.output_index_vs_sfe_fix,
+                self.final_scatter+"_tmp1.png",
+                self.box_scatter1,
+                self.box_scatter1,
+                )
+            combine_two_png(
+                self.final_scatter+"_tmp1.png",
+                self.output_sfe_vs_ssc_fix,
+                self.final_scatter,
+                "100000x100000+0+0",
+                self.box_scatter2,
+                axis="column",
+                )
+            os.system("rm -rf " + self.final_scatter + "_tmp1.png")
 
         # final_appendix1
-        print("")
-        print("##########################")
-        print("# create final_appendix1 #")
-        print("##########################")
+        if do_final_appendix1==True:
+            print("")
+            print("##########################")
+            print("# create final_appendix1 #")
+            print("##########################")
 
-        combine_two_png(
-            self.output_ks_vary,
-            self.output_index_vs_sfe_vary,
-            self.final_appendix1+"_tmp1.png",
-            self.box_scatter1,
-            self.box_scatter1,
-            )
-        combine_two_png(
-            self.final_appendix1+"_tmp1.png",
-            self.output_sfe_vs_ssc_vary,
-            self.final_appendix1,
-            "100000x100000+0+0",
-            self.box_scatter2,
-            axis="column",
-            )
-        os.system("rm -rf " + self.final_appendix1 + "_tmp1.png")
+            combine_two_png(
+                self.output_ks_vary,
+                self.output_index_vs_sfe_vary,
+                self.final_appendix1+"_tmp1.png",
+                self.box_scatter1,
+                self.box_scatter1,
+                )
+            combine_two_png(
+                self.final_appendix1+"_tmp1.png",
+                self.output_sfe_vs_ssc_vary,
+                self.final_appendix1,
+                "100000x100000+0+0",
+                self.box_scatter2,
+                axis="column",
+                )
+            os.system("rm -rf " + self.final_appendix1 + "_tmp1.png")
 
     ################
     # plot_scatter #

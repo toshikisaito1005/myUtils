@@ -850,7 +850,7 @@ def myax_fig2png_ann(ax,number,ra_cnt,dec_cnt,add_text=True,txtfiles=None):
     if number=="n3110_co_moms":
         # highlight speak
         if txtfiles!=None:
-            this_e = patches.Ellipse(xy=(-8,-12), height=20, angle=0,
+            this_e = patches.Ellipse(xy=(-8,-12), height=10, angle=0,
                 theta1=75, theta2=135,
                 fill=False, edgecolor="black", alpha=1.0, lw=3.0)
 
