@@ -858,8 +858,12 @@ def myax_fig2png_ann(ax,number,ra_cnt,dec_cnt,add_text=True,txtfiles=None):
         ax.scatter(-8,4,marker="+",c="black",s=500,lw=5)
 
         if add_text==True:
-            ax.text(15, -25, "thin southern arm", color="white", rotation=90,
+            ax.text(15, -25, "thin southern arm", color="black", rotation=90,
                 horizontalalignment="center", verticalalignment="bottom", weight="bold")
+
+            ax.plot([-8,-20],[4,8],marker="+",c="black",s=500,lw=5)
+            ax.text(-21, 9, "northern blob", color="black",
+                horizontalalignment="left", verticalalignment="bottom", weight="bold")
 
     ###########################################
     # Figure 2 of C8.5 spectral scan proposal #
