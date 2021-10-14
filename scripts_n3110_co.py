@@ -1648,7 +1648,7 @@ class ToolsNGC3110():
             ra_cnt=self.ra_str,
             dec_cnt=self.dec_str,
             unit_cont1=0.0627, # 1sigma level in Jy/beam
-            levels_cont1=[-2,2,4,6,8,10,15,20],
+            levels_cont1=[-2.5,2.5,5.0,7.5,10.0,15.0,20.0],
             width_cont1=[1.5],
             color_cont1="black",
             set_title="1.3 mm Continuum",
