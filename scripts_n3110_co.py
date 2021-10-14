@@ -1786,6 +1786,7 @@ class ToolsNGC3110():
             label_cbar="km s$^{-1}$",
             clim=[-245,245],
             numann="n3110_co_moms",
+            textann=False,
             )
 
         # 13co10
@@ -1808,6 +1809,7 @@ class ToolsNGC3110():
             label_cbar="km s$^{-1}$",
             clim=[-245,245],
             numann="n3110_co_moms",
+            textann=False,
             )
 
         # 13co21
@@ -1830,6 +1832,7 @@ class ToolsNGC3110():
             label_cbar="km s$^{-1}$",
             clim=[-245,245],
             numann="n3110_co_moms",
+            textann=False,
             )
 
         # c18o21
@@ -1852,6 +1855,7 @@ class ToolsNGC3110():
             label_cbar="km s$^{-1}$",
             clim=[-245,245],
             numann="n3110_co_moms",
+            textann=False,
             )
 
     ##############

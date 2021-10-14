@@ -862,7 +862,7 @@ def myax_fig2png_ann(ax,number,ra_cnt,dec_cnt,add_text=True,txtfiles=None):
                 horizontalalignment="center", verticalalignment="bottom", weight="bold")
 
             ax.plot([-8,-20],[4,8],"-",c="black",lw=2)
-            ax.text(-21, 9, "northern blob", color="black",
+            ax.text(-21, 9, "northern\nblob", color="black",
                 horizontalalignment="left", verticalalignment="bottom", weight="bold")
 
     ###########################################
