@@ -836,16 +836,30 @@ def myax_fig2png_ann(ax,number,ra_cnt,dec_cnt,add_text=True,txtfiles=None):
             ax.text(-8.5, 8.0, "AGN position",
                 horizontalalignment="right", verticalalignment="center", weight="bold")
 
-    #####################################
-    # Figure 1 of the NGC 3110 CO paper #
-    #####################################
-    if number==2:
+    ####################################
+    # Figures of the NGC 3110 CO paper #
+    ####################################
+    if number=="n3110_irac":
         # add annotation comment
         if add_text==True:
             ax.text(-15, 10, "NGC 3110", color="white",
                 horizontalalignment="right", verticalalignment="center", weight="bold")
             ax.text(-60, -30, "MCG-01-26-013", color="white",
                 horizontalalignment="right", verticalalignment="center", weight="bold")
+
+    if number=="n3110_co_moms":
+        # highlight speak
+        if txtfiles!=None:
+            data   = np.loadtxt(txtfiles,dtype="str")
+            this_x = float(data[data[:,0]=="ra_speak"][0,1].replace(",,,","").replace("deg","") - ra_dgr) * 3600
+            this_y = float(data[data[:,0]=="dec_speak"][0,1].replace(",,,","").replace("deg","") - dec_dgr) * 3600
+            this_r = float(data[data[:,0]=="r_speak"][0,1].replace(",,,","").replace("arcsec",""))
+
+            this_e = patches.Ellipse(xy=(-thisx,thisy), width=this_r,
+                height=this_r, angle=0, fill=False, edgecolor="grey",
+                alpha=1.0, lw=1.0)
+
+            ax.add_patch(this_e)
 
     ###########################################
     # Figure 2 of C8.5 spectral scan proposal #
@@ -875,9 +889,6 @@ def myax_fig2png_ann(ax,number,ra_cnt,dec_cnt,add_text=True,txtfiles=None):
                 horizontalalignment="center", verticalalignment="bottom", weight="bold")
             t.set_bbox(dict(facecolor="white", alpha=0.8, lw=0))
 
-    ###########################################
-    # Figure 3 of C8.5 spectral scan proposal #
-    ###########################################
     if number==4:
         if txtfiles!=None:
             # b3 fov

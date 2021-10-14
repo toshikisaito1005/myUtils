@@ -1699,7 +1699,7 @@ class ToolsNGC3110():
             set_cbar=True,
             label_cbar="MJy sr$^{-1}$",
             clim=[0,30],
-            numann=2,
+            numann="n3110_irac",
             textann=True,
             showbeam=False,
             )
@@ -1723,6 +1723,9 @@ class ToolsNGC3110():
             set_cbar=True,
             label_cbar="km s$^{-1}$",
             clim=[-245,245],
+            numann="n3110_co_moms",
+            textann=True,
+            txtfiles=self.keyfile_gal,
             )
 
         # 12co21
