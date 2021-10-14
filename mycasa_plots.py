@@ -858,7 +858,7 @@ def myax_fig2png_ann(ax,number,ra_cnt,dec_cnt,add_text=True,txtfiles=None):
         ax.scatter(-8,4,marker="+",c="black",s=700,lw=4)
 
         if add_text==True:
-            ax.text(15, -25, "thin southern arm", color="black", rotation=90,
+            ax.text(15, -29, "thin southern arm", color="black", rotation=90,
                 horizontalalignment="center", verticalalignment="bottom", weight="bold")
 
             ax.plot([-8,-19],[4,8],"-",c="black",lw=2)
