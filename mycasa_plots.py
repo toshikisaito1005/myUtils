@@ -850,16 +850,9 @@ def myax_fig2png_ann(ax,number,ra_cnt,dec_cnt,add_text=True,txtfiles=None):
     if number=="n3110_co_moms":
         # highlight speak
         if txtfiles!=None:
-            data   = np.loadtxt(txtfiles,dtype="str")
-            this_x = (float(data[data[:,0]=="ra_speak"][0,1].replace(",,,","").replace("deg","")) \
-                - float(ra_cnt.split("deg")[0])) * 3600
-            this_y = (float(data[data[:,0]=="dec_speak"][0,1].replace(",,,","").replace("deg","")) \
-                - float(dec_cnt.split("deg")[0])) * 3600
-            this_r = float(data[data[:,0]=="r_speak"][0,1].replace(",,,","").replace("arcsec",""))
-
-            this_e = patches.Ellipse(xy=(this_x,this_y), width=this_r*2,
-                height=this_r*2, angle=0, fill=False, edgecolor="black",
-                alpha=1.0, lw=3.0)
+            this_e = patches.Ellipse(xy=(-8,-12), height=20, angle=0,
+                theta1=75, theta2=135,
+                fill=False, edgecolor="black", alpha=1.0, lw=3.0)
 
             ax.add_patch(this_e)
 
