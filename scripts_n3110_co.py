@@ -1523,8 +1523,8 @@ class ToolsNGC3110():
             set_cbar=True,
             label_cbar="Ratio",
             clim=[0.1,1.5],
-            #numann="n3110_co_moms",
-            #txtfiles=self.keyfile_gal,
+            numann="n3110_co_moms",
+            txtfiles=self.keyfile_gal,
             )
 
         # 12co21 12co10 ratio
@@ -1546,8 +1546,8 @@ class ToolsNGC3110():
             set_cbar=True,
             label_cbar="Ratio",
             clim=[0.1,1.5],
-            #numann="n3110_co_moms",
-            #txtfiles=self.keyfile_gal,
+            numann="n3110_co_moms",
+            txtfiles=self.keyfile_gal,
             )
 
         # 12co10 13co10 ratio
@@ -1569,8 +1569,8 @@ class ToolsNGC3110():
             set_cbar=True,
             label_cbar="Ratio",
             clim=[7.5,30.0],
-            #numann="n3110_co_moms",
-            #txtfiles=self.keyfile_gal,
+            numann="n3110_co_moms",
+            txtfiles=self.keyfile_gal,
             )
 
         # 12co21 13co21 ratio
@@ -1592,8 +1592,8 @@ class ToolsNGC3110():
             set_cbar=True,
             label_cbar="Ratio",
             clim=[7.5,30.0],
-            #numann="n3110_co_moms",
-            #txtfiles=self.keyfile_gal,
+            numann="n3110_co_moms",
+            txtfiles=self.keyfile_gal,
             )
 
     ############
@@ -1635,8 +1635,8 @@ class ToolsNGC3110():
             label_cbar="mJy beam$^{-1}$",
             set_bg_color=cm.PuBu(0),
             clim=[0,0.50],
-            #numann="n3110_co_moms",
-            #txtfiles=self.keyfile_gal,
+            numann="n3110_co_moms",
+            txtfiles=self.keyfile_gal,
             )
 
         # b6
@@ -1661,8 +1661,8 @@ class ToolsNGC3110():
             label_cbar="mJy beam$^{-1}$",
             set_bg_color=cm.PuBu(0),
             clim=[0,1.70],
-            #numann="n3110_co_moms",
-            #txtfiles=self.keyfile_gal,
+            numann="n3110_co_moms",
+            txtfiles=self.keyfile_gal,
             )
 
     ############
