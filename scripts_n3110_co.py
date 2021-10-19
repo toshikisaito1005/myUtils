@@ -230,6 +230,8 @@ class ToolsNGC3110():
             self.nu_b6     = 234.6075
             self.nu_b3     = 104.024625
 
+            self.key_qrot = "/home02/saitots/myUtils/keys_n3110_co/Qrot_CDMS.txt"
+
             # output txt and png
             self.outpng_irac   = self.dir_products + self._read_key("outpng_irac")
             self.outpng_12co10 = self.dir_products + self._read_key("outpng_12co10")
@@ -1324,7 +1326,7 @@ class ToolsNGC3110():
 
             # a_lte(trot)
             logN_rot, Qrot = self._trot_from_rotation_diagram_13co(
-                15.0, this_k_13co21, txtdata = "keys/Qrot_CDMS.txt")
+                15.0, this_k_13co21, txtdata = self.key_qrot)
             N_tot = 10**logN_rot
             Xco = N_tot / X13co / this_k_12co10
             a_lte_trot = 4.3 * Xco / 2e+20
@@ -1332,9 +1334,9 @@ class ToolsNGC3110():
 
             # print Trot=15 and 30 K
             logN_15, _ = self._trot_from_rotation_diagram_13co(
-                15.0, this_k_13co21, txtdata = "keys/Qrot_CDMS.txt")
+                15.0, this_k_13co21, txtdata = self.key_qrot)
             logN_30, _ = self._trot_from_rotation_diagram_13co(
-                30.0, this_k_13co21, txtdata = "keys/Qrot_CDMS.txt")
+                30.0, this_k_13co21, txtdata = self.key_qrot)
             print(logN_15, logN_30, logN_30/logN_15)
 
             # a_lte(trot) error
@@ -1345,7 +1347,7 @@ class ToolsNGC3110():
 
             # a_lte(tkin)
             logN_rot, Qrot = self._trot_from_rotation_diagram_13co(
-                tkin[i], this_k_13co21, txtdata = "keys/Qrot_CDMS.txt")
+                tkin[i], this_k_13co21, txtdata = self.key_qrot)
             N_tot = 10**logN_rot
             Xco = N_tot / X13co / this_k_12co10
             a_lte_tkin = 4.3 * Xco / 2e+20
