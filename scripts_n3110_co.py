@@ -992,6 +992,8 @@ class ToolsNGC3110():
         aco_ism_trot_err = data[:,19]
         aco_ism_tkin_err = data[:,20]
 
+        print(aco_lte_trot)
+
         # process data
         dist_kpc  = np.sqrt(data_ra2**2+data_dec2**2) * 3600 * self.scale_kpc
 
@@ -1053,7 +1055,6 @@ class ToolsNGC3110():
 
         # plot hist
         histdata = np.histogram(aco_lte_trot, bins=25, range=[0.5,3.5])
-        print(aco_lte_trot)
         x1, y1 = histdata[1][:-1], histdata[0]/float(np.sum(histdata[0]))
         histdata = np.histogram(aco_ism_trot, bins=25, range=[0.5,3.5])
         x2, y2 = histdata[1][:-1], histdata[0]/float(np.sum(histdata[0]))
