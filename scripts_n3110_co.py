@@ -1330,6 +1330,13 @@ class ToolsNGC3110():
             a_lte_trot = 4.3 * Xco / 2e+20
             list_alpha_lte_trot.append(a_lte_trot)
 
+            # print Trot=15 and 30 K
+            logN_15, _ = self._trot_from_rotation_diagram_13co(
+                15.0, this_k_13co21, txtdata = "keys/Qrot_CDMS.txt")
+            logN_30, _ = self._trot_from_rotation_diagram_13co(
+                30.0, this_k_13co21, txtdata = "keys/Qrot_CDMS.txt")
+            print(logN_15, logN_30, logN_30/logN_15)
+
             # a_lte(trot) error
             N_tot_err = N_tot * err_k_13co21 / this_k_13co21
             Xco_err = Xco * np.sqrt((err_k_12co10/this_k_12co10)**2 + (N_tot_err/N_tot)**2)
