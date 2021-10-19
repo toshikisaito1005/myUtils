@@ -363,7 +363,7 @@ class ToolsNGC3110():
 
         if combine_figures==True:
             self.immagick_figures(
-                do_all=False,
+                do_all=True,
                 do_final_showline=True,
                 )
 
