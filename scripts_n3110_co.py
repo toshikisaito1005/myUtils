@@ -2328,7 +2328,7 @@ class ToolsNGC3110():
         ):
 
         k_B = 1.38064852e-16 # erg/K
-        h_p = 6.6260755e-27 # erg/s
+        h_p = 6.6260755e-27 # erg.s
         Tbg = 2.73 # K
         Eu = {
             1: 5.28880,
@@ -2355,8 +2355,11 @@ class ToolsNGC3110():
 
         #log_Ntot = (b + Qrot - np.log(1 - (exp_rot / exp_bg))) / np.log(10)
         #Ntot = y_hj * Qrot / (1 - (exp_rot / exp_bg)) / np.exp(Eu[hj_upp]/Trot)
-        Ntot = 3 * k_B * flux_hj / (8 * np.pi * Snu2[hj_upp] * 110.20135 * hj_upp) * 1e32 * Qrot \
-            / (1 - (exp_rot / exp_bg)) / np.exp(Eu[hj_upp]/Trot)
+        #Ntot = 3 * k_B * flux_hj / (8 * np.pi * Snu2[hj_upp] * 110.20135 * hj_upp) * 1e32 * Qrot \
+        #    / (1 - (exp_rot / exp_bg)) / np.exp(Eu[hj_upp]/Trot)
+        factor = (8 * np.pi * Snu2[hj_upp] * 110.20135 * hj_upp) * 1e32 / (3 * k_B * Qrot)
+        factor = factor * (1 - (exp_rot / exp_bg)) * np.exp(Eu[hj_upp]/Trot)
+        Ntot = flux_hj / factor
         log_Ntot = np.log10(Ntot)
 
         return round(log_Ntot, 2), round(Qrot, 2)
