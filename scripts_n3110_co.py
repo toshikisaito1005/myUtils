@@ -1337,7 +1337,7 @@ class ToolsNGC3110():
                 15.0, this_k_13co21, txtdata = self.key_qrot)
             logN_30, _ = self._trot_from_rotation_diagram_13co(
                 30.0, this_k_13co21, txtdata = self.key_qrot)
-            if np.isinf(logN_15)!=False:
+            if np.isinf(logN_15)==False:
                 print(logN_15, logN_30, 10**logN_30/10**logN_15)
 
             # a_lte(trot) error
