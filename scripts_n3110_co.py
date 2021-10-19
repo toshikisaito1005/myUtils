@@ -2359,7 +2359,7 @@ class ToolsNGC3110():
 
         #log_Ntot = (b + Qrot - np.log(1 - (exp_rot / exp_bg))) / np.log(10)
         #Ntot = y_hj * Qrot / (1 - (exp_rot / exp_bg)) / np.exp(Eu[hj_upp]/Trot)
-        factor = (8 * np.pi**3 * Snu2[hj_upp] * 110.20135 * hj_upp) / (3 * k_B * Qrot * 1e32)
+        factor = (8 * np.pi * Snu2[hj_upp] * 110.20135 * hj_upp) / (3 * k_B * Qrot * 1e32)
         factor = factor * (1 - (exp_rot / exp_bg)) * np.exp(-1 * Eu[hj_upp]/Trot)
         Ntot = flux_hj / factor
         log_Ntot = np.log10(Ntot)
