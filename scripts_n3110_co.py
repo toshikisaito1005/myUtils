@@ -1056,6 +1056,8 @@ class ToolsNGC3110():
         x1, y1 = histdata[1][:-1], histdata[0]/float(np.sum(histdata[0]))
         histdata = np.histogram(aco_ism_trot, bins=25, range=[0.5,3.5])
         x2, y2 = histdata[1][:-1], histdata[0]/float(np.sum(histdata[0]))
+        print(x1, y1)
+        print(x2, y2)
 
         plt.figure()
         plt.rcParams["font.size"] = 16
