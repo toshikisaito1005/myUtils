@@ -1333,14 +1333,14 @@ class ToolsNGC3110():
             list_alpha_lte_trot.append(a_lte_trot)
 
             # print Trot=15 and 30 K
-            logN_15, _ = self._trot_from_rotation_diagram_13co(
+            logN_15, Q15 = self._trot_from_rotation_diagram_13co(
                 15.0, this_k_13co21, txtdata = self.key_qrot)
-            logN_30, _ = self._trot_from_rotation_diagram_13co(
+            logN_30, Q30 = self._trot_from_rotation_diagram_13co(
                 30.0, this_k_13co21, txtdata = self.key_qrot)
-            logN_100, _ = self._trot_from_rotation_diagram_13co(
+            logN_100, Q100 = self._trot_from_rotation_diagram_13co(
                 100.0, this_k_13co21, txtdata = self.key_qrot)
             if np.isinf(logN_15)==False:
-                print( logN_15, logN_30, logN_100 )
+                print( Q15, Q30, Q100 )
 
             # a_lte(trot) error
             N_tot_err = N_tot * err_k_13co21 / this_k_13co21
