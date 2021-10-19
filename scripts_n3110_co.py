@@ -50,6 +50,7 @@ Date         Action
 2021-07-02   1st submit to ApJ!
 2021-08-17   receive the 1st referee report
 2021-09-01   major update based on the 1st referee report
+2021-10-19   bug fix in the rotation diagram part (refactor equation, Snu2)
 Toshiki Saito@Nichidai/NAOJ
 """
 
@@ -2343,12 +2344,13 @@ class ToolsNGC3110():
             6: 111.05126,
             }
         Snu2 = {
-            1: 0.02436,
-            2: 0.04869,
-            3: 0.07297,
-            4: 0.09717,
-            5: 0.12124,
-            6: 0.14518,
+            1: 0.01220,
+            2: 0.02436,
+            3: 0.04869,
+            4: 0.07297,
+            5: 0.09717,
+            6: 0.12124,
+            7: 0.14518,
             } # Debye^2
 
         #y_hj = 3 * k_B * flux_hj / (8 * np.pi * Snu2[hj_upp] * 110.20135 * hj_upp) * 1e32 # cm^2
