@@ -1331,10 +1331,11 @@ class ToolsNGC3110():
             logN_rot, Qrot = self._trot_from_rotation_diagram_13co(
                 15.0, this_k_13co21, txtdata = self.key_qrot)
             N_tot = 10**logN_rot
-            print(N_tot / X13co)
             Xco = N_tot / X13co / this_k_12co10
             a_lte_trot = 4.3 * Xco / 2e+20
             list_alpha_lte_trot.append(a_lte_trot)
+
+            print(N_tot / X13co, Xco, a_lte_trot)
 
             # a_lte(trot) error
             N_tot_err = N_tot * err_k_13co21 / this_k_13co21
@@ -1355,8 +1356,6 @@ class ToolsNGC3110():
             Xco_err = Xco * np.sqrt((err_k_12co10/this_k_12co10)**2 + (N_tot_err/N_tot)**2)
             a_lte_tkin_err = 4.3 * Xco_err / 2e+20
             list_alpha_lte_tkin_err.append(a_lte_tkin_err)
-
-        print(list_alpha_lte_trot)
 
         # alpha_ISM
         list_alpha_ism_trot = []
@@ -2369,7 +2368,7 @@ class ToolsNGC3110():
         # gammaWg = gamma * W / gu (eq.23 of Goldsmith & Langer 1999)
         gammaWg  = flux_hj * 8 * np.pi * k_B * (110.20135 * hj_upp)**2
         gammaWg  = gammaWg / (gu * h_p * (clight)**3 * Au) * 1e21 # cm^-2
-        log_Ntot = np.log10(gammaWg * Qrot * np.exp(Eu[hj_upp]/Trot))
+        log_Ntot = np.log10( gammaWg * Qrot * np.exp(Eu[hj_upp]/Trot) )
 
         return round(log_Ntot, 2), round(Qrot, 2)
 
