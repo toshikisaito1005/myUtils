@@ -1356,7 +1356,7 @@ class ToolsNGC3110():
             list_alpha_lte_tkin_err.append(a_lte_tkin_err)
 
         list_alpha_lte_trot = np.array(list_alpha_lte_trot)
-        print(mp.mean(list_alpha_lte_trot[list_alpha_lte_trot>0]))
+        print(np.mean(list_alpha_lte_trot[list_alpha_lte_trot>0]))
         # alpha_ISM
         list_alpha_ism_trot = []
         list_alpha_ism_tkin = []
