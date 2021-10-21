@@ -1333,6 +1333,8 @@ class ToolsNGC3110():
             a_lte_trot = 4.3 * Xco / 2e+20
             list_alpha_lte_trot.append(a_lte_trot)
 
+            print(10**logN_rot, Xco, a_lte_trot)
+
             # a_lte(trot) error
             N_tot_err = N_tot * err_k_13co21 / this_k_13co21
             Xco_err = Xco * np.sqrt((err_k_12co10/this_k_12co10)**2 + (N_tot_err/N_tot)**2)
