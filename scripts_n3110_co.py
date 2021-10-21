@@ -1355,6 +1355,8 @@ class ToolsNGC3110():
             a_lte_tkin_err = 4.3 * Xco_err / 2e+20
             list_alpha_lte_tkin_err.append(a_lte_tkin_err)
 
+        print(list_alpha_lte_trot)
+        
         # alpha_ISM
         list_alpha_ism_trot = []
         list_alpha_ism_tkin = []
