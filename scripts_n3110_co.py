@@ -1335,16 +1335,6 @@ class ToolsNGC3110():
             a_lte_trot = 4.3 * Xco / 2e+20
             list_alpha_lte_trot.append(a_lte_trot)
 
-            # print Trot=15 and 30 K
-            logN_15, Q15 = self._trot_from_rotation_diagram_13co(
-                15.0, this_k_13co21, txtdata = self.key_qrot)
-            logN_30, Q30 = self._trot_from_rotation_diagram_13co(
-                30.0, this_k_13co21, txtdata = self.key_qrot)
-            logN_100, Q100 = self._trot_from_rotation_diagram_13co(
-                100.0, this_k_13co21, txtdata = self.key_qrot)
-            if np.isinf(logN_15)==False:
-                print( logN_15, logN_30, logN_100 )
-
             # a_lte(trot) error
             N_tot_err = N_tot * err_k_13co21 / this_k_13co21
             Xco_err = Xco * np.sqrt((err_k_12co10/this_k_12co10)**2 + (N_tot_err/N_tot)**2)
@@ -2361,7 +2351,7 @@ class ToolsNGC3110():
 
         #log_Ntot = (b + Qrot - np.log(1 - (exp_rot / exp_bg))) / np.log(10)
         #Ntot = y_hj * Qrot / (1 - (exp_rot / exp_bg)) / np.exp(Eu[hj_upp]/Trot)
-        factor = (8 * np.pi * Snu2[hj_upp] * 110.20135 * hj_upp) / (3 * k_B * Qrot * 1e32)
+        factor = (8 * np.pi**3 * Snu2[hj_upp] * 110.20135 * hj_upp) / (3 * k_B * Qrot * 1e32)
         factor = factor * (1 - (exp_rot / exp_bg)) * np.exp(-1 * Eu[hj_upp]/Trot)
         Ntot = flux_hj / factor
         log_Ntot = np.log10(Ntot)
