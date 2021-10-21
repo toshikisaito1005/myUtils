@@ -1331,6 +1331,7 @@ class ToolsNGC3110():
             logN_rot, Qrot = self._trot_from_rotation_diagram_13co(
                 15.0, this_k_13co21, txtdata = self.key_qrot)
             N_tot = 10**logN_rot
+            print(N_tot / X13co)
             Xco = N_tot / X13co / this_k_12co10
             a_lte_trot = 4.3 * Xco / 2e+20
             list_alpha_lte_trot.append(a_lte_trot)
@@ -1356,7 +1357,7 @@ class ToolsNGC3110():
             list_alpha_lte_tkin_err.append(a_lte_tkin_err)
 
         print(list_alpha_lte_trot)
-        
+
         # alpha_ISM
         list_alpha_ism_trot = []
         list_alpha_ism_tkin = []
