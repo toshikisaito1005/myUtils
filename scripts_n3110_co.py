@@ -2364,7 +2364,7 @@ class ToolsNGC3110():
         #log_Ntot = np.log10(Ntot)
 
         # gammaWg = gamma * W / gu (eq.23 of Goldsmith & Langer 1999)
-        gammaWg  = flux_hj * 8 * np.pi * k_B * (110.20135e+9 * hj_upp)**2
+        gammaWg  = flux_hj * 8 * np.pi * k_B * (110.20135 * hj_upp)**2
         gammaWg  = gammaWg / (gu * h_p * (clight)**3 * Au) * 1e21 # cm^-2
         log_Ntot = np.log10(gammaWg * Qrot * np.exp(Eu[hj_upp]/Trot))
 
