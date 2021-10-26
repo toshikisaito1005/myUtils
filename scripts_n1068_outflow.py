@@ -1123,21 +1123,18 @@ class ToolsOutflow():
         taskname = self.modname + sys._getframe().f_code.co_name
         check_first(self.image_co10,taskname)
 
-        # import to casa
-        run_importfits(self.image_co10,self.out_map_co10)
-        run_importfits(self.image_ci10,self.out_map_ci10)
-        run_importfits(self.image_eco10,self.out_map_eco10)
-        run_importfits(self.image_eci10,self.out_map_eci10)
-        run_importfits(self.cube_co10,self.out_cube_co10)
-        run_importfits(self.cube_ci10,self.out_cube_ci10)
-        run_importfits(self.ncube_co10,self.out_ncube_co10)
-        run_importfits(self.ncube_ci10,self.out_ncube_ci10)
+        ##############################
+        # MUSE SIII/SII map (MAGNUM) #
+        ##############################
         run_importfits(self.image_siiisii,self.out_map_siiisii)
-        run_importfits(self.image_av,self.out_map_av)
-        run_importfits(self.image_oiii,self.out_map_oiii)
-        run_importfits(self.image_vla,self.out_map_radio)
 
-        # align 2d maps
+        #############################
+        # 2D co10 (align to MAGNUM) #
+        #############################
+        run_importfits(self.image_co10,self.out_map_co10)
+        run_importfits(self.image_eco10,self.out_map_eco10)
+
+        # align
         template = self.out_map_siiisii
         expr = "iif( IM0>IM1*" + str(self.snr_cube) + ", IM0, 0 )"
 
@@ -1146,10 +1143,43 @@ class ToolsOutflow():
         self._align_one_map(outfile, template, self.outfits_map_co10)
         os.system("rm -rf " + outfile)
 
+        outfile = self.out_map_eco10 + "_tmp1"
+        run_immath_two(self.out_map_eco10, self.out_map_eco10, outfile, expr)
+        self._align_one_map(outfile, template, self.outfits_map_eco10)
+        os.system("rm -rf " + outfile)
+
+        #############################
+        # 2D ci10 (align to MAGNUM) #
+        #############################
+        run_importfits(self.image_ci10,self.out_map_ci10)
+        run_importfits(self.image_eci10,self.out_map_eci10)
+
+        # align
+        template = self.out_map_siiisii
+        expr = "iif( IM0>IM1*" + str(self.snr_cube) + ", IM0, 0 )"
+
         outfile = self.out_map_ci10 + "_tmp1"
         run_immath_two(self.out_map_ci10, self.out_map_eci10, outfile, expr)
         self._align_one_map(outfile, template, self.outfits_map_ci10)
         os.system("rm -rf " + outfile)
+
+        outfile = self.out_map_eci10 + "_tmp1"
+        run_immath_two(self.out_map_eci10, self.out_map_eci10, outfile, expr)
+        self._align_one_map(outfile, template, self.outfits_map_eci10)
+        os.system("rm -rf " + outfile)
+
+
+
+        #############
+
+        # import to casa
+        run_importfits(self.cube_co10,self.out_cube_co10)
+        run_importfits(self.cube_ci10,self.out_cube_ci10)
+        run_importfits(self.ncube_co10,self.out_ncube_co10)
+        run_importfits(self.ncube_ci10,self.out_ncube_ci10)
+        run_importfits(self.image_av,self.out_map_av)
+        run_importfits(self.image_oiii,self.out_map_oiii)
+        run_importfits(self.image_vla,self.out_map_radio)
 
         # align 3d maps
         template = self.out_map_co10.replace(".image",".fits")
