@@ -1152,7 +1152,7 @@ class ToolsOutflow():
         os.system("rm -rf " + outfile1)
         os.system("rm -rf " + outfile2)
         os.system("rm -rf " + self.out_map_co10)
-        os.system("rm -rf " + self.out_emap_co10)
+        os.system("rm -rf " + self.out_map_eco10)
 
         #############################
         # 2D ci10 (align to MAGNUM) #
@@ -1176,7 +1176,7 @@ class ToolsOutflow():
         os.system("rm -rf " + outfile1)
         os.system("rm -rf " + outfile2)
         os.system("rm -rf " + self.out_map_ci10)
-        os.system("rm -rf " + self.out_emap_ci10)
+        os.system("rm -rf " + self.out_map_eci10)
 
         #############################
         # 3D ci10 (align to MAGNUM) #
