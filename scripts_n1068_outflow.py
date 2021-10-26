@@ -153,8 +153,8 @@ class ToolsOutflow():
             self.outfits_cube_co10 = self.out_cube_co10.replace(".cube","_cube.fits")
             self.outfits_cube_ci10 = self.out_cube_ci10.replace(".cube","_cube.fits")
             self.outfits_cube_cico = self.out_cube_cico.replace(".cube","_cube.fits")
-            self.outfits_ncube_co10 =self.out_ncube_co10.replace(".cube","_cube.fits")
-            self.outfits_ncube_ci10 =self.out_ncube_ci10.replace(".cube","_cube.fits")
+            self.outfits_ncube_co10 =self.out_ncube_co10.replace(".cube.noise","_err.fits")
+            self.outfits_ncube_ci10 =self.out_ncube_ci10.replace(".cube.noise","_err.fits")
             self.outfits_map_av = self.out_map_av.replace(".image",".fits")
             self.outfits_map_oiii = self.out_map_oiii.replace(".image",".fits")
             self.outfits_map_radio = self.out_map_radio.replace(".image",".fits")
@@ -1149,6 +1149,7 @@ class ToolsOutflow():
 
         os.system("rm -rf " + outfile1)
         os.system("rm -rf " + outfile2)
+        os.system("rm -rf " + self.out_map_co10)
 
         #############################
         # 2D ci10 (align to MAGNUM) #
@@ -1173,22 +1174,36 @@ class ToolsOutflow():
         os.system("rm -rf " + outfile2)
         os.system("rm -rf " + self.out_map_ci10)
 
+        #############################
+        # 3D co10 (align to MAGNUM) #
+        #############################
+        run_importfits(self.cube_co10,self.out_cube_co10)
+        run_importfits(self.ncube_co10,self.out_ncube_co10)
+
+        # align
+        template = self.outfits_map_co10
+        self._align_one_map(self.out_cube_ci10, template, self.outfits_cube_ci10, axes=[0,1])
+
+        template = self.out_cube_ci10.replace(".cube","_cube.fits")
+        self._align_one_map(self.out_ncube_ci10, template, self.outfits_ncube_ci10)
+
+        os.system("rm -rf" + self.out_cube_ci10)
+        os.system("rm -rf" + self.out_ncube_ci10)
+
 
 
         #############
 
         # import to casa
-        run_importfits(self.cube_co10,self.out_cube_co10)
         run_importfits(self.cube_ci10,self.out_cube_ci10)
-        run_importfits(self.ncube_co10,self.out_ncube_co10)
         run_importfits(self.ncube_ci10,self.out_ncube_ci10)
         run_importfits(self.image_av,self.out_map_av)
         run_importfits(self.image_oiii,self.out_map_oiii)
         run_importfits(self.image_vla,self.out_map_radio)
 
         # align 3d maps
-        template = self.out_map_co10.replace(".image",".fits")
-        self._align_one_map(self.out_cube_ci10, template, self.outfits_cube_ci10, axes=[0,1])
+        #template = self.out_map_co10.replace(".image",".fits")
+        #self._align_one_map(self.out_cube_ci10, template, self.outfits_cube_ci10, axes=[0,1])
 
         template = self.out_cube_ci10.replace(".cube","_cube.fits")
         self._align_one_map(self.out_cube_co10, template, self.outfits_cube_co10)
@@ -1212,7 +1227,6 @@ class ToolsOutflow():
         ###########
         # cleanup #
         ###########
-        os.system("rm -rf " + self.out_map_co10)
 
     ##################
     # _align_one_map #
