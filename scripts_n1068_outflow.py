@@ -1136,17 +1136,19 @@ class ToolsOutflow():
 
         # align
         template = self.out_map_siiisii
+
         expr = "iif( IM0>IM1*" + str(self.snr_cube) + ", IM0, 0 )"
+        outfile1 = self.out_map_co10 + "_tmp1"
+        run_immath_two(self.out_map_co10, self.out_map_eco10, outfile1, expr)
+        self._align_one_map(outfile1, template, self.outfits_map_co10)
 
-        outfile = self.out_map_co10 + "_tmp1"
-        run_immath_two(self.out_map_co10, self.out_map_eco10, outfile, expr)
-        self._align_one_map(outfile, template, self.outfits_map_co10)
-        os.system("rm -rf " + outfile)
+        expr = "iif( IM0>IM1*" + str(self.snr_cube) + ", IM1, 0 )"
+        outfile2 = self.out_map_eco10 + "_tmp1"
+        run_immath_two(outfile1, self.out_map_eco10, outfile2, expr)
+        self._align_one_map(outfile2, template, self.outfits_map_eco10)
 
-        outfile = self.out_map_eco10 + "_tmp1"
-        run_immath_two(self.out_map_eco10, self.out_map_eco10, outfile, expr)
-        self._align_one_map(outfile, template, self.outfits_map_eco10)
-        os.system("rm -rf " + outfile)
+        os.system("rm -rf " + outfile1)
+        os.system("rm -rf " + outfile2)
 
         #############################
         # 2D ci10 (align to MAGNUM) #
@@ -1156,17 +1158,19 @@ class ToolsOutflow():
 
         # align
         template = self.out_map_siiisii
+
         expr = "iif( IM0>IM1*" + str(self.snr_cube) + ", IM0, 0 )"
+        outfile1 = self.out_map_ci10 + "_tmp1"
+        run_immath_two(self.out_map_ci10, self.out_map_eci10, outfile1, expr)
+        self._align_one_map(outfile1, template, self.outfits_map_ci10)
 
-        outfile = self.out_map_ci10 + "_tmp1"
-        run_immath_two(self.out_map_ci10, self.out_map_eci10, outfile, expr)
-        self._align_one_map(outfile, template, self.outfits_map_ci10)
-        os.system("rm -rf " + outfile)
+        expr = "iif( IM0>IM1*" + str(self.snr_cube) + ", IM1, 0 )"
+        outfile2 = self.out_map_eci10 + "_tmp1"
+        run_immath_two(outfile1, self.out_map_eci10, outfile2, expr)
+        self._align_one_map(outfile2, template, self.outfits_map_eci10)
 
-        outfile = self.out_map_eci10 + "_tmp1"
-        run_immath_two(self.out_map_eci10, self.out_map_eci10, outfile, expr)
-        self._align_one_map(outfile, template, self.outfits_map_eci10)
-        os.system("rm -rf " + outfile)
+        os.system("rm -rf " + outfile1)
+        os.system("rm -rf " + outfile2)
 
 
 
