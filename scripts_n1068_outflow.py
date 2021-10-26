@@ -814,7 +814,7 @@ class ToolsOutflow():
         fig = plt.figure(figsize=(13,10))
         gs = gridspec.GridSpec(nrows=10, ncols=10)
         ax1 = plt.subplot(gs[0:10,0:10])
-        ad = [0.215,0.83,0.10,0.90]
+        ad = [0.205,0.83,0.10,0.90]
         myax_set(ax1, "both", xlim, ylim, xlabel, ylabel, title,adjust=ad)
 
         # plot
