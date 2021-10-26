@@ -1187,8 +1187,8 @@ class ToolsOutflow():
         template = self.outfits_cube_ci10
         self._align_one_map(self.out_ncube_ci10, template, self.outfits_ncube_ci10)
 
-        os.system("rm -rf" + self.out_cube_ci10)
-        os.system("rm -rf" + self.out_ncube_ci10)
+        os.system("rm -rf " + self.out_cube_ci10)
+        os.system("rm -rf " + self.out_ncube_ci10)
 
         #############################
         # 3D co10 (align to MAGNUM) #
@@ -1201,19 +1201,16 @@ class ToolsOutflow():
         self._align_one_map(self.out_cube_co10, template, self.outfits_cube_co10)
         self._align_one_map(self.out_ncube_co10, template, self.outfits_ncube_co10)
 
-        os.system("rm -rf" + self.out_cube_co10)
-        os.system("rm -rf" + self.out_ncube_co10)
+        os.system("rm -rf " + self.out_cube_co10)
+        os.system("rm -rf " + self.out_ncube_co10)
 
-        #############
-
+        #################
+        # other 2D maps #
+        #################
         # import to casa
         run_importfits(self.image_av,self.out_map_av)
         run_importfits(self.image_oiii,self.out_map_oiii)
         run_importfits(self.image_vla,self.out_map_radio)
-
-        # align 3d maps
-        #template = self.out_map_co10.replace(".image",".fits")
-        #self._align_one_map(self.out_cube_ci10, template, self.outfits_cube_ci10, axes=[0,1])
 
         # add beam
         imhead(self.out_map_siiisii,mode="put",hdkey="beammajor",hdvalue="0.8arcsec")
@@ -1228,10 +1225,6 @@ class ToolsOutflow():
         run_exportfits(self.out_map_av,self.outfits_map_av,True,True,True)
         run_exportfits(self.out_map_oiii,self.outfits_map_oiii,True,True,True)
         run_exportfits(self.out_map_radio,self.outfits_map_radio,True,True,True)
-
-        ###########
-        # cleanup #
-        ###########
 
     ##################
     # _align_one_map #
