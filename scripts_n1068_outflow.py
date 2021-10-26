@@ -815,7 +815,7 @@ class ToolsOutflow():
         gs = gridspec.GridSpec(nrows=10, ncols=10)
         ax1 = plt.subplot(gs[0:10,0:10])
         ad = [0.215,0.83,0.10,0.90]
-        myax_set(ax1, "both", xlim, ylim, xlabel, ylabel, title,adjust=ad)
+        myax_set(ax1, "both", xlim, ylim, title, xlabel, ylabel, adjust=ad)
 
         # plot
         ax1.scatter(x1, y1, lw=0, c="gray", s=20)
@@ -838,10 +838,10 @@ class ToolsOutflow():
             ax1.text(3.42,2.43,"1:0.1",rotation=51.34,horizontalalignment="right")
 
         # text
-        ax1.text(0.24,0.92,"FoV 1 Cone (colorized)",transform=ax1.transAxes)
-        ax1.text(0.24,0.87,"FoV 1 Non-cone (black)",transform=ax1.transAxes)
-        ax1.text(0.24,0.82,"FoV 2 (grey)",transform=ax1.transAxes)
-        ax1.text(0.24,0.77,"FoV 3 (grey)",transform=ax1.transAxes)
+        ax1.text(0.24,0.92,"FoV-1 Cone (colorized)",transform=ax1.transAxes)
+        ax1.text(0.24,0.87,"FoV-1 Non-cone (black)",transform=ax1.transAxes)
+        ax1.text(0.24,0.82,"FoV-2 (grey)",transform=ax1.transAxes)
+        ax1.text(0.24,0.77,"FoV-3 (grey)",transform=ax1.transAxes)
 
         plt.savefig(output, dpi=self.fig_dpi)
 
