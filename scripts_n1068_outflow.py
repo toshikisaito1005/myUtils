@@ -263,14 +263,14 @@ class ToolsOutflow():
 
     def run_ci_outflow(
         self,
-        do_prepare       = False,
-        do_ratio_map     = False,
-        do_compare_7m    = False,
-        #do_cube_modeling = False,
+        do_prepare       = False, # refactored
+        do_ratio_map     = False, # refactored
         plot_scatters    = False,
         plot_showcase    = False,
         plot_outflow_mom = False,
         plot_channel     = False,
+        # additional analysis
+        do_compare_7m    = False,
         ):
 
         if do_prepare==True:
@@ -280,12 +280,6 @@ class ToolsOutflow():
         if do_ratio_map==True:
             self.ratio_map()
             self.ratio_cube()
-
-        if do_compare_7m==True:
-            self.compare_7m_cubes()
-
-        #if do_cube_modeling==True:
-        #    self.modeling_cube()
 
         if plot_scatters==True:
             self.plot_ci_vs_co()
@@ -300,6 +294,10 @@ class ToolsOutflow():
 
         if plot_channel==True:
             self.get_outflow_channels()
+
+        # additional
+        if do_compare_7m==True:
+            self.compare_7m_cubes()
 
     ########################
     # get_outflow_channels #
@@ -678,6 +676,7 @@ class ToolsOutflow():
         data_siii_sii = data_siii_sii.flatten()
         data_siii_sii[np.isnan(data_siii_sii)] = 0
 
+        """
         ### plot scatter ci vs co
         # prepare
         cut = np.where((data_co>0) & (data_ci>0))
@@ -708,7 +707,7 @@ class ToolsOutflow():
 
         # plot
         self._plot_scatters(
-        	self.outpng_ci_vs_co,
+        	self.outpng_cico_vs_siiisii,
             co_sb, ci_sb, co_outcone, ci_outcone, co_cone, ci_cone, r_cone,
             "log $L'_{CO(1-0)}$ (K km s$^{-1}$ pc$^2$)",
             "log $L'_{[CI](1-0)}$ (K km s$^{-1}$ pc$^2$)",
@@ -716,6 +715,7 @@ class ToolsOutflow():
             [-1,3.5], [-0.1,3.5],
             plot_line = False,
             )
+        """
 
     #################
     # plot_ci_vs_co #
@@ -797,7 +797,7 @@ class ToolsOutflow():
             "log $L'_{[CI](1-0)}$ (K km s$^{-1}$ pc$^2$)",
             "(c) log $L'_{[CI](1-0)}$ vs. log $L'_{CO(1-0)}$",
             [-1,3.5], [-0.1,3.5],
-            plot_line = False,
+            plot_line = True,
             )
 
     def _plot_scatters(
@@ -811,11 +811,11 @@ class ToolsOutflow():
         plot_line = True,
         ):
 
-        fig = plt.figure(figsize=(10,10))
-        plt.subplots_adjust(bottom=0.10, left=0.15, right=0.95, top=0.90)
-        gs  = gridspec.GridSpec(nrows=3, ncols=3)
-        ax1 = plt.subplot(gs[0:3,0:3])
-        myax_set(ax1, "both", xlim, ylim, xlabel, ylabel, title)
+        fig = plt.figure(figsize=(13,10))
+        gs = gridspec.GridSpec(nrows=10, ncols=10)
+        ax1 = plt.subplot(gs[0:10,0:10])
+        ad = [0.19,0.99,0.10,0.90]
+        myax_set(ax1, "both", xlim, ylim, xlabel, ylabel, title,adjust=ad)
 
         # plot
         ax1.scatter(x1, y1, lw=0, c="gray", s=20)
