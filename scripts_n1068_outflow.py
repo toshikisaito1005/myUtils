@@ -1259,7 +1259,6 @@ class ToolsOutflow():
 
         # delete
         os.system("rm -rf " + imagename + ".regrid")
-        os.system("rm -rf " + imagename)
 
         if delim==True:
             os.system("rm -rf " + imagename)
