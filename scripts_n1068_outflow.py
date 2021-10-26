@@ -1175,7 +1175,7 @@ class ToolsOutflow():
         os.system("rm -rf " + self.out_map_ci10)
 
         #############################
-        # 3D co10 (align to MAGNUM) #
+        # 3D ci10 (align to MAGNUM) #
         #############################
         run_importfits(self.cube_co10,self.out_cube_ci10)
         run_importfits(self.ncube_co10,self.out_ncube_ci10)
@@ -1187,7 +1187,7 @@ class ToolsOutflow():
         template = self.out_cube_ci10.replace(".cube","_cube.fits")
         self._align_one_map(self.out_ncube_ci10, template, self.outfits_ncube_ci10)
 
-        #os.system("rm -rf" + self.out_cube_ci10)
+        os.system("rm -rf" + self.out_cube_ci10)
         os.system("rm -rf" + self.out_ncube_ci10)
 
 
