@@ -51,6 +51,8 @@ history:
 2021-06-04   circulate v0 draft to the paper team
 2021-06-25   move to ADC due to issues with new laptop
 2021-08-06   created
+2021-10-24   circulate v0.2 draft to the paper team
+2021-10-26   refactored align_maps
 Toshiki Saito@Nichidai/NAOJ
 """
 
@@ -1150,6 +1152,7 @@ class ToolsOutflow():
         os.system("rm -rf " + outfile1)
         os.system("rm -rf " + outfile2)
         os.system("rm -rf " + self.out_map_co10)
+        os.system("rm -rf " + self.out_emap_co10)
 
         #############################
         # 2D ci10 (align to MAGNUM) #
@@ -1173,6 +1176,7 @@ class ToolsOutflow():
         os.system("rm -rf " + outfile1)
         os.system("rm -rf " + outfile2)
         os.system("rm -rf " + self.out_map_ci10)
+        os.system("rm -rf " + self.out_emap_ci10)
 
         #############################
         # 3D ci10 (align to MAGNUM) #
