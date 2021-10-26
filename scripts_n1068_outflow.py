@@ -1171,6 +1171,7 @@ class ToolsOutflow():
 
         os.system("rm -rf " + outfile1)
         os.system("rm -rf " + outfile2)
+        os.system("rm -rf " + self.out_map_ci10)
 
 
 
@@ -1207,6 +1208,11 @@ class ToolsOutflow():
         run_exportfits(self.out_map_av,self.outfits_map_av,True,True,True)
         run_exportfits(self.out_map_oiii,self.outfits_map_oiii,True,True,True)
         run_exportfits(self.out_map_radio,self.outfits_map_radio,True,True,True)
+
+        ###########
+        # cleanup #
+        ###########
+        os.system("rm -rf " + self.out_map_co10)
 
     ##################
     # _align_one_map #
