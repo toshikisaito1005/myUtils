@@ -823,7 +823,7 @@ class ToolsOutflow():
         cs = ax1.scatter(x3, y3, lw=0, c=r3, cmap="rainbow_r", s=40)
 
         # colorbar
-        cax = fig.add_axes([0.81, 0.3, 0.03, 0.3]) # fig.add_axes([0.75, 0.57, 0.03, 0.3])
+        cax = fig.add_axes([0.77, 0.15, 0.03, 0.3]) # fig.add_axes([0.75, 0.57, 0.03, 0.3])
         cbar = plt.colorbar(cs, cax=cax)
         cbar.set_label("Distance (pc)")
         cbar.set_ticks([100,200,300,400,500])
