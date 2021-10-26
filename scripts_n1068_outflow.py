@@ -1187,7 +1187,7 @@ class ToolsOutflow():
         template = self.out_cube_ci10.replace(".cube","_cube.fits")
         self._align_one_map(self.out_ncube_ci10, template, self.outfits_ncube_ci10)
 
-        os.system("rm -rf" + self.out_cube_ci10)
+        #os.system("rm -rf" + self.out_cube_ci10)
         os.system("rm -rf" + self.out_ncube_ci10)
 
 
