@@ -823,7 +823,7 @@ class ToolsOutflow():
         cs = ax1.scatter(x3, y3, lw=0, c=r3, cmap="rainbow_r", s=40)
 
         # colorbar
-        cax = fig.add_axes([0.77, 0.15, 0.03, 0.3]) # fig.add_axes([0.75, 0.57, 0.03, 0.3])
+        cax = fig.add_axes([0.71, 0.15, 0.03, 0.3]) # fig.add_axes([0.75, 0.57, 0.03, 0.3])
         cbar = plt.colorbar(cs, cax=cax)
         cbar.set_label("Distance (pc)")
         cbar.set_ticks([100,200,300,400,500])
@@ -838,10 +838,10 @@ class ToolsOutflow():
             ax1.text(3.42,2.43,"1:0.1",rotation=51.34,horizontalalignment="right")
 
         # text
-        ax1.text(0.24,0.92,"FoV-1 Cone (colorized)",transform=ax1.transAxes)
-        ax1.text(0.24,0.87,"FoV-1 Non-cone (black)",transform=ax1.transAxes)
-        ax1.text(0.24,0.82,"FoV-2 (grey)",transform=ax1.transAxes)
-        ax1.text(0.24,0.77,"FoV-3 (grey)",transform=ax1.transAxes)
+        ax1.text(0.05,0.92,"FoV-1 Cone (colorized)",transform=ax1.transAxes)
+        ax1.text(0.05,0.87,"FoV-1 Non-cone (black)",transform=ax1.transAxes)
+        ax1.text(0.05,0.82,"FoV-2 (grey)",transform=ax1.transAxes)
+        ax1.text(0.05,0.77,"FoV-3 (grey)",transform=ax1.transAxes)
 
         plt.savefig(output, dpi=self.fig_dpi)
 
