@@ -1177,8 +1177,8 @@ class ToolsOutflow():
         #############################
         # 3D co10 (align to MAGNUM) #
         #############################
-        run_importfits(self.cube_co10,self.out_cube_co10)
-        run_importfits(self.ncube_co10,self.out_ncube_co10)
+        run_importfits(self.cube_co10,self.out_cube_ci10)
+        run_importfits(self.ncube_co10,self.out_ncube_ci10)
 
         # align
         template = self.outfits_map_co10
@@ -1195,8 +1195,8 @@ class ToolsOutflow():
         #############
 
         # import to casa
-        run_importfits(self.cube_ci10,self.out_cube_ci10)
-        run_importfits(self.ncube_ci10,self.out_ncube_ci10)
+        run_importfits(self.cube_co10,self.out_cube_co10)
+        run_importfits(self.ncube_co10,self.out_ncube_co10)
         run_importfits(self.image_av,self.out_map_av)
         run_importfits(self.image_oiii,self.out_map_oiii)
         run_importfits(self.image_vla,self.out_map_radio)
