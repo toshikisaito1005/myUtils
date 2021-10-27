@@ -350,7 +350,7 @@ class ToolsOutflow():
                 ra_cnt=self.ra_agn_str,
                 dec_cnt=self.dec_agn_str,
                 unit_cont1=0.05,
-                levels_cont1=[-2.5,2.5,5.0,10.0,20.0],
+                levels_cont1=[-5.0,5.0,10.0,20.0],
                 set_cmap="jet",
                 clim=[0,1],
                 #set_bg_color=cm.rainbow(0),
