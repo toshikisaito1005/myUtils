@@ -790,7 +790,7 @@ def myfig_fits2png(
 
     # add comment
     if comment!=None:
-        _myax_comment(ax,dec_cnt,xlim,ylim,comment_color)
+        _myax_comment(ax,dec_cnt,xlim,ylim,comment,comment_color)
 
     # annotation
     if numann!=None:
@@ -990,7 +990,7 @@ def myax_fig2png_ann(ax,number,ra_cnt,dec_cnt,add_text=True,txtfiles=None):
             t = ax.text(12, -5, "mosaic-2", color="white", rotation=0,
                 horizontalalignment="center", verticalalignment="center", weight="bold")
 
-def _myax_comment(ax,dec_cnt,xlim,ylim,comment_color):
+def _myax_comment(ax,dec_cnt,xlim,ylim,comment,comment_color):
     if float(dec_cnt.replace("deg",""))>0:
         t = ax.text(min(xlim)*-0.9, max(ylim)*-0.9,
             comment, horizontalalignment="left", verticalalignment="top",
