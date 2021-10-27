@@ -342,6 +342,11 @@ class ToolsOutflow():
             scalebar = 100. / self.scale_pc
             label_scalebar = "100 pc"
 
+            if i==len(self.chans_num):
+                title = "(a) Observed [CI]/CO ratio"
+            else:
+                title = None
+
             myfig_fits2png(
                 imcolor=this_cico,
                 outfile=this_outpng,
@@ -353,6 +358,7 @@ class ToolsOutflow():
                 levels_cont1=[-5.0,5.0,10.0,20.0],
                 set_cmap="jet",
                 clim=[0,1],
+                set_title=title,
                 #set_bg_color=cm.rainbow(0),
                 scalebar=scalebar,
                 label_scalebar=label_scalebar,
