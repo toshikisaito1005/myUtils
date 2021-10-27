@@ -1181,8 +1181,8 @@ class ToolsOutflow():
         #############################
         # 3D ci10 (align to MAGNUM) #
         #############################
-        run_importfits(self.cube_co10,self.out_cube_ci10)
-        run_importfits(self.ncube_co10,self.out_ncube_ci10)
+        run_importfits(self.cube_ci10,self.out_cube_ci10)
+        run_importfits(self.ncube_ci10,self.out_ncube_ci10)
 
         # align
         template = self.outfits_map_co10
