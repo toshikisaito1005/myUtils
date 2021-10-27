@@ -349,7 +349,7 @@ class ToolsOutflow():
                 imsize_as=self.imsize_as,
                 ra_cnt=self.ra_agn_str,
                 dec_cnt=self.dec_agn_str,
-                unit_cont1=1,
+                #unit_cont1=1,
                 levels_cont1=[-2.5,2.5,5.0,10.0,20.0],
                 set_cmap="jet",
                 clim=[0,1],
