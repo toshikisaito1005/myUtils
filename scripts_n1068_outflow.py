@@ -342,7 +342,7 @@ class ToolsOutflow():
             scalebar = 100. / self.scale_pc
             label_scalebar = "100 pc"
 
-            if i==len(self.chans_num):
+            if i==len(self.chans_num)-1:
                 title = "(a) Observed [CI]/CO ratio"
             else:
                 title = None
@@ -1038,7 +1038,7 @@ class ToolsOutflow():
 
         run_exportfits(self.out_cube_cico,self.outfits_cube_cico)
 
-        #os.system("rm -rf " + self.out_cube_cico + "*")
+        os.system("rm -rf " + self.out_cube_cico + "*")
 
     #############
     # ratio_map #
