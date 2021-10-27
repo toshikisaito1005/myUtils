@@ -265,8 +265,8 @@ class ToolsOutflow():
         self,
         do_prepare       = False, # refactored
         do_ratio_map     = False, # refactored
-        plot_scatters    = False,
-        plot_showcase    = False,
+        plot_scatters    = False, # refactored
+        plot_showcase    = False, # refactored
         plot_outflow_mom = False,
         plot_channel     = False,
         # additional analysis
@@ -1028,7 +1028,7 @@ class ToolsOutflow():
 
         run_exportfits(self.out_cube_cico,self.outfits_cube_cico)
 
-        os.system("rm -rf " + self.out_cube_cico + "*")
+        #os.system("rm -rf " + self.out_cube_cico + "*")
 
     #############
     # ratio_map #
