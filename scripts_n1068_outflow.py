@@ -267,8 +267,9 @@ class ToolsOutflow():
         do_ratio_map     = False, # refactored
         plot_scatters    = False, # refactored
         plot_showcase    = False, # refactored
-        plot_outflow_mom = False,
         plot_channel     = False,
+        # appendix
+        plot_outflow_mom = False,
         # additional analysis
         do_compare_7m    = False,
         ):
@@ -288,12 +289,13 @@ class ToolsOutflow():
         if plot_showcase==True:
             self.showcase()
 
+        if plot_channel==True:
+            self.get_outflow_channels()
+
+        # appendix
         if plot_outflow_mom==True:
             self.get_outflow_moments()
             self.plot_outflow_moments()
-
-        if plot_channel==True:
-            self.get_outflow_channels()
 
         # additional
         if do_compare_7m==True:
@@ -358,6 +360,8 @@ class ToolsOutflow():
                 label_cbar="(K km s$^{-1}$)",
                 numann=1,
                 textann=False,
+                comment=this_text,
+                comment_color=this_c,
                 )
 
             # cleanup
