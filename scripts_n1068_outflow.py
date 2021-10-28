@@ -249,42 +249,6 @@ class ToolsOutflow():
             self.png_map_vla     = self.dir_products + self._read_key("png_map_vla")
             self.png_map_siiisii = self.dir_products + self._read_key("png_map_siiisii")
 
-    ###############
-    # _create_dir #
-    ###############
-
-    def _create_dir(self, this_dir):
-
-        if self.refresh==True:
-            print("## refresh " + this_dir)
-            os.system("rm -rf " + this_dir)
-
-        if not glob.glob(this_dir):
-            print("## create " + this_dir)
-            os.mkdir(this_dir)
-
-        else:
-            print("## not refresh " + this_dir)
-
-    #############
-    # _read_key #
-    #############
-
-    def _read_key(self, key, keyfile="fig", delimiter=",,,"):
-
-        if keyfile=="gal":
-            keyfile = self.keyfile_gal
-        elif keyfile=="fig":
-            keyfile = self.keyfile_fig
-
-        keydata  = np.loadtxt(keyfile,dtype="str",delimiter=delimiter)
-        keywords =\
-             np.array([s.replace(" ","") for s in keydata[:,0]])
-        values   = keydata[:,1]
-        value    = values[np.where(keywords==key)[0][0]]
-
-        return value
-
     ##################
     # run_ci_outflow #
     ##################
@@ -666,295 +630,6 @@ class ToolsOutflow():
 
             # cleanup
             os.system("rm -rf "+this_cico+" "+this_ci10+" "+this_co10)
-
-    #################
-    # _ax_conemodel #
-    #################
-
-    def _ax_conemodel(
-        self,
-        ax,
-        this_vel,
-        title,
-        ):
-        """
-        """
-
-        myax_set(
-            ax,
-            grid   = "both",
-            title  = title,
-            xlim   = [9, -9],
-            ylim   = [-9, 9],
-            xlabel = "x-offset (arcsec)",
-            ylabel = "y-offset (arcsec)",
-            adjust = [0.215,0.83,0.10,0.90],
-            )
-        
-        fov_diamter = 16.5
-        fov = patches.Ellipse(
-            xy        = (-0, 0),
-            width     = fov_diamter,
-            height    = fov_diamter,
-            angle     = 0,
-            fill      = False,
-            edgecolor = "black",
-            alpha     = 1.0,
-            lw        = 3.5,
-            )
-
-        ax.add_patch(fov)
-        # annotation 2: outflow outlines
-        theta1 = -10.0 # degree
-        x1 = fov_diamter/2.0 * np.cos(np.radians(-1*theta1+90))
-        y1 = fov_diamter/2.0 * np.sin(np.radians(-1*theta1+90))
-        ax.plot([x1, -x1], [y1, -y1], "--", c="black", lw=3.5)
-        theta2 = 70.0 # degree
-        x1 = fov_diamter/2.0 * np.cos(np.radians(-1*theta2+90))
-        y1 = fov_diamter/2.0 * np.sin(np.radians(-1*theta2+90))
-        ax.plot([x1, -x1], [y1, -y1], "--", c="black", lw=3.5)
-        # text
-        comment = str(this_vel) + " km s$^{-1}$"
-        if this_vel>0:
-            color = "red"
-        else:
-            color = "blue"
-        t = ax.text(0.04, 0.96, comment, horizontalalignment="left", verticalalignment="top", color = color, weight="bold",
-        transform = ax.transAxes)
-        t.set_bbox(dict(facecolor="white", alpha=0.8, lw=0))
-        #
-        ax.set_xlabel("x-offset (arcsec)")
-        ax.set_ylabel("y-offset (arcsec)")
-
-    ######################
-    # _velrange_thischan #
-    ######################
-
-    def _velrange_thischan(
-        self,
-        this_vel,
-        chanwdith_GHz,
-        data,
-        ):
-
-        data          = np.array(data)
-        z             = 0.00379
-        obs_freq_ci   = 492.16065100 / (1+z) # GHz
-        # velocity range of this channel
-        chanwidth_kms = chanwdith_GHz / obs_freq_ci * 299792.458 # km/s
-        vupp          = this_vel + chanwidth_kms/2. #* 2
-        vlow          = this_vel - chanwidth_kms/2. #* 2
-        x             = data[0][data[3]<=vupp]
-        y             = data[1][data[3]<=vupp]
-        z             = data[2][data[3]<=vupp]
-        v             = data[3][data[3]<=vupp]
-        x             = x[v>=vlow]
-        y             = y[v>=vlow]
-        z             = z[v>=vlow]
-        v             = v[v>=vlow]
-
-        return np.array([x, y, z, v])
-
-    #########################
-    # _create_3d_bicone_rel #
-    #########################
-
-    def _create_3d_bicone_rel(
-        self,
-        length,
-        nbins,
-        angle,
-        pa,
-        incl,
-        pa_disk,
-        incl_disk,
-        width_disk,
-        scale,
-        clipoutflow = False,
-        velmax      = 0,
-        velmodel    = "const", # const or decelerate
-        velindex    = 0.3,
-        clipcnd     = None,
-        r_turn      = 140, # parsec
-        ):
-        """
-        """
-
-        ### radian to degree
-        angle     = np.radians(angle)
-        pa        = np.radians(pa)
-        incl      = np.radians(incl)
-        pa_disk   = np.radians(pa_disk)
-        incl_disk = np.radians(incl_disk)
-
-        ### preparation
-        theta = np.linspace(0, 2*np.pi, nbins)
-        r     = np.linspace(0, length, nbins)
-        t,R   = np.meshgrid(theta, r)
-
-        ### northern outer cone
-        ## generate edge-on nothern cone (-X=R.A., Y=decl., Z=depth)
-        x0 = np.tan(angle)*R*np.cos(t)
-        y0 = R
-        z0 = np.tan(angle)*R*np.sin(t)
-        r0 = np.sqrt(x0**2 + y0**2 + z0**2)
-        ## incine it based on inc
-        x1 = x0
-        y1 = y0*np.cos(incl) - z0*np.sin(incl)
-        z1 = y0*np.sin(incl) + z0*np.cos(incl)
-        ## rotate it based on pa
-        x2 = x1*np.cos(pa) - y1*np.sin(pa)
-        y2 = x1*np.sin(pa) + y1*np.cos(pa)
-        z2 = z1
-        ## LoS velocity
-        t2 = -np.degrees(np.arccos(x2/r0))
-        p2 = -np.degrees(np.arctan2(y2, z2))
-        v2 = np.sin(np.radians(t2)) * np.cos(np.radians(p2)) * velmax
-        ## mask
-        # incine it based on inc
-        X1 = x0
-        Y1 = y0*np.cos(incl+incl_disk) - z0*np.sin(incl+incl_disk)
-        Z1 = y0*np.sin(incl+incl_disk) + z0*np.cos(incl+incl_disk)
-        # rotate it based on pa
-        X2 = X1*np.cos(pa-pa_disk) - Y1*np.sin(pa-pa_disk)
-        Y2 = X1*np.sin(pa-pa_disk) + Y1*np.cos(pa-pa_disk)
-        Z2 = Z1
-        if velmodel=="decelerate":
-            ka = velmax/r_turn
-            kb = velmax/r_turn/3.0
-            v2 = np.where(r0>r_turn,velmax-kb*(r0-r_turn),ka*r0)
-            v2 = np.sin(np.radians(t2)) * np.cos(np.radians(p2)) * v2
-        # mask CND and outflow
-        if clipoutflow==True: # width_disk/2.
-            ax = 0.35265396141693
-            ay = 0
-            az = 2
-            aa = -width_disk#/2.0
-            x2[ax*X2+ay*Y2+az*Z2+aa>=0] = 0
-            y2[ax*X2+ay*Y2+az*Z2+aa>=0] = 0
-            z2[ax*X2+ay*Y2+az*Z2+aa>=0] = 0
-            v2[ax*X2+ay*Y2+az*Z2+aa>=0] = 0
-            nX = x2 / scale
-            nY = y2 / scale
-            nZ = z2 / scale
-            nV = v2
-        else:
-            nX = x2 / scale
-            nY = y2 / scale
-            nZ = z2 / scale
-            nV = v2
-
-        nX[np.isnan(nX)] = 0
-        nY[np.isnan(nY)] = 0
-        nZ[np.isnan(nZ)] = 0
-        nV[np.isnan(nV)] = 0
-
-        if clipcnd!=None:
-            nR = np.sqrt(nX**2 + nY**2 + nZ**2) * scale
-            nX[abs(nR)<clipcnd] = 0
-            nY[abs(nR)<clipcnd] = 0
-            nZ[abs(nR)<clipcnd] = 0
-            nV[abs(nR)<clipcnd] = 0
-
-        ### southern outer cone
-        ## generate edge-on nothern cone (-X=R.A., Y=decl., Z=depth)
-        x0 = np.tan(angle)*R*np.cos(t)
-        y0 = -R
-        z0 = np.tan(angle)*R*np.sin(t)
-        r0 = np.sqrt(x0**2 + y0**2 + z0**2)
-        ## incine it based on inc
-        x1 = x0
-        y1 = y0*np.cos(incl) - z0*np.sin(incl)
-        z1 = y0*np.sin(incl) + z0*np.cos(incl)
-        ## rotate it based on pa
-        x2 = x1*np.cos(pa) - y1*np.sin(pa)
-        y2 = x1*np.sin(pa) + y1*np.cos(pa)
-        z2 = z1
-        ## LoS velocity
-        t2 = -np.degrees(np.arccos(x2/r0))
-        p2 = -np.degrees(np.arctan2(y2, z2))
-        v2 = np.sin(np.radians(t2)) * np.cos(np.radians(p2)) * velmax
-        ## mask
-        # incine it based on inc
-        X1 = x0
-        Y1 = y0*np.cos(incl+incl_disk) - z0*np.sin(incl+incl_disk)
-        Z1 = y0*np.sin(incl+incl_disk) + z0*np.cos(incl+incl_disk)
-        # rotate it based on pa
-        X2 = X1*np.cos(pa-pa_disk) - Y1*np.sin(pa-pa_disk)
-        Y2 = X1*np.sin(pa-pa_disk) + Y1*np.cos(pa-pa_disk)
-        Z2 = Z1
-        if velmodel=="decelerate":
-            ka = velmax/r_turn
-            kb = velmax/r_turn/3.0
-            v2 = np.where(r0>r_turn,velmax-kb*(r0-r_turn),ka*r0)
-            v2 = np.sin(np.radians(t2)) * np.cos(np.radians(p2)) * v2
-        # mask CND and outflow
-        if clipoutflow==True:
-            ax = 0.35265396141693
-            ay = 0
-            az = 2
-            aa = width_disk#/2.0
-            x2[ax*X2+ay*Y2+az*Z2+aa<=0] = 0
-            y2[ax*X2+ay*Y2+az*Z2+aa<=0] = 0
-            z2[ax*X2+ay*Y2+az*Z2+aa<=0] = 0
-            v2[ax*X2+ay*Y2+az*Z2+aa<=0] = 0
-            sX = x2 / scale
-            sY = y2 / scale
-            sZ = z2 / scale
-            sV = v2
-        else:
-            sX = x2 / scale
-            sY = y2 / scale
-            sZ = z2 / scale
-            sV = v2
-        
-        sX[np.isnan(sX)] = 0
-        sY[np.isnan(sY)] = 0
-        sZ[np.isnan(sZ)] = 0
-        sV[np.isnan(sV)] = 0
-        
-        if clipcnd!=None:
-            sR = np.sqrt(sX**2 + sY**2 + sZ**2) * scale
-            sX[abs(sR)<clipcnd] = 0
-            sY[abs(sR)<clipcnd] = 0
-            sZ[abs(sR)<clipcnd] = 0
-            sV[abs(sR)<clipcnd] = 0
-
-        return nX, nY, nZ, nV, sX, sY, sZ, sV
-
-    #####################
-    # _extract_one_chan #
-    #####################
-
-    def _extract_one_chan(
-        self,
-        cubeimage,
-        imagename,
-        this_chan,
-        factor,
-        ):
-        """
-        """
-
-        os.system("rm -rf " + imagename + "*")
-        imsubimage(
-            imagename = cubeimage,
-            outfile   = imagename + "_tmp1",
-            chans     = this_chan,
-            )
-        imrebin(
-            imagename = imagename + "_tmp1",
-            outfile   = imagename + "_tmp2",
-            factor    = factor,
-            )
-        run_exportfits(
-            imagename  = imagename + "_tmp2",
-            fitsimage  = imagename,
-            dropdeg    = True,
-            dropstokes = True,
-            delin      = True,
-            )
-        os.system("rm -rf " + imagename + "_*")
 
     ########################
     # plot_outflow_moments #
@@ -1404,25 +1079,6 @@ class ToolsOutflow():
 
         plt.savefig(output, dpi=self.fig_dpi)
 
-    ##################
-    # _plot_7m_cubes #
-    ##################
-
-    def _plot_7m_cubes(
-        self,
-        ):
-        """ not tested yet
-        """
-
-        data = np.loadtxt(self.outtxt_slopes_7m)
-
-        plt.figure(figsize=(10,10))
-        plt.subplots_adjust(bottom=0.10, left=0.19, right=0.99, top=0.90)
-        gs = gridspec.GridSpec(nrows=11, ncols=11)
-        ax = plt.subplot(gs[0:11,0:11])
-        ax.hist(data)
-        plt.savefig(self.outpng_slopes_7m)
-
     ####################
     # compare_7m_cubes #
     ####################
@@ -1847,3 +1503,346 @@ class ToolsOutflow():
         if deltmp==True:
             os.system("rm -rf " + template)
 
+    #################
+    # _ax_conemodel #
+    #################
+
+    def _ax_conemodel(
+        self,
+        ax,
+        this_vel,
+        title,
+        ):
+        """
+        """
+
+        myax_set(
+            ax,
+            grid   = "both",
+            title  = title,
+            xlim   = [9, -9],
+            ylim   = [-9, 9],
+            xlabel = "x-offset (arcsec)",
+            ylabel = "y-offset (arcsec)",
+            adjust = [0.215,0.83,0.10,0.90],
+            )
+        
+        fov_diamter = 16.5
+        fov = patches.Ellipse(
+            xy        = (-0, 0),
+            width     = fov_diamter,
+            height    = fov_diamter,
+            angle     = 0,
+            fill      = False,
+            edgecolor = "black",
+            alpha     = 1.0,
+            lw        = 3.5,
+            )
+
+        ax.add_patch(fov)
+        # annotation 2: outflow outlines
+        theta1 = -10.0 # degree
+        x1 = fov_diamter/2.0 * np.cos(np.radians(-1*theta1+90))
+        y1 = fov_diamter/2.0 * np.sin(np.radians(-1*theta1+90))
+        ax.plot([x1, -x1], [y1, -y1], "--", c="black", lw=3.5)
+        theta2 = 70.0 # degree
+        x1 = fov_diamter/2.0 * np.cos(np.radians(-1*theta2+90))
+        y1 = fov_diamter/2.0 * np.sin(np.radians(-1*theta2+90))
+        ax.plot([x1, -x1], [y1, -y1], "--", c="black", lw=3.5)
+        # text
+        comment = str(this_vel) + " km s$^{-1}$"
+        if this_vel>0:
+            color = "red"
+        else:
+            color = "blue"
+        t = ax.text(0.04, 0.96, comment, horizontalalignment="left", verticalalignment="top", color = color, weight="bold",
+        transform = ax.transAxes)
+        t.set_bbox(dict(facecolor="white", alpha=0.8, lw=0))
+        #
+        ax.set_xlabel("x-offset (arcsec)")
+        ax.set_ylabel("y-offset (arcsec)")
+
+    ######################
+    # _velrange_thischan #
+    ######################
+
+    def _velrange_thischan(
+        self,
+        this_vel,
+        chanwdith_GHz,
+        data,
+        ):
+
+        data          = np.array(data)
+        z             = 0.00379
+        obs_freq_ci   = 492.16065100 / (1+z) # GHz
+        # velocity range of this channel
+        chanwidth_kms = chanwdith_GHz / obs_freq_ci * 299792.458 # km/s
+        vupp          = this_vel + chanwidth_kms/2. #* 2
+        vlow          = this_vel - chanwidth_kms/2. #* 2
+        x             = data[0][data[3]<=vupp]
+        y             = data[1][data[3]<=vupp]
+        z             = data[2][data[3]<=vupp]
+        v             = data[3][data[3]<=vupp]
+        x             = x[v>=vlow]
+        y             = y[v>=vlow]
+        z             = z[v>=vlow]
+        v             = v[v>=vlow]
+
+        return np.array([x, y, z, v])
+
+    #########################
+    # _create_3d_bicone_rel #
+    #########################
+
+    def _create_3d_bicone_rel(
+        self,
+        length,
+        nbins,
+        angle,
+        pa,
+        incl,
+        pa_disk,
+        incl_disk,
+        width_disk,
+        scale,
+        clipoutflow = False,
+        velmax      = 0,
+        velmodel    = "const", # const or decelerate
+        velindex    = 0.3,
+        clipcnd     = None,
+        r_turn      = 140, # parsec
+        ):
+        """
+        """
+
+        ### radian to degree
+        angle     = np.radians(angle)
+        pa        = np.radians(pa)
+        incl      = np.radians(incl)
+        pa_disk   = np.radians(pa_disk)
+        incl_disk = np.radians(incl_disk)
+
+        ### preparation
+        theta = np.linspace(0, 2*np.pi, nbins)
+        r     = np.linspace(0, length, nbins)
+        t,R   = np.meshgrid(theta, r)
+
+        ### northern outer cone
+        ## generate edge-on nothern cone (-X=R.A., Y=decl., Z=depth)
+        x0 = np.tan(angle)*R*np.cos(t)
+        y0 = R
+        z0 = np.tan(angle)*R*np.sin(t)
+        r0 = np.sqrt(x0**2 + y0**2 + z0**2)
+        ## incine it based on inc
+        x1 = x0
+        y1 = y0*np.cos(incl) - z0*np.sin(incl)
+        z1 = y0*np.sin(incl) + z0*np.cos(incl)
+        ## rotate it based on pa
+        x2 = x1*np.cos(pa) - y1*np.sin(pa)
+        y2 = x1*np.sin(pa) + y1*np.cos(pa)
+        z2 = z1
+        ## LoS velocity
+        t2 = -np.degrees(np.arccos(x2/r0))
+        p2 = -np.degrees(np.arctan2(y2, z2))
+        v2 = np.sin(np.radians(t2)) * np.cos(np.radians(p2)) * velmax
+        ## mask
+        # incine it based on inc
+        X1 = x0
+        Y1 = y0*np.cos(incl+incl_disk) - z0*np.sin(incl+incl_disk)
+        Z1 = y0*np.sin(incl+incl_disk) + z0*np.cos(incl+incl_disk)
+        # rotate it based on pa
+        X2 = X1*np.cos(pa-pa_disk) - Y1*np.sin(pa-pa_disk)
+        Y2 = X1*np.sin(pa-pa_disk) + Y1*np.cos(pa-pa_disk)
+        Z2 = Z1
+        if velmodel=="decelerate":
+            ka = velmax/r_turn
+            kb = velmax/r_turn/3.0
+            v2 = np.where(r0>r_turn,velmax-kb*(r0-r_turn),ka*r0)
+            v2 = np.sin(np.radians(t2)) * np.cos(np.radians(p2)) * v2
+        # mask CND and outflow
+        if clipoutflow==True: # width_disk/2.
+            ax = 0.35265396141693
+            ay = 0
+            az = 2
+            aa = -width_disk#/2.0
+            x2[ax*X2+ay*Y2+az*Z2+aa>=0] = 0
+            y2[ax*X2+ay*Y2+az*Z2+aa>=0] = 0
+            z2[ax*X2+ay*Y2+az*Z2+aa>=0] = 0
+            v2[ax*X2+ay*Y2+az*Z2+aa>=0] = 0
+            nX = x2 / scale
+            nY = y2 / scale
+            nZ = z2 / scale
+            nV = v2
+        else:
+            nX = x2 / scale
+            nY = y2 / scale
+            nZ = z2 / scale
+            nV = v2
+
+        nX[np.isnan(nX)] = 0
+        nY[np.isnan(nY)] = 0
+        nZ[np.isnan(nZ)] = 0
+        nV[np.isnan(nV)] = 0
+
+        if clipcnd!=None:
+            nR = np.sqrt(nX**2 + nY**2 + nZ**2) * scale
+            nX[abs(nR)<clipcnd] = 0
+            nY[abs(nR)<clipcnd] = 0
+            nZ[abs(nR)<clipcnd] = 0
+            nV[abs(nR)<clipcnd] = 0
+
+        ### southern outer cone
+        ## generate edge-on nothern cone (-X=R.A., Y=decl., Z=depth)
+        x0 = np.tan(angle)*R*np.cos(t)
+        y0 = -R
+        z0 = np.tan(angle)*R*np.sin(t)
+        r0 = np.sqrt(x0**2 + y0**2 + z0**2)
+        ## incine it based on inc
+        x1 = x0
+        y1 = y0*np.cos(incl) - z0*np.sin(incl)
+        z1 = y0*np.sin(incl) + z0*np.cos(incl)
+        ## rotate it based on pa
+        x2 = x1*np.cos(pa) - y1*np.sin(pa)
+        y2 = x1*np.sin(pa) + y1*np.cos(pa)
+        z2 = z1
+        ## LoS velocity
+        t2 = -np.degrees(np.arccos(x2/r0))
+        p2 = -np.degrees(np.arctan2(y2, z2))
+        v2 = np.sin(np.radians(t2)) * np.cos(np.radians(p2)) * velmax
+        ## mask
+        # incine it based on inc
+        X1 = x0
+        Y1 = y0*np.cos(incl+incl_disk) - z0*np.sin(incl+incl_disk)
+        Z1 = y0*np.sin(incl+incl_disk) + z0*np.cos(incl+incl_disk)
+        # rotate it based on pa
+        X2 = X1*np.cos(pa-pa_disk) - Y1*np.sin(pa-pa_disk)
+        Y2 = X1*np.sin(pa-pa_disk) + Y1*np.cos(pa-pa_disk)
+        Z2 = Z1
+        if velmodel=="decelerate":
+            ka = velmax/r_turn
+            kb = velmax/r_turn/3.0
+            v2 = np.where(r0>r_turn,velmax-kb*(r0-r_turn),ka*r0)
+            v2 = np.sin(np.radians(t2)) * np.cos(np.radians(p2)) * v2
+        # mask CND and outflow
+        if clipoutflow==True:
+            ax = 0.35265396141693
+            ay = 0
+            az = 2
+            aa = width_disk#/2.0
+            x2[ax*X2+ay*Y2+az*Z2+aa<=0] = 0
+            y2[ax*X2+ay*Y2+az*Z2+aa<=0] = 0
+            z2[ax*X2+ay*Y2+az*Z2+aa<=0] = 0
+            v2[ax*X2+ay*Y2+az*Z2+aa<=0] = 0
+            sX = x2 / scale
+            sY = y2 / scale
+            sZ = z2 / scale
+            sV = v2
+        else:
+            sX = x2 / scale
+            sY = y2 / scale
+            sZ = z2 / scale
+            sV = v2
+        
+        sX[np.isnan(sX)] = 0
+        sY[np.isnan(sY)] = 0
+        sZ[np.isnan(sZ)] = 0
+        sV[np.isnan(sV)] = 0
+        
+        if clipcnd!=None:
+            sR = np.sqrt(sX**2 + sY**2 + sZ**2) * scale
+            sX[abs(sR)<clipcnd] = 0
+            sY[abs(sR)<clipcnd] = 0
+            sZ[abs(sR)<clipcnd] = 0
+            sV[abs(sR)<clipcnd] = 0
+
+        return nX, nY, nZ, nV, sX, sY, sZ, sV
+
+    #####################
+    # _extract_one_chan #
+    #####################
+
+    def _extract_one_chan(
+        self,
+        cubeimage,
+        imagename,
+        this_chan,
+        factor,
+        ):
+        """
+        """
+
+        os.system("rm -rf " + imagename + "*")
+        imsubimage(
+            imagename = cubeimage,
+            outfile   = imagename + "_tmp1",
+            chans     = this_chan,
+            )
+        imrebin(
+            imagename = imagename + "_tmp1",
+            outfile   = imagename + "_tmp2",
+            factor    = factor,
+            )
+        run_exportfits(
+            imagename  = imagename + "_tmp2",
+            fitsimage  = imagename,
+            dropdeg    = True,
+            dropstokes = True,
+            delin      = True,
+            )
+        os.system("rm -rf " + imagename + "_*")
+
+    ##################
+    # _plot_7m_cubes #
+    ##################
+
+    def _plot_7m_cubes(
+        self,
+        ):
+        """ not tested yet
+        """
+
+        data = np.loadtxt(self.outtxt_slopes_7m)
+
+        plt.figure(figsize=(10,10))
+        plt.subplots_adjust(bottom=0.10, left=0.19, right=0.99, top=0.90)
+        gs = gridspec.GridSpec(nrows=11, ncols=11)
+        ax = plt.subplot(gs[0:11,0:11])
+        ax.hist(data)
+        plt.savefig(self.outpng_slopes_7m)
+
+    ###############
+    # _create_dir #
+    ###############
+
+    def _create_dir(self, this_dir):
+
+        if self.refresh==True:
+            print("## refresh " + this_dir)
+            os.system("rm -rf " + this_dir)
+
+        if not glob.glob(this_dir):
+            print("## create " + this_dir)
+            os.mkdir(this_dir)
+
+        else:
+            print("## not refresh " + this_dir)
+
+    #############
+    # _read_key #
+    #############
+
+    def _read_key(self, key, keyfile="fig", delimiter=",,,"):
+
+        if keyfile=="gal":
+            keyfile = self.keyfile_gal
+        elif keyfile=="fig":
+            keyfile = self.keyfile_fig
+
+        keydata  = np.loadtxt(keyfile,dtype="str",delimiter=delimiter)
+        keywords =\
+             np.array([s.replace(" ","") for s in keydata[:,0]])
+        values   = keydata[:,1]
+        value    = values[np.where(keywords==key)[0][0]]
+
+        return value
