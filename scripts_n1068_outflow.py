@@ -398,7 +398,7 @@ class ToolsOutflow():
             dec_cnt=self.dec_agn_str,
             set_title="(d) MUSE [SIII]/[SII] Ratio",
             clim=[0, 3],
-            colorlog=True,
+            colorlog=False,
             scalebar=scalebar,
             label_scalebar=label_scalebar,
             set_bg_color=cm.rainbow(0),
