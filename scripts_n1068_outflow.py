@@ -341,7 +341,7 @@ class ToolsOutflow():
         ################
         # create model #
         ################
-        angle_list = np.linspace(theta_out,theta_in,41)
+        angle_list = np.linspace(self.model_theta_out,self.model_theta_in,41)
 
         # constant velocity bicone
         cone_cnst = [[],[],[],[]]
