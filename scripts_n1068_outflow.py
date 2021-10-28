@@ -459,6 +459,7 @@ class ToolsOutflow():
     #################
 
     def _ax_conemodel(
+        self,
         ax,
         this_vel,
         ):
