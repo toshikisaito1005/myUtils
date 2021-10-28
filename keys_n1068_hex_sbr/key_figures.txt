@@ -1,0 +1,30 @@
+###############
+# directories #
+###############
+dir_proj     ,,,/lfs13/saitots/proj_n1068_hex_sbr/
+dir_raw      ,,,data_raw/
+dir_ready    ,,,data_ready/
+dir_other    ,,,data_other/
+dir_products ,,,products_png/
+dir_final    ,,,images/
+
+##################
+# final products #
+##################
+final_showcase ,,,fig_showcase.png
+
+############
+# raw maps #
+############
+maps_mom0  ,,,ngc1068_b3_12m_*_150pc_broad_mom0.fits
+maps_emom0 ,,,ngc1068_b3_12m_*_150pc_broad_emom0.fits
+irac1      ,,,tbe
+irac4      ,,,tbe
+
+###############
+# output maps #
+###############
+out_maps_mom0      ,,,n1068_???.image
+out_maps_emom0     ,,,n1068_???_err.image
+outfits_maps_mom0  ,,,n1068_???.fits
+outfits_maps_emom0 ,,,n1068_???_err.fits
