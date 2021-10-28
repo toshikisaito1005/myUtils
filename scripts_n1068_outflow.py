@@ -460,7 +460,7 @@ class ToolsOutflow():
         chanwdith_GHz,
         data,
         ):
-    
+
         data          = np.array(data)
         z             = 0.00379
         obs_freq_ci   = 492.16065100 / (1+z) # GHz
@@ -477,7 +477,7 @@ class ToolsOutflow():
         z             = z[v>=vlow]
         v             = v[v>=vlow]
 
-return np.array([x, y, z, v])
+        return np.array([x, y, z, v])
 
     #########################
     # _create_3d_bicone_rel #
