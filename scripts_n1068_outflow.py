@@ -173,22 +173,22 @@ class ToolsOutflow():
 
             # get ngc1068 properties
             self.ra_agn_str = self._read_key("ra_agn", "gal")
-            self.ra_agn = float(self.ra_agn_str.replace("deg",""))
+            self.ra_agn     = float(self.ra_agn_str.replace("deg",""))
 
             self.dec_agn_str = self._read_key("dec_agn", "gal")
-            self.dec_agn = float(self.dec_agn_str.replace("deg",""))
+            self.dec_agn     = float(self.dec_agn_str.replace("deg",""))
 
-            self.pa = float(self._read_key("pa", "gal"))
-            self.incl = float(self._read_key("incl", "gal"))
-            self.scale_pc = float(self._read_key("scale", "gal"))
+            self.pa        = float(self._read_key("pa", "gal"))
+            self.incl      = float(self._read_key("incl", "gal"))
+            self.scale_pc  = float(self._read_key("scale", "gal"))
             self.scale_kpc = float(self._read_key("scale", "gal")) / 1000.
             
             # input parameters
             self.fov_radius = float(self._read_key("fov_radius_as")) * self.scale_pc
 
-            self.snr_cube = float(self._read_key("snr_cube"))
+            self.snr_cube  = float(self._read_key("snr_cube"))
             self.snr_ratio = float(self._read_key("snr_ratio"))
-            self.snr_chan = float(self._read_key("snr_chan"))
+            self.snr_chan  = float(self._read_key("snr_chan"))
 
             l = self._read_key("imrebin_factor")
             self.imrebin_factor = [int(s) for s in l.split(",")]
@@ -200,6 +200,26 @@ class ToolsOutflow():
             self.chans_num = [int(s) for s in l.split(",")]
             self.chans_text = self._read_key("chans_text").split(",")
             self.chans_color = self._read_key("chans_color").split(",")
+
+            # model parameters
+            self.model_length       = float(self._read_key("model_length"))
+            self.model_pa           = float(self._read_key("model_pa"))
+            self.model_incl         = float(self._read_key("model_incl"))
+            self.model_theta_in     = float(self._read_key("model_theta_in"))
+            self.model_theta_out    = float(self._read_key("model_theta_out"))
+            self.model_maxvel_const = float(self._read_key("model_maxvel_const"))
+            self.model_maxvel_decv  = float(self._read_key("model_maxvel_decv"))
+            self.model_maxvel_best  = float(self._read_key("model_maxvel_best"))
+            self.model_cnd_rout     = float(self._read_key("model_cnd_rout"))
+            l = self._read_key("model_chanlist")
+            self.model_chanlist     = [int(s) for s in l.split(",")]
+
+            self.model_nbins        = 300 # 300
+            self.model_disk_width   = 100
+            self.model_pa_disk      = 286-270 # degree
+            self.model_incl_disk    = 41 # degree
+            self.model_r_turn       = 140 # pc
+            self.model_velindex     = 0.35 # decomission
 
             # output txt and png
             self.outtxt_slopes_7m = self.dir_products + self._read_key("txt_slopes")
@@ -267,7 +287,8 @@ class ToolsOutflow():
         do_ratio_map     = False, # refactored
         plot_scatters    = False, # refactored
         plot_showcase    = False, # refactored
-        plot_channel     = False,
+        plot_channel     = False, # refactored
+        do_modeling      = False, # refactored (need to validate)
         # appendix
         plot_outflow_mom = False,
         # additional analysis
@@ -292,6 +313,9 @@ class ToolsOutflow():
         if plot_channel==True:
             self.get_outflow_channels()
 
+        if do_modeling==True:
+            self.bicone_modeling()
+
         # appendix
         if plot_outflow_mom==True:
             self.get_outflow_moments()
@@ -300,6 +324,296 @@ class ToolsOutflow():
         # additional
         if do_compare_7m==True:
             self.compare_7m_cubes()
+
+    ###################
+    # bicone_modeling #
+    ###################
+
+    def bicone_modeling(
+        self,
+        ):
+        """
+        """
+
+        taskname = self.modname + sys._getframe().f_code.co_name
+        check_first(self.outfits_cube_cico,taskname)
+
+        ################
+        # create model #
+        ################
+        angle_list = np.linspace(theta_out,theta_in,41)
+
+        # constant velocity bicone
+        cone_cnst = [[],[],[],[]]
+        for i in range(len(angle_list)):
+            this_angle = angle_list[i]
+
+            ## geometry (X=R.A., Z=decl., Y=depth)
+            nx,ny,nz,nv,sx,sy,sz,sv = self._create_3d_bicone_rel(
+                self.model_length, self.model_nbins, this_angle, self.model_pa,
+                self.model_incl, self.model_pa_disk, self.model_incl_disk,
+                self.model_disk_width*1.5, self.scale_pc,
+                clipoutflow = False,
+                velmax      = self.model_maxvel_const,
+                velmodel    = "const",
+                velindex    = self.model_velindex,
+                clipcnd     = self.model_cnd_rout,
+                r_turn      = self.model_r_turn,
+                )
+            ## combine
+            cone_cnst[0].extend(nx.flatten())
+            cone_cnst[1].extend(ny.flatten())
+            cone_cnst[2].extend(nz.flatten())
+            cone_cnst[3].extend(nv.flatten())
+            cone_cnst[0].extend(sx.flatten())
+            cone_cnst[1].extend(sy.flatten())
+            cone_cnst[2].extend(sz.flatten())
+            cone_cnst[3].extend(sv.flatten())
+
+        # decelerating velocity bicone
+        cone_decv = [[],[],[],[]]
+        for i in range(len(angle_list)):
+            this_angle = angle_list[i]
+            ## geometry (X=R.A., Z=decl., Y=depth)
+            nx,ny,nz,nv,sx,sy,sz,sv = self._create_3d_bicone_rel(
+                length, nbins, this_angle, pa,
+                incl, pa_disk, incl_disk, disk_width*1.5, scale,
+                clipoutflow = False,
+                velmax      = maxvel_decv,
+                velmodel    = "decelerate",
+                velindex    = velindex,
+                clipcnd     = cnd_rout_pc,
+                r_turn      = r_turn,
+                )
+            ## combine
+            cone_decv[0].extend(nx.flatten())
+            cone_decv[1].extend(ny.flatten())
+            cone_decv[2].extend(nz.flatten())
+            cone_decv[3].extend(nv.flatten())
+            cone_decv[0].extend(sx.flatten())
+            cone_decv[1].extend(sy.flatten())
+            cone_decv[2].extend(sz.flatten())
+            cone_decv[3].extend(sv.flatten())
+
+        # decelerating, truncated velocity bicone i.e., best
+        cone_best = [[],[],[],[]]
+        for i in range(len(angle_list)):
+            this_angle = angle_list[i]
+            ## geometry (X=R.A., Z=decl., Y=depth)
+            nx,ny,nz,nv,sx,sy,sz,sv = self._create_3d_bicone_rel(
+                length, nbins, this_angle, pa,
+                incl, pa_disk, incl_disk, disk_width*1.5, scale,
+                clipoutflow = True,
+                velmax      = maxvel_best,
+                velmodel    = "decelerate",
+                velindex    = velindex,
+                clipcnd     = cnd_rout_pc,
+                r_turn      = r_turn,
+                )
+            ## combine
+            cone_best[0].extend(nx.flatten())
+            cone_best[1].extend(ny.flatten())
+            cone_best[2].extend(nz.flatten())
+            cone_best[3].extend(nv.flatten())
+            cone_best[0].extend(sx.flatten())
+            cone_best[1].extend(sy.flatten())
+            cone_best[2].extend(sz.flatten())
+            cone_best[3].extend(sv.flatten())
+
+        ###############
+        # plot models #
+        ###############
+        chanwdith_GHz = 0.004
+
+        size = 300
+        ### cnst bicone
+        for i in range(len(chanlist)):
+            ## preparation
+            # parameter
+            this_vel     = chanlist[i]
+            this_vel_str = str(this_vel).replace("-","m").split(".")[0]
+            # velocity range of this channel
+            this_map = velrange_thischan(
+                this_vel, chanwdith_GHz, cone_cnst)
+            # outputname
+            outputpng = output_tmp.replace("thisvel",this_vel_str)
+            outputpng = dir_chan + outputpng.replace("thismodel","cnst")
+
+            ## plot
+            plt.figure(figsize=(13,10))
+            plt.subplots_adjust(bottom=0.10, left=0.2145, right=0.83, top=0.90)
+            gs = gridspec.GridSpec(nrows=10, ncols=10)
+            ax = plt.subplot(gs[0:10,0:10])
+            ax_conemodel(ax, this_vel)
+            ax.scatter(-1*this_map[0], this_map[1], c="darkred", lw=0, s=size)
+            plt.savefig(outputpng, dpi=fig_dpi, transparent=False)
+
+    #########################
+    # _create_3d_bicone_rel #
+    #########################
+
+    def _create_3d_bicone_rel(
+        self,
+        length,
+        nbins,
+        angle,
+        pa,
+        incl,
+        pa_disk,
+        incl_disk,
+        width_disk,
+        scale,
+        clipoutflow = False,
+        velmax      = 0,
+        velmodel    = "const", # const or decelerate
+        velindex    = 0.3,
+        clipcnd     = None,
+        r_turn      = 140, # parsec
+        ):
+        """
+        """
+
+        ### radian to degree
+        angle     = np.radians(angle)
+        pa        = np.radians(pa)
+        incl      = np.radians(incl)
+        pa_disk   = np.radians(pa_disk)
+        incl_disk = np.radians(incl_disk)
+
+        ### preparation
+        theta = np.linspace(0, 2*np.pi, nbins)
+        r     = np.linspace(0, length, nbins)
+        t,R   = np.meshgrid(theta, r)
+
+        ### northern outer cone
+        ## generate edge-on nothern cone (-X=R.A., Y=decl., Z=depth)
+        x0 = np.tan(angle)*R*np.cos(t)
+        y0 = R
+        z0 = np.tan(angle)*R*np.sin(t)
+        r0 = np.sqrt(x0**2 + y0**2 + z0**2)
+        ## incine it based on inc
+        x1 = x0
+        y1 = y0*np.cos(incl) - z0*np.sin(incl)
+        z1 = y0*np.sin(incl) + z0*np.cos(incl)
+        ## rotate it based on pa
+        x2 = x1*np.cos(pa) - y1*np.sin(pa)
+        y2 = x1*np.sin(pa) + y1*np.cos(pa)
+        z2 = z1
+        ## LoS velocity
+        t2 = -np.degrees(np.arccos(x2/r0))
+        p2 = -np.degrees(np.arctan2(y2, z2))
+        v2 = np.sin(np.radians(t2)) * np.cos(np.radians(p2)) * velmax
+        ## mask
+        # incine it based on inc
+        X1 = x0
+        Y1 = y0*np.cos(incl+incl_disk) - z0*np.sin(incl+incl_disk)
+        Z1 = y0*np.sin(incl+incl_disk) + z0*np.cos(incl+incl_disk)
+        # rotate it based on pa
+        X2 = X1*np.cos(pa-pa_disk) - Y1*np.sin(pa-pa_disk)
+        Y2 = X1*np.sin(pa-pa_disk) + Y1*np.cos(pa-pa_disk)
+        Z2 = Z1
+        if velmodel=="decelerate":
+            ka = velmax/r_turn
+            kb = velmax/r_turn/3.0
+            v2 = np.where(r0>r_turn,velmax-kb*(r0-r_turn),ka*r0)
+            v2 = np.sin(np.radians(t2)) * np.cos(np.radians(p2)) * v2
+        # mask CND and outflow
+        if clipoutflow==True: # width_disk/2.
+            ax = 0.35265396141693
+            ay = 0
+            az = 2
+            aa = -width_disk#/2.0
+            x2[ax*X2+ay*Y2+az*Z2+aa>=0] = 0
+            y2[ax*X2+ay*Y2+az*Z2+aa>=0] = 0
+            z2[ax*X2+ay*Y2+az*Z2+aa>=0] = 0
+            v2[ax*X2+ay*Y2+az*Z2+aa>=0] = 0
+            nX = x2 / scale
+            nY = y2 / scale
+            nZ = z2 / scale
+            nV = v2
+        else:
+            nX = x2 / scale
+            nY = y2 / scale
+            nZ = z2 / scale
+            nV = v2
+
+        nX[np.isnan(nX)] = 0
+        nY[np.isnan(nY)] = 0
+        nZ[np.isnan(nZ)] = 0
+        nV[np.isnan(nV)] = 0
+
+        if clipcnd!=None:
+            nR = np.sqrt(nX**2 + nY**2 + nZ**2) * scale
+            nX[abs(nR)<clipcnd] = 0
+            nY[abs(nR)<clipcnd] = 0
+            nZ[abs(nR)<clipcnd] = 0
+            nV[abs(nR)<clipcnd] = 0
+
+        ### southern outer cone
+        ## generate edge-on nothern cone (-X=R.A., Y=decl., Z=depth)
+        x0 = np.tan(angle)*R*np.cos(t)
+        y0 = -R
+        z0 = np.tan(angle)*R*np.sin(t)
+        r0 = np.sqrt(x0**2 + y0**2 + z0**2)
+        ## incine it based on inc
+        x1 = x0
+        y1 = y0*np.cos(incl) - z0*np.sin(incl)
+        z1 = y0*np.sin(incl) + z0*np.cos(incl)
+        ## rotate it based on pa
+        x2 = x1*np.cos(pa) - y1*np.sin(pa)
+        y2 = x1*np.sin(pa) + y1*np.cos(pa)
+        z2 = z1
+        ## LoS velocity
+        t2 = -np.degrees(np.arccos(x2/r0))
+        p2 = -np.degrees(np.arctan2(y2, z2))
+        v2 = np.sin(np.radians(t2)) * np.cos(np.radians(p2)) * velmax
+        ## mask
+        # incine it based on inc
+        X1 = x0
+        Y1 = y0*np.cos(incl+incl_disk) - z0*np.sin(incl+incl_disk)
+        Z1 = y0*np.sin(incl+incl_disk) + z0*np.cos(incl+incl_disk)
+        # rotate it based on pa
+        X2 = X1*np.cos(pa-pa_disk) - Y1*np.sin(pa-pa_disk)
+        Y2 = X1*np.sin(pa-pa_disk) + Y1*np.cos(pa-pa_disk)
+        Z2 = Z1
+        if velmodel=="decelerate":
+            ka = velmax/r_turn
+            kb = velmax/r_turn/3.0
+            v2 = np.where(r0>r_turn,velmax-kb*(r0-r_turn),ka*r0)
+            v2 = np.sin(np.radians(t2)) * np.cos(np.radians(p2)) * v2
+        # mask CND and outflow
+        if clipoutflow==True:
+            ax = 0.35265396141693
+            ay = 0
+            az = 2
+            aa = width_disk#/2.0
+            x2[ax*X2+ay*Y2+az*Z2+aa<=0] = 0
+            y2[ax*X2+ay*Y2+az*Z2+aa<=0] = 0
+            z2[ax*X2+ay*Y2+az*Z2+aa<=0] = 0
+            v2[ax*X2+ay*Y2+az*Z2+aa<=0] = 0
+            sX = x2 / scale
+            sY = y2 / scale
+            sZ = z2 / scale
+            sV = v2
+        else:
+            sX = x2 / scale
+            sY = y2 / scale
+            sZ = z2 / scale
+            sV = v2
+        
+        sX[np.isnan(sX)] = 0
+        sY[np.isnan(sY)] = 0
+        sZ[np.isnan(sZ)] = 0
+        sV[np.isnan(sV)] = 0
+        
+        if clipcnd!=None:
+            sR = np.sqrt(sX**2 + sY**2 + sZ**2) * scale
+            sX[abs(sR)<clipcnd] = 0
+            sY[abs(sR)<clipcnd] = 0
+            sZ[abs(sR)<clipcnd] = 0
+            sV[abs(sR)<clipcnd] = 0
+
+        return nX, nY, nZ, nV, sX, sY, sZ, sV
 
     ########################
     # get_outflow_channels #

@@ -67,17 +67,27 @@ out_ci10_outflow_mom1 ,,,n1068_ci_outflow_mom1.image
 ###################
 # input paramters #
 ###################
-imsize_as      ,,,18
-fov_radius_as  ,,,8.05
-snr_cube       ,,,2.5
-snr_ratio      ,,,6.0
-snr_chan       ,,,10.0
-imrebin_factor ,,,2,2,1
-chans_num      ,,,68,81,94,107,120,133,146,159,172
-chans_text     ,,,+124.3 km s$^{-1}$,+93.4 km s$^{-1}$,+62.4 km s$^{-1}$,+31.5 km s$^{-1}$,+0.6 km s$^{-1}$ ($V_{sys}$),-30.4 km s$^{-1}$,-61.3 km s$^{-1}$,-92.3 km s$^{-1}$,-123.2 km s$^{-1}$
-chans_color    ,,,red,red,red,red,black,blue,blue,blue,blue
-r_cnd_as       ,,,3.0
-r_sbr_as       ,,,10.0
+imsize_as          ,,,18
+fov_radius_as      ,,,8.05
+snr_cube           ,,,2.5
+snr_ratio          ,,,6.0
+snr_chan           ,,,10.0
+imrebin_factor     ,,,2,2,1
+chans_num          ,,,68,81,94,107,120,133,146,159,172
+chans_text         ,,,+124.3 km s$^{-1}$,+93.4 km s$^{-1}$,+62.4 km s$^{-1}$,+31.5 km s$^{-1}$,+0.6 km s$^{-1}$ ($V_{sys}$),-30.4 km s$^{-1}$,-61.3 km s$^{-1}$,-92.3 km s$^{-1}$,-123.2 km s$^{-1}$
+chans_color        ,,,red,red,red,red,black,blue,blue,blue,blue
+r_cnd_as           ,,,3.0
+r_sbr_as           ,,,10.0
+model_length       ,,,300.0
+model_pa           ,,,30.0
+model_incl         ,,,5.0
+model_theta_in     ,,,20
+model_theta_out    ,,,40
+model_maxvel_const ,,,250
+model_maxvel_decv  ,,,250
+model_maxvel_best  ,,,250
+model_cnd_rout     ,,,100
+model_chanlist     ,,,-123.2,-92.3,-61.3,-30.4,0,31.5,62.4,93.4,124.3
 
 ######################
 # output txt and png #
@@ -109,18 +119,6 @@ f08_ci ,,,n1068_ci10.fits
 ######################################################
 ### n1068ciplot.bicone_modeling
 ######################################################
-### input
-f06_length       ,,,300.0
-f06_pa           ,,,30.0
-f06_incl         ,,,5.0
-f06_theta_in     ,,,20
-f06_theta_out    ,,,40
-f06_maxvel_const ,,,250
-f06_maxvel_decv  ,,,250
-f06_maxvel_best  ,,,250
-f06_cnd_rout     ,,,100
-f06_chanlist     ,,,-123.2,-92.3,-61.3,-30.4,0,31.5,62.4,93.4,124.3
-### output
 f06_output        ,,,model_thismodel_vthisvel.png
 f06_cloplist         ,,,1,1,1,3,1,2,0,0,0
 f06_box_crop1        ,,,1790x1640+380+170
@@ -142,34 +140,17 @@ f05_box_crop5        ,,,1900x1760+550+170
 ######################################################
 ### n1068ciplot.multi_pvd
 ######################################################
-### input
-f04_co_cube         ,,,n1068_co10.cube.fits
-f04_ci_cube         ,,,n1068_ci10.cube.fits
 f04_pv_pa           ,,,-20deg,-10deg,0deg,10deg,20deg,30deg,40deg,50deg,60deg
-### output
 f04_output          ,,,figtmp_pvd.png
 
 ######################################################
 ### n1068ciplot.radial_profile
 ######################################################
-### input
-f03_co              ,,,n1068_co10.masked.fits
-f03_ci              ,,,n1068_ci10.fits
-f03_siii_sii        ,,,n1068_siii_sii.masked.fits
-f03_co_cube         ,,,n1068_co10.cube.fits
-f03_ci_cube         ,,,n1068_ci10.cube.fits
-### output
-f03_output          ,,,figtmp_radial.png
-#
 f03_box_crop        ,,,5000x5000+0+0
 
 ######################################################
 ### n1068ciplot.scatters
 ######################################################
-### output
-f02_cico_vs_co      ,,,figtmp_scatter_cicoratio_vs_co.png
-f02_cico_vs_siiisii ,,,figtmp_scatter_cicoratio_vs_ionization.png
-#
 f02_box_crop        ,,,1900x1900+80+80
 f02_box_crop_ratio  ,,,2200x1850+350+80
 
