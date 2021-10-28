@@ -466,7 +466,7 @@ class ToolsOutflow():
         """
         """
 
-        ax_general_setup(
+        myax_set(
             ax,
             grid   = "both",
             title  = None,
