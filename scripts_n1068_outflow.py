@@ -234,15 +234,20 @@ class ToolsOutflow():
             self.outpng_map_co   = self.dir_products + self._read_key("png_map_co")
             self.outpng_map_cico = self.dir_products + self._read_key("png_map_cico")
 
-            self.outpng_outflow_mom0 = \
-                self.dir_products + self._read_key("png_outflow_mom0")
-            self.outpng_outflow_mom1 = \
-                self.dir_products + self._read_key("png_outflow_mom1")
             self.outpng_outflow_chans = \
                 self.dir_products + self._read_key("png_outflow_chans")
 
             self.png_outflow_model = \
                 self.dir_chan + self._read_key("png_outflow_model")
+
+            # appendix
+            self.outpng_outflow_mom0 = \
+                self.dir_products + self._read_key("png_outflow_mom0")
+            self.outpng_outflow_mom1 = \
+                self.dir_products + self._read_key("png_outflow_mom1")
+            self.png_map_oiii    = self.dir_products + self._read_key("png_map_oiii")
+            self.png_map_vla     = self.dir_products + self._read_key("png_map_vla")
+            self.png_map_siiisii = self.dir_products + self._read_key("png_map_siiisii")
 
     ###############
     # _create_dir #
@@ -351,7 +356,7 @@ class ToolsOutflow():
 
         myfig_fits2png(
             imcolor=self.outfits_map_oiii,
-            outfile=self.outpng_map_ci,
+            outfile=self.png_map_oiii,
             imsize_as=self.imsize_as,
             ra_cnt=self.ra_agn_str,
             dec_cnt=self.dec_agn_str,
@@ -360,10 +365,47 @@ class ToolsOutflow():
             colorlog=True,
             scalebar=scalebar,
             label_scalebar=label_scalebar,
+            set_bg_color=cm.rainbow(0),
             set_cbar=True,
             label_cbar="(arbitrary)",
             numann=1,
-            textann=True,
+            textann=False,
+            )
+
+        myfig_fits2png(
+            imcolor=self.outfits_map_vla,
+            outfile=self.png_map_vla,
+            imsize_as=self.imsize_as,
+            ra_cnt=self.ra_agn_str,
+            dec_cnt=self.dec_agn_str,
+            set_title="(c) VLA 8.49 GHz Radio Continuum",
+            clim=[0.0002, 0.111353],
+            colorlog=True,
+            scalebar=scalebar,
+            label_scalebar=label_scalebar,
+            set_bg_color=cm.rainbow(0),
+            set_cbar=True,
+            label_cbar="(arbitrary)",
+            numann=1,
+            textann=False,
+            )
+
+        myfig_fits2png(
+            imcolor=self.outfits_map_siiisii,
+            outfile=self.png_map_siiisii,
+            imsize_as=self.imsize_as,
+            ra_cnt=self.ra_agn_str,
+            dec_cnt=self.dec_agn_str,
+            set_title="(d) MUSE [SIII]/[SII] Ratio",
+            clim=[0, 3],
+            colorlog=True,
+            scalebar=scalebar,
+            label_scalebar=label_scalebar,
+            set_bg_color=cm.rainbow(0),
+            set_cbar=True,
+            label_cbar="MUSE [SIII]/[SII] Ratio",
+            numann=1,
+            textann=False,
             )
 
     ###################
@@ -934,12 +976,12 @@ class ToolsOutflow():
         myfig_fits2png(
             imcolor=self.outfits_ci10_outflow_mom0,
             outfile=self.outpng_outflow_mom0,
-            imcontour1=self.outfits_ci10_outflow_mom0,
+            #imcontour1=self.outfits_ci10_outflow_mom0,
             imsize_as=self.imsize_as,
             ra_cnt=self.ra_agn_str,
             dec_cnt=self.dec_agn_str,
-            levels_cont1=[0.025, 0.05, 0.1, 0.2, 0.4, 0.8, 0.96],
-            width_cont1=[1.0],
+            #levels_cont1=[0.025, 0.05, 0.1, 0.2, 0.4, 0.8, 0.96],
+            #width_cont1=[1.0],
             set_title="(a) [CI] Outflow Integrated Intensity",
             colorlog=True,
             set_bg_color=cm.rainbow(0),

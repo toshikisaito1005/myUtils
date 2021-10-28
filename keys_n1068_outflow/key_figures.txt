@@ -103,7 +103,9 @@ png_outflow_mom0    ,,,fig_map_ci_outflow_mom0.png
 png_outflow_mom1    ,,,fig_map_ci_outflow_mom1.png
 png_outflow_chans   ,,,fig_map_ci_outflow_chan_?.png
 png_outflow_model   ,,,fig_model_thismodel_thisvel.png
-
+png_map_oiii        ,,,fig_hst_oiii.png
+png_map_vla         ,,,fig_hst_vla.png
+png_map_siiisii     ,,,fig_hst_siiisii.png
 
 
 
