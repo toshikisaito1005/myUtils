@@ -85,6 +85,9 @@ class ToolsSBR():
             self._create_dir(self.dir_products)
             self._create_dir(self.dir_final)
 
+            # input maps
+            self.map_av = self.dir_other + self._read_key("map_av")
+
     ###################
     # run_ngc1068_sbr #
     ###################
@@ -99,6 +102,22 @@ class ToolsSBR():
 
         if do_prepare==True:
             self.align_maps()
+
+    ####################
+    # align_maps #
+    ####################
+
+    def align_maps(self):
+        """
+        """
+
+        template = self.map_av
+
+        taskname = self.modname + sys._getframe().f_code.co_name
+        check_first(template,taskname)
+
+        #
+
 
     ###############
     # _create_dir #
@@ -135,3 +154,4 @@ class ToolsSBR():
         value    = values[np.where(keywords==key)[0][0]]
 
         return value
+

@@ -286,16 +286,17 @@ class ToolsOutflow():
 
     def run_ci_outflow(
         self,
-        do_prepare       = False, # refactored
-        do_ratio_map     = False, # refactored
-        plot_scatters    = False, # refactored
-        plot_showcase    = False, # refactored
-        plot_channel     = False, # refactored
-        do_modeling      = False, # refactored (need to validate)
+        do_prepare          = False,
+        do_ratio_map        = False,
+        plot_scatters       = False,
+        plot_showcase       = False,
+        plot_channel        = False,
+        do_modeling         = False,
         # appendix
-        plot_outflow_mom = False,
+        plot_outflow_mom    = False,
+        plot_showcase_multi = False,
         # additional analysis
-        do_compare_7m    = False,
+        do_compare_7m       = False,
         ):
 
         if do_prepare==True:
@@ -313,6 +314,7 @@ class ToolsOutflow():
         if plot_showcase==True:
             self.showcase()
 
+
         if plot_channel==True:
             self.get_outflow_channels()
 
@@ -324,9 +326,45 @@ class ToolsOutflow():
             self.get_outflow_moments()
             self.plot_outflow_moments()
 
+        if plot_showcase_multi==True:
+            self.showcase_multi()
+
         # additional
         if do_compare_7m==True:
             self.compare_7m_cubes()
+
+    ##################
+    # showcase_multi #
+    ##################
+
+    def showcase_multi(
+        self,
+        ):
+        """
+        """
+
+        taskname = self.modname + sys._getframe().f_code.co_name
+        check_first(self.outfits_map_co10,taskname)
+
+        scalebar = 100. / self.scale_pc
+        label_scalebar = "100 pc"
+
+        myfig_fits2png(
+            imcolor=self.outfits_map_oiii,
+            outfile=self.outpng_map_ci,
+            imsize_as=self.imsize_as,
+            ra_cnt=self.ra_agn_str,
+            dec_cnt=self.dec_agn_str,
+            set_title="(b) HST [OIII] 5007",
+            clim=[0.1,10],
+            colorlog=True,
+            scalebar=scalebar,
+            label_scalebar=label_scalebar,
+            set_cbar=True,
+            label_cbar="(arbitrary)",
+            numann=1,
+            textann=True,
+            )
 
     ###################
     # bicone_modeling #
@@ -481,7 +519,6 @@ class ToolsOutflow():
 
             ## plot
             plt.figure(figsize=(13,10))
-            plt.subplots_adjust(bottom=0.10, left=0.2145, right=0.83, top=0.90)
             gs = gridspec.GridSpec(nrows=10, ncols=10)
             ax = plt.subplot(gs[0:10,0:10])
             self._ax_conemodel(ax, this_vel, title)
@@ -510,12 +547,83 @@ class ToolsOutflow():
 
             ## plot
             plt.figure(figsize=(13,10))
-            plt.subplots_adjust(bottom=0.10, left=0.2145, right=0.83, top=0.90)
             gs = gridspec.GridSpec(nrows=10, ncols=10)
             ax = plt.subplot(gs[0:10,0:10])
             self._ax_conemodel(ax, this_vel, title)
             ax.scatter(-1*this_map[0], this_map[1], c="darkred", lw=0, s=size)
             plt.savefig(outputpng, dpi=fig_dpi, transparent=False)
+
+    ########################
+    # get_outflow_channels #
+    ########################
+
+    def get_outflow_channels(
+        self,
+        ):
+        """
+        """
+
+        taskname = self.modname + sys._getframe().f_code.co_name
+        check_first(self.outfits_cube_cico,taskname)
+        check_first(self.outfits_cube_ci10)
+        check_first(self.outfits_cube_co10)
+
+        for i in range(len(self.chans_num)):
+            this_chan = str(self.chans_num[i])
+            this_chan_str =  this_chan.zfill(3)
+            this_text = self.chans_text[i]
+            this_c    = self.chans_color[i]
+            this_cico = self.dir_ready+"cube_cico_ch"+this_chan_str+".fits"
+            this_ci10 = self.dir_ready+"cube_ci10_ch"+this_chan_str+".fits"
+            this_co10 = self.dir_ready+"cube_co10_ch"+this_chan_str+".fits"
+            this_outpng = self.outpng_outflow_chans.replace("?",str(this_chan))
+
+            # extract a channel of the ratio cube
+            self._extract_one_chan(self.outfits_cube_cico,
+                this_cico,this_chan,self.imrebin_factor)
+
+            # extract a channel of the ci cube
+            self._extract_one_chan(self.outfits_cube_ci10,
+                this_ci10,this_chan,self.imrebin_factor)
+
+            # extract a channel of the co cube
+            self._extract_one_chan(self.outfits_cube_co10,
+                this_co10,this_chan,self.imrebin_factor)
+
+            # plot
+            scalebar = 100. / self.scale_pc
+            label_scalebar = "100 pc"
+
+            if i==len(self.chans_num)-1:
+                title = "(a) Observed [CI]/CO ratio"
+            else:
+                title = None
+
+            myfig_fits2png(
+                imcolor=this_cico,
+                outfile=this_outpng,
+                imcontour1=this_ci10,
+                imsize_as=self.imsize_as,
+                ra_cnt=self.ra_agn_str,
+                dec_cnt=self.dec_agn_str,
+                unit_cont1=0.05,
+                levels_cont1=[-5.0,5.0,10.0,20.0],
+                set_cmap="jet",
+                clim=[0,1],
+                set_title=title,
+                #set_bg_color=cm.rainbow(0),
+                scalebar=scalebar,
+                label_scalebar=label_scalebar,
+                set_cbar=True,
+                label_cbar="(K km s$^{-1}$)",
+                numann=1,
+                textann=False,
+                comment=this_text,
+                comment_color=this_c,
+                )
+
+            # cleanup
+            os.system("rm -rf "+this_cico+" "+this_ci10+" "+this_co10)
 
     #################
     # _ax_conemodel #
@@ -772,78 +880,6 @@ class ToolsOutflow():
 
         return nX, nY, nZ, nV, sX, sY, sZ, sV
 
-    ########################
-    # get_outflow_channels #
-    ########################
-
-    def get_outflow_channels(
-        self,
-        ):
-        """
-        """
-
-        taskname = self.modname + sys._getframe().f_code.co_name
-        check_first(self.outfits_cube_cico,taskname)
-        check_first(self.outfits_cube_ci10)
-        check_first(self.outfits_cube_co10)
-
-        for i in range(len(self.chans_num)):
-            this_chan = str(self.chans_num[i])
-            this_chan_str =  this_chan.zfill(3)
-            this_text = self.chans_text[i]
-            this_c    = self.chans_color[i]
-            this_cico = self.dir_ready+"cube_cico_ch"+this_chan_str+".fits"
-            this_ci10 = self.dir_ready+"cube_ci10_ch"+this_chan_str+".fits"
-            this_co10 = self.dir_ready+"cube_co10_ch"+this_chan_str+".fits"
-            this_outpng = self.outpng_outflow_chans.replace("?",str(this_chan))
-
-            # extract a channel of the ratio cube
-            self._extract_one_chan(self.outfits_cube_cico,
-                this_cico,this_chan,self.imrebin_factor)
-
-            # extract a channel of the ci cube
-            self._extract_one_chan(self.outfits_cube_ci10,
-                this_ci10,this_chan,self.imrebin_factor)
-
-            # extract a channel of the co cube
-            self._extract_one_chan(self.outfits_cube_co10,
-                this_co10,this_chan,self.imrebin_factor)
-
-            # plot
-            scalebar = 100. / self.scale_pc
-            label_scalebar = "100 pc"
-
-            if i==len(self.chans_num)-1:
-                title = "(a) Observed [CI]/CO ratio"
-            else:
-                title = None
-
-            myfig_fits2png(
-                imcolor=this_cico,
-                outfile=this_outpng,
-                imcontour1=this_ci10,
-                imsize_as=self.imsize_as,
-                ra_cnt=self.ra_agn_str,
-                dec_cnt=self.dec_agn_str,
-                unit_cont1=0.05,
-                levels_cont1=[-5.0,5.0,10.0,20.0],
-                set_cmap="jet",
-                clim=[0,1],
-                set_title=title,
-                #set_bg_color=cm.rainbow(0),
-                scalebar=scalebar,
-                label_scalebar=label_scalebar,
-                set_cbar=True,
-                label_cbar="(K km s$^{-1}$)",
-                numann=1,
-                textann=False,
-                comment=this_text,
-                comment_color=this_c,
-                )
-
-            # cleanup
-            os.system("rm -rf "+this_cico+" "+this_ci10+" "+this_co10)
-
     #####################
     # _extract_one_chan #
     #####################
@@ -904,7 +940,7 @@ class ToolsOutflow():
             dec_cnt=self.dec_agn_str,
             levels_cont1=[0.025, 0.05, 0.1, 0.2, 0.4, 0.8, 0.96],
             width_cont1=[1.0],
-            set_title="[CI] Outflow Integrated Intensity",
+            set_title="(a) [CI] Outflow Integrated Intensity",
             colorlog=True,
             set_bg_color=cm.rainbow(0),
             scalebar=scalebar,

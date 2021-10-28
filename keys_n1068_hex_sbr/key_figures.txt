@@ -18,6 +18,7 @@ final_showcase ,,,fig_showcase.png
 ############
 maps_mom0  ,,,ngc1068_b3_12m_*_150pc_broad_mom0.fits
 maps_emom0 ,,,ngc1068_b3_12m_*_150pc_broad_emom0.fits
+map_av     ,,,NGC1068_extinction.fits
 irac1      ,,,tbe
 irac4      ,,,tbe
 
