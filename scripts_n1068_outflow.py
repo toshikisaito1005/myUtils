@@ -453,6 +453,52 @@ class ToolsOutflow():
             ax.scatter(-1*this_map[0], this_map[1], c="darkred", lw=0, s=size)
             plt.savefig(outputpng, dpi=fig_dpi, transparent=False)
 
+        ### decv bicone
+        for i in range(len(self.model_chanlist)):
+            ## preparation
+            # parameter
+            this_vel     = self.model_chanlist[i]
+            this_vel_str = str(this_vel).replace("-","m").split(".")[0]
+
+            # velocity range of this channel
+            this_map = self._velrange_thischan(this_vel, chanwdith_GHz, cone_decv)
+
+            # outputname
+            outputpng = self.png_outflow_model.replace("thisvel",this_vel_str)
+            outputpng = outputpng.replace("thismodel","decv")
+
+            ## plot
+            plt.figure(figsize=(13,10))
+            plt.subplots_adjust(bottom=0.10, left=0.2145, right=0.83, top=0.90)
+            gs = gridspec.GridSpec(nrows=10, ncols=10)
+            ax = plt.subplot(gs[0:10,0:10])
+            self._ax_conemodel(ax, this_vel)
+            ax.scatter(-1*this_map[0], this_map[1], c="darkred", lw=0, s=size)
+            plt.savefig(outputpng, dpi=fig_dpi, transparent=False)
+
+        ### best bicone
+        for i in range(len(self.model_chanlist)):
+            ## preparation
+            # parameter
+            this_vel     = self.model_chanlist[i]
+            this_vel_str = str(this_vel).replace("-","m").split(".")[0]
+
+            # velocity range of this channel
+            this_map = self._velrange_thischan(this_vel, chanwdith_GHz, cone_best)
+
+            # outputname
+            outputpng = self.png_outflow_model.replace("thisvel",this_vel_str)
+            outputpng = outputpng.replace("thismodel","best")
+
+            ## plot
+            plt.figure(figsize=(13,10))
+            plt.subplots_adjust(bottom=0.10, left=0.2145, right=0.83, top=0.90)
+            gs = gridspec.GridSpec(nrows=10, ncols=10)
+            ax = plt.subplot(gs[0:10,0:10])
+            self._ax_conemodel(ax, this_vel)
+            ax.scatter(-1*this_map[0], this_map[1], c="darkred", lw=0, s=size)
+            plt.savefig(outputpng, dpi=fig_dpi, transparent=False)
+
     #################
     # _ax_conemodel #
     #################
