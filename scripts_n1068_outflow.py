@@ -376,14 +376,15 @@ class ToolsOutflow():
             this_angle = angle_list[i]
             ## geometry (X=R.A., Z=decl., Y=depth)
             nx,ny,nz,nv,sx,sy,sz,sv = self._create_3d_bicone_rel(
-                length, nbins, this_angle, pa,
-                incl, pa_disk, incl_disk, disk_width*1.5, scale,
+                self.model_length, self.model_nbins, this_angle, self.model_pa,
+                self.model_incl, self.model_pa_disk, self.model_incl_disk,
+                self.model_disk_width*1.5, self.scale_pc,
                 clipoutflow = False,
-                velmax      = maxvel_decv,
+                velmax      = self.model_maxvel_decv,
                 velmodel    = "decelerate",
-                velindex    = velindex,
-                clipcnd     = cnd_rout_pc,
-                r_turn      = r_turn,
+                velindex    = self.model_velindex,
+                clipcnd     = self.model_cnd_rout_pc,
+                r_turn      = self.model_r_turn,
                 )
             ## combine
             cone_decv[0].extend(nx.flatten())
@@ -401,14 +402,15 @@ class ToolsOutflow():
             this_angle = angle_list[i]
             ## geometry (X=R.A., Z=decl., Y=depth)
             nx,ny,nz,nv,sx,sy,sz,sv = self._create_3d_bicone_rel(
-                length, nbins, this_angle, pa,
-                incl, pa_disk, incl_disk, disk_width*1.5, scale,
+                self.model_length, self.model_nbins, this_angle, self.model_pa,
+                self.model_incl, self.model_pa_disk, self.model_incl_disk,
+                self.model_disk_width*1.5, self.scale_pc,
                 clipoutflow = True,
-                velmax      = maxvel_best,
+                velmax      = self.model_maxvel_best,
                 velmodel    = "decelerate",
-                velindex    = velindex,
-                clipcnd     = cnd_rout_pc,
-                r_turn      = r_turn,
+                velindex    = self.model_velindex,
+                clipcnd     = self.model_cnd_rout_pc,
+                r_turn      = self.model_r_turn,
                 )
             ## combine
             cone_best[0].extend(nx.flatten())
