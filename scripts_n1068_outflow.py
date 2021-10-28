@@ -429,10 +429,10 @@ class ToolsOutflow():
 
         size = 300
         ### cnst bicone
-        for i in range(len(chanlist)):
+        for i in range(len(self.model_chanlist)):
             ## preparation
             # parameter
-            this_vel     = chanlist[i]
+            this_vel     = self.model_chanlist[i]
             this_vel_str = str(this_vel).replace("-","m").split(".")[0]
             # velocity range of this channel
             this_map = velrange_thischan(
