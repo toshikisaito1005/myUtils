@@ -383,7 +383,7 @@ class ToolsOutflow():
                 velmax      = self.model_maxvel_decv,
                 velmodel    = "decelerate",
                 velindex    = self.model_velindex,
-                clipcnd     = self.model_cnd_rout_pc,
+                clipcnd     = self.model_cnd_rout,
                 r_turn      = self.model_r_turn,
                 )
             ## combine
@@ -409,7 +409,7 @@ class ToolsOutflow():
                 velmax      = self.model_maxvel_best,
                 velmodel    = "decelerate",
                 velindex    = self.model_velindex,
-                clipcnd     = self.model_cnd_rout_pc,
+                clipcnd     = self.model_cnd_rout,
                 r_turn      = self.model_r_turn,
                 )
             ## combine
