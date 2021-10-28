@@ -241,7 +241,8 @@ class ToolsOutflow():
             self.outpng_outflow_chans = \
                 self.dir_products + self._read_key("png_outflow_chans")
 
-            self.png_outflow_chans = self.dir_chan + self._read_key("png_outflow_chans")
+            self.png_outflow_model = \
+                self.dir_chan + self._read_key("png_outflow_model")
 
     ###############
     # _create_dir #
@@ -441,8 +442,8 @@ class ToolsOutflow():
             this_map = self._velrange_thischan(this_vel, chanwdith_GHz, cone_cnst)
 
             # outputname
-            outputpng = self.png_outflow_chans.replace("thisvel",this_vel_str)
-            outputpng = dir_chan + outputpng.replace("thismodel","cnst")
+            outputpng = self.png_outflow_model.replace("thisvel",this_vel_str)
+            outputpng = outputpng.replace("thismodel","cnst")
 
             ## plot
             plt.figure(figsize=(13,10))
@@ -485,7 +486,7 @@ class ToolsOutflow():
             alpha     = 1.0,
             lw        = 3.5,
             )
-        
+
         ax.add_patch(fov)
         # annotation 2: outflow outlines
         theta1 = -10.0 # degree
