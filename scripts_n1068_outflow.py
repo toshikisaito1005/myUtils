@@ -474,6 +474,7 @@ class ToolsOutflow():
             ylim   = [-9, 9],
             xlabel = "x-offset (arcsec)",
             ylabel = "y-offset (arcsec)",
+            adjust = [0.19,0.99,0.10,0.90],
             )
         
         fov_diamter = 16.5
