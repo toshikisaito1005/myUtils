@@ -101,7 +101,7 @@ png_map_co          ,,,fig_map_co.png
 png_map_cico        ,,,fig_map_cico.png
 png_outflow_mom0    ,,,fig_map_ci_outflow_mom0.png
 png_outflow_mom1    ,,,fig_map_ci_outflow_mom1.png
-png_outflow_chans   ,,,fig_map_ci_outflow_chan_?.png
+png_outflow_chans   ,,,fig_map_ci_outflow_chan_thisvel.png
 
 
 

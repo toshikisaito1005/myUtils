@@ -229,9 +229,9 @@ class ToolsOutflow():
             self.outpng_cico_vs_siiisii = \
                 self.dir_products + self._read_key("png_ci_vs_co")
 
-            self.imsize_as = float(self._read_key("imsize_as"))
-            self.outpng_map_ci = self.dir_products + self._read_key("png_map_ci")
-            self.outpng_map_co = self.dir_products + self._read_key("png_map_co")
+            self.imsize_as       = float(self._read_key("imsize_as"))
+            self.outpng_map_ci   = self.dir_products + self._read_key("png_map_ci")
+            self.outpng_map_co   = self.dir_products + self._read_key("png_map_co")
             self.outpng_map_cico = self.dir_products + self._read_key("png_map_cico")
 
             self.outpng_outflow_mom0 = \
@@ -240,6 +240,8 @@ class ToolsOutflow():
                 self.dir_products + self._read_key("png_outflow_mom1")
             self.outpng_outflow_chans = \
                 self.dir_products + self._read_key("png_outflow_chans")
+
+            self.png_outflow_chans = self.dir_chan + self._read_key("png_outflow_chans")
 
     ###############
     # _create_dir #
@@ -434,10 +436,12 @@ class ToolsOutflow():
             # parameter
             this_vel     = self.model_chanlist[i]
             this_vel_str = str(this_vel).replace("-","m").split(".")[0]
+
             # velocity range of this channel
             this_map = self._velrange_thischan(this_vel, chanwdith_GHz, cone_cnst)
+
             # outputname
-            outputpng = output_tmp.replace("thisvel",this_vel_str)
+            outputpng = self.png_outflow_chans.replace("thisvel",this_vel_str)
             outputpng = dir_chan + outputpng.replace("thismodel","cnst")
 
             ## plot
@@ -445,10 +449,65 @@ class ToolsOutflow():
             plt.subplots_adjust(bottom=0.10, left=0.2145, right=0.83, top=0.90)
             gs = gridspec.GridSpec(nrows=10, ncols=10)
             ax = plt.subplot(gs[0:10,0:10])
-            ax_conemodel(ax, this_vel)
+            self._ax_conemodel(ax, this_vel)
             ax.scatter(-1*this_map[0], this_map[1], c="darkred", lw=0, s=size)
             plt.savefig(outputpng, dpi=fig_dpi, transparent=False)
 
+    #################
+    # _ax_conemodel #
+    #################
+
+    def _ax_conemodel(
+        ax,
+        this_vel,
+        ):
+        """
+        """
+
+        ax_general_setup(
+            ax,
+            grid   = "both",
+            title  = None,
+            xlim   = [9, -9],
+            ylim   = [-9, 9],
+            xlabel = "x-offset (arcsec)",
+            ylabel = "y-offset (arcsec)",
+            )
+        
+        fov_diamter = 16.5
+        fov = patches.Ellipse(
+            xy        = (-0, 0),
+            width     = fov_diamter,
+            height    = fov_diamter,
+            angle     = 0,
+            fill      = False,
+            edgecolor = "black",
+            alpha     = 1.0,
+            lw        = 3.5,
+            )
+        
+        ax.add_patch(fov)
+        # annotation 2: outflow outlines
+        theta1 = -10.0 # degree
+        x1 = fov_diamter/2.0 * np.cos(np.radians(-1*theta1+90))
+        y1 = fov_diamter/2.0 * np.sin(np.radians(-1*theta1+90))
+        ax.plot([x1, -x1], [y1, -y1], "--", c="black", lw=3.5)
+        theta2 = 70.0 # degree
+        x1 = fov_diamter/2.0 * np.cos(np.radians(-1*theta2+90))
+        y1 = fov_diamter/2.0 * np.sin(np.radians(-1*theta2+90))
+        ax.plot([x1, -x1], [y1, -y1], "--", c="black", lw=3.5)
+        # text
+        comment = str(this_vel) + " km s$^{-1}$"
+        if this_vel>0:
+            color = "red"
+        else:
+            color = "blue"
+        t = ax.text(0.04, 0.96, comment, horizontalalignment="left", verticalalignment="top", color = color, weight="bold",
+        transform = ax.transAxes)
+        t.set_bbox(dict(facecolor="white", alpha=0.8, lw=0))
+        #
+        ax.set_xlabel("x-offset (arcsec)")
+        ax.set_ylabel("y-offset (arcsec)")
 
     ######################
     # _velrange_thischan #
