@@ -429,8 +429,8 @@ class ToolsOutflow():
         # plot models #
         ###############
         chanwdith_GHz = 0.004
-
         size = 300
+
         ### cnst bicone
         for i in range(len(self.model_chanlist)):
             ## preparation
@@ -447,7 +447,6 @@ class ToolsOutflow():
 
             ## plot
             plt.figure(figsize=(13,10))
-            plt.subplots_adjust(bottom=0.10, left=0.2145, right=0.83, top=0.90)
             gs = gridspec.GridSpec(nrows=10, ncols=10)
             ax = plt.subplot(gs[0:10,0:10])
             self._ax_conemodel(ax, this_vel)
