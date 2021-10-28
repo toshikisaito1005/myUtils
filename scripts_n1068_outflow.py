@@ -435,8 +435,7 @@ class ToolsOutflow():
             this_vel     = self.model_chanlist[i]
             this_vel_str = str(this_vel).replace("-","m").split(".")[0]
             # velocity range of this channel
-            this_map = velrange_thischan(
-                this_vel, chanwdith_GHz, cone_cnst)
+            this_map = self._velrange_thischan(this_vel, chanwdith_GHz, cone_cnst)
             # outputname
             outputpng = output_tmp.replace("thisvel",this_vel_str)
             outputpng = dir_chan + outputpng.replace("thismodel","cnst")
@@ -449,6 +448,36 @@ class ToolsOutflow():
             ax_conemodel(ax, this_vel)
             ax.scatter(-1*this_map[0], this_map[1], c="darkred", lw=0, s=size)
             plt.savefig(outputpng, dpi=fig_dpi, transparent=False)
+
+
+    ######################
+    # _velrange_thischan #
+    ######################
+
+    def _velrange_thischan(
+        self,
+        this_vel,
+        chanwdith_GHz,
+        data,
+        ):
+    
+        data          = np.array(data)
+        z             = 0.00379
+        obs_freq_ci   = 492.16065100 / (1+z) # GHz
+        # velocity range of this channel
+        chanwidth_kms = chanwdith_GHz / obs_freq_ci * 299792.458 # km/s
+        vupp          = this_vel + chanwidth_kms/2. #* 2
+        vlow          = this_vel - chanwidth_kms/2. #* 2
+        x             = data[0][data[3]<=vupp]
+        y             = data[1][data[3]<=vupp]
+        z             = data[2][data[3]<=vupp]
+        v             = data[3][data[3]<=vupp]
+        x             = x[v>=vlow]
+        y             = y[v>=vlow]
+        z             = z[v>=vlow]
+        v             = v[v>=vlow]
+
+return np.array([x, y, z, v])
 
     #########################
     # _create_3d_bicone_rel #
