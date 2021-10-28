@@ -373,7 +373,7 @@ class ToolsOutflow():
             )
 
         myfig_fits2png(
-            imcolor=self.outfits_map_vla,
+            imcolor=self.outfits_map_radio,
             outfile=self.png_map_vla,
             imsize_as=self.imsize_as,
             ra_cnt=self.ra_agn_str,
