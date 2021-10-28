@@ -212,7 +212,7 @@ class ToolsOutflow():
             self.model_maxvel_best  = float(self._read_key("model_maxvel_best"))
             self.model_cnd_rout     = float(self._read_key("model_cnd_rout"))
             l = self._read_key("model_chanlist")
-            self.model_chanlist     = [int(s) for s in l.split(",")]
+            self.model_chanlist     = [float(s) for s in l.split(",")]
 
             self.model_nbins        = 300 # 300
             self.model_disk_width   = 100
