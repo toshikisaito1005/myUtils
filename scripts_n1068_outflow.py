@@ -445,11 +445,17 @@ class ToolsOutflow():
             outputpng = self.png_outflow_model.replace("thisvel",this_vel_str)
             outputpng = outputpng.replace("thismodel","cnst")
 
+            # title
+            if i==0:
+                title = "(a) Model 1"
+            else:
+                title = None
+
             ## plot
             plt.figure(figsize=(13,10))
             gs = gridspec.GridSpec(nrows=10, ncols=10)
             ax = plt.subplot(gs[0:10,0:10])
-            self._ax_conemodel(ax, this_vel)
+            self._ax_conemodel(ax, this_vel, title)
             ax.scatter(-1*this_map[0], this_map[1], c="darkred", lw=0, s=size)
             plt.savefig(outputpng, dpi=fig_dpi, transparent=False)
 
@@ -467,12 +473,18 @@ class ToolsOutflow():
             outputpng = self.png_outflow_model.replace("thisvel",this_vel_str)
             outputpng = outputpng.replace("thismodel","decv")
 
+            # title
+            if i==0:
+                title = "(b) Model 2"
+            else:
+                title = None
+
             ## plot
             plt.figure(figsize=(13,10))
             plt.subplots_adjust(bottom=0.10, left=0.2145, right=0.83, top=0.90)
             gs = gridspec.GridSpec(nrows=10, ncols=10)
             ax = plt.subplot(gs[0:10,0:10])
-            self._ax_conemodel(ax, this_vel)
+            self._ax_conemodel(ax, this_vel, title)
             ax.scatter(-1*this_map[0], this_map[1], c="darkred", lw=0, s=size)
             plt.savefig(outputpng, dpi=fig_dpi, transparent=False)
 
@@ -490,12 +502,18 @@ class ToolsOutflow():
             outputpng = self.png_outflow_model.replace("thisvel",this_vel_str)
             outputpng = outputpng.replace("thismodel","best")
 
+            # title
+            if i==0:
+                title = "(b) Model 3"
+            else:
+                title = None
+
             ## plot
             plt.figure(figsize=(13,10))
             plt.subplots_adjust(bottom=0.10, left=0.2145, right=0.83, top=0.90)
             gs = gridspec.GridSpec(nrows=10, ncols=10)
             ax = plt.subplot(gs[0:10,0:10])
-            self._ax_conemodel(ax, this_vel)
+            self._ax_conemodel(ax, this_vel, title)
             ax.scatter(-1*this_map[0], this_map[1], c="darkred", lw=0, s=size)
             plt.savefig(outputpng, dpi=fig_dpi, transparent=False)
 
@@ -507,6 +525,7 @@ class ToolsOutflow():
         self,
         ax,
         this_vel,
+        title,
         ):
         """
         """
@@ -514,7 +533,7 @@ class ToolsOutflow():
         myax_set(
             ax,
             grid   = "both",
-            title  = None,
+            title  = title,
             xlim   = [9, -9],
             ylim   = [-9, 9],
             xlabel = "x-offset (arcsec)",
