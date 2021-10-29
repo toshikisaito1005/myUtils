@@ -383,7 +383,7 @@ class ToolsOutflow():
             axis="column",delin=True)
         combine_three_png(self.final_channel+"_tmp12.png",self.final_channel+"_tmp3.png",
             self.final_channel+"_tmp4.png",self.final_channel,
-            "100000x100000+0+0","100000x100000+0+0",axis="column",delin=True)
+            "100000x100000+0+0","100000x100000+0+0","100000x100000+0+0",axis="column",delin=True)
 
         print("################################")
         print("# create final_chan_model_best #")
