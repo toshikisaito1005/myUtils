@@ -249,6 +249,10 @@ class ToolsOutflow():
             self.png_map_vla     = self.dir_products + self._read_key("png_map_vla")
             self.png_map_siiisii = self.dir_products + self._read_key("png_map_siiisii")
 
+            # final products
+            self.final_showcase = self.dir_final + self._read_key("final_showcase")
+            self.box_map        = self._read_key("box_mom0")
+
     ##################
     # run_ci_outflow #
     ##################
@@ -261,6 +265,7 @@ class ToolsOutflow():
         plot_showcase       = False,
         plot_channel        = False,
         do_modeling         = False,
+        do_imagemagick      = False,
         # appendix
         plot_outflow_mom    = False,
         plot_showcase_multi = False,
@@ -298,9 +303,36 @@ class ToolsOutflow():
         if plot_showcase_multi==True:
             self.showcase_multi()
 
+        if do_imagemagick==True:
+            self.immagick_figures()
+
         # additional
         if do_compare_7m==True:
             self.compare_7m_cubes()
+
+    ####################
+    # immagick_figures #
+    ####################
+
+    def immagick_figures(
+        self,
+        ):
+        """
+        """
+
+        taskname = self.modname + sys._getframe().f_code.co_name
+        check_first(self.outpng_map_ci,taskname)
+
+        print("#####################")
+        print("# create final_irac #")
+        print("#####################")
+
+        combine_two_png(self.outpng_map_ci,self.outpng_map_co,
+            self.final_showcase+"_tmp1.png",self.box_map,self.box_map,delin=False)
+        combine_two_png(self.outpng_ci_vs_co,self.outpng_map_cico,
+            self.final_showcase+"_tmp2.png",self.box_map,self.box_map,delin=False)
+        combine_two_png(self.final_showcase+"_tmp1.png",self.final_showcase+"_tmp2.png",
+            self.final_showcase,self.box_map,self.box_map,axis="column",delin=True)
 
     ##################
     # showcase_multi #

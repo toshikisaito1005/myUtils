@@ -17,15 +17,15 @@ dir_final    ,,,images/
 # final products #
 ##################
 ### process_png
-process_showcase        ,,,fig_showcase.png
-process_scatter         ,,,fig_scatter.png
-process_magnum          ,,,fig_magnum.png
-process_radial          ,,,fig_radial.png
-process_channel         ,,,fig_channel.png
-process_chan_model_best ,,,fig_channel_best.png
-process_chan_model_decv ,,,fig_channel_decv.png
-process_chan_model_cnst ,,,fig_channel_cnst.png
-process_showcase_multi  ,,,fig_showcase_multi.png
+final_showcase        ,,,fig_showcase.png
+final_scatter         ,,,fig_scatter.png
+final_magnum          ,,,fig_magnum.png
+final_radial          ,,,fig_radial.png
+final_channel         ,,,fig_channel.png
+final_chan_model_best ,,,fig_channel_best.png
+final_chan_model_decv ,,,fig_channel_decv.png
+final_chan_model_cnst ,,,fig_channel_cnst.png
+final_showcase_multi  ,,,fig_showcase_multi.png
 
 ############
 # raw maps #
@@ -106,7 +106,9 @@ png_outflow_model   ,,,fig_model_thismodel_thisvel.png
 png_map_oiii        ,,,fig_hst_oiii.png
 png_map_vla         ,,,fig_hst_vla.png
 png_map_siiisii     ,,,fig_hst_siiisii.png
-
+#
+box_map             ,,,2200x1850+350+80
+#box_mom0            ,,,1850x1850+350+80
 
 
 
@@ -157,9 +159,3 @@ f03_box_crop        ,,,5000x5000+0+0
 ######################################################
 f02_box_crop        ,,,1900x1900+80+80
 f02_box_crop_ratio  ,,,2200x1850+350+80
-
-######################################################
-### n1068ciplot.showcase
-######################################################
-f01_box_crop_map        ,,,1850x1850+350+80
-f01_box_crop_ratio      ,,,2200x1850+350+80
