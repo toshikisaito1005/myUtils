@@ -251,7 +251,7 @@ class ToolsOutflow():
 
             # final products
             self.final_showcase = self.dir_final + self._read_key("final_showcase")
-            self.box_map        = self._read_key("box_mom0")
+            self.box_map        = self._read_key("box_map")
 
     ##################
     # run_ci_outflow #
