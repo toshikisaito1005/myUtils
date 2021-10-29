@@ -107,8 +107,7 @@ png_map_oiii        ,,,fig_hst_oiii.png
 png_map_vla         ,,,fig_hst_vla.png
 png_map_siiisii     ,,,fig_hst_siiisii.png
 #
-box_map             ,,,2200x1850+350+80
-#box_mom0            ,,,1850x1850+350+80
+box_map             ,,,2200x1870+350+80
 
 
 

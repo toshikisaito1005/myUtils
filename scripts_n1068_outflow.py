@@ -327,8 +327,6 @@ class ToolsOutflow():
         print("# create final_irac #")
         print("#####################")
 
-        print(self.final_showcase)
-
         combine_two_png(self.outpng_map_ci,self.outpng_map_co,
             self.final_showcase+"_tmp1.png",self.box_map,self.box_map,delin=False)
         combine_two_png(self.outpng_ci_vs_co,self.outpng_map_cico,
