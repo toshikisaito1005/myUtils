@@ -264,6 +264,8 @@ class ToolsOutflow():
                 self._read_key("box_chan_5"),
                 ]
 
+            self.final_chan_model_best = self.dir_final + self._read_key("final_chan_model_best")
+
     ##################
     # run_ci_outflow #
     ##################
@@ -353,6 +355,8 @@ class ToolsOutflow():
         files = glob.glob(self.png_outflow_model)
         files.sort()
 
+        print(files)
+
         # crop each channel
         list_chan_obs = []
         for i in range(len(files)):
@@ -380,6 +384,12 @@ class ToolsOutflow():
         combine_three_png(self.final_channel+"_tmp12.png",self.final_channel+"_tmp3.png",
             self.final_channel+"_tmp4.png",self.final_channel,
             "100000x100000+0+0","100000x100000+0+0",axis="column",delin=True)
+
+        print("################################")
+        print("# create final_chan_model_best #")
+        print("################################")
+
+        # self.final_chan_model_best
 
     ##################
     # showcase_multi #
