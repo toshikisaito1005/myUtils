@@ -1,53 +1,53 @@
 ###############
 # directories #
 ###############
-dir_proj       ,,,/lfs13/saitots/proj_n3110_jwu/
-dir_raw        ,,,data_raw/
-dir_other      ,,,data_other/
-dir_ready      ,,,data_ready/
-dir_products   ,,,products_png/
-dir_casaregion ,,,data_casa_region/
-dir_final      ,,,images/
+dir_proj                 ,,,/lfs13/saitots/proj_n3110_jwu/
+dir_raw                  ,,,data_raw/
+dir_other                ,,,data_other/
+dir_ready                ,,,data_ready/
+dir_products             ,,,products_png/
+dir_casaregion           ,,,data_casa_region/
+dir_final                ,,,images/
 
 ##################
 # final products #
 ##################
-final_irac      ,,,fig_irac.png
-final_showline  ,,,fig_showline.png
-final_showcont  ,,,fig_showcont.png
-final_showratio ,,,fig_showratio.png
-final_radial    ,,,fig_radial.png
-final_showhex   ,,,fig_showhex.png
-final_aco       ,,,fig_aco.png
-final_scatter   ,,,fig_scatter.png
-final_appendix1 ,,,fig_appendix1.png
+final_irac               ,,,fig_irac.png
+final_showline           ,,,fig_showline.png
+final_showcont           ,,,fig_showcont.png
+final_showratio          ,,,fig_showratio.png
+final_radial             ,,,fig_radial.png
+final_showhex            ,,,fig_showhex.png
+final_aco                ,,,fig_aco.png
+final_scatter            ,,,fig_scatter.png
+final_appendix1          ,,,fig_appendix1.png
 
 ##############
 # input fits #
 ##############
-cube_12co10       ,,,ngc3110_alma_12co10_l20_na.cube
-cube_12co21       ,,,ngc3110_alma_12co21_l20_na.cube
-cube_13co10       ,,,ngc3110_alma_13co10_l20_na.cube
-cube_13co21       ,,,ngc3110_alma_13co21_l20_na.cube
-cube_c18o21       ,,,ngc3110_alma_c18o21_l40_na.cube
-pb_12co10         ,,,ngc3110_alma_12co10_l20_na.flux
-pb_12co21         ,,,ngc3110_alma_12co21_l20_na.flux
-pb_13co10         ,,,ngc3110_alma_13co10_l20_na.flux
-pb_13co21         ,,,ngc3110_alma_13co21_l20_na.flux
-pb_c18o21         ,,,ngc3110_alma_c18o21_l40_na.flux
-cube_12co10_uvlim ,,,ngc3110_alma_12co10_l20_na.cube_uvlim
-cube_12co21_uvlim ,,,ngc3110_alma_12co21_l20_na.cube_uvlim
-cube_13co10_uvlim ,,,ngc3110_alma_13co10_l20_na.cube_uvlim
-cube_13co21_uvlim ,,,ngc3110_alma_13co21_l20_na.cube_uvlim
-cube_c18o21_uvlim ,,,ngc3110_alma_c18o21_l20_na.cube_uvlim
-map_b3            ,,,ngc3110_alma_b3_contin_na.image
-map_b6            ,,,ngc3110_alma_b6_contin_na.image
-map_ssc           ,,,ngc3110_naco_ssc.image
-map_halpha        ,,,ngc3110_oao_halpha.fits
-map_vla           ,,,ngc3110_vla_1p45GHz.fits
-map_irac          ,,,ngc3110_irac_ch1.image
-table_tkin        ,,,ngc3110_radex_tkin.txt
-table_nh2         ,,,ngc3110_radex_nH2.txt
+cube_12co10              ,,,ngc3110_alma_12co10_l20_na.cube
+cube_12co21              ,,,ngc3110_alma_12co21_l20_na.cube
+cube_13co10              ,,,ngc3110_alma_13co10_l20_na.cube
+cube_13co21              ,,,ngc3110_alma_13co21_l20_na.cube
+cube_c18o21              ,,,ngc3110_alma_c18o21_l40_na.cube
+pb_12co10                ,,,ngc3110_alma_12co10_l20_na.flux
+pb_12co21                ,,,ngc3110_alma_12co21_l20_na.flux
+pb_13co10                ,,,ngc3110_alma_13co10_l20_na.flux
+pb_13co21                ,,,ngc3110_alma_13co21_l20_na.flux
+pb_c18o21                ,,,ngc3110_alma_c18o21_l40_na.flux
+cube_12co10_uvlim        ,,,ngc3110_alma_12co10_l20_na.cube_uvlim
+cube_12co21_uvlim        ,,,ngc3110_alma_12co21_l20_na.cube_uvlim
+cube_13co10_uvlim        ,,,ngc3110_alma_13co10_l20_na.cube_uvlim
+cube_13co21_uvlim        ,,,ngc3110_alma_13co21_l20_na.cube_uvlim
+cube_c18o21_uvlim        ,,,ngc3110_alma_c18o21_l20_na.cube_uvlim
+map_b3                   ,,,ngc3110_alma_b3_contin_na.image
+map_b6                   ,,,ngc3110_alma_b6_contin_na.image
+map_ssc                  ,,,ngc3110_naco_ssc.image
+map_halpha               ,,,ngc3110_oao_halpha.fits
+map_vla                  ,,,ngc3110_vla_1p45GHz.fits
+map_irac                 ,,,ngc3110_irac_ch1.image
+table_tkin               ,,,ngc3110_radex_tkin.txt
+table_nh2                ,,,ngc3110_radex_nH2.txt
 
 ###############
 # output fits #
