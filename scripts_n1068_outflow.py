@@ -410,6 +410,7 @@ class ToolsOutflow():
     #####################
 
     def _panel_chan_model(
+        self,
         png_list_ready,
         outfilename,
         delin,
