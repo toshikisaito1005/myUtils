@@ -365,7 +365,7 @@ class ToolsOutflow():
             immagick_crop(this_file,this_out,this_box,delin=delin)
             list_chan_obs.append(this_out)
 
-        # crop colorbar
+        # combine two
         combine_two_png(list_chan_obs[8],list_chan_obs[0],
             self.final_channel+"_tmp1.png","100000x100000+0+0","100000x100000+0+0",delin=delin)
         combine_two_png(list_chan_obs[7],list_chan_obs[1],
@@ -383,7 +383,7 @@ class ToolsOutflow():
             self.final_channel+"_tmp4.png",self.final_channel,
             "100000x100000+0+0","100000x100000+0+0","100000x100000+0+0",axis="column",delin=True)
 
-        os.system("rm -rf " + self.final_channel + "_chan?.png")
+        #os.system("rm -rf " + self.final_channel + "_chan?.png")
 
         print("################################")
         print("# create final_chan_model_best #")
