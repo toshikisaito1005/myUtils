@@ -255,7 +255,7 @@ class ToolsOutflow():
 
             self.final_channel  = self.dir_final + self._read_key("final_channel")
             l                   = self._read_key("box_chan_keys")
-            self.box_chan_keys  = [float(s) for s in l.split(",")]
+            self.box_chan_keys  = [int(s) for s in l.split(",")]
             self.box_chan_list  = [
                 self._read_key("box_chan_1"),
                 self._read_key("box_chan_2"),
@@ -355,7 +355,6 @@ class ToolsOutflow():
         files = glob.glob(self.outpng_outflow_chans.replace("?","*"))
         files.sort()
 
-        print(self.outpng_outflow_chans)
         print(files)
 
         # crop each channel
