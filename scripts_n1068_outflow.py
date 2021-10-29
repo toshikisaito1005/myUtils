@@ -383,6 +383,8 @@ class ToolsOutflow():
             self.final_channel+"_tmp4.png",self.final_channel,
             "100000x100000+0+0","100000x100000+0+0","100000x100000+0+0",axis="column",delin=True)
 
+        os.system("rm -rf " + self.final_channel + "_chan?.png")
+
         print("################################")
         print("# create final_chan_model_best #")
         print("################################")
