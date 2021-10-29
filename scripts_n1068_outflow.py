@@ -262,6 +262,7 @@ class ToolsOutflow():
                 self._read_key("box_chan_3"),
                 self._read_key("box_chan_4"),
                 self._read_key("box_chan_5"),
+                self._read_key("box_chan_6"),
                 ]
 
             self.final_chan_model_best = self.dir_final + self._read_key("final_chan_model_best")
