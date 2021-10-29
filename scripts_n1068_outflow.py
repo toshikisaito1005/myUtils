@@ -327,12 +327,14 @@ class ToolsOutflow():
         print("# create final_irac #")
         print("#####################")
 
+        print(self.final_showcase)
+
         combine_two_png(self.outpng_map_ci,self.outpng_map_co,
             self.final_showcase+"_tmp1.png",self.box_map,self.box_map,delin=False)
         combine_two_png(self.outpng_ci_vs_co,self.outpng_map_cico,
             self.final_showcase+"_tmp2.png",self.box_map,self.box_map,delin=False)
         combine_two_png(self.final_showcase+"_tmp1.png",self.final_showcase+"_tmp2.png",
-            self.final_showcase,self.box_map,self.box_map,axis="column",delin=True)
+            self.final_showcase,"100000x100000+0+0","100000x100000+0+0",axis="column",delin=True)
 
     ##################
     # showcase_multi #
