@@ -108,8 +108,12 @@ png_map_vla         ,,,fig_hst_vla.png
 png_map_siiisii     ,,,fig_hst_siiisii.png
 #
 box_map             ,,,2200x1870+350+80
-
-
+box_chan_keys       ,,,1,1,1,3,1,2,0,0,0
+box_chan_1          ,,,1790x1640+380+170
+box_chan_2          ,,,1620x1640+550+170
+box_chan_3          ,,,1790x1760+380+170
+box_chan_4          ,,,2000x1760+550+170
+box_chan_5          ,,,1900x1760+550+170
 
 
 
@@ -121,16 +125,6 @@ box_map             ,,,2200x1870+350+80
 f08_co ,,,n1068_co10.masked.fits
 f08_ci ,,,n1068_ci10.fits
 
-######################################################
-### n1068ciplot.bicone_modeling
-######################################################
-f06_output        ,,,model_thismodel_vthisvel.png
-f06_cloplist         ,,,1,1,1,3,1,2,0,0,0
-f06_box_crop1        ,,,1790x1640+380+170
-f06_box_crop2        ,,,1620x1640+550+170
-f06_box_crop3        ,,,1790x1760+380+170
-f06_box_crop4        ,,,2000x1760+550+170
-f06_box_crop5        ,,,1900x1760+550+170
 
 ######################################################
 ### n1068ciplot.channelmap

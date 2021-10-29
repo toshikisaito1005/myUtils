@@ -253,6 +253,17 @@ class ToolsOutflow():
             self.final_showcase = self.dir_final + self._read_key("final_showcase")
             self.box_map        = self._read_key("box_map")
 
+            self.final_channel  = self.dir_final + self._read_key("final_channel")
+            l                   = self._read_key("box_chan_keys")
+            self.box_chan_keys  = [float(s) for s in l.split(",")]
+            self.box_chan_list  = [
+                self._read_key("box_chan_1"),
+                self._read_key("box_chan_2"),
+                self._read_key("box_chan_3"),
+                self._read_key("box_chan_4"),
+                self._read_key("box_chan_5"),
+                ]
+
     ##################
     # run_ci_outflow #
     ##################
@@ -316,6 +327,7 @@ class ToolsOutflow():
 
     def immagick_figures(
         self,
+        delin=False,
         ):
         """
         """
@@ -323,16 +335,51 @@ class ToolsOutflow():
         taskname = self.modname + sys._getframe().f_code.co_name
         check_first(self.outpng_map_ci,taskname)
 
-        print("#####################")
-        print("# create final_irac #")
-        print("#####################")
+        print("#########################")
+        print("# create final_showcase #")
+        print("#########################")
 
         combine_two_png(self.outpng_map_ci,self.outpng_map_co,
-            self.final_showcase+"_tmp1.png",self.box_map,self.box_map,delin=False)
+            self.final_showcase+"_tmp1.png",self.box_map,self.box_map,delin=delin)
         combine_two_png(self.outpng_ci_vs_co,self.outpng_map_cico,
-            self.final_showcase+"_tmp2.png",self.box_map,self.box_map,delin=False)
+            self.final_showcase+"_tmp2.png",self.box_map,self.box_map,delin=delin)
         combine_two_png(self.final_showcase+"_tmp1.png",self.final_showcase+"_tmp2.png",
             self.final_showcase,"100000x100000+0+0","100000x100000+0+0",axis="column",delin=True)
+
+        print("########################")
+        print("# create final_channel #")
+        print("########################")
+
+        files = glob.glob(self.png_outflow_model)
+        files.sort()
+
+        # crop each channel
+        list_chan_obs = []
+        for i in range(len(files)):
+            this_file = files[i]
+            this_out  = self.final_channel + "_chan" + str(i+1) + ".png"
+            this_key  = self.box_chan_keys[i]
+            this_box  = self.box_chan_list[this_key]
+            immagick_crop(this_file,this_out,this_box,delin=delin)
+            list_chan_obs.append(this_out)
+
+        # crop colorbar
+        combine_two_png(list_chan_obs[8],list_chan_obs[0],
+            self.final_channel+"_tmp1.png","100000x100000+0+0","100000x100000+0+0",delin=delin)
+        combine_two_png(list_chan_obs[7],list_chan_obs[1],
+            self.final_channel+"_tmp2.png","100000x100000+0+0","100000x100000+0+0",delin=delin)
+        combine_two_png(list_chan_obs[6],list_chan_obs[2],
+            self.final_channel+"_tmp3.png","100000x100000+0+0","100000x100000+0+0",delin=delin)
+        combine_two_png(list_chan_obs[5],list_chan_obs[3],
+            self.final_channel+"_tmp4.png","100000x100000+0+0","100000x100000+0+0",delin=delin)
+
+        # combine all
+        combine_two_png(self.final_channel+"_tmp1.png",self.final_channel+"_tmp2.png",
+            self.final_channel+"_tmp12.png","100000x100000+0+0","100000x100000+0+0",
+            axis="column",delin=True)
+        combine_three_png(self.final_channel+"_tmp12.png",self.final_channel+"_tmp3.png",
+            self.final_channel+"_tmp4.png",self.final_channel,
+            "100000x100000+0+0","100000x100000+0+0",axis="column",delin=True)
 
     ##################
     # showcase_multi #
