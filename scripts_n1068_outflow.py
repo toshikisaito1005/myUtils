@@ -352,7 +352,7 @@ class ToolsOutflow():
         print("# create final_channel #")
         print("########################")
 
-        files = glob.glob(self.outpng_outflow_chans)
+        files = glob.glob(self.outpng_outflow_chans.replace("?","*"))
         files.sort()
 
         print(self.outpng_outflow_chans)
