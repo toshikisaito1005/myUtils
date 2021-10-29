@@ -392,6 +392,7 @@ class ToolsOutflow():
 
         files   = glob.glob(self.png_outflow_model.replace("thismodel","best").replace("thisvel","*"))
         files   = sorted(files, key=lambda s: int(re.search(r'\d+', s).group()))
+        print(files)
         outfile = self.final_chan_model_best
         #
         png_list_ready = []
