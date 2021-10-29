@@ -353,9 +353,7 @@ class ToolsOutflow():
         print("########################")
 
         files = glob.glob(self.outpng_outflow_chans.replace("?","*"))
-        files.sort()
-
-        print(files)
+        files = sorted(files, key=lambda s: int(re.search(r'\d+', s).group()))
 
         # crop each channel
         list_chan_obs = []
