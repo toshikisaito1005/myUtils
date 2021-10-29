@@ -392,6 +392,8 @@ class ToolsOutflow():
 
         files   = glob.glob(self.png_outflow_model.replace("thismodel","best").replace("thisvel","*"))
         files   = sorted(files, key=lambda s: int(re.search(r'\d+', s).group()))
+        files.reverse()
+        print(files)
         outfile = self.final_chan_model_best
         #
         png_list_ready = []
@@ -417,32 +419,32 @@ class ToolsOutflow():
         delin,
         ):
         combine_two_png(
-            png_list_ready[0],
             png_list_ready[8],
+            png_list_ready[0],
             outfilename + "_tmp1.png",
             box1         = "10000x100000+0+0",
             box2         = "10000x100000+0+0",
             delin        = delin,
             )
         combine_two_png(
-            png_list_ready[1],
             png_list_ready[7],
+            png_list_ready[1],
             outfilename + "_tmp2.png",
             box1         = "10000x100000+0+0",
             box2         = "10000x100000+0+0",
             delin        = delin,
             )
         combine_two_png(
-            png_list_ready[2],
             png_list_ready[6],
+            png_list_ready[2],
             outfilename + "_tmp3.png",
             box1         = "10000x100000+0+0",
             box2         = "10000x100000+0+0",
             delin        = delin,
             )
         combine_two_png(
-            png_list_ready[3],
             png_list_ready[5],
+            png_list_ready[3],
             outfilename + "_tmp4.png",
             box1         = "10000x100000+0+0",
             box2         = "10000x100000+0+0",
