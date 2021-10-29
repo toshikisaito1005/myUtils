@@ -390,7 +390,82 @@ class ToolsOutflow():
         print("# create final_chan_model_best #")
         print("################################")
 
-        # self.final_chan_model_best
+        files   = glob.glob(self.png_outflow_model.replace("thismodel","best").replace("thisvel","*"))
+        outfile = self.final_chan_model_best
+        #
+        png_list_ready = []
+        for i in range(len(files)):
+            this_file = files[i]
+            this_out  = self.final_chan_model_best + "_chan" + str(i+1) + ".png"
+            this_key  = self.box_chan_keys[i]
+            this_box  = self.box_chan_list[this_key]
+            immagick_crop(this_file,this_out,this_box,delin=delin)
+            png_list_ready.append(this_out)
+
+        self._panel_chan_model(png_list_ready,outfile,delin=True)
+        os.system("rm -rf " + outfile + "*.png")
+
+    #####################
+    # _panel_chan_model #
+    #####################
+
+    def _panel_chan_model(
+        png_list_ready,
+        outfilename,
+        delin,
+        ):
+        combine_two_png(
+            png_list_ready[8],
+            png_list_ready[0],
+            outfilename + "_tmp1.png",
+            box1         = "10000x100000+0+0",
+            box2         = "10000x100000+0+0",
+            delin        = delin,
+            )
+        combine_two_png(
+            png_list_ready[7],
+            png_list_ready[1],
+            outfilename + "_tmp2.png",
+            box1         = "10000x100000+0+0",
+            box2         = "10000x100000+0+0",
+            delin        = delin,
+            )
+        combine_two_png(
+            png_list_ready[6],
+            png_list_ready[2],
+            outfilename + "_tmp3.png",
+            box1         = "10000x100000+0+0",
+            box2         = "10000x100000+0+0",
+            delin        = delin,
+            )
+        combine_two_png(
+            png_list_ready[5],
+            png_list_ready[3],
+            outfilename + "_tmp4.png",
+            box1         = "10000x100000+0+0",
+            box2         = "10000x100000+0+0",
+            delin        = delin,
+            )
+        combine_two_png(
+            outfilename + "_tmp1.png",
+            outfilename + "_tmp2.png",
+            outfilename + "_tmp12.png",
+            box1         = "10000x100000+0+0",
+            box2         = "10000x100000+0+0",
+            delin        = delin,
+            axis         = "column",
+            )
+        combine_three_png(
+            outfilename + "_tmp12.png",
+            outfilename + "_tmp3.png",
+            outfilename + "_tmp4.png",
+            outfilename,
+            box1         = "10000x100000+0+0",
+            box2         = "10000x100000+0+0",
+            box3         = "10000x100000+0+0",
+            delin        = delin,
+            axis         = "column",
+            )
 
     ##################
     # showcase_multi #
