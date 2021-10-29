@@ -355,6 +355,7 @@ class ToolsOutflow():
         files = glob.glob(self.outpng_outflow_chans)
         files.sort()
 
+        print(self.outpng_outflow_chans)
         print(files)
 
         # crop each channel
