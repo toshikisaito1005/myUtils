@@ -269,6 +269,8 @@ class ToolsOutflow():
             self.final_chan_model_decv = self.dir_final + self._read_key("final_chan_model_decv")
             self.final_chan_model_cnst = self.dir_final + self._read_key("final_chan_model_cnst")
 
+            self.final_showcase_multi = self.dir_final + self._read_key("final_showcase_multi")
+
     ##################
     # run_ci_outflow #
     ##################
@@ -453,6 +455,17 @@ class ToolsOutflow():
 
         self._panel_chan_model(png_list_ready,outfile,delin=True)
         os.system("rm -rf " + outfile + "*.png")
+
+        print("###############################")
+        print("# create final_showcase_multi #")
+        print("###############################")
+
+        combine_two_png(self.outpng_outflow_mom0,self.png_map_oiii,
+            self.final_showcase_multi+"_tmp1.png",self.box_map,self.box_map,delin=delin)
+        combine_two_png(self.outfits_map_radio,self.png_map_siiisii,
+            self.final_showcase_multi+"_tmp2.png",self.box_map,self.box_map,delin=delin)
+        combine_two_png(self.final_showcase_multi+"_tmp1.png",self.final_showcase_multi+"_tmp2.png",
+            self.final_showcase_multi,"100000x100000+0+0","100000x100000+0+0",axis="column",delin=True)
 
     #####################
     # _panel_chan_model #
@@ -866,12 +879,9 @@ class ToolsOutflow():
         myfig_fits2png(
             imcolor=self.outfits_ci10_outflow_mom0,
             outfile=self.outpng_outflow_mom0,
-            #imcontour1=self.outfits_ci10_outflow_mom0,
             imsize_as=self.imsize_as,
             ra_cnt=self.ra_agn_str,
             dec_cnt=self.dec_agn_str,
-            #levels_cont1=[0.025, 0.05, 0.1, 0.2, 0.4, 0.8, 0.96],
-            #width_cont1=[1.0],
             set_title="(a) [CI] Outflow Integrated Intensity",
             colorlog=True,
             set_bg_color=cm.rainbow(0),

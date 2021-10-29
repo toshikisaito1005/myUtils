@@ -52,37 +52,37 @@ table_nh2         ,,,ngc3110_radex_nH2.txt
 ###############
 # output fits #
 ###############
-outfits_12co10  ,,,n3110_12co10.fits
-outfits_12co21  ,,,n3110_12co21.fits
-outfits_13co10  ,,,n3110_13co10.fits
-outfits_13co21  ,,,n3110_13co21.fits
-outfits_c18o21  ,,,n3110_c18o21.fits
-outfits_b3      ,,,n3110_b3.fits
-outfits_b6      ,,,n3110_b6.fits
-outfits_ssc     ,,,n3110_ssc.fits
-outfits_halpha  ,,,n3110_halpha_native.fits
-outfits_vla     ,,,n3110_vla_native.fits
-outfits_irac    ,,,n3110_irac_ch1.fits
-outfits_pb_b3   ,,,n3110_band3_fov.fits
-outfits_pb_b6   ,,,n3110_band6_fov.fits
-outfits_r_21    ,,,n3110_12_r_21_10.fits
-outfits_r_t21   ,,,n3110_13_r_21_10.fits
-outfits_r_1213l ,,,n3110_12_13_r_10.fits
-outfits_r_1213h ,,,n3110_12_13_r_21.fits
+outfits_12co10           ,,,n3110_12co10.fits
+outfits_12co21           ,,,n3110_12co21.fits
+outfits_13co10           ,,,n3110_13co10.fits
+outfits_13co21           ,,,n3110_13co21.fits
+outfits_c18o21           ,,,n3110_c18o21.fits
+outfits_b3               ,,,n3110_b3.fits
+outfits_b6               ,,,n3110_b6.fits
+outfits_ssc              ,,,n3110_ssc.fits
+outfits_halpha           ,,,n3110_halpha_native.fits
+outfits_vla              ,,,n3110_vla_native.fits
+outfits_irac             ,,,n3110_irac_ch1.fits
+outfits_pb_b3            ,,,n3110_band3_fov.fits
+outfits_pb_b6            ,,,n3110_band6_fov.fits
+outfits_r_21             ,,,n3110_12_r_21_10.fits
+outfits_r_t21            ,,,n3110_13_r_21_10.fits
+outfits_r_1213l          ,,,n3110_12_13_r_10.fits
+outfits_r_1213h          ,,,n3110_12_13_r_21.fits
 
 #############
 # parameter #
 #############
-beam           ,,,2.0
-snr_mom_strong ,,,2.5
-snr_mom_weak   ,,,1.5
-imsize         ,,,65
-imsize_irac    ,,,155
-aperture       ,,,3.0
-step           ,,,1.5
-ra_blc         ,,,151.01325416666666
-decl_blc       ,,,-6.483688611111111
-num_aperture   ,,,23
+beam                     ,,,2.0
+snr_mom_strong           ,,,2.5
+snr_mom_weak             ,,,1.5
+imsize                   ,,,65
+imsize_irac              ,,,155
+aperture                 ,,,3.0
+step                     ,,,1.5
+ra_blc                   ,,,151.01325416666666
+decl_blc                 ,,,-6.483688611111111
+num_aperture             ,,,23
 
 ##############
 # output png #
@@ -119,25 +119,25 @@ output_index_vs_sfe_vary ,,,fig_index_vs_sfe_vary.png
 output_sfe_vs_ssc_fix    ,,,fig_sfe_vs_ssc_fix.png
 output_sfe_vs_ssc_vary   ,,,fig_sfe_vs_ssc_vary.png
 #
-box_irac     ,,,2200x1850+350+80
-box_line_tl  ,,,1850x1730+350+80
-box_line_tr  ,,,2200x1730+550+80
-box_line_bl  ,,,1850x1850+350+80
-box_line_br  ,,,1650x1850+550+80
-box_cont_b3  ,,,2140x1850+350+80
-box_cont_b6  ,,,2000x1850+550+80
-box_ratio_tl ,,,1850x1730+350+80
-box_ratio_tr ,,,2200x1730+550+80
-box_ratio_bl ,,,1850x1850+350+80
-box_ratio_br ,,,2200x1850+550+80
-box_radial   ,,,1650x1550+300+150
-box_hex1     ,,,3910x2710+0+0
-box_hex2     ,,,3590x2710+615+0
-box_hex3     ,,,3910x3080+0+0
-box_aco1     ,,,1700x1550+250+150
-box_aco2     ,,,1920x1550+250+150
-box_scatter1 ,,,1670x1630+130+80
-box_scatter2 ,,,2100x1630+130+80
+box_irac                 ,,,2200x1850+350+80
+box_line_tl              ,,,1850x1730+350+80
+box_line_tr              ,,,2200x1730+550+80
+box_line_bl              ,,,1850x1850+350+80
+box_line_br              ,,,1650x1850+550+80
+box_cont_b3              ,,,2140x1850+350+80
+box_cont_b6              ,,,2000x1850+550+80
+box_ratio_tl             ,,,1850x1730+350+80
+box_ratio_tr             ,,,2200x1730+550+80
+box_ratio_bl             ,,,1850x1850+350+80
+box_ratio_br             ,,,2200x1850+550+80
+box_radial               ,,,1650x1550+300+150
+box_hex1                 ,,,3910x2710+0+0
+box_hex2                 ,,,3590x2710+615+0
+box_hex3                 ,,,3910x3080+0+0
+box_aco1                 ,,,1700x1550+250+150
+box_aco2                 ,,,1920x1550+250+150
+box_scatter1             ,,,1670x1630+130+80
+box_scatter2             ,,,2100x1630+130+80
 
 #######
 # end #
