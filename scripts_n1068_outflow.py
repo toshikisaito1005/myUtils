@@ -266,6 +266,8 @@ class ToolsOutflow():
                 ]
 
             self.final_chan_model_best = self.dir_final + self._read_key("final_chan_model_best")
+            self.final_chan_model_decv = self.dir_final + self._read_key("final_chan_model_decv")
+            self.final_chan_model_cnst = self.dir_final + self._read_key("final_chan_model_cnst")
 
     ##################
     # run_ci_outflow #
@@ -400,6 +402,50 @@ class ToolsOutflow():
         for i in range(len(files)):
             this_file = files[i]
             this_out  = self.final_chan_model_best + "_chan" + str(i+1) + ".png"
+            this_key  = self.box_chan_keys[i]
+            this_box  = self.box_chan_list[this_key]
+            immagick_crop(this_file,this_out,this_box,delin=delin)
+            png_list_ready.append(this_out)
+
+        self._panel_chan_model(png_list_ready,outfile,delin=True)
+        os.system("rm -rf " + outfile + "*.png")
+
+        print("################################")
+        print("# create final_chan_model_decv #")
+        print("################################")
+
+        files   = glob.glob(self.png_outflow_model.replace("thismodel","decv").replace("thisvel","*"))
+        files   = sorted(files, key=lambda s: int(re.search(r'\d+', s).group()))
+        files.reverse()
+        print(files)
+        outfile = self.final_chan_model_decv
+        #
+        png_list_ready = []
+        for i in range(len(files)):
+            this_file = files[i]
+            this_out  = self.final_chan_model_decv + "_chan" + str(i+1) + ".png"
+            this_key  = self.box_chan_keys[i]
+            this_box  = self.box_chan_list[this_key]
+            immagick_crop(this_file,this_out,this_box,delin=delin)
+            png_list_ready.append(this_out)
+
+        self._panel_chan_model(png_list_ready,outfile,delin=True)
+        os.system("rm -rf " + outfile + "*.png")
+
+        print("################################")
+        print("# create final_chan_model_cnst #")
+        print("################################")
+
+        files   = glob.glob(self.png_outflow_model.replace("thismodel","cnst").replace("thisvel","*"))
+        files   = sorted(files, key=lambda s: int(re.search(r'\d+', s).group()))
+        files.reverse()
+        print(files)
+        outfile = self.final_chan_model_cnst
+        #
+        png_list_ready = []
+        for i in range(len(files)):
+            this_file = files[i]
+            this_out  = self.final_chan_model_cnst + "_chan" + str(i+1) + ".png"
             this_key  = self.box_chan_keys[i]
             this_box  = self.box_chan_list[this_key]
             immagick_crop(this_file,this_out,this_box,delin=delin)
