@@ -1774,8 +1774,8 @@ class ToolsOutflow():
         transform = ax.transAxes)
         t.set_bbox(dict(facecolor="white", alpha=0.8, lw=0))
         #
-        ax.set_xlabel("x-offset (arcsec)")
-        ax.set_ylabel("y-offset (arcsec)")
+        ax.set_xlabel("R.A. Offset (arcsec)")
+        ax.set_ylabel("Decl. Offset (arcsec)")
 
     ######################
     # _velrange_thischan #
