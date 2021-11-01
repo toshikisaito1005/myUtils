@@ -145,7 +145,8 @@ class ToolsSBR():
         header = ["ra(deg)","dec(deg)"]
         for i in range(len(maps_mom0)):
             this_mom0 = maps_mom0[i]
-            this_line = this_mom0.split("/")[-1].split("ngc1068_")[1].split(".fits")[0]
+            print()
+            this_line = this_mom0.split("/")[-1].split("n1068_")[1].split(".fits")[0]
             x,y,z = hexbin_sampling(
                 this_mom0,
                 self.ra_agn,
@@ -166,7 +167,7 @@ class ToolsSBR():
 
         for i in range(len(maps_emom0)):
             this_emom0 = maps_emom0[i]
-            this_line  = this_emom0.split("/")[-1].split("ngc1068_")[1].split(".fits")[0]
+            this_line  = this_emom0.split("/")[-1].split("n1068_")[1].split(".fits")[0]
             x,y,z = hexbin_sampling(
                 this_emom0,
                 self.ra_agn,
