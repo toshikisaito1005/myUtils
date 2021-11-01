@@ -139,13 +139,13 @@ class ToolsSBR():
         # sampling mom0
         maps_mom0 = glob.glob(self.outfits_mom0.replace("???","*"))
         maps_mom0 = [s for s in maps_mom0 if "err" not in s]
+        maps_mom0.sort()
 
         check_first(maps_mom0[0],taskname)
 
         header = ["ra(deg)","dec(deg)"]
         for i in range(len(maps_mom0)):
             this_mom0 = maps_mom0[i]
-            print()
             this_line = this_mom0.split("/")[-1].split("n1068_")[1].split(".fits")[0]
             x,y,z = hexbin_sampling(
                 this_mom0,
@@ -164,6 +164,7 @@ class ToolsSBR():
 
         # sampling emom0
         maps_emom0 = glob.glob(self.outfits_emom0.replace("???","*"))
+        maps_emom0.sort()
 
         for i in range(len(maps_emom0)):
             this_emom0 = maps_emom0[i]
@@ -211,6 +212,9 @@ class ToolsSBR():
             run_imregrid(this_map, template, this_output)
             run_exportfits(this_output, this_outfits, True, True, True)
 
+        # cleanup
+        os.system("rm -rf template")
+        
     ###############
     # _create_dir #
     ###############
