@@ -119,9 +119,14 @@ class ToolsSBR():
         taskname = self.modname + sys._getframe().f_code.co_name
         check_first(template,taskname)
 
-        #
+        # regrid mom0
         for this_map in self.maps_mom0:
-            this_output = self.dir_ready + this_map.split("/")[-1]
+            this_output = self.dir_ready + "n1068_" + this_map.split("/")[-1].split("_")[3] + ".mom0"
+            run_imregrid(this_map, template, this_output)
+
+        # regrid emom0
+        for this_map in self.maps_emom0:
+            this_output = self.dir_ready + "n1068_" + this_map.split("/")[-1].split("_")[3] + ".emom0"
             run_imregrid(this_map, template, this_output)
 
     ###############
