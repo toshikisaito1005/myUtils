@@ -92,6 +92,12 @@ class ToolsSBR():
             self.maps_emom0 = glob.glob(self.dir_raw + self._read_key("maps_emom0"))
             self.maps_emom0.sort()
 
+            # output maps
+            self.outmap_mom0   = self.dir_ready + self._read_key("out_maps_mom0")
+            self.outfits_mom0  = self.dir_ready + self._read_key("outfits_maps_mom0")
+            self.outmap_emom0  = self.dir_ready + self._read_key("out_maps_emom0")
+            self.outfits_emom0 = self.dir_ready + self._read_key("outfits_maps_emom0")
+
     ###################
     # run_ngc1068_sbr #
     ###################
@@ -123,13 +129,17 @@ class ToolsSBR():
 
         # regrid mom0
         for this_map in self.maps_mom0:
-            this_output = self.dir_ready + "n1068_" + this_map.split("/")[-1].split("_")[3] + ".mom0"
+            this_output  = self.outmap_mom0.replace("???",this_map.split("/")[-1].split("_")[3])
+            this_outfits = self.outfits_mom0.replace("???",this_map.split("/")[-1].split("_")[3])
             run_imregrid(this_map, template, this_output)
+            run_exportfits(this_output, this_outfits, True, True, True)
 
         # regrid emom0
         for this_map in self.maps_emom0:
-            this_output = self.dir_ready + "n1068_" + this_map.split("/")[-1].split("_")[3] + ".emom0"
+            this_output  = self.outmap_emom0.replace("???",this_map.split("/")[-1].split("_")[3])
+            this_outfits = self.outfits_emom0.replace("???",this_map.split("/")[-1].split("_")[3])
             run_imregrid(this_map, template, this_output)
+            run_exportfits(this_output, this_outfits, True, True, True)
 
     ###############
     # _create_dir #
