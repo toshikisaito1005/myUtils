@@ -88,6 +88,7 @@ class ToolsSBR():
             # input maps
             self.map_av    = self.dir_other + self._read_key("map_av")
             self.maps_mom0 = glob.glob(self.dir_raw + self._read_key("maps_mom0"))
+            self.maps_mom0.sort()
 
     ###################
     # run_ngc1068_sbr #
@@ -112,14 +113,16 @@ class ToolsSBR():
         """
         """
 
-        template = self.map_av
+        template = "template.image"
+        run_importfits(self.map_av,template)
 
         taskname = self.modname + sys._getframe().f_code.co_name
         check_first(template,taskname)
 
         #
-        print(self.maps_mom0)
-
+        for this_map in self.maps_mom0:
+            this_output = self.dir_ready + this_map.split("/")[-1]
+            run_imregrid(this_map, template, this_output)
 
     ###############
     # _create_dir #
