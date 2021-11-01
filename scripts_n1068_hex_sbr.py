@@ -74,29 +74,38 @@ class ToolsSBR():
             self.modname = "ToolsDense."
             
             # get directories
-            self.dir_proj     = self._read_key("dir_proj")
-            self.dir_raw      = self.dir_proj + self._read_key("dir_raw")
-            self.dir_ready    = self.dir_proj + self._read_key("dir_ready")
-            self.dir_other    = self.dir_proj + self._read_key("dir_other")
-            self.dir_products = self.dir_proj + self._read_key("dir_products")
-            self.dir_final    = self.dir_proj + self._read_key("dir_final")
+            self.dir_proj      = self._read_key("dir_proj")
+            self.dir_raw       = self.dir_proj + self._read_key("dir_raw")
+            self.dir_ready     = self.dir_proj + self._read_key("dir_ready")
+            self.dir_other     = self.dir_proj + self._read_key("dir_other")
+            self.dir_products  = self.dir_proj + self._read_key("dir_products")
+            self.dir_final     = self.dir_proj + self._read_key("dir_final")
 
             self._create_dir(self.dir_ready)
             self._create_dir(self.dir_products)
             self._create_dir(self.dir_final)
 
             # input maps
-            self.map_av    = self.dir_other + self._read_key("map_av")
-            self.maps_mom0 = glob.glob(self.dir_raw + self._read_key("maps_mom0"))
+            self.map_av        = self.dir_other + self._read_key("map_av")
+            self.maps_mom0     = glob.glob(self.dir_raw + self._read_key("maps_mom0"))
             self.maps_mom0.sort()
-            self.maps_emom0 = glob.glob(self.dir_raw + self._read_key("maps_emom0"))
+            self.maps_emom0    = glob.glob(self.dir_raw + self._read_key("maps_emom0"))
             self.maps_emom0.sort()
 
+            # ngc1068 properties
+            self.ra_agn        = float(self._read_key("ra_agn", "gal").split("deg")[0])
+            self.dec_agn       = float(self._read_key("dec_agn", "gal").split("deg")[0])
+
+            self.beam          = 2.14859173174056
+
             # output maps
-            self.outmap_mom0   = self.dir_ready + self._read_key("out_maps_mom0")
+            self.outmap_mom0   = self.dir_ready + self._read_key("outmaps_mom0")
             self.outfits_mom0  = self.dir_ready + self._read_key("outfits_maps_mom0")
-            self.outmap_emom0  = self.dir_ready + self._read_key("out_maps_emom0")
+            self.outmap_emom0  = self.dir_ready + self._read_key("outmaps_emom0")
             self.outfits_emom0 = self.dir_ready + self._read_key("outfits_maps_emom0")
+
+            # output txt and png
+            self.table_hex_obs = self.dir_ready + self._read_key("table_hex_obs")
 
     ###################
     # run_ngc1068_sbr #
@@ -104,7 +113,8 @@ class ToolsSBR():
 
     def run_ngc1068_sbr(
         self,
-        do_prepare = False,
+        do_prepare  = False,
+        do_sampling = False,
         ):
         """
         This method runs all the methods which will create figures in the paper.
@@ -113,9 +123,36 @@ class ToolsSBR():
         if do_prepare==True:
             self.align_maps()
 
-    ####################
+        if do_sampling==True:
+            self.hex_sampling()
+
+    ################
+    # hex_sampling #
+    ################
+
+    def hex_sampling(self):
+        """
+        """
+
+        taskname = self.modname + sys._getframe().f_code.co_name
+        check_first(template,taskname)
+
+        maps_mom0 = glob.glob(self.outfits_mom0)
+
+        for i in range(len(maps_mom0)):
+            this_mom0 = maps_mom0[i]
+            x,y,z = hexbin_sampling(this_mom0,self.ra_agn,self.dec_agn,beam=self.beam,gridsize=27)
+
+            if i==0:
+                output_hex = np.c_[x,y]
+
+            output_hex = np.c_[output_hex,z]
+
+        print(np.shape(output_hex))
+        
+    ##############
     # align_maps #
-    ####################
+    ##############
 
     def align_maps(self):
         """

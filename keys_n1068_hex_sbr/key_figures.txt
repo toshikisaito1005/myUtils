@@ -25,10 +25,15 @@ irac4              ,,,tbe
 ###############
 # output maps #
 ###############
-out_maps_mom0      ,,,n1068_???.image
-out_maps_emom0     ,,,n1068_???_err.image
+outmaps_mom0       ,,,n1068_???.image
+outmaps_emom0      ,,,n1068_???_err.image
 outfits_maps_mom0  ,,,n1068_???.fits
 outfits_maps_emom0 ,,,n1068_???_err.fits
+
+######################
+# output png and txt #
+######################
+table_hex_obs      ,,,n1068_hex_obs.txt
 
 #######
 # end #
