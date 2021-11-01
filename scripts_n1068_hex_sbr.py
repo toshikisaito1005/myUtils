@@ -136,7 +136,8 @@ class ToolsSBR():
 
         taskname = self.modname + sys._getframe().f_code.co_name
 
-        maps_mom0 = glob.glob(self.outfits_mom0)
+        maps_mom0 = glob.glob(self.outfits_mom0.replace("???","*"))
+        maps_mom0 = [s for s in maps_mom0 if "err" not in s]
 
         check_first(maps_mom0[0],taskname)
 
