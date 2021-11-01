@@ -135,9 +135,10 @@ class ToolsSBR():
         """
 
         taskname = self.modname + sys._getframe().f_code.co_name
-        check_first(template,taskname)
 
         maps_mom0 = glob.glob(self.outfits_mom0)
+
+        check_first(maps_mom0[0],taskname)
 
         for i in range(len(maps_mom0)):
             this_mom0 = maps_mom0[i]
@@ -149,7 +150,7 @@ class ToolsSBR():
             output_hex = np.c_[output_hex,z]
 
         print(np.shape(output_hex))
-        
+
     ##############
     # align_maps #
     ##############
@@ -159,7 +160,7 @@ class ToolsSBR():
         """
 
         template = "template.image"
-        run_importfits(self.map_av,template)
+        run_importfits(template,taskname)
 
         taskname = self.modname + sys._getframe().f_code.co_name
         check_first(template,taskname)
