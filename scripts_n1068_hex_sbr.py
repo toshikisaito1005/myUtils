@@ -145,6 +145,7 @@ class ToolsSBR():
         header = ["ra(deg)","dec(deg)"]
         for i in range(len(maps_mom0)):
             this_mom0 = maps_mom0[i]
+            print(this_mom0.split("/")[-1].split("ngc1068_"))
             this_line = this_mom0.split("/")[-1].split("ngc1068_")[1].split(".image")[0]
             x,y,z = hexbin_sampling(
                 this_mom0,
