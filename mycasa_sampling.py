@@ -88,6 +88,9 @@ def hexbin_sampling(
     hexy    = np.array(hexdata.get_array())
     hexdata = ax.hexbin(X, Y, gridsize=gridsize, extent=extent)
     num     = np.array(hexdata.get_array())
+
+    if err==True:
+        hexc = np.sqrt(hexc)
     
     plt.clf()
 
