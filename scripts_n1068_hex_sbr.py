@@ -86,7 +86,8 @@ class ToolsSBR():
             self._create_dir(self.dir_final)
 
             # input maps
-            self.map_av = self.dir_other + self._read_key("map_av")
+            self.map_av    = self.dir_other + self._read_key("map_av")
+            self.maps_mom0 = glob.glob(self.dir_raw + self._read_key("maps_mom0"))
 
     ###################
     # run_ngc1068_sbr #
@@ -117,6 +118,7 @@ class ToolsSBR():
         check_first(template,taskname)
 
         #
+        print(self.maps_mom0)
 
 
     ###############

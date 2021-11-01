@@ -53,6 +53,7 @@ history:
 2021-08-06   created
 2021-10-24   circulate v0.2 draft to the paper team
 2021-10-26   refactored align_maps
+2021-10-29   done all refactoring before v1 circular
 Toshiki Saito@Nichidai/NAOJ
 """
 
