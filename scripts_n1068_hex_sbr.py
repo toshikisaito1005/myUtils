@@ -136,6 +136,7 @@ class ToolsSBR():
 
         taskname = self.modname + sys._getframe().f_code.co_name
 
+        # sampling mom0
         maps_mom0 = glob.glob(self.outfits_mom0.replace("???","*"))
         maps_mom0 = [s for s in maps_mom0 if "err" not in s]
 
@@ -143,14 +144,24 @@ class ToolsSBR():
 
         for i in range(len(maps_mom0)):
             this_mom0 = maps_mom0[i]
-            x,y,z = hexbin_sampling(this_mom0,self.ra_agn,self.dec_agn,beam=self.beam,gridsize=27)
+            x,y,z,n = hexbin_sampling(
+                this_mom0,
+                self.ra_agn,
+                self.dec_agn,
+                beam=self.beam,
+                gridsize=27,
+                get_numpix=True,
+                )
 
             if i==0:
-                output_hex = np.c_[x,y]
+                output_hex = np.c_[n,x,y]
 
             output_hex = np.c_[output_hex,z]
 
-        print(np.shape(output_hex))
+        # sampling emom0
+        maps_emom0 = glob.glob(self.outfits_emom0.replace("???","*"))
+
+        np.savetxt(self.table_hex_obs,output_hex)
 
     ##############
     # align_maps #
