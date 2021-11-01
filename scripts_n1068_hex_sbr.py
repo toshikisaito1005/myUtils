@@ -142,26 +142,45 @@ class ToolsSBR():
 
         check_first(maps_mom0[0],taskname)
 
+        header = ["ra(deg)","dec(deg)"]
         for i in range(len(maps_mom0)):
             this_mom0 = maps_mom0[i]
-            x,y,z,n = hexbin_sampling(
+            this_line = this_mom0.split("/")[-1].split("ngc1068_")[1].split(".image")[0]
+            x,y,z = hexbin_sampling(
                 this_mom0,
                 self.ra_agn,
                 self.dec_agn,
                 beam=self.beam,
                 gridsize=27,
-                get_numpix=True,
+                err=False,
                 )
 
             if i==0:
-                output_hex = np.c_[n,x,y]
+                output_hex = np.c_[x,y]
 
             output_hex = np.c_[output_hex,z]
+            header.append(this_line)
 
         # sampling emom0
         maps_emom0 = glob.glob(self.outfits_emom0.replace("???","*"))
 
-        np.savetxt(self.table_hex_obs,output_hex)
+        for i in range(len(maps_emom0)):
+            this_emom0 = maps_emom0[i]
+            this_line  = this_emom0.split("/")[-1].split("ngc1068_")[1].split(".image")[0]
+            x,y,z = hexbin_sampling(
+                this_emom0,
+                self.ra_agn,
+                self.dec_agn,
+                beam=self.beam,
+                gridsize=27,
+                err=True,
+                )
+
+            output_hex = np.c_[output_hex,z]
+            header.append(this_line+"(err)")
+
+        header = " ".join(header)
+        np.savetxt(self.table_hex_obs,output_hex,header=header)
 
     ##############
     # align_maps #

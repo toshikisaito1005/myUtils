@@ -26,7 +26,7 @@ def hexbin_sampling(
     dec,
     beam=0.8,
     gridsize=70,
-    get_numpix=False,
+    err=False,
     ):
     """
     Run hexagonal re-sampling with CASA. Sampling area is gridsize*beam x
@@ -64,6 +64,9 @@ def hexbin_sampling(
     x    = (data["coords"][:,:,0] * 180/np.pi - ra) * 3600 # arcsec
     y    = (data["coords"][:,:,1] * 180/np.pi - dec) * 3600 # arcsec
     c    = np.nan_to_num(data["data"]) # K.km/s
+    if err==True:
+        c = c**2
+
     X    = x.reshape(-1)
     Y    = y.reshape(-1)
     C    = c.reshape(-1)
@@ -87,8 +90,5 @@ def hexbin_sampling(
     num     = np.array(hexdata.get_array())
     
     plt.clf()
-    
-    if get_numpix==False:
-        return hexx, hexy, hexc
-    else:
-        return hexx, hexy, hexc, num
+
+    return hexx, hexy, hexc
