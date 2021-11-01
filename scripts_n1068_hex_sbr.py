@@ -89,6 +89,8 @@ class ToolsSBR():
             self.map_av    = self.dir_other + self._read_key("map_av")
             self.maps_mom0 = glob.glob(self.dir_raw + self._read_key("maps_mom0"))
             self.maps_mom0.sort()
+            self.maps_emom0 = glob.glob(self.dir_raw + self._read_key("maps_emom0"))
+            self.maps_emom0.sort()
 
     ###################
     # run_ngc1068_sbr #
