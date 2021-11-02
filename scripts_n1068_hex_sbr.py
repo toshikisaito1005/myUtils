@@ -246,7 +246,7 @@ class ToolsSBR():
     # constrain_table #
     ###################
 
-    def _f_lin(x, a, b):
+    def _f_lin(self, x, a, b):
         """
         """
 
