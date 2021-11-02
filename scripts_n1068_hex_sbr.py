@@ -152,19 +152,68 @@ class ToolsSBR():
         check_first(self.table_hex_constrain,taskname)
 
         # read header
-        f = open(self.table_hex_constrain)
+        f      = open(self.table_hex_constrain)
         header = f.readline()
         header = header.split(",")[1:]
         f.close()
 
         # read data
-        data = np.loadtxt(self.table_hex_constrain)
+        data      = np.loadtxt(self.table_hex_constrain)
         dist_kcp  = data[:,0]
         data_mom0 = data[:,1:]
         name_mom0 = [s.split("\n")[0] for s in header]
 
-        print(np.shape(data_mom0))
-        print(name_mom0)
+        # get data
+        list_mom0 = []
+        for i in range(len(name_mom0)):
+            this_mom0 = data_mom0[:,i]
+            this_name = name_mom0[i]
+
+            if this_name=="n2hp10":
+                mom0_n2hp = this_mom0
+            else:
+                list_mom0.append(this_mom0)
+
+        # plot
+        for i in range(len(list_mom0)):
+            this_mom0 = list_mom0[i]
+            this_name = name_mom0[i]
+            x         = np.log10(this_mom0)
+            y         = np.log10(mom0_n2hp)
+            xlabel    = "log " + this_name
+            ylabel    = "log N$_2$H$^+$"
+            output    = self.dir_products + "scatter_n2hp_vs_" + this_mom0 + ".png"
+            self._plot_scatters(output,x,y,xlabel=xlabel,ylabel=ylabel)
+
+    ##################
+    # _plot_scatters #
+    ##################
+
+    def _plot_scatters(
+        self,
+        output,
+        x,
+        y,
+        xlim=None,
+        ylim=None,
+        title=None,
+        xlabel=None,
+        ylabel=None,
+        ):
+        """
+        """
+
+        fig = plt.figure(figsize=(13,10))
+        gs = gridspec.GridSpec(nrows=10, ncols=10)
+        ax1 = plt.subplot(gs[0:10,0:10])
+        ad = [0.215,0.83,0.10,0.90]
+        myax_set(ax1, "both", xlim, ylim, title, xlabel, ylabel, adjust=ad)
+
+        # plot
+        ax1.scatter(x, y, lw=0, c="gray", s=20)
+
+        # save
+        plt.savefig(output, dpi=self.fig_dpi)
 
     ###################
     # constrain_table #
