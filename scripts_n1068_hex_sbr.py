@@ -185,9 +185,9 @@ class ToolsSBR():
             xlabel    = "log " + this_name
             ylabel    = "log N$_2$H$^+$"
             output    = self.dir_products + "scatter_n2hp_vs_" + this_name + ".png"
-            
+
             if this_mom0=="co10":
-                xlim = [0.0,3.0]
+                xlim = [-5.0,7.0]
             else:
                 xlim = [-1.0,2.0]
 
