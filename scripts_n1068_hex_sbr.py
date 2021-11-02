@@ -160,8 +160,8 @@ class ToolsSBR():
 
         data_mom0  = data[:,2:len_data+2]
         data_emom0 = data[:,len_data+2:]
-        name_mom0  = header[2:len_data+2]
-        name_emom0 = header[len_data+2:]
+        name_mom0  = np.array(header[2:len_data+2])
+        name_emom0 = np.array(header[len_data+2:])
 
         n2hp_mom0  = data_mom0[:,np.where(name_mom0=="n2hp10")]
         print(np.where(name_mom0=="n2hp10"))
