@@ -175,6 +175,7 @@ class ToolsSBR():
 
         # constrain data by detected pixels
         table = np.array(dist_kpc)
+        print(np.shape(table))
         for i in range(len(data_mom0[0])):
             this_name   = name_mom0[i]
             this_mom0   = data_mom0[:,i]
@@ -182,6 +183,7 @@ class ToolsSBR():
             detect_rate = len(this_mom0[this_mom0>=this_emom0*self.snr_mom]) / float(len(this_mom0))
 
             if detect_rate>=self.detection_frac:
+                print(np.shape(this_mom0))
                 table = np.c_[table,np.array(this_mom0)]
 
         print(table)
