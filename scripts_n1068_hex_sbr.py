@@ -188,15 +188,18 @@ class ToolsSBR():
 
             array_slope[i[1],i[0]] = popt[0]
 
+        vmin = np.min(array_slope)
+        vmax = np.max(array_slope)
+
         # plot
         fig = plt.figure(figsize=(10,9))
         gs  = gridspec.GridSpec(nrows=30, ncols=30)
         ax  = plt.subplot(gs[0:30,0:30])
         myax_set(ax,title="Slope of log-log plot",aspect=1.0,adjust=[0.20,0.99,0.20,0.95])
 
-        im = ax.imshow(array_slope, interpolation="none", vmin=0.0, vmax=1.5, cmap="rainbow")
+        im = ax.imshow(array_slope, interpolation="none", vmin=vmin, vmax=vmax, cmap="rainbow")
         
-        self._myax_cbar(fig, ax, im, clim=[0,1.5])
+        self._myax_cbar(fig, ax, im, clim=[vmin,vmax])
 
         ax.set_xticks(range(len(name_mom0)))
         ax.set_xticklabels(name_mom0,rotation=90)
