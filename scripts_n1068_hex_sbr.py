@@ -207,6 +207,11 @@ class ToolsSBR():
         ax.set_yticks(range(len(name_mom0)))
         ax.set_yticklabels(name_mom0)
 
+        # text
+        for i in itertools.combinations(l, 2):
+            this_slope = array_slope[i[1],i[0]]
+            ax.text(i[1],i[0],this_slope,fontsize=10)
+
         print("# output = " + self.outpng_corner_slope)
         fig.savefig(self.outpng_corner_slope, dpi=fig_dpi)
 
