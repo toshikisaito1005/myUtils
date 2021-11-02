@@ -160,8 +160,8 @@ class ToolsSBR():
 
         data_mom0  = data[:,2:len_data+2]
         data_emom0 = data[:,len_data+2:]
-        name_mom0  = header[:,2:len_data+2]
-        name_emom0 = header[:,len_data+2:]
+        name_mom0  = header[2:len_data+2]
+        name_emom0 = header[len_data+2:]
 
         print(name_mom0)
 
