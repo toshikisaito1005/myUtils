@@ -175,7 +175,8 @@ class ToolsSBR():
         data_emom0 = data_emom0[cut]
 
         # constrain data by detected pixels
-        table = np.array(dist_kpc)
+        header = ["ra","dec"]
+        table  = np.array(dist_kpc)
         for i in range(len(data_mom0[0])):
             this_name   = name_mom0[i]
             this_mom0   = data_mom0[:,i]
@@ -184,9 +185,10 @@ class ToolsSBR():
 
             if detect_rate>=self.detection_frac:
                 table = np.c_[table,np.array(this_mom0)]
+                header.append(this_name)
 
-        print(np.shape(table))
-        # self.table_hex_constrain
+
+        np.savetxt(table,self.table_hex_constrain,header=header)
 
     ################
     # hex_sampling #
