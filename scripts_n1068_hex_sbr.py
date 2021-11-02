@@ -227,7 +227,7 @@ class ToolsSBR():
             "Correlation of log-log plot",
             "x-axis lines",
             "y-axis lines",
-            clim=[0.0,1.0],
+            clim=[0.5,1.0],
             )
 
     ##############
@@ -236,13 +236,13 @@ class ToolsSBR():
 
     def _plot_corner(
         self,
-        outpng, # self.outpng_corner_slope
-        data, # array_slope
-        list_name, # name_mom0
-        title, # "Slopes of log-log plot"
-        xlabel, # "x-axis lines"
-        ylabel, # "y-axis lines"
-        clim=[0.5,1.5],
+        outpng,
+        data,
+        list_name,
+        title,
+        xlabel,
+        ylabel,
+        clim,
         ):
 
         fig = plt.figure(figsize=(10,9))
