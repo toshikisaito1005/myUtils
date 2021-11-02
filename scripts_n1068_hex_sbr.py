@@ -164,7 +164,7 @@ class ToolsSBR():
         name_mom0 = header[1:]
 
         print(np.shape(data_mom0))
-        print(np.shape(name_mom0))
+        print(name_mom0)
 
     ###################
     # constrain_table #
