@@ -213,12 +213,12 @@ class ToolsSBR():
         # mesure best correlation using slope and coeff
         l            = 1-abs(array_slope-1)
         l            = np.nan_to_num(l)
-        scaled_slope = (l-np.min(l[l!=0])) / (np.max(l[l!=0])-np.min(l[l!=0]))
+        scaled_slope = np.where(l!=0,(l-np.min(l[l!=0])) / (np.max(l[l!=0])-np.min(l[l!=0])),0)
         print(l)
 
         l            = abs(array_coeff)
         l            = np.nan_to_num(l)
-        scaled_coeff = (l-np.min(l[l!=0])) / (np.max(l[l!=0])-np.min(l[l!=0]))
+        scaled_coeff = np.where(l!=0,(l-np.min(l[l!=0])) / (np.max(l[l!=0])-np.min(l[l!=0])),0)
 
         array_score  = np.sqrt(scaled_slope**2 + scaled_coeff**2)
 
