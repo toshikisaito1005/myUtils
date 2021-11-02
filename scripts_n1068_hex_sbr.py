@@ -203,7 +203,7 @@ class ToolsSBR():
         ax  = plt.subplot(gs[0:30,0:30])
         ax.set_aspect('equal', adjustable='box')
         myax_set(ax,title="Slopes of log-log plot",aspect=1.0,adjust=[0.10,0.99,0.20,0.92],
-            ylabel="y-axis lines",ylabel="x-axis lines")
+            ylabel="y-axis lines",xlabel="x-axis lines")
 
         im = ax.imshow(array_slope, interpolation="none", vmin=vmin, vmax=vmax, cmap="bwr")
         
