@@ -190,6 +190,7 @@ class ToolsSBR():
 
         vmin = np.min(array_slope[array_slope!=np.nan])
         vmax = np.max(array_slope[array_slope!=np.nan])
+        print(vmin,vmax)
 
         # plot
         fig = plt.figure(figsize=(10,9))
