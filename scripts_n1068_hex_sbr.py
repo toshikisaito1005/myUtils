@@ -164,7 +164,8 @@ class ToolsSBR():
         name_emom0 = np.array(header[len_data+2:])
 
         n2hp_mom0  = data_mom0[:,np.where(name_mom0=="n2hp10")[0][0]]
-        print(n2hp_mom0)
+        n2hp_emom0 = data_emom0[:,np.where(name_mom0=="n2hp10")[0][0]]
+        print(n2hp_mom0[n2hp_mom0>n2hp_emom0*3])
 
         # constrain data
         cut = np.where(dist_kpc>=self.r_sbr)
