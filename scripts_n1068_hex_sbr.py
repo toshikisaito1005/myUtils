@@ -115,16 +115,19 @@ class ToolsSBR():
             self.table_hex_obs  = self.dir_ready + self._read_key("table_hex_obs")
             self.table_hex_constrain = self.dir_ready + self._read_key("table_hex_constrain")
 
+            self.outpng_corner_slope = self.dir_products + self._read_key("outpng_corner_slope")
+
     ###################
     # run_ngc1068_sbr #
     ###################
 
     def run_ngc1068_sbr(
         self,
-        do_prepare    = False,
-        do_sampling   = False,
-        do_constrain  = False,
-        plot_scatters = False,
+        do_prepare        = False,
+        do_sampling       = False,
+        do_constrain      = False,
+        plot_scatters     = False,
+        plot_corner_slope = False,
         ):
         """
         This method runs all the methods which will create figures in the paper.
@@ -141,6 +144,67 @@ class ToolsSBR():
 
         if plot_scatters==True:
             self.plot_scatters()
+
+        if plot_corner_slope==True:
+            self.plot_corner_slope()
+
+    #####################
+    # plot_corner_slope #
+    #####################
+
+    def plot_corner_slope(self):
+        """
+        """
+
+        taskname = self.modname + sys._getframe().f_code.co_name
+        check_first(self.table_hex_constrain,taskname)
+
+        # read header
+        f      = open(self.table_hex_constrain)
+        header = f.readline()
+        header = header.split(",")[1:]
+        f.close()
+
+        # read data
+        data      = np.loadtxt(self.table_hex_constrain)
+        dist_kcp  = data[:,0]
+        data_mom0 = data[:,1:]
+        name_mom0 = [s.split("\n")[0] for s in header]
+
+        # prepare
+        l = range(len(name_mom0))
+        array_slope = np.zeros([len(name_mom0), len(name_mom0)])
+        array_slope = np.where(array_slope==0, np.nan, array_slope)
+
+        for i in itertools.combinations(l, 2):
+            x   = np.array(data_mom0[:,i[0]])
+            y   = np.array(data_mom0[:,i[1]])
+            cut = np.where((x>0) & (y>0))
+            x   = np.log10(x[cut])
+            y   = np.log10(y[cut])
+
+            # fit
+            popt,_  = curve_fit(self._f_lin, x, y, p0=[1.0,0.0], maxfev = 10000)
+
+            array_slope[i[1],i[0]] = popt[0]
+
+        # plot
+        fig = plt.figure(figsize=(10,9))
+        gs  = gridspec.GridSpec(nrows=30, ncols=30)
+        ax  = plt.subplot(gs[0:30,0:30])
+        myax_set(ax,title=None,aspect=1.0,adjust=[0.20,0.99,0.20,0.95])
+
+        im = ax.imshow(array_slope, interpolation="none", vmin=-1.0, vmax=1.0, cmap="rainbow")
+        
+        _myax_cbar(fig, ax, im, clim=[-1,1])
+
+        ax.set_xticks(range(len(name_mom0)))
+        ax.set_xticklabels(name_mom0,rotation=90)
+        ax.set_yticks(range(len(name_mom0)))
+        ax.set_yticklabels(name_mom0)
+
+        print("# output = " + self.outpng_corner_slope)
+        fig.savefig(self.outpng_corner_slope, dpi=fig_dpi)
 
     #################
     # plot_scatters #

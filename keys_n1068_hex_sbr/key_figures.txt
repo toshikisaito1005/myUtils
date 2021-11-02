@@ -35,6 +35,7 @@ outfits_maps_emom0  ,,,n1068_???_err.fits
 ######################
 table_hex_obs       ,,,n1068_hex_obs.txt
 table_hex_constrain ,,,n1068_hex_obs_constrained.txt
+outpng_corner_slope ,,,fig_corner_slope.png
 
 #######
 # end #
