@@ -170,12 +170,12 @@ class ToolsSBR():
 
         # constrain data by radius and N2H+ detection
         cut        = np.where((dist_kpc>=self.r_sbr) & (n2hp_mom0>=n2hp_emom0*self.snr_mom))
+        dist_kpc   = dist_kpc[cut]
         data_mom0  = data_mom0[cut]
         data_emom0 = data_emom0[cut]
 
         # constrain data by detected pixels
         table = np.array(dist_kpc)
-        print(np.shape(table))
         for i in range(len(data_mom0[0])):
             this_name   = name_mom0[i]
             this_mom0   = data_mom0[:,i]
@@ -183,10 +183,9 @@ class ToolsSBR():
             detect_rate = len(this_mom0[this_mom0>=this_emom0*self.snr_mom]) / float(len(this_mom0))
 
             if detect_rate>=self.detection_frac:
-                print(np.shape(this_mom0))
                 table = np.c_[table,np.array(this_mom0)]
 
-        print(table)
+        print(np.shape(table))
         # self.table_hex_constrain
 
     ################
