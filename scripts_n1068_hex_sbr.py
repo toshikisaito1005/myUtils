@@ -161,7 +161,7 @@ class ToolsSBR():
         data = np.loadtxt(self.table_hex_constrain)
         dist_kcp  = data[:,0]
         data_mom0 = data[:,1:]
-        name_mom0 = [s.split("\n") for s in header]
+        name_mom0 = [s.split("\n")[0] for s in header]
 
         print(np.shape(data_mom0))
         print(name_mom0)
