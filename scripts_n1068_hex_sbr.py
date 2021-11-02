@@ -196,6 +196,7 @@ class ToolsSBR():
         fig = plt.figure(figsize=(10,9))
         gs  = gridspec.GridSpec(nrows=30, ncols=30)
         ax  = plt.subplot(gs[0:30,0:30])
+        ax.set_aspect('equal', adjustable='box')
         myax_set(ax,title="Slope of log-log plot",aspect=1.0,adjust=[0.20,0.99,0.20,0.95])
 
         im = ax.imshow(array_slope, interpolation="none", vmin=vmin, vmax=vmax, cmap="rainbow")
@@ -222,7 +223,8 @@ class ToolsSBR():
         label=None,
         clim=None,
         ):
-        cb = fig.colorbar(data, ax=ax)
+        cax = [0.1, 0.45, 0.8, 0.1]
+        cb = fig.colorbar(data, ax=ax, cax=cax)
         
         if label is not None:
             cb.set_label(label)
