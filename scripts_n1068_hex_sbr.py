@@ -175,14 +175,16 @@ class ToolsSBR():
 
         # constrain data by detected pixels
         table = dist_kpc
+        print(np.shape(dist_kpc))
         for i in range(len(data_mom0[0])):
             this_name   = name_mom0[i]
             this_mom0   = data_mom0[:,i]
             this_emom0  = data_emom0[:,i]
-            detect_rate = len( this_mom0[this_mom0>=this_emom0*self.snr_mom] ) / float(len(this_mom0))
+            detect_rate = len(this_mom0[this_mom0>=this_emom0*self.snr_mom]) / float(len(this_mom0))
 
             if detect_rate>=self.detection_frac:
                 table = np.c_[table,this_mom0]
+                print(np.shape(table))
 
         print(table)
         # self.table_hex_constrain
