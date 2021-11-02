@@ -172,7 +172,7 @@ class ToolsSBR():
         name_mom0 = [s.split("\n")[0] for s in header]
         name_mom0 = list(map(str.upper,name_mom0))
         name_mom0 = [s.split("10")[0].split("21")[0] for s in name_mom0]
-        name_mom0 = [s.replace("13","$^{13}$").replace("13","$^{18}$") for s in name_mom0]
+        name_mom0 = [s.replace("13","$^{13}$").replace("18","$^{18}$") for s in name_mom0]
         name_mom0 = [s.replace("HCOP","HCO$^+$") for s in name_mom0]
         name_mom0 = [s.replace("N2HP","N$_2$H$^+$") for s in name_mom0]
         name_mom0 = [s.replace("CH3OH","CH$_3$OH") for s in name_mom0]
