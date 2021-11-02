@@ -219,8 +219,7 @@ class ToolsSBR():
         l            = np.nan_to_num(l)
         scaled_coeff = np.where(l!=0,(l-np.min(l[l!=0])) / (np.max(l[l!=0])-np.min(l[l!=0])),0)
 
-        array_score  = np.sqrt(scaled_slope**2 + scaled_coeff**2)
-        print(np.c_[scaled_slope.flatten(),scaled_coeff.flatten(),array_score.flatten()])
+        array_score  = np.sqrt((scaled_slope**2 + scaled_coeff**2)/2.0)
 
         # plot 
         self._plot_corner(
