@@ -184,8 +184,6 @@ class ToolsSBR():
             x         = np.log10(this_mom0[cut])
             y         = np.log10(mom0_n2hp[cut])
 
-            print(this_name)
-
             xlabel    = "log " + this_name
             ylabel    = "log N$_2$H$^+$"
             output    = self.dir_products + "scatter_n2hp_vs_" + this_name + ".png"
@@ -233,9 +231,9 @@ class ToolsSBR():
 
         # text
         if xlim!=None and ylim!=None:
-            ax1.plot([ylim[0]-1,ylim[1]+1], [ylim[0]-1,ylim[1]+1], "-", color="black")
-            ax1.plot([ylim[0]-1,ylim[1]+1], [ylim[0]-1-1.0,ylim[1]+1-1.0], "-", color="black")
-            ax1.plot([ylim[0]-1,ylim[1]+1], [ylim[0]-1+1.0,ylim[1]+1+1.0], "-", color="black")
+            ax1.plot([ylim[0]-1,ylim[1]+1], [ylim[0]-1,ylim[1]+1], "--", lw=2, color="tomat")
+            ax1.plot([ylim[0]-1,ylim[1]+1], [ylim[0]-1-1.0,ylim[1]+1-1.0], "--", lw=2, color="grey")
+            ax1.plot([ylim[0]-1,ylim[1]+1], [ylim[0]-1+1.0,ylim[1]+1+1.0], "--", lw=2, color="grey")
 
         # text
         ax1.text(0.1, 0.9, "$r$ $=$"+coeff, transform=ax1.transAxes)
