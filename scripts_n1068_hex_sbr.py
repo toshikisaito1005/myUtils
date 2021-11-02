@@ -190,12 +190,7 @@ class ToolsSBR():
             ylabel    = "log N$_2$H$^+$"
             output    = self.dir_products + "scatter_n2hp_vs_" + this_name + ".png"
 
-            if this_name=="co10":
-                xlim = [0.0,3.0]
-            else:
-                xlim = [-1.0,2.0]
-
-            self._plot_scatters(output,x,y,xlabel=xlabel,ylabel=ylabel,xlim=xlim,ylim=[-1.0,2.0])
+            self._plot_scatters(output,x,y,xlabel=xlabel,ylabel=ylabel)
 
     ##################
     # _plot_scatters #
@@ -206,8 +201,6 @@ class ToolsSBR():
         output,
         x,
         y,
-        xlim=None,
-        ylim=None,
         title=None,
         xlabel=None,
         ylabel=None,
@@ -221,6 +214,10 @@ class ToolsSBR():
         # fit
         popt,_  = curve_fit(self._f_lin, x, y, p0=[1.0,0.0], maxfev = 10000)
         best_y = self._f_lin(x, popt[0], popt[1])
+
+        # get xlim, ylim
+        xlim = [np.median(x)-1.0,np.median(x)+1.0]
+        ylim = [np.median(y)-1.0,np.median(y)+1.0]
 
         print("# plot " + output)
         fig = plt.figure(figsize=(13,10))
