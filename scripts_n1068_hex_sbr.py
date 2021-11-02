@@ -183,6 +183,8 @@ class ToolsSBR():
             cut       = np.where((this_mom0>0) & (mom0_n2hp>0))
             x         = np.log10(this_mom0)
             y         = np.log10(mom0_n2hp)
+            print(x)
+            print(y)
 
             xlabel    = "log " + this_name
             ylabel    = "log N$_2$H$^+$"
