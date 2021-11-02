@@ -182,7 +182,7 @@ class ToolsSBR():
             y         = np.log10(mom0_n2hp)
             xlabel    = "log " + this_name
             ylabel    = "log N$_2$H$^+$"
-            output    = self.dir_products + "scatter_n2hp_vs_" + this_mom0 + ".png"
+            output    = self.dir_products + "scatter_n2hp_vs_" + this_name + ".png"
             self._plot_scatters(output,x,y,xlabel=xlabel,ylabel=ylabel)
 
     ##################
