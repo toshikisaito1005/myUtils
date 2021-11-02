@@ -175,7 +175,7 @@ class ToolsSBR():
         data_emom0 = data_emom0[cut]
 
         # constrain data by detected pixels
-        header = ["ra","dec"]
+        header = ["dist(kpc)"]
         table  = np.array(dist_kpc)
         for i in range(len(data_mom0[0])):
             this_name   = name_mom0[i]
