@@ -119,9 +119,10 @@ class ToolsSBR():
 
     def run_ngc1068_sbr(
         self,
-        do_prepare   = False,
-        do_sampling  = False,
-        do_constrain = False,
+        do_prepare    = False,
+        do_sampling   = False,
+        do_constrain  = False,
+        plot_scatters = False,
         ):
         """
         This method runs all the methods which will create figures in the paper.
@@ -135,6 +136,35 @@ class ToolsSBR():
 
         if do_constrain==True:
             self.constrain_table()
+
+        if plot_scatters==True:
+            self.plot_scatters()
+
+    #################
+    # plot_scatters #
+    #################
+
+    def plot_scatters(self):
+        """
+        """
+
+        taskname = self.modname + sys._getframe().f_code.co_name
+        check_first(self.table_hex_constrain,taskname)
+
+        # read header
+        f = open(self.table_hex_constrain)
+        header = f.readline()
+        header = header.split(" ")[1:]
+        f.close()
+
+        # read data
+        data = np.loadtxt(self.table_hex_constrain)
+        dist_kcp  = data[:,0]
+        data_mom0 = data[:,1:]
+        name_mom0 = header[1:]
+
+        print(np.shape(data_mom0))
+        print(np.shape(name_mom0))
 
     ###################
     # constrain_table #
@@ -188,6 +218,7 @@ class ToolsSBR():
                 header.append(this_name)
 
         header = ",".join(header)
+        os.system("rm -rf " + self.table_hex_constrain)
         np.savetxt(self.table_hex_constrain,table,header=header)
 
     ################
