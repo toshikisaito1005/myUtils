@@ -224,9 +224,9 @@ class ToolsSBR():
 
         # text
         if xlim!=None and ylim!=None:
-            ax1.plot(ylim, ylim, "-", color="black")
-            ax1.plot(ylim, [ylim[0]-1.0,ylim[1]-1.0], "-", color="black")
-            ax1.plot(ylim, [ylim[0]+1.0,ylim[1]+1.0], "-", color="black")
+            ax1.plot([ylim[0]-1,ylim[1]+1], [ylim[0]-1,ylim[1]+1], "-", color="black")
+            ax1.plot([ylim[0]-1,ylim[1]+1], [ylim[0]-1-1.0,ylim[1]+1-1.0], "-", color="black")
+            ax1.plot([ylim[0]-1,ylim[1]+1], [ylim[0]-1+1.0,ylim[1]+1+1.0], "-", color="black")
 
         # save
         plt.savefig(output, dpi=self.fig_dpi)
