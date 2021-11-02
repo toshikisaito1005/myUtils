@@ -74,42 +74,44 @@ class ToolsSBR():
             self.modname = "ToolsDense."
             
             # get directories
-            self.dir_proj      = self._read_key("dir_proj")
-            self.dir_raw       = self.dir_proj + self._read_key("dir_raw")
-            self.dir_ready     = self.dir_proj + self._read_key("dir_ready")
-            self.dir_other     = self.dir_proj + self._read_key("dir_other")
-            self.dir_products  = self.dir_proj + self._read_key("dir_products")
-            self.dir_final     = self.dir_proj + self._read_key("dir_final")
+            self.dir_proj       = self._read_key("dir_proj")
+            self.dir_raw        = self.dir_proj + self._read_key("dir_raw")
+            self.dir_ready      = self.dir_proj + self._read_key("dir_ready")
+            self.dir_other      = self.dir_proj + self._read_key("dir_other")
+            self.dir_products   = self.dir_proj + self._read_key("dir_products")
+            self.dir_final      = self.dir_proj + self._read_key("dir_final")
 
             self._create_dir(self.dir_ready)
             self._create_dir(self.dir_products)
             self._create_dir(self.dir_final)
 
             # input maps
-            self.map_av        = self.dir_other + self._read_key("map_av")
-            self.maps_mom0     = glob.glob(self.dir_raw + self._read_key("maps_mom0"))
+            self.map_av         = self.dir_other + self._read_key("map_av")
+            self.maps_mom0      = glob.glob(self.dir_raw + self._read_key("maps_mom0"))
             self.maps_mom0.sort()
-            self.maps_emom0    = glob.glob(self.dir_raw + self._read_key("maps_emom0"))
+            self.maps_emom0     = glob.glob(self.dir_raw + self._read_key("maps_emom0"))
             self.maps_emom0.sort()
 
             # ngc1068 properties
-            self.ra_agn        = float(self._read_key("ra_agn", "gal").split("deg")[0])
-            self.dec_agn       = float(self._read_key("dec_agn", "gal").split("deg")[0])
-            self.scale_pc      = float(self._read_key("scale", "gal"))
-            self.scale_kpc     = self.scale_pc / 1000.
+            self.ra_agn         = float(self._read_key("ra_agn", "gal").split("deg")[0])
+            self.dec_agn        = float(self._read_key("dec_agn", "gal").split("deg")[0])
+            self.scale_pc       = float(self._read_key("scale", "gal"))
+            self.scale_kpc      = self.scale_pc / 1000.
 
-            self.beam          = 2.14859173174056
-            self.snr_mom       = 3.0
-            self.r_sbr         = 10.0 * self.scale_pc / 1000. # kpc
+            self.beam           = 2.14859173174056
+            self.snr_mom        = 3.0
+            self.r_sbr          = 10.0 * self.scale_pc / 1000. # kpc
+            self.detection_frac = 0.5
 
             # output maps
-            self.outmap_mom0   = self.dir_ready + self._read_key("outmaps_mom0")
-            self.outfits_mom0  = self.dir_ready + self._read_key("outfits_maps_mom0")
-            self.outmap_emom0  = self.dir_ready + self._read_key("outmaps_emom0")
-            self.outfits_emom0 = self.dir_ready + self._read_key("outfits_maps_emom0")
+            self.outmap_mom0    = self.dir_ready + self._read_key("outmaps_mom0")
+            self.outfits_mom0   = self.dir_ready + self._read_key("outfits_maps_mom0")
+            self.outmap_emom0   = self.dir_ready + self._read_key("outmaps_emom0")
+            self.outfits_emom0  = self.dir_ready + self._read_key("outfits_maps_emom0")
 
             # output txt and png
-            self.table_hex_obs = self.dir_ready + self._read_key("table_hex_obs")
+            self.table_hex_obs  = self.dir_ready + self._read_key("table_hex_obs")
+            self.table_hex_constrain = self.dir_ready + self._read_key("table_hex_constrain")
 
     ###################
     # run_ngc1068_sbr #
@@ -166,14 +168,24 @@ class ToolsSBR():
         n2hp_mom0  = data_mom0[:,np.where(name_mom0=="n2hp10")[0][0]]
         n2hp_emom0 = data_emom0[:,np.where(name_mom0=="n2hp10")[0][0]]
 
-        print(np.shape(data_mom0))
-
-        # constrain data
+        # constrain data by radius and N2H+ detection
         cut        = np.where((dist_kpc>=self.r_sbr) & (n2hp_mom0>=n2hp_emom0*self.snr_mom))
         data_mom0  = data_mom0[cut]
         data_emom0 = data_emom0[cut]
 
-        print(np.shape(data_mom0))
+        # constrain data by detected pixels
+        table = dist_kpc
+        for i in range(len(data_mom0[0])):
+            this_name   = name_mom0[i]
+            this_mom0   = data_mom0[:,i]
+            this_emom0  = data_emom0[:,i]
+            detect_rate = len( this_mom0[this_mom0>=this_emom0*self.snr_mom] ) / float(len(this_mom0))
+
+            if detect_rate>=self.detection_frac:
+                table = np.c_[table,this_mom0]
+
+        print(table)
+        # self.table_hex_constrain
 
     ################
     # hex_sampling #
