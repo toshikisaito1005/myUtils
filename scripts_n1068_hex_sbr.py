@@ -226,7 +226,7 @@ class ToolsSBR():
         myax_set(ax1, "both", xlim, ylim, title, xlabel, ylabel, adjust=ad)
 
         # plot
-        ax1.scatter(x, y, lw=0, c="gray", s=20)
+        ax1.scatter(x, y, lw=0, c="gray", s=50)
         ax1.plot(x, best_y, "-", color="tomato", lw=3)
 
         # text
