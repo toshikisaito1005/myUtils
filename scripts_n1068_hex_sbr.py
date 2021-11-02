@@ -170,8 +170,8 @@ class ToolsSBR():
 
         # constrain data
         cut        = np.where((dist_kpc>=self.r_sbr) & (n2hp_mom0>=n2hp_emom0*self.snr_mom))
-        data_mom0  = data_mom0[cut,:]
-        data_emom0 = data_emom0[cut,:]
+        data_mom0  = data_mom0[cut]
+        data_emom0 = data_emom0[cut]
 
         print(np.shape(data_mom0))
 
