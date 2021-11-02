@@ -241,7 +241,6 @@ class ToolsSBR():
             "x-axis lines",
             "y-axis lines",
             clim=[0.5,1.0],
-            cmap="rainbow",
             )
 
         self._plot_corner(
@@ -252,6 +251,7 @@ class ToolsSBR():
             "x-axis lines",
             "y-axis lines",
             clim=[0.0,1.0],
+            cmap="rainbow",
             )
 
     ##############
