@@ -146,7 +146,7 @@ class ToolsSBR():
         check_first(self.table_hex_obs,taskname)
 
         # read header
-        f = open(filename)
+        f = open(self.table_hex_obs)
         header = f.readline()
         f.close()
         print(header)
