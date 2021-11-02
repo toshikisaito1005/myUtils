@@ -236,7 +236,8 @@ class ToolsSBR():
             ax1.plot([ylim[0]-1,ylim[1]+1], [ylim[0]-1+1.0,ylim[1]+1+1.0], "--", lw=2, color="grey")
 
         # text
-        ax1.text(0.1, 0.9, "$r$ $=$"+coeff, transform=ax1.transAxes)
+        ax1.text(0.1, 0.9, "$r$ $=$ "+coeff, transform=ax1.transAxes)
+        ax1.text(0.1, 0.8, "slope $=$ "+str(np.round(popt[0],2)), transform=ax1.transAxes)
 
         # save
         plt.savefig(output, dpi=self.fig_dpi)
