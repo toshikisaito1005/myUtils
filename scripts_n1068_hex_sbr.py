@@ -103,7 +103,7 @@ class ToolsSBR():
             self.beam           = 2.14859173174056
             self.snr_mom        = 3.0
             self.r_sbr          = 10.0 * self.scale_pc / 1000. # kpc
-            self.detection_frac = 0.5
+            self.detection_frac = 0.3
 
             # output maps
             self.outmap_mom0    = self.dir_ready + self._read_key("outmaps_mom0")
