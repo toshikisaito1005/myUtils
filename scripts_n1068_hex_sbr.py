@@ -96,6 +96,7 @@ class ToolsSBR():
             self.ra_agn        = float(self._read_key("ra_agn", "gal").split("deg")[0])
             self.dec_agn       = float(self._read_key("dec_agn", "gal").split("deg")[0])
             self.scale_pc      = float(self._read_key("scale", "gal"))
+            self.scale_kpc     = self.scale_pc / 1000.
 
             self.beam          = 2.14859173174056
             self.snr_mom       = 3.0
@@ -144,16 +145,24 @@ class ToolsSBR():
         taskname = self.modname + sys._getframe().f_code.co_name
         check_first(self.table_hex_obs,taskname)
 
-        #
-        data     = np.loadtxt(self.table_hex_obs)
-        ra       = data[:,0]
-        dec      = data[:,1]
-        len_data = (len(data[0])-2)/2
+        # read header
+        f = open(filename)
+        header = f.readline()
+        f.close()
+        print(header)
 
-        data_mom0 = data[:,2:len_data+2]
+        # read data
+        data       = np.loadtxt(self.table_hex_obs)
+        len_data   = (len(data[0])-2)/2
+        x          = data[:,0]
+        y          = data[:,1]
+        dist_kpc   = np.sqrt(x**2+y**2) * self.scale_kpc
+
+        data_mom0  = data[:,2:len_data+2]
         data_emom0 = data[:,len_data+2:]
 
-        print(np.shape(data_mom0), np.shape(data_emom0))
+        # constrain data
+        cut = np.where(dist_kpc>=self.r_sbr)
 
     ################
     # hex_sampling #
