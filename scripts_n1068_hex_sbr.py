@@ -185,7 +185,7 @@ class ToolsSBR():
             xlabel    = "log " + this_name
             ylabel    = "log N$_2$H$^+$"
             output    = self.dir_products + "scatter_n2hp_vs_" + this_name + ".png"
-            self._plot_scatters(output,x,y,xlabel=xlabel,ylabel=ylabel)
+            self._plot_scatters(output,x,y,xlabel=xlabel,ylabel=ylabel,xlim=[-2.5,3.0],ylim=[-2.4,3.1]
 
     ##################
     # _plot_scatters #
