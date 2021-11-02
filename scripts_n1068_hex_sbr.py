@@ -216,6 +216,12 @@ class ToolsSBR():
         # plot
         ax1.scatter(x, y, lw=0, c="gray", s=20)
 
+        # text
+        if xlim!=None and ylim!=None:
+            ax1.plot(xlim, ylim, "--")
+            ax1.plot(xlim, [ylim-1.0,ylim-1.0], "--")
+            ax1.plot(xlim, [ylim+1.0,ylim+1.0], "--")
+
         # save
         plt.savefig(output, dpi=self.fig_dpi)
 
