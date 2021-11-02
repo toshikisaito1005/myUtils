@@ -196,7 +196,7 @@ class ToolsSBR():
 
         im = ax.imshow(array_slope, interpolation="none", vmin=-1.0, vmax=1.0, cmap="rainbow")
         
-        _myax_cbar(fig, ax, im, clim=[-1,1])
+        self._myax_cbar(fig, ax, im, clim=[-1,1])
 
         ax.set_xticks(range(len(name_mom0)))
         ax.set_xticklabels(name_mom0,rotation=90)
@@ -205,6 +205,28 @@ class ToolsSBR():
 
         print("# output = " + self.outpng_corner_slope)
         fig.savefig(self.outpng_corner_slope, dpi=fig_dpi)
+
+    ##############
+    # _myax_cbar #
+    ##############
+
+    def _myax_cbar(
+        self,
+        fig,
+        ax,
+        data,
+        label=None,
+        clim=None,
+        ):
+        cb = fig.colorbar(data, ax=ax)
+        
+        if label is not None:
+            cb.set_label(label)
+        
+        if clim is not None:
+            cb.set_clim(clim)
+
+        cb.outline.set_linewidth(2.5)
 
     #################
     # plot_scatters #
