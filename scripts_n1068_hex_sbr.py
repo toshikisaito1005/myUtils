@@ -210,6 +210,7 @@ class ToolsSBR():
         gs = gridspec.GridSpec(nrows=10, ncols=10)
         ax1 = plt.subplot(gs[0:10,0:10])
         ad = [0.215,0.83,0.10,0.90]
+        ax1.set_aspect('equal', adjustable='box')
         myax_set(ax1, "both", xlim, ylim, title, xlabel, ylabel, adjust=ad)
 
         # plot
