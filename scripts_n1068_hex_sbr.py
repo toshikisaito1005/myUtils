@@ -210,7 +210,7 @@ class ToolsSBR():
         # text
         for i in itertools.combinations(range(len(name_mom0)), 2):
             this_slope = str(np.round(array_slope[i[1],i[0]],2)).ljust(4, '0')
-            ax.text(i[0]-1,i[1]-1,this_slope,fontsize=12,
+            ax.text(i[0],i[1],this_slope,fontsize=12,
                 horizontalalignment="center", verticalalignment="center",weight="bold")
 
         print("# output = " + self.outpng_corner_slope)
