@@ -241,6 +241,7 @@ class ToolsSBR():
             "x-axis lines",
             "y-axis lines",
             clim=[0.5,1.0],
+            cmap="rainbow",
             )
 
         self._plot_corner(
@@ -266,6 +267,7 @@ class ToolsSBR():
         xlabel,
         ylabel,
         clim,
+        cmap="bwr",
         ):
 
         fig = plt.figure(figsize=(10,9))
@@ -274,7 +276,7 @@ class ToolsSBR():
         ax.set_aspect('equal', adjustable='box')
         myax_set(ax,title=title,aspect=1.0,adjust=[0.10,0.99,0.20,0.92],xlabel=xlabel,ylabel=ylabel)
 
-        im = ax.imshow(data, interpolation="none", vmin=clim[0], vmax=clim[1], cmap="bwr")
+        im = ax.imshow(data, interpolation="none", vmin=clim[0], vmax=clim[1], cmap=cmap)
         
         #self._myax_cbar(fig, ax, im, clim=clim)
 
