@@ -149,7 +149,6 @@ class ToolsSBR():
         f = open(self.table_hex_obs)
         header = f.readline()
         f.close()
-        print(header)
 
         # read data
         data       = np.loadtxt(self.table_hex_obs)
@@ -160,6 +159,10 @@ class ToolsSBR():
 
         data_mom0  = data[:,2:len_data+2]
         data_emom0 = data[:,len_data+2:]
+        name_mom0  = header[:,2:len_data+2]
+        name_emom0 = header[:,len_data+2:]
+
+        print(name_mom0)
 
         # constrain data
         cut = np.where(dist_kpc>=self.r_sbr)
