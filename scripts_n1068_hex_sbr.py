@@ -69,6 +69,8 @@ class ToolsSBR():
         self.dir_other    = None
         self.dir_products = None
 
+        self.fig_dpi = 200
+
         # import parameters
         if keyfile_fig is not None:
             self.modname = "ToolsDense."
