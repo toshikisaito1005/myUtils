@@ -182,6 +182,10 @@ class ToolsSBR():
             this_name = name_mom0[i]
             x         = np.log10(this_mom0)
             y         = np.log10(mom0_n2hp)
+            cut       = np.where((x!=np.nan) & (y!=np.nan))
+            x         = x[cut]
+            y         = y[cut]
+
             xlabel    = "log " + this_name
             ylabel    = "log N$_2$H$^+$"
             output    = self.dir_products + "scatter_n2hp_vs_" + this_name + ".png"
