@@ -116,6 +116,7 @@ class ToolsSBR():
             self.table_hex_constrain = self.dir_ready + self._read_key("table_hex_constrain")
 
             self.outpng_corner_slope = self.dir_products + self._read_key("outpng_corner_slope")
+            self.outpng_corner_coeff = self.dir_products + self._read_key("outpng_corner_coeff")
 
     ###################
     # run_ngc1068_sbr #
@@ -123,11 +124,11 @@ class ToolsSBR():
 
     def run_ngc1068_sbr(
         self,
-        do_prepare        = False,
-        do_sampling       = False,
-        do_constrain      = False,
-        plot_scatters     = False,
-        plot_corner_slope = False,
+        do_prepare     = False,
+        do_sampling    = False,
+        do_constrain   = False,
+        plot_scatters  = False,
+        plot_corners   = False,
         ):
         """
         This method runs all the methods which will create figures in the paper.
@@ -146,13 +147,13 @@ class ToolsSBR():
             self.plot_scatters()
 
         if plot_corner_slope==True:
-            self.plot_corner_slope()
+            self.plot_corners()
 
-    #####################
-    # plot_corner_slope #
-    #####################
+    ################
+    # plot_corners #
+    ################
 
-    def plot_corner_slope(self):
+    def plot_corners(self):
         """
         """
 
@@ -177,11 +178,10 @@ class ToolsSBR():
         name_mom0 = [s.replace("N2HP","N$_2$H$^+$") for s in name_mom0]
         name_mom0 = [s.replace("CH3OH","CH$_3$OH") for s in name_mom0]
 
-        # prepare
+        # measure slope
         l = range(len(name_mom0))
         array_slope = np.zeros([len(name_mom0), len(name_mom0)])
         array_slope = np.where(array_slope==0, np.nan, array_slope)
-
         for i in itertools.combinations(l, 2):
             x   = np.array(data_mom0[:,i[0]])
             y   = np.array(data_mom0[:,i[1]])
@@ -194,6 +194,21 @@ class ToolsSBR():
 
             array_slope[i[1],i[0]] = popt[0]
 
+        array_coeff = np.zeros([len(name_mom0), len(name_mom0)])
+        array_coeff = np.where(array_coeff==0, np.nan, array_coeff)
+        # measure coeff
+        for i in itertools.combinations(l, 2):
+            x   = np.array(data_mom0[:,i[0]])
+            y   = np.array(data_mom0[:,i[1]])
+            cut = np.where((x>0) & (y>0))
+            x   = np.log10(x[cut])
+            y   = np.log10(y[cut])
+
+            # measure
+            coeff  = np.round(np.corrcoef(x,y)[0,1], 2)
+
+            array_coeff[i[1],i[0]] = coeff
+
         # plot 
         self._plot_corner(
             self.outpng_corner_slope,
@@ -203,6 +218,16 @@ class ToolsSBR():
             "x-axis lines",
             "y-axis lines",
             clim=[0.5,1.5],
+            )
+
+        self._plot_corner(
+            self.outpng_corner_coeff,
+            array_coeff,
+            name_mom0,
+            "Correlation of log-log plot",
+            "x-axis lines",
+            "y-axis lines",
+            clim=[0.0,1.0],
             )
 
     ##############
