@@ -197,12 +197,13 @@ class ToolsSBR():
         l = np.nan_to_num(array_slope)
         vmin,vmax = 0.5,1.5 # np.min(l[l!=0]),np.max(l[l!=0])
 
-        # plot
+        # plot 
         fig = plt.figure(figsize=(10,9))
         gs  = gridspec.GridSpec(nrows=30, ncols=30)
         ax  = plt.subplot(gs[0:30,0:30])
         ax.set_aspect('equal', adjustable='box')
-        myax_set(ax,title="Slope of log-log plot",aspect=1.0,adjust=[0.10,0.99,0.20,0.92])
+        myax_set(ax,title="Slopes of log-log plot",aspect=1.0,adjust=[0.10,0.99,0.20,0.92],
+            ylabel="y-axis lines",ylabel="x-axis lines")
 
         im = ax.imshow(array_slope, interpolation="none", vmin=vmin, vmax=vmax, cmap="bwr")
         
