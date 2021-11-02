@@ -209,7 +209,7 @@ class ToolsSBR():
 
         # text
         print(array_slope)
-        for i in itertools.combinations(l, 2):
+        for i in itertools.combinations(range(len(name_mom0)), 2):
             print(i[1],i[0])
             this_slope = array_slope[i[1],i[0]]
             ax.text(i[1],i[0],this_slope,fontsize=10)
