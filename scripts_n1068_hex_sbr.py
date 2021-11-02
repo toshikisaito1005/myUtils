@@ -182,7 +182,7 @@ class ToolsSBR():
             this_name = name_mom0[i]
             x         = np.log10(this_mom0)
             y         = np.log10(mom0_n2hp)
-            cut       = np.where((x!=np.nan) & (y!=np.nan))
+            cut       = np.where((x!=np.nan) & (y!=np.nan) & (x!=np.inf) & (y!=np.inf))
             x         = x[cut]
             y         = y[cut]
 
