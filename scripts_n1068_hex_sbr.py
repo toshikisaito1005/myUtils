@@ -189,7 +189,7 @@ class ToolsSBR():
             array_slope[i[1],i[0]] = popt[0]
 
         l = np.nan_to_num(array_slope)
-        vmin,vmax = np.min(l[l!=0]),np.max(l[l!=0])
+        vmin,vmax = 0.5,1.5 # np.min(l[l!=0]),np.max(l[l!=0])
 
         # plot
         fig = plt.figure(figsize=(10,9))
@@ -198,7 +198,7 @@ class ToolsSBR():
         ax.set_aspect('equal', adjustable='box')
         myax_set(ax,title="Slope of log-log plot",aspect=1.0,adjust=[0.20,0.99,0.20,0.95])
 
-        im = ax.imshow(array_slope, interpolation="none", vmin=vmin, vmax=vmax, cmap="rainbow")
+        im = ax.imshow(array_slope, interpolation="none", vmin=vmin, vmax=vmax, cmap="bwr")
         
         self._myax_cbar(fig, ax, im, clim=[vmin,vmax])
 
