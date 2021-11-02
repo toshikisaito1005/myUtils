@@ -214,11 +214,12 @@ class ToolsSBR():
         l            = 1-abs(array_slope-1)
         l            = np.nan_to_num(l)
         scaled_slope = np.where(l!=0,(l-np.min(l[l!=0])) / (np.max(l[l!=0])-np.min(l[l!=0])),0)
-        print(l)
+        print(scaled_slope)
 
         l            = abs(array_coeff)
         l            = np.nan_to_num(l)
         scaled_coeff = np.where(l!=0,(l-np.min(l[l!=0])) / (np.max(l[l!=0])-np.min(l[l!=0])),0)
+        print(scaled_coeff)
 
         array_score  = np.sqrt(scaled_slope**2 + scaled_coeff**2)
 
