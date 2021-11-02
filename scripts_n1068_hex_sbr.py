@@ -214,6 +214,10 @@ class ToolsSBR():
         # col coeff
         coeff = str( np.round( np.corrcoef(x,y)[0,1],2 ) )
 
+        # fit
+        popt,_  = curve_fit(f_lin, x, y, p0=[1.0,0.0], maxfev = 10000)
+        best_y = func_lin(x, popt[0], popt[1])
+
         print("# plot " + output)
         fig = plt.figure(figsize=(13,10))
         gs = gridspec.GridSpec(nrows=10, ncols=10)
@@ -224,6 +228,7 @@ class ToolsSBR():
 
         # plot
         ax1.scatter(x, y, lw=0, c="gray", s=20)
+        ax1.plot(x, best_y, "-", color="tomato", lw=3)
 
         # text
         if xlim!=None and ylim!=None:
@@ -236,6 +241,11 @@ class ToolsSBR():
 
         # save
         plt.savefig(output, dpi=self.fig_dpi)
+
+    def f_lin(x, a, b):
+    """
+    """
+    return a * x + b
 
     ###################
     # constrain_table #
