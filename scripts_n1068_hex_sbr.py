@@ -146,7 +146,7 @@ class ToolsSBR():
         if plot_scatters==True:
             self.plot_scatters()
 
-        if plot_corner_slope==True:
+        if plot_corners==True:
             self.plot_corners()
 
     ################
