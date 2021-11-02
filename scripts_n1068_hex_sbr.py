@@ -117,6 +117,7 @@ class ToolsSBR():
 
             self.outpng_corner_slope = self.dir_products + self._read_key("outpng_corner_slope")
             self.outpng_corner_coeff = self.dir_products + self._read_key("outpng_corner_coeff")
+            self.outpng_corner_score = self.dir_products + self._read_key("outpng_corner_score")
 
     ###################
     # run_ngc1068_sbr #
@@ -209,6 +210,13 @@ class ToolsSBR():
 
             array_coeff[i[1],i[0]] = coeff
 
+        # mesure best correlation using slope and coeff
+        l            = 1-abs(array_slope-1)
+        scaled_slope = l-np.min(l) / (np.max(l)-np.min(l))
+        l            = abs(array_coeff)
+        scaled_coeff = l-np.min(l) / (np.max(l)-np.min(l))
+        array_score  = np.sqrt(scaled_slope**2 + scaled_coeff**2)
+
         # plot 
         self._plot_corner(
             self.outpng_corner_slope,
@@ -228,6 +236,16 @@ class ToolsSBR():
             "x-axis lines",
             "y-axis lines",
             clim=[0.5,1.0],
+            )
+
+        self._plot_corner(
+            self.outpng_corner_score,
+            array_score,
+            name_mom0,
+            "Correlation score (1=best,0=worst)",
+            "x-axis lines",
+            "y-axis lines",
+            clim=[0.0,1.0],
             )
 
     ##############
