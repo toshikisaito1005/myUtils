@@ -218,7 +218,7 @@ class ToolsSBR():
 
         # text
         if xlim!=None and ylim!=None:
-            ax1.plot(xlim, ylim, "--")
+            ax1.plot(xlim, ylim, "-", colro="black")
             ax1.plot(xlim, [ylim[0]-1.0,ylim[1]-1.0], "-", colro="black")
             ax1.plot(xlim, [ylim[0]+1.0,ylim[1]+1.0], "-", colro="black")
 
