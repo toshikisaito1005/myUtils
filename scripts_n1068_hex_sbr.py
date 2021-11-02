@@ -200,7 +200,7 @@ class ToolsSBR():
 
         im = ax.imshow(array_slope, interpolation="none", vmin=vmin, vmax=vmax, cmap="bwr")
         
-        self._myax_cbar(fig, ax, im, clim=[vmin,vmax])
+        #self._myax_cbar(fig, ax, im, clim=[vmin,vmax])
 
         ax.set_xticks(range(len(name_mom0)))
         ax.set_xticklabels(name_mom0,rotation=90)
@@ -209,7 +209,7 @@ class ToolsSBR():
 
         # text
         for i in itertools.combinations(range(len(name_mom0)), 2):
-            this_slope = np.round(array_slope[i[1],i[0]],2)
+            this_slope = str(np.round(array_slope[i[1],i[0]],2)).ljust(4, '0')
             ax.text(len(name_mom0)-i[1]-1,len(name_mom0)-i[0]-1,this_slope,fontsize=12,
                 horizontalalignment="center", verticalalignment="center",weight="bold")
 
