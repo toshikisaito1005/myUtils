@@ -196,7 +196,7 @@ class ToolsSBR():
         gs  = gridspec.GridSpec(nrows=30, ncols=30)
         ax  = plt.subplot(gs[0:30,0:30])
         ax.set_aspect('equal', adjustable='box')
-        myax_set(ax,title="Slope of log-log plot",aspect=1.0,adjust=[0.20,0.99,0.20,0.95])
+        myax_set(ax,title="Slope of log-log plot",aspect=1.0,adjust=[0.10,0.99,0.20,0.92])
 
         im = ax.imshow(array_slope, interpolation="none", vmin=vmin, vmax=vmax, cmap="bwr")
         
