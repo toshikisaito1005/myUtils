@@ -180,7 +180,7 @@ class ToolsSBR():
         for i in range(len(list_mom0)):
             this_mom0 = list_mom0[i]
             this_name = name_mom0[i]
-            cut       = np.where((x!=0) & (y!=0))
+            cut       = np.where((this_mom0!=0) & (mom0_n2hp!=0))
             x         = np.log10(this_mom0)
             y         = np.log10(mom0_n2hp)
 
