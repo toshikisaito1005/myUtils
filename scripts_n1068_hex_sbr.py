@@ -187,7 +187,7 @@ class ToolsSBR():
                 table = np.c_[table,np.array(this_mom0)]
                 header.append(this_name)
 
-
+        header = ",".join(header)
         np.savetxt(self.table_hex_constrain,table,header=header)
 
     ################
