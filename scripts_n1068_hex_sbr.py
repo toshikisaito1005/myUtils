@@ -194,34 +194,55 @@ class ToolsSBR():
 
             array_slope[i[1],i[0]] = popt[0]
 
-        l = np.nan_to_num(array_slope)
-        vmin,vmax = 0.5,1.5 # np.min(l[l!=0]),np.max(l[l!=0])
-
         # plot 
+        self._plot_corner(
+            self.outpng_corner_slope,
+            array_slope,
+            name_mom0,
+            "Slopes of log-log plot",
+            "x-axis lines",
+            "y-axis lines",
+            clim=[0.5,1.5],
+            )
+
+    ##############
+    # _myax_cbar #
+    ##############
+
+    def _plot_corner(
+        self,
+        outpng, # self.outpng_corner_slope
+        data, # array_slope
+        list_name, # name_mom0
+        title, # "Slopes of log-log plot"
+        xlabel, # "x-axis lines"
+        ylabel, # "y-axis lines"
+        clim=[0.5,1.5],
+        ):
+
         fig = plt.figure(figsize=(10,9))
         gs  = gridspec.GridSpec(nrows=30, ncols=30)
         ax  = plt.subplot(gs[0:30,0:30])
         ax.set_aspect('equal', adjustable='box')
-        myax_set(ax,title="Slopes of log-log plot",aspect=1.0,adjust=[0.10,0.99,0.20,0.92],
-            ylabel="y-axis lines",xlabel="x-axis lines")
+        myax_set(ax,title=title,aspect=1.0,adjust=[0.10,0.99,0.20,0.92],xlabel=xlabel,ylabel=ylabel)
 
-        im = ax.imshow(array_slope, interpolation="none", vmin=vmin, vmax=vmax, cmap="bwr")
+        im = ax.imshow(data, interpolation="none", vmin=clim[0], vmax=clim[1], cmap="bwr")
         
-        #self._myax_cbar(fig, ax, im, clim=[vmin,vmax])
+        #self._myax_cbar(fig, ax, im, clim=clim)
 
-        ax.set_xticks(range(len(name_mom0)))
-        ax.set_xticklabels(name_mom0,rotation=90)
-        ax.set_yticks(range(len(name_mom0)))
-        ax.set_yticklabels(name_mom0)
+        ax.set_xticks(range(len(list_name)))
+        ax.set_xticklabels(list_name,rotation=90)
+        ax.set_yticks(range(len(list_name)))
+        ax.set_yticklabels(list_name)
 
         # text
-        for i in itertools.combinations(range(len(name_mom0)), 2):
-            this_slope = str(np.round(array_slope[i[1],i[0]],2)).ljust(4, '0')
+        for i in itertools.combinations(range(len(list_name)), 2):
+            this_slope = str(np.round(data[i[1],i[0]],2)).ljust(4, '0')
             ax.text(i[0],i[1],this_slope,fontsize=12,
                 horizontalalignment="center", verticalalignment="center",weight="bold")
 
-        print("# output = " + self.outpng_corner_slope)
-        fig.savefig(self.outpng_corner_slope, dpi=fig_dpi)
+        print("# output = " + outpng)
+        fig.savefig(outpng, dpi=fig_dpi)
 
     ##############
     # _myax_cbar #
@@ -235,6 +256,7 @@ class ToolsSBR():
         label=None,
         clim=None,
         ):
+
         cb = fig.colorbar(data, ax=ax)
         
         if label is not None:
