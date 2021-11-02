@@ -188,9 +188,8 @@ class ToolsSBR():
 
             array_slope[i[1],i[0]] = popt[0]
 
-        vmin = np.min(array_slope[array_slope!=np.nan])
-        vmax = np.max(array_slope[array_slope!=np.nan])
-        print(vmin,vmax)
+        l = nan_to_num(array_slope)
+        vmin,vmax = np.min(l),np.max(l)
 
         # plot
         fig = plt.figure(figsize=(10,9))
