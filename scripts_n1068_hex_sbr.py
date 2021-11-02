@@ -190,7 +190,6 @@ class ToolsSBR():
 
         l = np.nan_to_num(array_slope)
         vmin,vmax = np.min(l[l!=0]),np.max(l[l!=0])
-        print(vmin,vmax)
 
         # plot
         fig = plt.figure(figsize=(10,9))
@@ -223,8 +222,7 @@ class ToolsSBR():
         label=None,
         clim=None,
         ):
-        cax = [0.1, 0.45, 0.8, 0.1]
-        cb = fig.colorbar(data, ax=ax, cax=cax)
+        cb = fig.colorbar(data, ax=ax)
         
         if label is not None:
             cb.set_label(label)
