@@ -192,11 +192,11 @@ class ToolsSBR():
         fig = plt.figure(figsize=(10,9))
         gs  = gridspec.GridSpec(nrows=30, ncols=30)
         ax  = plt.subplot(gs[0:30,0:30])
-        myax_set(ax,title=None,aspect=1.0,adjust=[0.20,0.99,0.20,0.95])
+        myax_set(ax,title="Slope of log-log plot",aspect=1.0,adjust=[0.20,0.99,0.20,0.95])
 
-        im = ax.imshow(array_slope, interpolation="none", vmin=-1.0, vmax=1.0, cmap="rainbow")
+        im = ax.imshow(array_slope, interpolation="none", vmin=0.0, vmax=1.0, cmap="rainbow")
         
-        self._myax_cbar(fig, ax, im, clim=[-1,1])
+        self._myax_cbar(fig, ax, im, clim=[0,1])
 
         ax.set_xticks(range(len(name_mom0)))
         ax.set_xticklabels(name_mom0,rotation=90)
