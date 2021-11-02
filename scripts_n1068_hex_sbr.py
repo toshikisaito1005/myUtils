@@ -148,16 +148,15 @@ class ToolsSBR():
         # read header
         f = open(self.table_hex_obs)
         header = f.readline()
-        header = header.split(" ")
+        header = header.split(" ")[1:]
         f.close()
-        print(header)
 
         # read data
         data       = np.loadtxt(self.table_hex_obs)
-        len_data   = (len(data[0])-2)/2
         x          = data[:,0]
         y          = data[:,1]
         dist_kpc   = np.sqrt(x**2+y**2) * self.scale_kpc
+        len_data   = (len(data[0])-2)/2
 
         data_mom0  = data[:,2:len_data+2]
         data_emom0 = data[:,len_data+2:]
