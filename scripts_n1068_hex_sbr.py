@@ -239,6 +239,7 @@ class ToolsSBR():
         ax1.text(0.1, 0.90, "#point $=$ "+str(len(x)), transform=ax1.transAxes)
         ax1.text(0.1, 0.85, "$r$ $=$ "+coeff, transform=ax1.transAxes)
         ax1.text(0.1, 0.80, "slope $=$ "+str(np.round(popt[0],2)), transform=ax1.transAxes)
+        ax1.text(0.1, 0.75, "intercept $=$ "+str(np.round(popt[1],2)), transform=ax1.transAxes)
 
         # save
         plt.savefig(output, dpi=self.fig_dpi)
