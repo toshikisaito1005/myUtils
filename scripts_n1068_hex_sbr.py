@@ -95,8 +95,11 @@ class ToolsSBR():
             # ngc1068 properties
             self.ra_agn        = float(self._read_key("ra_agn", "gal").split("deg")[0])
             self.dec_agn       = float(self._read_key("dec_agn", "gal").split("deg")[0])
+            self.scale_pc      = float(self._read_key("scale", "gal"))
 
             self.beam          = 2.14859173174056
+            self.snr_mom       = 3.0
+            self.r_sbr         = 10.0 * self.scale_pc / 1000. # kpc
 
             # output maps
             self.outmap_mom0   = self.dir_ready + self._read_key("outmaps_mom0")
@@ -113,8 +116,9 @@ class ToolsSBR():
 
     def run_ngc1068_sbr(
         self,
-        do_prepare  = False,
-        do_sampling = False,
+        do_prepare   = False,
+        do_sampling  = False,
+        do_constrain = False,
         ):
         """
         This method runs all the methods which will create figures in the paper.
@@ -125,6 +129,31 @@ class ToolsSBR():
 
         if do_sampling==True:
             self.hex_sampling()
+
+        if do_constrain==True:
+            self.constrain_table()
+
+    ###################
+    # constrain_table #
+    ###################
+
+    def constrain_table(self):
+        """
+        """
+
+        taskname = self.modname + sys._getframe().f_code.co_name
+        check_first(self.table_hex_obs,taskname)
+
+        #
+        data     = np.loadtxt(self.table_hex_obs)
+        ra       = data[:,0]
+        dec      = data[:,1]
+        len_data = (len(data[0])-2)/2
+
+        data_mom0 = data[:,2:len_data+2]
+        data_emom0 = data[:,len_data+2:]
+
+        print(np.shape(data_mom0), np.shape(data_emom0))
 
     ################
     # hex_sampling #
@@ -252,4 +281,3 @@ class ToolsSBR():
         value    = values[np.where(keywords==key)[0][0]]
 
         return value
-
