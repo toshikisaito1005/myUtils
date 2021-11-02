@@ -188,7 +188,7 @@ class ToolsSBR():
                 header.append(this_name)
 
 
-        np.savetxt(table,self.table_hex_constrain,header=header)
+        np.savetxt(self.table_hex_constrain,table,header=header)
 
     ################
     # hex_sampling #
