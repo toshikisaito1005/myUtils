@@ -214,7 +214,7 @@ class ToolsSBR():
         l            = 1-abs(array_slope-1)
         l            = np.where(l!=np.nan,l,0)
         scaled_slope = (l-np.min(l[l!=0])) / (np.max(l[l!=0])-np.min(l[l!=0]))
-        print(scaled_slope)
+        print(l)
 
         l            = abs(array_coeff)
         l            = np.where(l!=np.nan,l,0)
