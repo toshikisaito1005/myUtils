@@ -154,7 +154,7 @@ class ToolsSBR():
         # read header
         f = open(self.table_hex_constrain)
         header = f.readline()
-        header = header.split(" ")[1:]
+        header = header.split(",")[1:]
         f.close()
 
         # read data
