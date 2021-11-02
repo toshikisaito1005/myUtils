@@ -215,8 +215,8 @@ class ToolsSBR():
         coeff = str( np.round( np.corrcoef(x,y)[0,1],2 ) )
 
         # fit
-        popt,_  = curve_fit(f_lin, x, y, p0=[1.0,0.0], maxfev = 10000)
-        best_y = func_lin(x, popt[0], popt[1])
+        popt,_  = curve_fit(self._f_lin, x, y, p0=[1.0,0.0], maxfev = 10000)
+        best_y = self._f_lin(x, popt[0], popt[1])
 
         print("# plot " + output)
         fig = plt.figure(figsize=(13,10))
@@ -242,10 +242,15 @@ class ToolsSBR():
         # save
         plt.savefig(output, dpi=self.fig_dpi)
 
-    def f_lin(x, a, b):
-    """
-    """
-    return a * x + b
+    ###################
+    # constrain_table #
+    ###################
+
+    def _f_lin(x, a, b):
+        """
+        """
+
+        return a * x + b
 
     ###################
     # constrain_table #
