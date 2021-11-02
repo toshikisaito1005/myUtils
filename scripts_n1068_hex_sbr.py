@@ -215,6 +215,8 @@ class ToolsSBR():
         scaled_slope = l-np.min(l) / (np.max(l)-np.min(l))
         l            = abs(array_coeff)
         scaled_coeff = l-np.min(l) / (np.max(l)-np.min(l))
+        print(scaled_slope)
+        print(scaled_coeff)
         array_score  = np.sqrt(scaled_slope**2 + scaled_coeff**2)
 
         # plot 
