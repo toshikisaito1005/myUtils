@@ -148,7 +148,9 @@ class ToolsSBR():
         # read header
         f = open(self.table_hex_obs)
         header = f.readline()
+        header = header.split(" ")
         f.close()
+        print(header)
 
         # read data
         data       = np.loadtxt(self.table_hex_obs)
