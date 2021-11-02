@@ -183,8 +183,8 @@ class ToolsSBR():
             detect_rate = len(this_mom0[this_mom0>=this_emom0*self.snr_mom]) / float(len(this_mom0))
 
             if detect_rate>=self.detection_frac:
-                table = np.c_[table,this_mom0]
                 print(np.shape(table))
+                table = np.c_[table,this_mom0]
 
         print(table)
         # self.table_hex_constrain
