@@ -170,6 +170,8 @@ class ToolsSBR():
         dist_kcp  = data[:,0]
         data_mom0 = data[:,1:]
         name_mom0 = [s.split("\n")[0] for s in header]
+        name_mom0 = list(map(str.upper,name_mom0))
+        name_mom0 = [s.split("10")[0].split("21")[0] for s in name_mom0]
 
         # prepare
         l = range(len(name_mom0))
