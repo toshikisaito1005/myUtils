@@ -185,7 +185,13 @@ class ToolsSBR():
             xlabel    = "log " + this_name
             ylabel    = "log N$_2$H$^+$"
             output    = self.dir_products + "scatter_n2hp_vs_" + this_name + ".png"
-            self._plot_scatters(output,x,y,xlabel=xlabel,ylabel=ylabel,xlim=[-1.0,2.0],ylim=[-1.0,2.0])
+            
+            if this_mom0=="co10":
+                xlim = [0.0,3.0]
+            else:
+                xlim = [-1.0,2.0]
+
+            self._plot_scatters(output,x,y,xlabel=xlabel,ylabel=ylabel,xlim=xlim,ylim=[-1.0,2.0])
 
     ##################
     # _plot_scatters #
