@@ -178,8 +178,8 @@ class ToolsSBR():
 
         # plot
         for i in range(len(list_mom0)):
-            this_mom0 = np.array(list_mom0[i])
-            this_name = np.array(name_mom0[i])
+            this_mom0 = list_mom0[i]
+            this_name = name_mom0[i]
             cut       = np.where((this_mom0>0) & (mom0_n2hp>0))
             x         = np.log10(this_mom0[cut])
             y         = np.log10(mom0_n2hp[cut])
