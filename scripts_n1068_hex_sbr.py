@@ -178,7 +178,7 @@ class ToolsSBR():
         # import data
         data      = np.loadtxt(self.table_hex_obs)
         len_data  = (len(data[0])-2)/2
-        header    = header[2:len_data+2]
+        header    = header[:len_data+2]
         ra        = data[:,0] * 3600
         dec       = data[:,1] * 3600
         data_mom0 = data[:,2:len_data+2]
