@@ -238,7 +238,7 @@ class ToolsSBR():
 
         # ann
         r_sbr = patches.Circle(xy=(-0,0), radius=self.r_sbr_as,
-            fill=False, edgecolor="black", ls="--", lw=3.5)
+            fill=False, edgecolor="black", ls="dashed", lw=3.5)
         ax.add_patch(r_sbr)
 
         # save
