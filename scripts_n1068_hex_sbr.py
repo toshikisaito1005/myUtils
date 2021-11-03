@@ -228,13 +228,15 @@ class ToolsSBR():
         ax.set_aspect('equal', adjustable='box')
 
         # plot
-        cax = ax.scatter(x, y, s=1000, c=c, cmap="rainbow", marker="h", linewidths=0)
+        im = ax.scatter(x, y, s=1000, c=c, cmap="rainbow", marker="h", linewidths=0)
 
         # cbar
-        cbar = plt.colorbar(cax)
-        cbar.set_label(title_cbar)
-        cbar.add_axes([0.1, 0.45, 0.8, 0.1])
-        cbar.outline.set_linewidth(2.5)
+        cbar = plt.colorbar(im)
+        cax  = fig.add_axes([0.1, 0.45, 0.8, 0.1])
+        ax.colorbar(im, cax=cax)
+
+        #cbar.set_label(title_cbar)
+        #cbar.outline.set_linewidth(2.5)
 
         # ann
         r_sbr = patches.Circle(xy=(-0,0), radius=self.r_sbr_as,
