@@ -221,7 +221,6 @@ class ToolsSBR():
         grid="both",
         xlim=[25.0, -25.0],
         ylim=[-25.0, 25.0],
-        title=title,
         xlabel="R.A. offset (arcsec)",
         ylabel="Decl. offset (arcsec)",
         adjust=[0.10,0.99,0.10,0.93],
@@ -240,6 +239,9 @@ class ToolsSBR():
         r_sbr = patches.Circle(xy=(-0,0), radius=self.r_sbr_as,
             fill=False, edgecolor="black", ls="dashed", lw=3.5)
         ax.add_patch(r_sbr)
+
+        # text
+        ax.text(0.1, 0.9, title, transform=ax.transAxes, weight="bold")
 
         # save
         os.system("rm -rf " + outpng)
@@ -582,7 +584,7 @@ class ToolsSBR():
         for i in itertools.combinations(range(len(list_name)), 2):
             this_slope = str(np.round(data[i[1],i[0]],2)).ljust(4, '0')
             ax.text(i[0],i[1],this_slope,fontsize=12,
-                horizontalalignment="center", verticalalignment="center",weight="bold")
+                horizontalalignment="center", verticalalignment="center", weight="bold")
 
         print("# output = " + outpng)
         fig.savefig(outpng, dpi=fig_dpi)
