@@ -170,7 +170,7 @@ class ToolsSBR():
         # read header
         f      = open(self.table_hex_constrain)
         header = f.readline()
-        header = header.split(" ")[3:]
+        header = header.split(" ")[4:]
         header = [s.split("\n")[0] for s in header]
         f.close()
 
@@ -253,7 +253,7 @@ class ToolsSBR():
         # read header
         f      = open(self.table_hex_constrain)
         header = f.readline()
-        header = header.split(" ")[3:]
+        header = header.split(" ")[4:]
         f.close()
 
         # read data
@@ -357,7 +357,7 @@ class ToolsSBR():
         # read header
         f      = open(self.table_hex_constrain)
         header = f.readline()
-        header = header.split(" ")[3:]
+        header = header.split(" ")[4:]
         f.close()
 
         # read data
@@ -365,9 +365,6 @@ class ToolsSBR():
         dist_kcp  = data[:,2]
         data_mom0 = data[:,3:]
         name_mom0 = [s.split("\n")[0] for s in header]
-        print(name_mom0)
-        print(np.shape(name_mom0))
-        print(np.shape(data_mom0))
 
         # get data
         list_mom0 = []
