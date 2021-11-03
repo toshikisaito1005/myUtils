@@ -243,7 +243,7 @@ class ToolsSBR():
         cax  = fig.add_axes([0.19, 0.12, 0.025, 0.35])
         fig.colorbar(im, cax=cax)
         cbar.ax.yaxis.set_tick_params(color="white")
-        cbar.outline.set_edgecolor(fg_color)
+        #cbar.outline.set_edgecolor(fg_color)
 
         #cbar.set_label(title_cbar)
         #cbar.outline.set_linewidth(2.5)
