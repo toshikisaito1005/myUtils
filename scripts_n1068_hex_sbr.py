@@ -190,7 +190,7 @@ class ToolsSBR():
         dec       = data[:,1]
         data_mom0 = data[:,2:len_data+2]
 
-        data_n2hp = data_mom0[:,np.where(header=="n2hp10")[0]]
+        data_n2hp = data_mom0[:,np.where(header=="n2hp10")[0][0]]
         print(data_n2hp)
 
         # plot
