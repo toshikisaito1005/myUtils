@@ -314,6 +314,10 @@ class ToolsSBR():
             angle=degree, theta1=0, theta2=90-degree, lw=lw, ec="black")
         ax.add_patch(arc1)
 
+        arc2 = patches.Arc(xy=(0,0), width=40, height=40, ls="dashed",
+            angle=degree+180, theta1=0, theta2=90-degree, lw=lw, ec="black")
+        ax.add_patch(arc2)
+
         # text
         ax.text(0.03, 0.93, title, color="black", transform=ax.transAxes, weight="bold", fontsize=24)
 
