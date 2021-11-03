@@ -185,13 +185,13 @@ class ToolsSBR():
         name_mom0 = [s.replace("HCOP","HCO$^+$") for s in name_mom0]
         name_mom0 = [s.replace("N2HP","N$_2$H$^+$") for s in name_mom0]
         name_mom0 = [s.replace("CH3OH","CH$_3$OH") for s in name_mom0]
-        print(name_mom0)
 
         # plot
         for i in range(len(name_mom0)):
             this_mom0 = data_mom0[:,i]
             this_name = name_mom0[i]
             this_outpng = self.outpng_hexmap.replace("???",header[i])
+            print("# plot " + this_outpng)
             self._plot_hexmap(this_outpng,ra,dec,this_mom0,this_name,"(K km s$^{-1}$)")
 
     ################
@@ -228,7 +228,7 @@ class ToolsSBR():
         ax.set_aspect('equal', adjustable='box')
 
         # plot
-        cax = ax.scatter(x, y, s=600, c=c, cmap="rainbow", marker="h", linewidths=0)
+        cax = ax.scatter(x, y, s=800, c=c, cmap="rainbow", marker="h", linewidths=0)
 
         # cbar
         cbar = plt.colorbar(cax)
