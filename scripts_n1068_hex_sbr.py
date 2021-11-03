@@ -322,7 +322,7 @@ class ToolsSBR():
         cos = np.cos(np.radians(90/2.-degree/2.))
         sin = np.sin(np.radians(90/2.-degree/2.))
         ax.text(0.03, 0.93, title, color="black", transform=ax.transAxes, weight="bold", fontsize=24)
-        ax.text(0, 5, "Center", color="black", va="center", ha="center", weight="bold")
+        ax.text(0, 7.5, "Center", color="black", va="center", ha="center", weight="bold")
         ax.text(17*sin, 17*cos, "Bar-end", color="black", rotation=90/2.-degree/2., va="center", ha="center", weight="bold")
         ax.text(-17*sin, -17*cos, "Bar-end", color="black", rotation=90/2.-degree/2., va="center", ha="center", weight="bold")
 
