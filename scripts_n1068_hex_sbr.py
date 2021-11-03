@@ -232,7 +232,7 @@ class ToolsSBR():
 
         # cbar
         cbar = plt.colorbar(im)
-        cax  = fig.add_axes([0.1, 0.45, 0.8, 0.1])
+        cax  = plt.add_axes([0.1, 0.45, 0.8, 0.1])
         ax.colorbar(im, cax=cax)
 
         #cbar.set_label(title_cbar)
