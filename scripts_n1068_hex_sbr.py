@@ -365,6 +365,9 @@ class ToolsSBR():
         dist_kcp  = data[:,2]
         data_mom0 = data[:,3:]
         name_mom0 = [s.split("\n")[0] for s in header]
+        print(name_mom0)
+        print(np.shape(name_mom0))
+        print(np.shape(data_mom0))
 
         # get data
         list_mom0 = []
