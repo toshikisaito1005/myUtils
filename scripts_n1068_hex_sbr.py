@@ -286,7 +286,7 @@ class ToolsSBR():
         ax.set_aspect('equal', adjustable='box')
 
         # plot
-        im = ax.scatter(x, y, s=1000, c=c, cmap="rainbow", marker="h", linewidths=0)
+        im = ax.scatter(x, y, s=800, c=c, cmap="rainbow", marker="h", linewidths=0)
 
         # cbar
         cbar = plt.colorbar(im)
@@ -299,7 +299,7 @@ class ToolsSBR():
         ax.add_patch(r_sbr)
 
         # text
-        ax.text(0.03, 0.95, title, color="black", transform=ax.transAxes, weight="bold", fontsize=24)
+        ax.text(0.03, 0.93, title, color="black", transform=ax.transAxes, weight="bold", fontsize=24)
 
         # save
         os.system("rm -rf " + outpng)
