@@ -227,7 +227,7 @@ class ToolsSBR():
         ax.set_aspect('equal', adjustable='box')
 
         # plot
-        cax = ax.scatter(x, y, s=400, c=c, cmap="rainbow", marker="h", linewidths=0)
+        cax = ax.scatter(x, y, s=600, c=c, cmap="rainbow", marker="h", linewidths=0)
 
         # cbar
         cbar = plt.colorbar(cax)
