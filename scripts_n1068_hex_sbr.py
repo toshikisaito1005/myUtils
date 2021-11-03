@@ -219,7 +219,7 @@ class ToolsSBR():
 
         x = x[c>0]
         y = y[c>0]
-        c = np.log10(c[c>0])
+        c = c[c>0]
 
         # set plt, ax
         fig = plt.figure(figsize=(13,10))
