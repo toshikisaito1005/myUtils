@@ -121,6 +121,7 @@ class ToolsSBR():
             self.outpng_corner_score = self.dir_products + self._read_key("outpng_corner_score")
 
             self.outpng_hexmap = self.dir_products + self._read_key("outpng_hexmap")
+            self.outpng_mom0   = self.dir_products + self._read_key("outpng_mom0")
 
     ###################
     # run_ngc1068_sbr #
@@ -133,6 +134,7 @@ class ToolsSBR():
         do_constrain     = False,
         plot_scatters    = False,
         plot_corners     = False,
+        plot_showhex     = False,
         # appendix
         plot_showhex_all = False,
         ):
@@ -155,7 +157,7 @@ class ToolsSBR():
         if plot_corners==True:
             self.plot_corners()
 
-        if plot_hex_n2hp:
+        if plot_showhex:
             self.plot_hex_n2hp()
 
         # appendix
@@ -190,6 +192,16 @@ class ToolsSBR():
         name_mom0 = list(map(str.upper,header))
 
         data_n2hp = data_mom0[name_mom0=="n2hp10"]
+
+        # plot
+        this_x    = ra[data_n2hp>0]
+        this_y    = dec[data_n2hp>0]
+        this_c    = data_n2hp[data_n2hp>0]
+        this_name = "N$_2$H$^+$ integrated intensity map"
+
+        print("# plot " + self.outpng_mom0)
+        print("# plot " + self.outpng_mom0)
+        self._plot_hexmap(this_outpng,this_x,this_y,this_c,this_name)
 
     ################
     # plot_hex_all #

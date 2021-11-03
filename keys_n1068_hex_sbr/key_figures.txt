@@ -55,6 +55,7 @@ outpng_corner_slope ,,,fig_corner_slope.png
 outpng_corner_coeff ,,,fig_corner_coeff.png
 outpng_corner_score ,,,fig_corner_score.png
 outpng_hexmap       ,,,fig_hexmap_???.png
+outpng_mom0         ,,,fig_mom0_n2hp.png
 
 #######
 # end #
