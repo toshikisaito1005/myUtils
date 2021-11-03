@@ -321,8 +321,8 @@ class ToolsSBR():
         # text
         ax.text(0.03, 0.93, title, color="black", transform=ax.transAxes, weight="bold", fontsize=24)
         ax.text(0, 5, "Center", color="black", va="center", ha="center")
-        ax.text(11, 11, "Northern Barend", color="black", rotation=degree, va="center", ha="center")
-        ax.text(-11, -11, "Southern Barend", color="black", rotation=degree, va="center", ha="center")
+        ax.text(11, 11, "Bar-end", color="black", rotation=degree, va="center", ha="center")
+        ax.text(-11, -11, "Bar-end", color="black", rotation=degree, va="center", ha="center")
 
         # save
         os.system("rm -rf " + outpng)
