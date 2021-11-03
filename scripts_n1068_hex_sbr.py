@@ -212,7 +212,6 @@ class ToolsSBR():
         # set plt, ax
         plt.figure(figsize=(13,10))
         plt.rcParams["font.size"] = 16
-        plt.subplots_adjust(bottom=0.10, left=0.19, right=0.99, top=0.85)
         gs = gridspec.GridSpec(nrows=10, ncols=10)
         ax = plt.subplot(gs[0:10,0:10])
 
@@ -225,6 +224,7 @@ class ToolsSBR():
         title=title,
         xlabel="R.A. offset (arcsec)",
         ylabel="Decl. offset (arcsec)",
+        adjust=[0.10,0.99,0.10,0.93],
         )
         ax.set_aspect('equal', adjustable='box')
 
