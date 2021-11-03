@@ -179,7 +179,7 @@ class ToolsSBR():
         f      = open(self.table_hex_obs)
         header = f.readline()
         header = header.split(" ")[3:]
-        header = [s.split("\n")[0] for s in header]
+        header = mp.where([s.split("\n")[0] for s in header])
         f.close()
 
         # import data
@@ -189,9 +189,8 @@ class ToolsSBR():
         ra        = data[:,0]
         dec       = data[:,1]
         data_mom0 = data[:,2:len_data+2]
-        name_mom0 = list(map(str.upper,header))
 
-        data_n2hp = data_mom0[np.where(name_mom0=="n2hp10")]
+        data_n2hp = data_mom0[np.where(header=="n2hp10")]
         print(data_n2hp)
 
         # plot
