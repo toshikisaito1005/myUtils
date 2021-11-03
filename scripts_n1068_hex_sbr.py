@@ -200,8 +200,13 @@ class ToolsSBR():
         this_name = "N$_2$H$^+$ integrated intensity map"
 
         print("# plot " + self.outpng_mom0)
-        print("# plot " + self.outpng_mom0)
-        self._plot_hexmap(this_outpng,this_x,this_y,this_c,this_name)
+        self._plot_hexmap(
+            self.outpng_mom0,
+            this_x,
+            this_y,
+            this_c,
+            this_name,
+            )
 
     ################
     # plot_hex_all #
