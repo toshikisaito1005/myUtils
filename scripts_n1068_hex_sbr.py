@@ -195,13 +195,13 @@ class ToolsSBR():
             this_name = name_mom0[i]
             this_outpng = self.outpng_hexmap.replace("???",header[i])
 
-            this_x = x[this_mom0>0]
-            this_y = y[this_mom0>0]
+            this_x = ra[this_mom0>0]
+            this_y = dec[this_mom0>0]
             this_c = this_mom0[this_mom0>0]
 
             if len(this_c)>0:
                 print("# plot " + this_outpng)
-                self._plot_hexmap(this_outpng,ra,dec,this_mom0,this_name)
+                self._plot_hexmap(this_outpng,this_x,this_y,this_c,this_name)
 
     ################
     # _plot_hexmap #
