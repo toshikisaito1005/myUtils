@@ -128,12 +128,13 @@ class ToolsSBR():
 
     def run_ngc1068_sbr(
         self,
-        do_prepare     = False,
-        do_sampling    = False,
-        do_constrain   = False,
-        plot_scatters  = False,
-        plot_corners   = False,
-        plot_showhex   = False,
+        do_prepare       = False,
+        do_sampling      = False,
+        do_constrain     = False,
+        plot_scatters    = False,
+        plot_corners     = False,
+        # appendix
+        plot_showhex_all = False,
         ):
         """
         This method runs all the methods which will create figures in the paper.
@@ -154,14 +155,47 @@ class ToolsSBR():
         if plot_corners==True:
             self.plot_corners()
 
-        if plot_showhex==True:
-            self.plot_showhex()
+        if plot_hex_n2hp:
+            self.plot_hex_n2hp()
+
+        # appendix
+        if plot_showhex_all==True:
+            self.plot_hex_all()
+
+    #################
+    # plot_hex_n2hp #
+    #################
+
+    def plot_hex_n2hp(self):
+        """
+        """
+
+        taskname = self.modname + sys._getframe().f_code.co_name
+        check_first(self.table_hex_obs,taskname)
+
+        # read header
+        f      = open(self.table_hex_obs)
+        header = f.readline()
+        header = header.split(" ")[3:]
+        header = [s.split("\n")[0] for s in header]
+        f.close()
+
+        # import data
+        data      = np.loadtxt(self.table_hex_obs)
+        len_data  = (len(data[0])-2)/2
+        header    = header[:len_data]
+        ra        = data[:,0]
+        dec       = data[:,1]
+        data_mom0 = data[:,2:len_data+2]
+        name_mom0 = list(map(str.upper,header))
+
+        data_n2hp = data_mom0[name_mom0=="n2hp10"]
 
     ################
-    # plot_showhex #
+    # plot_hex_all #
     ################
 
-    def plot_showhex(self):
+    def plot_hex_all(self):
         """
         """
 
