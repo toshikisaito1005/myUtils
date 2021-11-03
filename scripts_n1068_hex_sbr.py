@@ -166,20 +166,22 @@ class ToolsSBR():
         """
 
         taskname = self.modname + sys._getframe().f_code.co_name
-        check_first(self.table_hex_constrain,taskname)
+        check_first(self.table_hex_obs,taskname)
 
         # read header
-        f      = open(self.table_hex_constrain)
+        f      = open(self.table_hex_obs)
         header = f.readline()
-        header = header.split(" ")[4:]
+        header = header.split(" ")[2:]
         header = [s.split("\n")[0] for s in header]
+        header = header[2:len_data+2]
         f.close()
 
         # import data
-        data      = np.loadtxt(self.table_hex_constrain)
-        ra        = data[:,0]
-        dec       = data[:,1]
-        data_mom0 = data[:,3:]
+        data      = np.loadtxt(self.table_hex_obs)
+        len_data  = (len(data[0])-2)/2
+        ra        = data[:,0] * 3600
+        dec       = data[:,1] * 3600
+        data_mom0 = data[:,2:len_data+2]
         name_mom0 = list(map(str.upper,header))
         name_mom0 = [s.split("10")[0].split("21")[0] for s in name_mom0]
         name_mom0 = [s.replace("13","$^{13}$").replace("18","$^{18}$") for s in name_mom0]
@@ -449,9 +451,9 @@ class ToolsSBR():
             this_name   = name_mom0[i]
             this_mom0   = data_mom0[:,i]
             this_emom0  = data_emom0[:,i]
-            this_mom0b  = np.where(this_mom0>=this_emom0*self.snr_mom,this_mom0,0)
+            this_mom0   = np.where(this_mom0>=this_emom0*self.snr_mom,this_mom0,0)
 
-            detect_rate = len(this_mom0b[this_mom0b!=0]) / float(len(this_mom0b))
+            detect_rate = len(this_mom0[this_mom0!=0]) / float(len(this_mom0))
 
             if detect_rate>=self.detection_frac:
                 table = np.c_[table,np.array(this_mom0)]
