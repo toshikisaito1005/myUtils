@@ -233,6 +233,7 @@ class ToolsSBR():
         # cbar
         cbar = plt.colorbar(cax)
         cbar.set_label(title_cbar)
+        cbar.add_axes([0.1, 0.45, 0.8, 0.1])
         cbar.outline.set_linewidth(2.5)
 
         # ann
