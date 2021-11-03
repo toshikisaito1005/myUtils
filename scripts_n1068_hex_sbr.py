@@ -242,11 +242,7 @@ class ToolsSBR():
         cbar = plt.colorbar(im)
         cax  = fig.add_axes([0.19, 0.12, 0.025, 0.35])
         fig.colorbar(im, cax=cax)
-        cax.set_tick_params(color="white")
-        #cbar.set_edgecolor(fg_color)
-
-        #cbar.set_label(title_cbar)
-        #cbar.outline.set_linewidth(2.5)
+        cbox = patches.Rectangle(xy=(23,-23). width=5, height=20, fc="white", akpha=0.5)
 
         # ann
         r_sbr = patches.Circle(xy=(-0,0), radius=self.r_sbr_as,
