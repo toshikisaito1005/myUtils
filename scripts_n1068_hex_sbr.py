@@ -310,7 +310,7 @@ class ToolsSBR():
             ls="dashed", color="black", lw=3.5)
 
         arc1 = patches.Arc(xy=(0,0), width=40, height=40, ls="dashed",
-            angle=0.0, theta1=0.0, theta2=-90+degree, lw=3.5, ec="black")
+            angle=90.0, theta1=0.0, theta2=90-degree, lw=3.5, ec="black")
         ax.add_patch(arc1)
 
         # text
