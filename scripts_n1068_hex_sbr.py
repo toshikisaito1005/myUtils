@@ -241,7 +241,7 @@ class ToolsSBR():
         ax.add_patch(r_sbr)
 
         # text
-        ax.text(0.1, 0.9, title, transform=ax.transAxes, weight="bold")
+        ax.text(0.1, 0.9, title, transform=ax.transAxes, weight="bold", fontsize=20)
 
         # save
         os.system("rm -rf " + outpng)
