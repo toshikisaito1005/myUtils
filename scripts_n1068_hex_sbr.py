@@ -211,6 +211,10 @@ class ToolsSBR():
         """
         """
 
+        x = x[c>0]
+        y = y[c>0]
+        c = c[c>0]
+
         # set plt, ax
         fig = plt.figure(figsize=(13,10))
         plt.rcParams["font.size"] = 16
@@ -242,7 +246,7 @@ class ToolsSBR():
 
         # ann
         r_sbr = patches.Circle(xy=(-0,0), radius=self.r_sbr_as,
-            fill=True, alpha=0.5, fc="black", ec="black", ls="dashed", lw=3.5)
+            fill=True, alpha=0.5, ec="black", ls="dashed", lw=3.5)
         ax.add_patch(r_sbr)
 
         # text
