@@ -294,23 +294,24 @@ class ToolsSBR():
         fig.colorbar(im, cax=cax)
 
         # ann
+        lw = 2
         r_sbr = patches.Circle(xy=(-0,0), radius=self.r_sbr_as,
-            fill=False, alpha=1.0, ec="black", ls="dashed", lw=3.5)
+            fill=False, alpha=1.0, ec="black", ls="dashed", lw=lw)
         ax.add_patch(r_sbr)
 
-        ax.plot([0,0], [10,20], ls="dashed", color="black", lw=3.5)
-        ax.plot([0,0], [-10,-20], ls="dashed", color="black", lw=3.5)
+        ax.plot([0,0], [10,20], ls="dashed", color="black", lw=lw)
+        ax.plot([0,0], [-10,-20], ls="dashed", color="black", lw=lw)
 
         degree = 25
         cos = np.cos(np.radians(degree))
         sin = np.sin(np.radians(degree))
         ax.plot([10*cos,20*cos], [10*sin,20*sin],
-            ls="dashed", color="black", lw=3.5)
+            ls="dashed", color="black", lw=lw)
         ax.plot([-10*cos,-20*cos], [-10*sin,-20*sin],
-            ls="dashed", color="black", lw=3.5)
+            ls="dashed", color="black", lw=lw)
 
         arc1 = patches.Arc(xy=(0,0), width=40, height=40, ls="dashed",
-            angle=degree, theta1=0, theta2=90-degree, lw=3.5, ec="black")
+            angle=degree, theta1=0, theta2=90-degree, lw=lw, ec="black")
         ax.add_patch(arc1)
 
         # text
