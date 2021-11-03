@@ -170,7 +170,7 @@ class ToolsSBR():
         # read header
         f      = open(self.table_hex_constrain)
         header = f.readline()
-        header = header.split(",")[3:]
+        header = header.split(" ")[3:]
         header = [s.split("\n")[0] for s in header]
         f.close()
 
@@ -253,7 +253,7 @@ class ToolsSBR():
         # read header
         f      = open(self.table_hex_constrain)
         header = f.readline()
-        header = header.split(",")[3:]
+        header = header.split(" ")[3:]
         f.close()
 
         # read data
@@ -357,7 +357,7 @@ class ToolsSBR():
         # read header
         f      = open(self.table_hex_constrain)
         header = f.readline()
-        header = header.split(",")[3:]
+        header = header.split(" ")[3:]
         f.close()
 
         # read data
@@ -446,7 +446,7 @@ class ToolsSBR():
                 table = np.c_[table,np.array(this_mom0)]
                 header.append(this_name)
 
-        header = ",".join(header)
+        header = " ".join(header)
         os.system("rm -rf " + self.table_hex_constrain)
         np.savetxt(self.table_hex_constrain,table,header=header)
 
