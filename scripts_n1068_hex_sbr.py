@@ -449,9 +449,9 @@ class ToolsSBR():
             this_name   = name_mom0[i]
             this_mom0   = data_mom0[:,i]
             this_emom0  = data_emom0[:,i]
-            this_mom0   = np.where(this_mom0>=this_emom0*self.snr_mom,this_mom0,0)
+            this_mom0b  = np.where(this_mom0>=this_emom0*self.snr_mom,this_mom0,0)
 
-            detect_rate = len(this_mom0[this_mom0!=0]) / float(len(this_mom0))
+            detect_rate = len(this_mom0b[this_mom0b!=0]) / float(len(this_mom0b))
 
             if detect_rate>=self.detection_frac:
                 table = np.c_[table,np.array(this_mom0)]
