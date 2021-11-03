@@ -179,7 +179,7 @@ class ToolsSBR():
         f      = open(self.table_hex_obs)
         header = f.readline()
         header = header.split(" ")[3:]
-        header = mp.where([s.split("\n")[0] for s in header])
+        header = np.where([s.split("\n")[0] for s in header])
         f.close()
 
         # import data
