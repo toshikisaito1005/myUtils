@@ -219,7 +219,7 @@ class ToolsSBR():
 
         x = x[c>0]
         y = y[c>0]
-        c = c[c>0]
+        c = np.log10(c[c>0])
 
         # set plt, ax
         fig = plt.figure(figsize=(13,10))
@@ -252,7 +252,7 @@ class ToolsSBR():
 
         # ann
         r_sbr = patches.Circle(xy=(-0,0), radius=self.r_sbr_as,
-            fill=True, alpha=0.5, ec="black", ls="dashed", lw=3.5)
+            fill=False, fill=True, alpha=0.5, ec="black", ls="dashed", lw=3.5)
         ax.add_patch(r_sbr)
 
         # text
