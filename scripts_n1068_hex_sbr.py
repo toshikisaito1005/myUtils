@@ -195,9 +195,9 @@ class ToolsSBR():
             this_name = name_mom0[i]
             this_outpng = self.outpng_hexmap.replace("???",header[i])
 
-            this_x = ra#[this_mom0>0]
-            this_y = dec#[this_mom0>0]
-            this_c = this_mom0#[this_mom0>0]
+            this_x = ra[this_mom0>0]
+            this_y = dec[this_mom0>0]
+            this_c = this_mom0[this_mom0>0]
 
             if len(this_c)>0:
                 print("# plot " + this_outpng)
@@ -242,8 +242,6 @@ class ToolsSBR():
         cbar = plt.colorbar(im)
         cax  = fig.add_axes([0.19, 0.12, 0.025, 0.35])
         fig.colorbar(im, cax=cax)
-        cbox = patches.Rectangle(xy=(18,-25), width=6, height=23, fill=True, fc="white", alpha=0.5)
-        ax.add_patch(cbox)
 
         # ann
         r_sbr = patches.Circle(xy=(-0,0), radius=self.r_sbr_as,
