@@ -301,7 +301,7 @@ class ToolsSBR():
         ax.plot([0,0], [10,20], ls="dashed", color="black", lw=3.5)
         ax.plot([0,0], [-10,-20], ls="dashed", color="black", lw=3.5)
 
-        degree = 35
+        degree = 25
         cos = np.cos(np.radians(degree))
         sin = np.sin(np.radians(degree))
         ax.plot([10*cos,20*cos], [10*sin,20*sin],
