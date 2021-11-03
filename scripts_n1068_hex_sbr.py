@@ -211,7 +211,7 @@ class ToolsSBR():
         # set plt, ax
         plt.figure(figsize=(13,10))
         plt.rcParams["font.size"] = 16
-        plt.subplots_adjust(bottom=0.10, left=0.19, right=0.99, top=0.90)
+        plt.subplots_adjust(bottom=0.10, left=0.19, right=0.99, top=0.85)
         gs = gridspec.GridSpec(nrows=10, ncols=10)
         ax = plt.subplot(gs[0:10,0:10])
 
@@ -228,7 +228,7 @@ class ToolsSBR():
         ax.set_aspect('equal', adjustable='box')
 
         # plot
-        cax = ax.scatter(x, y, s=800, c=c, cmap="rainbow", marker="h", linewidths=0)
+        cax = ax.scatter(x, y, s=1000, c=c, cmap="rainbow", marker="h", linewidths=0)
 
         # cbar
         cbar = plt.colorbar(cax)
