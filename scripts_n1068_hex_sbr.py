@@ -194,8 +194,14 @@ class ToolsSBR():
             this_mom0 = data_mom0[:,i]
             this_name = name_mom0[i]
             this_outpng = self.outpng_hexmap.replace("???",header[i])
-            print("# plot " + this_outpng)
-            self._plot_hexmap(this_outpng,ra,dec,this_mom0,this_name,"(K km s$^{-1}$)")
+
+            this_x = x[this_mom0>0]
+            this_y = y[this_mom0>0]
+            this_c = this_mom0[this_mom0>0]
+
+            if len(this_c)>0:
+                print("# plot " + this_outpng)
+                self._plot_hexmap(this_outpng,ra,dec,this_mom0,this_name)
 
     ################
     # _plot_hexmap #
@@ -206,7 +212,7 @@ class ToolsSBR():
         outpng,
         x,y,c,
         title,
-        title_cbar,
+        title_cbar="(K km s$^{-1}$)",
         ):
         """
         """
