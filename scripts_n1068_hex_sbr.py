@@ -301,9 +301,12 @@ class ToolsSBR():
         ax.plot([0,0], [10,20], ls="dashed", color="black", lw=3.5)
         ax.plot([0,0], [-10,-20], ls="dashed", color="black", lw=3.5)
 
-        cos = np.cos(np.radians(55))
-        sin = np.sin(np.radians(55))
+        degree = 35
+        cos = np.cos(np.radians(degree))
+        sin = np.sin(np.radians(degree))
         ax.plot([10*cos,20*cos], [10*sin,20*sin],
+            ls="dashed", color="black", lw=3.5)
+        ax.plot([-10*cos,-20*cos], [-10*sin,-20*sin],
             ls="dashed", color="black", lw=3.5)
 
         # text
