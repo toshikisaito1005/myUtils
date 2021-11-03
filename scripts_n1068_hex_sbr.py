@@ -210,7 +210,7 @@ class ToolsSBR():
         """
 
         # set plt, ax
-        plt.figure(figsize=(13,10))
+        fig = plt.figure(figsize=(13,10))
         plt.rcParams["font.size"] = 16
         gs = gridspec.GridSpec(nrows=10, ncols=10)
         ax = plt.subplot(gs[0:10,0:10])
@@ -232,7 +232,7 @@ class ToolsSBR():
 
         # cbar
         cbar = plt.colorbar(im)
-        cax  = plt.add_axes([0.1, 0.45, 0.8, 0.1])
+        cax  = fig.add_axes([0.1, 0.45, 0.8, 0.1])
         ax.colorbar(im, cax=cax)
 
         #cbar.set_label(title_cbar)
