@@ -217,9 +217,9 @@ class ToolsSBR():
         """
         """
 
-        x = x[c>0]
-        y = y[c>0]
-        c = c[c>0]
+        x = x#[c>0]
+        y = y#[c>0]
+        c = c#[c>0]
 
         # set plt, ax
         fig = plt.figure(figsize=(13,10))
@@ -230,7 +230,7 @@ class ToolsSBR():
         # set ax parameter
         myax_set(
         ax,
-        grid="both",
+        grid=None,
         xlim=[25.0, -25.0],
         ylim=[-25.0, 25.0],
         xlabel="R.A. offset (arcsec)",
@@ -252,11 +252,11 @@ class ToolsSBR():
 
         # ann
         r_sbr = patches.Circle(xy=(-0,0), radius=self.r_sbr_as,
-            fill=False, alpha=1.0, ec="black", ls="dashed", lw=3.5)
+            fill=False, alpha=1.0, ec="white", ls="dashed", lw=3.5)
         ax.add_patch(r_sbr)
 
         # text
-        ax.text(0.1, 0.9, title, transform=ax.transAxes, weight="bold", fontsize=20)
+        ax.text(0.1, 0.9, title, color="white", transform=ax.transAxes, weight="bold", fontsize=24
 
         # save
         os.system("rm -rf " + outpng)
