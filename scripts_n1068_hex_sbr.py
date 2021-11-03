@@ -188,6 +188,7 @@ class ToolsSBR():
         name_mom0 = [s.replace("HCOP","HCO$^+$") for s in name_mom0]
         name_mom0 = [s.replace("N2HP","N$_2$H$^+$") for s in name_mom0]
         name_mom0 = [s.replace("CH3OH","CH$_3$OH") for s in name_mom0]
+        print(name_mom0)
 
         # plot
         for i in range(len(name_mom0)):
