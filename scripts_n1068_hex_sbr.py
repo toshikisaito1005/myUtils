@@ -319,10 +319,12 @@ class ToolsSBR():
         ax.add_patch(arc2)
 
         # text
+        cos = np.cos(np.radians(degree/2.))
+        sin = np.sin(np.radians(degree/2.))
         ax.text(0.03, 0.93, title, color="black", transform=ax.transAxes, weight="bold", fontsize=24)
-        ax.text(0, 5, "Center", color="black", va="center", ha="center")
-        ax.text(20*cos, 20*sin, "Bar-end", color="black", rotation=degree, va="center", ha="center")
-        ax.text(-20*cos, -20*sin, "Bar-end", color="black", rotation=degree, va="center", ha="center")
+        ax.text(0, 5, "Center", color="black", va="center", ha="center", weight="bold")
+        ax.text(17*cos, 17*sin, "Bar-end", color="black", rotation=degree, va="center", ha="center", weight="bold")
+        ax.text(-17*cos, -17*sin, "Bar-end", color="black", rotation=degree, va="center", ha="center", weight="bold")
 
         # save
         os.system("rm -rf " + outpng)
