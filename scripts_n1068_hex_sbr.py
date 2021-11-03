@@ -191,7 +191,8 @@ class ToolsSBR():
         data_mom0 = data[:,2:len_data+2]
 
         data_n2hp = data_mom0[np.where(header=="n2hp10")]
-        print(data_n2hp)
+        print(header)
+        print(np.where(header=="n2hp10"))
 
         # plot
         this_x    = ra[data_n2hp>0]
