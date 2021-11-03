@@ -179,8 +179,8 @@ class ToolsSBR():
         data      = np.loadtxt(self.table_hex_obs)
         len_data  = (len(data[0])-2)/2
         header    = header[:len_data+2]
-        ra        = data[:,0] * 3600
-        dec       = data[:,1] * 3600
+        ra        = data[:,0]
+        dec       = data[:,1]
         data_mom0 = data[:,2:len_data+2]
         name_mom0 = list(map(str.upper,header))
         name_mom0 = [s.split("10")[0].split("21")[0] for s in name_mom0]
