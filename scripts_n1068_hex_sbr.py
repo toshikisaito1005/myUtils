@@ -245,11 +245,11 @@ class ToolsSBR():
 
         # ann
         r_sbr = patches.Circle(xy=(-0,0), radius=self.r_sbr_as,
-            fill=False, alpha=1.0, ec="white", ls="dashed", lw=3.5)
+            fill=False, alpha=1.0, ec="black", ls="dashed", lw=3.5)
         ax.add_patch(r_sbr)
 
         # text
-        ax.text(0.05, 0.9, title, color="white", transform=ax.transAxes, weight="bold", fontsize=24)
+        ax.text(0.05, 0.9, title, color="black", transform=ax.transAxes, weight="bold", fontsize=24)
 
         # save
         os.system("rm -rf " + outpng)
