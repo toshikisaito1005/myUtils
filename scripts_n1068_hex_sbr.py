@@ -179,7 +179,7 @@ class ToolsSBR():
         ra        = data[:,0]
         dec       = data[:,1]
         data_mom0 = data[:,3:]
-        name_mom0 = list(map(str.upper,name_mom0))
+        name_mom0 = list(map(str.upper,header))
         name_mom0 = [s.split("10")[0].split("21")[0] for s in name_mom0]
         name_mom0 = [s.replace("13","$^{13}$").replace("18","$^{18}$") for s in name_mom0]
         name_mom0 = [s.replace("HCOP","HCO$^+$") for s in name_mom0]
