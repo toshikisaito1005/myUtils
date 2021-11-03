@@ -191,7 +191,6 @@ class ToolsSBR():
         data_mom0 = data[:,2:len_data+2]
 
         data_n2hp = data_mom0[:,np.where(header=="n2hp10")[0][0]]
-        print(data_n2hp)
 
         # plot
         this_x    = ra[data_n2hp>0]
@@ -278,8 +277,8 @@ class ToolsSBR():
         myax_set(
         ax,
         grid=None,
-        xlim=[25.0, -25.0],
-        ylim=[-25.0, 25.0],
+        xlim=[30.0, -30.0],
+        ylim=[-30.0, 30.0],
         xlabel="R.A. offset (arcsec)",
         ylabel="Decl. offset (arcsec)",
         adjust=[0.10,0.99,0.10,0.93],
@@ -300,7 +299,7 @@ class ToolsSBR():
         ax.add_patch(r_sbr)
 
         # text
-        ax.text(0.05, 0.9, title, color="black", transform=ax.transAxes, weight="bold", fontsize=24)
+        ax.text(0.03, 0.95, title, color="black", transform=ax.transAxes, weight="bold", fontsize=24)
 
         # save
         os.system("rm -rf " + outpng)
