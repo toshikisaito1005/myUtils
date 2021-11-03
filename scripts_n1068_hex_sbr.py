@@ -301,8 +301,8 @@ class ToolsSBR():
         ax.plot([0,0], [10,20], ls="dashed", color="black", lw=3.5)
         ax.plot([0,0], [-10,-20], ls="dashed", color="black", lw=3.5)
 
-        cos45 = np.cos(np.radians(45))
-        ax.plot([10*cos45,20*cos45], [10*cos45,20*cos45], ls="dashed", color="black", lw=3.5)
+        cos = np.cos(np.radians(55))
+        ax.plot([10*cos,20*cos], [10*cos,20*cos], ls="dashed", color="black", lw=3.5)
 
         # text
         ax.text(0.03, 0.93, title, color="black", transform=ax.transAxes, weight="bold", fontsize=24)
