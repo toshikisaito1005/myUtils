@@ -49,9 +49,9 @@ class ToolsSBR():
 
     def __init__(
         self,
-        keyfile_fig = None,
-        keyfile_gal = None,
-        refresh = False,
+        keyfile_fig  = None,
+        keyfile_gal  = None,
+        refresh      = False,
         delete_inter = True,
         ):
         # initialize keys
@@ -119,6 +119,8 @@ class ToolsSBR():
             self.outpng_corner_coeff = self.dir_products + self._read_key("outpng_corner_coeff")
             self.outpng_corner_score = self.dir_products + self._read_key("outpng_corner_score")
 
+            self.outpng_hexmap = self.dir_products + self._read_key("outpng_hexmap")
+
     ###################
     # run_ngc1068_sbr #
     ###################
@@ -130,6 +132,7 @@ class ToolsSBR():
         do_constrain   = False,
         plot_scatters  = False,
         plot_corners   = False,
+        plot_showhex   = False,
         ):
         """
         This method runs all the methods which will create figures in the paper.
@@ -149,6 +152,91 @@ class ToolsSBR():
 
         if plot_corners==True:
             self.plot_corners()
+
+        if plot_showhex==True:
+            self.plot_showhex()
+
+    ################
+    # plot_showhex #
+    ################
+
+    def plot_showhex(self):
+        """
+        """
+
+        taskname = self.modname + sys._getframe().f_code.co_name
+        check_first(self.table_hex_constrain,taskname)
+
+        # read header
+        f      = open(self.table_hex_constrain)
+        header = f.readline()
+        header = header.split(",")[3:]
+        f.close()
+
+        # import data
+        data      = np.loadtxt(self.table_hex_constrain)
+        ra        = data[:,0]
+        dec       = data[:,1]
+        data_mom0 = data[:,3:]
+        name_mom0 = [s.split("\n")[0] for s in header]
+        name_mom0 = list(map(str.upper,name_mom0))
+        name_mom0 = [s.split("10")[0].split("21")[0] for s in name_mom0]
+        name_mom0 = [s.replace("13","$^{13}$").replace("18","$^{18}$") for s in name_mom0]
+        name_mom0 = [s.replace("HCOP","HCO$^+$") for s in name_mom0]
+        name_mom0 = [s.replace("N2HP","N$_2$H$^+$") for s in name_mom0]
+        name_mom0 = [s.replace("CH3OH","CH$_3$OH") for s in name_mom0]
+
+        # plot
+        for i in range(len(name_mom0)):
+            this_mom0 = data_mom0[:,i]
+            this_name = name_mom0[i]
+            this_outpng = self.outpng_hexmap.replace("???",header[i])
+            self._plot_hexmap(this_outpng,ra,dec,this_mom0,this_name,"(K km s$^{-1}$)")
+
+    ################
+    # _plot_hexmap #
+    ################
+
+    def _plot_hexmap(
+        self,
+        outpng,
+        x,y,c,
+        title,
+        title_cbar,
+        ):
+        """
+        """
+
+        # set plt, ax
+        plt.figure(figsize=(13,10))
+        plt.rcParams["font.size"] = 16
+        plt.subplots_adjust(bottom=0.10, left=0.19, right=0.99, top=0.90)
+        gs = gridspec.GridSpec(nrows=10, ncols=10)
+        ax = plt.subplot(gs[0:10,0:10])
+
+        # set ax parameter
+        myax_set(
+        ax,
+        grid="both",
+        xlim=[32.5, -32.5],
+        ylim=[-32.5, 32.5],
+        title=title,
+        xlabel="R.A. offset (arcsec)",
+        ylabel="Decl. offset (arcsec)",
+        )
+        ax.set_aspect('equal', adjustable='box')
+
+        # plot
+        cax = ax.scatter(x, y, s=270, c=c, cmap="rainbow", marker="h", linewidths=0)
+
+        # cbar
+        cbar = plt.colorbar(cax)
+        cbar.set_label(title_cbar)
+        cbar.outline.set_linewidth(2.5)
+
+        # save
+        os.system("rm -rf " + outpng)
+        plt.savefig(outpng, dpi=300)
 
     ################
     # plot_corners #
@@ -254,69 +342,6 @@ class ToolsSBR():
             cmap="rainbow",
             )
 
-    ##############
-    # _myax_cbar #
-    ##############
-
-    def _plot_corner(
-        self,
-        outpng,
-        data,
-        list_name,
-        title,
-        xlabel,
-        ylabel,
-        clim,
-        cmap="bwr",
-        ):
-
-        fig = plt.figure(figsize=(10,9))
-        gs  = gridspec.GridSpec(nrows=30, ncols=30)
-        ax  = plt.subplot(gs[0:30,0:30])
-        ax.set_aspect('equal', adjustable='box')
-        myax_set(ax,title=title,aspect=1.0,adjust=[0.10,0.99,0.20,0.92],xlabel=xlabel,ylabel=ylabel)
-
-        im = ax.imshow(data, interpolation="none", vmin=clim[0], vmax=clim[1], cmap=cmap)
-        
-        #self._myax_cbar(fig, ax, im, clim=clim)
-
-        ax.set_xticks(range(len(list_name)))
-        ax.set_xticklabels(list_name,rotation=90)
-        ax.set_yticks(range(len(list_name)))
-        ax.set_yticklabels(list_name)
-
-        # text
-        for i in itertools.combinations(range(len(list_name)), 2):
-            this_slope = str(np.round(data[i[1],i[0]],2)).ljust(4, '0')
-            ax.text(i[0],i[1],this_slope,fontsize=12,
-                horizontalalignment="center", verticalalignment="center",weight="bold")
-
-        print("# output = " + outpng)
-        fig.savefig(outpng, dpi=fig_dpi)
-
-    ##############
-    # _myax_cbar #
-    ##############
-
-    def _myax_cbar(
-        self,
-        fig,
-        ax,
-        data,
-        label=None,
-        clim=None,
-        ):
-
-        cb = fig.colorbar(data, ax=ax)
-        
-        if label is not None:
-            cb.set_label(label)
-        
-        if clim is not None:
-            cb.set_clim(clim)
-
-        cb.outline.set_linewidth(2.5)
-
     #################
     # plot_scatters #
     #################
@@ -364,70 +389,6 @@ class ToolsSBR():
             output    = self.dir_products + "scatter_n2hp_vs_" + this_name + ".png"
 
             self._plot_scatters(output,x,y,xlabel=xlabel,ylabel=ylabel)
-
-    ##################
-    # _plot_scatters #
-    ##################
-
-    def _plot_scatters(
-        self,
-        output,
-        x,
-        y,
-        title=None,
-        xlabel=None,
-        ylabel=None,
-        ):
-        """
-        """
-
-        # col coeff
-        coeff = str( np.round( np.corrcoef(x,y)[0,1],2 ) )
-
-        # fit
-        popt,_  = curve_fit(self._f_lin, x, y, p0=[1.0,0.0], maxfev = 10000)
-        best_y = self._f_lin(x, popt[0], popt[1])
-
-        # get xlim, ylim
-        xlim = [np.median(x)-1.0,np.median(x)+1.0]
-        ylim = [np.median(y)-1.0,np.median(y)+1.0]
-
-        print("# plot " + output)
-        fig = plt.figure(figsize=(13,10))
-        gs = gridspec.GridSpec(nrows=10, ncols=10)
-        ax1 = plt.subplot(gs[0:10,0:10])
-        ad = [0.215,0.83,0.10,0.90]
-        ax1.set_aspect('equal', adjustable='box')
-        myax_set(ax1, "both", xlim, ylim, title, xlabel, ylabel, adjust=ad)
-
-        # plot
-        ax1.scatter(x, y, lw=0, c="gray", s=100)
-        ax1.plot(x, best_y, "-", color="tomato", lw=3)
-
-        # text
-        if xlim!=None and ylim!=None:
-            ax1.plot([ylim[0]-1,ylim[1]+1], [ylim[0]-1,ylim[1]+1], "--", lw=2, color="black")
-            ax1.plot([ylim[0]-1,ylim[1]+1], [ylim[0]-1-1.0,ylim[1]+1-1.0], "--", lw=2, color="grey")
-            ax1.plot([ylim[0]-1,ylim[1]+1], [ylim[0]-1+1.0,ylim[1]+1+1.0], "--", lw=2, color="grey")
-
-        # text
-        ax1.text(0.1, 0.90, "#point $=$ "+str(len(x)), transform=ax1.transAxes)
-        ax1.text(0.1, 0.85, "$r$ $=$ "+coeff, transform=ax1.transAxes)
-        ax1.text(0.1, 0.80, "slope $=$ "+str(np.round(popt[0],2)), transform=ax1.transAxes)
-        ax1.text(0.1, 0.75, "intercept $=$ "+str(np.round(popt[1],2)), transform=ax1.transAxes)
-
-        # save
-        plt.savefig(output, dpi=self.fig_dpi)
-
-    ###################
-    # constrain_table #
-    ###################
-
-    def _f_lin(self, x, a, b):
-        """
-        """
-
-        return a * x + b
 
     ###################
     # constrain_table #
@@ -578,7 +539,134 @@ class ToolsSBR():
 
         # cleanup
         os.system("rm -rf template")
+
+    ##############
+    # _myax_cbar #
+    ##############
+
+    def _plot_corner(
+        self,
+        outpng,
+        data,
+        list_name,
+        title,
+        xlabel,
+        ylabel,
+        clim,
+        cmap="bwr",
+        ):
+
+        fig = plt.figure(figsize=(10,9))
+        gs  = gridspec.GridSpec(nrows=30, ncols=30)
+        ax  = plt.subplot(gs[0:30,0:30])
+        ax.set_aspect('equal', adjustable='box')
+        myax_set(ax,title=title,aspect=1.0,adjust=[0.10,0.99,0.20,0.92],xlabel=xlabel,ylabel=ylabel)
+
+        im = ax.imshow(data, interpolation="none", vmin=clim[0], vmax=clim[1], cmap=cmap)
         
+        #self._myax_cbar(fig, ax, im, clim=clim)
+
+        ax.set_xticks(range(len(list_name)))
+        ax.set_xticklabels(list_name,rotation=90)
+        ax.set_yticks(range(len(list_name)))
+        ax.set_yticklabels(list_name)
+
+        # text
+        for i in itertools.combinations(range(len(list_name)), 2):
+            this_slope = str(np.round(data[i[1],i[0]],2)).ljust(4, '0')
+            ax.text(i[0],i[1],this_slope,fontsize=12,
+                horizontalalignment="center", verticalalignment="center",weight="bold")
+
+        print("# output = " + outpng)
+        fig.savefig(outpng, dpi=fig_dpi)
+
+    ##############
+    # _myax_cbar #
+    ##############
+
+    def _myax_cbar(
+        self,
+        fig,
+        ax,
+        data,
+        label=None,
+        clim=None,
+        ):
+
+        cb = fig.colorbar(data, ax=ax)
+        
+        if label is not None:
+            cb.set_label(label)
+        
+        if clim is not None:
+            cb.set_clim(clim)
+
+        cb.outline.set_linewidth(2.5)
+
+    ##################
+    # _plot_scatters #
+    ##################
+
+    def _plot_scatters(
+        self,
+        output,
+        x,
+        y,
+        title=None,
+        xlabel=None,
+        ylabel=None,
+        ):
+        """
+        """
+
+        # col coeff
+        coeff = str( np.round( np.corrcoef(x,y)[0,1],2 ) )
+
+        # fit
+        popt,_  = curve_fit(self._f_lin, x, y, p0=[1.0,0.0], maxfev = 10000)
+        best_y = self._f_lin(x, popt[0], popt[1])
+
+        # get xlim, ylim
+        xlim = [np.median(x)-1.0,np.median(x)+1.0]
+        ylim = [np.median(y)-1.0,np.median(y)+1.0]
+
+        print("# plot " + output)
+        fig = plt.figure(figsize=(13,10))
+        gs = gridspec.GridSpec(nrows=10, ncols=10)
+        ax1 = plt.subplot(gs[0:10,0:10])
+        ad = [0.215,0.83,0.10,0.90]
+        ax1.set_aspect('equal', adjustable='box')
+        myax_set(ax1, "both", xlim, ylim, title, xlabel, ylabel, adjust=ad)
+
+        # plot
+        ax1.scatter(x, y, lw=0, c="gray", s=100)
+        ax1.plot(x, best_y, "-", color="tomato", lw=3)
+
+        # text
+        if xlim!=None and ylim!=None:
+            ax1.plot([ylim[0]-1,ylim[1]+1], [ylim[0]-1,ylim[1]+1], "--", lw=2, color="black")
+            ax1.plot([ylim[0]-1,ylim[1]+1], [ylim[0]-1-1.0,ylim[1]+1-1.0], "--", lw=2, color="grey")
+            ax1.plot([ylim[0]-1,ylim[1]+1], [ylim[0]-1+1.0,ylim[1]+1+1.0], "--", lw=2, color="grey")
+
+        # text
+        ax1.text(0.1, 0.90, "#point $=$ "+str(len(x)), transform=ax1.transAxes)
+        ax1.text(0.1, 0.85, "$r$ $=$ "+coeff, transform=ax1.transAxes)
+        ax1.text(0.1, 0.80, "slope $=$ "+str(np.round(popt[0],2)), transform=ax1.transAxes)
+        ax1.text(0.1, 0.75, "intercept $=$ "+str(np.round(popt[1],2)), transform=ax1.transAxes)
+
+        # save
+        plt.savefig(output, dpi=self.fig_dpi)
+
+    ##########
+    # _f_lin #
+    ##########
+
+    def _f_lin(self, x, a, b):
+        """
+        """
+
+        return a * x + b
+
     ###############
     # _create_dir #
     ###############
