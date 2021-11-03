@@ -195,9 +195,9 @@ class ToolsSBR():
             this_name = name_mom0[i]
             this_outpng = self.outpng_hexmap.replace("???",header[i])
 
-            this_x = ra[this_mom0>0]
-            this_y = dec[this_mom0>0]
-            this_c = this_mom0[this_mom0>0]
+            this_x = ra#[this_mom0>0]
+            this_y = dec#[this_mom0>0]
+            this_c = this_mom0#[this_mom0>0]
 
             if len(this_c)>0:
                 print("# plot " + this_outpng)
@@ -216,10 +216,6 @@ class ToolsSBR():
         ):
         """
         """
-
-        x = x#[c>0]
-        y = y#[c>0]
-        c = c#[c>0]
 
         # set plt, ax
         fig = plt.figure(figsize=(13,10))
