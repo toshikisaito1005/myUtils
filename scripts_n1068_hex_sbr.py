@@ -242,7 +242,7 @@ class ToolsSBR():
         cbar = plt.colorbar(im)
         cax  = fig.add_axes([0.19, 0.12, 0.025, 0.35])
         fig.colorbar(im, cax=cax)
-        cbox = patches.Rectangle(xy=(19,-24), width=5, height=22, fill=True, fc="white", alpha=0.5)
+        cbox = patches.Rectangle(xy=(18,-25), width=6, height=23, fill=True, fc="white", alpha=0.5)
         ax.add_patch(cbox)
 
         # ann
