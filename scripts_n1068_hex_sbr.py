@@ -309,8 +309,9 @@ class ToolsSBR():
         ax.plot([-10*cos,-20*cos], [-10*sin,-20*sin],
             ls="dashed", color="black", lw=3.5)
 
-        arc1 = patches.Arc(xy=(0,0), width=20, height=20,
-            angle=0.0, theta1=0.0, theta2=90-degree)
+        arc1 = patches.Arc(xy=(0,0), width=20, height=20, ls="dashed",
+            angle=0.0, theta1=0.0, theta2=90-degree, lw=3.5)
+        ax.add_patch(arc1)
 
         # text
         ax.text(0.03, 0.93, title, color="black", transform=ax.transAxes, weight="bold", fontsize=24)
