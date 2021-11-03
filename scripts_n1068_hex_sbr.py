@@ -164,13 +164,13 @@ class ToolsSBR():
         # read header
         f      = open(self.table_hex_constrain)
         header = f.readline()
-        header = header.split(",")[1:]
+        header = header.split(",")[3:]
         f.close()
 
         # read data
         data      = np.loadtxt(self.table_hex_constrain)
-        dist_kcp  = data[:,0]
-        data_mom0 = data[:,1:]
+        dist_kcp  = data[:,2]
+        data_mom0 = data[:,3:]
         name_mom0 = [s.split("\n")[0] for s in header]
         name_mom0 = list(map(str.upper,name_mom0))
         name_mom0 = [s.split("10")[0].split("21")[0] for s in name_mom0]
@@ -331,13 +331,13 @@ class ToolsSBR():
         # read header
         f      = open(self.table_hex_constrain)
         header = f.readline()
-        header = header.split(",")[1:]
+        header = header.split(",")[3:]
         f.close()
 
         # read data
         data      = np.loadtxt(self.table_hex_constrain)
-        dist_kcp  = data[:,0]
-        data_mom0 = data[:,1:]
+        dist_kcp  = data[:,2]
+        data_mom0 = data[:,3:]
         name_mom0 = [s.split("\n")[0] for s in header]
 
         # get data
@@ -463,13 +463,15 @@ class ToolsSBR():
 
         # constrain data by radius and N2H+ detection
         cut        = np.where((dist_kpc>=self.r_sbr) & (n2hp_mom0>=n2hp_emom0*self.snr_mom))
+        x          = x[cut]
+        y          = y[cut]
         dist_kpc   = dist_kpc[cut]
         data_mom0  = data_mom0[cut]
         data_emom0 = data_emom0[cut]
 
         # constrain data by detected pixels
-        header = ["dist(kpc)"]
-        table  = np.array(dist_kpc)
+        header = ["x(as) y(as) dist(kpc)"]
+        table  = np.c_[x,y,dist_kpc]
         for i in range(len(data_mom0[0])):
             this_name   = name_mom0[i]
             this_mom0   = data_mom0[:,i]
