@@ -103,6 +103,7 @@ class ToolsSBR():
             self.beam           = 2.14859173174056
             self.snr_mom        = 3.0
             self.r_sbr          = 10.0 * self.scale_pc / 1000. # kpc
+            self.r_sbr_as       = 10.0
             self.detection_frac = 0.75
 
             # output maps
@@ -234,6 +235,11 @@ class ToolsSBR():
         cbar = plt.colorbar(cax)
         cbar.set_label(title_cbar)
         cbar.outline.set_linewidth(2.5)
+
+        # ann
+        r_sbr = patches.Circle(xy=(-0,0), radius=self.r_sbr_as,
+            fill=False, edgecolor="black", ls="--", lw=3.5)
+        ax.add_patch(r_sbr)
 
         # save
         os.system("rm -rf " + outpng)
