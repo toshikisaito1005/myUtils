@@ -171,7 +171,7 @@ class ToolsSBR():
         # read header
         f      = open(self.table_hex_obs)
         header = f.readline()
-        header = header.split(" ")[2:]
+        header = header.split(" ")[3:]
         header = [s.split("\n")[0] for s in header]
         f.close()
 
