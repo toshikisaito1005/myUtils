@@ -178,7 +178,7 @@ class ToolsSBR():
         # import data
         data      = np.loadtxt(self.table_hex_obs)
         len_data  = (len(data[0])-2)/2
-        header    = header[:len_data+2]
+        header    = header[:len_data]
         ra        = data[:,0]
         dec       = data[:,1]
         data_mom0 = data[:,2:len_data+2]
@@ -192,7 +192,7 @@ class ToolsSBR():
 
         # plot
         for i in range(len(name_mom0)):
-            this_mom0 = data_mom0[:,i]
+            this_mom0 = np.log10(data_mom0[:,i])
             this_name = name_mom0[i]
             this_outpng = self.outpng_hexmap.replace("???",header[i])
             print("# plot " + this_outpng)
