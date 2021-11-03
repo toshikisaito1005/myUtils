@@ -157,7 +157,7 @@ class ToolsSBR():
         if plot_corners==True:
             self.plot_corners()
 
-        if plot_showhex:
+        if plot_showhex==True:
             self.plot_hex_n2hp()
 
         # appendix
