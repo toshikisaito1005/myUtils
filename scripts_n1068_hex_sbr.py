@@ -205,6 +205,7 @@ class ToolsSBR():
             this_y,
             this_c,
             this_name,
+            ann=True,
             )
 
     ################
@@ -297,6 +298,8 @@ class ToolsSBR():
         r_sbr = patches.Circle(xy=(-0,0), radius=self.r_sbr_as,
             fill=False, alpha=1.0, ec="black", ls="dashed", lw=3.5)
         ax.add_patch(r_sbr)
+
+        ax.plot([0,0], [10,20], ls="dashed", color="black", lw=3.5)
 
         # text
         ax.text(0.03, 0.93, title, color="black", transform=ax.transAxes, weight="bold", fontsize=24)
