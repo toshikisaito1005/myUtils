@@ -171,6 +171,7 @@ class ToolsSBR():
         f      = open(self.table_hex_constrain)
         header = f.readline()
         header = header.split(",")[3:]
+        header = [s.split("\n")[0] for s in header]
         f.close()
 
         # import data
@@ -178,7 +179,6 @@ class ToolsSBR():
         ra        = data[:,0]
         dec       = data[:,1]
         data_mom0 = data[:,3:]
-        name_mom0 = [s.split("\n")[0] for s in header]
         name_mom0 = list(map(str.upper,name_mom0))
         name_mom0 = [s.split("10")[0].split("21")[0] for s in name_mom0]
         name_mom0 = [s.replace("13","$^{13}$").replace("18","$^{18}$") for s in name_mom0]
@@ -218,8 +218,8 @@ class ToolsSBR():
         myax_set(
         ax,
         grid="both",
-        xlim=[32.5, -32.5],
-        ylim=[-32.5, 32.5],
+        xlim=[25.0, -25.0],
+        ylim=[-25.0, 25.0],
         title=title,
         xlabel="R.A. offset (arcsec)",
         ylabel="Decl. offset (arcsec)",
@@ -227,7 +227,7 @@ class ToolsSBR():
         ax.set_aspect('equal', adjustable='box')
 
         # plot
-        cax = ax.scatter(x, y, s=270, c=c, cmap="rainbow", marker="h", linewidths=0)
+        cax = ax.scatter(x, y, s=400, c=c, cmap="rainbow", marker="h", linewidths=0)
 
         # cbar
         cbar = plt.colorbar(cax)
