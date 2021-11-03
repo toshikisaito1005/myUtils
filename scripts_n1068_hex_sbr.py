@@ -236,7 +236,7 @@ class ToolsSBR():
         ax.set_aspect('equal', adjustable='box')
 
         # plot
-        im = ax.scatter(x, y, s=1000, c=c, cmap="gnuplot", marker="h", linewidths=0)
+        im = ax.scatter(x, y, s=1000, c=c, cmap="rainbow", marker="h", linewidths=0)
 
         # cbar
         cbar = plt.colorbar(im)
