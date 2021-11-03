@@ -294,7 +294,7 @@ class ToolsSBR():
         fig.colorbar(im, cax=cax)
 
         # ann
-        lw = 2
+        lw = 2.5
         r_sbr = patches.Circle(xy=(-0,0), radius=self.r_sbr_as,
             fill=False, alpha=1.0, ec="black", ls="dashed", lw=lw)
         ax.add_patch(r_sbr)
