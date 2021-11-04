@@ -120,8 +120,9 @@ class ToolsSBR():
             self.outpng_corner_coeff = self.dir_products + self._read_key("outpng_corner_coeff")
             self.outpng_corner_score = self.dir_products + self._read_key("outpng_corner_score")
 
-            self.outpng_hexmap = self.dir_products + self._read_key("outpng_hexmap")
-            self.outpng_mom0   = self.dir_products + self._read_key("outpng_mom0")
+            self.outpng_hexmap  = self.dir_products + self._read_key("outpng_hexmap")
+            self.outpng_mom0    = self.dir_products + self._read_key("outpng_mom0")
+            self.outpng_envmask = self.dir_products + self._read_key("outpng_envmask")
 
     ###################
     # run_ngc1068_sbr #
@@ -129,9 +130,12 @@ class ToolsSBR():
 
     def run_ngc1068_sbr(
         self,
+        # analysis
         do_prepare       = False,
         do_sampling      = False,
         do_constrain     = False,
+        do_envmask       = False,
+        # plot
         plot_scatters    = False,
         plot_corners     = False,
         plot_showhex     = False,
@@ -142,6 +146,7 @@ class ToolsSBR():
         This method runs all the methods which will create figures in the paper.
         """
 
+        # analysis
         if do_prepare==True:
             self.align_maps()
 
@@ -151,6 +156,10 @@ class ToolsSBR():
         if do_constrain==True:
             self.constrain_table()
 
+        if do_envmask==True:
+            self.create_envmask()
+
+        # plot
         if plot_scatters==True:
             self.plot_scatters()
 
@@ -163,6 +172,50 @@ class ToolsSBR():
         # appendix
         if plot_showhex_all==True:
             self.plot_hex_all()
+
+    ##################
+    # create_envmask #
+    ##################
+
+    def create_envmask(self):
+        """
+        """
+
+        taskname = self.modname + sys._getframe().f_code.co_name
+        check_first(self.table_hex_obs,taskname)
+
+        # read header
+        f      = open(self.table_hex_obs)
+        header = f.readline()
+        header = header.split(" ")[3:]
+        header = np.array([s.split("\n")[0] for s in header])
+        f.close()
+
+        # import data
+        data      = np.loadtxt(self.table_hex_obs)
+        len_data  = (len(data[0])-2)/2
+        header    = header[:len_data]
+        ra        = data[:,0]
+        dec       = data[:,1]
+        data_mom0 = data[:,2:len_data+2]
+
+        data_c18o = data_mom0[:,np.where(header=="c18o10")[0][0]]
+
+        # create mask (1) C18O intensity
+        mask_intensity = np.where(data_c18o>=10)
+
+        ra_int   = ra[mask_intensity]
+        dec_int  = dec[mask_intensity]
+        data_int = data_c18o[mask_intensity]
+
+        print("# plot " + self.outpng_mom0)
+        self._plot_hexmap(
+            self.outpng_mom0,
+            ra_int,
+            dec_int,
+            data_int,
+            "env mask",
+            )
 
     #################
     # plot_hex_n2hp #
