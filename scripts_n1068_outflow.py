@@ -730,6 +730,9 @@ class ToolsOutflow():
             ax = plt.subplot(gs[0:10,0:10])
             self._ax_conemodel(ax, this_vel, title)
             ax.scatter(-1*this_map[0], this_map[1], c="darkred", lw=0, s=size)
+            cnd_mask = patches.Circle(xy=(-0,0), radius=self.r_cnd, fill=True,
+                alpha=1.0, ec="white", lw=0)
+            ax.add_patch(cnd_mask)
             plt.savefig(outputpng, dpi=fig_dpi, transparent=False)
 
         ### decv bicone
@@ -758,6 +761,9 @@ class ToolsOutflow():
             ax = plt.subplot(gs[0:10,0:10])
             self._ax_conemodel(ax, this_vel, title)
             ax.scatter(-1*this_map[0], this_map[1], c="darkred", lw=0, s=size)
+            cnd_mask = patches.Circle(xy=(-0,0), radius=self.r_cnd, fill=True,
+                alpha=1.0, ec="white", lw=0)
+            ax.add_patch(cnd_mask)
             plt.savefig(outputpng, dpi=fig_dpi, transparent=False)
 
         ### best bicone
@@ -786,6 +792,9 @@ class ToolsOutflow():
             ax = plt.subplot(gs[0:10,0:10])
             self._ax_conemodel(ax, this_vel, title)
             ax.scatter(-1*this_map[0], this_map[1], c="darkred", lw=0, s=size)
+            cnd_mask = patches.Circle(xy=(-0,0), radius=self.r_cnd, fill=True,
+                alpha=1.0, ec="white", lw=0)
+            ax.add_patch(cnd_mask)
             plt.savefig(outputpng, dpi=fig_dpi, transparent=False)
 
     ########################
