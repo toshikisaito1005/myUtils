@@ -198,6 +198,7 @@ class ToolsSBR():
         ra        = data[:,0]
         dec       = data[:,1]
         dist_kpc  = np.sqrt(ra**2+dec**2) * self.scale_kpc
+        theta_deg = np.degrees(np.arctan2(ra, dec))
 
         data_mom0 = data[:,2:len_data+2]
 
@@ -207,11 +208,12 @@ class ToolsSBR():
         mask = np.where(dist_kpc<self.r_sbr,1,0)
         data_c18o_masked = np.where(dist_kpc<self.r_sbr,0,data_c18o)
 
-        # masking (2) C18O intensity
-        mask = np.where((data_c18o_masked>=4)&(ra>0),2,mask)
+        # masking (2) molecular arms and SBR by C18O intensity
+        mask = np.where(data_c18o_masked>=4,2,mask)
         data_c18o_masked = np.where(data_c18o_masked==2,1,0)
 
         # masking (3) barend
+        print(theta_deg)
 
 
         print("# plot " + self.outpng_envmask)
