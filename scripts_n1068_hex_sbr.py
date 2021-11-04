@@ -142,6 +142,7 @@ class ToolsSBR():
         plot_showhex     = False,
         # appendix
         plot_showhex_all = False,
+        plot_showhex_ratio_all = False,
         ):
         """
         This method runs all the methods which will create figures in the paper.
@@ -171,6 +172,21 @@ class ToolsSBR():
         # appendix
         if plot_showhex_all==True:
             self.plot_hex_all()
+
+        if plot_showhex_ratio_all==True:
+            self.plot_hex_r13co_all() # TBE
+            self.plot_hex_rhcn_all() # TBE
+
+    ######################
+    # plot_hex_r13co_all #
+    ######################
+
+    def plot_hex_r13co_all(self):
+        """
+        """
+
+        taskname = self.modname + sys._getframe().f_code.co_name
+        check_first(self.table_hex_obs,taskname)
 
     ##################
     # create_envmask #
@@ -325,117 +341,6 @@ class ToolsSBR():
             if len(this_c)>0:
                 print("# plot " + this_outpng)
                 self._plot_hexmap(this_outpng,this_x,this_y,this_c,this_name,ann=False,)
-
-    ################
-    # _plot_hexmap #
-    ################
-
-    def _plot_hexmap(
-        self,
-        outpng,
-        x,y,c,
-        title,
-        title_cbar="(K km s$^{-1}$)",
-        cmap="rainbow",
-        plot_cbar=True,
-        ann=True,
-        ):
-        """
-        """
-
-        # set plt, ax
-        fig = plt.figure(figsize=(13,10))
-        plt.rcParams["font.size"] = 16
-        gs = gridspec.GridSpec(nrows=10, ncols=10)
-        ax = plt.subplot(gs[0:10,0:10])
-
-        # set ax parameter
-        myax_set(
-        ax,
-        grid=None,
-        xlim=[29.5, -29.5],
-        ylim=[-29.5, 29.5],
-        xlabel="R.A. offset (arcsec)",
-        ylabel="Decl. offset (arcsec)",
-        adjust=[0.10,0.99,0.10,0.93],
-        )
-        ax.set_aspect('equal', adjustable='box')
-
-        # plot
-        im = ax.scatter(x, y, s=690, c=c, cmap=cmap, marker="h", linewidths=0)
-
-        # cbar
-        if plot_cbar==True:
-            cbar = plt.colorbar(im)
-            cax  = fig.add_axes([0.19, 0.12, 0.025, 0.35])
-            fig.colorbar(im, cax=cax)
-
-        # prepare for ann
-        lw = 2.5
-        degree1 = 25
-        degree2 = 25
-        l1 = self.r_sbr_as
-        l2 = 18
-
-        # text
-        ax.text(0.03, 0.93, title, color="black", transform=ax.transAxes, weight="bold", fontsize=24)
-        if ann==True:
-            ax.text(0, 0, "CND", color="black", va="center", ha="center", weight="bold")
-            ax.text(0, 6, "Center", color="black", va="center", ha="center", weight="bold")
-            ax.text(8, 11, "Bar-end", color="black", va="center", ha="center", weight="bold", rotation=22.5)
-            ax.text(-8, 11, "Inner Spiral", color="black", va="center", ha="center", weight="bold", rotation=-22.5)
-            ax.text(-22, -5, "Outer Spiral", color="black", va="center", ha="center", weight="bold", rotation=-60)
-
-        """
-        # ann center
-        r_sbr = patches.Circle(xy=(-0,0), radius=self.r_sbr_as,
-            fill=False, alpha=1.0, ec="black", ls="dashed", lw=lw)
-        ax.add_patch(r_sbr)
-
-        ax.text(0, 7, "Center", color="black", va="center", ha="center", weight="bold")
-
-        # ann bar-end
-        cos = np.cos(np.radians(degree1))
-        sin = np.sin(np.radians(degree1))
-        ax.plot([0,0], [l1,l2], ls="dashed", color="black", lw=lw)
-        ax.plot([0,0], [-l1,-l2], ls="dashed", color="black", lw=lw)
-        ax.plot([l1*cos,l2*cos], [l1*sin,l2*sin], ls="dashed", color="black", lw=lw)
-        ax.plot([-l1*cos,-l2*cos], [-l1*sin,-l2*sin], ls="dashed", color="black", lw=lw)
-        arc1 = patches.Arc(xy=(0,0), width=l2*2, height=l2*2, ls="dashed",
-            angle=degree1, theta1=0, theta2=90-degree1, lw=lw, ec="black")
-        ax.add_patch(arc1)
-        arc2 = patches.Arc(xy=(0,0), width=l2*2, height=l2*2, ls="dashed",
-            angle=degree1+180, theta1=0, theta2=90-degree1, lw=lw, ec="black")
-        ax.add_patch(arc2)
-
-        cos = np.cos(np.radians(90/2.-degree1/2.))
-        sin = np.sin(np.radians(90/2.-degree1/2.))
-        ax.text((l2-3)*sin, (l2-3)*cos, "Bar-end", color="black", rotation=90/2.-degree1/2., va="center", ha="center", weight="bold")
-        ax.text(-(l2-3)*sin, -(l2-3)*cos, "Bar-end", color="black", rotation=90/2.-degree1/2., va="center", ha="center", weight="bold")
-
-        # ann inner-spiral
-        cos = np.cos(np.radians(degree2))
-        sin = np.sin(np.radians(degree2))
-        ax.plot([0,0], [l1,l2], ls="dashed", color="black", lw=lw)
-        ax.plot([0,0], [-l1,-l2], ls="dashed", color="black", lw=lw)
-        ax.plot([l1*cos,l2*cos], [-l1*sin,-l2*sin], ls="dashed", color="black", lw=lw)
-        ax.plot([-l1*cos,-l2*cos], [l1*sin,l2*sin], ls="dashed", color="black", lw=lw)
-        arc1 = patches.Arc(xy=(0,0), width=l2*2, height=l2*2, ls="dashed",
-            angle=90, theta1=0, theta2=90-degree2, lw=lw, ec="black")
-        ax.add_patch(arc1)
-        arc2 = patches.Arc(xy=(0,0), width=l2*2, height=l2*2, ls="dashed",
-            angle=90+180, theta1=0, theta2=90-degree2, lw=lw, ec="black")
-        ax.add_patch(arc2)
-
-        cos = np.cos(np.radians(-90/2.+degree2/2.))
-        sin = np.sin(np.radians(-90/2.+degree2/2.))
-        ax.text((l2-3)*sin, (l2-3)*cos, "Inner Arm", color="black", rotation=-90/2.+degree2/2., va="center", ha="center", weight="bold")
-        ax.text(-(l2-3)*sin, -(l2-3)*cos, "Inner Arm", color="black", rotation=-90/2.+degree2/2., va="center", ha="center", weight="bold")
-        """
-
-        # save
-        os.system("rm -rf " + outpng)
-        plt.savefig(outpng, dpi=300)
 
     ################
     # plot_corners #
@@ -739,6 +644,117 @@ class ToolsSBR():
 
         # cleanup
         os.system("rm -rf template")
+
+    ################
+    # _plot_hexmap #
+    ################
+
+    def _plot_hexmap(
+        self,
+        outpng,
+        x,y,c,
+        title,
+        title_cbar="(K km s$^{-1}$)",
+        cmap="rainbow",
+        plot_cbar=True,
+        ann=True,
+        ):
+        """
+        """
+
+        # set plt, ax
+        fig = plt.figure(figsize=(13,10))
+        plt.rcParams["font.size"] = 16
+        gs = gridspec.GridSpec(nrows=10, ncols=10)
+        ax = plt.subplot(gs[0:10,0:10])
+
+        # set ax parameter
+        myax_set(
+        ax,
+        grid=None,
+        xlim=[29.5, -29.5],
+        ylim=[-29.5, 29.5],
+        xlabel="R.A. offset (arcsec)",
+        ylabel="Decl. offset (arcsec)",
+        adjust=[0.10,0.99,0.10,0.93],
+        )
+        ax.set_aspect('equal', adjustable='box')
+
+        # plot
+        im = ax.scatter(x, y, s=690, c=c, cmap=cmap, marker="h", linewidths=0)
+
+        # cbar
+        cbar = plt.colorbar(im)
+        if plot_cbar==True:
+            cax  = fig.add_axes([0.19, 0.12, 0.025, 0.35])
+            fig.colorbar(im, cax=cax)
+
+        # prepare for ann
+        lw = 2.5
+        degree1 = 25
+        degree2 = 25
+        l1 = self.r_sbr_as
+        l2 = 18
+
+        # text
+        ax.text(0.03, 0.93, title, color="black", transform=ax.transAxes, weight="bold", fontsize=24)
+        if ann==True:
+            ax.text(0, 0, "CND", color="black", va="center", ha="center", weight="bold")
+            ax.text(0, 6, "Center", color="black", va="center", ha="center", weight="bold")
+            ax.text(8, 11, "Bar-end", color="black", va="center", ha="center", weight="bold", rotation=22.5)
+            ax.text(-8, 11, "Inner Spiral", color="black", va="center", ha="center", weight="bold", rotation=-22.5)
+            ax.text(-22, -5, "Outer Spiral", color="black", va="center", ha="center", weight="bold", rotation=-60)
+
+        """
+        # ann center
+        r_sbr = patches.Circle(xy=(-0,0), radius=self.r_sbr_as,
+            fill=False, alpha=1.0, ec="black", ls="dashed", lw=lw)
+        ax.add_patch(r_sbr)
+
+        ax.text(0, 7, "Center", color="black", va="center", ha="center", weight="bold")
+
+        # ann bar-end
+        cos = np.cos(np.radians(degree1))
+        sin = np.sin(np.radians(degree1))
+        ax.plot([0,0], [l1,l2], ls="dashed", color="black", lw=lw)
+        ax.plot([0,0], [-l1,-l2], ls="dashed", color="black", lw=lw)
+        ax.plot([l1*cos,l2*cos], [l1*sin,l2*sin], ls="dashed", color="black", lw=lw)
+        ax.plot([-l1*cos,-l2*cos], [-l1*sin,-l2*sin], ls="dashed", color="black", lw=lw)
+        arc1 = patches.Arc(xy=(0,0), width=l2*2, height=l2*2, ls="dashed",
+            angle=degree1, theta1=0, theta2=90-degree1, lw=lw, ec="black")
+        ax.add_patch(arc1)
+        arc2 = patches.Arc(xy=(0,0), width=l2*2, height=l2*2, ls="dashed",
+            angle=degree1+180, theta1=0, theta2=90-degree1, lw=lw, ec="black")
+        ax.add_patch(arc2)
+
+        cos = np.cos(np.radians(90/2.-degree1/2.))
+        sin = np.sin(np.radians(90/2.-degree1/2.))
+        ax.text((l2-3)*sin, (l2-3)*cos, "Bar-end", color="black", rotation=90/2.-degree1/2., va="center", ha="center", weight="bold")
+        ax.text(-(l2-3)*sin, -(l2-3)*cos, "Bar-end", color="black", rotation=90/2.-degree1/2., va="center", ha="center", weight="bold")
+
+        # ann inner-spiral
+        cos = np.cos(np.radians(degree2))
+        sin = np.sin(np.radians(degree2))
+        ax.plot([0,0], [l1,l2], ls="dashed", color="black", lw=lw)
+        ax.plot([0,0], [-l1,-l2], ls="dashed", color="black", lw=lw)
+        ax.plot([l1*cos,l2*cos], [-l1*sin,-l2*sin], ls="dashed", color="black", lw=lw)
+        ax.plot([-l1*cos,-l2*cos], [l1*sin,l2*sin], ls="dashed", color="black", lw=lw)
+        arc1 = patches.Arc(xy=(0,0), width=l2*2, height=l2*2, ls="dashed",
+            angle=90, theta1=0, theta2=90-degree2, lw=lw, ec="black")
+        ax.add_patch(arc1)
+        arc2 = patches.Arc(xy=(0,0), width=l2*2, height=l2*2, ls="dashed",
+            angle=90+180, theta1=0, theta2=90-degree2, lw=lw, ec="black")
+        ax.add_patch(arc2)
+
+        cos = np.cos(np.radians(-90/2.+degree2/2.))
+        sin = np.sin(np.radians(-90/2.+degree2/2.))
+        ax.text((l2-3)*sin, (l2-3)*cos, "Inner Arm", color="black", rotation=-90/2.+degree2/2., va="center", ha="center", weight="bold")
+        ax.text(-(l2-3)*sin, -(l2-3)*cos, "Inner Arm", color="black", rotation=-90/2.+degree2/2., va="center", ha="center", weight="bold")
+        """
+
+        # save
+        os.system("rm -rf " + outpng)
+        plt.savefig(outpng, dpi=300)
 
     ##############
     # _myax_cbar #
