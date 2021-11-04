@@ -233,7 +233,7 @@ class ToolsSBR():
             ra,
             dec,
             mask,
-            "env mask",
+            "Galactic Environments",
             )
 
     #################
