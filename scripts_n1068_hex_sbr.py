@@ -202,7 +202,7 @@ class ToolsSBR():
         data_c18o = data_mom0[:,np.where(header=="c18o10")[0][0]]
 
         # create mask (1) C18O intensity
-        mask_intensity = np.where(data_c18o>=5)
+        mask_intensity = np.where(data_c18o>=4)
 
         ra_int   = ra[mask_intensity]
         dec_int  = dec[mask_intensity]
