@@ -342,8 +342,6 @@ class ToolsSBR():
 
         cos = np.cos(np.radians(-90/2.+degree2/2.))
         sin = np.sin(np.radians(-90/2.+degree2/2.))
-        cos2 = np.cos(np.radians(-90/2.+degree3/2.))
-        sin2 = np.sin(np.radians(-90/2.+degree3/2.))
         ax.text((l2-3)*sin, (l2-3)*cos, "Inner Arm", color="black", rotation=-90/2.+degree2/2., va="center", ha="center", weight="bold")
         ax.text(-(l2-3)*sin, -(l2-3)*cos, "Inner Arm", color="black", rotation=-90/2.+degree2/2., va="center", ha="center", weight="bold")
 
