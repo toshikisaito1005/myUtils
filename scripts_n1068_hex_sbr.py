@@ -320,12 +320,18 @@ class ToolsSBR():
         ax.add_patch(arc2)
 
         # ann inner-spiral
-        cos = np.cos(np.radians(degree1))
-        sin = np.sin(np.radians(degree1))
+        cos = np.cos(np.radians(degree2))
+        sin = np.sin(np.radians(degree2))
         ax.plot([0,0], [l1,l2], ls="dashed", color="black", lw=lw)
         ax.plot([0,0], [-l1,-l2], ls="dashed", color="black", lw=lw)
         ax.plot([l1*cos,l2*cos], [-l1*sin,-l2*sin], ls="dashed", color="black", lw=lw)
         ax.plot([-l1*cos,-l2*cos], [l1*sin,l2*sin], ls="dashed", color="black", lw=lw)
+        arc1 = patches.Arc(xy=(0,0), width=l2*2, height=l2*2, ls="dashed",
+            angle=0, theta1=0, theta2=90-degree2, lw=lw, ec="black")
+        ax.add_patch(arc1)
+        arc2 = patches.Arc(xy=(0,0), width=l2*2, height=l2*2, ls="dashed",
+            angle=0+180, theta1=0, theta2=90-degree2, lw=lw, ec="black")
+        ax.add_patch(arc2)
 
         # text
         cos = np.cos(np.radians(90/2.-degree1/2.))
