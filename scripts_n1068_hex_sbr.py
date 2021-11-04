@@ -214,7 +214,7 @@ class ToolsSBR():
 
         # masking (3) bar-ends
         mask = np.where((mask==2)&(theta_deg>=0)&(theta_deg<65)&(dist_as<=18),3,mask)
-        mask = np.where((mask==2)&(theta_deg>=-180)&(theta_deg<-180+90)&(dist_as<=21),3,mask)
+        mask = np.where((mask==2)&(theta_deg>=-180)&(theta_deg<-180+85)&(dist_as<=23),3,mask)
 
 
         print("# plot " + self.outpng_envmask)
