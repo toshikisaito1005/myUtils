@@ -277,8 +277,8 @@ class ToolsSBR():
         myax_set(
         ax,
         grid=None,
-        xlim=[30.0, -30.0],
-        ylim=[-30.0, 30.0],
+        xlim=[29.5, -29.5],
+        ylim=[-29.5, 29.5],
         xlabel="R.A. offset (arcsec)",
         ylabel="Decl. offset (arcsec)",
         adjust=[0.10,0.99,0.10,0.93],
