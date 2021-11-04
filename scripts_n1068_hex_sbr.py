@@ -208,9 +208,9 @@ class ToolsSBR():
         dec_int  = dec[mask_intensity]
         data_int = data_c18o[mask_intensity]
 
-        print("# plot " + self.outpng_mom0)
+        print("# plot " + self.outpng_envmask)
         self._plot_hexmap(
-            self.outpng_mom0,
+            self.outpng_envmask,
             ra_int,
             dec_int,
             data_int,
