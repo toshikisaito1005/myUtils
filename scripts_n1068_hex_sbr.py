@@ -380,8 +380,7 @@ class ToolsSBR():
         ax.text(0.03, 0.93, title, color="black", transform=ax.transAxes, weight="bold", fontsize=24)
         ax.text(0, 0, "CND", color="black", va="center", ha="center", weight="bold")
         ax.text(0, 7, "Center", color="black", va="center", ha="center", weight="bold")
-        ax.text(5, 12, "Bar-end", color="black", va="center", ha="center", weight="bold")
-        ax.text(-5, -12, "Bar-end", color="black", va="center", ha="center", weight="bold")
+        ax.text(8, 12, "Bar-end", color="black", va="center", ha="center", weight="bold", ratation=22.5)
 
         """
         # ann center
