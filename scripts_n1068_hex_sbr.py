@@ -295,26 +295,29 @@ class ToolsSBR():
 
         # ann
         lw = 2.5
+        degree = 25
+        l1 = self.r_sbr_as
+        l2 = 18
+
         r_sbr = patches.Circle(xy=(-0,0), radius=self.r_sbr_as,
             fill=False, alpha=1.0, ec="black", ls="dashed", lw=lw)
         ax.add_patch(r_sbr)
 
-        ax.plot([0,0], [10,15], ls="dashed", color="black", lw=lw)
-        ax.plot([0,0], [-10,-15], ls="dashed", color="black", lw=lw)
+        ax.plot([0,0], [l1,l2], ls="dashed", color="black", lw=lw)
+        ax.plot([0,0], [-l1,-l2], ls="dashed", color="black", lw=lw)
 
-        degree = 25
         cos = np.cos(np.radians(degree))
         sin = np.sin(np.radians(degree))
-        ax.plot([10*cos,15*cos], [10*sin,15*sin],
+        ax.plot([l1*cos,l2*cos], [l1*sin,l2*sin],
             ls="dashed", color="black", lw=lw)
-        ax.plot([-10*cos,-15*cos], [-10*sin,-15*sin],
+        ax.plot([-l1*cos,-l2*cos], [-l1*sin,-l2*sin],
             ls="dashed", color="black", lw=lw)
 
-        arc1 = patches.Arc(xy=(0,0), width=30, height=30, ls="dashed",
+        arc1 = patches.Arc(xy=(0,0), width=l2*2, height=l2*2, ls="dashed",
             angle=degree, theta1=0, theta2=90-degree, lw=lw, ec="black")
         ax.add_patch(arc1)
 
-        arc2 = patches.Arc(xy=(0,0), width=30, height=30, ls="dashed",
+        arc2 = patches.Arc(xy=(0,0), width=l2*2, height=l2*2, ls="dashed",
             angle=degree+180, theta1=0, theta2=90-degree, lw=lw, ec="black")
         ax.add_patch(arc2)
 
