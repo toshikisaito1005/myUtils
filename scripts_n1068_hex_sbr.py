@@ -297,6 +297,8 @@ class ToolsSBR():
         lw = 2.5
         degree1 = 25
         degree2 = 25
+        degree3 = 25
+        angle3  = 25
         l1 = self.r_sbr_as
         l2 = 18
 
@@ -323,8 +325,8 @@ class ToolsSBR():
 
         cos = np.cos(np.radians(90/2.-degree1/2.))
         sin = np.sin(np.radians(90/2.-degree1/2.))
-        ax.text((l2-2)*sin, (l2-2)*cos, "Bar-end", color="black", rotation=90/2.-degree1/2., va="center", ha="center", weight="bold")
-        ax.text(-(l2-2)*sin, -(l2-2)*cos, "Bar-end", color="black", rotation=90/2.-degree1/2., va="center", ha="center", weight="bold")
+        ax.text((l2-3)*sin, (l2-3)*cos, "Bar-end", color="black", rotation=90/2.-degree1/2., va="center", ha="center", weight="bold")
+        ax.text(-(l2-3)*sin, -(l2-3)*cos, "Bar-end", color="black", rotation=90/2.-degree1/2., va="center", ha="center", weight="bold")
 
         # ann inner-spiral
         cos = np.cos(np.radians(degree2))
@@ -342,8 +344,14 @@ class ToolsSBR():
 
         cos = np.cos(np.radians(-90/2.+degree2/2.))
         sin = np.sin(np.radians(-90/2.+degree2/2.))
-        ax.text((l2-2)*sin, (l2-2)*cos, "Inner Arm", color="black", rotation=-90/2.+degree2/2., va="center", ha="center", weight="bold")
-        ax.text(-(l2-2)*sin, -(l2-2)*cos, "Inner Arm", color="black", rotation=-90/2.+degree2/2., va="center", ha="center", weight="bold")
+        ax.text((l2-3)*sin, (l2-3)*cos, "Inner Arm", color="black", rotation=-90/2.+degree2/2., va="center", ha="center", weight="bold")
+        ax.text(-(l2-3)*sin, -(l2-3)*cos, "Inner Arm", color="black", rotation=-90/2.+degree2/2., va="center", ha="center", weight="bold")
+
+        # ann outer-spiral
+        cos = np.cos(np.radians(degree3))
+        sin = np.sin(np.radians(degree3))
+        ax.plot([l1*cos,l3*cos], [l1*sin,l3*sin], ls="dashed", color="black", lw=lw)
+        ax.plot([-l1*cos,-l3*cos], [-l1*sin,-l3*sin], ls="dashed", color="black", lw=lw)
 
         # text
         ax.text(0.03, 0.93, title, color="black", transform=ax.transAxes, weight="bold", fontsize=24)
