@@ -194,8 +194,9 @@ class ToolsOutflow():
             l = self._read_key("imrebin_factor")
             self.imrebin_factor = [int(s) for s in l.split(",")]
 
-            self.r_cnd =  float(self._read_key("r_cnd_as")) * self.scale_kpc
-            self.r_sbr = float(self._read_key("r_sbr_as")) * self.scale_kpc
+            self.r_cnd    = float(self._read_key("r_cnd_as")) * self.scale_kpc
+            self.r_cnd_as = float(self._read_key("r_cnd_as"))
+            self.r_sbr    =float(self._read_key("r_sbr_as")) * self.scale_kpc
 
             l = self._read_key("chans_num")
             self.chans_num = [int(s) for s in l.split(",")]
@@ -730,7 +731,7 @@ class ToolsOutflow():
             ax = plt.subplot(gs[0:10,0:10])
             self._ax_conemodel(ax, this_vel, title)
             ax.scatter(-1*this_map[0], this_map[1], c="darkred", lw=0, s=size)
-            cnd_mask = patches.Circle(xy=(-0,0), radius=self.r_cnd, fill=True,
+            cnd_mask = patches.Circle(xy=(-0,0), radius=self.r_cnd_as, fill=True,
                 alpha=1.0, fc="white", lw=0)
             ax.add_patch(cnd_mask)
             plt.savefig(outputpng, dpi=fig_dpi, transparent=False)
@@ -761,7 +762,7 @@ class ToolsOutflow():
             ax = plt.subplot(gs[0:10,0:10])
             self._ax_conemodel(ax, this_vel, title)
             ax.scatter(-1*this_map[0], this_map[1], c="darkred", lw=0, s=size)
-            cnd_mask = patches.Circle(xy=(-0,0), radius=self.r_cnd, fill=True,
+            cnd_mask = patches.Circle(xy=(-0,0), radius=self.r_cnd_as, fill=True,
                 alpha=1.0, fc="white", lw=0)
             ax.add_patch(cnd_mask)
             plt.savefig(outputpng, dpi=fig_dpi, transparent=False)
@@ -792,7 +793,7 @@ class ToolsOutflow():
             ax = plt.subplot(gs[0:10,0:10])
             self._ax_conemodel(ax, this_vel, title)
             ax.scatter(-1*this_map[0], this_map[1], c="darkred", lw=0, s=size)
-            cnd_mask = patches.Circle(xy=(-0,0), radius=self.r_cnd, fill=True,
+            cnd_mask = patches.Circle(xy=(-0,0), radius=self.r_cnd_as, fill=True,
                 alpha=1.0, fc="white", lw=0)
             ax.add_patch(cnd_mask)
             plt.savefig(outputpng, dpi=fig_dpi, transparent=False)
