@@ -102,6 +102,7 @@ class ToolsSBR():
 
             self.beam           = 2.14859173174056
             self.snr_mom        = 3.0
+            self.r_cnd_as       = 4.0
             self.r_sbr          = 10.0 * self.scale_pc / 1000. # kpc
             self.r_sbr_as       = 10.0
             self.detection_frac = 0.75
@@ -205,16 +206,19 @@ class ToolsSBR():
 
         data_c18o = data_mom0[:,np.where(header=="c18o10")[0][0]]
 
+        # masking (1) CND
+        mask = np.where(dist_kpc<self.r_cnd_as,1,0)
+
         # masking (1) center
-        mask = np.where(dist_kpc<self.r_sbr,1,0)
+        mask = np.where(dist_kpc<self.r_sbr,2,0)
         data_c18o_masked = np.where(dist_kpc<self.r_sbr,0,data_c18o)
 
         # masking (2) molecular arms and SBR by C18O intensity
-        mask = np.where(data_c18o_masked>=4,2,mask)
+        mask = np.where(data_c18o_masked>=4,3,mask)
 
         # masking (3) bar-ends
-        mask = np.where((mask==2)&(theta_deg>=0)&(theta_deg<65)&(dist_as<=18),3,mask)
-        mask = np.where((mask==2)&(theta_deg>=-180)&(theta_deg<-180+85)&(dist_as<=23),3,mask)
+        mask = np.where((mask==2)&(theta_deg>=0)&(theta_deg<65)&(dist_as<=18),4,mask)
+        mask = np.where((mask==2)&(theta_deg>=-180)&(theta_deg<-180+85)&(dist_as<=23),4,mask)
 
 
         print("# plot " + self.outpng_envmask)
