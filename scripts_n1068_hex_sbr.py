@@ -229,6 +229,7 @@ class ToolsSBR():
             dec,
             mask,
             "env mask",
+            "gnuplot",
             )
 
     #################
@@ -330,6 +331,7 @@ class ToolsSBR():
         x,y,c,
         title,
         title_cbar="(K km s$^{-1}$)",
+        cmap="rainbow",
         ):
         """
         """
@@ -353,7 +355,7 @@ class ToolsSBR():
         ax.set_aspect('equal', adjustable='box')
 
         # plot
-        im = ax.scatter(x, y, s=690, c=c, cmap="rainbow", marker="h", linewidths=0)
+        im = ax.scatter(x, y, s=690, c=c, cmap=cmap, marker="h", linewidths=0)
 
         # cbar
         cbar = plt.colorbar(im)
