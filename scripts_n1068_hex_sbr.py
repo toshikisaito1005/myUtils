@@ -204,7 +204,7 @@ class ToolsSBR():
         data_c18o = data_mom0[:,np.where(header=="c18o10")[0][0]]
 
         # masking (1) center
-        mask = np.where(dist_kpc<self.r_sbr,data_c18o,1)
+        mask = np.where(dist_kpc<self.r_sbr,1,data_c18o)
 
         # masking (2) C18O intensity
         #mask_intensity = np.where(data_c18o>=4)
