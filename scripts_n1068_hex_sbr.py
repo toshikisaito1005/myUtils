@@ -299,22 +299,22 @@ class ToolsSBR():
             fill=False, alpha=1.0, ec="black", ls="dashed", lw=lw)
         ax.add_patch(r_sbr)
 
-        ax.plot([0,0], [10,20], ls="dashed", color="black", lw=lw)
-        ax.plot([0,0], [-10,-20], ls="dashed", color="black", lw=lw)
+        ax.plot([0,0], [10,15], ls="dashed", color="black", lw=lw)
+        ax.plot([0,0], [-10,-15], ls="dashed", color="black", lw=lw)
 
         degree = 25
         cos = np.cos(np.radians(degree))
         sin = np.sin(np.radians(degree))
-        ax.plot([10*cos,20*cos], [10*sin,20*sin],
+        ax.plot([10*cos,15*cos], [10*sin,15*sin],
             ls="dashed", color="black", lw=lw)
-        ax.plot([-10*cos,-20*cos], [-10*sin,-20*sin],
+        ax.plot([-10*cos,-15*cos], [-10*sin,-15*sin],
             ls="dashed", color="black", lw=lw)
 
-        arc1 = patches.Arc(xy=(0,0), width=40, height=40, ls="dashed",
+        arc1 = patches.Arc(xy=(0,0), width=30, height=30, ls="dashed",
             angle=degree, theta1=0, theta2=90-degree, lw=lw, ec="black")
         ax.add_patch(arc1)
 
-        arc2 = patches.Arc(xy=(0,0), width=40, height=40, ls="dashed",
+        arc2 = patches.Arc(xy=(0,0), width=30, height=30, ls="dashed",
             angle=degree+180, theta1=0, theta2=90-degree, lw=lw, ec="black")
         ax.add_patch(arc2)
 
@@ -322,7 +322,7 @@ class ToolsSBR():
         cos = np.cos(np.radians(90/2.-degree/2.))
         sin = np.sin(np.radians(90/2.-degree/2.))
         ax.text(0.03, 0.93, title, color="black", transform=ax.transAxes, weight="bold", fontsize=24)
-        ax.text(0, 7.5, "Center", color="black", va="center", ha="center", weight="bold")
+        ax.text(0, 7, "Center", color="black", va="center", ha="center", weight="bold")
         ax.text(17*sin, 17*cos, "Bar-end", color="black", rotation=90/2.-degree/2., va="center", ha="center", weight="bold")
         ax.text(-17*sin, -17*cos, "Bar-end", color="black", rotation=90/2.-degree/2., va="center", ha="center", weight="bold")
 
