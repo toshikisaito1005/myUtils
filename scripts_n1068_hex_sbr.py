@@ -382,7 +382,7 @@ class ToolsSBR():
         ax.text(0, 6, "Center", color="black", va="center", ha="center", weight="bold")
         ax.text(8, 11, "Bar-end", color="black", va="center", ha="center", weight="bold", rotation=22.5)
         ax.text(-8, 11, "Inner Spiral", color="black", va="center", ha="center", weight="bold", rotation=-22.5)
-        ax.text(-20, -7, "Outer Spiral", color="black", va="center", ha="center", weight="bold", rotation=-80)
+        ax.text(-20, -5, "Outer Spiral", color="black", va="center", ha="center", weight="bold", rotation=-60)
 
         """
         # ann center
