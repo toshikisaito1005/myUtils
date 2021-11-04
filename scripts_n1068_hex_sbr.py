@@ -328,12 +328,12 @@ class ToolsSBR():
         ax.plot([-l1*cos,-l2*cos], [l1*sin,l2*sin], ls="dashed", color="black", lw=lw)
 
         # text
-        cos = np.cos(np.radians(90/2.-degree/2.))
-        sin = np.sin(np.radians(90/2.-degree/2.))
+        cos = np.cos(np.radians(90/2.-degree1/2.))
+        sin = np.sin(np.radians(90/2.-degree1/2.))
         ax.text(0.03, 0.93, title, color="black", transform=ax.transAxes, weight="bold", fontsize=24)
         ax.text(0, 7, "Center", color="black", va="center", ha="center", weight="bold")
-        ax.text((l2-2)*sin, (l2-2)*cos, "Bar-end", color="black", rotation=90/2.-degree/2., va="center", ha="center", weight="bold")
-        ax.text(-(l2-2)*sin, -(l2-2)*cos, "Bar-end", color="black", rotation=90/2.-degree/2., va="center", ha="center", weight="bold")
+        ax.text((l2-2)*sin, (l2-2)*cos, "Bar-end", color="black", rotation=90/2.-degree1/2., va="center", ha="center", weight="bold")
+        ax.text(-(l2-2)*sin, -(l2-2)*cos, "Bar-end", color="black", rotation=90/2.-degree1/2., va="center", ha="center", weight="bold")
 
         # save
         os.system("rm -rf " + outpng)
