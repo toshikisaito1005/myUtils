@@ -297,11 +297,8 @@ class ToolsSBR():
         lw = 2.5
         degree1 = 25
         degree2 = 25
-        degree3 = 25
-        angle3  = 25
         l1 = self.r_sbr_as
         l2 = 18
-        l3 = 25
 
         # ann center
         r_sbr = patches.Circle(xy=(-0,0), radius=self.r_sbr_as,
@@ -345,17 +342,10 @@ class ToolsSBR():
 
         cos = np.cos(np.radians(-90/2.+degree2/2.))
         sin = np.sin(np.radians(-90/2.+degree2/2.))
+        cos2 = np.cos(np.radians(-90/2.+degree3/2.))
+        sin2 = np.sin(np.radians(-90/2.+degree3/2.))
         ax.text((l2-3)*sin, (l2-3)*cos, "Inner Arm", color="black", rotation=-90/2.+degree2/2., va="center", ha="center", weight="bold")
         ax.text(-(l2-3)*sin, -(l2-3)*cos, "Inner Arm", color="black", rotation=-90/2.+degree2/2., va="center", ha="center", weight="bold")
-
-        # ann outer-spiral
-        cos = np.cos(np.radians(degree3))
-        sin = np.sin(np.radians(degree3))
-        ax.plot([l1*cos,l3*cos], [-l1*sin,-l3*sin], ls="dashed", color="black", lw=lw)
-        ax.plot([-l1*cos,-l3*cos], [l1*sin,l3*sin], ls="dashed", color="black", lw=lw)
-        sin = np.sin(np.radians(degree3))
-        ax.plot([l2*cos,l3*cos], [l2*sin,l3*sin], ls="dashed", color="black", lw=lw)
-        ax.plot([-l2*cos,-l3*cos], [-l2*sin,-l3*sin], ls="dashed", color="black", lw=lw)
 
         # text
         ax.text(0.03, 0.93, title, color="black", transform=ax.transAxes, weight="bold", fontsize=24)
