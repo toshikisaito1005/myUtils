@@ -234,7 +234,6 @@ class ToolsSBR():
             dec,
             mask,
             "env mask",
-            cmap="gnuplot",
             )
 
     #################
