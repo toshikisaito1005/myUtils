@@ -136,7 +136,6 @@ class ToolsSBR():
         do_prepare       = False,
         do_sampling      = False,
         do_constrain     = False,
-        do_envmask       = False,
         # plot
         plot_scatters    = False,
         plot_corners     = False,
@@ -156,10 +155,8 @@ class ToolsSBR():
             self.hex_sampling()
 
         if do_constrain==True:
-            self.constrain_table()
-
-        if do_envmask==True:
-            self.create_envmask()
+            envmask = self.create_envmask() # create and plot original envmask
+            self.constrain_table(envmask)
 
         # plot
         if plot_scatters==True:
@@ -237,6 +234,8 @@ class ToolsSBR():
             plot_cbar=False,
             )
 
+        return mask
+
     #################
     # plot_hex_n2hp #
     #################
@@ -278,6 +277,7 @@ class ToolsSBR():
             this_y,
             this_c,
             this_name,
+            ann=False,
             )
 
     ################
@@ -324,7 +324,7 @@ class ToolsSBR():
 
             if len(this_c)>0:
                 print("# plot " + this_outpng)
-                self._plot_hexmap(this_outpng,this_x,this_y,this_c,this_name)
+                self._plot_hexmap(this_outpng,this_x,this_y,this_c,this_name,ann=False,)
 
     ################
     # _plot_hexmap #
@@ -338,6 +338,7 @@ class ToolsSBR():
         title_cbar="(K km s$^{-1}$)",
         cmap="rainbow",
         plot_cbar=True,
+        ann=True,
         ):
         """
         """
@@ -378,11 +379,12 @@ class ToolsSBR():
 
         # text
         ax.text(0.03, 0.93, title, color="black", transform=ax.transAxes, weight="bold", fontsize=24)
-        ax.text(0, 0, "CND", color="black", va="center", ha="center", weight="bold")
-        ax.text(0, 6, "Center", color="black", va="center", ha="center", weight="bold")
-        ax.text(8, 11, "Bar-end", color="black", va="center", ha="center", weight="bold", rotation=22.5)
-        ax.text(-8, 11, "Inner Spiral", color="black", va="center", ha="center", weight="bold", rotation=-22.5)
-        ax.text(-22, -5, "Outer Spiral", color="black", va="center", ha="center", weight="bold", rotation=-60)
+        if ann==True:
+            ax.text(0, 0, "CND", color="black", va="center", ha="center", weight="bold")
+            ax.text(0, 6, "Center", color="black", va="center", ha="center", weight="bold")
+            ax.text(8, 11, "Bar-end", color="black", va="center", ha="center", weight="bold", rotation=22.5)
+            ax.text(-8, 11, "Inner Spiral", color="black", va="center", ha="center", weight="bold", rotation=-22.5)
+            ax.text(-22, -5, "Outer Spiral", color="black", va="center", ha="center", weight="bold", rotation=-60)
 
         """
         # ann center
@@ -449,13 +451,13 @@ class ToolsSBR():
         # read header
         f      = open(self.table_hex_constrain)
         header = f.readline()
-        header = header.split(" ")[4:]
+        header = header.split(" ")[5:]
         f.close()
 
         # read data
         data      = np.loadtxt(self.table_hex_constrain)
-        dist_kcp  = data[:,2]
-        data_mom0 = data[:,3:]
+        dist_kcp  = data[:,3]
+        data_mom0 = data[:,4:]
         name_mom0 = [s.split("\n")[0] for s in header]
         name_mom0 = list(map(str.upper,name_mom0))
         name_mom0 = [s.split("10")[0].split("21")[0] for s in name_mom0]
@@ -553,13 +555,13 @@ class ToolsSBR():
         # read header
         f      = open(self.table_hex_constrain)
         header = f.readline()
-        header = header.split(" ")[4:]
+        header = header.split(" ")[5:]
         f.close()
 
         # read data
         data      = np.loadtxt(self.table_hex_constrain)
-        dist_kcp  = data[:,2]
-        data_mom0 = data[:,3:]
+        dist_kcp  = data[:,3]
+        data_mom0 = data[:,4:]
         name_mom0 = [s.split("\n")[0] for s in header]
 
         # get data
@@ -591,7 +593,7 @@ class ToolsSBR():
     # constrain_table #
     ###################
 
-    def constrain_table(self):
+    def constrain_table(self,envmask):
         """
         """
 
@@ -623,13 +625,14 @@ class ToolsSBR():
         cut        = np.where((dist_kpc>=self.r_sbr) & (n2hp_mom0>=n2hp_emom0*self.snr_mom))
         x          = x[cut]
         y          = y[cut]
+        envmask    = envmask[cut]
         dist_kpc   = dist_kpc[cut]
         data_mom0  = data_mom0[cut]
         data_emom0 = data_emom0[cut]
 
         # constrain data by detected pixels
-        header = ["x(as) y(as) dist(kpc)"]
-        table  = np.c_[x,y,dist_kpc]
+        header = ["x(as) y(as) envmask dist(kpc)"]
+        table  = np.c_[x,y,envmask,dist_kpc]
         for i in range(len(data_mom0[0])):
             this_name   = name_mom0[i]
             this_mom0   = data_mom0[:,i]
