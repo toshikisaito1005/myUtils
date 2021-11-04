@@ -327,10 +327,10 @@ class ToolsSBR():
         ax.plot([l1*cos,l2*cos], [-l1*sin,-l2*sin], ls="dashed", color="black", lw=lw)
         ax.plot([-l1*cos,-l2*cos], [l1*sin,l2*sin], ls="dashed", color="black", lw=lw)
         arc1 = patches.Arc(xy=(0,0), width=l2*2, height=l2*2, ls="dashed",
-            angle=-degree2, theta1=0, theta2=90-degree2, lw=lw, ec="black")
+            angle=0, theta1=0, theta2=90-degree2, lw=lw, ec="black")
         ax.add_patch(arc1)
         arc2 = patches.Arc(xy=(0,0), width=l2*2, height=l2*2, ls="dashed",
-            angle=-degree2+180, theta1=0, theta2=90-degree2, lw=lw, ec="black")
+            angle=0+180, theta1=0, theta2=90-degree2, lw=lw, ec="black")
         ax.add_patch(arc2)
 
         # text
