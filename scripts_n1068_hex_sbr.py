@@ -222,6 +222,10 @@ class ToolsSBR():
         mask = np.where((mask==3)&(theta_deg>=-180)&(theta_deg<-180+85)&(dist_as<=18),4,mask)
         mask = np.where((mask==3)&(theta_deg>=-180)&(theta_deg<-180+45)&(dist_as<=24),4,mask)
 
+        # masking (4) shocked arms
+        mask = np.where((mask==3)&(theta_deg>=0)&(theta_deg<10),5,mask)
+        mask = np.where((mask==3)&(theta_deg>=-180)&(theta_deg<-180+90),5,mask)
+
 
         print("# plot " + self.outpng_envmask)
         self._plot_hexmap(
@@ -230,7 +234,7 @@ class ToolsSBR():
             dec,
             mask,
             "env mask",
-            "gnuplot",
+            cmap="gnuplot",
             )
 
     #################
