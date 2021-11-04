@@ -286,40 +286,46 @@ class ToolsSBR():
         ax.set_aspect('equal', adjustable='box')
 
         # plot
-        im = ax.scatter(x, y, s=680, c=c, cmap="rainbow", marker="h", linewidths=0)
+        im = ax.scatter(x, y, s=690, c=c, cmap="rainbow", marker="h", linewidths=0)
 
         # cbar
         cbar = plt.colorbar(im)
         cax  = fig.add_axes([0.19, 0.12, 0.025, 0.35])
         fig.colorbar(im, cax=cax)
 
-        # ann
+        # prepare for ann
         lw = 2.5
-        degree = 25
+        degree1 = 25
+        degree2 = 25
         l1 = self.r_sbr_as
         l2 = 18
 
+        # ann center
         r_sbr = patches.Circle(xy=(-0,0), radius=self.r_sbr_as,
             fill=False, alpha=1.0, ec="black", ls="dashed", lw=lw)
         ax.add_patch(r_sbr)
 
+        # ann bar-end
+        cos = np.cos(np.radians(degree1))
+        sin = np.sin(np.radians(degree1))
         ax.plot([0,0], [l1,l2], ls="dashed", color="black", lw=lw)
         ax.plot([0,0], [-l1,-l2], ls="dashed", color="black", lw=lw)
-
-        cos = np.cos(np.radians(degree))
-        sin = np.sin(np.radians(degree))
-        ax.plot([l1*cos,l2*cos], [l1*sin,l2*sin],
-            ls="dashed", color="black", lw=lw)
-        ax.plot([-l1*cos,-l2*cos], [-l1*sin,-l2*sin],
-            ls="dashed", color="black", lw=lw)
-
+        ax.plot([l1*cos,l2*cos], [l1*sin,l2*sin], ls="dashed", color="black", lw=lw)
+        ax.plot([-l1*cos,-l2*cos], [-l1*sin,-l2*sin], ls="dashed", color="black", lw=lw)
         arc1 = patches.Arc(xy=(0,0), width=l2*2, height=l2*2, ls="dashed",
-            angle=degree, theta1=0, theta2=90-degree, lw=lw, ec="black")
+            angle=degree1, theta1=0, theta2=90-degree1, lw=lw, ec="black")
         ax.add_patch(arc1)
-
         arc2 = patches.Arc(xy=(0,0), width=l2*2, height=l2*2, ls="dashed",
-            angle=degree+180, theta1=0, theta2=90-degree, lw=lw, ec="black")
+            angle=degree1+180, theta1=0, theta2=90-degree1, lw=lw, ec="black")
         ax.add_patch(arc2)
+
+        # ann inner-spiral
+        cos = np.cos(np.radians(degree1))
+        sin = np.sin(np.radians(degree1))
+        ax.plot([0,0], [l1,l2], ls="dashed", color="black", lw=lw)
+        ax.plot([0,0], [-l1,-l2], ls="dashed", color="black", lw=lw)
+        ax.plot([l1*cos,l2*cos], [-l1*sin,-l2*sin], ls="dashed", color="black", lw=lw)
+        ax.plot([-l1*cos,-l2*cos], [l1*sin,l2*sin], ls="dashed", color="black", lw=lw)
 
         # text
         cos = np.cos(np.radians(90/2.-degree/2.))
