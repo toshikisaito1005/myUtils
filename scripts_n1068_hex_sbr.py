@@ -205,8 +205,10 @@ class ToolsSBR():
 
         # masking (1) center
         mask = np.where(dist_kpc<self.r_sbr,1,0)
+        data_c18o_masked = np.where(dist_kpc<self.r_sbr,0,data_c18o)
 
         # masking (2) C18O intensity
+        mask = np.where(data_c18o_masked>=4,2,mask)
         #mask_intensity = np.where(data_c18o>=4)
 
         print("# plot " + self.outpng_envmask)
