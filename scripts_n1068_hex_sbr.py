@@ -210,7 +210,7 @@ class ToolsSBR():
         mask = np.where(dist_kpc<=self.r_cnd_as,1,0)
 
         # masking (1) center
-        mask = np.where((dist_kpc<self.r_sbr)&(dist_kpc<self.r_cnd_as),2,0)
+        mask = np.where((dist_kpc<self.r_sbr)&(dist_kpc>self.r_cnd_as),2,0)
         data_c18o_masked = np.where(dist_kpc<self.r_sbr,0,data_c18o)
 
         # masking (2) molecular arms and SBR by C18O intensity
