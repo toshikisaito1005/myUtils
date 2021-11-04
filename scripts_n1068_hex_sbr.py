@@ -323,8 +323,8 @@ class ToolsSBR():
 
         cos = np.cos(np.radians(90/2.-degree1/2.))
         sin = np.sin(np.radians(90/2.-degree1/2.))
-        ax.text((l2-2)*sin, (l2-2)*cos, "Bar End", color="black", rotation=90/2.-degree1/2., va="center", ha="center", weight="bold")
-        ax.text(-(l2-2)*sin, -(l2-2)*cos, "Bar End", color="black", rotation=90/2.-degree1/2., va="center", ha="center", weight="bold")
+        ax.text((l2-2)*sin, (l2-2)*cos, "Bar-end", color="black", rotation=90/2.-degree1/2., va="center", ha="center", weight="bold")
+        ax.text(-(l2-2)*sin, -(l2-2)*cos, "Bar-end", color="black", rotation=90/2.-degree1/2., va="center", ha="center", weight="bold")
 
         # ann inner-spiral
         cos = np.cos(np.radians(degree2))
@@ -342,8 +342,8 @@ class ToolsSBR():
 
         cos = np.cos(np.radians(-90/2.+degree2/2.))
         sin = np.sin(np.radians(-90/2.+degree2/2.))
-        ax.text((l2-2)*sin, -(l2-2)*cos, "Inner Arm", color="black", rotation=-90/2.+degree2/2., va="center", ha="center", weight="bold")
-        ax.text(-(l2-2)*sin, (l2-2)*cos, "Inner Arm", color="black", rotation=-90/2.+degree2/2., va="center", ha="center", weight="bold")
+        ax.text((l2-2)*sin, (l2-2)*cos, "Inner Arm", color="black", rotation=-90/2.+degree2/2., va="center", ha="center", weight="bold")
+        ax.text(-(l2-2)*sin, -(l2-2)*cos, "Inner Arm", color="black", rotation=-90/2.+degree2/2., va="center", ha="center", weight="bold")
 
         # text
         ax.text(0.03, 0.93, title, color="black", transform=ax.transAxes, weight="bold", fontsize=24)
