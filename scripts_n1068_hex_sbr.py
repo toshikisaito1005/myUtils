@@ -321,6 +321,8 @@ class ToolsSBR():
             angle=degree1+180, theta1=0, theta2=90-degree1, lw=lw, ec="black")
         ax.add_patch(arc2)
 
+        cos = np.cos(np.radians(90/2.-degree1/2.))
+        sin = np.sin(np.radians(90/2.-degree1/2.))
         ax.text((l2-2)*sin, (l2-2)*cos, "Bar End", color="black", rotation=90/2.-degree1/2., va="center", ha="center", weight="bold")
         ax.text(-(l2-2)*sin, -(l2-2)*cos, "Bar End", color="black", rotation=90/2.-degree1/2., va="center", ha="center", weight="bold")
 
@@ -338,12 +340,12 @@ class ToolsSBR():
             angle=90+180, theta1=0, theta2=90-degree2, lw=lw, ec="black")
         ax.add_patch(arc2)
 
-        ax.text((l2-2)*sin, -(l2-2)*cos, "Inner Arm", color="black", rotation=90/2.+degree2/2., va="center", ha="center", weight="bold")
-        ax.text(-(l2-2)*sin, (l2-2)*cos, "Inner Arm", color="black", rotation=90/2.+degree2/2., va="center", ha="center", weight="bold")
+        cos = np.cos(np.radians(-90/2.+degree2/2.))
+        sin = np.sin(np.radians(-90/2.+degree2/2.))
+        ax.text((l2-2)*sin, -(l2-2)*cos, "Inner Arm", color="black", rotation=-90/2.+degree2/2., va="center", ha="center", weight="bold")
+        ax.text(-(l2-2)*sin, (l2-2)*cos, "Inner Arm", color="black", rotation=-90/2.+degree2/2., va="center", ha="center", weight="bold")
 
         # text
-        cos = np.cos(np.radians(90/2.-degree1/2.))
-        sin = np.sin(np.radians(90/2.-degree1/2.))
         ax.text(0.03, 0.93, title, color="black", transform=ax.transAxes, weight="bold", fontsize=24)
 
         # save
