@@ -212,7 +212,7 @@ class ToolsSBR():
         mask = np.where(data_c18o_masked>=4,2,mask)
 
         # masking (3) barend
-        mask = np.where((mask==2)&(theta_deg>=0),3,mask)
+        mask = np.where((mask==2)&(theta_deg>=0)&(theta_deg<45),3,mask)
 
 
         print("# plot " + self.outpng_envmask)
