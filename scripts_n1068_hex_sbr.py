@@ -210,10 +210,9 @@ class ToolsSBR():
 
         # masking (2) molecular arms and SBR by C18O intensity
         mask = np.where(data_c18o_masked>=4,2,mask)
-        data_c18o_masked = np.where(data_c18o_masked==2,1,0)
 
         # masking (3) barend
-        mask = np.where((data_c18o_masked==1)&(theta_deg>=0),3,mask)
+        mask = np.where((mask==2)&(theta_deg>=0),3,mask)
 
 
         print("# plot " + self.outpng_envmask)
