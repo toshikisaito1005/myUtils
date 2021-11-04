@@ -197,7 +197,7 @@ class ToolsSBR():
         header    = header[:len_data]
         ra        = data[:,0]
         dec       = data[:,1]
-        dist_kpc  = np.sqrt(x**2+y**2) * self.scale_kpc
+        dist_kpc  = np.sqrt(ra**2+dec**2) * self.scale_kpc
 
         data_mom0 = data[:,2:len_data+2]
 
