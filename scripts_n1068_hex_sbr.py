@@ -336,6 +336,7 @@ class ToolsSBR():
         title,
         title_cbar="(K km s$^{-1}$)",
         cmap="rainbow",
+        plot_cbar=True,
         ):
         """
         """
@@ -362,9 +363,10 @@ class ToolsSBR():
         im = ax.scatter(x, y, s=690, c=c, cmap=cmap, marker="h", linewidths=0)
 
         # cbar
-        cbar = plt.colorbar(im)
-        cax  = fig.add_axes([0.19, 0.12, 0.025, 0.35])
-        fig.colorbar(im, cax=cax)
+        if plot_cbar==True:
+            cbar = plt.colorbar(im)
+            cax  = fig.add_axes([0.19, 0.12, 0.025, 0.35])
+            fig.colorbar(im, cax=cax)
 
         # prepare for ann
         lw = 2.5
@@ -372,6 +374,13 @@ class ToolsSBR():
         degree2 = 25
         l1 = self.r_sbr_as
         l2 = 18
+
+        # text
+        ax.text(0.03, 0.93, title, color="black", transform=ax.transAxes, weight="bold", fontsize=24)
+        ax.text(0, 0, "CND", color="black", transform=ax.transAxes, weight="bold")
+        ax.text(0, 7, "Center", color="black", transform=ax.transAxes, weight="bold")
+        ax.text(5, 12, "Bar-end", color="black", transform=ax.transAxes, weight="bold")
+        ax.text(-5, -12, "Bar-end", color="black", transform=ax.transAxes, weight="bold")
 
         """
         # ann center
@@ -419,9 +428,6 @@ class ToolsSBR():
         ax.text((l2-3)*sin, (l2-3)*cos, "Inner Arm", color="black", rotation=-90/2.+degree2/2., va="center", ha="center", weight="bold")
         ax.text(-(l2-3)*sin, -(l2-3)*cos, "Inner Arm", color="black", rotation=-90/2.+degree2/2., va="center", ha="center", weight="bold")
         """
-
-        # text
-        ax.text(0.03, 0.93, title, color="black", transform=ax.transAxes, weight="bold", fontsize=24)
 
         # save
         os.system("rm -rf " + outpng)
