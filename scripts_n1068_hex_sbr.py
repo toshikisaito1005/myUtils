@@ -102,6 +102,7 @@ class ToolsSBR():
 
             self.beam           = 2.14859173174056
             self.snr_mom        = 3.0
+            self.r_cnd          = 4.0 * self.scale_pc / 1000. # kpc
             self.r_cnd_as       = 4.0
             self.r_sbr          = 10.0 * self.scale_pc / 1000. # kpc
             self.r_sbr_as       = 10.0
@@ -211,7 +212,7 @@ class ToolsSBR():
         data_c18o_masked = np.where(dist_kpc<self.r_sbr,0,data_c18o)
 
         # masking (2) CND
-        mask = np.where(dist_kpc<=self.r_cnd_as,1,0)
+        mask = np.where(dist_kpc<=self.r_cnd,1,0)
 
         # masking (2) molecular arms and SBR by C18O intensity
         mask = np.where(data_c18o_masked>=4,3,mask)
