@@ -234,6 +234,7 @@ class ToolsSBR():
             dec,
             mask,
             "Galactic Environments",
+            plot_cbar=False,
             )
 
     #################
