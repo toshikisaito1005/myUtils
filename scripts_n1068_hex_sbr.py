@@ -351,8 +351,11 @@ class ToolsSBR():
         # ann outer-spiral
         cos = np.cos(np.radians(degree3))
         sin = np.sin(np.radians(degree3))
-        ax.plot([l1*cos,l3*cos], [l1*sin,l3*sin], ls="dashed", color="black", lw=lw)
-        ax.plot([-l1*cos,-l3*cos], [-l1*sin,-l3*sin], ls="dashed", color="black", lw=lw)
+        ax.plot([l1*cos,l3*cos], [-l1*sin,-l3*sin], ls="dashed", color="black", lw=lw)
+        ax.plot([-l1*cos,-l3*cos], [l1*sin,l3*sin], ls="dashed", color="black", lw=lw)
+        sin = np.sin(np.radians(degree3))
+        ax.plot([l2*cos,l3*cos], [l2*sin,l3*sin], ls="dashed", color="black", lw=lw)
+        ax.plot([-l2*cos,-l3*cos], [-l2*sin,-l3*sin], ls="dashed", color="black", lw=lw)
 
         # text
         ax.text(0.03, 0.93, title, color="black", transform=ax.transAxes, weight="bold", fontsize=24)
