@@ -305,6 +305,8 @@ class ToolsSBR():
             fill=False, alpha=1.0, ec="black", ls="dashed", lw=lw)
         ax.add_patch(r_sbr)
 
+        ax.text(0, 7, "Center", color="black", va="center", ha="center", weight="bold")
+
         # ann bar-end
         cos = np.cos(np.radians(degree1))
         sin = np.sin(np.radians(degree1))
@@ -318,6 +320,9 @@ class ToolsSBR():
         arc2 = patches.Arc(xy=(0,0), width=l2*2, height=l2*2, ls="dashed",
             angle=degree1+180, theta1=0, theta2=90-degree1, lw=lw, ec="black")
         ax.add_patch(arc2)
+
+        ax.text((l2-2)*sin, (l2-2)*cos, "Bar End", color="black", rotation=90/2.-degree1/2., va="center", ha="center", weight="bold")
+        ax.text(-(l2-2)*sin, -(l2-2)*cos, "Bar End", color="black", rotation=90/2.-degree1/2., va="center", ha="center", weight="bold")
 
         # ann inner-spiral
         cos = np.cos(np.radians(degree2))
@@ -333,13 +338,13 @@ class ToolsSBR():
             angle=90+180, theta1=0, theta2=90-degree2, lw=lw, ec="black")
         ax.add_patch(arc2)
 
+        ax.text((l2-2)*sin, -(l2-2)*cos, "Inner Arm", color="black", rotation=90/2.+degree2/2., va="center", ha="center", weight="bold")
+        ax.text(-(l2-2)*sin, (l2-2)*cos, "Inner Arm", color="black", rotation=90/2.+degree2/2., va="center", ha="center", weight="bold")
+
         # text
         cos = np.cos(np.radians(90/2.-degree1/2.))
         sin = np.sin(np.radians(90/2.-degree1/2.))
         ax.text(0.03, 0.93, title, color="black", transform=ax.transAxes, weight="bold", fontsize=24)
-        ax.text(0, 7, "Center", color="black", va="center", ha="center", weight="bold")
-        ax.text((l2-2)*sin, (l2-2)*cos, "Bar-end", color="black", rotation=90/2.-degree1/2., va="center", ha="center", weight="bold")
-        ax.text(-(l2-2)*sin, -(l2-2)*cos, "Bar-end", color="black", rotation=90/2.-degree1/2., va="center", ha="center", weight="bold")
 
         # save
         os.system("rm -rf " + outpng)
