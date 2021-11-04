@@ -197,23 +197,24 @@ class ToolsSBR():
         header    = header[:len_data]
         ra        = data[:,0]
         dec       = data[:,1]
+        dist_kpc  = np.sqrt(x**2+y**2) * self.scale_kpc
+
         data_mom0 = data[:,2:len_data+2]
 
         data_c18o = data_mom0[:,np.where(header=="c18o10")[0][0]]
 
-        # create mask (1) C18O intensity
-        mask_intensity = np.where(data_c18o>=4)
+        # masking (1) center
+        mask = np.where(dist_kpc<self.r_sbr,data_c18o,1)
 
-        ra_int   = ra[mask_intensity]
-        dec_int  = dec[mask_intensity]
-        data_int = data_c18o[mask_intensity]
+        # masking (2) C18O intensity
+        #mask_intensity = np.where(data_c18o>=4)
 
         print("# plot " + self.outpng_envmask)
         self._plot_hexmap(
             self.outpng_envmask,
-            ra_int,
-            dec_int,
-            data_int,
+            ra,
+            dec,
+            mask,
             "env mask",
             )
 
