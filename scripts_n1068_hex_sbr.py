@@ -301,6 +301,7 @@ class ToolsSBR():
         angle3  = 25
         l1 = self.r_sbr_as
         l2 = 18
+        l3 = 25
 
         # ann center
         r_sbr = patches.Circle(xy=(-0,0), radius=self.r_sbr_as,
