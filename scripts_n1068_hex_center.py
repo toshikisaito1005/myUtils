@@ -204,7 +204,7 @@ class ToolsPCA():
         list_r13co_mean = np.where(mean_r13co!=0, list_r13co/mean_r13co, 0)
         list_rhcn_mean  = np.where(mean_rhcn!=0, list_rhcn/mean_rhcn, 0)
 
-        print(np.c[list_name,np.sum(list_mom0_mean,axis=0)])
+        print(np.c_[list_name,np.sum(list_mom0_mean,axis=0)])
 
 
     ################
