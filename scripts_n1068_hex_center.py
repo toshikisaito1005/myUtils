@@ -112,6 +112,7 @@ class ToolsPCA():
         do_prepare       = False,
         do_sampling      = False,
         do_pca           = False,
+        plot_hexmap      = False,
         ):
         """
         This method runs all the methods which will create figures in the paper.
@@ -125,7 +126,54 @@ class ToolsPCA():
             self.hex_sampling()
 
         if do_pca==True:
-            self.run_hex_pca()
+            self.run_hex_pca() # something wrong!
+
+        if plot_hexmap==True:
+            self.plot_hex()
+
+    ############
+    # plot_hex #
+    ############
+
+    def plot_hex(self):
+        """
+        """
+
+        taskname = self.modname + sys._getframe().f_code.co_name
+        check_first(self.table_hex_obs,taskname)
+
+        # read header
+        f      = open(self.table_hex_obs)
+        header = f.readline()
+        header = header.split(" ")[3:]
+        header = np.array([s.split("\n")[0] for s in header])
+        f.close()
+
+        # import data
+        data      = np.loadtxt(self.table_hex_obs)
+        len_data  = (len(data[0])-2)/2
+        header    = header[:len_data]
+        ra        = data[:,0]
+        dec       = data[:,1]
+        data_mom0 = data[:,2:len_data+2]
+
+        data_13co = data_mom0[:,np.where(header=="13co10")[0][0]]
+
+        # plot
+        this_x    = ra[data_13co>0]
+        this_y    = dec[data_13co>0]
+        this_c    = data_13co[data_13co>0]
+        this_name = "13CO integrated intensity map"
+
+        print("# plot " + self.outpng_mom0)
+        self._plot_hexmap(
+            self.outpng_mom0,
+            this_x,
+            this_y,
+            this_c,
+            this_name,
+            ann=False,
+            )
 
     ###############
     # run_hex_pca #
