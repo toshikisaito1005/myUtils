@@ -200,9 +200,21 @@ class ToolsPCA():
         sum_r13co = np.sum(list_r13co[np.where(list_r13co!=0)], axis=0)
         sum_rhcn  = np.sum(list_rhcn[np.where(list_rhcn!=0)], axis=0)
 
-        list_mom0_mean  = np.where(list_mom0!=0, list_mom0/sum_mom0, 0)
-        list_r13co_mean = np.where(list_r13co!=0, list_r13co/sum_r13co, 0)
-        list_rhcn_mean  = np.where(list_rhcn!=0, list_rhcn/sum_rhcn, 0)
+        list_mom0_mean  = r
+        list_r13co_mean = r
+        list_rhcn_mean  = r
+        for i in range(len(list_mom0)):
+            this_mom0  = list_mom0[:,i]
+            this_r13co = list_r13co[:,i]
+            this_rhcn  = list_rhcn[:,i]
+
+        list_mom0_mean =  np.c_[list_mom0_mean, np.where(this_mom0!=0, this_mom0/sum_mom0, 0)]
+        list_r13co_mean = np.c_[list_r13co_mean, np.where(this_r13co!=0, this_r13co/sum_r13co, 0)]
+        list_rhcn_mean  = np.c_[list_rhcn_mean, np.where(this_rhcn!=0, this_rhcn/sum_rhcn, 0)]
+
+        list_mom0_mean  = list_mom0_mean[:,1:]
+        list_r13co_mean = list_r13co_mean[:,1:]
+        list_rhcn_mean  = list_rhcn_mean[:,1:]
 
         print(np.c_[list_name,np.sum(list_mom0_mean,axis=0)])
 
