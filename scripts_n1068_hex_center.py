@@ -95,6 +95,9 @@ class ToolsPCA():
             self.outmap_emom0   = self.dir_ready + self._read_key("outmaps_emom0")
             self.outfits_emom0  = self.dir_ready + self._read_key("outfits_maps_emom0")
 
+            # output txt and png
+            self.table_hex_obs  = self.dir_ready + self._read_key("table_hex_obs")
+
     ###################
     # run_ngc1068_pca #
     ###################
