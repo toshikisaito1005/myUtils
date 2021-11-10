@@ -159,7 +159,7 @@ class ToolsPCA():
         emom0_hcn  = data_emom0[:,np.where(name_mom0=="hcn10")[0][0]]
 
         # constrain data
-        list_mom0 = []
+        list_mom0 = r
         list_name = []
         for i in range(len(data_mom0[0])):
             this_mom0  = data_mom0[:,i]
@@ -167,11 +167,10 @@ class ToolsPCA():
             this_name  = name_mom0[i]
 
             if len(this_mom0[this_mom0>this_emom0*self.snr_mom])>=10:
-                list_mom0.append(this_mom0)
+                list_mom0 = np.c_[list_mom0,this_mom0]
                 list_name.append(this_name)
 
-        list_mom0 = np.array(list_mom0)
-        print(list_mom0)
+        print(np.shape(list_mom0))
 
 
     ################
