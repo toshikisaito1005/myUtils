@@ -89,6 +89,12 @@ class ToolsPCA():
             self.r_sbr          = 10.0 * self.scale_pc / 1000. # kpc
             self.r_sbr_as       = 10.0
 
+            # output maps
+            self.outmap_mom0    = self.dir_ready + self._read_key("outmaps_mom0")
+            self.outfits_mom0   = self.dir_ready + self._read_key("outfits_maps_mom0")
+            self.outmap_emom0   = self.dir_ready + self._read_key("outmaps_emom0")
+            self.outfits_emom0  = self.dir_ready + self._read_key("outfits_maps_emom0")
+
     ###################
     # run_ngc1068_pca #
     ###################
