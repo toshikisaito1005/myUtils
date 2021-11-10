@@ -131,15 +131,18 @@ class ToolsPCA():
         """
         """
 
+        taskname = self.modname + sys._getframe().f_code.co_name
+        check_first(self.table_hex_obs,taskname)
+
         # extract line name
-        with open(txtdata) as f:
+        with open(self.table_hex_obs) as f:
             header = f.readline()
 
         list_name = [s for s in header.split(" ")[3:-1] if "err" not in s]
         list_name = np.array(list_name)
 
         # extract data
-        data = np.loadtxt(txtdata)
+        data = np.loadtxt(self.table_hex_obs)
         x          = data[:,0]
         y          = data[:,1]
         r          = np.sqrt(x**2 + y**2) * self.scale_pc / 1000.
