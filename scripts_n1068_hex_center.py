@@ -107,6 +107,7 @@ class ToolsPCA():
         # analysis
         do_prepare       = False,
         do_sampling      = False,
+        do_pca           = False,
         ):
         """
         This method runs all the methods which will create figures in the paper.
@@ -119,6 +120,9 @@ class ToolsPCA():
         if do_sampling==True:
             self.hex_sampling()
 
+        if do_pca==True:
+            self.run_hex_pca()
+
     ###############
     # run_hex_pca #
     ###############
@@ -126,6 +130,31 @@ class ToolsPCA():
     def run_hex_pca(self):
         """
         """
+
+        # extract line name
+        with open(txtdata) as f:
+            header = f.readline()
+
+        list_name = [s for s in header.split(" ")[3:-1] if "err" not in s]
+        list_name = np.array(list_name)
+
+        # extract data
+        data = np.loadtxt(txtdata)
+        x          = data[:,0]
+        y          = data[:,1]
+        r          = np.sqrt(x**2 + y**2) * self.scale_pc / 1000.
+        len_data   = (len(data[0])-2)/2
+
+        data_mom0  = data[:,2:len_data+2]
+        data_emom0 = data[:,len_data+2:]
+        name_mom0  = np.array(header[2:len_data+2])
+        name_emom0 = np.array(header[len_data+2:])
+
+        13co_mom0  = data_mom0[:,np.where(name_mom0=="13co10")[0][0]]
+        13co_emom0 = data_emom0[:,np.where(name_mom0=="13co10")[0][0]]
+
+        hcn_mom0   = data_mom0[:,np.where(name_mom0=="hcn10")[0][0]]
+        hcn_emom0  = data_emom0[:,np.where(name_mom0=="hcn10")[0][0]]
 
     ################
     # hex_sampling #
