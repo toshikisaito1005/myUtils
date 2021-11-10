@@ -88,7 +88,7 @@ class ToolsPCA():
             self.r_cnd_as       = 3.0
             self.r_sbr          = 10.0 * self.scale_pc / 1000. # kpc
             self.r_sbr_as       = 10.0
-            self.gridsize       = 70 # int(np.ceil(self.r_sbr_as*2/self.beam))
+            self.gridsize       = int(np.ceil(self.r_sbr_as*2/self.beam))
 
             # output maps
             self.outmap_mom0    = self.dir_ready + self._read_key("outmaps_mom0")
