@@ -196,13 +196,13 @@ class ToolsPCA():
         print(list_name)
 
         # normalize
-        mean_mom0  = np.mean(list_mom0[np.where(list_mom0!=0)], axis=0)
-        mean_r13co = np.mean(list_r13co[np.where(list_r13co!=0)], axis=0)
-        mean_rhcn  = np.mean(list_rhcn[np.where(list_rhcn!=0)], axis=0)
+        sum_mom0  = np.sum(list_mom0[np.where(list_mom0!=0)], axis=0)
+        sum_r13co = np.sum(list_r13co[np.where(list_r13co!=0)], axis=0)
+        sum_rhcn  = np.sum(list_rhcn[np.where(list_rhcn!=0)], axis=0)
 
-        list_mom0_mean  = np.where(mean_mom0!=0, list_mom0/mean_mom0, 0)
-        list_r13co_mean = np.where(mean_r13co!=0, list_r13co/mean_r13co, 0)
-        list_rhcn_mean  = np.where(mean_rhcn!=0, list_rhcn/mean_rhcn, 0)
+        list_mom0_mean  = np.where(sum_mom0!=0, list_mom0/sum_mom0, 0)
+        list_r13co_mean = np.where(sum_r13co!=0, list_r13co/sum_r13co, 0)
+        list_rhcn_mean  = np.where(sum_rhcn!=0, list_rhcn/sum_rhcn, 0)
 
         print(np.c_[list_name,np.sum(list_mom0_mean,axis=0)])
 
