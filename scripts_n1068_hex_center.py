@@ -216,6 +216,9 @@ class ToolsPCA():
         list_r13co_mean = list_r13co_mean[:,1:]
         list_rhcn_mean  = list_rhcn_mean[:,1:]
 
+        print(np.shape(list_name))
+        print(np.shape(list_mom0))
+        print(np.shape(list_mom0_mean))
         print(np.c_[list_name,np.sum(list_mom0_mean,axis=0)])
 
 
