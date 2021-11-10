@@ -172,7 +172,7 @@ class ToolsPCA():
             this_emom0 = data_emom0[:,i]
             this_name  = name_mom0[i]
 
-            if len(this_mom0[this_mom0>this_emom0*self.snr_mom])>=5:
+            if len(this_mom0[this_mom0>this_emom0*self.snr_mom])>=10:
                 # save line name
                 list_name.append(this_name)
 
