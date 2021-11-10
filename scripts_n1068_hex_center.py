@@ -98,9 +98,12 @@ class ToolsPCA():
 
             # output txt and png
             self.table_hex_obs  = self.dir_ready + self._read_key("table_hex_obs")
+
             self.outpng_pca_mom0 = self.dir_products + self._read_key("outpng_pca_mom0")
             self.outpng_pca_r13co = self.dir_products + self._read_key("outpng_pca_r13co")
             self.outpng_pca_rhcn = self.dir_products + self._read_key("outpng_pca_rhcn")
+
+            self.outpng_mom0 = self.dir_products + self._read_key("outpng_mom0")
 
     ###################
     # run_ngc1068_pca #
@@ -164,10 +167,11 @@ class ToolsPCA():
         this_y    = dec[data_13co>0]
         this_c    = data_13co[data_13co>0]
         this_name = "13CO integrated intensity map"
+        output    = outpng_mom0.replace("???","13co")
 
-        print("# plot " + self.outpng_mom0)
+        print("# plot " + output)
         self._plot_hexmap(
-            self.outpng_mom0,
+            output,
             this_x,
             this_y,
             this_c,
