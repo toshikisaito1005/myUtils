@@ -77,6 +77,9 @@ def pca_2d_hex(
     u_drawing = []
     for i in range(principals):
         this_u = u_compressed[:,i]
+        print(np.shape(X))
+        print(np.shape(Y))
+        print(np.shape(this_u))
 
         fig = plt.figure()
         gs  = gridspec.GridSpec(nrows=1,ncols=1)
