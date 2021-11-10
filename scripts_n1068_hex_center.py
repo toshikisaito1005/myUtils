@@ -159,19 +159,36 @@ class ToolsPCA():
         emom0_hcn  = data_emom0[:,np.where(name_mom0=="hcn10")[0][0]]
 
         # constrain data
-        list_mom0 = r
-        list_name = []
+        list_mom0  = r
+        list_r13co = r
+        list_rhcn  = r
+        list_name  = []
         for i in range(len(data_mom0[0])):
             this_mom0  = data_mom0[:,i]
             this_emom0 = data_emom0[:,i]
             this_name  = name_mom0[i]
 
             if len(this_mom0[this_mom0>this_emom0*self.snr_mom])>=10:
-                list_mom0 = np.c_[list_mom0,this_mom0]
+                # save line name
                 list_name.append(this_name)
 
-        print(np.shape(list_mom0[0]))
+                # save mom0
+                list_mom0  = np.c_[list_mom0,this_mom0]
 
+                # save ratio relative to 13co
+                ratio      = this_mom0/mom0_13co
+                ratio[np.isnan(ratio)] = 0
+                ratio[np.isinf(ratio)] = 0
+                list_r13co = np.c_[list_r13co,ratio]
+
+                # save ratio relative to hcn
+                ratio      = this_mom0/mom0_hcn
+                ratio[np.isnan(ratio)] = 0
+                ratio[np.isinf(ratio)] = 0
+                list_rhcn  = np.c_[list_rhcn,ratio]
+
+        print(np.shape(list_name),np.shape(list_mom0),np.shape(list_r13co),np.shape(list_rhcn))
+        print(np.min(list_r13co),np.max(list_r13co))
 
     ################
     # hex_sampling #
