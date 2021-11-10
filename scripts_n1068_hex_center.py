@@ -161,7 +161,7 @@ class ToolsPCA():
         data_mom0 = data[:,2:len_data+2]
 
         # plot
-        for in range(len(header)):
+        for i in range(len(header)):
             this_c = data_mom0[:,i]
             this_name = header[i]
 
