@@ -297,7 +297,6 @@ class ToolsPCA():
             self.gridsize,
             )
 
-
     ################
     # hex_sampling #
     ################
@@ -447,7 +446,6 @@ class ToolsPCA():
         # save
         os.system("rm -rf " + outpng)
         plt.savefig(outpng, dpi=300)
-
 
     ###############
     # _create_dir #

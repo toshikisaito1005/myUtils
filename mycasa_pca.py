@@ -64,10 +64,10 @@ def pca_2d_hex(
     # derive CCR
     y = np.cumsum(eig)
     ylist = y / y[-1]
-    index = np.where(ylist>=0.9)[0]
+    index = np.where(ylist>=0.8)[0]
 
     print(ylist)
-    print("The number of axes which first achieve 90%: " + str(index[0] + 1))
+    print("The number of axes which first achieve 80%: " + str(index[0] + 1))
 
     # visualize
     principals = index[0] + 1
