@@ -132,13 +132,66 @@ class ToolsPCA():
             self.run_hex_pca() # something wrong!
 
         if plot_hexmap==True:
-            self.plot_hex()
+            self.plot_hex_mom0()
+            self.plot_hex_ratio()
 
-    ############
-    # plot_hex #
-    ############
+    ##################
+    # plot_hex_ratio #
+    ##################
 
-    def plot_hex(self):
+    def plot_hex_ratio(self):
+        """
+        """
+
+        taskname = self.modname + sys._getframe().f_code.co_name
+        check_first(self.table_hex_obs,taskname)
+
+        # read header
+        f      = open(self.table_hex_obs)
+        header = f.readline()
+        header = header.split(" ")[3:]
+        header = np.array([s.split("\n")[0] for s in header])
+        f.close()
+
+        # import data
+        data      = np.loadtxt(self.table_hex_obs)
+        len_data  = (len(data[0])-2)/2
+        header    = header[:len_data]
+        ra        = data[:,0]
+        dec       = data[:,1]
+        data_mom0 = data[:,2:len_data+2]
+
+        data_hcn  = data_mom0[:,np.where(name_mom0=="hcn10")[0][0]]
+
+        # plot
+        for i in range(len(header)):
+            this_c = data_mom0[:,i] / data_hcn
+            this_c[np.where(np.isinf(this_c))] = 0
+            this_c[np.where(np.isnan(this_c))] = 0
+            this_name = header[i]
+
+            this_x = ra[this_c>0]
+            this_y = dec[this_c>0]
+            this_c = this_c[this_c>0]
+
+            output = self.outpng_mom0.replace("???","r_"+this_name+"_hcn")
+
+            if len(this_c)!=0:
+                print("# plot " + output)
+                self._plot_hexmap(
+                    output,
+                    this_x,
+                    this_y,
+                    this_c,
+                    this_name,
+                    ann=False,
+                    )
+
+    #################
+    # plot_hex_mom0 #
+    #################
+
+    def plot_hex_mom0(self):
         """
         """
 
