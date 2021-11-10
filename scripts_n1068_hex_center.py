@@ -203,7 +203,7 @@ class ToolsPCA():
         list_mom0_mean  = r
         list_r13co_mean = r
         list_rhcn_mean  = r
-        for i in range(len(list_mom0)):
+        for i in range(len(list_mom0[0])):
             this_mom0  = list_mom0[:,i]
             this_r13co = list_r13co[:,i]
             this_rhcn  = list_rhcn[:,i]
