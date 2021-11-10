@@ -151,6 +151,9 @@ class ToolsPCA():
         data_mom0  = data[:,2:len_data+2]
         data_emom0 = data[:,len_data+2:]
         name_mom0  = np.array(header[2:len_data+2])
+        print(np.shape(data_mom0))
+        print(np.shape(data_emom0))
+        print(np.shape(name_mom0))
 
         mom0_13co  = data_mom0[:,np.where(name_mom0=="13co10")[0][0]]
         emom0_13co = data_emom0[:,np.where(name_mom0=="13co10")[0][0]]
