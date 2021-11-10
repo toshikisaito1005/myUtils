@@ -366,6 +366,18 @@ class ToolsPCA():
             self.gridsize,
             )
 
+        pca_2d_hex(
+            x,
+            y,
+            list_r13co_mean,
+            list_name,
+            self.outpng_pca_r13co,
+            "_150pc",
+            self.snr_mom,
+            self.beam,
+            self.gridsize,
+            )
+
     ################
     # hex_sampling #
     ################
