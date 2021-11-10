@@ -141,7 +141,7 @@ class ToolsPCA():
         header = [s.split("\n")[0] for s in header]
         f.close()
 
-        # extract data
+        # extract mom0 data
         data = np.loadtxt(self.table_hex_obs)
         x          = data[:,0]
         y          = data[:,1]
@@ -158,7 +158,7 @@ class ToolsPCA():
         mom0_hcn   = data_mom0[:,np.where(name_mom0=="hcn10")[0][0]]
         emom0_hcn  = data_emom0[:,np.where(name_mom0=="hcn10")[0][0]]
 
-        # constrain data
+        # constrain data by detection number of pixels
         list_mom0  = r
         list_r13co = r
         list_rhcn  = r
@@ -189,6 +189,18 @@ class ToolsPCA():
 
         print("# survived lines for PCA analysis are...")
         print(list_name)
+
+        # normalize
+        mean_mom0  = np.mean(list_mom0[np.where(list_mom0!=0)], axis=0)
+        mean_r13co = np.mean(list_r13co[np.where(list_r13co!=0)], axis=0)
+        mean_rhcn  = np.mean(list_rhcn[np.where(list_rhcn!=0)], axis=0)
+
+        list_mom0_mean  = np.where(mean_mom0!=0, list_mom0/mean_mom0, 0)
+        list_r13co_mean = np.where(mean_r13co!=0, list_r13co/mean_r13co, 0)
+        list_rhcn_mean  = np.where(mean_rhcn!=0, list_rhcn/mean_rhcn, 0)
+
+        print(np.sum(list_mom0_mean,axis=0))
+
 
     ################
     # hex_sampling #
