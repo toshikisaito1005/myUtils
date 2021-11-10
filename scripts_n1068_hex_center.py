@@ -160,14 +160,14 @@ class ToolsPCA():
         dec       = data[:,1]
         data_mom0 = data[:,2:len_data+2]
 
-        data_13co = data_mom0[:,np.where(header=="13co10")[0][0]]
+        data_13co = data_mom0[:,np.where(header=="cch10")[0][0]]
 
         # plot
         this_x    = ra[data_13co>0]
         this_y    = dec[data_13co>0]
         this_c    = data_13co[data_13co>0]
-        this_name = "13CO integrated intensity map"
-        output    = self.outpng_mom0.replace("???","13co")
+        this_name = "CCH integrated intensity map"
+        output    = self.outpng_mom0.replace("???","cch")
 
         print("# plot " + output)
         self._plot_hexmap(
