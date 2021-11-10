@@ -214,12 +214,11 @@ class ToolsPCA():
             list_r13co_mean = np.c_[list_r13co_mean, np.where(this_r13co!=0, this_r13co/sum_r13co, 0)]
             list_rhcn_mean  = np.c_[list_rhcn_mean, np.where(this_rhcn!=0, this_rhcn/sum_rhcn, 0)]
 
-        list_mom0_mean  = list_mom0_mean[:,1:]
-        list_r13co_mean = list_r13co_mean[:,1:]
-        list_rhcn_mean  = list_rhcn_mean[:,1:]
+        list_mom0_mean  = list_mom0_mean[:,1:].T
+        list_r13co_mean = list_r13co_mean[:,1:].T
+        list_rhcn_mean  = list_rhcn_mean[:,1:].T
 
         # run pca
-        list_mom0_mean = list_mom0_mean.T
         pca_2d_hex(
             x,
             y,
