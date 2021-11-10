@@ -170,7 +170,7 @@ class ToolsPCA():
                 list_mom0 = np.c_[list_mom0,this_mom0]
                 list_name.append(this_name)
 
-        print(np.shape(list_mom0))
+        print(np.shape(list_mom0[0]))
 
 
     ################
