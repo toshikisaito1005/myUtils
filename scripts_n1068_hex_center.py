@@ -162,7 +162,7 @@ class ToolsPCA():
         list_mom0  = r
         list_r13co = r
         list_rhcn  = r
-        list_name  = []
+        list_name  = ["r"]
         for i in range(len(data_mom0[0])):
             this_mom0  = data_mom0[:,i]
             this_emom0 = data_emom0[:,i]
@@ -187,8 +187,8 @@ class ToolsPCA():
                 ratio[np.isinf(ratio)] = 0
                 list_rhcn  = np.c_[list_rhcn,ratio]
 
-        print(np.shape(list_name),np.shape(list_mom0),np.shape(list_r13co),np.shape(list_rhcn))
-        print(np.min(list_r13co),np.max(list_r13co))
+        print("# survived lines for PCA analysis are...")
+        print(list_name)
 
     ################
     # hex_sampling #
