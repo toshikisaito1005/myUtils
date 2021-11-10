@@ -138,6 +138,7 @@ class ToolsPCA():
         f = open(self.table_hex_obs)
         header = f.readline()
         header = header.split(" ")[1:]
+        header = [s.split("\n")[0] for s in header]
         f.close()
 
         # extract data
