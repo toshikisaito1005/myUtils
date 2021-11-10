@@ -269,7 +269,7 @@ class ToolsPCA():
 
             list_mom0_mean  = np.c_[list_mom0_mean, this_mom0/sum_mom0]#np.where(this_mom0!=0, this_mom0/sum_mom0, 0)]
             list_r13co_mean = np.c_[list_r13co_mean, this_r13co/sum_r13co]#np.where(this_r13co!=0, this_r13co/sum_r13co, 0)]
-            list_rhcn_mean  = np.c_[list_rhcn_mean, this_rhcn/sum_rhcn:#np.where(this_rhcn!=0, this_rhcn/sum_rhcn, 0)]
+            list_rhcn_mean  = np.c_[list_rhcn_mean, this_rhcn/sum_rhcn]#np.where(this_rhcn!=0, this_rhcn/sum_rhcn, 0)]
 
         list_mom0_mean  = list_mom0_mean[:,1:].T
         list_r13co_mean = list_r13co_mean[:,1:].T
