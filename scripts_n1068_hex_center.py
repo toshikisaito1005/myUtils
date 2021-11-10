@@ -187,6 +187,11 @@ class ToolsPCA():
                 ratio[np.isinf(ratio)] = 0
                 list_rhcn  = np.c_[list_rhcn,ratio]
 
+        list_mom0  = list_mom0[:,1:]
+        list_r13co = list_r13co[:,1:]
+        list_rhcn  = list_rhcn[:,1:]
+        list_name  = list_name[1:]
+
         print("# survived lines for PCA analysis are...")
         print(list_name)
 
