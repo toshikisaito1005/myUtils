@@ -219,6 +219,7 @@ class ToolsPCA():
         list_rhcn_mean  = list_rhcn_mean[:,1:]
 
         # run pca
+        list_mom0_mean = list_mom0_mean.T
         pca_2d_hex(
             x,
             y,
