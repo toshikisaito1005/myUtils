@@ -161,7 +161,7 @@ class ToolsPCA():
         dec       = data[:,1]
         data_mom0 = data[:,2:len_data+2]
 
-        data_hcn  = data_mom0[:,np.where(name_mom0=="hcn10")[0][0]]
+        data_hcn  = data_mom0[:,np.where(header=="hcn10")[0][0]]
 
         # plot
         for i in range(len(header)):
