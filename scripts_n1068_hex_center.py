@@ -119,6 +119,14 @@ class ToolsPCA():
         if do_sampling==True:
             self.hex_sampling()
 
+    ###############
+    # run_hex_pca #
+    ###############
+
+    def run_hex_pca(self):
+        """
+        """
+
     ################
     # hex_sampling #
     ################
@@ -140,7 +148,7 @@ class ToolsPCA():
         for i in range(len(maps_mom0)):
             this_mom0 = maps_mom0[i]
             this_line = this_mom0.split("/")[-1].split("n1068_")[1].split(".fits")[0]
-            print("# sampleing " + this_mom0.split("/")[-1])
+            print("# sampling " + this_mom0.split("/")[-1])
             x,y,z = hexbin_sampling(
                 this_mom0,
                 self.ra_agn,
@@ -149,6 +157,10 @@ class ToolsPCA():
                 gridsize=27,
                 err=False,
                 )
+            cut = np.where(np.sqrt(x**2+y**2)<=self.r_sbr_as)
+            x   = x[cut]
+            y   = y[cut]
+            z   = z[cut]
 
             if i==0:
                 output_hex = np.c_[x,y]
@@ -163,7 +175,7 @@ class ToolsPCA():
         for i in range(len(maps_emom0)):
             this_emom0 = maps_emom0[i]
             this_line  = this_emom0.split("/")[-1].split("n1068_")[1].split(".fits")[0]
-            print("# sampleing " + this_emom0.split("/")[-1])
+            print("# sampling " + this_emom0.split("/")[-1])
             x,y,z = hexbin_sampling(
                 this_emom0,
                 self.ra_agn,
@@ -172,6 +184,10 @@ class ToolsPCA():
                 gridsize=27,
                 err=True,
                 )
+            cut = np.where(np.sqrt(x**2+y**2)<=self.r_sbr_as)
+            x   = x[cut]
+            y   = y[cut]
+            z   = z[cut]
 
             output_hex = np.c_[output_hex,z]
             header.append(this_line+"(err)")
