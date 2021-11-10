@@ -73,7 +73,7 @@ class ToolsSBR():
 
         # import parameters
         if keyfile_fig is not None:
-            self.modname = "ToolsDense."
+            self.modname = "ToolsSBR."
             
             # get directories
             self.dir_proj       = self._read_key("dir_proj")
