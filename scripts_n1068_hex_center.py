@@ -135,11 +135,10 @@ class ToolsPCA():
         check_first(self.table_hex_obs,taskname)
 
         # extract line name
-        with open(self.table_hex_obs) as f:
-            header = f.readline()
-
-        list_name = [s for s in header.split(" ")[3:-1] if "err" not in s]
-        list_name = np.array(list_name)
+        f = open(self.table_hex_obs)
+        header = f.readline()
+        header = header.split(" ")[1:]
+        f.close()
 
         # extract data
         data = np.loadtxt(self.table_hex_obs)
@@ -150,9 +149,10 @@ class ToolsPCA():
 
         data_mom0  = data[:,2:len_data+2]
         data_emom0 = data[:,len_data+2:]
-        name_mom0  = np.array(list_name[2:len_data+2])
-        name_emom0 = np.array(list_name[len_data+2:])
+        name_mom0  = np.array(header[2:len_data+2])
+        name_emom0 = np.array(header[len_data+2:])
         print(name_mom0)
+        print(name_emom0)
 
         mom0_13co  = data_mom0[:,np.where(name_mom0=="13co10")[0][0]]
         emom0_13co = data_emom0[:,np.where(name_mom0=="13co10")[0][0]]
