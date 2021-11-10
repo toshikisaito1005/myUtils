@@ -88,6 +88,7 @@ class ToolsPCA():
             self.r_cnd_as       = 3.0
             self.r_sbr          = 10.0 * self.scale_pc / 1000. # kpc
             self.r_sbr_as       = 10.0
+            self.gridsize       = int(np.ceil(self.r_sbr_as*2/self.beam))
 
             # output maps
             self.outmap_mom0    = self.dir_ready + self._read_key("outmaps_mom0")
@@ -97,6 +98,7 @@ class ToolsPCA():
 
             # output txt and png
             self.table_hex_obs  = self.dir_ready + self._read_key("table_hex_obs")
+            self.outpng_pca     = self.dir_products + self._read_key("outpng_pca")
 
     ###################
     # run_ngc1068_pca #
@@ -216,10 +218,18 @@ class ToolsPCA():
         list_r13co_mean = list_r13co_mean[:,1:]
         list_rhcn_mean  = list_rhcn_mean[:,1:]
 
-        print(np.shape(list_name))
-        print(np.shape(list_mom0))
-        print(np.shape(list_mom0_mean))
-        print(np.c_[list_name,np.sum(list_mom0_mean,axis=0)])
+        # run pca
+        pca_2d_hex(
+            x,
+            y,
+            list_mom0_mean,
+            list_name,
+            self.outpng_pca,
+            "_150pc",
+            self.snr_mom,
+            self.beam,
+            self.gridsize,
+            )
 
 
     ################
