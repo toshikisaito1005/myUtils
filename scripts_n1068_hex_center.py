@@ -98,7 +98,9 @@ class ToolsPCA():
 
             # output txt and png
             self.table_hex_obs  = self.dir_ready + self._read_key("table_hex_obs")
-            self.outpng_pca     = self.dir_products + self._read_key("outpng_pca")
+            self.outpng_pca_mom0 = self.dir_products + self._read_key("outpng_pca_mom0")
+            self.outpng_pca_r13co = self.dir_products + self._read_key("outpng_pca_r13co")
+            self.outpng_pca_rhcn = self.dir_products + self._read_key("outpng_pca_rhcn")
 
     ###################
     # run_ngc1068_pca #
@@ -224,7 +226,19 @@ class ToolsPCA():
             y,
             list_mom0_mean,
             list_name,
-            self.outpng_pca,
+            self.outpng_pca_mom0,
+            "_150pc",
+            self.snr_mom,
+            self.beam,
+            self.gridsize,
+            )
+
+        pca_2d_hex(
+            x,
+            y,
+            list_rhcn_mean,
+            list_name,
+            self.outpng_pca_rhcn,
             "_150pc",
             self.snr_mom,
             self.beam,

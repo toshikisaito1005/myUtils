@@ -32,7 +32,9 @@ outfits_maps_emom0  ,,,n1068_???_err.fits
 # output png and txt #
 ######################
 table_hex_obs       ,,,n1068_hex_obs.txt
-outpng_pca          ,,,fig_hexmap_pca_150pc.png
+outpng_pca_mom0     ,,,fig_hexmap_pca_mom0_150pc.png
+outpng_pca_r13co    ,,,fig_hexmap_pca_r13co_150pc.png
+outpng_pca_rhcn     ,,,fig_hexmap_pca_rhcn_150pc.png
 
 #######
 # end #
