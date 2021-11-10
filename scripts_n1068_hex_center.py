@@ -171,15 +171,16 @@ class ToolsPCA():
 
             output = self.outpng_mom0.replace("???",this_name)
 
-            print("# plot " + output)
-            self._plot_hexmap(
-                output,
-                this_x,
-                this_y,
-                this_c,
-                this_name,
-                ann=False,
-                )
+            if len(this_c)!=0:
+                print("# plot " + output)
+                self._plot_hexmap(
+                    output,
+                    this_x,
+                    this_y,
+                    this_c,
+                    this_name,
+                    ann=False,
+                    )
 
     ###############
     # run_hex_pca #
