@@ -623,7 +623,7 @@ class ToolsSBR():
         """
 
         template = "template.image"
-        run_importfits(template,taskname)
+        run_importfits(self.map_av,template)
 
         taskname = self.modname + sys._getframe().f_code.co_name
         check_first(template,taskname)
