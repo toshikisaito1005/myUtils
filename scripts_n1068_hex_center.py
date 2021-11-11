@@ -99,6 +99,9 @@ class ToolsPCA():
 
             # output txt and png
             self.table_hex_obs  = self.dir_ready + self._read_key("table_hex_obs")
+            self.table_hex_pca_mom0  = self.dir_ready + self._read_key("table_hex_pca_mom0")
+            self.table_hex_pca_r13co  = self.dir_ready + self._read_key("table_hex_pca_r13co")
+            self.table_hex_pca_rhcn  = self.dir_ready + self._read_key("table_hex_pca_rhcn")
 
             self.outpng_pca_mom0 = self.dir_products + self._read_key("outpng_pca_mom0")
             self.outpng_pca_r13co = self.dir_products + self._read_key("outpng_pca_r13co")
@@ -130,9 +133,9 @@ class ToolsPCA():
             self.hex_sampling()
 
         if do_and_plot_pca==True:
-            self.run_hex_pca(output=self.outpng_pca_mom0,reverse=True)
-            self.run_hex_pca(output=self.outpng_pca_rhcn,denom="hcn10",reverse=True)
-            self.run_hex_pca(output=self.outpng_pca_r13co,denom="13co10",reverse=True)
+            self.run_hex_pca(output=self.outpng_pca_mom0,outtxt=self.table_hex_pca_mom0,reverse=True)
+            self.run_hex_pca(output=self.outpng_pca_rhcn,outtxt=self.table_hex_pca_rhcn,denom="hcn10",reverse=True)
+            self.run_hex_pca(output=self.outpng_pca_r13co,outtxt=self.table_hex_pca_r13co,denom="13co10",reverse=True)
 
         if plot_hexmap==True:
             self.plot_hexmap_mom0()
@@ -222,7 +225,7 @@ class ToolsPCA():
     # run_hex_pca #
     ###############
 
-    def run_hex_pca(self,output,denom=None,reverse=False):
+    def run_hex_pca(self,output,outtxt,denom=None,reverse=False):
         """
         """
 
@@ -278,7 +281,8 @@ class ToolsPCA():
             factor=2,
             )
 
-        print(np.shape(array_hex_pca))
+        header = "ra(deg) dec(deg) PC1 PC2 ..."
+        np.savetxt(outtxt,array_hex_pca,header=header)
 
     ################
     # hex_sampling #
