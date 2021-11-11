@@ -291,7 +291,7 @@ class ToolsPCA():
             else:
                 print("# skip " + this_name + " " + str(len_data))
 
-        data = np.array(data)
+        data = np.array(data).T
 
         # run
         print(np.shape(x))
