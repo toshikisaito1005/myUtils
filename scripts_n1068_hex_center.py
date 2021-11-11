@@ -264,7 +264,7 @@ class ToolsPCA():
 
         # run
         os.system("rm -rf " + output)
-        pca_2d_hex(
+        array_hex_pca = pca_2d_hex(
             x,
             y,
             data,
@@ -277,6 +277,8 @@ class ToolsPCA():
             reverse=reverse,
             factor=2,
             )
+
+        print(np.shape(array_hex_pca))
 
     ################
     # hex_sampling #
