@@ -294,6 +294,10 @@ class ToolsPCA():
         data = np.array(data)
 
         # run
+        print(np.shape(x))
+        print(np.shape(y))
+        print(np.shape(data))
+        print(np.shape(data_name))
         os.system("rm -rf " + self.outpng_pca_mom0)
         pca_2d_hex(
             x,
