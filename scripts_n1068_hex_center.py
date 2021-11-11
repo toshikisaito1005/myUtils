@@ -223,7 +223,7 @@ class ToolsPCA():
         check_first(self.table_hex_obs,taskname)
 
         # extract line name
-        list_name,array_data,array_err,_,_,r = self._read_table(self.table_hex_obs)
+        list_name,array_data,array_err,x,y,r = self._read_table(self.table_hex_obs)
 
         # main
         data, data_name = [], []
