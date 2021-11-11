@@ -132,7 +132,7 @@ class ToolsPCA():
         if do_and_plot_pca==True:
             self.run_hex_pca(output=self.outpng_pca_mom0,reverse=True)
             self.run_hex_pca(output=self.outpng_pca_rhcn,denom="hcn10",reverse=True)
-            self.run_hex_pca(output=self.outpng_pca_r13co,denom="13co10")
+            self.run_hex_pca(output=self.outpng_pca_r13co,denom="13co10",reverse=True)
 
         if plot_hexmap==True:
             self.plot_hexmap_mom0()
