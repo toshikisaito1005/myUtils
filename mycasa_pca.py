@@ -130,6 +130,10 @@ def pca_2d_hex(
         this_out = output.replace(bstr + ".png", new_name)
         plt.savefig(this_out)
 
+    print(np.shape(X))
+    print(np.shape(Y))
+    print(np.shape(np.array(u_drawing)))
+
     return np.c_[-X, Y, np.array(u_drawing)]
 
 ############
