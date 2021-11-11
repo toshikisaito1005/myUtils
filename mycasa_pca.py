@@ -89,6 +89,9 @@ def pca_2d_hex(
         u_drawing.append(this_hex)
 
     # plot eigenvector
+    print(np.shape(X))
+    print(np.shape(Y))
+    print(np.shape(u_drawing))
     for i in range(principals):
         this_out = output.replace(bstr+".png","_pc"+str(i+1)+bstr+".png")
         myfig_hex_map(-X, Y, u_drawing[i], this_out, beam=beam,
