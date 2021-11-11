@@ -131,6 +131,7 @@ class ToolsPCA():
         if do_and_plot_pca==True:
             self.run_hex_pca(output=self.outpng_pca_mom0)
             self.run_hex_pca(output=self.outpng_pca_rhcn,denom="hcn10")
+            self.run_hex_pca(output=self.outpng_pca_r13co,denom="13co10")
 
         if plot_hexmap==True:
             self.plot_hexmap_mom0()
@@ -245,7 +246,7 @@ class ToolsPCA():
                 err_denom  = None
 
             # sn cut and zero padding
-            this_flux = self._process_hex_for_pca(this_flux, this_err, r, data_denom, err_denom)
+            this_flux = self._process_hex_for_pca(this_flux,this_err,r,data_denom,err_denom)
 
             # limiting by #data
             len_data = len(this_flux[this_flux>0])
@@ -269,6 +270,7 @@ class ToolsPCA():
             self.beam,
             self.gridsize,
             reverse=True,
+            lim=[14,14]
             )
 
     ########################

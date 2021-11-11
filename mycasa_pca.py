@@ -41,6 +41,7 @@ def pca_2d_hex(
     beam=0.8,
     gridsize=70,
     reverse=False,
+    lim=None,
     ):
     """
     References
@@ -124,6 +125,10 @@ def pca_2d_hex(
 
         ax.set_xlabel("PC1")
         ax.set_ylabel(this_pcname)
+
+        if lim!=None:
+            set.xlim(lim)
+            set.ylim(lim)
 
         new_name = "_pc1_vs_pc" + str(i+1) + bstr + ".png"
         this_out = output.replace(bstr + ".png", new_name)
