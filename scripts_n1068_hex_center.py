@@ -288,6 +288,8 @@ class ToolsPCA():
         maps_mom0 = glob.glob(self.outfits_mom0.replace("???","*"))
         maps_mom0 = [s for s in maps_mom0 if "err" not in s]
         maps_mom0.sort()
+        maps_mom0.append(self.map_av)
+        maps_mom0.append(self.map_ionization)
 
         check_first(maps_mom0[0],taskname)
 
