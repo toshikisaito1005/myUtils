@@ -316,7 +316,7 @@ class ToolsPCA():
             this_r13co = list_r13co[:,i]
             this_rhcn  = list_rhcn[:,i]
 
-            thres = 0
+            thres = 1e9
 
             mean_mom0   = np.mean(this_mom0[np.where(this_mom0!=thres)])
             mean_r13co  = np.mean(this_r13co[np.where(this_r13co!=thres)])
