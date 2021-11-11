@@ -235,6 +235,12 @@ class ToolsPCA():
             this_err  = array_err[:,i]
             this_name = list_name[i]
 
+            if this_name=="extinction":
+                this_err = this_err * 0
+            elif this_name=="siiisii_ratio":
+                this_err = this_err * 0:
+
+
             if this_name==denom:
                 continue
 
@@ -316,6 +322,8 @@ class ToolsPCA():
         # sampling emom0
         maps_emom0 = glob.glob(self.outfits_emom0.replace("???","*"))
         maps_emom0.sort()
+        maps_emom0.append(self.map_av)
+        maps_emom0.append(self.map_ionization)
 
         for i in range(len(maps_emom0)):
             this_emom0 = maps_emom0[i]
