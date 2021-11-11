@@ -107,7 +107,8 @@ class ToolsPCA():
             self.outpng_pca_r13co = self.dir_products + self._read_key("outpng_pca_r13co")
             self.outpng_pca_rhcn  = self.dir_products + self._read_key("outpng_pca_rhcn")
 
-            self.outpng_mom0 = self.dir_products + self._read_key("outpng_mom0")
+            self.outpng_mom0      = self.dir_products + self._read_key("outpng_mom0")
+            self.outpng_pca       = self.dir_products + self._read_key("outpng_pca")
 
     ###################
     # run_ngc1068_pca #
@@ -168,6 +169,20 @@ class ToolsPCA():
         r        = np.sqrt(x**2 + y**2)
         data_pca = data[:,2:]
 
+        # plot
+        for i in range(len(data_pca[0])):
+            this_c    = data_pca[:,i]
+            output = self.outpng_pca.replace("???",str(i+1))
+
+            print("# plot " + output)
+            self._plot_hexmap(
+                output,
+                x,
+                y,
+                this_c,
+                "PC"+str(i+1),
+                ann=False,
+                )
 
     #####################
     # plot_hexmap_ratio #

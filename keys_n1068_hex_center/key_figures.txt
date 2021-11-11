@@ -40,6 +40,7 @@ outpng_pca_mom0     ,,,fig_hexmap_pca_mom0_150pc.png
 outpng_pca_r13co    ,,,fig_hexmap_pca_r13co_150pc.png
 outpng_pca_rhcn     ,,,fig_hexmap_pca_rhcn_150pc.png
 outpng_mom0         ,,,fig_hexmap_???.png
+outpng_pca          ,,,fig_hexmap_pca???.png
 
 #######
 # end #
