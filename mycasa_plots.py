@@ -194,7 +194,7 @@ def myfig_hex_map(
     myax_set(ax,xlim=xlim,ylim=ylim,title=title,aspect=1.0)
 
     if zerocbar==True:
-        clim = [-np.max(abs(C))/2.,np.max(abs(C))/2.]
+        clim = [-np.max(abs(C)),np.max(abs(C))]
         hexdata = ax.hexbin(
             X, Y, C=C,
             cmap=cmap,
