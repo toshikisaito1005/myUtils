@@ -171,14 +171,18 @@ class ToolsPCA():
 
         # plot
         for i in range(len(data_pca[0])):
-            this_c    = data_pca[:,i]
+            this_c = data_pca[:,i]
+            this_x = x[this_c!=0]
+            this_y = y[this_c!=0]
+            this_c = this_c[this_c!=0]
+
             output = self.outpng_pca.replace("???",str(i+1))
 
             print("# plot " + output)
             self._plot_hexmap(
                 output,
-                x,
-                y,
+                this_x,
+                this_y,
                 this_c,
                 "PC"+str(i+1),
                 ann=False,
