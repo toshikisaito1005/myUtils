@@ -410,10 +410,6 @@ class ToolsDense():
         data = np.array(data)
 
         # run
-        print(np.shape(x))
-        print(np.shape(y))
-        print(np.shape(data))
-        print(np.shape(data_name))
         os.system("rm -rf " + self.dir_hexp + "hexp_mom0*" + mask + ".png")
         output = self.dir_hexp + "hexp_mom0" + bstr + ".png"
         pca_2d_hex(x,y,data,data_name,output,bstr,self.snr_mom,beam,gridsize)
