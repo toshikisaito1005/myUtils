@@ -292,6 +292,8 @@ class ToolsPCA():
                 print("# skip " + this_name + " " + str(len_data))
 
         data = np.array(data)
+        data[np.isnan(data)] = 0
+        data[np.isinf(data)] = 0
 
         # run
         print(np.shape(x))
