@@ -147,26 +147,13 @@ class ToolsPCA():
         taskname = self.modname + sys._getframe().f_code.co_name
         check_first(self.table_hex_obs,taskname)
 
-        # read header
-        f      = open(self.table_hex_obs)
-        header = f.readline()
-        header = header.split(" ")[3:]
-        header = np.array([s.split("\n")[0] for s in header])
-        f.close()
-
-        # import data
-        data      = np.loadtxt(self.table_hex_obs)
-        len_data  = (len(data[0])-2)/2
-        header    = header[:len_data]
-        ra        = data[:,0]
-        dec       = data[:,1]
-        data_mom0 = data[:,2:len_data+2]
-
-        data_hcn  = data_mom0[:,np.where(header==denom)[0][0]]
+        # extract line name
+        header,data_mom0,_,ra,dec = self._read_table(self.table_hex_obs)
+        data_denom = data_mom0[:,np.where(header==denom)[0][0]]
 
         # plot
         for i in range(len(header)):
-            this_c = data_mom0[:,i] / data_hcn
+            this_c = data_mom0[:,i] / data_denom
             this_c[np.where(np.isinf(this_c))] = 0
             this_c[np.where(np.isnan(this_c))] = 0
             this_name = header[i]
@@ -199,20 +186,8 @@ class ToolsPCA():
         taskname = self.modname + sys._getframe().f_code.co_name
         check_first(self.table_hex_obs,taskname)
 
-        # read header
-        f      = open(self.table_hex_obs)
-        header = f.readline()
-        header = header.split(" ")[3:]
-        header = np.array([s.split("\n")[0] for s in header])
-        f.close()
-
-        # import data
-        data      = np.loadtxt(self.table_hex_obs)
-        len_data  = (len(data[0])-2)/2
-        header    = header[:len_data]
-        ra        = data[:,0]
-        dec       = data[:,1]
-        data_mom0 = data[:,2:len_data+2]
+        # extract line name
+        header,data_mom0,_,ra,dec = self._read_table(self.table_hex_obs)
 
         # plot
         for i in range(len(header)):
@@ -248,22 +223,7 @@ class ToolsPCA():
         check_first(self.table_hex_obs,taskname)
 
         # extract line name
-        f = open(self.table_hex_obs)
-        header = f.readline()
-        header = header.split(" ")[1:]
-        header = [s.split("\n")[0] for s in header]
-        f.close()
-
-        # extract mom0 data
-        data = np.loadtxt(self.table_hex_obs)
-        x          = data[:,0]
-        y          = data[:,1]
-        r          = np.sqrt(x**2 + y**2)
-        len_data   = (len(data[0])-2)/2
-
-        array_data = data[:,2:len_data+2]
-        array_err  = data[:,len_data+2:]
-        list_name  = np.array(header[2:len_data+2])
+        list_name,array_data,array_err,_,_ = self._read_table(self.table_hex_obs)
 
         # main
         data, data_name = [], []
@@ -273,28 +233,16 @@ class ToolsPCA():
             this_name = list_name[i]
 
             # sn cut and zero padding
-            this_thres = abs(this_err * self.snr_mom)
-            this_flux  = np.where(this_flux>=this_thres, this_flux, 0)
-            this_flux  = ( this_flux - np.mean(this_flux) ) / np.std(this_flux)
-            this_flux[np.isnan(this_flux)] = 0
-            this_flux[np.isinf(this_flux)] = 0
-
-            # masking
-            this_flux = np.where(r<=self.r_sbr_as, this_flux, 0)
-            this_err  = np.where(r<=self.r_sbr_as, this_err, 0)
+            this_flux = self._process_hex_for_pca(this_flux, this_err)
 
             # limiting by #data
             len_data = len(this_flux[this_flux>0])
             if len_data>=10:
-                print("# meet " + this_name + " " + str(len_data))
+                print("# meet " + this_name + " #=" + str(len_data))
                 data.append(this_flux.flatten())
                 data_name.append(this_name)
             else:
-                print("# skip " + this_name + " " + str(len_data))
-
-        data = np.array(data)
-        data[np.isnan(data)] = 0
-        data[np.isinf(data)] = 0
+                print("# skip " + this_name + " #=" + str(len_data))
 
         # run
         os.system("rm -rf " + self.outpng_pca_mom0)
@@ -310,6 +258,63 @@ class ToolsPCA():
             self.gridsize,
             reverse=True,
             )
+
+    ########################
+    # _process_hex_for_pca #
+    ########################
+
+    def _process_hex_for_pca(
+        self,
+        this_flux,
+        this_err,
+        ):
+        """
+        """
+
+        # sn cut
+        this_thres = abs(this_err * self.snr_mom)
+        this_flux  = np.where(this_flux>=this_thres, this_flux, 0)
+
+        # normalize
+        this_flux  = ( this_flux - np.mean(this_flux) ) / np.std(this_flux)
+
+        # zero padding
+        this_flux[np.isnan(this_flux)] = 0
+        this_flux[np.isinf(this_flux)] = 0
+
+        # extract center by masking
+        this_flux = np.where(r<=self.r_sbr_as, this_flux, 0)
+        this_err  = np.where(r<=self.r_sbr_as, this_err, 0)
+
+        return this_flux
+
+    ###############
+    # _read_table #
+    ###############
+
+    def _read_table(self,txtdata):
+        """
+        """
+
+        # extract line name
+        f = open(txtdata)
+        header = f.readline()
+        header = header.split(" ")[1:]
+        header = [s.split("\n")[0] for s in header]
+        f.close()
+
+        # extract mom0 data
+        data = np.loadtxt(txtdata)
+        x          = data[:,0]
+        y          = data[:,1]
+        r          = np.sqrt(x**2 + y**2)
+        len_data   = (len(data[0])-2)/2
+
+        array_data = data[:,2:len_data+2]
+        array_err  = data[:,len_data+2:]
+        list_name  = np.array(header[2:len_data+2])
+
+        return list_name, array_data, array_err, x, y
 
     ################
     # hex_sampling #
