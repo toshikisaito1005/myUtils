@@ -338,9 +338,9 @@ class ToolsPCA():
             list_rhcn_mean[np.isinf(list_rhcn_mean)] = 0
 
             # mask outer part
-            list_mom0_mean = np.where(np.sqrt(x**+y**2)<=self.r_sbr_as,list_mom0_mean,0)
-            list_r13co_mean = np.where(np.sqrt(x**+y**2)<=self.r_sbr_as,list_r13co_mean,0)
-            list_rhcn_mean = np.where(np.sqrt(x**+y**2)<=self.r_sbr_as,list_rhcn_mean,0)
+            list_mom0_mean = np.where(np.sqrt(x**2+y**2)<=self.r_sbr_as,list_mom0_mean,0)
+            list_r13co_mean = np.where(np.sqrt(x**2+y**2)<=self.r_sbr_as,list_r13co_mean,0)
+            list_rhcn_mean = np.where(np.sqrt(x**2+y**2)<=self.r_sbr_as,list_rhcn_mean,0)
 
 
         list_mom0_mean  = list_mom0_mean[:,1:].T
