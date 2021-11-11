@@ -83,7 +83,7 @@ class ToolsPCA():
             self.scale_pc       = float(self._read_key("scale", "gal"))
             self.scale_kpc      = self.scale_pc / 1000.
 
-            self.beam           = 2.14859173174056
+            self.beam           = 2.14859173174056 # 150pc in arcsec
             self.snr_mom        = 3.0
             self.r_cnd          = 3.0 * self.scale_pc / 1000. # kpc
             self.r_cnd_as       = 3.0
@@ -274,72 +274,6 @@ class ToolsPCA():
             factor=2,
             )
 
-    ########################
-    # _process_hex_for_pca #
-    ########################
-
-    def _process_hex_for_pca(
-        self,
-        this_flux,
-        this_err,
-        this_r,
-        denom_flux=None,
-        denom_err=None,
-        ):
-        """
-        """
-
-        # sn cut
-        this_thres = abs(this_err * self.snr_mom)
-        this_flux  = np.where(this_flux>=this_thres, this_flux, 0)
-
-        if denom_flux!=None:
-            denom_flux = np.where(denom_flux>=denom_err*self.snr_mom, denom_flux, 0)
-            this_flux  = this_flux / denom_flux
-            this_flux[np.isinf(this_flux)] = 0
-            this_flux[np.isnan(this_flux)] = 0
-
-        # normalize
-        this_flux  = ( this_flux - np.mean(this_flux) ) / np.std(this_flux)
-
-        # zero padding
-        this_flux[np.isnan(this_flux)] = 0
-        this_flux[np.isinf(this_flux)] = 0
-
-        # extract center by masking
-        this_flux = np.where(this_r<=self.r_sbr_as, this_flux, 0)
-        this_err  = np.where(this_r<=self.r_sbr_as, this_err, 0)
-
-        return this_flux
-
-    ###############
-    # _read_table #
-    ###############
-
-    def _read_table(self,txtdata):
-        """
-        """
-
-        # extract line name
-        f = open(txtdata)
-        header = f.readline()
-        header = header.split(" ")[1:]
-        header = [s.split("\n")[0] for s in header]
-        f.close()
-
-        # extract mom0 data
-        data = np.loadtxt(txtdata)
-        x          = data[:,0]
-        y          = data[:,1]
-        r          = np.sqrt(x**2 + y**2)
-        len_data   = (len(data[0])-2)/2
-
-        array_data = data[:,2:len_data+2]
-        array_err  = data[:,len_data+2:]
-        list_name  = np.array(header[2:len_data+2])
-
-        return list_name, array_data, array_err, x, y, r
-
     ################
     # hex_sampling #
     ################
@@ -430,6 +364,72 @@ class ToolsPCA():
 
         # cleanup
         os.system("rm -rf template")
+
+    ########################
+    # _process_hex_for_pca #
+    ########################
+
+    def _process_hex_for_pca(
+        self,
+        this_flux,
+        this_err,
+        this_r,
+        denom_flux=None,
+        denom_err=None,
+        ):
+        """
+        """
+
+        # sn cut
+        this_thres = abs(this_err * self.snr_mom)
+        this_flux  = np.where(this_flux>=this_thres, this_flux, 0)
+
+        if denom_flux!=None:
+            denom_flux = np.where(denom_flux>=denom_err*self.snr_mom, denom_flux, 0)
+            this_flux  = this_flux / denom_flux
+            this_flux[np.isinf(this_flux)] = 0
+            this_flux[np.isnan(this_flux)] = 0
+
+        # normalize
+        this_flux  = ( this_flux - np.mean(this_flux) ) / np.std(this_flux)
+
+        # zero padding
+        this_flux[np.isnan(this_flux)] = 0
+        this_flux[np.isinf(this_flux)] = 0
+
+        # extract center by masking
+        this_flux = np.where(this_r<=self.r_sbr_as, this_flux, 0)
+        this_err  = np.where(this_r<=self.r_sbr_as, this_err, 0)
+
+        return this_flux
+
+    ###############
+    # _read_table #
+    ###############
+
+    def _read_table(self,txtdata):
+        """
+        """
+
+        # extract line name
+        f = open(txtdata)
+        header = f.readline()
+        header = header.split(" ")[1:]
+        header = [s.split("\n")[0] for s in header]
+        f.close()
+
+        # extract mom0 data
+        data = np.loadtxt(txtdata)
+        x          = data[:,0]
+        y          = data[:,1]
+        r          = np.sqrt(x**2 + y**2)
+        len_data   = (len(data[0])-2)/2
+
+        array_data = data[:,2:len_data+2]
+        array_err  = data[:,len_data+2:]
+        list_name  = np.array(header[2:len_data+2])
+
+        return list_name, array_data, array_err, x, y, r
 
     ################
     # _plot_hexmap #
