@@ -270,7 +270,7 @@ class ToolsPCA():
             self.beam,
             self.gridsize,
             reverse=reverse,
-            lim=[-14,14]
+            factor=2,
             )
 
     ########################
