@@ -275,12 +275,14 @@ class ToolsPCA():
         list_r13co = r
         list_rhcn  = r
         list_name  = ["r"]
+
         for i in range(len(data_mom0[0])):
             this_mom0  = data_mom0[:,i]
             this_emom0 = data_emom0[:,i]
             this_name  = name_mom0[i]
+            this_mom0  = np.where(this_mom0>=this_emom0*self.snr_mom,this_mom0,0)
 
-            if len(this_mom0[this_mom0>this_emom0*self.snr_mom])>=10:
+            if len(this_mom0[this_mom0!=0])>=10:
                 # save line name
                 list_name.append(this_name)
 
