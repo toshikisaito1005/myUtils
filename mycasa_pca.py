@@ -99,7 +99,7 @@ def pca_2d_hex(
         gridsize=gridsize, cmap="bwr", cblabel=None, zerocbar=True)
 
     # plot clusters
-    pca_score        = np.dot(data_m, u_compressed)
+    pca_score = np.dot(data_m, u_compressed)
 
     # plot scatter
     for i in range(principals):
@@ -117,7 +117,7 @@ def pca_2d_hex(
         myax_set(ax,xlim=None,ylim=None,title=None)
 
         for j in range(len(list_name)):
-            x, y = pc1[j], this_pc[j]
+            x, y = pc1[j]/np.std(pc1), this_pc[j]/np.std(this_pc)
             ax.plot([0,x],[0,y])
             this_name = list_name[j]
             ax.text(x,y,this_name,fontsize=14)
