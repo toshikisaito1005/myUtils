@@ -179,6 +179,8 @@ class ToolsPCA():
             if abs(np.min(this_c))>abs(np.max(this_c)):
                 this_c = this_c * -1
 
+            this_c = np.where(this_c>np.max(this_c)/1.5,np.max(this_c)/1.5,this_c)
+
             output = self.outpng_pca.replace("???",str(i+1))
 
             print("# plot " + output)
