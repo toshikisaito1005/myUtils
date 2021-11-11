@@ -337,6 +337,12 @@ class ToolsPCA():
             list_r13co_mean[np.isinf(list_r13co_mean)] = 0
             list_rhcn_mean[np.isinf(list_rhcn_mean)] = 0
 
+            # mask outer part
+            list_mom0_mean = np.where(np.sqrt(x**+y**2)<=self.r_sbr_as,list_mom0_mean,0)
+            list_r13co_mean = np.where(np.sqrt(x**+y**2)<=self.r_sbr_as,list_r13co_mean,0)
+            list_rhcn_mean = np.where(np.sqrt(x**+y**2)<=self.r_sbr_as,list_rhcn_mean,0)
+
+
         list_mom0_mean  = list_mom0_mean[:,1:].T
         list_r13co_mean = list_r13co_mean[:,1:].T
         list_rhcn_mean  = list_rhcn_mean[:,1:].T
@@ -408,10 +414,6 @@ class ToolsPCA():
                 gridsize=27,
                 err=False,
                 )
-            cut = np.where(np.sqrt(x**2+y**2)<=self.r_sbr_as)
-            x   = x[cut]
-            y   = y[cut]
-            z   = z[cut]
 
             if i==0:
                 output_hex = np.c_[x,y]
@@ -435,10 +437,6 @@ class ToolsPCA():
                 gridsize=27,
                 err=True,
                 )
-            cut = np.where(np.sqrt(x**2+y**2)<=self.r_sbr_as)
-            x   = x[cut]
-            y   = y[cut]
-            z   = z[cut]
 
             output_hex = np.c_[output_hex,z]
             header.append(this_line+"(err)")
