@@ -127,8 +127,8 @@ def pca_2d_hex(
         ax.set_ylabel(this_pcname)
 
         if lim!=None:
-            set.xlim(lim)
-            set.ylim(lim)
+            ax.set_xlim(lim)
+            ax.set_ylim(lim)
 
         new_name = "_pc1_vs_pc" + str(i+1) + bstr + ".png"
         this_out = output.replace(bstr + ".png", new_name)
