@@ -310,7 +310,7 @@ class ToolsPCA():
             "_150pc",
             self.snr_mom,
             self.beam,
-            self.gridsize,
+            27,
             )
 
         """
