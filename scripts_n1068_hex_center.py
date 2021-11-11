@@ -100,12 +100,12 @@ class ToolsPCA():
             # output txt and png
             self.table_hex_obs  = self.dir_ready + self._read_key("table_hex_obs")
             self.table_hex_pca_mom0  = self.dir_ready + self._read_key("table_hex_pca_mom0")
-            self.table_hex_pca_r13co  = self.dir_ready + self._read_key("table_hex_pca_r13co")
+            self.table_hex_pca_r13co = self.dir_ready + self._read_key("table_hex_pca_r13co")
             self.table_hex_pca_rhcn  = self.dir_ready + self._read_key("table_hex_pca_rhcn")
 
-            self.outpng_pca_mom0 = self.dir_products + self._read_key("outpng_pca_mom0")
+            self.outpng_pca_mom0  = self.dir_products + self._read_key("outpng_pca_mom0")
             self.outpng_pca_r13co = self.dir_products + self._read_key("outpng_pca_r13co")
-            self.outpng_pca_rhcn = self.dir_products + self._read_key("outpng_pca_rhcn")
+            self.outpng_pca_rhcn  = self.dir_products + self._read_key("outpng_pca_rhcn")
 
             self.outpng_mom0 = self.dir_products + self._read_key("outpng_mom0")
 
@@ -118,7 +118,10 @@ class ToolsPCA():
         # analysis
         do_prepare       = False,
         do_sampling      = False,
-        do_and_plot_pca  = False,
+        do_pca           = False,
+        # plot figures in paper
+        plot_hexmap_pca  = False,
+        # supplement
         plot_hexmap      = False,
         ):
         """
@@ -132,15 +135,39 @@ class ToolsPCA():
         if do_sampling==True:
             self.hex_sampling()
 
-        if do_and_plot_pca==True:
+        if do_pca==True:
             self.run_hex_pca(output=self.outpng_pca_mom0,outtxt=self.table_hex_pca_mom0,reverse=True)
             self.run_hex_pca(output=self.outpng_pca_rhcn,outtxt=self.table_hex_pca_rhcn,denom="hcn10",reverse=True)
             self.run_hex_pca(output=self.outpng_pca_r13co,outtxt=self.table_hex_pca_r13co,denom="13co10",reverse=True)
 
+        # plot figures in paper
+        if plot_hexmap_pca==True:
+            self.plot_hexmap_pca()
+
+        # supplement
         if plot_hexmap==True:
             self.plot_hexmap_mom0()
             self.plot_hexmap_ratio(denom="hcn10")
             self.plot_hexmap_ratio(denom="13co10")
+
+    ###################
+    # plot_hexmap_pca #
+    ###################
+
+    def plot_hexmap_pca(self):
+        """
+        """
+
+        taskname = self.modname + sys._getframe().f_code.co_name
+        check_first(self.table_hex_pca_mom0,taskname)
+
+        # extract mom0 data
+        data = np.loadtxt(self.table_hex_pca_mom0)
+        x        = data[:,0]
+        y        = data[:,1]
+        r        = np.sqrt(x**2 + y**2)
+        data_pca = data[:,2:]
+
 
     #####################
     # plot_hexmap_ratio #
@@ -225,7 +252,13 @@ class ToolsPCA():
     # run_hex_pca #
     ###############
 
-    def run_hex_pca(self,output,outtxt,denom=None,reverse=False):
+    def run_hex_pca(
+        self,
+        output,
+        outtxt,
+        denom=None,
+        reverse=False,
+        ):
         """
         """
 
