@@ -129,7 +129,7 @@ class ToolsPCA():
             self.hex_sampling()
 
         if do_pca==True:
-            self.run_hex_pca() # something wrong!
+            self.run_hex_pca() # something wrong! reproduce previous PCA first! see scripts_n1068_dense.py
 
         if plot_hexmap==True:
             self.plot_hex_mom0()
@@ -316,7 +316,7 @@ class ToolsPCA():
             this_r13co = list_r13co[:,i]
             this_rhcn  = list_rhcn[:,i]
 
-            thres = 1e9 # 0
+            thres = 0
 
             mean_mom0   = np.mean(this_mom0[np.where(this_mom0!=thres)])
             mean_r13co  = np.mean(this_r13co[np.where(this_r13co!=thres)])
