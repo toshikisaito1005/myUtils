@@ -71,6 +71,7 @@ class ToolsPCA():
 
             # input maps
             self.map_av         = self.dir_other + self._read_key("map_av")
+            self.map_ionization = self.dir_other + self._read_key("map_ionization")
             self.maps_mom0      = glob.glob(self.dir_raw + self._read_key("maps_mom0"))
             self.maps_mom0.sort()
             self.maps_emom0     = glob.glob(self.dir_raw + self._read_key("maps_emom0"))

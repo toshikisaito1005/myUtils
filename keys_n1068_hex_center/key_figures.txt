@@ -16,9 +16,10 @@ final_showcase      ,,,fig_showcase.png
 ############
 # raw maps #
 ############
-maps_mom0           ,,,ngc1068_b3_12m_*_150pc_broad_mom0.fits
-maps_emom0          ,,,ngc1068_b3_12m_*_150pc_broad_emom0.fits
+maps_mom0           ,,,ngc1068_b3_12m*_150pc_broad_mom0.fits
+maps_emom0          ,,,ngc1068_b3_12m*_150pc_broad_emom0.fits
 map_av              ,,,NGC1068_extinction.fits
+map_ionization      ,,,NGC1068_siiisii_ratio.fits
 
 ###############
 # output maps #
