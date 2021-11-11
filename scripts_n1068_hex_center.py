@@ -129,7 +129,7 @@ class ToolsPCA():
             self.hex_sampling()
 
         if do_pca==True:
-            self.run_hex_pca() # something wrong! reproduce previous PCA first! see scripts_n1068_dense.py
+            self.run_hex_pca()
 
         if plot_hexmap==True:
             self.plot_hex_mom0()
@@ -253,6 +253,61 @@ class ToolsPCA():
         header = [s.split("\n")[0] for s in header]
         f.close()
 
+        # extract mom0 data
+        data = np.loadtxt(self.table_hex_obs)
+        x          = data[:,0]
+        y          = data[:,1]
+        r          = np.sqrt(x**2 + y**2)
+        len_data   = (len(data[0])-2)/2
+
+        array_data = data[:,2:len_data+2]
+        array_err  = data[:,len_data+2:]
+        list_name  = np.array(header[2:len_data+2])
+
+        # main
+        data, data_name = [], []
+        for i in range(len(list_name)):
+            this_flux = array_data[:,i]
+            this_err  = array_err[:,i]
+            this_name = list_name[i]
+
+            # sn cut and zero padding
+            this_thres = abs(this_err * self.snr_mom)
+            this_flux  = np.where(this_flux>=this_thres, this_flux, 0)
+            this_flux  = ( this_flux - np.mean(this_flux) ) / np.std(this_flux)
+            this_flux[np.isnan(this_flux)] = 0
+            this_flux[np.isinf(this_flux)] = 0
+
+            # masking
+            this_flux = np.where(r<=self.r_sbr, this_flux, 0)
+            this_err  = np.where(r<=self.r_sbr, this_err, 0)
+
+            # limiting by #data
+            len_data = len(this_flux[this_flux>0])
+            if len_data>=10:
+                print("# meet " + this_name + " " + str(len_data))
+                data.append(this_flux.flatten())
+                data_name.append(this_name)
+            else:
+                print("# skip " + this_name + " " + str(len_data))
+
+        data = np.array(data)
+
+        # run
+        os.system("rm -rf " + self.outpng_pca_mom0)
+        pca_2d_hex(
+            x,
+            y,
+            data,
+            data_name,
+            self.outpng_pca_mom0,
+            "_150pc",
+            self.snr_mom,
+            self.beam,
+            self.gridsize,
+            )
+
+        """
         # extract mom0 data
         data = np.loadtxt(self.table_hex_obs)
         x          = data[:,0]
@@ -386,6 +441,7 @@ class ToolsPCA():
             self.beam,
             self.gridsize,
             )
+        """
 
     ################
     # hex_sampling #
