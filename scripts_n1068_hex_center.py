@@ -330,7 +330,7 @@ class ToolsPCA():
             list_mom0_mean  = np.c_[list_mom0_mean, np.where(r<=self.r_sbr_as, (this_mom0-mean_mom0)/std_mom0, 0)]
             if this_name!="13co10":
                 list_r13co_mean = np.c_[list_r13co_mean, np.where(r<=self.r_sbr_as, (this_r13co-mean_r13co)/std_r13co, 0)]
-                if this_name!="hcn10":
+            if this_name!="hcn10":
                 list_rhcn_mean  = np.c_[list_rhcn_mean, np.where(r<=self.r_sbr_as, (this_rhcn-mean_rhcn)/std_rhcn, 0)]
 
             list_mom0_mean[np.isnan(list_mom0_mean)] = 0
