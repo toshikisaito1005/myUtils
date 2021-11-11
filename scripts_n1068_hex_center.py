@@ -88,7 +88,7 @@ class ToolsPCA():
             self.r_cnd_as       = 3.0
             self.r_sbr          = 10.0 * self.scale_pc / 1000. # kpc
             self.r_sbr_as       = 10.0
-            self.gridsize       = int(np.ceil(self.r_sbr_as*2/self.beam))
+            self.gridsize       = 27 # int(np.ceil(self.r_sbr_as*2/self.beam))
 
             # output maps
             self.outmap_mom0    = self.dir_ready + self._read_key("outmaps_mom0")
@@ -132,14 +132,15 @@ class ToolsPCA():
             self.run_hex_pca()
 
         if plot_hexmap==True:
-            self.plot_hex_mom0()
-            self.plot_hex_ratio()
+            self.plot_hexmap_mom0()
+            self.plot_hexmap_ratio(denom="hcn10")
+            self.plot_hexmap_ratio(denom="13co10")
 
-    ##################
-    # plot_hex_ratio #
-    ##################
+    #####################
+    # plot_hexmap_ratio #
+    #####################
 
-    def plot_hex_ratio(self):
+    def plot_hexmap_ratio(self,denom=None):
         """
         """
 
@@ -161,7 +162,7 @@ class ToolsPCA():
         dec       = data[:,1]
         data_mom0 = data[:,2:len_data+2]
 
-        data_hcn  = data_mom0[:,np.where(header=="hcn10")[0][0]]
+        data_hcn  = data_mom0[:,np.where(header==denom)[0][0]]
 
         # plot
         for i in range(len(header)):
@@ -174,7 +175,7 @@ class ToolsPCA():
             this_y = dec[this_c>0]
             this_c = this_c[this_c>0]
 
-            output = self.outpng_mom0.replace("???","r_"+this_name+"_hcn")
+            output = self.outpng_mom0.replace("???","r_"+this_name+"_"+denom)
 
             if len(this_c)!=0:
                 print("# plot " + output)
@@ -187,11 +188,11 @@ class ToolsPCA():
                     ann=False,
                     )
 
-    #################
-    # plot_hex_mom0 #
-    #################
+    ####################
+    # plot_hexmap_mom0 #
+    ####################
 
-    def plot_hex_mom0(self):
+    def plot_hexmap_mom0(self):
         """
         """
 
@@ -296,10 +297,6 @@ class ToolsPCA():
         data[np.isinf(data)] = 0
 
         # run
-        print(np.shape(x))
-        print(np.shape(y))
-        print(np.shape(data))
-        print(np.shape(data_name))
         os.system("rm -rf " + self.outpng_pca_mom0)
         pca_2d_hex(
             x,
@@ -310,144 +307,9 @@ class ToolsPCA():
             "_150pc",
             self.snr_mom,
             self.beam,
-            27,
-            )
-
-        """
-        # extract mom0 data
-        data = np.loadtxt(self.table_hex_obs)
-        x          = data[:,0]
-        y          = data[:,1]
-        r          = np.sqrt(x**2 + y**2)
-        len_data   = (len(data[0])-2)/2
-
-        data_mom0  = data[:,2:len_data+2]
-        data_emom0 = data[:,len_data+2:]
-        name_mom0  = np.array(header[2:len_data+2])
-
-        mom0_13co  = data_mom0[:,np.where(name_mom0=="13co10")[0][0]]
-        emom0_13co = data_emom0[:,np.where(name_mom0=="13co10")[0][0]]
-
-        mom0_hcn   = data_mom0[:,np.where(name_mom0=="hcn10")[0][0]]
-        emom0_hcn  = data_emom0[:,np.where(name_mom0=="hcn10")[0][0]]
-
-        # constrain data by detection number of pixels
-        list_mom0  = r
-        list_r13co = r
-        list_rhcn  = r
-        list_name  = ["r"]
-
-        for i in range(len(data_mom0[0])):
-            this_mom0  = data_mom0[:,i]
-            this_emom0 = data_emom0[:,i]
-            this_name  = name_mom0[i]
-            this_mom0  = np.where(this_mom0>=this_emom0*self.snr_mom,this_mom0,0)
-
-            if len(this_mom0[this_mom0!=0])>=10:
-                # save line name
-                list_name.append(this_name)
-
-                # save mom0
-                list_mom0  = np.c_[list_mom0,this_mom0]
-
-                # save ratio relative to 13co
-                ratio      = this_mom0/mom0_13co
-                ratio[np.isnan(ratio)] = 0
-                ratio[np.isinf(ratio)] = 0
-                list_r13co = np.c_[list_r13co,ratio]
-
-                # save ratio relative to hcn
-                ratio      = this_mom0/mom0_hcn
-                ratio[np.isnan(ratio)] = 0
-                ratio[np.isinf(ratio)] = 0
-                list_rhcn  = np.c_[list_rhcn,ratio]
-
-        list_mom0  = list_mom0[:,1:]
-        list_r13co = list_r13co[:,1:]
-        list_rhcn  = list_rhcn[:,1:]
-        list_name  = list_name[1:]
-
-        print("# survived lines for PCA analysis are...")
-        print(list_name)
-
-        # normalize
-        list_name_r13co  = []
-        list_name_rhcn   = []
-        list_mom0_mean  = r
-        list_r13co_mean = r
-        list_rhcn_mean  = r
-        for i in range(len(list_name)):
-            this_name  = list_name[i]
-            this_mom0  = list_mom0[:,i]
-            this_r13co = list_r13co[:,i]
-            this_rhcn  = list_rhcn[:,i]
-
-            thres = 1e9
-
-            mean_mom0   = np.mean(this_mom0[np.where(this_mom0!=thres)])
-            mean_r13co  = np.mean(this_r13co[np.where(this_r13co!=thres)])
-            mean_rhcn   = np.mean(this_rhcn[np.where(this_rhcn!=thres)])
-
-            std_mom0   = np.std(this_mom0[np.where(this_mom0!=thres)])
-            std_r13co  = np.std(this_r13co[np.where(this_r13co!=thres)])
-            std_rhcn   = np.std(this_rhcn[np.where(this_rhcn!=thres)])
-
-            list_mom0_mean  = np.c_[list_mom0_mean, np.where(r<=self.r_sbr_as, (this_mom0-mean_mom0)/std_mom0, 0)]
-            if this_name!="13co10":
-                list_name_r13co.append(this_name)
-                list_r13co_mean = np.c_[list_r13co_mean, np.where(r<=self.r_sbr_as, (this_r13co-mean_r13co)/std_r13co, 0)]
-            if this_name!="hcn10":
-                list_name_rhcn.append(this_name)
-                list_rhcn_mean  = np.c_[list_rhcn_mean, np.where(r<=self.r_sbr_as, (this_rhcn-mean_rhcn)/std_rhcn, 0)]
-
-            list_mom0_mean[np.isnan(list_mom0_mean)] = 0
-            list_r13co_mean[np.isnan(list_r13co_mean)] = 0
-            list_rhcn_mean[np.isnan(list_rhcn_mean)] = 0
-            list_mom0_mean[np.isinf(list_mom0_mean)] = 0
-            list_r13co_mean[np.isinf(list_r13co_mean)] = 0
-            list_rhcn_mean[np.isinf(list_rhcn_mean)] = 0
-
-        list_mom0_mean  = list_mom0_mean[:,1:].T
-        list_r13co_mean = list_r13co_mean[:,1:].T
-        list_rhcn_mean  = list_rhcn_mean[:,1:].T
-
-        # run pca
-        pca_2d_hex(
-            x,
-            y,
-            list_mom0_mean,
-            list_name,
-            self.outpng_pca_mom0,
-            "_150pc",
-            self.snr_mom,
-            self.beam,
             self.gridsize,
+            reverse=True,
             )
-
-        pca_2d_hex(
-            x,
-            y,
-            list_rhcn_mean,
-            list_name_rhcn,
-            self.outpng_pca_rhcn,
-            "_150pc",
-            self.snr_mom,
-            self.beam,
-            self.gridsize,
-            )
-
-        pca_2d_hex(
-            x,
-            y,
-            list_r13co_mean,
-            list_name_r13co,
-            self.outpng_pca_r13co,
-            "_150pc",
-            self.snr_mom,
-            self.beam,
-            self.gridsize,
-            )
-        """
 
     ################
     # hex_sampling #
@@ -476,7 +338,7 @@ class ToolsPCA():
                 self.ra_agn,
                 self.dec_agn,
                 beam=self.beam,
-                gridsize=27,
+                gridsize=self.gridsize,
                 err=False,
                 )
 
@@ -499,7 +361,7 @@ class ToolsPCA():
                 self.ra_agn,
                 self.dec_agn,
                 beam=self.beam,
-                gridsize=27,
+                gridsize=self.gridsize,
                 err=True,
                 )
 

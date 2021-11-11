@@ -40,6 +40,7 @@ def pca_2d_hex(
     snr=3.0,
     beam=0.8,
     gridsize=70,
+    reverse=False,
     ):
     """
     References
@@ -71,7 +72,10 @@ def pca_2d_hex(
 
     # visualize
     principals = index[0] + 1
-    u_compressed = u[:, 0:principals]
+    if reverse==True:
+        u_compressed = u[:, 0:principals] * -1
+    else:
+        u_compressed = u[:, 0:principals]
 
     # re hex sampling
     u_drawing = []
@@ -89,9 +93,6 @@ def pca_2d_hex(
         u_drawing.append(this_hex)
 
     # plot eigenvector
-    print(np.shape(X))
-    print(np.shape(Y))
-    print(np.shape(u_drawing))
     for i in range(principals):
         this_out = output.replace(bstr+".png","_pc"+str(i+1)+bstr+".png")
         myfig_hex_map(-X, Y, u_drawing[i], this_out, beam=beam,
