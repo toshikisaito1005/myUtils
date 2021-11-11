@@ -114,7 +114,7 @@ class ToolsPCA():
         # analysis
         do_prepare       = False,
         do_sampling      = False,
-        do_pca           = False,
+        do_and_plot_pca  = False,
         plot_hexmap      = False,
         ):
         """
@@ -128,8 +128,9 @@ class ToolsPCA():
         if do_sampling==True:
             self.hex_sampling()
 
-        if do_pca==True:
-            self.run_hex_pca()
+        if do_and_plot_pca==True:
+            self.run_hex_pca(output=self.outpng_pca_mom0)
+            self.run_hex_pca(output=self.outpng_pca_rhcn,denom="hcn10")
 
         if plot_hexmap==True:
             self.plot_hexmap_mom0()
@@ -215,7 +216,7 @@ class ToolsPCA():
     # run_hex_pca #
     ###############
 
-    def run_hex_pca(self):
+    def run_hex_pca(self,output,denom=None):
         """
         """
 
@@ -232,8 +233,19 @@ class ToolsPCA():
             this_err  = array_err[:,i]
             this_name = list_name[i]
 
+            if this_name==denom:
+                continue
+
+            if denom!=None:
+                index      = np.where(list_name==denom)[0][0]
+                data_denom = array_data[:,index]
+                err_denom  = array_err[:,index]
+            else:
+                data_denom = None
+                err_denom  = None
+
             # sn cut and zero padding
-            this_flux = self._process_hex_for_pca(this_flux, this_err, r)
+            this_flux = self._process_hex_for_pca(this_flux, this_err, r, data_denom, err_denom)
 
             # limiting by #data
             len_data = len(this_flux[this_flux>0])
@@ -245,13 +257,13 @@ class ToolsPCA():
                 print("# skip " + this_name + " #=" + str(len_data))
 
         # run
-        os.system("rm -rf " + self.outpng_pca_mom0)
+        os.system("rm -rf " + output)
         pca_2d_hex(
             x,
             y,
             data,
             data_name,
-            self.outpng_pca_mom0,
+            output,
             "_150pc",
             self.snr_mom,
             self.beam,
@@ -268,6 +280,8 @@ class ToolsPCA():
         this_flux,
         this_err,
         this_r,
+        denom_flux=None,
+        denom_err=None,
         ):
         """
         """
@@ -275,6 +289,12 @@ class ToolsPCA():
         # sn cut
         this_thres = abs(this_err * self.snr_mom)
         this_flux  = np.where(this_flux>=this_thres, this_flux, 0)
+
+        if denom_flux!=None:
+            denom_flux = np.where(denom_flux>=denom_err*self.snr_mom, denom_flux, 0)
+            this_flux  = this_flux / denom_flux
+            this_flux[np.isinf(this_flux)] = 0
+            this_flux[np.isnan(this_flux)] = 0
 
         # normalize
         this_flux  = ( this_flux - np.mean(this_flux) ) / np.std(this_flux)
