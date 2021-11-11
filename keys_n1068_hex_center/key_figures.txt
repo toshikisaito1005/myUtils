@@ -18,8 +18,8 @@ final_showcase      ,,,fig_showcase.png
 ############
 maps_mom0           ,,,ngc1068_b*_12m*_150pc_broad_mom0.fits
 maps_emom0          ,,,ngc1068_b*_12m*_150pc_broad_emom0.fits
-map_av              ,,,NGC1068_extinction.fits
-map_ionization      ,,,NGC1068_siiisii_ratio.fits
+map_av              ,,,n1068_extinction.fits
+map_ionization      ,,,n1068_siiisii_ratio.fits
 
 ###############
 # output maps #
