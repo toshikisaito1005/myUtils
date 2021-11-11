@@ -335,7 +335,7 @@ class ToolsPCA():
             if this_line=="extinction":
                 z = z * 0
             elif this_line=="siiisii_ratio":
-                z = z * 0:
+                z = z * 0
 
             output_hex = np.c_[output_hex,z]
             header.append(this_line+"(err)")
