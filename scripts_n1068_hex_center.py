@@ -279,8 +279,8 @@ class ToolsPCA():
             this_flux[np.isinf(this_flux)] = 0
 
             # masking
-            this_flux = np.where(r<=self.r_sbr, this_flux, 0)
-            this_err  = np.where(r<=self.r_sbr, this_err, 0)
+            this_flux = np.where(r<=self.r_sbr_as, this_flux, 0)
+            this_err  = np.where(r<=self.r_sbr_as, this_err, 0)
 
             # limiting by #data
             len_data = len(this_flux[this_flux>0])
