@@ -148,7 +148,7 @@ class ToolsPCA():
         check_first(self.table_hex_obs,taskname)
 
         # extract line name
-        header,data_mom0,_,ra,dec = self._read_table(self.table_hex_obs)
+        header,data_mom0,_,ra,dec,_ = self._read_table(self.table_hex_obs)
         data_denom = data_mom0[:,np.where(header==denom)[0][0]]
 
         # plot
@@ -187,7 +187,7 @@ class ToolsPCA():
         check_first(self.table_hex_obs,taskname)
 
         # extract line name
-        header,data_mom0,_,ra,dec = self._read_table(self.table_hex_obs)
+        header,data_mom0,_,ra,dec,_ = self._read_table(self.table_hex_obs)
 
         # plot
         for i in range(len(header)):
@@ -223,7 +223,7 @@ class ToolsPCA():
         check_first(self.table_hex_obs,taskname)
 
         # extract line name
-        list_name,array_data,array_err,_,_ = self._read_table(self.table_hex_obs)
+        list_name,array_data,array_err,_,_,r = self._read_table(self.table_hex_obs)
 
         # main
         data, data_name = [], []
@@ -233,7 +233,7 @@ class ToolsPCA():
             this_name = list_name[i]
 
             # sn cut and zero padding
-            this_flux = self._process_hex_for_pca(this_flux, this_err)
+            this_flux = self._process_hex_for_pca(this_flux, this_err, r)
 
             # limiting by #data
             len_data = len(this_flux[this_flux>0])
@@ -267,6 +267,7 @@ class ToolsPCA():
         self,
         this_flux,
         this_err,
+        this_r,
         ):
         """
         """
@@ -283,8 +284,8 @@ class ToolsPCA():
         this_flux[np.isinf(this_flux)] = 0
 
         # extract center by masking
-        this_flux = np.where(r<=self.r_sbr_as, this_flux, 0)
-        this_err  = np.where(r<=self.r_sbr_as, this_err, 0)
+        this_flux = np.where(this_r<=self.r_sbr_as, this_flux, 0)
+        this_err  = np.where(this_r<=self.r_sbr_as, this_err, 0)
 
         return this_flux
 
@@ -314,7 +315,7 @@ class ToolsPCA():
         array_err  = data[:,len_data+2:]
         list_name  = np.array(header[2:len_data+2])
 
-        return list_name, array_data, array_err, x, y
+        return list_name, array_data, array_err, x, y, r
 
     ################
     # hex_sampling #
