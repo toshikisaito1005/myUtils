@@ -132,9 +132,9 @@ def pca_2d_hex(
 
     print(np.shape(X))
     print(np.shape(Y))
-    print(np.shape(np.array(u_drawing)))
+    print(np.shape(np.array(u_drawing).T))
 
-    return np.c_[-X, Y, np.array(u_drawing)]
+    return np.c_[-X, Y, np.array(u_drawing).T]
 
 ############
 # _eigsort #
