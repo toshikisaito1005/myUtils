@@ -308,6 +308,8 @@ class ToolsPCA():
         print(list_name)
 
         # normalize
+        list_name_r13co  = []
+        list_name_rhcn   = []
         list_mom0_mean  = r
         list_r13co_mean = r
         list_rhcn_mean  = r
@@ -329,8 +331,10 @@ class ToolsPCA():
 
             list_mom0_mean  = np.c_[list_mom0_mean, np.where(r<=self.r_sbr_as, (this_mom0-mean_mom0)/std_mom0, 0)]
             if this_name!="13co10":
+                list_name_r13co.append(this_name)
                 list_r13co_mean = np.c_[list_r13co_mean, np.where(r<=self.r_sbr_as, (this_r13co-mean_r13co)/std_r13co, 0)]
             if this_name!="hcn10":
+                list_name_rhcn.append(this_name)
                 list_rhcn_mean  = np.c_[list_rhcn_mean, np.where(r<=self.r_sbr_as, (this_rhcn-mean_rhcn)/std_rhcn, 0)]
 
             list_mom0_mean[np.isnan(list_mom0_mean)] = 0
@@ -361,7 +365,7 @@ class ToolsPCA():
             x,
             y,
             list_rhcn_mean,
-            list_name,
+            list_name_rhcn,
             self.outpng_pca_rhcn,
             "_150pc",
             self.snr_mom,
@@ -373,7 +377,7 @@ class ToolsPCA():
             x,
             y,
             list_r13co_mean,
-            list_name,
+            list_name_r13co,
             self.outpng_pca_r13co,
             "_150pc",
             self.snr_mom,
