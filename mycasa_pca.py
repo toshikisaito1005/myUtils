@@ -41,7 +41,7 @@ def pca_2d_hex(
     beam=0.8,
     gridsize=70,
     reverse=False,
-    lim=None,
+    factor=None,
     ):
     """
     References
@@ -97,7 +97,7 @@ def pca_2d_hex(
     for i in range(principals):
         this_out = output.replace(bstr+".png","_pc"+str(i+1)+bstr+".png")
         myfig_hex_map(-X, Y, u_drawing[i], this_out, beam=beam,
-        gridsize=gridsize, cmap="bwr", cblabel=None, zerocbar=True, lim=[14,14])
+        gridsize=gridsize, cmap="bwr", cblabel=None, zerocbar=True, factor=factor)
 
     # plot clusters
     pca_score = np.dot(data_m, u_compressed)
