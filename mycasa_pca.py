@@ -115,7 +115,7 @@ def pca_2d_hex(
         fig = plt.figure(figsize=(10,9))
         gs  = gridspec.GridSpec(nrows=30, ncols=30)
         ax  = plt.subplot(gs[0:30,0:30])
-        myax_set(ax,xlim=None,ylim=None,title=None)
+        myax_set(ax,xlim=lim,ylim=lim,title=None)
 
         for j in range(len(list_name)):
             x, y = pc1[j]/np.std(pc1), this_pc[j]/np.std(this_pc)
@@ -125,10 +125,6 @@ def pca_2d_hex(
 
         ax.set_xlabel("PC1")
         ax.set_ylabel(this_pcname)
-
-        if lim!=None:
-            ax.set_xlim(lim)
-            ax.set_ylim(lim)
 
         new_name = "_pc1_vs_pc" + str(i+1) + bstr + ".png"
         this_out = output.replace(bstr + ".png", new_name)
