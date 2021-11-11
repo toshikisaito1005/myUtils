@@ -97,7 +97,7 @@ def pca_2d_hex(
     for i in range(principals):
         this_out = output.replace(bstr+".png","_pc"+str(i+1)+bstr+".png")
         myfig_hex_map(-X, Y, u_drawing[i], this_out, beam=beam,
-        gridsize=gridsize, cmap="bwr", cblabel=None, zerocbar=True)
+        gridsize=gridsize, cmap="bwr", cblabel=None, zerocbar=True, lim=[14,14])
 
     # plot clusters
     pca_score = np.dot(data_m, u_compressed)
@@ -115,7 +115,7 @@ def pca_2d_hex(
         fig = plt.figure(figsize=(10,9))
         gs  = gridspec.GridSpec(nrows=30, ncols=30)
         ax  = plt.subplot(gs[0:30,0:30])
-        myax_set(ax,xlim=lim,ylim=lim,title=None)
+        myax_set(ax,xlim=None,ylim=None,title=None)
 
         for j in range(len(list_name)):
             x, y = pc1[j]/np.std(pc1), this_pc[j]/np.std(this_pc)

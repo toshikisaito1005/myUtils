@@ -163,6 +163,7 @@ def myfig_hex_map(
     cmap="rainbow",
     cblabel="(K km s$^{-1}$)",
     zerocbar=False,
+    lim=None,
     ):
     """
     Parameters
@@ -184,6 +185,10 @@ def myfig_hex_map(
     # prepare for plot
     xlim   = [extent[1],extent[0]]
     ylim   = [extent[2],extent[3]]
+    if lim!=None:
+        xlim = lim
+        ylim = lim
+
     title  = output.split("/")[-1].replace(".png","")
 
     # plot
