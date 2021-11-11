@@ -235,12 +235,6 @@ class ToolsPCA():
             this_err  = array_err[:,i]
             this_name = list_name[i]
 
-            if this_name=="extinction":
-                this_err = this_err * 0
-            elif this_name=="siiisii_ratio":
-                this_err = this_err * 0:
-
-
             if this_name==denom:
                 continue
 
@@ -337,6 +331,11 @@ class ToolsPCA():
                 gridsize=self.gridsize,
                 err=True,
                 )
+
+            if this_line=="extinction":
+                z = z * 0
+            elif this_line=="siiisii_ratio":
+                z = z * 0:
 
             output_hex = np.c_[output_hex,z]
             header.append(this_line+"(err)")
