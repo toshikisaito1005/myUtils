@@ -326,9 +326,9 @@ class ToolsPCA():
             std_r13co  = np.std(this_r13co[np.where(this_r13co!=thres)])
             std_rhcn   = np.std(this_rhcn[np.where(this_rhcn!=thres)])
 
-            list_mom0_mean  = np.c_[list_mom0_mean, np.where(this_mom0!=thres, (this_mom0-mean_mom0)/std_mom0, 0)]
-            list_r13co_mean = np.c_[list_r13co_mean, np.where(this_r13co!=thres, (this_r13co-mean_r13co)/std_r13co, 0)]
-            list_rhcn_mean  = np.c_[list_rhcn_mean, np.where(this_rhcn!=thres, (this_rhcn-mean_rhcn)/std_rhcn, 0)]
+            list_mom0_mean  = np.c_[list_mom0_mean, np.where(r<=self.r_sbr_as, (this_mom0-mean_mom0)/std_mom0, 0)]
+            list_r13co_mean = np.c_[list_r13co_mean, np.where(r<=self.r_sbr_as, (this_r13co-mean_r13co)/std_r13co, 0)]
+            list_rhcn_mean  = np.c_[list_rhcn_mean, np.where(r<=self.r_sbr_as, (this_rhcn-mean_rhcn)/std_rhcn, 0)]
 
             list_mom0_mean[np.isnan(list_mom0_mean)] = 0
             list_r13co_mean[np.isnan(list_r13co_mean)] = 0
@@ -336,12 +336,6 @@ class ToolsPCA():
             list_mom0_mean[np.isinf(list_mom0_mean)] = 0
             list_r13co_mean[np.isinf(list_r13co_mean)] = 0
             list_rhcn_mean[np.isinf(list_rhcn_mean)] = 0
-
-            # mask outer part
-            list_mom0_mean = np.where(r<=self.r_sbr_as,list_mom0_mean,0)
-            list_r13co_mean = np.where(r<=self.r_sbr_as,list_r13co_mean,0)
-            list_rhcn_mean = np.where(r<=self.r_sbr_as,list_rhcn_mean,0)
-
 
         list_mom0_mean  = list_mom0_mean[:,1:].T
         list_r13co_mean = list_r13co_mean[:,1:].T
