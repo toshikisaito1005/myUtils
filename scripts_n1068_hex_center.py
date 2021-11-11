@@ -365,7 +365,7 @@ class ToolsPCA():
             run_exportfits(this_output, this_outfits, True, True, True)
 
         # cleanup
-        os.system("rm -rf template")
+        os.system("rm -rf template.image")
 
     ########################
     # _process_hex_for_pca #
