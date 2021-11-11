@@ -165,6 +165,10 @@ class ToolsPCA():
             this_y = dec[this_c>0]
             this_c = this_c[this_c>0]
 
+            this_c = np.log10(this_c)
+            this_c[np.where(np.isinf(this_c))] = 0
+            this_c[np.where(np.isnan(this_c))] = 0
+
             output = self.outpng_mom0.replace("???","r_"+this_name+"_"+denom)
 
             if len(this_c)!=0:
