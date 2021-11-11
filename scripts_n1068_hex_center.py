@@ -129,8 +129,8 @@ class ToolsPCA():
             self.hex_sampling()
 
         if do_and_plot_pca==True:
-            self.run_hex_pca(output=self.outpng_pca_mom0)
-            self.run_hex_pca(output=self.outpng_pca_rhcn,denom="hcn10")
+            self.run_hex_pca(output=self.outpng_pca_mom0,reverse=True)
+            self.run_hex_pca(output=self.outpng_pca_rhcn,denom="hcn10",reverse=True)
             self.run_hex_pca(output=self.outpng_pca_r13co,denom="13co10")
 
         if plot_hexmap==True:
@@ -217,7 +217,7 @@ class ToolsPCA():
     # run_hex_pca #
     ###############
 
-    def run_hex_pca(self,output,denom=None):
+    def run_hex_pca(self,output,denom=None,reverse=False):
         """
         """
 
@@ -269,8 +269,8 @@ class ToolsPCA():
             self.snr_mom,
             self.beam,
             self.gridsize,
-            reverse=True,
-            lim=[14,14]
+            reverse=reverse,
+            lim=[-14,14]
             )
 
     ########################
