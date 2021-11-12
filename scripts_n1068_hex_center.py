@@ -203,11 +203,11 @@ class ToolsPCA():
         ax.set_aspect('equal', adjustable='box')
 
         for i in range(len(score_name)):
-            x = score_pc1[i]
-            y = score_pc2[i]
-            t = score_name[i]
-            ax.plot([0,x],[0,y],"-",color="black")
-            ax.text(x,y,t,fontsize=14)
+            pc1 = score_pc1[i]
+            pc2 = score_pc2[i]
+            t   = score_name[i]
+            ax.plot([0,pc1],[0,pc2],"-",color="black")
+            ax.text(pc1,pc2,t,fontsize=14)
 
         # save
         os.system("rm -rf " + self.outpng_pca_scatter)
