@@ -211,6 +211,10 @@ class ToolsPCA():
 
             if score_name[i]=="n2hp10":
                 ax.text(pc1,pc2,"N$_2$H$^+$",fontsize=18,ha="center",va="bottom")
+            elif score_name[i]=="hc3n1110":
+                ax.text(pc1,pc2,"HC$_3$N(11-10)",fontsize=18,ha="center",va="bottom")
+            elif score_name[i]=="hc3n1211":
+                ax.text(pc1,pc2,"HC$_3$N(12-11)",fontsize=18,ha="center",va="bottom")
             else:
                 ax.text(pc1,pc2,score_name[i],fontsize=14)
 
