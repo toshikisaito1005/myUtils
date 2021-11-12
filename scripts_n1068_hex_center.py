@@ -191,6 +191,7 @@ class ToolsPCA():
                 this_c,
                 "PC"+str(i+1),
                 ann=False,
+                lim=15,
                 )
 
     #####################
@@ -520,6 +521,7 @@ class ToolsPCA():
         cmap="rainbow",
         plot_cbar=True,
         ann=True,
+        lim=29.5,
         ):
         """
         """
@@ -534,8 +536,8 @@ class ToolsPCA():
         myax_set(
         ax,
         grid=None,
-        xlim=[29.5, -29.5],
-        ylim=[-29.5, 29.5],
+        xlim=[lim, -lim],
+        ylim=[-lim, lim],
         xlabel="R.A. offset (arcsec)",
         ylabel="Decl. offset (arcsec)",
         adjust=[0.10,0.99,0.10,0.93],
