@@ -176,6 +176,8 @@ class ToolsPCA():
         ###################
         # plot PC scatter #
         ###################
+        print("# plot " + self.outpng_pca_scatter)
+
         table_hex_pca_mom0_score = self.table_hex_pca_mom0.replace(".txt","_score.txt")
         data_score = np.loadtxt(table_hex_pca_mom0_score,dtype="str")
         score_name = data_score[:,0]
@@ -205,9 +207,10 @@ class ToolsPCA():
         for i in range(len(score_name)):
             pc1 = score_pc1[i]
             pc2 = score_pc2[i]
-            t   = score_name[i]
             ax.plot([0,pc1],[0,pc2],"-",color="tomato")
-            ax.text(pc1,pc2,t,fontsize=14)
+
+            if score_name[i]=="n2hp10":
+                ax.text(pc1,pc2,"N$_2$H$^+$",fontsize=18,ha="center",va="bottom")
 
         # save
         os.system("rm -rf " + self.outpng_pca_scatter)
