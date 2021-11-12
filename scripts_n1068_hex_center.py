@@ -332,7 +332,7 @@ class ToolsPCA():
 
         # run
         os.system("rm -rf " + output)
-        array_hex_pca = pca_2d_hex(
+        array_hex_pca, pca_score, list_name = pca_2d_hex(
             x,
             y,
             data,
@@ -348,6 +348,9 @@ class ToolsPCA():
 
         header = "ra(deg) dec(deg) PC1 PC2 ..."
         np.savetxt(outtxt,array_hex_pca,header=header)
+
+        print(np.shape(pca_score))
+        print(pca_score)
 
     ################
     # hex_sampling #
