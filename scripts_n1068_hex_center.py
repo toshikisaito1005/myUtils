@@ -184,7 +184,7 @@ class ToolsPCA():
         score_pc1  = data_score[:,1].astype(np.float64)
         score_pc2  = data_score[:,2].astype(np.float64)
         score_pc1  = score_pc1 / np.std(score_pc1)
-        score_pc2  = score_pc2 / np.std(score_pc2)
+        score_pc2  = score_pc2 / np.std(score_pc2) * -1
 
         # set plt, ax
         fig = plt.figure(figsize=(13,10))
