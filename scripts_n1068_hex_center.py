@@ -192,6 +192,7 @@ class ToolsPCA():
                 "PC"+str(i+1),
                 ann=False,
                 lim=15,
+                size=1400,
                 )
 
     #####################
@@ -522,6 +523,7 @@ class ToolsPCA():
         plot_cbar=True,
         ann=True,
         lim=29.5,
+        size=690,
         ):
         """
         """
@@ -545,7 +547,7 @@ class ToolsPCA():
         ax.set_aspect('equal', adjustable='box')
 
         # plot
-        im = ax.scatter(x, y, s=690, c=c, cmap=cmap, marker="h", linewidths=0)
+        im = ax.scatter(x, y, s=size, c=c, cmap=cmap, marker="h", linewidths=0)
 
         # cbar
         cbar = plt.colorbar(im)
