@@ -172,7 +172,7 @@ class ToolsPCA():
         """
 
         taskname = self.modname + sys._getframe().f_code.co_name
-        check_first(self.outpng_map_ci,taskname)
+        check_first(self.outpng_pca.replace("???","1"),taskname)
 
         print("###################")
         print("# create mom0_pca #")
