@@ -589,7 +589,7 @@ class ToolsPCA():
         # add annotation comment
         if add_text==True:
             ax.plot([0,-7], [0,10], lw=3, c="black")
-            ax.text(-9.5, 10.5, "AGN position",
+            ax.text(-10.5, 10.5, "AGN position",
                 horizontalalignment="right", verticalalignment="center", weight="bold")
 
         # save
