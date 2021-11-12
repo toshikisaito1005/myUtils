@@ -109,9 +109,9 @@ class ToolsPCA():
 
             self.outpng_mom0         = self.dir_products + self._read_key("outpng_mom0")
 
-            self.outpng_pca          = self.dir_products + self._read_key("outpng_pca")
+            self.outpng_pca_hexmap   = self.dir_products + self._read_key("outpng_pca")
             self.outpng_pca_scatter  = self.dir_products + self._read_key("outpng_pca_scatter")
-            self.outpng_pca_r13co         = self.dir_products + self._read_key("outpng_pca_r13co")
+            self.outpng_pca_hexmap_r13co  = self.dir_products + self._read_key("outpng_pca_r13co")
             self.outpng_pca_scatter_r13co = self.dir_products + self._read_key("outpng_pca_scatter_r13co")
 
             # final
@@ -313,11 +313,7 @@ class ToolsPCA():
 
             this_c = np.where(this_c>np.max(this_c)/1.5,np.max(this_c)/1.5,this_c)
 
-            print(i)
-            print(self.outpng_pca_r13co)
-
-
-            output = self.outpng_pca_r13co.replace("???",str(i+1))
+            output = self.outpng_pca_hexmap_r13co.replace("???",str(i+1))
 
             print("# plot " + output)
             self._plot_hexmap(
@@ -451,7 +447,7 @@ class ToolsPCA():
 
             this_c = np.where(this_c>np.max(this_c)/1.5,np.max(this_c)/1.5,this_c)
 
-            output = self.outpng_pca.replace("???",str(i+1))
+            output = self.outpng_pca_hexmap.replace("???",str(i+1))
 
             print("# plot " + output)
             self._plot_hexmap(
