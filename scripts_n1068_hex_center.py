@@ -228,7 +228,9 @@ class ToolsPCA():
             elif score_name[i]=="cn10l":
                 ax.text(pc1,pc2,"CN(1-0)l",fontsize=18,ha="left",va="center")
             elif score_name[i]=="hnc10":
-                ax.text(pc1,pc2,"HNC",fontsize=18,ha="left",va="top")
+                ax.text(pc1,pc2,"HNC",fontsize=18,ha="center",va="top")
+            elif score_name[i]=="cn10h":
+                ax.text(pc1,pc2,"CN(1-0)h",fontsize=18,ha="center",va="top")
             else:
                 ax.text(pc1,pc2,score_name[i],fontsize=14)
 
