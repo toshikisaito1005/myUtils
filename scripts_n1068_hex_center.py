@@ -313,6 +313,10 @@ class ToolsPCA():
 
             this_c = np.where(this_c>np.max(this_c)/1.5,np.max(this_c)/1.5,this_c)
 
+            print(i)
+            print(self.outpng_pca_r13co)
+
+
             output = self.outpng_pca_r13co.replace("???",str(i+1))
 
             print("# plot " + output)
