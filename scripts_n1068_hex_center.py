@@ -111,6 +111,10 @@ class ToolsPCA():
             self.outpng_pca          = self.dir_products + self._read_key("outpng_pca")
             self.outpng_pca_scatter  = self.dir_products + self._read_key("outpng_pca_scatter")
 
+            # final
+            self.final_pca_mom0      = self.dir_final + self._read_key("final_pca_mom0")
+            self.box_map             = self._read_key("box_map")
+
     ###################
     # run_ngc1068_pca #
     ###################
@@ -123,6 +127,7 @@ class ToolsPCA():
         do_pca           = False,
         # plot figures in paper
         plot_hexmap_pca  = False,
+        do_imagemagick   = False,
         # supplement
         plot_hexmap      = False,
         ):
@@ -146,11 +151,43 @@ class ToolsPCA():
         if plot_hexmap_pca==True:
             self.plot_hexmap_pca()
 
+        if do_imagemagick==True:
+            self.immagick_figures()
+
         # supplement
         if plot_hexmap==True:
             self.plot_hexmap_mom0()
             self.plot_hexmap_ratio(denom="hcn10")
             self.plot_hexmap_ratio(denom="13co10")
+
+    ####################
+    # immagick_figures #
+    ####################
+
+    def immagick_figures(
+        self,
+        delin=False,
+        ):
+        """
+        """
+
+        taskname = self.modname + sys._getframe().f_code.co_name
+        check_first(self.outpng_map_ci,taskname)
+
+        print("###################")
+        print("# create mom0_pca #")
+        print("###################")
+
+        combine_three_png(
+            self.outpng_pca.replace("???","1"),
+            self.outpng_pca.replace("???","2"),
+            self.outpng_pca_scatter,
+            self.final_pca_mom0,
+            self.box_map,
+            self.box_map,
+            self.box_map,
+            delin=delin,
+            )
 
     ###################
     # plot_hexmap_pca #

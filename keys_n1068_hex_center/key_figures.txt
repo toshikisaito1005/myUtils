@@ -11,7 +11,7 @@ dir_final           ,,,images/
 ##################
 # final products #
 ##################
-final_showcase      ,,,fig_showcase.png
+final_pca_mom0      ,,,fig_pca_mom0.png
 
 ############
 # raw maps #
@@ -42,6 +42,8 @@ outpng_pca_rhcn     ,,,fig_hexmap_pca_rhcn_150pc.png
 outpng_mom0         ,,,fig_hexmap_???.png
 outpng_pca          ,,,fig_hexmap_pca???.png
 outpng_pca_scatter  ,,,fig_hexmap_pca_scatter.png
+#
+box_map             ,,,2200x1870+350+80
 
 #######
 # end #
