@@ -41,7 +41,9 @@ outpng_pca_r13co    ,,,fig_hexmap_pca_r13co_150pc.png
 outpng_pca_rhcn     ,,,fig_hexmap_pca_rhcn_150pc.png
 outpng_mom0         ,,,fig_hexmap_???.png
 outpng_pca          ,,,fig_hexmap_pca???.png
-outpng_pca_scatter  ,,,fig_hexmap_pca_scatter.png
+outpng_pca_scatter  ,,,fig_scatter_pca.png
+outpng_pca_r13co          ,,,fig_hexmap_pca???_r13co.png
+outpng_pca_scatter_r13co  ,,,fig_scatter_pca_r13co.png
 #
 box_map             ,,,2870x2750+350+150
 

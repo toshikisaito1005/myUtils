@@ -108,8 +108,11 @@ class ToolsPCA():
             self.outpng_pca_rhcn     = self.dir_products + self._read_key("outpng_pca_rhcn")
 
             self.outpng_mom0         = self.dir_products + self._read_key("outpng_mom0")
+
             self.outpng_pca          = self.dir_products + self._read_key("outpng_pca")
             self.outpng_pca_scatter  = self.dir_products + self._read_key("outpng_pca_scatter")
+            self.outpng_pca_r13co          = self.dir_products + self._read_key("outpng_pca_r13co")
+            self.outpng_pca_scatter_r13co  = self.dir_products + self._read_key("outpng_pca_scatter_r13co)
 
             # final
             self.final_pca_mom0      = self.dir_final + self._read_key("final_pca_mom0")
@@ -122,14 +125,14 @@ class ToolsPCA():
     def run_ngc1068_pca(
         self,
         # analysis
-        do_prepare       = False,
-        do_sampling      = False,
-        do_pca           = False,
+        do_prepare            = False,
+        do_sampling           = False,
+        do_pca                = False,
         # plot figures in paper
-        plot_hexmap_pca  = False,
-        do_imagemagick   = False,
+        plot_hexmap_pca       = False,
+        do_imagemagick        = False,
         # supplement
-        plot_hexmap      = False,
+        plot_hexmap           = False,
         ):
         """
         This method runs all the methods which will create figures in the paper.
@@ -150,6 +153,7 @@ class ToolsPCA():
         # plot figures in paper
         if plot_hexmap_pca==True:
             self.plot_hexmap_pca()
+            self.plot_hexmap_pca_r13co()
 
         if do_imagemagick==True:
             self.immagick_figures()
@@ -188,6 +192,142 @@ class ToolsPCA():
             self.box_map,
             delin=delin,
             )
+
+    #########################
+    # plot_hexmap_pca_r13co #
+    #########################
+
+    def plot_hexmap_pca_r13co(self):
+        """
+        """
+
+        taskname = self.modname + sys._getframe().f_code.co_name
+        check_first(self.table_hex_pca_r13co,taskname)
+
+        # extract mom0 data
+        data = np.loadtxt(self.table_hex_pca_r13co)
+        x        = data[:,0]
+        y        = data[:,1]
+        r        = np.sqrt(x**2 + y**2)
+        data_pca = data[:,2:]
+
+        ###################
+        # plot PC scatter #
+        ###################
+        print("# plot " + self.outpng_pca_scatter_r13co)
+
+        table_hex_pca_score = self.table_hex_pca_r13co.replace(".txt","_score.txt")
+        data_score = np.loadtxt(table_hex_pca_score,dtype="str")
+        score_name = data_score[:,0]
+        score_pc1  = data_score[:,1].astype(np.float64)
+        score_pc2  = data_score[:,2].astype(np.float64)
+        score_pc1  = score_pc1 / np.std(score_pc1)
+        score_pc2  = score_pc2 / np.std(score_pc2) * -1
+
+        # set plt, ax
+        fig = plt.figure(figsize=(13,10))
+        plt.rcParams["font.size"] = 16
+        gs = gridspec.GridSpec(nrows=10, ncols=10)
+        ax = plt.subplot(gs[0:10,0:10])
+
+        # set ax parameter
+        myax_set(
+        ax,
+        grid=None,
+        xlim=[-3.2,1.8],
+        ylim=[-1.6,3.4],
+        xlabel="PC1",
+        ylabel="PC2",
+        adjust=[0.023,0.963,0.10,0.93],
+        )
+        ax.set_aspect('equal', adjustable='box')
+
+        for i in range(len(score_name)):
+            pc1 = score_pc1[i]
+            pc2 = score_pc2[i]
+            ax.plot([0,pc1],[0,pc2],"-",color="grey",lw=2)
+
+            """
+            if score_name[i]=="n2hp10":
+                ax.text(pc1,pc2,"N$_2$H$^+$",fontsize=18,ha="center",va="top")
+            elif score_name[i]=="hc3n109":
+                continue
+            elif score_name[i]=="hc3n1110":
+                continue
+            elif score_name[i]=="hc3n1211":
+                ax.text(pc1,pc2-0.15,"HC$_3$Nx3",fontsize=18,ha="left",va="center")
+            elif score_name[i]=="h13cn10":
+                ax.text(pc1,pc2-0.1,"H$^{13}$CN",fontsize=18,ha="left",va="bottom")
+            elif score_name[i]=="cs21":
+                ax.text(pc1,pc2,"CS",fontsize=18,ha="center",va="top")
+            elif score_name[i]=="hcn10":
+                ax.text(pc1,pc2,"HCN",fontsize=18,ha="left",va="center")
+            elif score_name[i]=="hcop10":
+                ax.text(pc1,pc2,"HCO$^+$",fontsize=18,ha="left",va="center")
+            elif score_name[i]=="cn10l":
+                ax.text(pc1,pc2,"CN(1-0)l",fontsize=18,ha="left",va="center")
+            elif score_name[i]=="hnc10":
+                ax.text(pc1,pc2,"HNC",fontsize=18,ha="center",va="bottom")
+            elif score_name[i]=="cn10h":
+                ax.text(pc1,pc2,"CN(1-0)h",fontsize=18,ha="center",va="bottom")
+            elif score_name[i]=="ci10":
+                ax.text(pc1,pc2,"[CI]",fontsize=18,ha="center",va="bottom")
+            elif score_name[i]=="cch10":
+                ax.text(pc1,pc2,"CCH",fontsize=18,ha="right",va="bottom")
+            elif score_name[i]=="siiisii_ratio":
+                ax.text(pc1,pc2,"[SIII]/[SII] ratio",fontsize=18,ha="center",va="bottom")
+            elif score_name[i]=="co10":
+                ax.text(pc1,pc2,"CO",fontsize=18,ha="right",va="center")
+            elif score_name[i]=="13co10":
+                ax.text(pc1,pc2,"$^{13}$CO",fontsize=18,ha="right",va="center")
+            elif score_name[i]=="c18o10":
+                ax.text(pc1,pc2,"C$^{18}$O",fontsize=18,ha="right",va="center")
+            elif score_name[i]=="ch3oh21":
+                ax.text(pc1,pc2,"CH$_3$OH",fontsize=18,ha="center",va="top")
+            else:
+            """
+            ax.text(pc1,pc2,score_name[i],fontsize=14)
+
+        ax.text(0.03, 0.93, "PC1 vs. PC2", color="black", transform=ax.transAxes, weight="bold", fontsize=24)
+
+        # save
+        os.system("rm -rf " + self.outpng_pca_scatter_r13co)
+        plt.savefig(self.outpng_pca_scatter_r13co, dpi=300)
+
+        #################
+        # plot PCA maps #
+        #################
+        clims    = [0.35,0.18]
+        anntexts = [True,False]
+        cmaps    = ["Reds","PuBu"]
+        for i in range(len(data_pca[0])):
+            this_c    = data_pca[:,i]
+            this_x    = x[this_c!=0]
+            this_y    = y[this_c!=0]
+            this_c    = this_c[this_c!=0]
+            this_text = anntexts[i]
+            thid_cmap = cmaps[i]
+
+            if abs(np.min(this_c))>abs(np.max(this_c)):
+                this_c = this_c * -1
+
+            this_c = np.where(this_c>np.max(this_c)/1.5,np.max(this_c)/1.5,this_c)
+
+            output = self.outpng_pca_r13co.replace("???",str(i+1))
+
+            print("# plot " + output)
+            self._plot_hexmap(
+                output,
+                this_x,
+                this_y,
+                this_c,
+                "PC"+str(i+1)+" (intensity normalized to $^{13}$CO)",
+                cmap=thid_cmap,
+                ann=True,
+                add_text=this_text,
+                lim=13,
+                size=3600,
+                )
 
     ###################
     # plot_hexmap_pca #
