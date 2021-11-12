@@ -176,15 +176,15 @@ class ToolsPCA():
         """
 
         taskname = self.modname + sys._getframe().f_code.co_name
-        check_first(self.outpng_pca.replace("???","1"),taskname)
+        check_first(self.outpng_pca_hexmap.replace("???","1"),taskname)
 
         print("###################")
         print("# create mom0_pca #")
         print("###################")
 
         combine_three_png(
-            self.outpng_pca.replace("???","1"),
-            self.outpng_pca.replace("???","2"),
+            self.outpng_pca_hexmap.replace("???","1"),
+            self.outpng_pca_hexmap.replace("???","2"),
             self.outpng_pca_scatter,
             self.final_pca_mom0,
             self.box_map,
