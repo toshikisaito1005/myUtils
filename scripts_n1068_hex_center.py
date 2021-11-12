@@ -207,9 +207,6 @@ class ToolsPCA():
         r        = np.sqrt(x**2 + y**2)
         data_pca = data[:,2:]
 
-        clims    = [0.35,0.18]
-        anntexts = [True,False]
-
         ###################
         # plot PC scatter #
         ###################
@@ -294,12 +291,16 @@ class ToolsPCA():
         #################
         # plot PCA maps #
         #################
+        clims    = [0.35,0.18]
+        anntexts = [True,False]
+        cmaps    = ["Reds","PuBu"]
         for i in range(len(data_pca[0])):
             this_c    = data_pca[:,i]
             this_x    = x[this_c!=0]
             this_y    = y[this_c!=0]
             this_c    = this_c[this_c!=0]
             this_text = anntexts[i]
+            thid_cmap = cmaps[i]
 
             if abs(np.min(this_c))>abs(np.max(this_c)):
                 this_c = this_c * -1
@@ -315,7 +316,7 @@ class ToolsPCA():
                 this_y,
                 this_c,
                 "PC"+str(i+1)+" (intensity)",
-                cmap="Reds",
+                cmap=thid_cmap,
                 ann=True,
                 add_text=this_text,
                 lim=13,
