@@ -174,8 +174,8 @@ class ToolsPCA():
 
         # plot PC scatter
         table_hex_pca_mom0_score = self.table_hex_pca_mom0.replace(".txt","_score.txt")
-        data_score = np.loadtxt(table_hex_pca_mom0_score)
-        print(data_score,dtype="str")
+        data_score = np.loadtxt(table_hex_pca_mom0_score,dtype="str")
+        print(data_score)
 
         # plot PCA maps
         for i in range(len(data_pca[0])):
