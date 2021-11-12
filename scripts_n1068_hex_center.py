@@ -200,7 +200,7 @@ class ToolsPCA():
         ylim=[-1.8,3.2],
         xlabel="PC1",
         ylabel="PC2",
-        adjust=[0.10,0.99,0.10,0.93],
+        adjust=[0.05,0.99,0.10,0.93],
         )
         ax.set_aspect('equal', adjustable='box')
 
@@ -236,7 +236,7 @@ class ToolsPCA():
             elif score_name[i]=="cch10":
                 ax.text(pc1,pc2,"CCH",fontsize=18,ha="right",va="bottom")
             elif score_name[i]=="siiisii_ratio":
-                ax.text(pc1,pc2,"[SIII]/[SII] ratio",fontsize=18,ha="center",va="top")
+                ax.text(pc1,pc2,"[SIII]/[SII] ratio",fontsize=18,ha="center",va="bottom")
             elif score_name[i]=="co10":
                 ax.text(pc1,pc2,"CO",fontsize=18,ha="right",va="center")
             elif score_name[i]=="13co10":
