@@ -196,7 +196,7 @@ class ToolsPCA():
                 ann=True,
                 add_text=True,
                 lim=13,
-                size=2400,
+                size=2800,
                 )
 
     #####################
