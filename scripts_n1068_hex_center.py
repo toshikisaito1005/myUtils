@@ -211,6 +211,8 @@ class ToolsPCA():
 
             if score_name[i]=="n2hp10":
                 ax.text(pc1,pc2,"N$_2$H$^+$",fontsize=18,ha="center",va="bottom")
+            else:
+                ax.text(pc1,pc2,score_name[i],fontsize=14)
 
         # save
         os.system("rm -rf " + self.outpng_pca_scatter)
