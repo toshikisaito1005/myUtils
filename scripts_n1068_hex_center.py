@@ -116,6 +116,7 @@ class ToolsPCA():
 
             # final
             self.final_pca_mom0      = self.dir_final + self._read_key("final_pca_mom0")
+            self.final_pca_r13co     = self.dir_final + self._read_key("final_pca_r13co")
             self.box_map             = self._read_key("box_map")
 
     ###################
@@ -178,15 +179,30 @@ class ToolsPCA():
         taskname = self.modname + sys._getframe().f_code.co_name
         check_first(self.outpng_pca_hexmap.replace("???","1"),taskname)
 
-        print("###################")
-        print("# create mom0_pca #")
-        print("###################")
+        print("#########################")
+        print("# create final_pca_mom0 #")
+        print("#########################")
 
         combine_three_png(
             self.outpng_pca_hexmap.replace("???","1"),
             self.outpng_pca_hexmap.replace("???","2"),
             self.outpng_pca_scatter,
             self.final_pca_mom0,
+            self.box_map,
+            self.box_map,
+            self.box_map,
+            delin=delin,
+            )
+
+        print("#########################")
+        print("# create mom0_pca_r13co #")
+        print("#########################")
+
+        combine_three_png(
+            self.outpng_pca_hexmap_r13co.replace("???","1"),
+            self.outpng_pca_hexmap_r13co.replace("???","2"),
+            self.outpng_pca_scatter_r13co,
+            self.final_pca_r13co,
             self.box_map,
             self.box_map,
             self.box_map,
