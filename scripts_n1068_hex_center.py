@@ -195,7 +195,7 @@ class ToolsPCA():
                 cmap="Reds",
                 ann=True,
                 add_text=True,
-                lim=16,
+                lim=13,
                 size=2400,
                 )
 
