@@ -43,7 +43,7 @@ outpng_mom0         ,,,fig_hexmap_???.png
 outpng_pca          ,,,fig_hexmap_pca???.png
 outpng_pca_scatter  ,,,fig_hexmap_pca_scatter.png
 #
-box_map             ,,,2700x2400+350+150
+box_map             ,,,2800x2800+350+150
 
 #######
 # end #
