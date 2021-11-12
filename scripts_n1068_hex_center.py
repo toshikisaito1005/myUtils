@@ -216,13 +216,13 @@ class ToolsPCA():
             elif score_name[i]=="hc3n1110":
                 continue
             elif score_name[i]=="hc3n1211":
-                ax.text(pc1,pc2+0.1,"HC$_3$N x 3",fontsize=18,ha="left",va="center")
+                ax.text(pc1,pc2+0.1,"HC$_3$Nx3",fontsize=18,ha="left",va="center")
             elif score_name[i]=="h13cn10":
-                ax.text(pc1,pc2+0.1,"H$^{13}$CN",fontsize=18,ha="left",va="top")
+                ax.text(pc1,pc2,"H$^{13}$CN",fontsize=18,ha="left",va="top")
             elif score_name[i]=="cs21":
-                ax.text(pc1,pc2+0.1,"CS",fontsize=18,ha="center",va="bottom")
+                ax.text(pc1,pc2,"CS",fontsize=18,ha="center",va="bottom")
             elif score_name[i]=="hcn10":
-                ax.text(pc1,pc2+0.1,"HCN",fontsize=18,ha="left",va="center")
+                ax.text(pc1,pc2,"HCN",fontsize=18,ha="left",va="center")
             else:
                 ax.text(pc1,pc2,score_name[i],fontsize=14)
 
