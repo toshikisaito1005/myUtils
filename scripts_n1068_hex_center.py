@@ -233,8 +233,8 @@ class ToolsPCA():
         myax_set(
         ax,
         grid=None,
-        xlim=[-3.2,1.8],
-        ylim=[-1.8,3.2],
+        xlim=[-3.4,1.6],
+        ylim=[-1.6,3.4],
         xlabel="PC1",
         ylabel="PC2",
         adjust=[0.023,0.963,0.10,0.93],
@@ -284,6 +284,8 @@ class ToolsPCA():
                 ax.text(pc1,pc2,"CH$_3$OH",fontsize=18,ha="center",va="top")
             else:
                 ax.text(pc1,pc2,score_name[i],fontsize=14)
+
+        ax.text(0.03, 0.93, "PC1 vs. PC2", color="black", transform=ax.transAxes, weight="bold", fontsize=24)
 
         # save
         os.system("rm -rf " + self.outpng_pca_scatter)
