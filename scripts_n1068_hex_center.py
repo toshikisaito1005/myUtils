@@ -98,17 +98,18 @@ class ToolsPCA():
             self.outfits_emom0  = self.dir_ready + self._read_key("outfits_maps_emom0")
 
             # output txt and png
-            self.table_hex_obs  = self.dir_ready + self._read_key("table_hex_obs")
+            self.table_hex_obs       = self.dir_ready + self._read_key("table_hex_obs")
             self.table_hex_pca_mom0  = self.dir_ready + self._read_key("table_hex_pca_mom0")
             self.table_hex_pca_r13co = self.dir_ready + self._read_key("table_hex_pca_r13co")
             self.table_hex_pca_rhcn  = self.dir_ready + self._read_key("table_hex_pca_rhcn")
 
-            self.outpng_pca_mom0  = self.dir_products + self._read_key("outpng_pca_mom0")
-            self.outpng_pca_r13co = self.dir_products + self._read_key("outpng_pca_r13co")
-            self.outpng_pca_rhcn  = self.dir_products + self._read_key("outpng_pca_rhcn")
+            self.outpng_pca_mom0     = self.dir_products + self._read_key("outpng_pca_mom0")
+            self.outpng_pca_r13co    = self.dir_products + self._read_key("outpng_pca_r13co")
+            self.outpng_pca_rhcn     = self.dir_products + self._read_key("outpng_pca_rhcn")
 
-            self.outpng_mom0      = self.dir_products + self._read_key("outpng_mom0")
-            self.outpng_pca       = self.dir_products + self._read_key("outpng_pca")
+            self.outpng_mom0         = self.dir_products + self._read_key("outpng_mom0")
+            self.outpng_pca          = self.dir_products + self._read_key("outpng_pca")
+            self.outpng_pca_scatter  = self.dir_products + self._read_key("outpng_pca_scatter")
 
     ###################
     # run_ngc1068_pca #
@@ -172,14 +173,49 @@ class ToolsPCA():
         clims    = [0.35,0.18]
         anntexts = [True,False]
 
-        # plot PC scatter
+        ###################
+        # plot PC scatter #
+        ###################
         table_hex_pca_mom0_score = self.table_hex_pca_mom0.replace(".txt","_score.txt")
         data_score = np.loadtxt(table_hex_pca_mom0_score,dtype="str")
         score_name = data_score[:,0]
         score_pc1  = data_score[:,1].astype(np.float64)
-        print(score_pc1)
+        score_pc2  = data_score[:,2].astype(np.float64)
+        score_pc1  = score_pc1 / np.std(score_pc1)
+        score_pc2  = score_pc2 / np.std(score_pc2)
 
-        # plot PCA maps
+        # set plt, ax
+        fig = plt.figure(figsize=(13,10))
+        plt.rcParams["font.size"] = 16
+        gs = gridspec.GridSpec(nrows=10, ncols=10)
+        ax = plt.subplot(gs[0:10,0:10])
+
+        # set ax parameter
+        myax_set(
+        ax,
+        grid=None,
+        xlim=[lim, -lim],
+        ylim=[-lim, lim],
+        xlabel="R.A. offset (arcsec)",
+        ylabel="Decl. offset (arcsec)",
+        adjust=[0.10,0.99,0.10,0.93],
+        )
+        ax.set_aspect('equal', adjustable='box')
+
+        for i in range(len(score_name)):
+            x = score_pc1[i]
+            y = score_pc2[i]
+            t = score_name[i]
+            ax.plot([0,x],[0,y],"-",color="black")
+            ax.text(x,y,t,fontsize=14)
+
+        # save
+        os.system("rm -rf " + self.outpng_pca_scatter)
+        plt.savefig(self.outpng_pca_scatter, dpi=300)
+
+        #################
+        # plot PCA maps #
+        #################
         for i in range(len(data_pca[0])):
             this_c    = data_pca[:,i]
             this_x    = x[this_c!=0]
@@ -577,7 +613,6 @@ class ToolsPCA():
         ax.plot([-10,-10+bar],[-10,-10],"-",color="black",lw=4)
         ax.text(-10, -10.5, "100 pc",
                 horizontalalignment="right", verticalalignment="top")
-
 
         # text
         ax.text(0.03, 0.93, title, color="black", transform=ax.transAxes, weight="bold", fontsize=24)
