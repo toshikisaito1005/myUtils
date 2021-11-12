@@ -349,8 +349,8 @@ class ToolsPCA():
         header = "ra(deg) dec(deg) PC1 PC2 ..."
         np.savetxt(outtxt,array_hex_pca,header=header)
 
-        print(np.shape(pca_score))
-        print(pca_score)
+        header = "line PC1 PC2 ..."
+        np.savetxt(outtxt.replace(".txt","_score.txt"),pca_score,header=header)
 
     ################
     # hex_sampling #
