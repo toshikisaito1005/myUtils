@@ -238,11 +238,11 @@ class ToolsPCA():
             elif score_name[i]=="siiisii_ratio":
                 ax.text(pc1,pc2,"[SIII]/[SII] ratio",fontsize=18,ha="center",va="top")
             elif score_name[i]=="co10":
-                ax.text(pc1,pc2,"CO",fontsize=18,ha="left",va="center")
+                ax.text(pc1,pc2,"CO",fontsize=18,ha="right",va="center")
             elif score_name[i]=="13co10":
-                ax.text(pc1,pc2,"$^{13}$CO",fontsize=18,ha="left",va="center")
+                ax.text(pc1,pc2,"$^{13}$CO",fontsize=18,ha="right",va="center")
             elif score_name[i]=="c18o10":
-                ax.text(pc1,pc2,"C$^{18}$O",fontsize=18,ha="left",va="center")
+                ax.text(pc1,pc2,"C$^{18}$O",fontsize=18,ha="right",va="center")
             elif score_name[i]=="ch3oh21":
                 ax.text(pc1,pc2,"CH$_3$OH",fontsize=18,ha="center",va="bottom")
             else:
