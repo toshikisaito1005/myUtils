@@ -197,7 +197,7 @@ class ToolsPCA():
         ax,
         grid=None,
         xlim=[-3.2,1.8],
-        ylim=[-3.2,1.8],
+        ylim=[-1.8,3.2],
         xlabel="PC1",
         ylabel="PC2",
         adjust=[0.10,0.99,0.10,0.93],
