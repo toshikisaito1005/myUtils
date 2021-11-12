@@ -194,8 +194,8 @@ class ToolsPCA():
         myax_set(
         ax,
         grid=None,
-        xlim=[-2,2],
-        ylim=[-2,2],
+        xlim=[-3,3],
+        ylim=[-3,3],
         xlabel="R.A. offset (arcsec)",
         ylabel="Decl. offset (arcsec)",
         adjust=[0.10,0.99,0.10,0.93],
@@ -206,7 +206,7 @@ class ToolsPCA():
             pc1 = score_pc1[i]
             pc2 = score_pc2[i]
             t   = score_name[i]
-            ax.plot([0,pc1],[0,pc2],"-",color="black")
+            ax.plot([0,pc1],[0,pc2],"-",color="tomato")
             ax.text(pc1,pc2,t,fontsize=14)
 
         # save
