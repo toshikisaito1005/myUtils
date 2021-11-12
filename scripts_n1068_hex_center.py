@@ -200,7 +200,7 @@ class ToolsPCA():
         ylim=[-1.8,3.2],
         xlabel="PC1",
         ylabel="PC2",
-        adjust=[0.025,0.965,0.10,0.93],
+        adjust=[0.023,0.963,0.10,0.93],
         )
         ax.set_aspect('equal', adjustable='box')
 
