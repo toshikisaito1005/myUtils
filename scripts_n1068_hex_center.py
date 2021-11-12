@@ -193,7 +193,7 @@ class ToolsPCA():
                 this_c,
                 "PC"+str(i+1)+" (intensity)",
                 cmap="PuBu",
-                ann=False,
+                ann=True,
                 lim=16,
                 size=2400,
                 )
@@ -560,6 +560,33 @@ class ToolsPCA():
 
         # text
         ax.text(0.03, 0.93, title, color="black", transform=ax.transAxes, weight="bold", fontsize=24)
+
+        # ann
+        if ann==True:
+            theta1      = -10.0 # degree
+            theta2      = 70.0 # degree
+            fov_diamter = 16.5 # arcsec (12m+7m Band 8)
+
+            fov_diamter = 16.5
+            efov1 = patches.Ellipse(xy=(-0,0), width=fov_diamter,
+                height=fov_diamter, angle=0, fill=False, edgecolor="black",
+                alpha=1.0, lw=3.5)
+
+            ax.add_patch(efov1)
+
+            # plot NGC 1068 AGN and outflow geometry
+            x1 = fov_diamter/2.0 * np.cos(np.radians(-1*theta1+90))
+            y1 = fov_diamter/2.0 * np.sin(np.radians(-1*theta1+90))
+            ax.plot([x1, -x1], [y1, -y1], "--", c="black", lw=3.5)
+            x2 = fov_diamter/2.0 * np.cos(np.radians(-1*theta2+90))
+            y2 = fov_diamter/2.0 * np.sin(np.radians(-1*theta2+90))
+            ax.plot([x2, -x2], [y2, -y2], "--", c="black", lw=3.5)
+
+            # add annotation comment
+            if add_text==True:
+                ax.plot([0,-5], [0,7.5], lw=3, c="black")
+                ax.text(-8.5, 8.0, "AGN position",
+                    horizontalalignment="right", verticalalignment="center", weight="bold")
 
         # save
         os.system("rm -rf " + outpng)
