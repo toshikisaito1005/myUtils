@@ -196,10 +196,10 @@ class ToolsPCA():
         myax_set(
         ax,
         grid=None,
-        xlim=[-4,2],
-        ylim=[-4,2],
-        xlabel="R.A. offset (arcsec)",
-        ylabel="Decl. offset (arcsec)",
+        xlim=[-3.2,1.8],
+        ylim=[-3.2,1.8],
+        xlabel="PC1",
+        ylabel="PC2",
         adjust=[0.10,0.99,0.10,0.93],
         )
         ax.set_aspect('equal', adjustable='box')
