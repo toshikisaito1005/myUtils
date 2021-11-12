@@ -241,7 +241,7 @@ class ToolsPCA():
         for i in range(len(score_name)):
             pc1 = score_pc1[i]
             pc2 = score_pc2[i]
-            ax.plot([0,pc1],[0,pc2],"-",color="tomato",lw=2)
+            ax.plot([0,pc1],[0,pc2],"-",color="black",lw=2)
 
             if score_name[i]=="n2hp10":
                 ax.text(pc1,pc2,"N$_2$H$^+$",fontsize=18,ha="center",va="top")
