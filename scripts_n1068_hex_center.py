@@ -192,6 +192,7 @@ class ToolsPCA():
                 this_y,
                 this_c,
                 "PC"+str(i+1)+" (intensity)",
+                cmap="PuBu",
                 ann=False,
                 lim=16,
                 size=2400,
