@@ -169,12 +169,18 @@ class ToolsPCA():
         r        = np.sqrt(x**2 + y**2)
         data_pca = data[:,2:]
 
+        clims = [0.35,0.18]
+
         # plot
         for i in range(len(data_pca[0])):
-            this_c = data_pca[:,i]
-            this_x = x[this_c!=0]
-            this_y = y[this_c!=0]
-            this_c = this_c[this_c!=0]
+            this_c    = data_pca[:,i]
+            this_x    = x[this_c!=0]
+            this_y    = y[this_c!=0]
+            this_c    = this_c[this_c!=0]
+
+            this_clim = clims[i]
+            this_c    = np.where(this_c>=this_clim, this_clim, this_c)
+
 
             if abs(np.min(this_c))>abs(np.max(this_c)):
                 this_c = this_c * -1
