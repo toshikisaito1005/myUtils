@@ -192,8 +192,9 @@ class ToolsPCA():
                 this_y,
                 this_c,
                 "PC"+str(i+1)+" (intensity)",
-                cmap="PuBu",
+                cmap="Reds",
                 ann=True,
+                add_text=True,
                 lim=16,
                 size=2400,
                 )
@@ -524,9 +525,10 @@ class ToolsPCA():
         title_cbar="(K km s$^{-1}$)",
         cmap="rainbow",
         plot_cbar=True,
-        ann=True,
+        ann=False,
         lim=29.5,
         size=690,
+        add_text=False,
         ):
         """
         """
@@ -582,11 +584,11 @@ class ToolsPCA():
             y2 = fov_diamter/2.0 * np.sin(np.radians(-1*theta2+90))
             ax.plot([x2, -x2], [y2, -y2], "--", c="black", lw=3.5)
 
-            # add annotation comment
-            if add_text==True:
-                ax.plot([0,-5], [0,7.5], lw=3, c="black")
-                ax.text(-8.5, 8.0, "AGN position",
-                    horizontalalignment="right", verticalalignment="center", weight="bold")
+        # add annotation comment
+        if add_text==True:
+            ax.plot([0,-5], [0,7.5], lw=3, c="black")
+            ax.text(-8.5, 8.0, "AGN position",
+                horizontalalignment="right", verticalalignment="center", weight="bold")
 
         # save
         os.system("rm -rf " + outpng)
