@@ -233,7 +233,7 @@ class ToolsPCA():
         myax_set(
         ax,
         grid=None,
-        xlim=[-3.4,1.6],
+        xlim=[-3.2,1.8],
         ylim=[-1.6,3.4],
         xlabel="PC1",
         ylabel="PC2",
