@@ -196,8 +196,8 @@ class ToolsPCA():
         myax_set(
         ax,
         grid=None,
-        xlim=[-3,3],
-        ylim=[-3,3],
+        xlim=[-4,2],
+        ylim=[-4,2],
         xlabel="R.A. offset (arcsec)",
         ylabel="Decl. offset (arcsec)",
         adjust=[0.10,0.99,0.10,0.93],
