@@ -192,7 +192,7 @@ class ToolsPCA():
                 "PC"+str(i+1)+" (intensity)",
                 ann=False,
                 lim=16,
-                size=1800,
+                size=2100,
                 )
 
     #####################
