@@ -191,7 +191,7 @@ class ToolsPCA():
                 this_c,
                 "PC"+str(i+1)+" (intensity)",
                 ann=False,
-                lim=15,
+                lim=16,
                 size=1800,
                 )
 
