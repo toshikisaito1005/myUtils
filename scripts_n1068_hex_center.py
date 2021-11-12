@@ -562,6 +562,11 @@ class ToolsPCA():
             cax  = fig.add_axes([0.19, 0.12, 0.025, 0.35])
             fig.colorbar(im, cax=cax)
 
+        # scale bar
+        bar = 100 / self.scale_pc
+        ax.plot([-10,-10+bar],[-10,-10],"-",color="black",lw=2)
+
+
         # text
         ax.text(0.03, 0.93, title, color="black", transform=ax.transAxes, weight="bold", fontsize=24)
 
