@@ -130,7 +130,7 @@ def pca_2d_hex(
         this_out = output.replace(bstr + ".png", new_name)
         plt.savefig(this_out)
 
-    return np.c_[X, Y, np.array(u_drawing).T], pca_score, list_name
+    return np.c_[X, Y, np.array(u_drawing).T], np.c_[pca_score, list_name]
 
 ############
 # _eigsort #

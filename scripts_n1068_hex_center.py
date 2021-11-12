@@ -332,7 +332,7 @@ class ToolsPCA():
 
         # run
         os.system("rm -rf " + output)
-        array_hex_pca, pca_score, list_name = pca_2d_hex(
+        array_hex_pca, pca_score = pca_2d_hex(
             x,
             y,
             data,
