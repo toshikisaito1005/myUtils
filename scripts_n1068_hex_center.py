@@ -350,7 +350,7 @@ class ToolsPCA():
         np.savetxt(outtxt,array_hex_pca,header=header)
 
         header = "line PC1 PC2 ..."
-        np.savetxt(outtxt.replace(".txt","_score.txt"),pca_score,header=header)
+        np.savetxt(outtxt.replace(".txt","_score.txt"),pca_score,header=header,fmt="%s")
 
     ################
     # hex_sampling #
