@@ -177,12 +177,9 @@ class ToolsPCA():
             this_x    = x[this_c!=0]
             this_y    = y[this_c!=0]
             this_c    = this_c[this_c!=0]
-            this_clim = clims[i]
-
 
             if abs(np.min(this_c))>abs(np.max(this_c)):
                 this_c = this_c * -1
-                this_c = np.where(this_c>=this_clim, this_clim, this_c)
 
             this_c = np.where(this_c>np.max(this_c)/1.5,np.max(this_c)/1.5,this_c)
 
