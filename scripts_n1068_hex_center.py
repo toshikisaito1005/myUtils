@@ -565,7 +565,7 @@ class ToolsPCA():
         # scale bar
         bar = 100 / self.scale_pc
         ax.plot([-10,-10+bar],[-10,-10],"-",color="black",lw=4)
-        ax.text(-10, -10, "100 pc",
+        ax.text(-10, -10.5, "100 pc",
                 horizontalalignment="right", verticalalignment="top")
 
 
