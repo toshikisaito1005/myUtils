@@ -210,7 +210,7 @@ class ToolsPCA():
             ax.plot([0,pc1],[0,pc2],"-",color="tomato")
 
             if score_name[i]=="n2hp10":
-                ax.text(pc1,pc2,"N$_2$H$^+$",fontsize=18,ha="center",va="bottom")
+                ax.text(pc1,pc2,"N$_2$H$^+$",fontsize=18,ha="center",va="top")
             elif score_name[i]=="hc3n109":
                 continue
             elif score_name[i]=="hc3n1110":
@@ -218,9 +218,9 @@ class ToolsPCA():
             elif score_name[i]=="hc3n1211":
                 ax.text(pc1,pc2+0.15,"HC$_3$Nx3",fontsize=18,ha="left",va="center")
             elif score_name[i]=="h13cn10":
-                ax.text(pc1,pc2+0.1,"H$^{13}$CN",fontsize=18,ha="left",va="top")
+                ax.text(pc1,pc2+0.1,"H$^{13}$CN",fontsize=18,ha="left",va="bottom")
             elif score_name[i]=="cs21":
-                ax.text(pc1,pc2,"CS",fontsize=18,ha="center",va="bottom")
+                ax.text(pc1,pc2,"CS",fontsize=18,ha="center",va="top")
             elif score_name[i]=="hcn10":
                 ax.text(pc1,pc2,"HCN",fontsize=18,ha="left",va="center")
             elif score_name[i]=="hcop10":
@@ -228,13 +228,13 @@ class ToolsPCA():
             elif score_name[i]=="cn10l":
                 ax.text(pc1,pc2,"CN(1-0)l",fontsize=18,ha="left",va="center")
             elif score_name[i]=="hnc10":
-                ax.text(pc1,pc2,"HNC",fontsize=18,ha="center",va="top")
+                ax.text(pc1,pc2,"HNC",fontsize=18,ha="center",va="bottom")
             elif score_name[i]=="cn10h":
-                ax.text(pc1,pc2,"CN(1-0)h",fontsize=18,ha="center",va="top")
+                ax.text(pc1,pc2,"CN(1-0)h",fontsize=18,ha="center",va="bottom")
             elif score_name[i]=="ci10":
-                ax.text(pc1,pc2,"[CI]",fontsize=18,ha="center",va="top")
+                ax.text(pc1,pc2,"[CI]",fontsize=18,ha="center",va="bottom")
             elif score_name[i]=="cch10":
-                ax.text(pc1,pc2,"CCH",fontsize=18,ha="right",va="top")
+                ax.text(pc1,pc2,"CCH",fontsize=18,ha="right",va="bottom")
             elif score_name[i]=="siiisii_ratio":
                 ax.text(pc1,pc2,"[SIII]/[SII] ratio",fontsize=18,ha="center",va="top")
             elif score_name[i]=="co10":
@@ -244,7 +244,7 @@ class ToolsPCA():
             elif score_name[i]=="c18o10":
                 ax.text(pc1,pc2,"C$^{18}$O",fontsize=18,ha="right",va="center")
             elif score_name[i]=="ch3oh21":
-                ax.text(pc1,pc2,"CH$_3$OH",fontsize=18,ha="center",va="bottom")
+                ax.text(pc1,pc2,"CH$_3$OH",fontsize=18,ha="center",va="top")
             else:
                 ax.text(pc1,pc2,score_name[i],fontsize=14)
 
