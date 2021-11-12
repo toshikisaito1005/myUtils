@@ -109,9 +109,9 @@ class ToolsPCA():
 
             self.outpng_mom0         = self.dir_products + self._read_key("outpng_mom0")
 
-            self.outpng_pca_hexmap   = self.dir_products + self._read_key("outpng_pca")
+            self.outpng_pca_hexmap   = self.dir_products + self._read_key("outpng_pca_hexmap")
             self.outpng_pca_scatter  = self.dir_products + self._read_key("outpng_pca_scatter")
-            self.outpng_pca_hexmap_r13co  = self.dir_products + self._read_key("outpng_pca_r13co")
+            self.outpng_pca_hexmap_r13co  = self.dir_products + self._read_key("outpng_pca_hexmap_r13co")
             self.outpng_pca_scatter_r13co = self.dir_products + self._read_key("outpng_pca_scatter_r13co")
 
             # final
