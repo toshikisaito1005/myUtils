@@ -171,6 +171,8 @@ class ToolsPCA():
         This method runs all the methods which will create figures in the paper.
         """
 
+        denom1 = "c18o10"
+
         # analysis
         if do_prepare==True:
             self.align_maps()
@@ -181,7 +183,7 @@ class ToolsPCA():
         if do_pca==True:
             self.run_hex_pca(output=self.outpng_pca_mom0,outtxt=self.table_hex_pca_mom0,reverse=True)
             self.run_hex_pca(output=self.outpng_pca_rhcn,outtxt=self.table_hex_pca_rhcn,denom="hcn10",reverse=True)
-            self.run_hex_pca(output=self.outpng_pca_r13co,outtxt=self.table_hex_pca_r13co,denom="13co10",reverse=True)
+            self.run_hex_pca(output=self.outpng_pca_r13co,outtxt=self.table_hex_pca_r13co,denom=denom1,reverse=True)
 
         # plot figures in paper
         if plot_hexmap_pca==True:
@@ -190,7 +192,7 @@ class ToolsPCA():
 
         if plot_hexmap_pca_podium==True:
             self.plot_hexmap_pca_podium()
-            self.plot_hexmap_pca_ratio_podium()
+            self.plot_hexmap_pca_ratio_podium(denom=denom1)
 
         if do_imagemagick==True:
             self.immagick_figures()
@@ -199,7 +201,7 @@ class ToolsPCA():
         if plot_hexmap==True:
             self.plot_hexmap_mom0()
             self.plot_hexmap_ratio(denom="hcn10")
-            self.plot_hexmap_ratio(denom="13co10")
+            self.plot_hexmap_ratio(denom=denom1)
 
         if do_imagemagick_sub==True:
             self.immagick_figures_sub()
@@ -396,7 +398,7 @@ class ToolsPCA():
     # plot_hexmap_pca_ratio_podium #
     ################################
 
-    def plot_hexmap_pca_ratio_podium(self):
+    def plot_hexmap_pca_ratio_podium(self,denom="13co10"):
         """
         """
 
@@ -407,7 +409,7 @@ class ToolsPCA():
         # extract mom0 data
         header,data_mom0,_,x,y,r = self._read_table(self.table_hex_obs)
 
-        denom_name  = "13co10"
+        denom_name  = denom
         denom_index = np.where(header==denom_name)
         denom_z     = np.array(data_mom0[:,denom_index].flatten())
 
