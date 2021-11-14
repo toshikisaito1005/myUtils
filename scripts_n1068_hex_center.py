@@ -426,7 +426,7 @@ class ToolsPCA():
             x,
             y,
             pc1_z4,
-            "HCNO$^+$(1-0) (PC1)",
+            "HCO$^+$(1-0) (PC1)",
             cmap="Reds",
             ann=True,
             add_text=False,
