@@ -37,11 +37,12 @@ outfits_maps_emom0        ,,,n1068_???_err.fits
 ######################
 # output png and txt #
 ######################
+# text files
 table_hex_obs             ,,,n1068_hex_obs.txt
 table_hex_pca_mom0        ,,,n1068_hex_pca_mom0.txt
 table_hex_pca_r13co       ,,,n1068_hex_pca_r13co.txt
 table_hex_pca_rhcn        ,,,n1068_hex_pca_rhcn.txt
-#
+# png files
 outpng_pca_mom0           ,,,fig_hexmap_pca_mom0_150pc.png
 outpng_pca_r13co          ,,,fig_hexmap_pca_r13co_150pc.png
 outpng_pca_rhcn           ,,,fig_hexmap_pca_rhcn_150pc.png
@@ -54,7 +55,7 @@ outpng_pca1_mom0_podium   ,,,fig_hexmap_pc1_mom0_???.png
 outpng_pca2_mom0_podium   ,,,fig_hexmap_pc2_mom0_???.png
 outpng_pca1_ratio_podium  ,,,fig_hexmap_pc1_ratio_???.png
 outpng_pca2_ratio_podium  ,,,fig_hexmap_pc2_ratio_???.png
-#
+# box for imagemajick
 box_map                   ,,,2870x2750+350+150
 box_map_noxlabel          ,,,2550x2750+670+150
 box_map_noylabel          ,,,2870x2560+350+150

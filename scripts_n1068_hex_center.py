@@ -446,10 +446,18 @@ class ToolsPCA():
         pc1_z3     = np.where(pc1_z3>=np.max(pc1_z3)/factor, np.max(pc1_z3)/factor, pc1_z3)
         pc1_z4     = np.where(pc1_z4>=np.max(pc1_z4)/factor, np.max(pc1_z4)/factor, pc1_z4)
 
-        pc1_z1     = np.where(pc1_z1==np.max(pc1_z1), 0, pc1_z1)
-        pc1_z2     = np.where(pc1_z2==np.max(pc1_z2), 0, pc1_z2)
-        #pc1_z3     = np.where(pc1_z3==np.max(pc1_z3), 0, pc1_z3)
-        pc1_z4     = np.where(pc1_z4==np.max(pc1_z4), 0, pc1_z4)
+        pc1_z1_sort = pc1_z1.flatten()
+        pc1_z2_sort = pc1_z2.flatten()
+        pc1_z3_sort = pc1_z3.flatten()
+        pc1_z4_sort = pc1_z4.flatten()
+        pc1_z1_sort.sort()
+        pc1_z2_sort.sort()
+        pc1_z3_sort.sort()
+        pc1_z4_sort.sort()
+        pc1_z1     = np.where(pc1_z1==np.max(pc1_z1), pc1_z1_sort[-2], pc1_z1)
+        pc1_z2     = np.where(pc1_z2==np.max(pc1_z2), pc1_z2_sort[-2], pc1_z2)
+        #pc1_z3     = np.where(pc1_z3==np.max(pc1_z3), pc1_z3_sort[-2], pc1_z3)
+        pc1_z4     = np.where(pc1_z4==np.max(pc1_z4), pc1_z4_sort[-2], pc1_z4)
 
         # get PC1 podium
         pc2_name1  = "cch10"
@@ -486,10 +494,18 @@ class ToolsPCA():
         pc2_z3     = np.where(pc2_z3>=np.max(pc2_z3)/factor, np.max(pc2_z3)/factor, pc2_z3)
         pc2_z4     = np.where(pc2_z4>=np.max(pc2_z4)/factor, np.max(pc2_z4)/factor, pc2_z4)
 
-        pc2_z1     = np.where(pc2_z1==np.max(pc2_z1), 0, pc2_z1)
-        pc2_z2     = np.where(pc2_z2==np.max(pc2_z2), 0, pc2_z2)
-        pc2_z3     = np.where(pc2_z3==np.max(pc2_z3), 0, pc2_z3)
-        pc2_z4     = np.where(pc2_z4==np.max(pc2_z4), 0, pc2_z4)
+        pc2_z1_sort = pc2_z1.flatten()
+        pc2_z2_sort = pc2_z2.flatten()
+        pc2_z3_sort = pc2_z3.flatten()
+        pc2_z4_sort = pc2_z4.flatten()
+        pc2_z1_sort.sort()
+        pc2_z2_sort.sort()
+        pc2_z3_sort.sort()
+        pc2_z4_sort.sort()
+        pc2_z1     = np.where(pc2_z1==np.max(pc2_z1), pc2_z1_sort[-2], pc2_z1)
+        pc2_z2     = np.where(pc2_z2==np.max(pc2_z2), pc2_z2_sort[-2], pc2_z2)
+        pc2_z3     = np.where(pc2_z3==np.max(pc2_z3), pc2_z3_sort[-2], pc2_z3)
+        pc2_z4     = np.where(pc2_z4==np.max(pc2_z4), pc2_z4_sort[-2], pc2_z4)
 
         # PC1 podium+1
         self._plot_hexmap(
