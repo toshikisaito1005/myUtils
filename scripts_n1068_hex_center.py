@@ -98,19 +98,19 @@ class ToolsPCA():
             self.outfits_emom0  = self.dir_ready + self._read_key("outfits_maps_emom0")
 
             # output txt and png
-            self.table_hex_obs       = self.dir_ready + self._read_key("table_hex_obs")
-            self.table_hex_pca_mom0  = self.dir_ready + self._read_key("table_hex_pca_mom0")
-            self.table_hex_pca_r13co = self.dir_ready + self._read_key("table_hex_pca_r13co")
-            self.table_hex_pca_rhcn  = self.dir_ready + self._read_key("table_hex_pca_rhcn")
+            self.table_hex_obs            = self.dir_ready + self._read_key("table_hex_obs")
+            self.table_hex_pca_mom0       = self.dir_ready + self._read_key("table_hex_pca_mom0")
+            self.table_hex_pca_r13co      = self.dir_ready + self._read_key("table_hex_pca_r13co")
+            self.table_hex_pca_rhcn       = self.dir_ready + self._read_key("table_hex_pca_rhcn")
 
-            self.outpng_pca_mom0     = self.dir_products + self._read_key("outpng_pca_mom0")
-            self.outpng_pca_r13co    = self.dir_products + self._read_key("outpng_pca_r13co")
-            self.outpng_pca_rhcn     = self.dir_products + self._read_key("outpng_pca_rhcn")
+            self.outpng_pca_mom0          = self.dir_products + self._read_key("outpng_pca_mom0")
+            self.outpng_pca_r13co         = self.dir_products + self._read_key("outpng_pca_r13co")
+            self.outpng_pca_rhcn          = self.dir_products + self._read_key("outpng_pca_rhcn")
 
-            self.outpng_mom0         = self.dir_products + self._read_key("outpng_mom0")
+            self.outpng_mom0              = self.dir_products + self._read_key("outpng_mom0")
 
-            self.outpng_pca_hexmap   = self.dir_products + self._read_key("outpng_pca_hexmap")
-            self.outpng_pca_scatter  = self.dir_products + self._read_key("outpng_pca_scatter")
+            self.outpng_pca_hexmap        = self.dir_products + self._read_key("outpng_pca_hexmap")
+            self.outpng_pca_scatter       = self.dir_products + self._read_key("outpng_pca_scatter")
             self.outpng_pca_hexmap_r13co  = self.dir_products + self._read_key("outpng_pca_hexmap_r13co")
             self.outpng_pca_scatter_r13co = self.dir_products + self._read_key("outpng_pca_scatter_r13co")
 
@@ -132,7 +132,9 @@ class ToolsPCA():
             self.final_pca_mom0_podium    = self.dir_final + self._read_key("final_pca_mom0_podium")
 
             self.box_map                  = self._read_key("box_map")
-            self.box_map_noxabel          = self._read_key("box_map_noxabel")
+            self.box_map_noxlabel         = self._read_key("box_map_noxlabel")
+            self.box_map_noylabel         = self._read_key("box_map_noylabel")
+            self.box_map_noxylabel        = self._read_key("box_map_noxylabel")
 
     ###################
     # run_ngc1068_pca #
@@ -227,15 +229,15 @@ class ToolsPCA():
             self.outpng_pca1_mom0_2nd,
             self.final_pca_mom0_podium+"_tmp1.png",
             self.box_map,
-            self.box_map_noxabel,
+            self.box_map_noxlabel,
             delin=delin,
             )
         combine_two_png(
             self.outpng_pca1_mom0_3rd,
             self.outpng_pca1_mom0_4th,
             self.final_pca_mom0_podium+"_tmp2.png",
-            self.box_map_noxabel,
-            self.box_map_noxabel,
+            self.box_map_noxlabel,
+            self.box_map_noxlabel,
             delin=delin,
             )
         combine_two_png(
@@ -253,15 +255,15 @@ class ToolsPCA():
             self.outpng_pca2_mom0_2nd,
             self.final_pca_mom0_podium+"_tmp1.png",
             self.box_map,
-            self.box_map_noxabel,
+            self.box_map_noxlabel,
             delin=delin,
             )
         combine_two_png(
             self.outpng_pca2_mom0_3rd,
             self.outpng_pca2_mom0_4th,
             self.final_pca_mom0_podium+"_tmp2.png",
-            self.box_map_noxabel,
-            self.box_map_noxabel,
+            self.box_map_noxlabel,
+            self.box_map_noxlabel,
             delin=delin,
             )
         combine_two_png(
