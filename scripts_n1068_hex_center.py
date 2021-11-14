@@ -126,6 +126,18 @@ class ToolsPCA():
             self.outpng_pca2_mom0_3rd     = outpng_pca2_mom0_podium.replace("???","3rd")
             self.outpng_pca2_mom0_4th     = outpng_pca2_mom0_podium.replace("???","4th")
 
+            outpng_pca1_ratio_podium      = self.dir_products + self._read_key("outpng_pca1_ratio_podium")
+            self.outpng_pca1_ratio_1st    = outpng_pca1_ratio_podium.replace("???","1st")
+            self.outpng_pca1_ratio_2nd    = outpng_pca1_ratio_podium.replace("???","2nd")
+            self.outpng_pca1_ratio_3rd    = outpng_pca1_ratio_podium.replace("???","3rd")
+            self.outpng_pca1_ratio_4th    = outpng_pca1_ratio_podium.replace("???","4th")
+
+            outpng_pca2_ratio_podium      = self.dir_products + self._read_key("outpng_pca2_ratio_podium")
+            self.outpng_pca2_ratio_1st    = outpng_pca2_ratio_podium.replace("???","1st")
+            self.outpng_pca2_ratio_2nd    = outpng_pca2_ratio_podium.replace("???","2nd")
+            self.outpng_pca2_ratio_3rd    = outpng_pca2_ratio_podium.replace("???","3rd")
+            self.outpng_pca2_ratio_4th    = outpng_pca2_ratio_podium.replace("???","4th")
+
             # final
             self.final_pca_mom0           = self.dir_final + self._read_key("final_pca_mom0")
             self.final_pca_r13co          = self.dir_final + self._read_key("final_pca_r13co")
@@ -177,6 +189,7 @@ class ToolsPCA():
 
         if plot_hexmap_pca_podium==True:
             self.plot_hexmap_pca_podium()
+            self.plot_hexmap_pca_ratio_podium()
 
         if do_imagemagick==True:
             self.immagick_figures()
@@ -286,6 +299,73 @@ class ToolsPCA():
             delin=True,
             )
 
+        print("##################################")
+        print("# create final_pca1_ratio_podium #")
+        print("##################################")
+
+        # pca1 mom0
+        combine_two_png(
+            self.outpng_pca1_ratio_1st,
+            self.outpng_pca1_ratio_2nd,
+            self.final_pca_ratio_podium+"_tmp1.png",
+            self.box_map_noylabel,
+            self.box_map_noxylabel,
+            delin=delin,
+            )
+        combine_two_png(
+            self.outpng_pca1_ratio_3rd,
+            self.outpng_pca1_ratio_4th,
+            self.final_pca_ratio_podium+"_tmp2.png",
+            self.box_map_noxylabel,
+            self.box_map_noxylabel,
+            delin=delin,
+            )
+        combine_two_png(
+            self.final_pca_ratio_podium+"_tmp1.png",
+            self.final_pca_ratio_podium+"_tmp2.png",
+            self.final_pca_ratio_podium+"_pca1.png",
+            "10000x10000+0+0",
+            "10000x10000+0+0",
+            delin=True,
+            )
+
+        " pca2 mom0"
+        combine_two_png(
+            self.outpng_pca2_ratio_1st,
+            self.outpng_pca2_ratio_2nd,
+            self.final_pca_ratio_podium+"_tmp1.png",
+            self.box_map,
+            self.box_map_noxlabel,
+            delin=delin,
+            )
+        combine_two_png(
+            self.outpng_pca2_ratio_3rd,
+            self.outpng_pca2_ratio_4th,
+            self.final_pca_ratio_podium+"_tmp2.png",
+            self.box_map_noxlabel,
+            self.box_map_noxlabel,
+            delin=delin,
+            )
+        combine_two_png(
+            self.final_pca_ratio_podium+"_tmp1.png",
+            self.final_pca_ratio_podium+"_tmp2.png",
+            self.final_pca_ratio_podium+"_pca2.png",
+            "100000x100000+0+0",
+            "100000x100000+0+0",
+            delin=True,
+            )
+
+        # combine
+        combine_two_png(
+            self.final_pca_ratio_podium+"_pca1.png",
+            self.final_pca_ratio_podium+"_pca2.png",
+            self.final_pca_ratio_podium,
+            "100000x100000+0+0",
+            "100000x100000+0+0",
+            axis="column",
+            delin=True,
+            )
+
     ########################
     # immagick_figures_sub #
     ########################
@@ -311,6 +391,206 @@ class ToolsPCA():
             self.box_map,
             delin=delin,
             )
+
+    ################################
+    # plot_hexmap_pca_ratio_podium #
+    ################################
+
+    def plot_hexmap_pca_ratio_podium(self):
+        """
+        """
+
+        taskname = self.modname + sys._getframe().f_code.co_name
+        check_first(self.table_hex_obs,taskname)
+        factor = 2.0
+
+        # extract mom0 data
+        header,data_mom0,_,x,y,r = self._read_table(self.table_hex_obs)
+
+        denom_name  = "13co10"
+        denom_index = np.where(header==denom_name)
+        denom_z     = np.array(data_mom0[:,denom_index].flatten())
+
+        # get PC1 podium
+        pc1_name1  = "h13cn10"
+        pc1_name2  = "hc3n109"
+        pc1_name3  = "n2hp10"
+        pc1_name4  = "co10"
+
+        pc1_index1 = np.where(header==pc1_name1)
+        pc1_index2 = np.where(header==pc1_name2)
+        pc1_index3 = np.where(header==pc1_name3)
+        pc1_index4 = np.where(header==pc1_name4)
+
+        pc1_z1     = np.array(data_mom0[:,pc1_index1].flatten()) / denom_z
+        pc1_z2     = np.array(data_mom0[:,pc1_index2].flatten()) / denom_z
+        pc1_z3     = np.array(data_mom0[:,pc1_index3].flatten()) / denom_z
+        pc1_z4     = np.array(data_mom0[:,pc1_index4].flatten()) / denom_z
+
+        pc1_z1[np.isinf(pc1_z1)] = 0
+        pc1_z2[np.isinf(pc1_z2)] = 0
+        pc1_z3[np.isinf(pc1_z3)] = 0
+        pc1_z4[np.isinf(pc1_z4)] = 0
+        pc1_z1[np.isnan(pc1_z1)] = 0
+        pc1_z2[np.isnan(pc1_z2)] = 0
+        pc1_z3[np.isnan(pc1_z3)] = 0
+        pc1_z4[np.isnan(pc1_z4)] = 0
+
+        pc1_z1     = np.where(r<=self.r_sbr_as,pc1_z1,0)
+        pc1_z2     = np.where(r<=self.r_sbr_as,pc1_z2,0)
+        pc1_z3     = np.where(r<=self.r_sbr_as,pc1_z3,0)
+        pc1_z4     = np.where(r<=self.r_sbr_as,pc1_z4,0)
+
+        pc1_z1     = np.where(pc1_z1>=np.max(pc1_z1)/factor, np.max(pc1_z1)/factor, pc1_z1)
+        pc1_z2     = np.where(pc1_z2>=np.max(pc1_z2)/factor, np.max(pc1_z2)/factor, pc1_z2)
+        pc1_z3     = np.where(pc1_z3>=np.max(pc1_z3)/factor, np.max(pc1_z3)/factor, pc1_z3)
+        pc1_z4     = np.where(pc1_z4>=np.max(pc1_z4)/factor, np.max(pc1_z4)/factor, pc1_z4)
+
+        # get PC1 podium
+        pc2_name1  = "cch10"
+        pc2_name2  = "cn10h"
+        pc2_name3  = "hnc10"
+        pc2_name4  = "c18o10"
+
+        pc2_index1 = np.where(header==pc2_name1)
+        pc2_index2 = np.where(header==pc2_name2)
+        pc2_index3 = np.where(header==pc2_name3)
+        pc2_index4 = np.where(header==pc2_name4)
+
+        pc2_z1     = np.array(data_mom0[:,pc2_index1].flatten()) / denom_z
+        pc2_z2     = np.array(data_mom0[:,pc2_index2].flatten()) / denom_z
+        pc2_z3     = np.array(data_mom0[:,pc2_index3].flatten()) / denom_z
+        pc2_z4     = np.array(data_mom0[:,pc2_index4].flatten()) / denom_z
+
+        pc2_z1[np.isinf(pc2_z1)] = 0
+        pc2_z2[np.isinf(pc2_z2)] = 0
+        pc2_z3[np.isinf(pc2_z3)] = 0
+        pc2_z4[np.isinf(pc2_z4)] = 0
+        pc2_z1[np.isnan(pc2_z1)] = 0
+        pc2_z2[np.isnan(pc2_z2)] = 0
+        pc2_z3[np.isnan(pc2_z3)] = 0
+        pc2_z4[np.isnan(pc2_z4)] = 0
+
+        pc2_z1     = np.where(r<=self.r_sbr_as,pc2_z1,0)
+        pc2_z2     = np.where(r<=self.r_sbr_as,pc2_z2,0)
+        pc2_z3     = np.where(r<=self.r_sbr_as,pc2_z3,0)
+        pc2_z4     = np.where(r<=self.r_sbr_as,pc2_z4,0)
+
+        pc2_z1     = np.where(pc2_z1>=np.max(pc2_z1)/factor, np.max(pc2_z1)/factor, pc2_z1)
+        pc2_z2     = np.where(pc2_z2>=np.max(pc2_z2)/factor, np.max(pc2_z2)/factor, pc2_z2)
+        pc2_z3     = np.where(pc2_z3>=np.max(pc2_z3)/factor, np.max(pc2_z3)/factor, pc2_z3)
+        pc2_z4     = np.where(pc2_z4>=np.max(pc2_z4)/factor, np.max(pc2_z4)/factor, pc2_z4)
+
+        # PC1 podium+1
+        self._plot_hexmap(
+            self.outpng_pca1_ratio_1st,
+            x,
+            y,
+            pc1_z1,
+            "H$^{13}$CN(1-0)/$^{13}$CO(1-0) (highest PC1)",
+            cmap="Reds",
+            ann=True,
+            add_text=False,
+            lim=13,
+            size=3600,
+            )
+
+        self._plot_hexmap(
+            self.outpng_pca1_ratio_2nd,
+            x,
+            y,
+            pc1_z2,
+            "HC$_3$N(10-9)/$^{13}$CO(1-0) (2nd highest PC1)",
+            cmap="Reds",
+            ann=True,
+            add_text=False,
+            lim=13,
+            size=3600,
+            )
+
+        self._plot_hexmap(
+            self.outpng_pca1_ratio_3rd,
+            x,
+            y,
+            pc1_z3,
+            "N$_2$H$^+$(1-0)/$^{13}$CO(1-0) (3rd highest PC1)",
+            cmap="Reds",
+            ann=True,
+            add_text=False,
+            lim=13,
+            size=3600,
+            )
+
+        self._plot_hexmap(
+            self.outpng_pca1_ratio_4th,
+            x,
+            y,
+            pc1_z4,
+            "CO(1-0)/$^{13}$CO(1-0) (lowest PC1)",
+            cmap="Greys",
+            ann=True,
+            add_text=False,
+            lim=13,
+            size=3600,
+            )
+
+        # PC2 podium+1
+        self._plot_hexmap(
+            self.outpng_pca2_mom0_1st,
+            x,
+            y,
+            pc2_z1,
+            "CCH(1-0)/$^{13}$CO(1-0) (2nd highest PC2)",
+            cmap="PuBu",
+            ann=True,
+            add_text=False,
+            lim=13,
+            size=3600,
+            label="(K km s$^{-1}$)",
+            )
+
+        self._plot_hexmap(
+            self.outpng_pca2_ratio_2nd,
+            x,
+            y,
+            pc2_z2,
+            "CN(1-0)h/$^{13}$CO(1-0) (highest PC2)",
+            cmap="PuBu",
+            ann=True,
+            add_text=False,
+            lim=13,
+            size=3600,
+            label="(K km s$^{-1}$)",
+            )
+
+        self._plot_hexmap(
+            self.outpng_pca2_ratio_3rd,
+            x,
+            y,
+            pc2_z3,
+            "HNC(1-0)/$^{13}$CO(1-0) (3rd highest PC2)",
+            cmap="PuBu",
+            ann=True,
+            add_text=False,
+            lim=13,
+            size=3600,
+            label="(K km s$^{-1}$)",
+            )
+
+        self._plot_hexmap(
+            self.outpng_pca2_ratio_4th,
+            x,
+            y,
+            pc2_z4,
+            "C$^{18}$O(1-0)/$^{13}$CO(1-0) (lowest PC2)",
+            cmap="Greys",
+            ann=True,
+            add_text=False,
+            lim=13,
+            size=3600,
+            label="(K km s$^{-1}$)",
+            )
+
 
     ##########################
     # plot_hexmap_pca_podium #

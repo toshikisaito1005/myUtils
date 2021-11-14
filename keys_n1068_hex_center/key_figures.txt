@@ -1,60 +1,62 @@
 ###############
 # directories #
 ###############
-dir_proj                 ,,,/lfs13/saitots/proj_n1068_hex_center/
-dir_raw                  ,,,data_raw/
-dir_ready                ,,,data_ready/
-dir_other                ,,,data_other/
-dir_products             ,,,products_png/
-dir_final                ,,,images/
+dir_proj                  ,,,/lfs13/saitots/proj_n1068_hex_center/
+dir_raw                   ,,,data_raw/
+dir_ready                 ,,,data_ready/
+dir_other                 ,,,data_other/
+dir_products              ,,,products_png/
+dir_final                 ,,,images/
 
 ##################
 # final products #
 ##################
 # paper
-final_pca_mom0           ,,,fig_pca_mom0.png
-final_pca_mom0_podium    ,,,fig_pca_mom0_podium.png
+final_pca_mom0            ,,,fig_pca_mom0.png
+final_pca_mom0_podium     ,,,fig_pca_mom0_podium.png
 # supplement
-final_pca_r13co          ,,,fig_pca_r13co.png
+final_pca_r13co           ,,,fig_pca_r13co.png
 
 ############
 # raw maps #
 ############
-maps_mom0                ,,,ngc1068_b*_12m*_150pc_broad_mom0.fits
-maps_emom0               ,,,ngc1068_b*_12m*_150pc_broad_emom0.fits
-map_av                   ,,,n1068_extinction.fits
-map_ionization           ,,,n1068_siiisii_ratio.fits
+maps_mom0                 ,,,ngc1068_b*_12m*_150pc_broad_mom0.fits
+maps_emom0                ,,,ngc1068_b*_12m*_150pc_broad_emom0.fits
+map_av                    ,,,n1068_extinction.fits
+map_ionization            ,,,n1068_siiisii_ratio.fits
 
 ###############
 # output maps #
 ###############
-outmaps_mom0             ,,,n1068_???.image
-outmaps_emom0            ,,,n1068_???_err.image
-outfits_maps_mom0        ,,,n1068_???.fits
-outfits_maps_emom0       ,,,n1068_???_err.fits
+outmaps_mom0              ,,,n1068_???.image
+outmaps_emom0             ,,,n1068_???_err.image
+outfits_maps_mom0         ,,,n1068_???.fits
+outfits_maps_emom0        ,,,n1068_???_err.fits
 
 ######################
 # output png and txt #
 ######################
-table_hex_obs            ,,,n1068_hex_obs.txt
-table_hex_pca_mom0       ,,,n1068_hex_pca_mom0.txt
-table_hex_pca_r13co      ,,,n1068_hex_pca_r13co.txt
-table_hex_pca_rhcn       ,,,n1068_hex_pca_rhcn.txt
-outpng_pca_mom0          ,,,fig_hexmap_pca_mom0_150pc.png
-outpng_pca_r13co         ,,,fig_hexmap_pca_r13co_150pc.png
-outpng_pca_rhcn          ,,,fig_hexmap_pca_rhcn_150pc.png
-outpng_mom0              ,,,fig_hexmap_???.png
-outpng_pca_hexmap        ,,,fig_hexmap_pca???.png
-outpng_pca_scatter       ,,,fig_scatter_pca.png
-outpng_pca_hexmap_r13co  ,,,fig_hexmap_r13co_pca???.png
-outpng_pca_scatter_r13co ,,,fig_scatter_r13co_pca.png
-outpng_pca1_mom0_podium  ,,,fig_hexmap_pc1_mom0_???.png
-outpng_pca2_mom0_podium  ,,,fig_hexmap_pc2_mom0_???.png
+table_hex_obs             ,,,n1068_hex_obs.txt
+table_hex_pca_mom0        ,,,n1068_hex_pca_mom0.txt
+table_hex_pca_r13co       ,,,n1068_hex_pca_r13co.txt
+table_hex_pca_rhcn        ,,,n1068_hex_pca_rhcn.txt
+outpng_pca_mom0           ,,,fig_hexmap_pca_mom0_150pc.png
+outpng_pca_r13co          ,,,fig_hexmap_pca_r13co_150pc.png
+outpng_pca_rhcn           ,,,fig_hexmap_pca_rhcn_150pc.png
+outpng_mom0               ,,,fig_hexmap_???.png
+outpng_pca_hexmap         ,,,fig_hexmap_pca???.png
+outpng_pca_scatter        ,,,fig_scatter_pca.png
+outpng_pca_hexmap_r13co   ,,,fig_hexmap_r13co_pca???.png
+outpng_pca_scatter_r13co  ,,,fig_scatter_r13co_pca.png
+outpng_pca1_mom0_podium   ,,,fig_hexmap_pc1_mom0_???.png
+outpng_pca2_mom0_podium   ,,,fig_hexmap_pc2_mom0_???.png
+outpng_pca1_ratio_podium  ,,,fig_hexmap_pc1_ratio_???.png
+outpng_pca2_ratio_podium  ,,,fig_hexmap_pc2_ratio_???.png
 #
-box_map                  ,,,2870x2750+350+150
-box_map_noxlabel         ,,,2550x2750+670+150
-box_map_noylabel         ,,,2870x2560+350+150
-box_map_noxylabel        ,,,2550x2560+670+150
+box_map                   ,,,2870x2750+350+150
+box_map_noxlabel          ,,,2550x2750+670+150
+box_map_noylabel          ,,,2870x2560+350+150
+box_map_noxylabel         ,,,2550x2560+670+150
 
 #######
 # end #
