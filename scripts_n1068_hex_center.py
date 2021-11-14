@@ -537,7 +537,7 @@ class ToolsPCA():
 
         # PC2 podium+1
         self._plot_hexmap(
-            self.outpng_pca2_mom0_1st,
+            self.outpng_pca2_ratio_1st,
             x,
             y,
             pc2_z1,
@@ -591,7 +591,6 @@ class ToolsPCA():
             size=3600,
             label="(K km s$^{-1}$)",
             )
-
 
     ##########################
     # plot_hexmap_pca_podium #
