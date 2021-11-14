@@ -41,6 +41,7 @@ table_hex_obs             ,,,n1068_hex_obs.txt
 table_hex_pca_mom0        ,,,n1068_hex_pca_mom0.txt
 table_hex_pca_r13co       ,,,n1068_hex_pca_r13co.txt
 table_hex_pca_rhcn        ,,,n1068_hex_pca_rhcn.txt
+#
 outpng_pca_mom0           ,,,fig_hexmap_pca_mom0_150pc.png
 outpng_pca_r13co          ,,,fig_hexmap_pca_r13co_150pc.png
 outpng_pca_rhcn           ,,,fig_hexmap_pca_rhcn_150pc.png
