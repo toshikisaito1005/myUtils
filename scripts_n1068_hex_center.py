@@ -956,7 +956,7 @@ class ToolsPCA():
         cbar = plt.colorbar(im)
         if plot_cbar==True:
             cax  = fig.add_axes([0.19, 0.12, 0.025, 0.35])
-            fig.colorbar(im, cax=cax, label=label)
+            fig.colorbar(im, cax=cax).set_label(label)
 
         # scale bar
         bar = 100 / self.scale_pc
