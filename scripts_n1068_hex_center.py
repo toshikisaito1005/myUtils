@@ -399,7 +399,7 @@ class ToolsPCA():
             x,
             y,
             pc1_z2,
-            "HC$_3$N(10-9) (2nd highestPC1)",
+            "HC$_3$N(10-9) (2nd highest PC1)",
             cmap="Reds",
             ann=True,
             add_text=False,
