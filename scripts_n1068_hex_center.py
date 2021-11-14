@@ -272,6 +272,10 @@ class ToolsPCA():
         pc2_z3     = np.where(r<=self.r_sbr_as,pc2_z3,0)
         pc2_z4     = np.where(r<=self.r_sbr_as,pc2_z4,0)
 
+        print(np.shape(x))
+        print(np.shape(y))
+        print(np.shape(pc1_z1))
+
         # PC1 podium+1
         outpng = self.outpng_pca1_mom0_podium.replace("???","1st")
         self._plot_hexmap(
