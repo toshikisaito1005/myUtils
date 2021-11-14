@@ -336,7 +336,49 @@ class ToolsPCA():
             x,
             y,
             pc2_z1,
-            "CN(1-0)h (PC1)",
+            "CN(1-0)h (PC2)",
+            cmap="PuBu",
+            ann=True,
+            add_text=False,
+            lim=13,
+            size=3600,
+            )
+
+        outpng = self.outpng_pca2_mom0_podium.replace("???","2nd")
+        self._plot_hexmap(
+            outpng,
+            x,
+            y,
+            pc2_z2,
+            "CCH(1-0) (PC2)",
+            cmap="PuBu",
+            ann=True,
+            add_text=False,
+            lim=13,
+            size=3600,
+            )
+
+        outpng = self.outpng_pca2_mom0_podium.replace("???","3rd")
+        self._plot_hexmap(
+            outpng,
+            x,
+            y,
+            pc2_z3,
+            "HNC(1-0) (PC2)",
+            cmap="PuBu",
+            ann=True,
+            add_text=False,
+            lim=13,
+            size=3600,
+            )
+
+        outpng = self.outpng_pca2_mom0_podium.replace("???","4th")
+        self._plot_hexmap(
+            outpng,
+            x,
+            y,
+            pc2_z4,
+            "CN(1-0)l (PC2)",
             cmap="PuBu",
             ann=True,
             add_text=False,
