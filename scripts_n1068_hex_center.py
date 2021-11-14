@@ -417,7 +417,7 @@ class ToolsPCA():
         pc1_name1  = "h13cn10"
         pc1_name2  = "hc3n109"
         pc1_name3  = "n2hp10"
-        pc1_name4  = "co10"
+        pc1_name4  = "hcn10"
 
         pc1_index1 = np.where(header==pc1_name1)
         pc1_index2 = np.where(header==pc1_name2)
@@ -465,7 +465,7 @@ class ToolsPCA():
         pc2_name1  = "cch10"
         pc2_name2  = "cn10h"
         pc2_name3  = "hnc10"
-        pc2_name4  = "c18o10"
+        pc2_name4  = "cn10l"
 
         pc2_index1 = np.where(header==pc2_name1)
         pc2_index2 = np.where(header==pc2_name2)
@@ -515,7 +515,7 @@ class ToolsPCA():
             x,
             y,
             pc1_z1,
-            "H$^{13}$CN(1-0)/$^{13}$CO(1-0) (highest PC1)",
+            "H$^{13}$CN(1-0)/C$^{18}$O(1-0) (highest PC1)",
             cmap="Reds",
             ann=True,
             add_text=False,
@@ -528,7 +528,7 @@ class ToolsPCA():
             x,
             y,
             pc1_z2,
-            "HC$_3$N(10-9)/$^{13}$CO(1-0) (2nd highest PC1)",
+            "HC$_3$N(10-9)/C$^{18}$O(1-0) (2nd highest PC1)",
             cmap="Reds",
             ann=True,
             add_text=False,
@@ -541,7 +541,7 @@ class ToolsPCA():
             x,
             y,
             pc1_z3,
-            "N$_2$H$^+$(1-0)/$^{13}$CO(1-0) (3rd highest PC1)",
+            "N$_2$H$^+$(1-0)/C$^{18}$O(1-0) (3rd highest PC1)",
             cmap="Reds",
             ann=True,
             add_text=False,
@@ -554,8 +554,8 @@ class ToolsPCA():
             x,
             y,
             pc1_z4,
-            "CO(1-0)/$^{13}$CO(1-0) (lowest PC1)",
-            cmap="Greys",
+            "HCN(1-0)/C$^{18}$O(1-0) (4th highest PC1)",
+            cmap="Reds",
             ann=True,
             add_text=False,
             lim=13,
@@ -568,7 +568,7 @@ class ToolsPCA():
             x,
             y,
             pc2_z1,
-            "CCH(1-0)/$^{13}$CO(1-0) (2nd highest PC2)",
+            "CCH(1-0)/C$^{18}$O(1-0) (2nd highest PC2)",
             cmap="PuBu",
             ann=True,
             add_text=False,
@@ -582,7 +582,7 @@ class ToolsPCA():
             x,
             y,
             pc2_z2,
-            "CN(1-0)h/$^{13}$CO(1-0) (highest PC2)",
+            "CN(1-0)h/C$^{18}$O(1-0) (highest PC2)",
             cmap="PuBu",
             ann=True,
             add_text=False,
@@ -596,7 +596,7 @@ class ToolsPCA():
             x,
             y,
             pc2_z3,
-            "HNC(1-0)/$^{13}$CO(1-0) (3rd highest PC2)",
+            "HNC(1-0)/C$^{18}$O(1-0) (3rd highest PC2)",
             cmap="PuBu",
             ann=True,
             add_text=False,
@@ -610,8 +610,8 @@ class ToolsPCA():
             x,
             y,
             pc2_z4,
-            "C$^{18}$O(1-0)/$^{13}$CO(1-0) (lowest PC2)",
-            cmap="Greys",
+            "CN(1-0)l(1-0)/C$^{18}$O(1-0) (4th highest PC2)",
+            cmap="PuBu",
             ann=True,
             add_text=False,
             lim=13,
