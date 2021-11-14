@@ -264,7 +264,7 @@ class ToolsPCA():
         # PC1 1st
         outpng = self.outpng_pca1_mom0_podium.replace("???","1st")
         self._plot_hexmap(
-            output,
+            outpng,
             x,
             y,
             pc1_z1,
