@@ -246,10 +246,10 @@ class ToolsPCA():
         pc1_z3     = np.array(data_mom0[:,pc1_index3].flatten())
         pc1_z4     = np.array(data_mom0[:,pc1_index4].flatten())
 
-        pc1_z1     = np.where(r<=self.r_sbr_as,pc1_z1,0)
-        pc1_z2     = np.where(r<=self.r_sbr_as,pc1_z2,0)
-        pc1_z3     = np.where(r<=self.r_sbr_as,pc1_z3,0)
-        pc1_z4     = np.where(r<=self.r_sbr_as,pc1_z4,0)
+        pc1_z1     = np.log10(np.where(r<=self.r_sbr_as,pc1_z1,0))
+        pc1_z2     = np.log10(np.where(r<=self.r_sbr_as,pc1_z2,0))
+        pc1_z3     = np.log10(np.where(r<=self.r_sbr_as,pc1_z3,0))
+        pc1_z4     = np.log10(np.where(r<=self.r_sbr_as,pc1_z4,0))
 
         # get PC1 podium
         pc2_name1  = "cn10h"
@@ -267,10 +267,10 @@ class ToolsPCA():
         pc2_z3     = np.array(data_mom0[:,pc2_index3].flatten())
         pc2_z4     = np.array(data_mom0[:,pc2_index4].flatten())
 
-        pc2_z1     = np.where(r<=self.r_sbr_as,pc2_z1,0)
-        pc2_z2     = np.where(r<=self.r_sbr_as,pc2_z2,0)
-        pc2_z3     = np.where(r<=self.r_sbr_as,pc2_z3,0)
-        pc2_z4     = np.where(r<=self.r_sbr_as,pc2_z4,0)
+        pc2_z1     = np.log10(np.where(r<=self.r_sbr_as,pc2_z1,0))
+        pc2_z2     = np.log10(np.where(r<=self.r_sbr_as,pc2_z2,0))
+        pc2_z3     = np.log10(np.where(r<=self.r_sbr_as,pc2_z3,0))
+        pc2_z4     = np.log10(np.where(r<=self.r_sbr_as,pc2_z4,0))
 
         # PC1 podium+1
         outpng = self.outpng_pca1_mom0_podium.replace("???","1st")
