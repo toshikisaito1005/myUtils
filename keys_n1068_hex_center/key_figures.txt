@@ -46,6 +46,7 @@ outpng_pca_scatter       ,,,fig_scatter_pca.png
 outpng_pca_hexmap_r13co  ,,,fig_hexmap_r13co_pca???.png
 outpng_pca_scatter_r13co ,,,fig_scatter_r13co_pca.png
 outpng_pca1_mom0_podium  ,,,fig_hexmap_pc1_mom0_???.png
+outpng_pca2_mom0_podium  ,,,fig_hexmap_pc2_mom0_???.png
 #
 box_map                  ,,,2870x2750+350+150
 

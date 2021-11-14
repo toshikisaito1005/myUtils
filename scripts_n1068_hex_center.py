@@ -115,6 +115,7 @@ class ToolsPCA():
             self.outpng_pca_scatter_r13co = self.dir_products + self._read_key("outpng_pca_scatter_r13co")
 
             self.outpng_pca1_mom0_podium  = self.dir_products + self._read_key("outpng_pca1_mom0_podium")
+            self.outpng_pca2_mom0_podium  = self.dir_products + self._read_key("outpng_pca2_mom0_podium")
 
             # final
             self.final_pca_mom0      = self.dir_final + self._read_key("final_pca_mom0")
@@ -261,15 +262,72 @@ class ToolsPCA():
         pc2_z3     = data_mom0[:,pc2_index3]
         pc2_z4     = data_mom0[:,pc2_index4]
 
-        # PC1 1st
+        # PC1 podium+1
         outpng = self.outpng_pca1_mom0_podium.replace("???","1st")
         self._plot_hexmap(
             outpng,
             x,
             y,
             pc1_z1,
-            "H$^{13}$CN(1-0)",
+            "H$^{13}$CN(1-0) (PC1)",
             cmap="Reds",
+            ann=True,
+            add_text=False,
+            lim=13,
+            size=3600,
+            )
+
+        outpng = self.outpng_pca1_mom0_podium.replace("???","2nd")
+        self._plot_hexmap(
+            outpng,
+            x,
+            y,
+            pc1_z2,
+            "HC$_3$N(10-9) (PC1)",
+            cmap="Reds",
+            ann=True,
+            add_text=False,
+            lim=13,
+            size=3600,
+            )
+
+        outpng = self.outpng_pca1_mom0_podium.replace("???","3rd")
+        self._plot_hexmap(
+            outpng,
+            x,
+            y,
+            pc1_z3,
+            "HCN(1-0) (PC1)",
+            cmap="Reds",
+            ann=True,
+            add_text=False,
+            lim=13,
+            size=3600,
+            )
+
+        outpng = self.outpng_pca1_mom0_podium.replace("???","4th")
+        self._plot_hexmap(
+            outpng,
+            x,
+            y,
+            pc1_z4,
+            "CN(1-0)l (PC1)",
+            cmap="Reds",
+            ann=True,
+            add_text=False,
+            lim=13,
+            size=3600,
+            )
+
+        # PC2 podium+1
+        outpng = self.outpng_pca2_mom0_podium.replace("???","1st")
+        self._plot_hexmap(
+            outpng,
+            x,
+            y,
+            pc2_z1,
+            "CN(1-0)h (PC1)",
+            cmap="PuBu",
             ann=True,
             add_text=False,
             lim=13,
