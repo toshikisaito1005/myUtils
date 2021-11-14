@@ -251,6 +251,11 @@ class ToolsPCA():
         pc1_z3     = np.where(r<=self.r_sbr_as,pc1_z3,0)
         pc1_z4     = np.where(r<=self.r_sbr_as,pc1_z4,0)
 
+        pc1_z1     = np.where(pc1_z1>=np.max(pc1_z1)/1.5, np.max(pc1_z1)/1.5, pc1_z1)
+        pc1_z2     = np.where(pc1_z2>=np.max(pc1_z2)/1.5, np.max(pc1_z2)/1.5, pc1_z2)
+        pc1_z3     = np.where(pc1_z3>=np.max(pc1_z3)/1.5, np.max(pc1_z3)/1.5, pc1_z3)
+        pc1_z4     = np.where(pc1_z4>=np.max(pc1_z4)/1.5, np.max(pc1_z4)/1.5, pc1_z4)
+
         # get PC1 podium
         pc2_name1  = "cn10h"
         pc2_name2  = "cch10"
@@ -271,6 +276,11 @@ class ToolsPCA():
         pc2_z2     = np.where(r<=self.r_sbr_as,pc2_z2,0)
         pc2_z3     = np.where(r<=self.r_sbr_as,pc2_z3,0)
         pc2_z4     = np.where(r<=self.r_sbr_as,pc2_z4,0)
+
+        pc2_z1     = np.where(pc2_z1>=np.max(pc2_z1)/1.5, np.max(pc2_z1)/1.5, pc2_z1)
+        pc2_z2     = np.where(pc2_z2>=np.max(pc2_z2)/1.5, np.max(pc2_z2)/1.5, pc2_z2)
+        pc2_z3     = np.where(pc2_z3>=np.max(pc2_z3)/1.5, np.max(pc2_z3)/1.5, pc2_z3)
+        pc2_z4     = np.where(pc2_z4>=np.max(pc2_z4)/1.5, np.max(pc2_z4)/1.5, pc2_z4)
 
         # PC1 podium+1
         outpng = self.outpng_pca1_mom0_podium.replace("???","1st")
@@ -908,6 +918,7 @@ class ToolsPCA():
         lim=29.5,
         size=690,
         add_text=False,
+        clim=None,
         ):
         """
         """
