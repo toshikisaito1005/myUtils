@@ -234,7 +234,7 @@ class ToolsPCA():
             self.outpng_pca1_mom0_3rd,
             self.outpng_pca1_mom0_4th,
             self.final_pca_mom0_podium+"_tmp2.png",
-            self.box_map,
+            self.box_map_noxabel,
             self.box_map_noxabel,
             delin=delin,
             )
@@ -260,7 +260,7 @@ class ToolsPCA():
             self.outpng_pca2_mom0_3rd,
             self.outpng_pca2_mom0_4th,
             self.final_pca_mom0_podium+"_tmp2.png",
-            self.box_map,
+            self.box_map_noxabel,
             self.box_map_noxabel,
             delin=delin,
             )
@@ -268,8 +268,8 @@ class ToolsPCA():
             self.final_pca_mom0_podium+"_tmp1.png",
             self.final_pca_mom0_podium+"_tmp2.png",
             self.final_pca_mom0_podium+"_pca2.png",
-            "10000x10000+0+0",
-            "10000x10000+0+0",
+            "100000x100000+0+0",
+            "100000x100000+0+0",
             delin=True,
             )
 
@@ -278,8 +278,8 @@ class ToolsPCA():
             self.final_pca_mom0_podium+"_pca1.png",
             self.final_pca_mom0_podium+"_pca2.png",
             self.final_pca_mom0_podium,
-            "10000x10000+0+0",
-            "10000x10000+0+0",
+            "100000x100000+0+0",
+            "100000x100000+0+0",
             axis="column",
             delin=True,
             )
