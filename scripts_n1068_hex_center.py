@@ -1015,7 +1015,7 @@ class ToolsPCA():
         lim=29.5,
         size=690,
         add_text=False,
-        label=None,
+        label="",
         ):
         """
         """
