@@ -484,7 +484,7 @@ class ToolsPCA():
             y,
             pc2_z4,
             "C$^{18}$O(1-0) (lowest PC2)",
-            cmap="PuBu",
+            cmap="Greys",
             ann=True,
             add_text=False,
             lim=13,
