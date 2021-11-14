@@ -142,6 +142,7 @@ class ToolsPCA():
             self.final_pca_mom0           = self.dir_final + self._read_key("final_pca_mom0")
             self.final_pca_r13co          = self.dir_final + self._read_key("final_pca_r13co")
             self.final_pca_mom0_podium    = self.dir_final + self._read_key("final_pca_mom0_podium")
+            self.final_pca_ratio_podium   = self.dir_final + self._read_key("final_pca_ratio_podium")
 
             self.box_map                  = self._read_key("box_map")
             self.box_map_noxlabel         = self._read_key("box_map_noxlabel")
@@ -402,7 +403,7 @@ class ToolsPCA():
 
         taskname = self.modname + sys._getframe().f_code.co_name
         check_first(self.table_hex_obs,taskname)
-        factor = 2.0
+        factor = 1.0
 
         # extract mom0 data
         header,data_mom0,_,x,y,r = self._read_table(self.table_hex_obs)
