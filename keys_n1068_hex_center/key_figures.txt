@@ -51,7 +51,7 @@ outpng_pca_scatter_r13co ,,,fig_scatter_r13co_pca.png
 outpng_pca1_mom0_podium  ,,,fig_hexmap_pc1_mom0_???.png
 outpng_pca2_mom0_podium  ,,,fig_hexmap_pc2_mom0_???.png
 #
-box_map                  ,,,2870x2750+350+150
+box_map                  ,,,2840x2750+380+150
 box_map_noxlabel         ,,,2520x2750+700+150
 box_map_noylabel         ,,,2870x2750+350+150
 box_map_noxylabel        ,,,2870x2750+350+150
