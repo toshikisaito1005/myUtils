@@ -1,18 +1,20 @@
 ###############
 # directories #
 ###############
-dir_proj            ,,,/lfs13/saitots/proj_n1068_hex_center/
-dir_raw             ,,,data_raw/
-dir_ready           ,,,data_ready/
-dir_other           ,,,data_other/
-dir_products        ,,,products_png/
-dir_final           ,,,images/
+dir_proj                 ,,,/lfs13/saitots/proj_n1068_hex_center/
+dir_raw                  ,,,data_raw/
+dir_ready                ,,,data_ready/
+dir_other                ,,,data_other/
+dir_products             ,,,products_png/
+dir_final                ,,,images/
 
 ##################
 # final products #
 ##################
-final_pca_mom0      ,,,fig_pca_mom0.png
-final_pca_r13co     ,,,fig_pca_r13co.png
+final_pca_mom0           ,,,fig_pca_mom0.png
+final_pca_mom0_podium    ,,,fig_pca_mom0_podium.png
+# supplement
+final_pca_r13co          ,,,fig_pca_r13co.png
 
 ############
 # raw maps #
@@ -49,6 +51,7 @@ outpng_pca1_mom0_podium  ,,,fig_hexmap_pc1_mom0_???.png
 outpng_pca2_mom0_podium  ,,,fig_hexmap_pc2_mom0_???.png
 #
 box_map                  ,,,2870x2750+350+150
+box_map_noxabel          ,,,2870x2750+350+150
 
 #######
 # end #

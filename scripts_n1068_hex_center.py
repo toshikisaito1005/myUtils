@@ -114,13 +114,25 @@ class ToolsPCA():
             self.outpng_pca_hexmap_r13co  = self.dir_products + self._read_key("outpng_pca_hexmap_r13co")
             self.outpng_pca_scatter_r13co = self.dir_products + self._read_key("outpng_pca_scatter_r13co")
 
-            self.outpng_pca1_mom0_podium  = self.dir_products + self._read_key("outpng_pca1_mom0_podium")
-            self.outpng_pca2_mom0_podium  = self.dir_products + self._read_key("outpng_pca2_mom0_podium")
+            outpng_pca1_mom0_podium       = self.dir_products + self._read_key("outpng_pca1_mom0_podium")
+            self.outpng_pca1_mom0_1st     = outpng_pca1_mom0_podium.replace("???","1st")
+            self.outpng_pca1_mom0_2nd     = outpng_pca1_mom0_podium.replace("???","2nd")
+            self.outpng_pca1_mom0_3rd     = outpng_pca1_mom0_podium.replace("???","3rd")
+            self.outpng_pca1_mom0_4th     = outpng_pca1_mom0_podium.replace("???","4th")
+
+            outpng_pca2_mom0_podium       = self.dir_products + self._read_key("outpng_pca2_mom0_podium")
+            self.outpng_pca2_mom0_1st     = outpng_pca2_mom0_podium.replace("???","1st")
+            self.outpng_pca2_mom0_2nd     = outpng_pca2_mom0_podium.replace("???","2nd")
+            self.outpng_pca2_mom0_3rd     = outpng_pca2_mom0_podium.replace("???","3rd")
+            self.outpng_pca2_mom0_4th     = outpng_pca2_mom0_podium.replace("???","4th")
 
             # final
-            self.final_pca_mom0      = self.dir_final + self._read_key("final_pca_mom0")
-            self.final_pca_r13co     = self.dir_final + self._read_key("final_pca_r13co")
-            self.box_map             = self._read_key("box_map")
+            self.final_pca_mom0           = self.dir_final + self._read_key("final_pca_mom0")
+            self.final_pca_r13co          = self.dir_final + self._read_key("final_pca_r13co")
+            self.final_pca_mom0_podium    = self.dir_final + self._read_key("final_pca_mom0_podium")
+
+            self.box_map                  = self._read_key("box_map")
+            self.box_map_noxabel          = self._read_key("box_map_noxabel")
 
     ###################
     # run_ngc1068_pca #
@@ -138,6 +150,7 @@ class ToolsPCA():
         do_imagemagick         = False,
         # supplement
         plot_hexmap            = False,
+        do_imagemagick_sub     = False,
         ):
         """
         This method runs all the methods which will create figures in the paper.
@@ -172,6 +185,9 @@ class ToolsPCA():
             self.plot_hexmap_ratio(denom="hcn10")
             self.plot_hexmap_ratio(denom="13co10")
 
+        if do_imagemagick_sub==True:
+            self.immagick_figures_sub()
+
     ####################
     # immagick_figures #
     ####################
@@ -200,6 +216,84 @@ class ToolsPCA():
             self.box_map,
             delin=delin,
             )
+
+        print("#################################")
+        print("# create final_pca1_mom0_podium #")
+        print("#################################")
+
+        # pca1 mom0
+        combine_two_png(
+            self.outpng_pca1_mom0_1st,
+            self.outpng_pca1_mom0_2nd,
+            self.final_pca_mom0_podium+"_tmp1.png",
+            self.box_map,
+            self.box_map_noxabel,
+            delin=delin,
+            )
+        combine_two_png(
+            self.outpng_pca1_mom0_3rd,
+            self.outpng_pca1_mom0_4th,
+            self.final_pca_mom0_podium+"_tmp2.png",
+            self.box_map,
+            self.box_map_noxabel,
+            delin=delin,
+            )
+        combine_two_png(
+            self.final_pca_mom0_podium+"_tmp1.png",
+            self.final_pca_mom0_podium+"_tmp2.png",
+            self.final_pca_mom0_podium+"_pca1.png",
+            "10000x10000+0+0",
+            "10000x10000+0+0",
+            delin=True,
+            )
+
+        " pca2 mom0"
+        combine_two_png(
+            self.outpng_pca2_mom0_1st,
+            self.outpng_pca2_mom0_2nd,
+            self.final_pca_mom0_podium+"_tmp1.png",
+            self.box_map,
+            self.box_map_noxabel,
+            delin=delin,
+            )
+        combine_two_png(
+            self.outpng_pca2_mom0_3rd,
+            self.outpng_pca2_mom0_4th,
+            self.final_pca_mom0_podium+"_tmp2.png",
+            self.box_map,
+            self.box_map_noxabel,
+            delin=delin,
+            )
+        combine_two_png(
+            self.final_pca_mom0_podium+"_tmp1.png",
+            self.final_pca_mom0_podium+"_tmp2.png",
+            self.final_pca_mom0_podium+"_pca2.png",
+            "10000x10000+0+0",
+            "10000x10000+0+0",
+            delin=True,
+            )
+
+        # combine
+        combine_two_png(
+            self.final_pca_mom0_podium+"_pca1.png",
+            self.final_pca_mom0_podium+"_pca2.png",
+            self.final_pca_mom0_podium,
+            "10000x10000+0+0",
+            "10000x10000+0+0",
+            axis="column",
+            delin=True,
+            )
+
+    ########################
+    # immagick_figures_sub #
+    ########################
+
+    def immagick_figures_sub(
+        self,
+        delin=False,
+        ):
+        """
+        """
 
         print("##########################")
         print("# create final_pca_r13co #")
@@ -283,9 +377,8 @@ class ToolsPCA():
         pc2_z4     = np.where(pc2_z4>=np.max(pc2_z4)/1.5, np.max(pc2_z4)/1.5, pc2_z4)
 
         # PC1 podium+1
-        outpng = self.outpng_pca1_mom0_podium.replace("???","1st")
         self._plot_hexmap(
-            outpng,
+            self.outpng_pca1_mom0_1st,
             x,
             y,
             pc1_z1,
@@ -298,9 +391,8 @@ class ToolsPCA():
             label="(K km s$^{-1}$)",
             )
 
-        outpng = self.outpng_pca1_mom0_podium.replace("???","2nd")
         self._plot_hexmap(
-            outpng,
+            self.outpng_pca1_mom0_2nd,
             x,
             y,
             pc1_z2,
@@ -313,9 +405,8 @@ class ToolsPCA():
             label="(K km s$^{-1}$)",
             )
 
-        outpng = self.outpng_pca1_mom0_podium.replace("???","3rd")
         self._plot_hexmap(
-            outpng,
+            self.outpng_pca1_mom0_3rd,
             x,
             y,
             pc1_z3,
@@ -328,9 +419,8 @@ class ToolsPCA():
             label="(K km s$^{-1}$)",
             )
 
-        outpng = self.outpng_pca1_mom0_podium.replace("???","4th")
         self._plot_hexmap(
-            outpng,
+            self.outpng_pca1_mom0_4th,
             x,
             y,
             pc1_z4,
@@ -344,9 +434,8 @@ class ToolsPCA():
             )
 
         # PC2 podium+1
-        outpng = self.outpng_pca2_mom0_podium.replace("???","1st")
         self._plot_hexmap(
-            outpng,
+            self.outpng_pca2_mom0_1st,
             x,
             y,
             pc2_z1,
@@ -359,9 +448,8 @@ class ToolsPCA():
             label="(K km s$^{-1}$)",
             )
 
-        outpng = self.outpng_pca2_mom0_podium.replace("???","2nd")
         self._plot_hexmap(
-            outpng,
+            self.outpng_pca2_mom0_2nd,
             x,
             y,
             pc2_z2,
@@ -374,9 +462,8 @@ class ToolsPCA():
             label="(K km s$^{-1}$)",
             )
 
-        outpng = self.outpng_pca2_mom0_podium.replace("???","3rd")
         self._plot_hexmap(
-            outpng,
+            self.outpng_pca2_mom0_3rd,
             x,
             y,
             pc2_z3,
@@ -389,9 +476,8 @@ class ToolsPCA():
             label="(K km s$^{-1}$)",
             )
 
-        outpng = self.outpng_pca2_mom0_podium.replace("???","4th")
         self._plot_hexmap(
-            outpng,
+            self.outpng_pca2_mom0_4th,
             x,
             y,
             pc2_z4,
