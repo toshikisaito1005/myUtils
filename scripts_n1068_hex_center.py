@@ -330,7 +330,7 @@ class ToolsPCA():
         pc1_name1  = "h13cn10"
         pc1_name2  = "hc3n109"
         pc1_name3  = "hcn10"
-        pc1_name4  = "cn10l"
+        pc1_name4  = "13co10"
 
         pc1_index1 = np.where(header==pc1_name1)
         pc1_index2 = np.where(header==pc1_name2)
@@ -356,7 +356,7 @@ class ToolsPCA():
         pc2_name1  = "cn10h"
         pc2_name2  = "cch10"
         pc2_name3  = "hnc10"
-        pc2_name4  = "hcop10"
+        pc2_name4  = "c18o10"
 
         pc2_index1 = np.where(header==pc2_name1)
         pc2_index2 = np.where(header==pc2_name2)
@@ -384,7 +384,7 @@ class ToolsPCA():
             x,
             y,
             pc1_z1,
-            "H$^{13}$CN(1-0) (PC1)",
+            "H$^{13}$CN(1-0) (highest PC1)",
             cmap="Reds",
             ann=True,
             add_text=False,
@@ -398,7 +398,7 @@ class ToolsPCA():
             x,
             y,
             pc1_z2,
-            "HC$_3$N(10-9) (PC1)",
+            "HC$_3$N(10-9) (2nd highestPC1)",
             cmap="Reds",
             ann=True,
             add_text=False,
@@ -412,7 +412,7 @@ class ToolsPCA():
             x,
             y,
             pc1_z3,
-            "HCN(1-0) (PC1)",
+            "HCN(1-0) (3rd highest PC1)",
             cmap="Reds",
             ann=True,
             add_text=False,
@@ -426,8 +426,8 @@ class ToolsPCA():
             x,
             y,
             pc1_z4,
-            "HCO$^+$(1-0) (PC1)",
-            cmap="Reds",
+            "$^{13}$CO(1-0) (lowest PC1)",
+            cmap="Greys",
             ann=True,
             add_text=False,
             lim=13,
@@ -441,7 +441,7 @@ class ToolsPCA():
             x,
             y,
             pc2_z1,
-            "CN(1-0)h (PC2)",
+            "CN(1-0)h (highest PC2)",
             cmap="PuBu",
             ann=True,
             add_text=False,
@@ -455,7 +455,7 @@ class ToolsPCA():
             x,
             y,
             pc2_z2,
-            "CCH(1-0) (PC2)",
+            "CCH(1-0) (2nd highest PC2)",
             cmap="PuBu",
             ann=True,
             add_text=False,
@@ -469,7 +469,7 @@ class ToolsPCA():
             x,
             y,
             pc2_z3,
-            "HNC(1-0) (PC2)",
+            "HNC(1-0) (3rd highest PC2)",
             cmap="PuBu",
             ann=True,
             add_text=False,
@@ -483,7 +483,7 @@ class ToolsPCA():
             x,
             y,
             pc2_z4,
-            "CN(1-0)l (PC2)",
+            "C$^{18}$O(1-0) (lowest PC2)",
             cmap="PuBu",
             ann=True,
             add_text=False,
