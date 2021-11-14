@@ -228,16 +228,16 @@ class ToolsPCA():
             self.outpng_pca1_mom0_1st,
             self.outpng_pca1_mom0_2nd,
             self.final_pca_mom0_podium+"_tmp1.png",
-            self.box_map,
-            self.box_map_noxlabel,
+            self.box_map_noylabel,
+            self.box_map_noxylabel,
             delin=delin,
             )
         combine_two_png(
             self.outpng_pca1_mom0_3rd,
             self.outpng_pca1_mom0_4th,
             self.final_pca_mom0_podium+"_tmp2.png",
-            self.box_map_noxlabel,
-            self.box_map_noxlabel,
+            self.box_map_noxylabel,
+            self.box_map_noxylabel,
             delin=delin,
             )
         combine_two_png(
@@ -356,7 +356,7 @@ class ToolsPCA():
         pc2_name1  = "cn10h"
         pc2_name2  = "cch10"
         pc2_name3  = "hnc10"
-        pc2_name4  = "cn10l"
+        pc2_name4  = "hcop10"
 
         pc2_index1 = np.where(header==pc2_name1)
         pc2_index2 = np.where(header==pc2_name2)
@@ -426,7 +426,7 @@ class ToolsPCA():
             x,
             y,
             pc1_z4,
-            "CN(1-0)l (PC1)",
+            "HCNO$^+$(1-0) (PC1)",
             cmap="Reds",
             ann=True,
             add_text=False,
