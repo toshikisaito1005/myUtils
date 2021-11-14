@@ -295,6 +295,7 @@ class ToolsPCA():
             add_text=False,
             lim=13,
             size=3600,
+            label="(K km s$^{-1}$)",
             )
 
         outpng = self.outpng_pca1_mom0_podium.replace("???","2nd")
@@ -309,6 +310,7 @@ class ToolsPCA():
             add_text=False,
             lim=13,
             size=3600,
+            label="(K km s$^{-1}$)",
             )
 
         outpng = self.outpng_pca1_mom0_podium.replace("???","3rd")
@@ -323,6 +325,7 @@ class ToolsPCA():
             add_text=False,
             lim=13,
             size=3600,
+            label="(K km s$^{-1}$)",
             )
 
         outpng = self.outpng_pca1_mom0_podium.replace("???","4th")
@@ -337,6 +340,7 @@ class ToolsPCA():
             add_text=False,
             lim=13,
             size=3600,
+            label="(K km s$^{-1}$)",
             )
 
         # PC2 podium+1
@@ -352,6 +356,7 @@ class ToolsPCA():
             add_text=False,
             lim=13,
             size=3600,
+            label="(K km s$^{-1}$)",
             )
 
         outpng = self.outpng_pca2_mom0_podium.replace("???","2nd")
@@ -366,6 +371,7 @@ class ToolsPCA():
             add_text=False,
             lim=13,
             size=3600,
+            label="(K km s$^{-1}$)",
             )
 
         outpng = self.outpng_pca2_mom0_podium.replace("???","3rd")
@@ -380,6 +386,7 @@ class ToolsPCA():
             add_text=False,
             lim=13,
             size=3600,
+            label="(K km s$^{-1}$)",
             )
 
         outpng = self.outpng_pca2_mom0_podium.replace("???","4th")
@@ -394,6 +401,7 @@ class ToolsPCA():
             add_text=False,
             lim=13,
             size=3600,
+            label="(K km s$^{-1}$)",
             )
 
     #########################
@@ -918,7 +926,7 @@ class ToolsPCA():
         lim=29.5,
         size=690,
         add_text=False,
-        clim=None,
+        label=None,
         ):
         """
         """
@@ -948,7 +956,7 @@ class ToolsPCA():
         cbar = plt.colorbar(im)
         if plot_cbar==True:
             cax  = fig.add_axes([0.19, 0.12, 0.025, 0.35])
-            fig.colorbar(im, cax=cax)
+            fig.colorbar(im, cax=cax, label=label)
 
         # scale bar
         bar = 100 / self.scale_pc
