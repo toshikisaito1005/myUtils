@@ -114,6 +114,8 @@ class ToolsPCA():
             self.outpng_pca_hexmap_r13co  = self.dir_products + self._read_key("outpng_pca_hexmap_r13co")
             self.outpng_pca_scatter_r13co = self.dir_products + self._read_key("outpng_pca_scatter_r13co")
 
+            self.outpng_pca1_mom0_podium  = self.dir_products + self._read_key("outpng_pca1_mom0_podium")
+
             # final
             self.final_pca_mom0      = self.dir_final + self._read_key("final_pca_mom0")
             self.final_pca_r13co     = self.dir_final + self._read_key("final_pca_r13co")
@@ -126,14 +128,15 @@ class ToolsPCA():
     def run_ngc1068_pca(
         self,
         # analysis
-        do_prepare            = False,
-        do_sampling           = False,
-        do_pca                = False,
+        do_prepare             = False,
+        do_sampling            = False,
+        do_pca                 = False,
         # plot figures in paper
-        plot_hexmap_pca       = False,
-        do_imagemagick        = False,
+        plot_hexmap_pca        = False,
+        plot_hexmap_pca_podium = False,
+        do_imagemagick         = False,
         # supplement
-        plot_hexmap           = False,
+        plot_hexmap            = False,
         ):
         """
         This method runs all the methods which will create figures in the paper.
@@ -155,6 +158,9 @@ class ToolsPCA():
         if plot_hexmap_pca==True:
             self.plot_hexmap_pca()
             self.plot_hexmap_pca_r13co()
+
+        if plot_hexmap_pca_podium==True:
+            self.plot_hexmap_pca_podium()
 
         if do_imagemagick==True:
             self.immagick_figures()
@@ -194,9 +200,9 @@ class ToolsPCA():
             delin=delin,
             )
 
-        print("#########################")
-        print("# create mom0_pca_r13co #")
-        print("#########################")
+        print("##########################")
+        print("# create final_pca_r13co #")
+        print("##########################")
 
         combine_three_png(
             self.outpng_pca_hexmap_r13co.replace("???","1"),
@@ -207,6 +213,67 @@ class ToolsPCA():
             self.box_map,
             self.box_map,
             delin=delin,
+            )
+
+    ##########################
+    # plot_hexmap_pca_podium #
+    ##########################
+
+    def plot_hexmap_pca_podium(self):
+        """
+        """
+
+        taskname = self.modname + sys._getframe().f_code.co_name
+        check_first(self.table_hex_obs,taskname)
+
+        # extract mom0 data
+        header,data_mom0,_,x,y,r = self._read_table(self.table_hex_obs)
+
+        # get PC1 podium
+        pc1_name1  = "h13cn10"
+        pc1_name2  = "hc3n109"
+        pc1_name3  = "hcn10"
+        pc1_name4  = "cn10l"
+
+        pc1_index1 = np.where(header==pc1_name1)
+        pc1_index2 = np.where(header==pc1_name2)
+        pc1_index3 = np.where(header==pc1_name3)
+        pc1_index4 = np.where(header==pc1_name4)
+
+        pc1_z1     = data_mom0[:,index1]
+        pc1_z2     = data_mom0[:,index2]
+        pc1_z3     = data_mom0[:,index3]
+        pc1_z4     = data_mom0[:,index4]
+
+        # get PC1 podium
+        pc2_name1  = "cn10h"
+        pc2_name2  = "cch10"
+        pc2_name3  = "hnc10"
+        pc2_name4  = "cn10l"
+
+        pc2_index1 = np.where(header==pc2_name1)
+        pc2_index2 = np.where(header==pc2_name2)
+        pc2_index3 = np.where(header==pc2_name3)
+        pc2_index4 = np.where(header==pc2_name4)
+
+        pc2_z1     = data_mom0[:,index1]
+        pc2_z2     = data_mom0[:,index2]
+        pc2_z3     = data_mom0[:,index3]
+        pc2_z4     = data_mom0[:,index4]
+
+        # PC1 1st
+        outpng = self.outpng_pca1_mom0_podium.replace("???","1st")
+        self._plot_hexmap(
+            output,
+            x,
+            y,
+            pc1_z1,
+            "H$^{13}$CN(1-0)",
+            cmap="Reds",
+            ann=True,
+            add_text=False,
+            lim=13,
+            size=3600,
             )
 
     #########################
@@ -238,7 +305,7 @@ class ToolsPCA():
         score_pc1  = data_score[:,1].astype(np.float64)
         score_pc2  = data_score[:,2].astype(np.float64)
         score_pc1  = score_pc1 / np.std(score_pc1)
-        score_pc2  = score_pc2 / np.std(score_pc2) * -1
+        score_pc2  = score_pc2 / np.std(score_pc2)
 
         # set plt, ax
         fig = plt.figure(figsize=(13,10))
@@ -313,7 +380,6 @@ class ToolsPCA():
         #################
         # plot PCA maps #
         #################
-        clims    = [0.35,0.18]
         anntexts = [True,False]
         cmaps    = ["Reds","PuBu"]
         for i in range(len(data_pca[0])):
@@ -447,7 +513,6 @@ class ToolsPCA():
         #################
         # plot PCA maps #
         #################
-        clims    = [0.35,0.18]
         anntexts = [True,False]
         cmaps    = ["Reds","PuBu"]
         for i in range(len(data_pca[0])):
@@ -478,85 +543,6 @@ class ToolsPCA():
                 lim=13,
                 size=3600,
                 )
-
-    #####################
-    # plot_hexmap_ratio #
-    #####################
-
-    def plot_hexmap_ratio(self,denom=None):
-        """
-        """
-
-        taskname = self.modname + sys._getframe().f_code.co_name
-        check_first(self.table_hex_obs,taskname)
-
-        # extract line name
-        header,data_mom0,_,ra,dec,_ = self._read_table(self.table_hex_obs)
-        data_denom = data_mom0[:,np.where(header==denom)[0][0]]
-
-        # plot
-        for i in range(len(header)):
-            this_c = data_mom0[:,i] / data_denom
-            this_c[np.where(np.isinf(this_c))] = 0
-            this_c[np.where(np.isnan(this_c))] = 0
-            this_name = header[i]
-
-            this_x = ra[this_c>0]
-            this_y = dec[this_c>0]
-            this_c = this_c[this_c>0]
-
-            this_c = np.log10(this_c)
-            this_c[np.where(np.isinf(this_c))] = 0
-            this_c[np.where(np.isnan(this_c))] = 0
-
-            output = self.outpng_mom0.replace("???","r_"+this_name+"_"+denom)
-
-            if len(this_c)!=0:
-                print("# plot " + output)
-                self._plot_hexmap(
-                    output,
-                    this_x,
-                    this_y,
-                    this_c,
-                    this_name,
-                    ann=False,
-                    )
-
-    ####################
-    # plot_hexmap_mom0 #
-    ####################
-
-    def plot_hexmap_mom0(self):
-        """
-        """
-
-        taskname = self.modname + sys._getframe().f_code.co_name
-        check_first(self.table_hex_obs,taskname)
-
-        # extract line name
-        header,data_mom0,_,ra,dec,_ = self._read_table(self.table_hex_obs)
-
-        # plot
-        for i in range(len(header)):
-            this_c = data_mom0[:,i]
-            this_name = header[i]
-
-            this_x = ra[this_c>0]
-            this_y = dec[this_c>0]
-            this_c = this_c[this_c>0]
-
-            output = self.outpng_mom0.replace("???",this_name)
-
-            if len(this_c)!=0:
-                print("# plot " + output)
-                self._plot_hexmap(
-                    output,
-                    this_x,
-                    this_y,
-                    this_c,
-                    this_name,
-                    ann=False,
-                    )
 
     ###############
     # run_hex_pca #
@@ -882,6 +868,85 @@ class ToolsPCA():
         # save
         os.system("rm -rf " + outpng)
         plt.savefig(outpng, dpi=300)
+
+    #####################
+    # plot_hexmap_ratio #
+    #####################
+
+    def plot_hexmap_ratio(self,denom=None):
+        """
+        """
+
+        taskname = self.modname + sys._getframe().f_code.co_name
+        check_first(self.table_hex_obs,taskname)
+
+        # extract line name
+        header,data_mom0,_,ra,dec,_ = self._read_table(self.table_hex_obs)
+        data_denom = data_mom0[:,np.where(header==denom)[0][0]]
+
+        # plot
+        for i in range(len(header)):
+            this_c = data_mom0[:,i] / data_denom
+            this_c[np.where(np.isinf(this_c))] = 0
+            this_c[np.where(np.isnan(this_c))] = 0
+            this_name = header[i]
+
+            this_x = ra[this_c>0]
+            this_y = dec[this_c>0]
+            this_c = this_c[this_c>0]
+
+            this_c = np.log10(this_c)
+            this_c[np.where(np.isinf(this_c))] = 0
+            this_c[np.where(np.isnan(this_c))] = 0
+
+            output = self.outpng_mom0.replace("???","r_"+this_name+"_"+denom)
+
+            if len(this_c)!=0:
+                print("# plot " + output)
+                self._plot_hexmap(
+                    output,
+                    this_x,
+                    this_y,
+                    this_c,
+                    this_name,
+                    ann=False,
+                    )
+
+    ####################
+    # plot_hexmap_mom0 #
+    ####################
+
+    def plot_hexmap_mom0(self):
+        """
+        """
+
+        taskname = self.modname + sys._getframe().f_code.co_name
+        check_first(self.table_hex_obs,taskname)
+
+        # extract line name
+        header,data_mom0,_,ra,dec,_ = self._read_table(self.table_hex_obs)
+
+        # plot
+        for i in range(len(header)):
+            this_c = data_mom0[:,i]
+            this_name = header[i]
+
+            this_x = ra[this_c>0]
+            this_y = dec[this_c>0]
+            this_c = this_c[this_c>0]
+
+            output = self.outpng_mom0.replace("???",this_name)
+
+            if len(this_c)!=0:
+                print("# plot " + output)
+                self._plot_hexmap(
+                    output,
+                    this_x,
+                    this_y,
+                    this_c,
+                    this_name,
+                    ann=False,
+                    )
 
     ###############
     # _create_dir #
