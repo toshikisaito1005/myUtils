@@ -245,6 +245,7 @@ class ToolsPCA():
         pc1_z2     = data_mom0[:,pc1_index2]
         pc1_z3     = data_mom0[:,pc1_index3]
         pc1_z4     = data_mom0[:,pc1_index4]
+        print(np.shape(pc1_z1))
 
         pc1_z1     = np.where(r<=self.r_sbr_as,pc1_z1,0)
         pc1_z2     = np.where(r<=self.r_sbr_as,pc1_z2,0)
