@@ -404,7 +404,7 @@ class ToolsPCA():
 
         taskname = self.modname + sys._getframe().f_code.co_name
         check_first(self.table_hex_obs,taskname)
-        factor = 1.0
+        factor = 2.0
 
         # extract mom0 data
         header,data_mom0,_,x,y,r = self._read_table(self.table_hex_obs)
@@ -574,7 +574,7 @@ class ToolsPCA():
             add_text=False,
             lim=13,
             size=3600,
-            label="(K km s$^{-1}$)",
+            label="",
             )
 
         self._plot_hexmap(
@@ -588,7 +588,7 @@ class ToolsPCA():
             add_text=False,
             lim=13,
             size=3600,
-            label="(K km s$^{-1}$)",
+            label="",
             )
 
         self._plot_hexmap(
@@ -602,7 +602,7 @@ class ToolsPCA():
             add_text=False,
             lim=13,
             size=3600,
-            label="(K km s$^{-1}$)",
+            label="",
             )
 
         self._plot_hexmap(
@@ -610,13 +610,13 @@ class ToolsPCA():
             x,
             y,
             pc2_z4,
-            "CN(1-0)l(1-0)/C$^{18}$O(1-0) (4th highest PC2)",
+            "CN(1-0)l/C$^{18}$O(1-0) (4th highest PC2)",
             cmap="PuBu",
             ann=True,
             add_text=False,
             lim=13,
             size=3600,
-            label="(K km s$^{-1}$)",
+            label="",
             )
 
     ##########################
