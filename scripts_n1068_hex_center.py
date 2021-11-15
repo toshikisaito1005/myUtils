@@ -3,6 +3,8 @@ Python class for the NGC 1068 PCA project.
 
 history:
 2021-11-10   created
+2021-11-14   pca analysis for mom0 and ratio and those mom0 maps
+2021-11-15   start drafting
 Toshiki Saito@Nichidai/NAOJ
 """
 
@@ -492,7 +494,7 @@ class ToolsPCA():
         pc2_z4     = np.where(r<=self.r_sbr_as,pc2_z4,0)
 
         pc2_z1     = np.where(pc2_z1>=np.max(pc2_z1)/factor, np.max(pc2_z1)/factor, pc2_z1)
-        pc2_z2     = np.where(pc2_z2>=np.max(pc2_z2)/factor, np.max(pc2_z2)/factor, pc2_z2)
+        pc2_z2     = np.where(pc2_z2>=50,                    50,                    pc2_z2)
         pc2_z3     = np.where(pc2_z3>=np.max(pc2_z3)/factor, np.max(pc2_z3)/factor, pc2_z3)
         pc2_z4     = np.where(pc2_z4>=np.max(pc2_z4)/factor, np.max(pc2_z4)/factor, pc2_z4)
 
