@@ -404,7 +404,7 @@ class ToolsPCA():
 
         taskname = self.modname + sys._getframe().f_code.co_name
         check_first(self.table_hex_obs,taskname)
-        factor = 2.0
+        factor = 3.0
 
         # extract mom0 data
         header,data_mom0,_,x,y,r = self._read_table(self.table_hex_obs)
