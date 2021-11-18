@@ -227,9 +227,9 @@ class ToolsPCA():
         print("#########################")
 
         combine_three_png(
+            self.outpng_pca_scatter,
             self.outpng_pca_hexmap.replace("???","1"),
             self.outpng_pca_hexmap.replace("???","2"),
-            self.outpng_pca_scatter,
             self.final_pca_mom0,
             self.box_map,
             self.box_map,
