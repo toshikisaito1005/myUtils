@@ -173,7 +173,7 @@ class ToolsPCA():
         This method runs all the methods which will create figures in the paper.
         """
 
-        denom1 = "c18o10"
+        denom1 = "hcn10"
 
         # analysis
         if do_prepare==True:
