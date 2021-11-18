@@ -406,7 +406,7 @@ class ToolsPCA():
 
         taskname = self.modname + sys._getframe().f_code.co_name
         check_first(self.table_hex_obs,taskname)
-        factor = 3.0
+        factor = 2.0
 
         # extract mom0 data
         header,data_mom0,_,x,y,r = self._read_table(self.table_hex_obs)
@@ -416,10 +416,10 @@ class ToolsPCA():
         denom_z     = np.array(data_mom0[:,denom_index].flatten())
 
         # get PC1 podium
-        pc1_name1  = "h13cn10"
-        pc1_name2  = "hc3n109"
-        pc1_name3  = "n2hp10"
-        pc1_name4  = "hcn10"
+        pc1_name1  = "ci10"
+        pc1_name2  = "cn10h"
+        pc1_name3  = "cch10"
+        pc1_name4  = "hnc10"
 
         pc1_index1 = np.where(header==pc1_name1)
         pc1_index2 = np.where(header==pc1_name2)
@@ -464,10 +464,10 @@ class ToolsPCA():
         pc1_z4     = np.where(pc1_z4==np.max(pc1_z4), pc1_z4_sort[-2], pc1_z4)
 
         # get PC1 podium
-        pc2_name1  = "cch10"
-        pc2_name2  = "cn10h"
-        pc2_name3  = "hnc10"
-        pc2_name4  = "cn10l"
+        pc2_name1  = "c18o10"
+        pc2_name2  = "13co10"
+        pc2_name3  = "n2hp10"
+        pc2_name4  = "ch3oh21"
 
         pc2_index1 = np.where(header==pc2_name1)
         pc2_index2 = np.where(header==pc2_name2)
@@ -511,13 +511,16 @@ class ToolsPCA():
         pc2_z3     = np.where(pc2_z3==np.max(pc2_z3), pc2_z3_sort[-2], pc2_z3)
         pc2_z4     = np.where(pc2_z4==np.max(pc2_z4), pc2_z4_sort[-2], pc2_z4)
 
+        if denom_name=="hcn10":
+            denom_str="HCN(1-0)"
+
         # PC1 podium+1
         self._plot_hexmap(
             self.outpng_pca1_ratio_1st,
             x,
             y,
             pc1_z1,
-            "H$^{13}$CN(1-0)/C$^{18}$O(1-0) (highest PC1)",
+            "[CI](1-0)/"+denom_str+" (highest PC2)",
             cmap="Reds",
             ann=True,
             add_text=False,
@@ -530,7 +533,7 @@ class ToolsPCA():
             x,
             y,
             pc1_z2,
-            "HC$_3$N(10-9)/C$^{18}$O(1-0) (2nd highest PC1)",
+            "CN(1$_{3/2}$-0$_{1/2}$)/"+denom_str+" (2nd highest PC2)",
             cmap="Reds",
             ann=True,
             add_text=False,
@@ -543,7 +546,7 @@ class ToolsPCA():
             x,
             y,
             pc1_z3,
-            "N$_2$H$^+$(1-0)/C$^{18}$O(1-0) (3rd highest PC1)",
+            "CCH(1-0)/"+denom_str+" (3rd highest PC2)",
             cmap="Reds",
             ann=True,
             add_text=False,
@@ -556,7 +559,7 @@ class ToolsPCA():
             x,
             y,
             pc1_z4,
-            "HCN(1-0)/C$^{18}$O(1-0) (4th highest PC1)",
+            "HNC(1-0)/"+denom_str+" (4th highest PC2)",
             cmap="Reds",
             ann=True,
             add_text=False,
@@ -570,8 +573,8 @@ class ToolsPCA():
             x,
             y,
             pc2_z1,
-            "CCH(1-0)/C$^{18}$O(1-0) (highest PC2)",
-            cmap="PuBu",
+            "C$^{18}$O(1-0)/"+denom_str+" (lowest PC2)",
+            cmap="Greys",
             ann=True,
             add_text=False,
             lim=13,
@@ -584,8 +587,8 @@ class ToolsPCA():
             x,
             y,
             pc2_z2,
-            "CN(1-0)h/C$^{18}$O(1-0) (2nd highest PC2)",
-            cmap="PuBu",
+            "$^{13}$CO/"+denom_str+" (2nd lowest PC2)",
+            cmap="Greys",
             ann=True,
             add_text=False,
             lim=13,
@@ -598,8 +601,8 @@ class ToolsPCA():
             x,
             y,
             pc2_z3,
-            "HNC(1-0)/C$^{18}$O(1-0) (3rd highest PC2)",
-            cmap="PuBu",
+            "N$_2$H$^+$(1-0)/"+denom_str+" (3rd lowest PC2)",
+            cmap="Greys",
             ann=True,
             add_text=False,
             lim=13,
@@ -612,8 +615,8 @@ class ToolsPCA():
             x,
             y,
             pc2_z4,
-            "CN(1-0)l/C$^{18}$O(1-0) (4th highest PC2)",
-            cmap="PuBu",
+            "CH$_3$OH(2$_K$-1$_K$)/"+denom_str+" (4th lowest PC2)",
+            cmap="Greys",
             ann=True,
             add_text=False,
             lim=13,
