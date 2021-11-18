@@ -411,10 +411,10 @@ class ToolsPCA():
         pc1_name3  = "hcn10"
         pc1_name4  = "hcop10"
 
-        pc2_name1  = "ci10"
-        pc2_name2  = "cn10h"
-        pc2_name3  = "cch10"
-        pc2_name4  = "hnc10"
+        pc2_name1  = "cn10h"
+        pc2_name2  = "cch10"
+        pc2_name3  = "hnc10"
+        pc2_name4  = "cn10l"
 
         # extract mom0 data
         header,data_mom0,_,x,y,r = self._read_table(self.table_hex_obs)
@@ -537,7 +537,7 @@ class ToolsPCA():
             x,
             y,
             pc1_z1,
-            "H$^{13}$CN(1-0)/"+denom1_str+" (high PC1)",
+            "H$^{13}$CN(1-0)/"+denom1_str+" (highest PC1)",
             cmap="Reds",
             ann=True,
             add_text=False,
@@ -550,7 +550,7 @@ class ToolsPCA():
             x,
             y,
             pc1_z2,
-            "HC$_3$N(10-9)/"+denom1_str+" (high PC1)",
+            "HC$_3$N(10-9)/"+denom1_str+" (2nd highest PC1)",
             cmap="Reds",
             ann=True,
             add_text=False,
@@ -563,7 +563,7 @@ class ToolsPCA():
             x,
             y,
             pc1_z3,
-            "HCN(1-0)/"+denom1_str+" (high PC1)",
+            "HCN(1-0)/"+denom1_str+" (3rd highest PC1)",
             cmap="Reds",
             ann=True,
             add_text=False,
@@ -576,7 +576,7 @@ class ToolsPCA():
             x,
             y,
             pc1_z4,
-            "HCO$^+$(1-0)/"+denom1_str+" (high PC1)",
+            "HCO$^+$(1-0)/"+denom1_str+" (4th highest PC1)",
             cmap="Reds",
             ann=True,
             add_text=False,
@@ -590,7 +590,7 @@ class ToolsPCA():
             x,
             y,
             pc2_z1,
-            "[CI](1-0)/"+denom2_str+" (high PC2)",
+            "CN(1$_{3/2}$-0$_{1/2}$)/"+denom2_str+" (highest PC2)",
             cmap="PuBu",
             ann=True,
             add_text=False,
@@ -604,7 +604,7 @@ class ToolsPCA():
             x,
             y,
             pc2_z2,
-            "CN(1$_{3/2}$-0$_{1/2}$)/"+denom2_str+" (high PC2)",
+            "CCH(1-0)/"+denom2_str+" (2nd highest PC2)",
             cmap="PuBu",
             ann=True,
             add_text=False,
@@ -618,7 +618,7 @@ class ToolsPCA():
             x,
             y,
             pc2_z3,
-            "CCH(1-0)/"+denom2_str+" (high PC2)",
+            "HNC(1-0)/"+denom2_str+" (3rd highest PC2)",
             cmap="PuBu",
             ann=True,
             add_text=False,
@@ -632,7 +632,7 @@ class ToolsPCA():
             x,
             y,
             pc2_z4,
-            "HNC(1-0)/"+denom2_str+" (high PC2)",
+            "CN(1$_{1/2}$-0$_{1/2}$)/"+denom2_str+" (4th highest PC2)",
             cmap="PuBu",
             ann=True,
             add_text=False,
