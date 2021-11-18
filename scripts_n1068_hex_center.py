@@ -398,7 +398,7 @@ class ToolsPCA():
     # plot_hexmap_pca_ratio_podium #
     ################################
 
-    def plot_hexmap_pca_ratio_podium(self,denom1="c18o10",denom2="c18o10"):
+    def plot_hexmap_pca_ratio_podium(self,denom1="co10",denom2="co10"):
         """
         """
 
@@ -519,6 +519,8 @@ class ToolsPCA():
             denom1_str="$^{13}$CO(1-0)"
         if denom1_name=="c18o10":
             denom1_str="C$^{18}$O(1-0)"
+        if denom1_name=="co10":
+            denom1_str="CO(1-0)"
 
         if denom2_name=="hcn10":
             denom2_str="HCN(1-0)"
@@ -526,6 +528,8 @@ class ToolsPCA():
             denom2_str="$^{13}$CO(1-0)"
         if denom2_name=="c18o10":
             denom2_str="C$^{18}$O(1-0)"
+        if denom2_name=="co10":
+            denom2_str="CO(1-0)"
 
         # PC1 podium+1
         self._plot_hexmap(
