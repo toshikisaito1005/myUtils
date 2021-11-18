@@ -516,7 +516,7 @@ class ToolsPCA():
         if denom1_name=="hcn10":
             denom1_str="HCN(1-0)"
         if denom2_name=="13co10":
-            denom2_str="$^{13}$(1-0)"
+            denom2_str="$^{13}$CO(1-0)"
 
         # PC1 podium+1
         self._plot_hexmap(
