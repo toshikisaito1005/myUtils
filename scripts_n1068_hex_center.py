@@ -192,7 +192,7 @@ class ToolsPCA():
 
         if plot_hexmap_pca_podium==True:
             self.plot_hexmap_pca_podium()
-            self.plot_hexmap_pca_ratio_podium(denom=denom1)
+            self.plot_hexmap_pca_ratio_podium(denom1="hcn10",denom2="13co10")
 
         if do_imagemagick==True:
             self.immagick_figures()
@@ -200,7 +200,8 @@ class ToolsPCA():
         # supplement
         if plot_hexmap==True:
             self.plot_hexmap_mom0()
-            self.plot_hexmap_ratio(denom1="hcn10",denom2="13co10")
+            self.plot_hexmap_ratio(denom="13co10")
+            self.plot_hexmap_ratio(denom="hcn10")
 
         if do_imagemagick_sub==True:
             self.immagick_figures_sub()
