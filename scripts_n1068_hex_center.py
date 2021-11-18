@@ -202,7 +202,7 @@ class ToolsPCA():
         # supplement
         if plot_hexmap==True:
             self.plot_hexmap_mom0()
-            self.plot_hexmap_ratio(denom="hcn10")
+            self.plot_hexmap_ratio(denom1="hcn10",denom2="13co10")
             self.plot_hexmap_ratio(denom=denom1)
 
         if do_imagemagick_sub==True:
@@ -400,7 +400,7 @@ class ToolsPCA():
     # plot_hexmap_pca_ratio_podium #
     ################################
 
-    def plot_hexmap_pca_ratio_podium(self,denom="13co10"):
+    def plot_hexmap_pca_ratio_podium(self,denom1="13co10",denom2="13co10"):
         """
         """
 
@@ -411,9 +411,13 @@ class ToolsPCA():
         # extract mom0 data
         header,data_mom0,_,x,y,r = self._read_table(self.table_hex_obs)
 
-        denom_name  = denom
-        denom_index = np.where(header==denom_name)
-        denom_z     = np.array(data_mom0[:,denom_index].flatten())
+        denom_name1  = denom1
+        denom1_index = np.where(header==denom_name1)
+        denom1_z     = np.array(data_mom0[:,denom1_index].flatten())
+
+        denom_name2  = denom2
+        denom2_index = np.where(header==denom_name2)
+        denom2_z     = np.array(data_mom0[:,denom2_index].flatten())
 
         # get PC1 podium
         pc1_name1  = "ci10"
@@ -426,10 +430,10 @@ class ToolsPCA():
         pc1_index3 = np.where(header==pc1_name3)
         pc1_index4 = np.where(header==pc1_name4)
 
-        pc1_z1     = np.array(data_mom0[:,pc1_index1].flatten()) / denom_z
-        pc1_z2     = np.array(data_mom0[:,pc1_index2].flatten()) / denom_z
-        pc1_z3     = np.array(data_mom0[:,pc1_index3].flatten()) / denom_z
-        pc1_z4     = np.array(data_mom0[:,pc1_index4].flatten()) / denom_z
+        pc1_z1     = np.array(data_mom0[:,pc1_index1].flatten()) / denom1_z
+        pc1_z2     = np.array(data_mom0[:,pc1_index2].flatten()) / denom1_z
+        pc1_z3     = np.array(data_mom0[:,pc1_index3].flatten()) / denom1_z
+        pc1_z4     = np.array(data_mom0[:,pc1_index4].flatten()) / denom1_z
 
         pc1_z1[np.isinf(pc1_z1)] = 0
         pc1_z2[np.isinf(pc1_z2)] = 0
@@ -460,24 +464,24 @@ class ToolsPCA():
         pc1_z4_sort.sort()
         pc1_z1     = np.where(pc1_z1==np.max(pc1_z1), pc1_z1_sort[-2], pc1_z1)
         pc1_z2     = np.where(pc1_z2==np.max(pc1_z2), pc1_z2_sort[-2], pc1_z2)
-        #pc1_z3     = np.where(pc1_z3==np.max(pc1_z3), pc1_z3_sort[-2], pc1_z3)
+        pc1_z3     = np.where(pc1_z3==np.max(pc1_z3), pc1_z3_sort[-2], pc1_z3)
         pc1_z4     = np.where(pc1_z4==np.max(pc1_z4), pc1_z4_sort[-2], pc1_z4)
 
         # get PC1 podium
-        pc2_name1  = "c18o10"
-        pc2_name2  = "13co10"
-        pc2_name3  = "n2hp10"
-        pc2_name4  = "ch3oh21"
+        pc2_name1  = "ci10"
+        pc2_name2  = "cn10h"
+        pc2_name3  = "cch10"
+        pc2_name4  = "hnc10"
 
         pc2_index1 = np.where(header==pc2_name1)
         pc2_index2 = np.where(header==pc2_name2)
         pc2_index3 = np.where(header==pc2_name3)
         pc2_index4 = np.where(header==pc2_name4)
 
-        pc2_z1     = np.array(data_mom0[:,pc2_index1].flatten()) / denom_z
-        pc2_z2     = np.array(data_mom0[:,pc2_index2].flatten()) / denom_z
-        pc2_z3     = np.array(data_mom0[:,pc2_index3].flatten()) / denom_z
-        pc2_z4     = np.array(data_mom0[:,pc2_index4].flatten()) / denom_z
+        pc2_z1     = np.array(data_mom0[:,pc2_index1].flatten()) / denom2_z
+        pc2_z2     = np.array(data_mom0[:,pc2_index2].flatten()) / denom2_z
+        pc2_z3     = np.array(data_mom0[:,pc2_index3].flatten()) / denom2_z
+        pc2_z4     = np.array(data_mom0[:,pc2_index4].flatten()) / denom2_z
 
         pc2_z1[np.isinf(pc2_z1)] = 0
         pc2_z2[np.isinf(pc2_z2)] = 0
@@ -494,7 +498,7 @@ class ToolsPCA():
         pc2_z4     = np.where(r<=self.r_sbr_as,pc2_z4,0)
 
         pc2_z1     = np.where(pc2_z1>=np.max(pc2_z1)/factor, np.max(pc2_z1)/factor, pc2_z1)
-        pc2_z2     = np.where(pc2_z2>=50,                    50,                    pc2_z2) # ingnore an outflier; 50 is based on CN10l's np.max(pc2_z4)/factor~25.
+        pc2_z2     = np.where(pc2_z2>=np.max(pc2_z2)/factor, np.max(pc2_z2)/factor, pc2_z2)
         pc2_z3     = np.where(pc2_z3>=np.max(pc2_z3)/factor, np.max(pc2_z3)/factor, pc2_z3)
         pc2_z4     = np.where(pc2_z4>=np.max(pc2_z4)/factor, np.max(pc2_z4)/factor, pc2_z4)
 
@@ -511,8 +515,10 @@ class ToolsPCA():
         pc2_z3     = np.where(pc2_z3==np.max(pc2_z3), pc2_z3_sort[-2], pc2_z3)
         pc2_z4     = np.where(pc2_z4==np.max(pc2_z4), pc2_z4_sort[-2], pc2_z4)
 
-        if denom_name=="hcn10":
-            denom_str="HCN(1-0)"
+        if denom1_name=="hcn10":
+            denom1_str="HCN(1-0)"
+        if denom2_name=="13co10":
+            denom2_str="$^{13}$(1-0)"
 
         # PC1 podium+1
         self._plot_hexmap(
@@ -520,7 +526,7 @@ class ToolsPCA():
             x,
             y,
             pc1_z1,
-            "[CI](1-0)/"+denom_str+" (highest PC2)",
+            "[CI](1-0)/"+denom1_str+" (highest PC2)",
             cmap="Reds",
             ann=True,
             add_text=False,
@@ -533,7 +539,7 @@ class ToolsPCA():
             x,
             y,
             pc1_z2,
-            "CN(1$_{3/2}$-0$_{1/2}$)/"+denom_str+" (2nd highest PC2)",
+            "CN(1$_{3/2}$-0$_{1/2}$)/"+denom1_str+" (2nd highest PC2)",
             cmap="Reds",
             ann=True,
             add_text=False,
@@ -546,7 +552,7 @@ class ToolsPCA():
             x,
             y,
             pc1_z3,
-            "CCH(1-0)/"+denom_str+" (3rd highest PC2)",
+            "CCH(1-0)/"+denom1_str+" (3rd highest PC2)",
             cmap="Reds",
             ann=True,
             add_text=False,
@@ -559,7 +565,7 @@ class ToolsPCA():
             x,
             y,
             pc1_z4,
-            "HNC(1-0)/"+denom_str+" (4th highest PC2)",
+            "HNC(1-0)/"+denom1_str+" (4th highest PC2)",
             cmap="Reds",
             ann=True,
             add_text=False,
@@ -573,8 +579,8 @@ class ToolsPCA():
             x,
             y,
             pc2_z1,
-            "C$^{18}$O(1-0)/"+denom_str+" (lowest PC2)",
-            cmap="Greys",
+            "[CI](1-0)/"+denom2_str+" (highest PC2)",
+            cmap="Reds",
             ann=True,
             add_text=False,
             lim=13,
@@ -587,8 +593,8 @@ class ToolsPCA():
             x,
             y,
             pc2_z2,
-            "$^{13}$CO/"+denom_str+" (2nd lowest PC2)",
-            cmap="Greys",
+            "CN(1$_{3/2}$-0$_{1/2}$)/"+denom2_str+" (2nd highest PC2)",
+            cmap="Reds",
             ann=True,
             add_text=False,
             lim=13,
@@ -601,8 +607,8 @@ class ToolsPCA():
             x,
             y,
             pc2_z3,
-            "N$_2$H$^+$(1-0)/"+denom_str+" (3rd lowest PC2)",
-            cmap="Greys",
+            "CCH(1-0)/"+denom2_str+" (3rd highest PC2)",
+            cmap="Reds",
             ann=True,
             add_text=False,
             lim=13,
@@ -615,8 +621,8 @@ class ToolsPCA():
             x,
             y,
             pc2_z4,
-            "CH$_3$OH(2$_K$-1$_K$)/"+denom_str+" (4th lowest PC2)",
-            cmap="Greys",
+            "HNC(1-0)/"+denom2_str+" (4th highest PC2)",
+            cmap="Reds",
             ann=True,
             add_text=False,
             lim=13,
