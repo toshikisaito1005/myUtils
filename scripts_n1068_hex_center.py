@@ -173,8 +173,6 @@ class ToolsPCA():
         This method runs all the methods which will create figures in the paper.
         """
 
-        denom1 = "hcn10"
-
         # analysis
         if do_prepare==True:
             self.align_maps()
@@ -203,7 +201,6 @@ class ToolsPCA():
         if plot_hexmap==True:
             self.plot_hexmap_mom0()
             self.plot_hexmap_ratio(denom1="hcn10",denom2="13co10")
-            self.plot_hexmap_ratio(denom=denom1)
 
         if do_imagemagick_sub==True:
             self.immagick_figures_sub()
