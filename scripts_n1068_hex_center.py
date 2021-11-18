@@ -398,7 +398,7 @@ class ToolsPCA():
     # plot_hexmap_pca_ratio_podium #
     ################################
 
-    def plot_hexmap_pca_ratio_podium(self,denom1="13co10",denom2="13co10"):
+    def plot_hexmap_pca_ratio_podium(self,denom1="hcn10",denom2="13co10"):
         """
         """
 
@@ -409,12 +409,12 @@ class ToolsPCA():
         # extract mom0 data
         header,data_mom0,_,x,y,r = self._read_table(self.table_hex_obs)
 
-        denom_name1  = denom1
-        denom1_index = np.where(header==denom_name1)
+        denom1_name  = denom1
+        denom1_index = np.where(header==denom1_name)
         denom1_z     = np.array(data_mom0[:,denom1_index].flatten())
 
-        denom_name2  = denom2
-        denom2_index = np.where(header==denom_name2)
+        denom2_name  = denom2
+        denom2_index = np.where(header==denom2_name)
         denom2_z     = np.array(data_mom0[:,denom2_index].flatten())
 
         # get PC1 podium
