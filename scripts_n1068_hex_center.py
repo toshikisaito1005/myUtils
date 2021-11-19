@@ -483,7 +483,7 @@ class ToolsPCA():
             self.outpng_hexmap_hnc_hcn,
             x,
             y,
-            line1_z,
+            line2_z,
             "HNC(1-0)_HCN(1-0)",
             cmap="PuBu",
             ann=True,
