@@ -484,9 +484,9 @@ class ToolsPCA():
             r,
             [line1_z,line2_z,denom_z],
             "Radial Intensity",
-            size=1500,
-            ylabel="Intensity (K km s$^{-1}$)",
-            xlim=[0,11],
+            size=1000,
+            ylabel="log Intensity (K km s$^{-1}$)",
+            xlim=[0,10.2],
             ylim=[-1.0,3.5],
             )
 
@@ -1469,7 +1469,7 @@ class ToolsPCA():
         ylim=ylim,
         xlabel="Distance (arcsec)",
         ylabel=ylabel,
-        adjust=[0.20,0.80,0.10,0.93],
+        adjust=[0.18,0.82,0.10,0.93],
         )
 
         # plot
