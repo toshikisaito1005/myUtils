@@ -464,13 +464,15 @@ class ToolsPCA():
         line2_z      = np.where(line2_z==np.max(line2_z), line2_z_sort[-2], line2_z)
 
         # extract outflow cone
+        line1_zc     = np.where(r<1,line1_z,0)
         line1_zn     = np.where((theta_deg>=-15)&(theta_deg<65),line1_z,0)
         line1_zs     = np.where((theta_deg>=-15-180)&(theta_deg<65-180),line1_z,0)
-        line1_z      = line1_zn + line1_zs
+        line1_z      = line1_zn + line1_zs + line1_zc
 
+        line2_zc     = np.where(r<1,line2_z,0)
         line2_zn     = np.where((theta_deg>=-15)&(theta_deg<65),line2_z,0)
-        line2_zs     = np.where((theta_deg<=-15-180)&(theta_deg>65-180),line2_z,0)
-        line2_z      = line2_zn + line2_zs
+        line2_zs     = np.where((theta_deg>=-15-180)&(theta_deg<65-180),line2_z,0)
+        line2_z      = line2_zn + line2_zs + line2_zc
 
         # CN/HCN
         self._plot_hexmap(
