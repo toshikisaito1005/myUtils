@@ -483,7 +483,7 @@ class ToolsPCA():
             self.outpng_hexmap_cn_hcn,
             r,
             [line1_z,line2_z,denom_z],
-            title,
+            "Radial Intensity",
             size=3600,
             ylabel="Intensity (K km s$^{-1}$)",
             )
