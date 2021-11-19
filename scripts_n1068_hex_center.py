@@ -145,6 +145,7 @@ class ToolsPCA():
             self.final_pca_r13co          = self.dir_final + self._read_key("final_pca_r13co")
             self.final_pca_mom0_podium    = self.dir_final + self._read_key("final_pca_mom0_podium")
             self.final_pca_ratio_podium   = self.dir_final + self._read_key("final_pca_ratio_podium")
+            self.final_hexmap_ratio_hcn   = self.dir_final + self._read_key("final_hexmap_ratio_hcn")
 
             self.box_map                  = self._read_key("box_map")
             self.box_map_noxlabel         = self._read_key("box_map_noxlabel")
@@ -375,6 +376,20 @@ class ToolsPCA():
             delin=True,
             )
 
+        print("#################################")
+        print("# create final_hexmap_ratio_hcn #")
+        print("#################################")
+
+        combine_two_png(
+            self.outpng_hexmap_cn_hcn,
+            self.outpng_hexmap_hnc_hcn,
+            self.final_hexmap_ratio_hcn,
+            self.box_map_noylabel,
+            self.box_map,
+            axis="column",
+            delin=True,
+            )
+
     ########################
     # immagick_figures_sub #
     ########################
@@ -412,7 +427,7 @@ class ToolsPCA():
         taskname = self.modname + sys._getframe().f_code.co_name
         check_first(self.table_hex_obs,taskname)
 
-        line_name1  = "cn10"
+        line_name1  = "cn10h"
         line_name2  = "hnc10"
         line_denom  = "hcn10"
 
@@ -425,7 +440,7 @@ class ToolsPCA():
 
         # get CN and HNC
         line1_index = np.where(header==line_name1)
-        line2_index = np.where(header==line_name1)
+        line2_index = np.where(header==line_name2)
 
         line1_z     = np.array(data_mom0[:,line1_index].flatten()) / denom_z
         line2_z     = np.array(data_mom0[:,line2_index].flatten()) / denom_z
