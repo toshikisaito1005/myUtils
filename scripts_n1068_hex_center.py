@@ -86,7 +86,7 @@ class ToolsPCA():
             self.scale_kpc                = self.scale_pc / 1000.
 
             self.beam                     = 2.14859173174056 # 150pc in arcsec
-            self.snr_mom                  = 3.5
+            self.snr_mom                  = 4.0
             self.r_cnd                    = 3.0 * self.scale_pc / 1000. # kpc
             self.r_cnd_as                 = 3.0
             self.r_sbr                    = 10.0 * self.scale_pc / 1000. # kpc
