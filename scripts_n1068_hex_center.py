@@ -426,6 +426,7 @@ class ToolsPCA():
 
         taskname = self.modname + sys._getframe().f_code.co_name
         check_first(self.table_hex_obs,taskname)
+        factor = 1.0
 
         line_name1  = "cn10h"
         line_name2  = "hnc10"
