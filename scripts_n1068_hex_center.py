@@ -426,7 +426,6 @@ class ToolsPCA():
 
         taskname = self.modname + sys._getframe().f_code.co_name
         check_first(self.table_hex_obs,taskname)
-        factor = 2.0
 
         line_name1  = "cn10h"
         line_name2  = "hnc10"
@@ -454,8 +453,8 @@ class ToolsPCA():
         line1_z     = np.where(r<=self.r_sbr_as,line1_z,0)
         line2_z     = np.where(r<=self.r_sbr_as,line2_z,0)
 
-        line1_z     = np.where(line1_z>=np.max(line1_z)/factor, np.max(line1_z)/factor, line1_z)
-        line2_z     = np.where(line2_z>=np.max(line2_z)/factor, np.max(line2_z)/factor, line2_z)
+        #line1_z     = np.where(line1_z>=np.max(line1_z)/factor, np.max(line1_z)/factor, line1_z)
+        line2_z     = np.where(line2_z>=1.1, np.max(line2_z)/factor, line2_z)
 
         line1_z_sort = line1_z.flatten()
         line2_z_sort = line2_z.flatten()
