@@ -228,7 +228,6 @@ class ToolsPCA():
         taskname = self.modname + sys._getframe().f_code.co_name
         check_first(self.outpng_pca_hexmap.replace("???","1"),taskname)
 
-        """s
         print("#########################")
         print("# create final_pca_mom0 #")
         print("#########################")
@@ -376,7 +375,6 @@ class ToolsPCA():
             axis="column",
             delin=True,
             )
-        """
 
         print("###########################")
         print("# create final_hex_radial #")
