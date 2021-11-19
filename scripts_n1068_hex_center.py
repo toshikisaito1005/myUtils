@@ -479,6 +479,7 @@ class ToolsPCA():
         denom_zs     = np.where((theta_deg>=-15-180)&(theta_deg<65-180)&(r<self.r_sbr_as),denom_z,0)
         denom_z      = np.log10(denom_zn + denom_zs + denom_zc)
 
+        # plot
         self._plot_radial(
             self.outpng_hexmap_cn_hcn,
             r,
@@ -487,21 +488,18 @@ class ToolsPCA():
             size=1000,
             ylabel="log Intensity (K km s$^{-1}$)",
             xlim=[0,10.2],
-            ylim=[-1.0,3.5],
+            ylim=[-0.8,3.5],
             )
 
-        # HNC/HCN
-        self._plot_hexmap(
+        self._plot_radial(
             self.outpng_hexmap_hnc_hcn,
-            x,
-            y,
-            line2_z,
-            "HNC(1-0)/HCN(1-0)",
-            cmap="PuBu",
-            ann=True,
-            add_text=False,
-            lim=13,
-            size=3600,
+            r,
+            [line1_z-denom_z,line2_z-denom_z],
+            "Radial Ratio",
+            size=1000,
+            ylabel="log Ratio",
+            xlim=[0,10.2],
+            ylim=None,#[-0.8,3.5],
             )
 
     ################################
