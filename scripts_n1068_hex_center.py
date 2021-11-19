@@ -454,7 +454,7 @@ class ToolsPCA():
         line2_z     = np.where(r<=self.r_sbr_as,line2_z,0)
 
         #line1_z     = np.where(line1_z>=np.max(line1_z)/factor, np.max(line1_z)/factor, line1_z)
-        line2_z     = np.where(line2_z>=1.1, np.max(line2_z)/factor, line2_z)
+        line2_z     = np.where(line2_z>=1.1, 1.1, line2_z)
 
         line1_z_sort = line1_z.flatten()
         line2_z_sort = line2_z.flatten()
