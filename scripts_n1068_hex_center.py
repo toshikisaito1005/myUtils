@@ -1470,7 +1470,7 @@ class ToolsPCA():
         ylim=ylim,
         xlabel="Distance (arcsec)",
         ylabel=ylabel,
-        adjust=[0.17,0.81,0.10,0.93],
+        adjust=[0.173,0.813,0.10,0.93],
         )
 
         # plot
