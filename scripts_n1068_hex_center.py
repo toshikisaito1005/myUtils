@@ -389,7 +389,7 @@ class ToolsPCA():
             self.box_map_noylabel,
             self.box_map,
             axis="column",
-            delin=True,
+            delin=delin,
             )
 
     ########################
