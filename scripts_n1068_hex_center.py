@@ -474,18 +474,18 @@ class ToolsPCA():
         line2_zs     = np.where((theta_deg>=-15-180)&(theta_deg<65-180),line2_z,0)
         line2_z      = line2_zn + line2_zs + line2_zc
 
-        # CN/HCN
-        self._plot_hexmap(
+        denom_zc     = np.where(r<1,denom_z,0)
+        denom_zn     = np.where((theta_deg>=-15)&(theta_deg<65),denom_z,0)
+        denom_zs     = np.where((theta_deg>=-15-180)&(theta_deg<65-180),denom_z,0)
+        denom_z      = denom_zn + denom_zs + denom_zc
+
+        _plot_radial(
             self.outpng_hexmap_cn_hcn,
-            x,
-            y,
-            line1_z,
-            "CN(1$_{3/2}$-0$_{1/2}$)/HCN(1-0)",
-            cmap="PuBu",
-            ann=True,
-            add_text=False,
-            lim=13,
+            r,
+            [line1_z,line2_z,denom_z],
+            title,
             size=3600,
+            ylabel="Intensity (K km s$^{-1}$)",
             )
 
         # HNC/HCN
@@ -1435,6 +1435,52 @@ class ToolsPCA():
         list_name  = np.array(header[2:len_data+2])
 
         return list_name, array_data, array_err, x, y, r
+
+    ################
+    # _plot_radial #
+    ################
+
+    def _plot_radial(
+        self,
+        outpng,
+        r,clist,
+        title,
+        size=100,
+        ylabel=None,
+        ):
+        """
+        """
+
+        # set plt, ax
+        fig = plt.figure(figsize=(13,10))
+        plt.rcParams["font.size"] = 16
+        gs = gridspec.GridSpec(nrows=10, ncols=10)
+        ax = plt.subplot(gs[0:10,0:10])
+
+        # set ax parameter
+        myax_set(
+        ax,
+        grid=None,
+        xlim=None,#[lim, -lim],
+        ylim=None,#[-lim, lim],
+        xlabel="Distance (arcsec)",
+        ylabel=ylabel,
+        adjust=[0.10,0.99,0.10,0.93],
+        )
+        ax.set_aspect('equal', adjustable='box')
+
+        # plot
+        for i in range(len(clist)):
+            this_c = clist[i]
+            color  = cm.rainbow(i/float(len(clist)))
+            ax.scatter(r, this_c, s=size, c=color, linewidths=0)
+
+        # text
+        ax.text(0.03, 0.93, title, color="black", transform=ax.transAxes, weight="bold", fontsize=24)
+
+        # save
+        os.system("rm -rf " + outpng)
+        plt.savefig(outpng, dpi=300)
 
     ################
     # _plot_hexmap #
