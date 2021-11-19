@@ -1483,12 +1483,12 @@ class ToolsPCA():
         ax.text(0.03, 0.93, title, color="black", transform=ax.transAxes, weight="bold", fontsize=24)
 
         if ann==1:
-            ax.text(0.97, 0.93, "CN(1$_{3/2}$-0$_{1/2}$)", color=cm.gnuplot(0/2.), transform=ax.transAxes, weight="bold", fontsize=24, ha="right")
-            ax.text(0.97, 0.87, "HNC(1-0)", color=cm.gnuplot(1/2.), transform=ax.transAxes, weight="bold", fontsize=24, ha="right")
-            ax.text(0.97, 0.81, "HCN(1-0)", color=cm.gnuplot(2/2.), transform=ax.transAxes, weight="bold", fontsize=24, ha="right")
+            ax.text(0.97, 0.93, "CN(1$_{3/2}$-0$_{1/2}$)", color=cm.gist_rainbow(0/2.), transform=ax.transAxes, weight="bold", fontsize=24, ha="right")
+            ax.text(0.97, 0.87, "HNC(1-0)", color=cm.gist_rainbow(1/2.), transform=ax.transAxes, weight="bold", fontsize=24, ha="right")
+            ax.text(0.97, 0.81, "HCN(1-0)", color=cm.gist_rainbow(2/2.), transform=ax.transAxes, weight="bold", fontsize=24, ha="right")
         elif ann==2:
-            ax.text(0.97, 0.93, "CN(1$_{3/2}$-0$_{1/2}$)/HCN(1-0)", color=cm.gnuplot(0/2.), transform=ax.transAxes, weight="bold", fontsize=24, ha="right")
-            ax.text(0.97, 0.87, "HNC(1-0)/HCN(1-0)", color=cm.gnuplot(1/2.), transform=ax.transAxes, weight="bold", fontsize=24, ha="right")
+            ax.text(0.97, 0.93, "CN(1$_{3/2}$-0$_{1/2}$)/HCN(1-0)", color=cm.gist_rainbow(0/2.), transform=ax.transAxes, weight="bold", fontsize=24, ha="right")
+            ax.text(0.97, 0.87, "HNC(1-0)/HCN(1-0)", color=cm.gist_rainbow(1/2.), transform=ax.transAxes, weight="bold", fontsize=24, ha="right")
 
         # save
         os.system("rm -rf " + outpng)
