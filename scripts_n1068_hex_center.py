@@ -198,7 +198,7 @@ class ToolsPCA():
             self.plot_hexmap_pca_podium()
             self.plot_hexmap_pca_ratio_podium()
 
-        if plot_hexmap_hcn_ratio=True:
+        if plot_hexmap_hcn_ratio==True:
             self.plot_hexmap_hcn_ratio()
 
         if do_imagemagick==True:
