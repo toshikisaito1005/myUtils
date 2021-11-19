@@ -433,6 +433,7 @@ class ToolsPCA():
 
         # extract mom0 data
         header,data_mom0,_,x,y,r = self._read_table(self.table_hex_obs)
+        theta_deg   = np.degrees(np.arctan2(x, y))
 
         denom_name  = line_denom
         denom_index = np.where(header==denom_name)
@@ -453,15 +454,16 @@ class ToolsPCA():
         line1_z     = np.where(r<=self.r_sbr_as,line1_z,0)
         line2_z     = np.where(r<=self.r_sbr_as,line2_z,0)
 
-        #line1_z     = np.where(line1_z>=np.max(line1_z)/factor, np.max(line1_z)/factor, line1_z)
-        line2_z     = np.where(line2_z>=1.1, 1.1, line2_z)
-
         line1_z_sort = line1_z.flatten()
         line2_z_sort = line2_z.flatten()
         line1_z_sort.sort()
         line2_z_sort.sort()
         line1_z     = np.where(line1_z==np.max(line1_z), line1_z_sort[-2], line1_z)
         line2_z     = np.where(line2_z==np.max(line2_z), line2_z_sort[-2], line2_z)
+
+        # extract outflow cone
+        line1_z = np.where((theta_deg>=0)&(theta_deg<65)&(dist_as<=18),line1_z,0)
+        line2_z = np.where((theta_deg>=0)&(theta_deg<65)&(dist_as<=18),line2_z,0)
 
         # CN/HCN
         self._plot_hexmap(
