@@ -151,6 +151,9 @@ class ToolsPCA():
             self.box_map_noylabel         = self._read_key("box_map_noylabel")
             self.box_map_noxylabel        = self._read_key("box_map_noxylabel")
 
+            self.outpng_hexmap_cn_hcn     = self.dir_products + self._read_key("outpng_hexmap_cn_hcn")
+            self.outpng_hexmap_hnc_hcn    = self.dir_products + self._read_key("outpng_hexmap_hnc_hcn")
+
     ###################
     # run_ngc1068_pca #
     ###################
@@ -164,6 +167,7 @@ class ToolsPCA():
         # plot figures in paper
         plot_hexmap_pca        = False,
         plot_hexmap_pca_podium = False,
+        plot_hexmap_hcn_ratio  = False,
         do_imagemagick         = False,
         # supplement
         plot_hexmap            = False,
@@ -193,6 +197,9 @@ class ToolsPCA():
         if plot_hexmap_pca_podium==True:
             self.plot_hexmap_pca_podium()
             self.plot_hexmap_pca_ratio_podium()
+
+        if plot_hexmap_hcn_ratio=True:
+            self.plot_hexmap_hcn_ratio()
 
         if do_imagemagick==True:
             self.immagick_figures()
@@ -392,6 +399,81 @@ class ToolsPCA():
             self.box_map,
             self.box_map,
             delin=delin,
+            )
+
+    #########################
+    # plot_hexmap_hcn_ratio #
+    #########################
+
+    def plot_hexmap_hcn_ratio(self):
+        """
+        """
+
+        taskname = self.modname + sys._getframe().f_code.co_name
+        check_first(self.table_hex_obs,taskname)
+
+        line_name1  = "cn10"
+        line_name2  = "hnc10"
+        line_denom  = "hcn10"
+
+        # extract mom0 data
+        header,data_mom0,_,x,y,r = self._read_table(self.table_hex_obs)
+
+        denom_name  = line_denom
+        denom_index = np.where(header==denom_name)
+        denom_z     = np.array(data_mom0[:,denom_index].flatten())
+
+        # get CN and HNC
+        line1_index = np.where(header==line_name1)
+        line2_index = np.where(header==line_name1)
+
+        line1_z     = np.array(data_mom0[:,line1_index].flatten()) / denom_z
+        line2_z     = np.array(data_mom0[:,line2_index].flatten()) / denom_z
+
+        line1_z[np.isinf(line1_z)] = 0
+        line2_z[np.isinf(line2_z)] = 0
+        line1_z[np.isnan(line1_z)] = 0
+        line2_z[np.isnan(line2_z)] = 0
+
+        line1_z     = np.where(r<=self.r_sbr_as,line1_z,0)
+        line2_z     = np.where(r<=self.r_sbr_as,line2_z,0)
+
+        line1_z     = np.where(line1_z>=np.max(line1_z)/factor, np.max(line1_z)/factor, line1_z)
+        line2_z     = np.where(line2_z>=np.max(line2_z)/factor, np.max(line2_z)/factor, line2_z)
+
+        line1_z_sort = line1_z.flatten()
+        line2_z_sort = line2_z.flatten()
+        line1_z_sort.sort()
+        line2_z_sort.sort()
+        line1_z     = np.where(line1_z==np.max(line1_z), line1_z_sort[-2], line1_z)
+        line2_z     = np.where(line2_z==np.max(line2_z), line2_z_sort[-2], line2_z)
+
+        # CN/HCN
+        self._plot_hexmap(
+            self.outpng_hexmap_cn_hcn,
+            x,
+            y,
+            line1_z,
+            "CN(1$_{3/2}$-0$_{1/2}$)_HCN(1-0)",
+            cmap="PuBu",
+            ann=True,
+            add_text=False,
+            lim=13,
+            size=3600,
+            )
+
+        # HNC/HCN
+        self._plot_hexmap(
+            self.outpng_hexmap_hnc_hcn,
+            x,
+            y,
+            line1_z,
+            "HNC(1-0)_HCN(1-0)",
+            cmap="PuBu",
+            ann=True,
+            add_text=False,
+            lim=13,
+            size=3600,
             )
 
     ################################
