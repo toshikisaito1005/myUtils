@@ -486,6 +486,8 @@ class ToolsPCA():
             "Radial Intensity",
             size=1500,
             ylabel="Intensity (K km s$^{-1}$)",
+            xlim=[0,11],
+            ylim=[-1.0,3.5],
             )
 
         # HNC/HCN
@@ -1447,6 +1449,8 @@ class ToolsPCA():
         title,
         size=100,
         ylabel=None,
+        xlim=None,
+        ylim=None,
         ):
         """
         """
@@ -1461,11 +1465,11 @@ class ToolsPCA():
         myax_set(
         ax,
         grid=None,
-        xlim=None,#[lim, -lim],
-        ylim=None,#[-lim, lim],
+        xlim=xlim,
+        ylim=ylim,
         xlabel="Distance (arcsec)",
         ylabel=ylabel,
-        adjust=[0.10,0.99,0.10,0.93],
+        adjust=[0.20,0.80,0.10,0.93],
         )
 
         # plot
