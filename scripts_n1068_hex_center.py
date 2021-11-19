@@ -1451,6 +1451,7 @@ class ToolsPCA():
         ylabel=None,
         xlim=None,
         ylim=None,
+        ann=None,
         ):
         """
         """
@@ -1469,17 +1470,22 @@ class ToolsPCA():
         ylim=ylim,
         xlabel="Distance (arcsec)",
         ylabel=ylabel,
-        adjust=[0.18,0.82,0.10,0.93],
+        adjust=[0.17,0.81,0.10,0.93],
         )
 
         # plot
         for i in range(len(clist)):
             this_c = clist[i]
-            color  = cm.rainbow(i/float(len(clist)))
+            color  = cm.rainbow(i/float(len(clist)-1))
             ax.scatter(r, this_c, s=size, c=color, linewidths=0)
 
         # text
         ax.text(0.03, 0.93, title, color="black", transform=ax.transAxes, weight="bold", fontsize=24)
+
+        if ann==1:
+            ax.text(0.97, 0.93, "CN(1$_{3/2}$-0$_{1/2}$)", color=cm.rainbow(0/float(len(clist)-1)), transform=ax.transAxes, weight="bold", fontsize=24, ha="right")
+            ax.text(0.97, 0.93, "HNC(1-0)", color=cm.rainbow(1/float(len(clist)-1)), transform=ax.transAxes, weight="bold", fontsize=24, ha="right")
+            ax.text(0.97, 0.93, "HCN(1-0)", color=cm.rainbow(1/float(len(clist)-1)), transform=ax.transAxes, weight="bold", fontsize=24, ha="right")
 
         # save
         os.system("rm -rf " + outpng)
