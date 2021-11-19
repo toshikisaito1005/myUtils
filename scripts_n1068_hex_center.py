@@ -463,11 +463,11 @@ class ToolsPCA():
 
         # extract outflow cone
         line1_zn     = np.where((theta_deg>=-15+180)&(theta_deg<65-180),line1_z,0)
-        line1_zs     = np.where((theta_deg>=-15+180)&(theta_deg<65-180),line1_z,0)
+        line1_zs     = np.where((theta_deg<=-15+180)&(theta_deg>65-180),line1_z,0)
         line1_z      = line1_zn + line1_zs
 
         line2_zn     = np.where((theta_deg>=-15+180)&(theta_deg<65-180),line2_z,0)
-        line2_zs     = np.where((theta_deg>=-15+180)&(theta_deg<65-180),line2_z,0)
+        line2_zs     = np.where((theta_deg<=-15+180)&(theta_deg?65-180),line2_z,0)
         line2_z      = line2_zn + line2_zs
 
         # CN/HCN
