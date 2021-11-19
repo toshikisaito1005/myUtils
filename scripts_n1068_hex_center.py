@@ -1467,6 +1467,7 @@ class ToolsPCA():
         ylabel=ylabel,
         adjust=[0.10,0.99,0.10,0.93],
         )
+        ax.set_aspect(adjustable='box')
 
         # plot
         for i in range(len(clist)):
