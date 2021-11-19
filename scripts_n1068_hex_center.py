@@ -489,6 +489,7 @@ class ToolsPCA():
             ylabel="log Intensity (K km s$^{-1}$)",
             xlim=[0,10.2],
             ylim=[-0.8,3.5],
+            ann=1,
             )
 
         self._plot_radial(
@@ -500,6 +501,7 @@ class ToolsPCA():
             ylabel="log Ratio",
             xlim=[0,10.2],
             ylim=None,#[-0.8,3.5],
+            ann=2,
             )
 
     ################################
