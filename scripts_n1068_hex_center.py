@@ -426,7 +426,7 @@ class ToolsPCA():
 
         taskname = self.modname + sys._getframe().f_code.co_name
         check_first(self.table_hex_obs,taskname)
-        factor = 1.0
+        factor = 2.0
 
         line_name1  = "cn10h"
         line_name2  = "hnc10"
@@ -470,7 +470,7 @@ class ToolsPCA():
             x,
             y,
             line1_z,
-            "CN(1$_{3/2}$-0$_{1/2}$)_HCN(1-0)",
+            "CN(1$_{3/2}$-0$_{1/2}$)/HCN(1-0)",
             cmap="PuBu",
             ann=True,
             add_text=False,
@@ -484,7 +484,7 @@ class ToolsPCA():
             x,
             y,
             line2_z,
-            "HNC(1-0)_HCN(1-0)",
+            "HNC(1-0)/HCN(1-0)",
             cmap="PuBu",
             ann=True,
             add_text=False,
