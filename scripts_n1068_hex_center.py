@@ -467,24 +467,24 @@ class ToolsPCA():
         line1_zc     = np.where(r<1,line1_z,0)
         line1_zn     = np.where((theta_deg>=-15)&(theta_deg<65),line1_z,0)
         line1_zs     = np.where((theta_deg>=-15-180)&(theta_deg<65-180),line1_z,0)
-        line1_z      = line1_zn + line1_zs + line1_zc
+        line1_z      = np.log10(line1_zn + line1_zs + line1_zc)
 
         line2_zc     = np.where(r<1,line2_z,0)
         line2_zn     = np.where((theta_deg>=-15)&(theta_deg<65),line2_z,0)
         line2_zs     = np.where((theta_deg>=-15-180)&(theta_deg<65-180),line2_z,0)
-        line2_z      = line2_zn + line2_zs + line2_zc
+        line2_z      = np.log10(line2_zn + line2_zs + line2_zc)
 
         denom_zc     = np.where(r<1,denom_z,0)
         denom_zn     = np.where((theta_deg>=-15)&(theta_deg<65),denom_z,0)
         denom_zs     = np.where((theta_deg>=-15-180)&(theta_deg<65-180),denom_z,0)
-        denom_z      = denom_zn + denom_zs + denom_zc
+        denom_z      = np.log10(denom_zn + denom_zs + denom_zc)
 
         self._plot_radial(
             self.outpng_hexmap_cn_hcn,
             r,
             [line1_z,line2_z,denom_z],
             "Radial Intensity",
-            size=3600,
+            size=1500,
             ylabel="Intensity (K km s$^{-1}$)",
             )
 
