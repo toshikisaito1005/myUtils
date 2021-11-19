@@ -80,8 +80,8 @@ class ToolsPCA():
             self.maps_emom0.sort()
 
             # ngc1068 properties
-            self.ra_agn                   = float(self._read_key("ra", "gal").split("deg")[0])
-            self.dec_agn                  = float(self._read_key("dec", "gal").split("deg")[0])
+            self.ra_agn                   = float(self._read_key("ra_agn", "gal").split("deg")[0])
+            self.dec_agn                  = float(self._read_key("dec_agn", "gal").split("deg")[0])
             self.scale_pc                 = float(self._read_key("scale", "gal"))
             self.scale_kpc                = self.scale_pc / 1000.
 
