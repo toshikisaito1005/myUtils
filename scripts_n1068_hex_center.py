@@ -486,7 +486,7 @@ class ToolsPCA():
             size=1000,
             ylabel="log Intensity (K km s$^{-1}$)",
             xlim=[0,10.2],
-            ylim=[-0.8,3.5],
+            ylim=[-0.2,3.3],
             ann=1,
             )
 
@@ -498,7 +498,7 @@ class ToolsPCA():
             size=1000,
             ylabel="log Ratio",
             xlim=[0,10.2],
-            ylim=[-3.5,0.6],
+            ylim=[-1.0,1.0],
             ann=2,
             )
 
