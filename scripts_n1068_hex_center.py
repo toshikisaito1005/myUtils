@@ -145,7 +145,7 @@ class ToolsPCA():
             self.final_pca_r13co          = self.dir_final + self._read_key("final_pca_r13co")
             self.final_pca_mom0_podium    = self.dir_final + self._read_key("final_pca_mom0_podium")
             self.final_pca_ratio_podium   = self.dir_final + self._read_key("final_pca_ratio_podium")
-            self.final_hexmap_ratio_hcn   = self.dir_final + self._read_key("final_hexmap_ratio_hcn")
+            self.final_hex_radial         = self.dir_final + self._read_key("final_hex_radial")
 
             self.box_map                  = self._read_key("box_map")
             self.box_map_noxlabel         = self._read_key("box_map_noxlabel")
@@ -168,7 +168,7 @@ class ToolsPCA():
         # plot figures in paper
         plot_hexmap_pca        = False,
         plot_hexmap_pca_podium = False,
-        plot_hexmap_hcn_ratio  = False,
+        plot_radial            = False,
         do_imagemagick         = False,
         # supplement
         plot_hexmap            = False,
@@ -199,8 +199,8 @@ class ToolsPCA():
             self.plot_hexmap_pca_podium()
             self.plot_hexmap_pca_ratio_podium()
 
-        if plot_hexmap_hcn_ratio==True:
-            self.plot_hexmap_hcn_ratio()
+        if plot_radial==True:
+            self.plot_radial()
 
         if do_imagemagick==True:
             self.immagick_figures()
@@ -376,14 +376,14 @@ class ToolsPCA():
             delin=True,
             )
 
-        print("#################################")
-        print("# create final_hexmap_ratio_hcn #")
-        print("#################################")
+        print("###########################")
+        print("# create final_hex_radial #")
+        print("###########################")
 
         combine_two_png(
             self.outpng_hexmap_cn_hcn,
             self.outpng_hexmap_hnc_hcn,
-            self.final_hexmap_ratio_hcn,
+            self.final_hex_radial,
             self.box_map_noylabel,
             self.box_map,
             axis="column",
@@ -420,50 +420,55 @@ class ToolsPCA():
     # plot_hexmap_hcn_ratio #
     #########################
 
-    def plot_hexmap_hcn_ratio(self):
+    def plot_radial(self):
         """
         """
 
         taskname = self.modname + sys._getframe().f_code.co_name
         check_first(self.table_hex_obs,taskname)
 
-        line_name1  = "cn10h"
-        line_name2  = "hnc10"
-        line_denom  = "hcn10"
+        line_name1   = "cn10h"
+        line_name2   = "hnc10"
+        line_denom   = "hcn10"
 
         # extract mom0 data
         header,data_mom0,_,x,y,r = self._read_table(self.table_hex_obs)
-        theta_deg   = np.degrees(np.arctan2(x, y))
+        theta_deg    = np.degrees(np.arctan2(x, y))
 
-        denom_name  = line_denom
-        denom_index = np.where(header==denom_name)
-        denom_z     = np.array(data_mom0[:,denom_index].flatten())
+        denom_name   = line_denom
+        denom_index  = np.where(header==denom_name)
+        denom_z      = np.array(data_mom0[:,denom_index].flatten())
 
         # get CN and HNC
-        line1_index = np.where(header==line_name1)
-        line2_index = np.where(header==line_name2)
+        line1_index  = np.where(header==line_name1)
+        line2_index  = np.where(header==line_name2)
 
-        line1_z     = np.array(data_mom0[:,line1_index].flatten()) / denom_z
-        line2_z     = np.array(data_mom0[:,line2_index].flatten()) / denom_z
+        line1_z      = np.array(data_mom0[:,line1_index].flatten()) / denom_z
+        line2_z      = np.array(data_mom0[:,line2_index].flatten()) / denom_z
 
         line1_z[np.isinf(line1_z)] = 0
         line2_z[np.isinf(line2_z)] = 0
         line1_z[np.isnan(line1_z)] = 0
         line2_z[np.isnan(line2_z)] = 0
 
-        line1_z     = np.where(r<=self.r_sbr_as,line1_z,0)
-        line2_z     = np.where(r<=self.r_sbr_as,line2_z,0)
+        line1_z      = np.where(r<=self.r_sbr_as,line1_z,0)
+        line2_z      = np.where(r<=self.r_sbr_as,line2_z,0)
 
         line1_z_sort = line1_z.flatten()
         line2_z_sort = line2_z.flatten()
         line1_z_sort.sort()
         line2_z_sort.sort()
-        line1_z     = np.where(line1_z==np.max(line1_z), line1_z_sort[-2], line1_z)
-        line2_z     = np.where(line2_z==np.max(line2_z), line2_z_sort[-2], line2_z)
+        line1_z      = np.where(line1_z==np.max(line1_z), line1_z_sort[-2], line1_z)
+        line2_z      = np.where(line2_z==np.max(line2_z), line2_z_sort[-2], line2_z)
 
         # extract outflow cone
-        line1_z = np.where((theta_deg>=0)&(theta_deg<65),line1_z,0)
-        line2_z = np.where((theta_deg>=0)&(theta_deg<65),line2_z,0)
+        line1_zn     = np.where((theta_deg>=-15+180)&(theta_deg<65-180),line1_z,0)
+        line1_zs     = np.where((theta_deg>=-15+180)&(theta_deg<65-180),line1_z,0)
+        line1_z      = line1_zn + line1_zs
+
+        line2_zn     = np.where((theta_deg>=-15+180)&(theta_deg<65-180),line2_z,0)
+        line2_zs     = np.where((theta_deg>=-15+180)&(theta_deg<65-180),line2_z,0)
+        line2_z      = line2_zn + line2_zs
 
         # CN/HCN
         self._plot_hexmap(

@@ -13,7 +13,7 @@ dir_final                 ,,,images/
 ##################
 # paper
 final_pca_mom0            ,,,fig_pca_mom0.png
-final_hexmap_ratio_hcn    ,,,fig_hexmap_ratio_hcn.png
+final_hex_radial          ,,,fig_hex_radial.png
 # appendix
 final_pca_mom0_podium     ,,,fig_pca_mom0_podium.png
 final_pca_ratio_podium    ,,,fig_pca_ratio_podium.png
