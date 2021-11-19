@@ -477,11 +477,6 @@ class ToolsPCA():
         denom_zs     = np.where((theta_deg>=-15-180)&(theta_deg<65-180)&(r<self.r_sbr_as),denom_z,0)
         denom_z      = np.log10(denom_zn + denom_zs + denom_zc)
 
-        line1_z[np.isinf(line1_z)] = 0
-        line2_z[np.isinf(line2_z)] = 0
-        line1_z[np.isnan(line1_z)] = 0
-        line2_z[np.isnan(line2_z)] = 0
-
         # plot
         self._plot_radial(
             self.outpng_hexmap_cn_hcn,
