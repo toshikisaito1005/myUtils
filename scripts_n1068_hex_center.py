@@ -514,7 +514,7 @@ class ToolsPCA():
             size=1000/7,
             ylabel="log Ratio",
             xlim=[0,10.2],
-            ylim=[-1.0,1.0],
+            ylim=[-2.0,1.0],
             ann=2,
             )
 
@@ -1490,7 +1490,7 @@ class ToolsPCA():
         # plot data
         for i in range(len(clist)):
             this_c = clist[i]
-            
+
             # constrain data
             this_c[np.isnan(this_c)] = -100
             this_c[np.isinf(this_c)] = -100
