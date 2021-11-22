@@ -1,3 +1,6 @@
+import os, sys, glob
+import numpy as np
+
 def lowess(x, y, f=1./3.):
     """
     Basic LOWESS smoother with uncertainty.
