@@ -19,7 +19,7 @@ from mycasa_stacking import cube_stacking
 from mycasa_sampling import *
 from mycasa_plots import *
 from mycasa_pca import *
-import mycasa_lowess as lo
+from mycasa_lowess import *
 
 ###########################
 ### ToolsDense
