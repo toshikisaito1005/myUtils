@@ -429,12 +429,15 @@ class ToolsPCA():
         taskname = self.modname + sys._getframe().f_code.co_name
         check_first(self.table_hex_obs,taskname)
 
+        line1_name1   = "h13cn10"
+        line1_name2   = "hc3n109"
+        line1_name3   = "hcop10"
         line_name1   = "cn10h"
         line_name2   = "hnc10"
         line_name3   = "cch10"
         line_denom   = "hcn10"
 
-        # extract mom0 data
+        # extract denom data
         header,data_mom0,_,x,y,r = self._read_table(self.table_hex_obs)
         theta_deg    = np.degrees(np.arctan2(x, y))
 
@@ -442,7 +445,37 @@ class ToolsPCA():
         denom_index  = np.where(header==denom_name)
         denom_z      = np.array(data_mom0[:,denom_index].flatten())
 
-        # get CN and HNC
+        # get PC1 ratios
+        line1_index  = np.where(header==line1_name1)
+        line2_index  = np.where(header==line1_name2)
+        line3_index  = np.where(header==line1_name3)
+
+        line1_z      = np.array(data_mom0[:,line1_index].flatten())
+        line2_z      = np.array(data_mom0[:,line2_index].flatten())
+        line3_z      = np.array(data_mom0[:,line3_index].flatten())
+
+        line1_z[np.isinf(line1_z)] = 0
+        line2_z[np.isinf(line2_z)] = 0
+        line3_z[np.isinf(line3_z)] = 0
+        line1_z[np.isnan(line1_z)] = 0
+        line2_z[np.isnan(line2_z)] = 0
+        line3_z[np.isnan(line3_z)] = 0
+
+        line1_z      = np.where(r<=self.r_sbr_as,line1_z,0)
+        line2_z      = np.where(r<=self.r_sbr_as,line2_z,0)
+        line3_z      = np.where(r<=self.r_sbr_as,line3_z,0)
+
+        line1_z_sort = line1_z.flatten()
+        line2_z_sort = line2_z.flatten()
+        line3_z_sort = line3_z.flatten()
+        line1_z_sort.sort()
+        line2_z_sort.sort()
+        line3_z_sort.sort()
+        line1_name1_z = np.where(line1_z==np.max(line1_z), line1_z_sort[-2], line1_z)
+        line1_name2_z = np.where(line2_z==np.max(line2_z), line2_z_sort[-2], line2_z)
+        line1_name3_z = np.where(line3_z==np.max(line3_z), line3_z_sort[-2], line3_z)
+
+        # PC2 ratios
         line1_index  = np.where(header==line_name1)
         line2_index  = np.where(header==line_name2)
         line3_index  = np.where(header==line_name3)
@@ -468,25 +501,40 @@ class ToolsPCA():
         line1_z_sort.sort()
         line2_z_sort.sort()
         line3_z_sort.sort()
-        line1_z      = np.where(line1_z==np.max(line1_z), line1_z_sort[-2], line1_z)
-        line2_z      = np.where(line2_z==np.max(line2_z), line2_z_sort[-2], line2_z)
-        line3_z      = np.where(line3_z==np.max(line3_z), line3_z_sort[-2], line3_z)
+        line2_name1_z = np.where(line1_z==np.max(line1_z), line1_z_sort[-2], line1_z)
+        line2_name2_z = np.where(line2_z==np.max(line2_z), line2_z_sort[-2], line2_z)
+        line2_name3_z = np.where(line3_z==np.max(line3_z), line3_z_sort[-2], line3_z)
 
         # extract outflow cone
-        line1_zc     = np.where(r<1,line1_z,0)
-        line1_zn     = np.where((theta_deg>=-15)&(theta_deg<65)&(r<self.r_sbr_as),line1_z,0)
-        line1_zs     = np.where((theta_deg>=-15-180)&(theta_deg<65-180)&(r<self.r_sbr_as),line1_z,0)
-        line1_z      = np.log10(line1_zn + line1_zs + line1_zc)
+        line1_zc     = np.where(r<1,line1_name1_z,0)
+        line1_zn     = np.where((theta_deg>=-15)&(theta_deg<65)&(r<self.r_sbr_as),line1_name1_z,0)
+        line1_zs     = np.where((theta_deg>=-15-180)&(theta_deg<65-180)&(r<self.r_sbr_as),line1_name1_z,0)
+        line1_name1_z = np.log10(line1_zn + line1_zs + line1_zc)
 
-        line2_zc     = np.where(r<1,line2_z,0)
-        line2_zn     = np.where((theta_deg>=-15)&(theta_deg<65)&(r<self.r_sbr_as),line2_z,0)
-        line2_zs     = np.where((theta_deg>=-15-180)&(theta_deg<65-180)&(r<self.r_sbr_as),line2_z,0)
-        line2_z      = np.log10(line2_zn + line2_zs + line2_zc)
+        line2_zc     = np.where(r<1,line1_name2_z,0)
+        line2_zn     = np.where((theta_deg>=-15)&(theta_deg<65)&(r<self.r_sbr_as),line1_name2_z,0)
+        line2_zs     = np.where((theta_deg>=-15-180)&(theta_deg<65-180)&(r<self.r_sbr_as),line1_name2_z,0)
+        line1_name2_z = np.log10(line2_zn + line2_zs + line2_zc)
 
-        line3_zc     = np.where(r<1,line3_z,0)
-        line3_zn     = np.where((theta_deg>=-15)&(theta_deg<65)&(r<self.r_sbr_as),line3_z,0)
-        line3_zs     = np.where((theta_deg>=-15-180)&(theta_deg<65-180)&(r<self.r_sbr_as),line3_z,0)
-        line3_z      = np.log10(line3_zn + line3_zs + line3_zc)
+        line3_zc     = np.where(r<1,line1_name3_z,0)
+        line3_zn     = np.where((theta_deg>=-15)&(theta_deg<65)&(r<self.r_sbr_as),line1_name3_z,0)
+        line3_zs     = np.where((theta_deg>=-15-180)&(theta_deg<65-180)&(r<self.r_sbr_as),line1_name3_z,0)
+        line1_name3_z = np.log10(line3_zn + line3_zs + line3_zc)
+
+        line1_zc     = np.where(r<1,line2_name1_z,0)
+        line1_zn     = np.where((theta_deg>=-15)&(theta_deg<65)&(r<self.r_sbr_as),line2_name1_z,0)
+        line1_zs     = np.where((theta_deg>=-15-180)&(theta_deg<65-180)&(r<self.r_sbr_as),line2_name1_z,0)
+        line2_name1_z = np.log10(line1_zn + line1_zs + line1_zc)
+
+        line2_zc     = np.where(r<1,line2_name2_z,0)
+        line2_zn     = np.where((theta_deg>=-15)&(theta_deg<65)&(r<self.r_sbr_as),line2_name2_z,0)
+        line2_zs     = np.where((theta_deg>=-15-180)&(theta_deg<65-180)&(r<self.r_sbr_as),line2_name2_z,0)
+        line2_name2_z = np.log10(line2_zn + line2_zs + line2_zc)
+
+        line3_zc     = np.where(r<1,line3_name3_z,0)
+        line3_zn     = np.where((theta_deg>=-15)&(theta_deg<65)&(r<self.r_sbr_as),line3_name3_z,0)
+        line3_zs     = np.where((theta_deg>=-15-180)&(theta_deg<65-180)&(r<self.r_sbr_as),line3_name3_z,0)
+        line3_name3_z = np.log10(line3_zn + line3_zs + line3_zc)
 
         denom_zc     = np.where(r<1,denom_z,0)
         denom_zn     = np.where((theta_deg>=-15)&(theta_deg<65)&(r<self.r_sbr_as),denom_z,0)
@@ -497,20 +545,20 @@ class ToolsPCA():
         self._plot_radial(
             self.outpng_hexmap_cn_hcn,
             r,
-            [line1_z,line2_z,line3_z,denom_z],
-            "Radial Intensity",
+            [line1_name1_z-denom_z,line1_name2_z-denom_z,line1_name3_z-denom_z],
+            "Radial Ratio (PC1)",
             size=1000/7,
-            ylabel="log Intensity (K km s$^{-1}$)",
+            ylabel="log Radial Ratio (PC1)",
             xlim=[0,10.2],
-            ylim=[-0.2,3.3],
-            ann=1,
+            ylim=None,[-0.2,3.3],
+            ann=3,
             )
 
         self._plot_radial(
             self.outpng_hexmap_hnc_hcn,
             r,
-            [line1_z-denom_z,line2_z-denom_z,line3_z-denom_z],
-            "Radial Ratio",
+            [line2_name1_z-denom_z,line2_name2_z-denom_z,line2_name3_z-denom_z],
+            "log Radial Ratio (PC2)",
             size=1000/7,
             ylabel="log Ratio",
             xlim=[0,10.2],
