@@ -464,7 +464,7 @@ class ToolsPCA():
 def _get_bicone_radial(
     self,
     name,
-    )
+    ):
     """
     self._get_bicone_radial(
     name="h13cn10",
