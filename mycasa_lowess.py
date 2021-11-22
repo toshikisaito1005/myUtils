@@ -47,14 +47,6 @@ def lowess(x, y, f=1./3.):
 #y_sm, y_std = lowess(x, y, f=1./5.)
 ## plot it
 #plt.plot(x[order], y_sm[order], color='tomato', label='LOWESS')
-#plt.fill_between(x[order], y_sm[order] - 1.96*y_std[order],
-#                 y_sm[order] + 1.96*y_std[order], alpha=0.3, label='LOWESS uncertainty')
-#plt.plot(x, y, 'k.', label='Observations')
-#plt.legend(loc='best')
-##run it
-#y_sm, y_std = lowess(x, y, f=1./5.)
-## plot it
-#plt.plot(x[order], y_sm[order], color='tomato', label='LOWESS')
 #plt.fill_between(x[order], y_sm[order] - y_std[order],
 #                 y_sm[order] + y_std[order], alpha=0.3, label='LOWESS uncertainty')
 #plt.plot(x, y, 'k.', label='Observations')
