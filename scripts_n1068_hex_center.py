@@ -499,7 +499,7 @@ class ToolsPCA():
             r,
             [line1_z,line2_z,line3_z,denom_z],
             "Radial Intensity",
-            size=1000/3,
+            size=1000/7,
             ylabel="log Intensity (K km s$^{-1}$)",
             xlim=[0,10.2],
             ylim=[-0.2,3.3],
@@ -511,7 +511,7 @@ class ToolsPCA():
             r,
             [line1_z-denom_z,line2_z-denom_z,line3_z-denom_z],
             "Radial Ratio",
-            size=1000/3,
+            size=1000/7,
             ylabel="log Ratio",
             xlim=[0,10.2],
             ylim=[-1.0,1.0],
@@ -1503,6 +1503,8 @@ class ToolsPCA():
             order  = np.argsort(this_r)
             y_sm, y_std = lowess(this_r, this_c, f=1./4.4)
             ax.plot(this_r[order], y_sm[order], color=color, lw=5)
+            plt.fill_between(this_r[order], y_sm[order] - 1.96*y_std[order],
+                y_sm[order] + 1.96*y_std[order], color=color, alpha=0.3)
 
         # text
         ax.text(0.03, 0.93, title, color="black", transform=ax.transAxes, weight="bold", fontsize=24)
