@@ -14,3 +14,6 @@ see Saito, Takano et al. 2021b
 
 ## scripts_n1068_hex_sbr.py and keys_n1068_hex_sbr/
 see Saito, Takano et al. 2022a
+
+## mycasa_lowess.py
+A modified version of https://github.com/arokem/lowess.

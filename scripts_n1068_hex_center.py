@@ -5,6 +5,7 @@ history:
 2021-11-10   created
 2021-11-14   pca analysis for mom0 and ratio and those mom0 maps
 2021-11-15   start drafting
+2021-11-22   implement LOWESS
 Toshiki Saito@Nichidai/NAOJ
 """
 
@@ -18,6 +19,7 @@ from mycasa_stacking import cube_stacking
 from mycasa_sampling import *
 from mycasa_plots import *
 from mycasa_pca import *
+import mycasa_lowess as lo
 
 ###########################
 ### ToolsDense
@@ -416,9 +418,9 @@ class ToolsPCA():
             delin=delin,
             )
 
-    #########################
-    # plot_hexmap_hcn_ratio #
-    #########################
+    ###############
+    # plot_radial #
+    ###############
 
     def plot_radial(self):
         """
@@ -1485,11 +1487,19 @@ class ToolsPCA():
         adjust=[0.176,0.813,0.10,0.93],
         )
 
-        # plot
+        # plot data
         for i in range(len(clist)):
             this_c = clist[i]
             color  = cm.rainbow(i/float(len(clist)-1))
             ax.scatter(r, this_c, s=size, c=color, linewidths=0)
+
+            # plot LOWESS
+            for kernel in [lo.epanechnikov, lo.tri_cube]:
+                for robust in [True, False]:
+                    x0 = range(len(r))
+                    f_hat = lo.lowess(r, this_c, x0, kernel=kernel, l=1.0, robust=robust)
+                    
+                    ax.plot(r,f_hat)
 
         # text
         ax.text(0.03, 0.93, title, color="black", transform=ax.transAxes, weight="bold", fontsize=24)
