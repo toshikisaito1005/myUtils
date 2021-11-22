@@ -461,38 +461,38 @@ class ToolsPCA():
             ann=3,
             )
 
-def _get_bicone_radial(
-    self,
-    name,
-    ):
-    """
-    self._get_bicone_radial(
-    name="h13cn10",
-    name_denom="hcn10",
-    )
-    """
+    def _get_bicone_radial(
+        self,
+        name,
+        ):
+        """
+        self._get_bicone_radial(
+        name="h13cn10",
+        name_denom="hcn10",
+        )
+        """
 
-    # get table
-    header,data_mom0,_,x,y,r = self._read_table(self.table_hex_obs)
-    theta_deg      = np.degrees(np.arctan2(x, y))
+        # get table
+        header,data_mom0,_,x,y,r = self._read_table(self.table_hex_obs)
+        theta_deg      = np.degrees(np.arctan2(x, y))
 
-    # get line data
-    line_index     = np.where(header==name)
-    data_line      = np.array(data_mom0[:,line_index].flatten())
-    data_line[np.isinf(data_line)] = 0
-    data_line[np.isnan(data_line)] = 0
-    data_line      = np.where(r<=self.r_sbr_as,data_line,0)
-    data_line_sort = data_line.flatten()
-    data_line_sort.sort()
-    data_line      = np.where(data_line==np.max(data_line), data_line_sort[-2], data_line)
+        # get line data
+        line_index     = np.where(header==name)
+        data_line      = np.array(data_mom0[:,line_index].flatten())
+        data_line[np.isinf(data_line)] = 0
+        data_line[np.isnan(data_line)] = 0
+        data_line      = np.where(r<=self.r_sbr_as,data_line,0)
+        data_line_sort = data_line.flatten()
+        data_line_sort.sort()
+        data_line      = np.where(data_line==np.max(data_line), data_line_sort[-2], data_line)
 
-    # get line bicone
-    line_zc        = np.where(r<1,data_line,0)
-    line_zn        = np.where((theta_deg>=-15)&(theta_deg<65)&(r<self.r_sbr_as),data_line,0)
-    line_zs        = np.where((theta_deg>=-15-180)&(theta_deg<65-180)&(r<self.r_sbr_as),data_line,0)
-    data_line      = np.log10(line_zn + line_zs + line_zc)
+        # get line bicone
+        line_zc        = np.where(r<1,data_line,0)
+        line_zn        = np.where((theta_deg>=-15)&(theta_deg<65)&(r<self.r_sbr_as),data_line,0)
+        line_zs        = np.where((theta_deg>=-15-180)&(theta_deg<65-180)&(r<self.r_sbr_as),data_line,0)
+        data_line      = np.log10(line_zn + line_zs + line_zc)
 
-    return data_line
+        return data_line
 
     ################################
     # plot_hexmap_pca_ratio_podium #
