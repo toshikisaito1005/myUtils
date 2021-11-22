@@ -509,7 +509,7 @@ class ToolsPCA():
         self._plot_radial(
             self.outpng_hexmap_hnc_hcn,
             r,
-            [line1_z-denom_z,line2_z-denom_z,line3_z-denom_z],
+            [line1_z/denom_z,line2_z/denom_z,line3_z/denom_z],#[line1_z-denom_z,line2_z-denom_z,line3_z-denom_z],
             "Radial Ratio",
             size=1000/7,
             ylabel="log Ratio",
