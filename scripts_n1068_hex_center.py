@@ -1498,12 +1498,11 @@ class ToolsPCA():
             this_c[np.isinf(this_c)] = -100
             cut    = np.where(this_c!=-100)
             this_c = this_c[cut]
-            r      = r[cut]
-            print(this_c)
+            this_r = r[cut]
 
-            order  = np.argsort(r)
-            y_sm, y_std = lowess(r, this_c, f=1./2.)
-            ax.plot(r[order], y_sm[order], color='tomato', label='LOWESS')
+            order  = np.argsort(this_r)
+            y_sm, y_std = lowess(this_r, this_c, f=1./2.)
+            ax.plot(this_r[order], y_sm[order], color='tomato', label='LOWESS')
 
         # text
         ax.text(0.03, 0.93, title, color="black", transform=ax.transAxes, weight="bold", fontsize=24)
