@@ -1496,7 +1496,7 @@ class ToolsPCA():
             # plot LOWESS
             for kernel in [lo.epanechnikov, lo.tri_cube]:
                 for robust in [True, False]:
-                    x0 = range(len(r))
+                    x0 = np.array(range(len(r)))
                     f_hat = lo.lowess(r, this_c, x0, kernel=kernel, l=1.0, robust=robust)
                     
                     ax.plot(r,f_hat)
