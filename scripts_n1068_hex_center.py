@@ -1489,22 +1489,24 @@ class ToolsPCA():
 
         # plot data
         for i in range(len(clist)):
-            this_c = clist[i]
-            color  = cm.rainbow(i/float(len(clist)-1))
-            ax.scatter(r, this_c, s=size, c=color, linewidths=0)
-
-            # plot LOWESS
+            # constrain data
             this_c[np.isnan(this_c)] = -100
             this_c[np.isinf(this_c)] = -100
             cut    = np.where((this_c!=-100) & (this_c!=0))
             this_c = this_c[cut]
             this_r = r[cut]
 
+            # plot data
+            this_c = clist[i]
+            color  = cm.rainbow(i/float(len(clist)-1))
+            ax.scatter(this_r, this_c, s=size, c=color, linewidths=0)
+
+            # plot LOWESS
             order  = np.argsort(this_r)
             y_sm, y_std = lowess(this_r, this_c, f=1./4.4)
             ax.plot(this_r[order], y_sm[order], color=color, lw=5)
-            plt.fill_between(this_r[order], y_sm[order] - 1.96*y_std[order],
-                y_sm[order] + 1.96*y_std[order], color=color, alpha=0.3)
+            plt.fill_between(this_r[order], y_sm[order] - y_std[order],
+                y_sm[order] + y_std[order], color=color, alpha=0.3)
 
         # text
         ax.text(0.03, 0.93, title, color="black", transform=ax.transAxes, weight="bold", fontsize=24)
