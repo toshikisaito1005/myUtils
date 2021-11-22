@@ -433,14 +433,15 @@ class ToolsPCA():
         data_co10,r    = self._get_bicone_radial("co10")
         data_hcn10,_   = self._get_bicone_radial("hcn10")
 
-        data_pc2_1st,_ = self._get_bicone_radial("cn10h")
-        data_pc2_2nd,_ = self._get_bicone_radial("hnc10")
-        data_pc2_3rd,_ = self._get_bicone_radial("cch10")
-
         data_pc1_1st,_ = self._get_bicone_radial("h13cn10")
         data_pc1_2nd,_ = self._get_bicone_radial("hc3n109")
         data_pc1_3rd,_ = self._get_bicone_radial("hcop10")
 
+        data_pc2_1st,_ = self._get_bicone_radial("cn10h")
+        data_pc2_2nd,_ = self._get_bicone_radial("hnc10")
+        data_pc2_3rd,_ = self._get_bicone_radial("cch10")
+
+        # plot
         self._plot_radial(
             self.outpng_hexmap_hnc_hcn,
             r,
@@ -456,7 +457,7 @@ class ToolsPCA():
         self._plot_radial(
             self.outpng_hexmap_cn_hcn,
             r,
-            [data_pc1_1st-data_co10,data_pc212nd-data_co10,data_pc2_1rd-data_co10],
+            [data_pc1_1st-data_co10,data_pc1_2nd-data_co10,data_pc1_3rd-data_co10],
             "Radial Ratio to CO(1-0)",
             size=1000/7,
             ylabel="Radial Ratio to CO(1-0)",
