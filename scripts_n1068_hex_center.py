@@ -1494,7 +1494,10 @@ class ToolsPCA():
             ax.scatter(r, this_c, s=size, c=color, linewidths=0)
 
             # plot LOWESS
-            order = np.argsort(r)
+            cut    = np.where((this_c!=np.nan) & (this_c!=np.inf))
+            this_c = this_c[cut]
+            r      = r[cut]
+            order  = np.argsort(r)
             y_sm, y_std = lowess(r, this_c, f=1./5.)
             ax.plot(r[order], y_sm[order], color='tomato', label='LOWESS')
             print(np.c_[r[order], y_sm[order]])
