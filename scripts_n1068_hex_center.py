@@ -1494,7 +1494,8 @@ class ToolsPCA():
             ax.scatter(r, this_c, s=size, c=color, linewidths=0)
 
             # plot LOWESS
-            cut    = np.where((np.array(this_c)!=np.nan) & (np.array(this_c)!=np.inf))
+            this_c[np.isnan(this_c)] = -100
+            cut    = np.where(this_c!=-100)
             this_c = this_c[cut]
             r      = r[cut]
             print(this_c)
