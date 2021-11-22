@@ -558,7 +558,7 @@ class ToolsPCA():
             self.outpng_hexmap_hnc_hcn,
             r,
             [line2_name1_z-denom_z,line2_name2_z-denom_z,line2_name3_z-denom_z],
-            "log Radial Ratio (PC2)",
+            "Radial Ratio (PC2)",
             size=1000/7,
             ylabel="log Ratio",
             xlim=[0,10.2],
