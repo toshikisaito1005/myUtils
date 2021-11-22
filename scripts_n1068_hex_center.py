@@ -1502,7 +1502,7 @@ class ToolsPCA():
             print(this_c)
 
             order  = np.argsort(r)
-            y_sm, y_std = lowess(r, this_c, f=1./5.)
+            y_sm, y_std = lowess(r, this_c, f=1./2.)
             ax.plot(r[order], y_sm[order], color='tomato', label='LOWESS')
 
         # text
