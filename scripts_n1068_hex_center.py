@@ -430,12 +430,12 @@ class ToolsPCA():
         check_first(self.table_hex_obs,taskname)
 
         # get data
-        data_co10    = self._get_bicone_radial("co10")
-        data_hcn10   = self._get_bicone_radial("hcn10")
+        data_co10,r    = self._get_bicone_radial("co10")
+        data_hcn10,_   = self._get_bicone_radial("hcn10")
 
-        data_pc2_1st = self._get_bicone_radial("cn10h")
-        data_pc2_2nd = self._get_bicone_radial("hnc10")
-        data_pc2_3rd = self._get_bicone_radial("cch10")
+        data_pc2_1st,_ = self._get_bicone_radial("cn10h")
+        data_pc2_2nd,_ = self._get_bicone_radial("hnc10")
+        data_pc2_3rd,_ = self._get_bicone_radial("cch10")
 
         self._plot_radial(
             self.outpng_hexmap_hnc_hcn,
@@ -496,7 +496,7 @@ class ToolsPCA():
         line_zs        = np.where((theta_deg>=-15-180)&(theta_deg<65-180)&(r<self.r_sbr_as),data_line,0)
         data_line      = np.log10(line_zn + line_zs + line_zc)
 
-        return data_line
+        return data_line, r
 
     ################################
     # plot_hexmap_pca_ratio_podium #
