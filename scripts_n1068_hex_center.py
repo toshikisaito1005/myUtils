@@ -430,12 +430,12 @@ class ToolsPCA():
         check_first(self.table_hex_obs,taskname)
 
         # get data
-        data_co10    = self._get_bicone_radial("co10")
-        data_hcn10   = self._get_bicone_radial("hcn10")
+        data_co10    = self._get_bicone_radial("co10",r)
+        data_hcn10   = self._get_bicone_radial("hcn10",r)
 
-        data_pc2_1st = self._get_bicone_radial("cn10h")
-        data_pc2_2nd = self._get_bicone_radial("hnc10")
-        data_pc2_3rd = self._get_bicone_radial("cch10")
+        data_pc2_1st = self._get_bicone_radial("cn10h",r)
+        data_pc2_2nd = self._get_bicone_radial("hnc10",r)
+        data_pc2_3rd = self._get_bicone_radial("cch10",r)
 
         self._plot_radial(
             self.outpng_hexmap_hnc_hcn,
@@ -461,9 +461,14 @@ class ToolsPCA():
             ann=3,
             )
 
+    ######################
+    # _get_bicone_radial #
+    ######################
+
     def _get_bicone_radial(
         self,
         name,
+        r,
         ):
         """
         self._get_bicone_radial(
