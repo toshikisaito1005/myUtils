@@ -1489,6 +1489,8 @@ class ToolsPCA():
 
         # plot data
         for i in range(len(clist)):
+            this_c = clist[i]
+            
             # constrain data
             this_c[np.isnan(this_c)] = -100
             this_c[np.isinf(this_c)] = -100
@@ -1497,7 +1499,6 @@ class ToolsPCA():
             this_r = r[cut]
 
             # plot data
-            this_c = clist[i]
             color  = cm.rainbow(i/float(len(clist)-1))
             ax.scatter(this_r, this_c, s=size, c=color, linewidths=0)
 
