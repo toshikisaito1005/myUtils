@@ -450,10 +450,11 @@ class ToolsPCA():
             size=1000/7,
             ylabel="log Ratio",
             xlim=[0,10.2],
-            ylim=None,#[-1.6,1.1],
+            ylim=[-1.6,1.1],
             ann=2,
             )
 
+        """
         self._plot_radial(
             self.outpng_hexmap_cn_hcn,
             r,
@@ -465,6 +466,7 @@ class ToolsPCA():
             ylim=None,#[-4.5,1.3],
             ann=3,
             )
+        """
 
     ######################
     # _get_bicone_radial #
