@@ -476,22 +476,22 @@ class ToolsPCA():
         line1_zc     = np.where(r<1,line1_z,0)
         line1_zn     = np.where((theta_deg>=-15)&(theta_deg<65)&(r<self.r_sbr_as),line1_z,0)
         line1_zs     = np.where((theta_deg>=-15-180)&(theta_deg<65-180)&(r<self.r_sbr_as),line1_z,0)
-        line1_z      = line1_zn + line1_zs + line1_zc # np.log10(line1_zn + line1_zs + line1_zc)
+        line1_z      = np.log10(line1_zn + line1_zs + line1_zc)
 
         line2_zc     = np.where(r<1,line2_z,0)
         line2_zn     = np.where((theta_deg>=-15)&(theta_deg<65)&(r<self.r_sbr_as),line2_z,0)
         line2_zs     = np.where((theta_deg>=-15-180)&(theta_deg<65-180)&(r<self.r_sbr_as),line2_z,0)
-        line2_z      = line2_zn + line2_zs + line2_zc # np.log10(line2_zn + line2_zs + line2_zc)
+        line2_z      = np.log10(line2_zn + line2_zs + line2_zc)
 
         line3_zc     = np.where(r<1,line3_z,0)
         line3_zn     = np.where((theta_deg>=-15)&(theta_deg<65)&(r<self.r_sbr_as),line3_z,0)
         line3_zs     = np.where((theta_deg>=-15-180)&(theta_deg<65-180)&(r<self.r_sbr_as),line3_z,0)
-        line3_z      = line3_zn + line3_zs + line3_zc # np.log10(line3_zn + line3_zs + line3_zc)
+        line3_z      = np.log10(line3_zn + line3_zs + line3_zc)
 
         denom_zc     = np.where(r<1,denom_z,0)
         denom_zn     = np.where((theta_deg>=-15)&(theta_deg<65)&(r<self.r_sbr_as),denom_z,0)
         denom_zs     = np.where((theta_deg>=-15-180)&(theta_deg<65-180)&(r<self.r_sbr_as),denom_z,0)
-        denom_z      = denom_zn + denom_zs + denom_zc # np.log10(denom_zn + denom_zs + denom_zc)
+        denom_z      = np.log10(denom_zn + denom_zs + denom_zc)
 
         # plot
         self._plot_radial(
@@ -509,7 +509,7 @@ class ToolsPCA():
         self._plot_radial(
             self.outpng_hexmap_hnc_hcn,
             r,
-            [line1_z/denom_z,line2_z/denom_z,line3_z/denom_z],#[line1_z-denom_z,line2_z-denom_z,line3_z-denom_z],
+            [line1_z-denom_z,line2_z-denom_z,line3_z-denom_z],
             "Radial Ratio",
             size=1000/7,
             ylabel="log Ratio",
