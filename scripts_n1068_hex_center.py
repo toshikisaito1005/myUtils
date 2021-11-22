@@ -531,10 +531,10 @@ class ToolsPCA():
         line2_zs     = np.where((theta_deg>=-15-180)&(theta_deg<65-180)&(r<self.r_sbr_as),line2_name2_z,0)
         line2_name2_z = np.log10(line2_zn + line2_zs + line2_zc)
 
-        line3_zc     = np.where(r<1,line3_name3_z,0)
-        line3_zn     = np.where((theta_deg>=-15)&(theta_deg<65)&(r<self.r_sbr_as),line3_name3_z,0)
-        line3_zs     = np.where((theta_deg>=-15-180)&(theta_deg<65-180)&(r<self.r_sbr_as),line3_name3_z,0)
-        line3_name3_z = np.log10(line3_zn + line3_zs + line3_zc)
+        line3_zc     = np.where(r<1,line2_name3_z,0)
+        line3_zn     = np.where((theta_deg>=-15)&(theta_deg<65)&(r<self.r_sbr_as),line2_name3_z,0)
+        line3_zs     = np.where((theta_deg>=-15-180)&(theta_deg<65-180)&(r<self.r_sbr_as),line2_name3_z,0)
+        line2_name3_z = np.log10(line3_zn + line3_zs + line3_zc)
 
         denom_zc     = np.where(r<1,denom_z,0)
         denom_zn     = np.where((theta_deg>=-15)&(theta_deg<65)&(r<self.r_sbr_as),denom_z,0)
