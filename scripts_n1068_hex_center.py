@@ -550,7 +550,7 @@ class ToolsPCA():
             size=1000/7,
             ylabel="log Radial Ratio (PC1)",
             xlim=[0,10.2],
-            ylim=[-4.5,1.0],
+            ylim=[-4.5,1.3],
             ann=3,
             )
 
