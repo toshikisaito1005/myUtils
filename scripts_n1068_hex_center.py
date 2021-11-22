@@ -550,7 +550,7 @@ class ToolsPCA():
             size=1000/7,
             ylabel="log Radial Ratio (PC1)",
             xlim=[0,10.2],
-            ylim=None,[-0.2,3.3],
+            ylim=None,#[-0.2,3.3],
             ann=3,
             )
 
@@ -1569,6 +1569,10 @@ class ToolsPCA():
             ax.text(0.97, 0.93, "CN(1$_{3/2}$-0$_{1/2}$)/HCN(1-0)", color=cm.rainbow(0/float(len(clist)-1)), transform=ax.transAxes, weight="bold", fontsize=24, ha="right")
             ax.text(0.97, 0.87, "HNC(1-0)/HCN(1-0)", color=cm.rainbow(1/float(len(clist)-1)), transform=ax.transAxes, weight="bold", fontsize=24, ha="right")
             ax.text(0.97, 0.81, "CCH(1-0)/HCN(1-0)", color=cm.rainbow(2/float(len(clist)-1)), transform=ax.transAxes, weight="bold", fontsize=24, ha="right")
+        elif ann==3:
+            ax.text(0.97, 0.93, "H$^{13}$CN(1-0)/HCN(1-0)", color=cm.rainbow(0/float(len(clist)-1)), transform=ax.transAxes, weight="bold", fontsize=24, ha="right")
+            ax.text(0.97, 0.87, "HC$_3$N(10-9)/HCN(1-0)", color=cm.rainbow(1/float(len(clist)-1)), transform=ax.transAxes, weight="bold", fontsize=24, ha="right")
+            ax.text(0.97, 0.81, "HCO$^+$(1-0)/HCN(1-0)", color=cm.rainbow(2/float(len(clist)-1)), transform=ax.transAxes, weight="bold", fontsize=24, ha="right")
 
         # save
         os.system("rm -rf " + outpng)
