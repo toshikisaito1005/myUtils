@@ -1495,6 +1495,7 @@ class ToolsPCA():
 
             # plot LOWESS
             this_c[np.isnan(this_c)] = -100
+            this_c[np.isinf(this_c)] = -100
             cut    = np.where(this_c!=-100)
             this_c = this_c[cut]
             r      = r[cut]
