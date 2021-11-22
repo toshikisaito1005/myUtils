@@ -1493,13 +1493,13 @@ class ToolsPCA():
             color  = cm.rainbow(i/float(len(clist)-1))
             ax.scatter(r, this_c, s=size, c=color, linewidths=0)
 
-            # plot LOWESS
-            for kernel in [lo.epanechnikov, lo.tri_cube]:
-                for robust in [True, False]:
-                    x0 = np.array(range(len(r)))
-                    f_hat = lo.lowess(r, this_c, x0, kernel=kernel, l=1.0, robust=robust)
-                    
-                    ax.plot(r,f_hat)
+            ## plot LOWESS
+            #for kernel in [lo.epanechnikov, lo.tri_cube]:
+            #    for robust in [True, False]:
+            #        x0 = np.array(range(len(r)))
+            #        f_hat = lo.lowess(r, this_c, x0, kernel=kernel, l=1.0, robust=robust)
+            #        
+            #        ax.plot(r,f_hat)
 
         # text
         ax.text(0.03, 0.93, title, color="black", transform=ax.transAxes, weight="bold", fontsize=24)
