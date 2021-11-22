@@ -1501,8 +1501,8 @@ class ToolsPCA():
             this_r = r[cut]
 
             order  = np.argsort(this_r)
-            y_sm, y_std = lowess(this_r, this_c, f=1./2.)
-            ax.plot(this_r[order], y_sm[order], color=color)
+            y_sm, y_std = lowess(this_r, this_c, f=1./5.)
+            ax.plot(this_r[order], y_sm[order], color=color, lw=5)
 
         # text
         ax.text(0.03, 0.93, title, color="black", transform=ax.transAxes, weight="bold", fontsize=24)
