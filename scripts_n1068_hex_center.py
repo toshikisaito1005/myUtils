@@ -496,24 +496,24 @@ class ToolsPCA():
         # plot
         self._plot_radial(
             self.outpng_hexmap_cn_hcn,
-            r,
+            np.log10(r),
             [line1_z,line2_z,line3_z,denom_z],
             "Radial Intensity",
             size=1000/3,
             ylabel="log Intensity (K km s$^{-1}$)",
-            xlim=[0,10.2],
+            xlim=None,#[0,10.2],
             ylim=[-0.2,3.3],
             ann=1,
             )
 
         self._plot_radial(
             self.outpng_hexmap_hnc_hcn,
-            r,
+            np.log10(r),
             [line1_z-denom_z,line2_z-denom_z,line3_z-denom_z],
             "Radial Ratio",
             size=1000/3,
             ylabel="log Ratio",
-            xlim=[0,10.2],
+            xlim=None,#[0,10.2],
             ylim=[-1.0,1.0],
             ann=2,
             )
