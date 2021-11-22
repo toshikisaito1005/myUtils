@@ -1552,7 +1552,7 @@ class ToolsPCA():
 
             # plot LOWESS
             order  = np.argsort(this_r)
-            y_sm, y_std = lowess(this_r, this_c, f=1./3.)
+            y_sm, y_std = lowess(this_r, this_c, f=1./2.5)
             ax.plot(this_r[order], y_sm[order], color=color, lw=5)
             plt.fill_between(this_r[order], y_sm[order] - y_std[order],
                 y_sm[order] + y_std[order], color=color, alpha=0.3)
