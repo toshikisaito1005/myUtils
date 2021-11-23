@@ -487,9 +487,9 @@ class ToolsPCA():
         data_line[np.isinf(data_line)] = 0
         data_line[np.isnan(data_line)] = 0
         data_line      = np.where(r<=self.r_sbr_as,data_line,0)
-        data_line_sort = data_line.flatten()
-        data_line_sort.sort()
-        data_line      = np.where(data_line==np.max(data_line), data_line_sort[-2], data_line)
+        #data_line_sort = data_line.flatten()
+        #data_line_sort.sort()
+        #data_line      = np.where(data_line==np.max(data_line), data_line_sort[-2], data_line)
 
         # get line bicone
         line_zc        = np.where(r<1,data_line,0)
