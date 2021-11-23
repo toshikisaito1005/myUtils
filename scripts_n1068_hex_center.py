@@ -461,7 +461,7 @@ class ToolsPCA():
             "Radial Ratio (disk)",
             size=1000/10,
             ylabel="log Ratio",
-            xlim=None,#[0,10.2],
+            xlim=[0,10.2],
             ylim=None,#[-1.6,1.1],
             )
 
@@ -1494,6 +1494,7 @@ class ToolsPCA():
             cut    = np.where((this_c!=-100) & (this_c!=0))
             this_c = this_c[cut]
             this_r = r[cut]
+            print(this_c)
 
             # plot data
             color  = cm.rainbow(i/float(len(clist)-1))
