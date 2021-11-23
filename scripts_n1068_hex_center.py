@@ -1499,25 +1499,16 @@ class ToolsPCA():
             order  = np.argsort(this_r)
             y_sm, y_std = lowess(this_r, this_c, f=fvalue)
             ax.plot(this_r[order], y_sm[order], color=color, lw=5)
-            plt.fill_between(this_r[order], y_sm[order] - y_std[order],
-                y_sm[order] + y_std[order], color=color, alpha=0.3)
+            plt.fill_between(this_r[order], y_sm[order] - 1.96*y_std[order],
+                y_sm[order] + 1.96*y_std[order], color=color, alpha=0.3)
 
         # text
         ax.text(0.03, 0.93, title, color="black", transform=ax.transAxes, weight="bold", fontsize=24)
 
-        if ann==1: # not used
-            ax.text(0.97, 0.93, "CN(1$_{3/2}$-0$_{1/2}$)", color=cm.rainbow(0/float(len(clist)-1)), transform=ax.transAxes, fontsize=24, ha="right")
-            ax.text(0.97, 0.87, "HNC(1-0)", color=cm.rainbow(1/float(len(clist)-1)), transform=ax.transAxes, fontsize=24, ha="right")
-            ax.text(0.97, 0.81, "CCH(1-0)", color=cm.rainbow(2/float(len(clist)-1)), transform=ax.transAxes, fontsize=24, ha="right")
-            ax.text(0.97, 0.75, "HCN(1-0)", color=cm.rainbow(3/float(len(clist)-1)), transform=ax.transAxes, fontsize=24, ha="right")
-        elif ann==2: # used
+        if ann==2:
             ax.text(0.97, 0.93, "CN(1$_{3/2}$-0$_{1/2}$)/HCN(1-0)", color=cm.rainbow(0/float(len(clist)-1)), transform=ax.transAxes, fontsize=24, ha="right")
             ax.text(0.97, 0.87, "HNC(1-0)/HCN(1-0)", color=cm.rainbow(1/float(len(clist)-1)), transform=ax.transAxes, fontsize=24, ha="right")
             ax.text(0.97, 0.81, "CCH(1-0)/HCN(1-0)", color=cm.rainbow(2/float(len(clist)-1)), transform=ax.transAxes, fontsize=24, ha="right")
-        elif ann==3: # not used
-            ax.text(0.97, 0.93, "H$^{13}$CN(1-0)/HCN(1-0)", color=cm.rainbow(0/float(len(clist)-1)), transform=ax.transAxes, fontsize=24, ha="right")
-            ax.text(0.97, 0.87, "HC$_3$N(10-9)/HCN(1-0)", color=cm.rainbow(1/float(len(clist)-1)), transform=ax.transAxes, fontsize=24, ha="right")
-            ax.text(0.97, 0.81, "HCO$^+$(1-0)/HCN(1-0)", color=cm.rainbow(2/float(len(clist)-1)), transform=ax.transAxes, fontsize=24, ha="right")
 
         # save
         os.system("rm -rf " + outpng)
