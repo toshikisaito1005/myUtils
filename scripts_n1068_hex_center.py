@@ -447,7 +447,7 @@ class ToolsPCA():
             r,
             [data_cone_1st-data_hcn10,data_cone_2nd-data_hcn10,data_cone_3rd-data_hcn10],
             "Radial Ratio (outflow)",
-            size=1000/7,
+            size=1000/10,
             ylabel="log Ratio",
             xlim=[0,10.2],
             ylim=[-1.6,1.1],
@@ -459,7 +459,7 @@ class ToolsPCA():
             r,
             [data_disk_1st-data_hcn10,data_disk_2nd-data_hcn10,data_disk_3rd-data_hcn10],
             "Radial Ratio (disk)",
-            size=1000/7,
+            size=1000/10,
             ylabel="log Ratio",
             xlim=[0,10.2],
             ylim=[-1.6,1.1],
@@ -502,7 +502,7 @@ class ToolsPCA():
             line_zs    = np.where((theta_deg>=-15-180)&(theta_deg<65-180)&(r<self.r_sbr_as),data_line,0)
         elif cone=="out":
             line_zn    = np.where((theta_deg>=-65-180)&(theta_deg<-15)&(r<self.r_sbr_as),data_line,0)
-            line_zs    = np.where((theta_deg>=651)&(theta_deg<-15+180)&(r<self.r_sbr_as),data_line,0)
+            line_zs    = np.where((theta_deg>=65)&(theta_deg<-15+180)&(r<self.r_sbr_as),data_line,0)
 
         data_line      = np.log10(line_zn + line_zs + line_zc)
 
