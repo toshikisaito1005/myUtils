@@ -1495,7 +1495,7 @@ class ToolsPCA():
 
             # plot data
             color  = cm.rainbow(i/float(len(clist)-1))
-            ax.scatter(this_r, this_c, s=size, c=color, linewidths=0)
+            #ax.scatter(this_r, this_c, s=size, c=color, linewidths=0)
 
             # plot LOWESS
             order  = np.argsort(this_r)
