@@ -478,10 +478,11 @@ class ToolsPCA():
         """
         """
 
-        angle1 = -15 - 5
-        angle2 = -115 + 5
-        angle3 = 165 - 5
-        angle4 = 65 + 5
+        offset = 10
+        angle1 = -15 - offset
+        angle2 = -115 + offset
+        angle3 = 165 - offset
+        angle4 = 65 + offset
 
         # get table
         header,data_mom0,_,x,y,r = self._read_table(self.table_hex_obs)
