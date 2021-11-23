@@ -447,7 +447,7 @@ class ToolsPCA():
         # plot
         xlim  = [2.1,9.6]
 
-        rdata = [data_cone_1st-data_cone_hcn10,data_disk_1st-data_disk_hcn10]
+        rdata = [data_cone_1st-data_cone_co10,data_disk_1st-data_disk_co10]
         self._plot_radial(
             self.outpng_radial1,
             r,
@@ -460,7 +460,7 @@ class ToolsPCA():
             ann=1,
             )
 
-        rdata = [data_cone_2nd-data_cone_hcn10,data_disk_2nd-data_disk_hcn10]
+        rdata = [data_cone_2nd-data_cone_co10,data_disk_2nd-data_disk_co10]
         self._plot_radial(
             self.outpng_radial2,
             r,
