@@ -447,7 +447,7 @@ class ToolsPCA():
         # plot
         xlim  = [2.1,9.6]
 
-        rdata = [data_cone_1st-data_cone_co10,data_disk_1st-data_disk_co10]
+        rdata = [data_cone_1st-data_cone_hcn10,data_disk_1st-data_disk_hcn10]
         self._plot_radial(
             self.outpng_radial1,
             r,
@@ -456,11 +456,11 @@ class ToolsPCA():
             size=1000/10,
             ylabel="log Ratio",
             xlim=xlim,
-            ylim=None,
+            ylim=[-0.8,0.6],
             ann=1,
             )
 
-        rdata = [data_cone_2nd-data_cone_co10,data_disk_2nd-data_disk_co10]
+        rdata = [data_cone_2nd-data_cone_hcn10,data_disk_2nd-data_disk_hcn10]
         self._plot_radial(
             self.outpng_radial2,
             r,
@@ -468,11 +468,11 @@ class ToolsPCA():
             "Radial HNC(1-0)/HCN(1-0) ratio",
             size=1000/10,
             ylabel="log Ratio",
-            xlim=xlim,
+            xlim=[-0.8,-0.1],
             ylim=None,
             )
 
-        rdata = [data_cone_3rd-data_cone_co10,data_disk_3rd-data_disk_co10]
+        rdata = [data_cone_3rd-data_cone_hcn10,data_disk_3rd-data_disk_hcn10]
         self._plot_radial(
             self.outpng_radial3,
             r,
@@ -481,7 +481,7 @@ class ToolsPCA():
             size=1000/10,
             ylabel="log Ratio",
             xlim=xlim,
-            ylim=None,
+            ylim=[-2.3,0.1],
             )
 
     ######################
