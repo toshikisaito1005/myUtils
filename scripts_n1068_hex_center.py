@@ -480,7 +480,6 @@ class ToolsPCA():
         # get table
         header,data_mom0,_,x,y,r = self._read_table(self.table_hex_obs)
         theta_deg      = np.degrees(np.arctan2(x, y))
-        print(np.min(theta_deg),np.max(theta_deg))
 
         # get line data
         line_index     = np.where(header==name)
@@ -498,8 +497,8 @@ class ToolsPCA():
             line_zn    = np.where((theta_deg>=-15)&(theta_deg<65)&(r<self.r_sbr_as),data_line,0)
             line_zs    = np.where((theta_deg>=165)&(theta_deg<-115)&(r<self.r_sbr_as),data_line,0)
         elif cone=="out":
-            line_zn    = np.where((theta_deg>-115)&(theta_deg<-15)&(r<self.r_sbr_as),data_line,0)
-            line_zs    = np.where((theta_deg>65)&(theta_deg<165)&(r<self.r_sbr_as),data_line,0)
+            line_zn    = np.where((theta_deg>-115)&(theta_deg<-15)&(r<self.r_sbr_as),data_line,data_line)#0)
+            line_zs    = np.where((theta_deg>65)&(theta_deg<165)&(r<self.r_sbr_as),data_line,data_line)#0)
 
         data_line      = np.log10(line_zn + line_zs + line_zc)
 
