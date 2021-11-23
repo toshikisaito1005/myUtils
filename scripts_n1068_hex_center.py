@@ -493,9 +493,9 @@ class ToolsPCA():
         line_zn    = np.where((theta_deg>=-15)&(theta_deg<65)&(r<self.r_sbr_as),data_line,0)
         line_zs    = np.where((theta_deg>=165)&(theta_deg<-115)&(r<self.r_sbr_as),data_line,0)
 
-        if cone="in":
+        if cone=="in":
             data_line  = np.log10(line_zn + line_zs + line_zc)
-        else: cone="out":
+        elif cone=="out":
             data_line  = np.log10(-1 * (data_line - (line_zn + line_zs + line_zc)))
 
 
