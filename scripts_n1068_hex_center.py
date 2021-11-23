@@ -430,22 +430,23 @@ class ToolsPCA():
         check_first(self.table_hex_obs,taskname)
 
         # get data
-        data_co10,r    = self._get_bicone_radial("co10")
-        data_hcn10,_   = self._get_bicone_radial("hcn10")
+        data_cone_co10,r  = self._get_bicone_radial("co10")
+        data_cone_hcn10,_ = self._get_bicone_radial("hcn10")
+        data_cone_1st,_   = self._get_bicone_radial("cn10h")
+        data_cone_2nd,_   = self._get_bicone_radial("hnc10")
+        data_cone_3rd,_   = self._get_bicone_radial("cch10")
 
-        data_cone_1st,_ = self._get_bicone_radial("cn10h")
-        data_cone_2nd,_ = self._get_bicone_radial("hnc10")
-        data_cone_3rd,_ = self._get_bicone_radial("cch10")
-
-        data_disk_1st,_ = self._get_bicone_radial("cn10h",cone="out")
-        data_disk_2nd,_ = self._get_bicone_radial("hnc10",cone="out")
-        data_disk_3rd,_ = self._get_bicone_radial("cch10",cone="out")
+        data_disk_co10,_  = self._get_bicone_radial("co10",cone="out")
+        data_disk_hcn10,_ = self._get_bicone_radial("hcn10",cone="out")
+        data_disk_1st,_   = self._get_bicone_radial("cn10h",cone="out")
+        data_disk_2nd,_   = self._get_bicone_radial("hnc10",cone="out")
+        data_disk_3rd,_   = self._get_bicone_radial("cch10",cone="out")
 
         # plot
         self._plot_radial(
             self.outpng_hexmap_hnc_hcn,
             r,
-            [data_cone_1st-data_hcn10,data_cone_2nd-data_hcn10,data_cone_3rd-data_hcn10],
+            [data_cone_1st-data_cone_hcn10,data_cone_2nd-data_cone_hcn10,data_cone_3rd-data_cone_hcn10],
             "Radial Ratio (outflow)",
             size=1000/10,
             ylabel="log Ratio",
@@ -457,7 +458,7 @@ class ToolsPCA():
         self._plot_radial(
             self.outpng_hexmap_cn_hcn,
             r,
-            [data_disk_1st-data_hcn10,data_disk_2nd-data_hcn10,data_disk_3rd-data_hcn10],
+            [data_disk_1st-data_disk_hcn10,data_disk_2nd-data_disk_hcn10,data_disk_3rd-data_disk_hcn10],
             "Radial Ratio (disk)",
             size=1000/10,
             ylabel="log Ratio",
