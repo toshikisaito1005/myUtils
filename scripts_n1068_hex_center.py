@@ -433,20 +433,20 @@ class ToolsPCA():
         data_co10,r    = self._get_bicone_radial("co10")
         data_hcn10,_   = self._get_bicone_radial("hcn10")
 
-        data_pc1_1st,_ = self._get_bicone_radial("h13cn10")
-        data_pc1_2nd,_ = self._get_bicone_radial("hc3n109")
-        data_pc1_3rd,_ = self._get_bicone_radial("hcop10")
+        data_cone_1st,_ = self._get_bicone_radial("cn10h")
+        data_cone_2nd,_ = self._get_bicone_radial("hnc10")
+        data_cone_3rd,_ = self._get_bicone_radial("cch10")
 
-        data_pc2_1st,_ = self._get_bicone_radial("cn10h")
-        data_pc2_2nd,_ = self._get_bicone_radial("hnc10")
-        data_pc2_3rd,_ = self._get_bicone_radial("cch10")
+        data_disk_1st,_ = self._get_bicone_radial("cn10h",cone="out")
+        data_disk_2nd,_ = self._get_bicone_radial("hnc10",cone="out")
+        data_disk_3rd,_ = self._get_bicone_radial("cch10",cone="out")
 
         # plot
         self._plot_radial(
             self.outpng_hexmap_hnc_hcn,
             r,
-            [data_pc1_1st-data_hcn10,data_pc1_2nd-data_hcn10,data_pc1_3rd-data_hcn10],
-            "Radial Ratio to HCN(1-0)",
+            [data_cone_1st-data_hcn10,data_cone_2nd-data_hcn10,data_cone_3rd-data_hcn10],
+            "Radial Ratio (outflow)",
             size=1000/7,
             ylabel="log Ratio",
             xlim=[0,10.2],
@@ -454,19 +454,16 @@ class ToolsPCA():
             ann=2,
             )
 
-        """
         self._plot_radial(
             self.outpng_hexmap_cn_hcn,
             r,
-            [data_pc1_1st-data_co10,data_pc1_2nd-data_co10,data_pc1_3rd-data_co10],
-            "Radial Ratio to CO(1-0)",
+            [data_disk_1st-data_hcn10,data_disk_2nd-data_hcn10,data_disk_3rd-data_hcn10],
+            "Radial Ratio (disk)",
             size=1000/7,
-            ylabel="Radial Ratio to CO(1-0)",
+            ylabel="log Ratio",
             xlim=[0,10.2],
-            ylim=None,#[-4.5,1.3],
-            ann=3,
+            ylim=[-1.6,1.1],
             )
-        """
 
     ######################
     # _get_bicone_radial #
@@ -475,6 +472,7 @@ class ToolsPCA():
     def _get_bicone_radial(
         self,
         name,
+        cone="in",
         ):
         """
         self._get_bicone_radial(
@@ -499,8 +497,13 @@ class ToolsPCA():
 
         # get line bicone
         line_zc        = np.where(r<1,data_line,0)
-        line_zn        = np.where((theta_deg>=-15)&(theta_deg<65)&(r<self.r_sbr_as),data_line,0)
-        line_zs        = np.where((theta_deg>=-15-180)&(theta_deg<65-180)&(r<self.r_sbr_as),data_line,0)
+        if cone=="in":
+            line_zn    = np.where((theta_deg>=-15)&(theta_deg<65)&(r<self.r_sbr_as),data_line,0)
+            line_zs    = np.where((theta_deg>=-15-180)&(theta_deg<65-180)&(r<self.r_sbr_as),data_line,0)
+        elif cone=="out":
+            line_zn    = np.where((theta_deg>=-65-180)&(theta_deg<-15)&(r<self.r_sbr_as),data_line,0)
+            line_zs    = np.where((theta_deg>=651)&(theta_deg<-15+180)&(r<self.r_sbr_as),data_line,0)
+
         data_line      = np.log10(line_zn + line_zs + line_zc)
 
         return data_line, r
@@ -1499,16 +1502,16 @@ class ToolsPCA():
         # text
         ax.text(0.03, 0.93, title, color="black", transform=ax.transAxes, weight="bold", fontsize=24)
 
-        if ann==1:
+        if ann==1: # not used
             ax.text(0.97, 0.93, "CN(1$_{3/2}$-0$_{1/2}$)", color=cm.rainbow(0/float(len(clist)-1)), transform=ax.transAxes, weight="bold", fontsize=24, ha="right")
             ax.text(0.97, 0.87, "HNC(1-0)", color=cm.rainbow(1/float(len(clist)-1)), transform=ax.transAxes, weight="bold", fontsize=24, ha="right")
             ax.text(0.97, 0.81, "CCH(1-0)", color=cm.rainbow(2/float(len(clist)-1)), transform=ax.transAxes, weight="bold", fontsize=24, ha="right")
             ax.text(0.97, 0.75, "HCN(1-0)", color=cm.rainbow(3/float(len(clist)-1)), transform=ax.transAxes, weight="bold", fontsize=24, ha="right")
-        elif ann==2:
+        elif ann==2: # used
             ax.text(0.97, 0.93, "CN(1$_{3/2}$-0$_{1/2}$)/HCN(1-0)", color=cm.rainbow(0/float(len(clist)-1)), transform=ax.transAxes, weight="bold", fontsize=24, ha="right")
             ax.text(0.97, 0.87, "HNC(1-0)/HCN(1-0)", color=cm.rainbow(1/float(len(clist)-1)), transform=ax.transAxes, weight="bold", fontsize=24, ha="right")
             ax.text(0.97, 0.81, "CCH(1-0)/HCN(1-0)", color=cm.rainbow(2/float(len(clist)-1)), transform=ax.transAxes, weight="bold", fontsize=24, ha="right")
-        elif ann==3:
+        elif ann==3: # not used
             ax.text(0.97, 0.93, "H$^{13}$CN(1-0)/HCN(1-0)", color=cm.rainbow(0/float(len(clist)-1)), transform=ax.transAxes, weight="bold", fontsize=24, ha="right")
             ax.text(0.97, 0.87, "HC$_3$N(10-9)/HCN(1-0)", color=cm.rainbow(1/float(len(clist)-1)), transform=ax.transAxes, weight="bold", fontsize=24, ha="right")
             ax.text(0.97, 0.81, "HCO$^+$(1-0)/HCN(1-0)", color=cm.rainbow(2/float(len(clist)-1)), transform=ax.transAxes, weight="bold", fontsize=24, ha="right")
