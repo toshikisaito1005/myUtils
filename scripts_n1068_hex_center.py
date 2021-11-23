@@ -478,6 +478,11 @@ class ToolsPCA():
         """
         """
 
+        angle1 = -15 - 5
+        angle2 = -115 + 5
+        angle3 = 165 - 5
+        angle4 = 65 + 5
+
         # get table
         header,data_mom0,_,x,y,r = self._read_table(self.table_hex_obs)
         theta_deg  =  np.degrees(np.arctan2(x, y))
@@ -491,9 +496,9 @@ class ToolsPCA():
 
         # get line bicone
         line_zc    = np.where(r<1,data_line,0)
-        line_zn    = np.where((theta_deg>=-15)&(theta_deg<65)&(r<self.r_sbr_as),data_line,0)
-        line_zs    = np.where((theta_deg>=165)&(r<self.r_sbr_as),data_line,0)
-        line_zs    = np.where((theta_deg<-115)&(r<self.r_sbr_as),data_line,line_zs)
+        line_zn    = np.where((theta_deg>=angle1)&(theta_deg<angle4)&(r<self.r_sbr_as),data_line,0)
+        line_zs    = np.where((theta_deg>=angle3)&(r<self.r_sbr_as),data_line,0)
+        line_zs    = np.where((theta_deg<angle2)&(r<self.r_sbr_as),data_line,line_zs)
 
         if cone=="in":
             data_line = np.log10(line_zn + line_zs + line_zc)
