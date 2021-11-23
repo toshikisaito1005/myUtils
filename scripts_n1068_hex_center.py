@@ -1499,8 +1499,8 @@ class ToolsPCA():
             order  = np.argsort(this_r)
             y_sm, y_std = lowess(this_r, this_c, f=fvalue)
             ax.plot(this_r[order], y_sm[order], color=color, lw=5)
-            plt.fill_between(this_r[order], y_sm[order] - 1.96*y_std[order],
-                y_sm[order] + 1.96*y_std[order], color=color, alpha=0.3)
+            plt.fill_between(this_r[order], y_sm[order] - y_std[order],
+                y_sm[order] + y_std[order], color=color, alpha=0.3)
 
         # text
         ax.text(0.03, 0.93, title, color="black", transform=ax.transAxes, weight="bold", fontsize=24)
