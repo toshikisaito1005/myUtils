@@ -479,28 +479,26 @@ class ToolsPCA():
 
         # get table
         header,data_mom0,_,x,y,r = self._read_table(self.table_hex_obs)
-        theta_deg      = np.degrees(np.arctan2(x, y))
+        theta_deg  =  np.degrees(np.arctan2(x, y))
 
         # get line data
-        line_index     = np.where(header==name)
-        data_line      = np.array(data_mom0[:,line_index].flatten())
+        line_index = np.where(header==name)
+        data_line  = np.array(data_mom0[:,line_index].flatten())
         data_line[np.isinf(data_line)] = 0
         data_line[np.isnan(data_line)] = 0
-        data_line      = np.where(r<=self.r_sbr_as,data_line,0)
-        #data_line_sort = data_line.flatten()
-        #data_line_sort.sort()
-        #data_line      = np.where(data_line==np.max(data_line), data_line_sort[-2], data_line)
+        data_line  = np.where(r<=self.r_sbr_as,data_line,0)
 
         # get line bicone
-        line_zc        = np.where(r<1,data_line,0)
-        if cone=="in":
-            line_zn    = np.where((theta_deg>=-15)&(theta_deg<65)&(r<self.r_sbr_as),data_line,0)
-            line_zs    = np.where((theta_deg>=165)&(theta_deg<-115)&(r<self.r_sbr_as),data_line,0)
-        elif cone=="out":
-            line_zn    = np.where((theta_deg>-115)&(theta_deg<-15)&(r<self.r_sbr_as),data_line,0)
-            line_zs    = np.where((theta_deg>65)&(theta_deg<165)&(r<self.r_sbr_as),data_line,0)
+        line_zc    = np.where(r<1,data_line,0)
+        line_zn    = np.where((theta_deg>=-15)&(theta_deg<65)&(r<self.r_sbr_as),data_line,0)
+        line_zs    = np.where((theta_deg>=165)&(theta_deg<-115)&(r<self.r_sbr_as),data_line,0)
 
-        data_line      = np.log10(line_zn + line_zs + line_zc)
+        if cone="in":
+            data_line  = np.log10(line_zn + line_zs + line_zc)
+        else: cone="out":
+            data_line  = np.log10(-1 * (data_line - (line_zn + line_zs + line_zc)))
+
+
 
         return data_line, r
 
