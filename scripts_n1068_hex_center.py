@@ -478,7 +478,7 @@ class ToolsPCA():
         """
         """
 
-        offset = 10
+        offset = 15
         angle1 = -15 - offset
         angle2 = -115 + offset
         angle3 = 165 - offset
@@ -507,18 +507,18 @@ class ToolsPCA():
             data_line = np.log10(data_line - line_zn - line_zs)
 
         self._plot_hexmap(
-                name + "_" + cone + ".png",
-                x,y,data_line,
-                name + "_" + cone + ".png",
-                title_cbar="(K km s$^{-1}$)",
-                cmap="rainbow",
-                plot_cbar=True,
-                ann=False,
-                lim=29.5,
-                size=690,
-                add_text=False,
-                label="",
-                )
+            name + "_" + cone + ".png",
+            x,y,data_line,
+            name + "_" + cone + ".png",
+            title_cbar="(K km s$^{-1}$)",
+            cmap="rainbow",
+            plot_cbar=True,
+            ann=False,
+            lim=29.5,
+            size=690,
+            add_text=False,
+            label="",
+            )
 
         return data_line, r
 
