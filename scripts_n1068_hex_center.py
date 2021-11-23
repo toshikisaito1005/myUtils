@@ -391,7 +391,7 @@ class ToolsPCA():
             self.box_map,
             self.box_map_noylabel,
             self.box_map_noylabel,
-            delin=delin,
+            delin=delin, 
             )
 
     ########################
