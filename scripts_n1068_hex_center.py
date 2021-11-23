@@ -389,8 +389,8 @@ class ToolsPCA():
             self.outpng_radial3,
             self.final_hex_radial,
             self.box_map,
-            self.box_map_noxlabel,
-            self.box_map_noxlabel,
+            self.box_map,
+            self.box_map,
             delin=delin,
             )
 
@@ -1488,7 +1488,7 @@ class ToolsPCA():
         # set ax parameter
         myax_set(
         ax,
-        grid=None,
+        grid="both",
         xlim=xlim,
         ylim=ylim,
         xlabel="Distance (arcsec)",
