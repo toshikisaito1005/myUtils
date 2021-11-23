@@ -498,6 +498,12 @@ class ToolsPCA():
         elif cone=="out":
             data_line = np.log10(data_line - line_zn - line_zs)
 
+        data_line[np.isnan(data_line)] = -100
+        data_line[np.isinf(data_line)] = -100
+        cut        = np.where((data_line!=-100) & (data_line!=0))
+        data_line  = data_line[cut]
+        r          = r[cut]
+
         return data_line, r
 
     ################################
