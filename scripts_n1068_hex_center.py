@@ -1464,7 +1464,7 @@ class ToolsPCA():
         xlim=None,
         ylim=None,
         ann=None,
-        fvalue=1/4.4,
+        fvalue=1/3.,
         ):
         """
         """
