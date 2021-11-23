@@ -459,7 +459,6 @@ class ToolsPCA():
 
         denom = data_disk_hcn10
         rdata = [data_disk_1st-denom,data_disk_2nd-denom,data_disk_3rd-denom]
-        rdata = [data_disk_2nd-data_disk_hcn10,data_cone_2nd-data_cone_hcn10]
         self._plot_radial(
             self.outpng_hexmap_hnc_hcn,
             r,
