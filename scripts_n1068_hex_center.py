@@ -461,7 +461,7 @@ class ToolsPCA():
             "Radial Ratio (disk)",
             size=1000/10,
             ylabel="log Ratio",
-            xlim=[0,10.2],
+            xlim=None,#[0,10.2],
             ylim=None,#[-1.6,1.1],
             )
 
