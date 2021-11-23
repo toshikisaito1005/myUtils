@@ -445,6 +445,8 @@ class ToolsPCA():
         data_disk_3rd,_   = self._get_bicone_radial("cch10",cone="out")
 
         # plot
+        xlim  = [0.1,9.6]
+        
         rdata = [data_cone_1st-data_cone_hcn10,data_disk_1st-data_disk_hcn10]
         self._plot_radial(
             self.outpng_radial1,
@@ -453,7 +455,7 @@ class ToolsPCA():
             "Radial CN(1$_{3/2}$-0$_{1/2}$)/HCN(1-0)",
             size=1000/10,
             ylabel="log Ratio",
-            xlim=[0,10.2],
+            xlim=xlim,
             ylim=None,#[-1.4,0.8],
             ann=1,
             )
@@ -466,7 +468,7 @@ class ToolsPCA():
             "Radial HNC(1-0)/HCN(1-0)",
             size=1000/10,
             ylabel="log Ratio",
-            xlim=[0,10.2],
+            xlim=xlim,
             ylim=None,#[-1.4,0.8],
             )
 
@@ -478,7 +480,7 @@ class ToolsPCA():
             "Radial CCH(1-0)/HCN(1-0)",
             size=1000/10,
             ylabel="log Ratio",
-            xlim=[0,10.2],
+            xlim=xlim,
             ylim=None,#[-1.4,0.8],
             )
 
