@@ -446,17 +446,17 @@ class ToolsPCA():
 
         # plot
         xlim  = [0.1,9.6]
-        
+
         rdata = [data_cone_1st-data_cone_hcn10,data_disk_1st-data_disk_hcn10]
         self._plot_radial(
             self.outpng_radial1,
             r,
             rdata,
-            "Radial CN(1$_{3/2}$-0$_{1/2}$)/HCN(1-0)",
+            "Radial CN(1$_{3/2}$-0$_{1/2}$)/HCN(1-0) ratio",
             size=1000/10,
             ylabel="log Ratio",
             xlim=xlim,
-            ylim=None,#[-1.4,0.8],
+            ylim=None,
             ann=1,
             )
 
@@ -465,11 +465,11 @@ class ToolsPCA():
             self.outpng_radial2,
             r,
             rdata,
-            "Radial HNC(1-0)/HCN(1-0)",
+            "Radial HNC(1-0)/HCN(1-0) ratio",
             size=1000/10,
             ylabel="log Ratio",
             xlim=xlim,
-            ylim=None,#[-1.4,0.8],
+            ylim=None,
             )
 
         rdata = [data_cone_3rd-data_cone_hcn10,data_disk_3rd-data_disk_hcn10]
@@ -477,11 +477,11 @@ class ToolsPCA():
             self.outpng_radial3,
             r,
             rdata,
-            "Radial CCH(1-0)/HCN(1-0)",
+            "Radial CCH(1-0)/HCN(1-0) ratio",
             size=1000/10,
             ylabel="log Ratio",
             xlim=xlim,
-            ylim=None,#[-1.4,0.8],
+            ylim=None,
             )
 
     ######################
@@ -1516,17 +1516,17 @@ class ToolsPCA():
             # plot LOWESS
             order  = np.argsort(this_r)
             y_sm, y_std = lowess(this_r, this_c, f=fvalue)
-            ax.plot(this_r[order], y_sm[order], color=color, lw=5)
+            ax.plot(this_r[order], y_sm[order], color=color, lw=8)
             plt.fill_between(this_r[order], y_sm[order] - y_std[order],
-                y_sm[order] + y_std[order], color=color, alpha=0.3)
+                y_sm[order] + y_std[order], color=color, alpha=0.5)
 
         # text
         ax.text(0.03, 0.93, title, color="black", transform=ax.transAxes, weight="bold", fontsize=24)
 
         # annotation
         if ann==1:
-            ax.text(0.97, 0.93, "Bicone", color="tomato", transform=ax.transAxes, fontsize=24, ha="right")
-            ax.text(0.97, 0.87, "Disk", color="deepskyblue", transform=ax.transAxes, fontsize=24, ha="right")
+            ax.text(0.97, 0.93, "Bicone", color="tomato", transform=ax.transAxes, fontsize=24, ha="right", weight="bold")
+            ax.text(0.97, 0.87, "Disk", color="deepskyblue", transform=ax.transAxes, fontsize=24, ha="right", weight="bold")
         if ann==2:
             ax.text(0.97, 0.93, "CN(1$_{3/2}$-0$_{1/2}$)/HCN(1-0)", color=cm.rainbow(0/float(len(clist)-1)), transform=ax.transAxes, fontsize=24, ha="right")
             ax.text(0.97, 0.87, "HNC(1-0)/HCN(1-0)", color=cm.rainbow(1/float(len(clist)-1)), transform=ax.transAxes, fontsize=24, ha="right")
