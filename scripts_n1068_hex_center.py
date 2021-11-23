@@ -478,7 +478,7 @@ class ToolsPCA():
         """
         """
 
-        offset = 15
+        offset = 10
         angle1 = -15 - offset
         angle2 = -115 + offset
         angle3 = 165 - offset
