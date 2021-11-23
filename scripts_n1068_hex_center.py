@@ -496,10 +496,10 @@ class ToolsPCA():
         line_zc        = np.where(r<1,data_line,0)
         if cone=="in":
             line_zn    = np.where((theta_deg>=-15)&(theta_deg<65)&(r<self.r_sbr_as),data_line,0)
-            line_zs    = np.where((theta_deg>=-15-180)&(theta_deg<65-180)&(r<self.r_sbr_as),data_line,0)
+            line_zs    = np.where((theta_deg>=165)&(theta_deg<-115)&(r<self.r_sbr_as),data_line,0)
         elif cone=="out":
-            line_zn    = np.where((theta_deg>65-180)&(theta_deg<-15)&(r<self.r_sbr_as),data_line,0)
-            line_zs    = np.where((theta_deg>65)&(theta_deg<-15+180)&(r<self.r_sbr_as),data_line,0)
+            line_zn    = np.where((theta_deg>-115)&(theta_deg<-15)&(r<self.r_sbr_as),data_line,0)
+            line_zs    = np.where((theta_deg>65)&(theta_deg<165)&(r<self.r_sbr_as),data_line,0)
 
         data_line      = np.log10(line_zn + line_zs + line_zc)
 
