@@ -1464,6 +1464,7 @@ class ToolsPCA():
         xlim=None,
         ylim=None,
         ann=None,
+        fvalue=4.5,
         ):
         """
         """
@@ -1495,7 +1496,6 @@ class ToolsPCA():
             cut    = np.where((this_c!=-100) & (this_c!=0))
             this_c = this_c[cut]
             this_r = r[cut]
-            print(this_c)
 
             # plot data
             color  = cm.rainbow(i/float(len(clist)-1))
@@ -1503,7 +1503,7 @@ class ToolsPCA():
 
             # plot LOWESS
             order  = np.argsort(this_r)
-            y_sm, y_std = lowess(this_r, this_c, f=1./2.5)
+            y_sm, y_std = lowess(this_r, this_c, f=fvalue)
             ax.plot(this_r[order], y_sm[order], color=color, lw=5)
             plt.fill_between(this_r[order], y_sm[order] - y_std[order],
                 y_sm[order] + y_std[order], color=color, alpha=0.3)
