@@ -445,7 +445,7 @@ class ToolsPCA():
         data_disk_3rd,_   = self._get_bicone_radial("cch10",cone="out")
 
         # plot
-        xlim  = [0.1,9.6]
+        xlim  = [2.1,9.6]
 
         rdata = [data_cone_1st-data_cone_hcn10,data_disk_1st-data_disk_hcn10]
         self._plot_radial(
