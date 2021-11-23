@@ -462,7 +462,7 @@ class ToolsPCA():
             size=1000/10,
             ylabel="log Ratio",
             xlim=[0,10.2],
-            ylim=[-3.0,1.0],
+            ylim=[-2.8,1.1],
             ann=2,
             )
 
@@ -1464,7 +1464,7 @@ class ToolsPCA():
         xlim=None,
         ylim=None,
         ann=None,
-        fvalue=1/2.5,
+        fvalue=1/2.0,
         ):
         """
         """
