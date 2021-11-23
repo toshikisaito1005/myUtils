@@ -472,7 +472,7 @@ class ToolsPCA():
             ylim=None,
             )
 
-        rdata = [data_cone_3rd-data_cone_hcn10,data_disk_3rd-data_disk_hcn10]
+        rdata = [data_cone_3rd-data_cone_co10,data_disk_3rd-data_disk_co10]
         self._plot_radial(
             self.outpng_radial3,
             r,
