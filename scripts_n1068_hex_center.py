@@ -498,11 +498,19 @@ class ToolsPCA():
         elif cone=="out":
             data_line = np.log10(data_line - line_zn - line_zs)
 
-        data_line[np.isnan(data_line)] = -100
-        data_line[np.isinf(data_line)] = -100
-        cut        = np.where((data_line!=-100) & (data_line!=0))
-        data_line  = data_line[cut]
-        r          = r[cut]
+        self._plot_hexmap(
+                name + "_" + cone + ".png",
+                x,y,data_line,
+                name + "_" + cone + ".png",
+                title_cbar="(K km s$^{-1}$)",
+                cmap="rainbow",
+                plot_cbar=True,
+                ann=False,
+                lim=29.5,
+                size=690,
+                add_text=False,
+                label="",
+                )
 
         return data_line, r
 
