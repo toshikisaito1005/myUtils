@@ -475,15 +475,12 @@ class ToolsPCA():
         cone="in",
         ):
         """
-        self._get_bicone_radial(
-        name="h13cn10",
-        name_denom="hcn10",
-        )
         """
 
         # get table
         header,data_mom0,_,x,y,r = self._read_table(self.table_hex_obs)
         theta_deg      = np.degrees(np.arctan2(x, y))
+        print(np.min(theta_deg),np.max(theta_deg))
 
         # get line data
         line_index     = np.where(header==name)
