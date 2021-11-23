@@ -445,27 +445,27 @@ class ToolsPCA():
         # plot
         denom = data_cone_hcn10
         self._plot_radial(
-            self.outpng_hexmap_hnc_hcn,
+            self.outpng_hexmap_cn_hcn,
             r,
             [data_cone_1st-denom,data_cone_2nd-denom,data_cone_3rd-denom],
             "Radial Ratio (outflow)",
             size=1000/10,
             ylabel="log Ratio",
             xlim=[0,10.2],
-            ylim=[-1.6,1.1],
+            ylim=[-1.6,1.1],#[-2.8,1.1],
+            ann=2,
             )
 
         denom = data_disk_hcn10
         self._plot_radial(
-            self.outpng_hexmap_cn_hcn,
+            self.outpng_hexmap_hnc_hcn,
             r,
             [data_disk_1st-denom,data_disk_2nd-denom,data_disk_3rd-denom],
             "Radial Ratio (disk)",
             size=1000/10,
             ylabel="log Ratio",
             xlim=[0,10.2],
-            ylim=[-1.6,1.1],#[-2.8,1.1],
-            ann=2,
+            ylim=[-1.6,1.1],
             )
 
     ######################
