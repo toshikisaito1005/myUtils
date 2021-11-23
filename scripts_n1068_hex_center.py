@@ -389,8 +389,8 @@ class ToolsPCA():
             self.outpng_radial3,
             self.final_hex_radial,
             self.box_map,
-            self.box_map_noylabel,
-            self.box_map_noylabel,
+            self.box_map_noxlabel,
+            self.box_map_noxlabel,
             delin=delin,
             )
 
@@ -455,6 +455,7 @@ class ToolsPCA():
             ylabel="log Ratio",
             xlim=[0,10.2],
             ylim=None,#[-1.4,0.8],
+            ann=1,
             )
 
         rdata = [data_cone_2nd-data_cone_hcn10,data_disk_2nd-data_disk_hcn10]
