@@ -453,13 +453,13 @@ class ToolsPCA():
             size=1000/10,
             ylabel="log Ratio",
             xlim=[0,10.2],
-            ylim=[-1.6,1.1],#[-2.8,1.1],
+            ylim=[-1.6,1.1],
             ann=2,
             )
 
         denom = data_disk_hcn10
         rdata = [data_disk_1st-denom,data_disk_2nd-denom,data_disk_3rd-denom]
-        rdata = [data_cone_1st-data_disk_1st,data_cone_2nd-data_disk_2nd,data_cone_3rd-data_disk_3rd]
+        rdata = [data_disk_2nd-denom,data_cone_2nd-denom]
         self._plot_radial(
             self.outpng_hexmap_hnc_hcn,
             r,
