@@ -452,7 +452,6 @@ class ToolsPCA():
             ylabel="log Ratio",
             xlim=[0,10.2],
             ylim=[-1.6,1.1],
-            ann=2,
             )
 
         self._plot_radial(
@@ -464,6 +463,7 @@ class ToolsPCA():
             ylabel="log Ratio",
             xlim=[0,10.2],
             ylim=None,#[-1.6,1.1],
+            ann=2,
             )
 
     ######################
