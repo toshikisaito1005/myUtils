@@ -443,7 +443,7 @@ class ToolsPCA():
         data_disk_3rd,_   = self._get_bicone_radial("cch10",cone="out")
 
         # plot
-        denom = data_cone_co10#data_cone_hcn10
+        denom = data_cone_hcn10
         self._plot_radial(
             self.outpng_hexmap_hnc_hcn,
             r,
@@ -452,10 +452,10 @@ class ToolsPCA():
             size=1000/10,
             ylabel="log Ratio",
             xlim=[0,10.2],
-            ylim=None,#[-1.6,1.1],
+            ylim=[-1.6,1.1],
             )
 
-        denom = data_disk_co10#data_disk_hcn10
+        denom = data_disk_hcn10
         self._plot_radial(
             self.outpng_hexmap_cn_hcn,
             r,
@@ -464,7 +464,7 @@ class ToolsPCA():
             size=1000/10,
             ylabel="log Ratio",
             xlim=[0,10.2],
-            ylim=None,#[-2.8,1.1],
+            ylim=[-2.8,1.1],
             ann=2,
             )
 
@@ -507,20 +507,6 @@ class ToolsPCA():
             data_line = np.log10(line_zn + line_zs + line_zc)
         elif cone=="out":
             data_line = np.log10(data_line - line_zn - line_zs)
-
-        self._plot_hexmap(
-            name + "_" + cone + ".png",
-            x,y,data_line,
-            name + "_" + cone + ".png",
-            title_cbar="(K km s$^{-1}$)",
-            cmap="rainbow",
-            plot_cbar=True,
-            ann=False,
-            lim=29.5,
-            size=690,
-            add_text=False,
-            label="",
-            )
 
         return data_line, r
 
