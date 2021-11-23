@@ -142,6 +142,10 @@ class ToolsPCA():
             self.outpng_pca2_ratio_3rd    = outpng_pca2_ratio_podium.replace("???","3rd")
             self.outpng_pca2_ratio_4th    = outpng_pca2_ratio_podium.replace("???","4th")
 
+            self.outpng_radial1           = self.dir_products + self._read_key("outpng_radial1")
+            self.outpng_radial2           = self.dir_products + self._read_key("outpng_radial2")
+            self.outpng_radial3           = self.dir_products + self._read_key("outpng_radial3")
+
             # final
             self.final_pca_mom0           = self.dir_final + self._read_key("final_pca_mom0")
             self.final_pca_r13co          = self.dir_final + self._read_key("final_pca_r13co")
@@ -153,9 +157,6 @@ class ToolsPCA():
             self.box_map_noxlabel         = self._read_key("box_map_noxlabel")
             self.box_map_noylabel         = self._read_key("box_map_noylabel")
             self.box_map_noxylabel        = self._read_key("box_map_noxylabel")
-
-            self.outpng_hexmap_cn_hcn     = self.dir_products + self._read_key("outpng_hexmap_cn_hcn")
-            self.outpng_hexmap_hnc_hcn    = self.dir_products + self._read_key("outpng_hexmap_hnc_hcn")
 
     ###################
     # run_ngc1068_pca #
@@ -382,13 +383,14 @@ class ToolsPCA():
         print("# create final_hex_radial #")
         print("###########################")
 
-        combine_two_png(
-            self.outpng_hexmap_cn_hcn,
-            self.outpng_hexmap_hnc_hcn,
+        combine_three_png(
+            self.outpng_radial1,
+            self.outpng_radial2,
+            self.outpng_radial3,
             self.final_hex_radial,
-            self.box_map_noylabel,
             self.box_map,
-            axis="column",
+            self.box_map_noylabel,
+            self.box_map_noylabel,
             delin=delin,
             )
 
@@ -422,7 +424,7 @@ class ToolsPCA():
     # plot_radial #
     ###############
 
-    def plot_radial(self,denom="hcn10"):
+    def plot_radial(self):
         """
         """
 
@@ -443,31 +445,40 @@ class ToolsPCA():
         data_disk_3rd,_   = self._get_bicone_radial("cch10",cone="out")
 
         # plot
-        denom = data_cone_hcn10
-        rdata = [data_cone_1st-denom,data_cone_2nd-denom,data_cone_3rd-denom]
+        rdata = [data_cone_1st-data_cone_hcn10,data_disk_1st-data_disk_hcn10]
         self._plot_radial(
-            self.outpng_hexmap_cn_hcn,
+            self.outpng_radial1,
             r,
             rdata,
-            "Radial Ratio (outflow)",
+            "Radial CN(1$_{3/2}$-0$_{1/2}$)/HCN(1-0)",
             size=1000/10,
             ylabel="log Ratio",
             xlim=[0,10.2],
-            ylim=[-1.4,0.8],#[-1.6,1.1],
-            ann=2,
+            ylim=None,#[-1.4,0.8],
             )
 
-        denom = data_disk_hcn10
-        rdata = [data_disk_1st-denom,data_disk_2nd-denom,data_disk_3rd-denom]
+        rdata = [data_cone_2nd-data_cone_hcn10,data_disk_2nd-data_disk_hcn10]
         self._plot_radial(
-            self.outpng_hexmap_hnc_hcn,
+            self.outpng_radial1,
             r,
             rdata,
-            "Radial Ratio (disk)",
+            "Radial HNC(1-0)/HCN(1-0)",
             size=1000/10,
             ylabel="log Ratio",
             xlim=[0,10.2],
-            ylim=[-1.4,0.8],#[-1.6,1.1],
+            ylim=None,#[-1.4,0.8],
+            )
+
+        rdata = [data_cone_3rd-data_cone_hcn10,data_disk_3rd-data_disk_hcn10]
+        self._plot_radial(
+            self.outpng_radial1,
+            r,
+            rdata,
+            "Radial CCH(1-0)/HCN(1-0)",
+            size=1000/10,
+            ylabel="log Ratio",
+            xlim=[0,10.2],
+            ylim=None,#[-1.4,0.8],
             )
 
     ######################
@@ -1494,8 +1505,10 @@ class ToolsPCA():
             this_r = r[cut]
 
             # plot data
-            color  = cm.rainbow(i/float(len(clist)-1))
-            #ax.scatter(this_r, this_c, s=size, c=color, linewidths=0)
+            if i==0:
+                color = "tomato"
+            elif i==1:
+                color = "deepskyblue"
 
             # plot LOWESS
             order  = np.argsort(this_r)
