@@ -1519,7 +1519,7 @@ class ToolsPCA():
             order  = np.argsort(this_r)
             y_sm, y_std = lowess(this_r, this_c, f=fvalue)
             ax.plot(this_r[order], y_sm[order], color=color, lw=8, zorder=this_zorder)
-            plt.fill_between(this_r[order], y_sm[order] - y_std[order],
+            plt.fill_between(this_r[order], y_sm[order] - y_std[order], lw=0,
                 y_sm[order] + y_std[order], color=color, alpha=0.5, zorder=this_zorder)
 
         # text
