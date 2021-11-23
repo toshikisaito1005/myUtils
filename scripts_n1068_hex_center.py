@@ -491,7 +491,8 @@ class ToolsPCA():
         # get line bicone
         line_zc    = np.where(r<1,data_line,0)
         line_zn    = np.where((theta_deg>=-15)&(theta_deg<65)&(r<self.r_sbr_as),data_line,0)
-        line_zs    = np.where((theta_deg>=165)&(theta_deg<-115)&(r<self.r_sbr_as),data_line,0)
+        line_zs    = np.where((theta_deg>=165)&(r<self.r_sbr_as),data_line,0)
+        line_zs    = np.where((theta_deg<-115)&(r<self.r_sbr_as),data_line,line_zs)
 
         if cone=="in":
             data_line = np.log10(line_zn + line_zs + line_zc)
