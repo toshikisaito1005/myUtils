@@ -497,8 +497,7 @@ class ToolsPCA():
             data_line = np.log10(line_zn + line_zs + line_zc)
         elif cone=="out":
             data_line = np.log10(data_line - line_zn - line_zs)
-
-
+            print(data_line)
 
         return data_line, r
 
