@@ -391,7 +391,7 @@ class ToolsPCA():
             self.box_map,
             self.box_map_noylabel,
             self.box_map_noylabel,
-            delin=delin, 
+            delin=delin,
             )
 
     ########################
@@ -459,7 +459,7 @@ class ToolsPCA():
 
         rdata = [data_cone_2nd-data_cone_hcn10,data_disk_2nd-data_disk_hcn10]
         self._plot_radial(
-            self.outpng_radial1,
+            self.outpng_radial2,
             r,
             rdata,
             "Radial HNC(1-0)/HCN(1-0)",
@@ -471,7 +471,7 @@ class ToolsPCA():
 
         rdata = [data_cone_3rd-data_cone_hcn10,data_disk_3rd-data_disk_hcn10]
         self._plot_radial(
-            self.outpng_radial1,
+            self.outpng_radial3,
             r,
             rdata,
             "Radial CCH(1-0)/HCN(1-0)",
