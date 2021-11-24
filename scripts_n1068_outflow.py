@@ -344,16 +344,40 @@ class ToolsOutflow():
         taskname = self.modname + sys._getframe().f_code.co_name
         check_first(self.outpng_map_ci,taskname)
 
-        print("#########################")
-        print("# create final_showcase #")
-        print("#########################")
+        print("##############################")
+        print("# create final_showcase (v1) #")
+        print("##############################")
 
-        combine_two_png(self.outpng_map_ci,self.outpng_map_co,
-            self.final_showcase+"_tmp1.png",self.box_map,self.box_map,delin=delin)
-        combine_two_png(self.outpng_ci_vs_co,self.outpng_map_cico,
-            self.final_showcase+"_tmp2.png",self.box_map,self.box_map,delin=delin)
-        combine_two_png(self.final_showcase+"_tmp1.png",self.final_showcase+"_tmp2.png",
-            self.final_showcase,"100000x100000+0+0","100000x100000+0+0",axis="column",delin=True)
+        combine_three_png(
+            self.outpng_map_ci,
+            self.outpng_map_co,
+            self.outpng_ci_vs_co,
+            self.final_showcase+"_tmp1.png",
+            self.box_map,
+            self.box_map,
+            self.box_map,
+            delin=delin,
+            )
+        combine_three_png(
+            self.outpng_ci_vs_co,
+            self.outpng_ci_vs_co,
+            self.outpng_ci_vs_co
+            self.final_showcase+"_tmp2.png",
+            self.box_map,
+            self.box_map,
+            self.box_map,
+            delin=delin,
+            )
+
+        combine_two_png(
+            self.final_showcase+"_tmp1.png",
+            self.final_showcase+"_tmp2.png",
+            self.final_showcase,
+            "100000x100000+0+0",
+            "100000x100000+0+0",
+            axis="column",
+            delin=True,
+            )
 
         print("########################")
         print("# create final_channel #")
@@ -468,6 +492,19 @@ class ToolsOutflow():
             self.final_showcase_multi+"_tmp2.png",self.box_map,self.box_map,delin=delin)
         combine_two_png(self.final_showcase_multi+"_tmp1.png",self.final_showcase_multi+"_tmp2.png",
             self.final_showcase_multi,"100000x100000+0+0","100000x100000+0+0",axis="column",delin=True)
+
+        """
+        print("##############################")
+        print("# create final_showcase (v0) #")
+        print("##############################")
+
+        combine_two_png(self.outpng_map_ci,self.outpng_map_co,
+            self.final_showcase+"_tmp1.png",self.box_map,self.box_map,delin=delin)
+        combine_two_png(self.outpng_ci_vs_co,self.outpng_map_cico,
+            self.final_showcase+"_tmp2.png",self.box_map,self.box_map,delin=delin)
+        combine_two_png(self.final_showcase+"_tmp1.png",self.final_showcase+"_tmp2.png",
+            self.final_showcase,"100000x100000+0+0","100000x100000+0+0",axis="column",delin=True)
+        """
 
     #####################
     # _panel_chan_model #
