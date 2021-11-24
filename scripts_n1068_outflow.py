@@ -326,7 +326,7 @@ class ToolsOutflow():
 
         # suggested analysis
         if plot_spectra==True:
-            plot_spectra():
+            self.plot_spectra()
 
         # summarize figures
         if do_imagemagick==True:
