@@ -139,12 +139,12 @@ def _myax_cbar(
     label=None,
     clim=None,
     colorbarticks=None,
+    colorbarticktexts=None,
     ):
 
     if colorbarticks is not None:
         cb = fig.colorbar(data, ax=ax, ticks=colorbarticks)
-        colorbartickstext = [str(s) for s in colorbarticks]
-        cb.ax.set_yticklabels(colorbartickstext)
+        cb.ax.set_yticklabels(colorbarticktexts)
     else:
         cb = fig.colorbar(data, ax=ax)
     
@@ -630,6 +630,7 @@ def myfig_fits2png(
     textann=True,
     txtfiles=None,
     colorbarticks=None,
+    colorbarticktexts=None,
     ):
     """
     Parameters
@@ -787,7 +788,8 @@ def myfig_fits2png(
     # colorbar
     cim.set_clim(clim)
     if set_cbar==True:
-        _myax_cbar(plt,ax,cim,label=label_cbar,clim=clim,colorbarticks=colorbarticks)
+        _myax_cbar(plt,ax,cim,label=label_cbar,clim=clim,
+            colorbarticks=colorbarticks,colorbarticktexts=colorbarticktexts)
 
     # add beam size
     if showbeam==True:

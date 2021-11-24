@@ -1062,6 +1062,7 @@ class ToolsOutflow():
             numann=1,
             textann=True,
             colorbarticks=[10**1.5,10**2,10**2.5],
+            colorbarticktexts=["10$^{1.5}$","10$^{2.0}$","10$^{2.5}$"]
             )
 
         myfig_fits2png(
