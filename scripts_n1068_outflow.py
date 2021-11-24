@@ -541,9 +541,13 @@ class ToolsOutflow():
         print("# imval_all for 2 cubes. Will take ~2x2 min.")
         print("# co cube")
         data_co, box = imval_all(self.outfits_cube_co10)
+        data_co = data_co["data"] * data_co["mask"]
         print(data_co)
+
         print("# ci cube")
         data_ci, _   = imval_all(self.outfits_cube_ci10)
+        data_ci = data_ci["data"] * data_ci["mask"]
+
         data_coords  = imval(self.outfits_map_co10,box=box)["coords"]
 
         # calculate relative distance from the center
@@ -556,10 +560,13 @@ class ToolsOutflow():
         dist_pc, theta = get_reldist_pc(ra_deg, dec_deg, self.ra_agn,
             self.dec_agn, self.scale_pc, 0, 0)
         dist_as = dist_pc / self.scale_pc
+        #dist_as = np.tile(dist_as, (,1))
+        cut = np.where(dist_as<fov_radius,True,False)
 
         # extract FoV-1 data
-        data_co = data_co[dist_as<fov_radius]
-        data_ci = data_ci[dist_as<fov_radius]
+        data_co = data_co * cut
+        data_ci = data_ci * cut
+        print(np.shape(data_co))
 
         ########################
         # FoV-1 bicone spectra #
