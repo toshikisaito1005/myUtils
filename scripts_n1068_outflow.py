@@ -229,7 +229,7 @@ class ToolsOutflow():
 
             self.outpng_ci_vs_co = self.dir_products + self._read_key("png_ci_vs_co")
             self.outpng_cico_vs_siiisii = \
-                self.dir_products + self._read_key("png_ci_vs_co")
+                self.dir_products + self._read_key("png_cico_vs_siiisii")
 
             self.imsize_as       = float(self._read_key("imsize_as"))
             self.outpng_map_ci   = self.dir_products + self._read_key("png_map_ci")
