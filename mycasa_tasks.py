@@ -41,9 +41,9 @@ logger.setLevel(logging.DEBUG)
 # import CASA and python stuff
 exec(open(os.environ["HOME"]+"/myUtils/stuff_casa.py").read())
 
-########################################
-### common
-########################################
+##########
+# common #
+##########
 modname = "mytask."
 
 def check_first(
@@ -117,9 +117,9 @@ def f_lin(x, a, b):
     """
     return a * x + b
 
-########################################
-### relabelimage
-########################################
+################
+# relabelimage #
+################
 def relabelimage(
     imagename,
     icrs_to_j2000=False,
@@ -158,9 +158,9 @@ def relabelimage(
     myia.setcoordsys(mycs)
     myia.close()
 
-########################################
-### remove_small_masks
-########################################
+######################
+# remove_small_masks #
+######################
 
 def remove_small_masks(
     maskname,
@@ -200,9 +200,9 @@ def remove_small_masks(
     myia.putchunk(mask)
     myia.done()
 
-########################################
-### beam_area
-########################################
+#############
+# beam_area #
+#############
 
 def beam_area(
     imagename,
@@ -222,9 +222,9 @@ def beam_area(
 
     return barea_pix
 
-########################################
-### imval_all
-########################################
+#############
+# imval_all #
+#############
 def imval_all(
     imagename,
     region=None,
