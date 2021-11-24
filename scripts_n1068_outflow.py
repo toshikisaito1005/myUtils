@@ -289,7 +289,9 @@ class ToolsOutflow():
         # appendix
         plot_outflow_mom    = False,
         plot_showcase_multi = False,
-        # additional analysis
+        # suggested analysis
+        plot_spectra        = False,
+        # supplement (not published)
         do_compare_7m       = False,
         ):
 
@@ -308,7 +310,6 @@ class ToolsOutflow():
         if plot_showcase==True:
             self.showcase()
 
-
         if plot_channel==True:
             self.get_outflow_channels()
 
@@ -323,10 +324,15 @@ class ToolsOutflow():
         if plot_showcase_multi==True:
             self.showcase_multi()
 
+        # suggested analysis
+        if plot_spectra==True:
+            plot_spectra():
+
+        # summarize figures
         if do_imagemagick==True:
             self.immagick_figures()
 
-        # additional
+        # supplement
         if do_compare_7m==True:
             self.compare_7m_cubes()
 
@@ -513,6 +519,31 @@ class ToolsOutflow():
         combine_two_png(self.final_showcase+"_tmp1.png",self.final_showcase+"_tmp2.png",
             self.final_showcase,"100000x100000+0+0","100000x100000+0+0",axis="column",delin=True)
         """
+
+    ################
+    # plot_spectra #
+    ################
+
+    def plot_spectra(
+        self,
+        ):
+        """
+        """
+
+        taskname = self.modname + sys._getframe().f_code.co_name
+        check_first(self.cube_co10,taskname)
+
+        # all FoV-1 spectra
+        data_co, box = imval_all(self.cube_co10)
+        data_coords  = imval(self.outfits_map_co10,box=box)["coords"]
+
+        print(np.shape(data_co))
+        print(np.shape(data_coords))
+
+        # FoV-1 bicone spectra
+        # mask cubes using CI outflow mom0 map?
+        # imval
+
 
     #####################
     # _panel_chan_model #
@@ -1250,9 +1281,9 @@ class ToolsOutflow():
 
       	# get coords data
         data_co, box = imval_all(self.outfits_map_co10)
-        data_coords = imval(self.outfits_map_co10,box=box)["coords"]
+        data_coords  = imval(self.outfits_map_co10,box=box)["coords"]
 
-        ra_deg = data_coords[:,:,0] * 180/np.pi
+        ra_deg  = data_coords[:,:,0] * 180/np.pi
         ra_deg  = ra_deg.flatten()
 
         dec_deg = data_coords[:,:,1] * 180/np.pi
