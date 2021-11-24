@@ -1193,7 +1193,6 @@ class ToolsOutflow():
         data_siii_sii = data_siii_sii.flatten()
         data_siii_sii[np.isnan(data_siii_sii)] = 0
 
-        """
         ### plot scatter ci vs co
         # prepare
         cut = np.where((data_co>0) & (data_ci>0))
@@ -1228,11 +1227,10 @@ class ToolsOutflow():
             co_sb, ci_sb, co_outcone, ci_outcone, co_cone, ci_cone, r_cone,
             "log $L'_{CO(1-0)}$ (K km s$^{-1}$ pc$^2$)",
             "log $L'_{[CI](1-0)}$ (K km s$^{-1}$ pc$^2$)",
-            "(c) log $L'_{[CI](1-0)}$ vs. log $L'_{CO(1-0)}$",
+            "(e) log $L'_{[CI](1-0)}$ vs. log $L'_{CO(1-0)}$",
             [-1,3.5], [-0.1,3.5],
             plot_line = False,
             )
-        """
 
     #################
     # plot_ci_vs_co #

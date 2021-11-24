@@ -1,17 +1,17 @@
 ###############
 # directories #
 ###############
-dir_proj     ,,,/lfs13/saitots/proj_n1068_ci_outflow/
-dir_raw_co   ,,,data_raw/b3_co10_0p8as/
-dir_raw_ci   ,,,data_raw/b8_ci10_0p8as/
-dir_hst      ,,,data_other/hst/
-dir_vla      ,,,data_other/vla/
-dir_magnum   ,,,data_other/magnum/
+dir_proj              ,,,/lfs13/saitots/proj_n1068_ci_outflow/
+dir_raw_co            ,,,data_raw/b3_co10_0p8as/
+dir_raw_ci            ,,,data_raw/b8_ci10_0p8as/
+dir_hst               ,,,data_other/hst/
+dir_vla               ,,,data_other/vla/
+dir_magnum            ,,,data_other/magnum/
 #
-dir_ready    ,,,data_ready/
-dir_products ,,,products_png/
-dir_chan     ,,,data_chan/
-dir_final    ,,,images/
+dir_ready             ,,,data_ready/
+dir_products          ,,,products_png/
+dir_chan              ,,,data_chan/
+dir_final             ,,,images/
 
 ##################
 # final products #
