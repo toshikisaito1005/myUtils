@@ -560,8 +560,8 @@ class ToolsOutflow():
         data_ci = data_ci.transpose(2,0,1) * cut
         print(np.shape(data_co))
 
-        data_co = data_co[data_co!=0]
-        data_ci = data_ci[data_ci!=0]
+        data_co = np.where(data_co!=0,data_co,0)
+        data_ci = np.where(data_ci!=0,data_ci,0)
         print(np.shape(data_co))
 
         print(np.shape(np.mean(data_co,axis=0)))
