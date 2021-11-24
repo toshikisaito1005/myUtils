@@ -837,6 +837,11 @@ def myax_fig2png_ann(ax,number,ra_cnt,dec_cnt,add_text=True,txtfiles=None):
             ax.text(-8.5, 8.0, "AGN position",
                 horizontalalignment="right", verticalalignment="center", weight="bold")
 
+            ax.text(8.5, 8.0, "Bicone",
+                horizontalalignment="left", verticalalignment="center", weight="bold")
+            ax.text(7.5, 8.0, "Bicone",
+                horizontalalignment="left", verticalalignment="center", weight="bold")
+
     ####################################
     # Figures of the NGC 3110 CO paper #
     ####################################
