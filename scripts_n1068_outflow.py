@@ -1061,6 +1061,7 @@ class ToolsOutflow():
             label_cbar="(K km s$^{-1}$)",
             numann=1,
             textann=True,
+            colorbarticks=[10**1.5,10**2,10**2.5],
             )
 
         myfig_fits2png(
