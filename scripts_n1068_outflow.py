@@ -558,15 +558,11 @@ class ToolsOutflow():
         cut = np.where(dist_as<fov_radius,True,False)
         data_co = data_co.transpose(2,0,1) * cut
         data_ci = data_ci.transpose(2,0,1) * cut
-        print(np.shape(data_co))
 
         data_co = np.where(data_co!=0,data_co,0)
         data_ci = np.where(data_ci!=0,data_ci,0)
-        print(np.shape(data_co))
 
-        print(np.shape(np.mean(data_co,axis=0)))
-        print(np.shape(np.mean(data_co,axis=1)))
-        print(np.shape(np.mean(data_co,axis=2)))
+        print(np.shape(np.mean(data_co,axis=(1,2)))
 
         ########################
         # FoV-1 bicone spectra #
