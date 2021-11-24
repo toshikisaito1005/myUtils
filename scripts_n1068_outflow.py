@@ -556,8 +556,8 @@ class ToolsOutflow():
 
         # extract FoV-1 data
         cut = np.where(dist_as<fov_radius,True,False)
-        data_co = data_co.transpose(1,2,0) * cut
-        data_ci = data_ci.transpose(1,2,0) * cut
+        data_co = data_co.transpose(2,0,1) * cut
+        data_ci = data_ci.transpose(2,0,1) * cut
         print(np.shape(data_co))
 
         ########################
