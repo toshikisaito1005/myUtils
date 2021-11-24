@@ -837,7 +837,7 @@ def myax_fig2png_ann(ax,number,ra_cnt,dec_cnt,add_text=True,txtfiles=None):
             ax.text(-8.5, 8.0, "AGN position",
                 horizontalalignment="right", verticalalignment="center", weight="bold")
 
-            ax.plot([7,2.5], [7.5,7.5], "--", lw=3, c="black")
+            ax.plot([7,7.5], [2.5,7.0], "--", lw=3, c="black")
             ax.text(8.5, 8.0, "Bicone",
                 horizontalalignment="left", verticalalignment="center", weight="bold")
             ax.text(8.5, 7.3, "boundary",
