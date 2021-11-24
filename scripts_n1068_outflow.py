@@ -336,7 +336,7 @@ class ToolsOutflow():
 
     def immagick_figures(
         self,
-        delin=False,
+        delin                   = False,
         do_final_showcase       = True,
         do_final_channel        = False,
         do_final_chan_models    = False,
@@ -1138,7 +1138,7 @@ class ToolsOutflow():
             dec_cnt=self.dec_agn_str,
             levels_cont1=[0.025, 0.05, 0.1, 0.2, 0.4, 0.8, 0.96],
             width_cont1=[1.0],
-            set_title="(d) [CI]/CO Ratio",
+            set_title="(c) [CI]/CO Ratio",
             colorlog=True,
             clim=[0.1,2],
             scalebar=scalebar,
@@ -1312,7 +1312,7 @@ class ToolsOutflow():
             co_sb, ci_sb, co_outcone, ci_outcone, co_cone, ci_cone, r_cone,
             "log $L'_{CO(1-0)}$ (K km s$^{-1}$ pc$^2$)",
             "log $L'_{[CI](1-0)}$ (K km s$^{-1}$ pc$^2$)",
-            "(c) log $L'_{[CI](1-0)}$ vs. log $L'_{CO(1-0)}$",
+            "(d) log $L'_{[CI](1-0)}$ vs. log $L'_{CO(1-0)}$",
             [-1,3.5], [-0.1,3.5],
             plot_line = True,
             )
