@@ -360,8 +360,8 @@ class ToolsOutflow():
             )
         combine_three_png(
             self.outpng_ci_vs_co,
-            self.outpng_ci_vs_co,
-            self.outpng_ci_vs_co
+            self.outpng_ci_vs_co, # to be replaced
+            self.outpng_ci_vs_co, # to be replaced
             self.final_showcase+"_tmp2.png",
             self.box_map,
             self.box_map,
