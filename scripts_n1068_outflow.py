@@ -542,7 +542,6 @@ class ToolsOutflow():
         print("# co cube")
         data_co, box = imval_all(self.outfits_cube_co10)
         data_co = data_co["data"] * data_co["mask"]
-        print(data_co)
 
         print("# ci cube")
         data_ci, _   = imval_all(self.outfits_cube_ci10)
@@ -551,19 +550,12 @@ class ToolsOutflow():
         data_coords  = imval(self.outfits_map_co10,box=box)["coords"]
 
         # calculate relative distance from the center
-        ra_deg  = data_coords[:,:,0] * 180/np.pi
-        ra_deg  = ra_deg.flatten()
-
-        dec_deg = data_coords[:,:,1] * 180/np.pi
-        dec_deg = dec_deg.flatten()
-
-        dist_pc, theta = get_reldist_pc(ra_deg, dec_deg, self.ra_agn,
-            self.dec_agn, self.scale_pc, 0, 0)
-        dist_as = dist_pc / self.scale_pc
-        #dist_as = np.tile(dist_as, (,1))
-        cut = np.where(dist_as<fov_radius,True,False)
+        ra_deg  = data_coords[:,:,0] * 180/np.pi - self.ra_agn
+        dec_deg = data_coords[:,:,1] * 180/np.pi - self.dec_agn
+        dist_as = np.sqrt(ra_deg**2 + dec_deg**2)
 
         # extract FoV-1 data
+        cut = np.where(dist_as<fov_radius,True,False)
         data_co = data_co * cut
         data_ci = data_ci * cut
         print(np.shape(data_co))
