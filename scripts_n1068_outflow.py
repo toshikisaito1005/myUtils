@@ -538,11 +538,11 @@ class ToolsOutflow():
         # all FoV-1 spectra #
         #####################
         # import
-        print("# imval_all for 2 cubes. Will take ~23x2 min.")
+        print("# imval_all for 2 cubes. Will take ~2x2 min.")
         print("# co cube")
-        data_co, box = imval_all(self.outfits_cube_co10) # more than 20 min!
+        data_co, box = imval_all(self.outfits_cube_co10)
         print("# ci cube")
-        data_ci, _   = imval_all(self.outfits_cube_ci10) # more than 20 min!
+        data_ci, _   = imval_all(self.outfits_cube_ci10)
         data_coords  = imval(self.outfits_map_co10,box=box)["coords"]
 
         # calculate relative distance from the center
@@ -558,6 +558,8 @@ class ToolsOutflow():
 
         # extract FoV-1 data
         cut = np.where(dist_as < fov_radius)
+        print(np.shape(cut))
+        print(np.shape(data_co))
         data_co = data_co[cut]
         data_ci = data_ci[cut]
 
