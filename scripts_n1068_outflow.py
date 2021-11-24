@@ -531,16 +531,39 @@ class ToolsOutflow():
         """
 
         taskname = self.modname + sys._getframe().f_code.co_name
-        check_first(self.cube_co10,taskname)
+        check_first(self.outfits_cube_co10,taskname)
+        fov_radius = 16.5 / 2.
 
-        # all FoV-1 spectra
-        data_co, box = imval_all(self.cube_co10)
+        #####################
+        # all FoV-1 spectra #
+        #####################
+        # import
+        print("# imval_all for 2 cubes. Will take ~23x2 min.")
+        print("# co cube")
+        data_co, box = imval_all(self.outfits_cube_co10) # more than 20 min!
+        print("# ci cube")
+        data_ci, _   = imval_all(self.outfits_cube_ci10) # more than 20 min!
         data_coords  = imval(self.outfits_map_co10,box=box)["coords"]
 
-        print(np.shape(data_co))
-        print(np.shape(data_coords))
+        # calculate relative distance from the center
+        ra_deg  = data_coords[:,:,0] * 180/np.pi
+        ra_deg  = ra_deg.flatten()
 
-        # FoV-1 bicone spectra
+        dec_deg = data_coords[:,:,1] * 180/np.pi
+        dec_deg = dec_deg.flatten()
+
+        dist_pc, theta = get_reldist_pc(ra_deg, dec_deg, self.ra_agn,
+            self.dec_agn, self.scale_pc, 0, 0)
+        dist_as = dist_pc / self.scale_pc
+
+        # extract FoV-1 data
+        cut = np.where(dist_as < fov_radius)
+        data_co = data_co[cut]
+        data_ci = data_ci[cut]
+
+        ########################
+        # FoV-1 bicone spectra #
+        ########################
         # mask cubes using CI outflow mom0 map?
         # imval
 
