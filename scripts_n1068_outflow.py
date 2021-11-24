@@ -1231,7 +1231,7 @@ class ToolsOutflow():
             "log [CI]/CO",
             "log [SIII]/[SII]",
             "(e) log [SIII]/[SII] vs. log [CI]/CO",
-            None, None, #[-1,3.5], [-0.1,3.5],
+            [-3.0,3.0], [-0.6,1.0],
             plot_line = False,
             )
 
