@@ -559,10 +559,14 @@ class ToolsOutflow():
         data_co = data_co.transpose(2,0,1) * cut
         data_ci = data_ci.transpose(2,0,1) * cut
 
-        data_co = np.where(data_co!=0,data_co,0)
-        data_ci = np.where(data_ci!=0,data_ci,0)
+        data_co = np.where(data_co!=0,data_co,np.nan)
+        data_ci = np.where(data_ci!=0,data_ci,np.nan)
 
-        print(np.shape(np.mean(data_co,axis=(1,2))))
+        spec_co_fov1 = np.shape(np.nanmean(data_co,axis=(1,2)))
+        spec_ci_fov1 = np.shape(np.nanmean(data_ci,axis=(1,2)))
+
+        print(np.shape(np.nanmean(data_co,axis=(1,2))))
+        print(np.shape(np.nanmean(data_ci,axis=(1,2))))
 
         ########################
         # FoV-1 bicone spectra #
