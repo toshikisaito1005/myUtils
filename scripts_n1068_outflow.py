@@ -365,7 +365,7 @@ class ToolsOutflow():
                 )
             combine_three_png(
                 self.outpng_ci_vs_co,
-                self.outpng_ci_vs_co, # to be replaced
+                self.outpng_cico_vs_siiisii,
                 self.outpng_ci_vs_co, # to be replaced
                 self.final_showcase+"_tmp2.png",
                 self.box_map,
@@ -1195,11 +1195,11 @@ class ToolsOutflow():
 
         ### plot scatter ci vs co
         # prepare
-        cut = np.where((data_co>0) & (data_ci>0))
-        co = np.log10(data_co[cut])
-        ci = np.log10(data_ci[cut])
-        r = dist_pc[cut]
-        t = theta[cut]
+        cut      = np.where((data_co>0) & (data_ci>0) & (data_siii_sii!=0))
+        cico     = np.log10(data_ci[cut]/data_co[cut])
+        siii_sii = np.log10(data_siii_sii[cut])
+        r        = dist_pc[cut]
+        t        = theta[cut]
 
         cut_c1 = np.where( (r<=self.fov_radius) & (t>=0) & (t<=60) )
         cut_c2 = np.where( (r<=self.fov_radius) & (t<=-120) & (t>=-180) )
@@ -1208,27 +1208,30 @@ class ToolsOutflow():
         cut_sb = np.where( (r>self.fov_radius) )
 
         # split data
-        co_c1, ci_c1, r_c1 = co[cut_c1], ci[cut_c1], r[cut_c1]
-        co_c2, ci_c2, r_c2 = co[cut_c2], ci[cut_c2], r[cut_c2]
-        co_o1, ci_o1, _ = co[cut_o1], ci[cut_o1], r[cut_o1]
-        co_o2, ci_o2, _ = co[cut_o2], ci[cut_o2], r[cut_o2]
-        co_sb, ci_sb, _ = co[cut_sb], ci[cut_sb], r[cut_sb]
+        cico_c1, siii_sii_c1, r_c1 = cico[cut_c1], siii_sii[cut_c1], r[cut_c1]
+        cico_c2, siii_sii_c2, r_c2 = cico[cut_c2], siii_sii[cut_c2], r[cut_c2]
+        cico_o1, siii_sii_o1, _    = cico[cut_o1], siii_sii[cut_o1], r[cut_o1]
+        cico_o2, siii_sii_o2, _    = cico[cut_o2], siii_sii[cut_o2], r[cut_o2]
+        cico_sb, siii_sii_sb, _    = cico[cut_sb], siii_sii[cut_sb], r[cut_sb]
 
-        co_cone = np.r_[co_c1, co_c2]
-        ci_cone = np.r_[ci_c1, ci_c2]
-        r_cone  = np.r_[r_c1,  r_c2]
+        cico_cone     = np.r_[cico_c1, cico_c2]
+        siii_sii_cone = np.r_[siii_sii_c1, siii_sii_c2]
+        r_cone        = np.r_[r_c1, r_c2]
 
-        co_outcone = np.r_[co_o1, co_o2]
-        ci_outcone = np.r_[ci_o1, ci_o2]
+        cico_outcone     = np.r_[cico_o1, cico_o2]
+        siii_sii_outcone = np.r_[siii_sii_o1, siii_sii_o2]
 
         # plot
         self._plot_scatters(
         	self.outpng_cico_vs_siiisii,
-            co_sb, ci_sb, co_outcone, ci_outcone, co_cone, ci_cone, r_cone,
-            "log $L'_{CO(1-0)}$ (K km s$^{-1}$ pc$^2$)",
-            "log $L'_{[CI](1-0)}$ (K km s$^{-1}$ pc$^2$)",
-            "(e) log $L'_{[CI](1-0)}$ vs. log $L'_{CO(1-0)}$",
-            [-1,3.5], [-0.1,3.5],
+            cico_sb, siii_sii_sb,
+            cico_outcone, siii_sii_outcone,
+            cico_cone, siii_sii_cone,
+            r_cone,
+            "log [CI]/CO",
+            "log [SIII]/[SII]",
+            "(e) log [SIII]/[SII] vs. log [CI]/CO",
+            None, None, #[-1,3.5], [-0.1,3.5],
             plot_line = False,
             )
 
