@@ -566,7 +566,7 @@ class ToolsOutflow():
         # calculate r,theta from the center
         ra_deg       = data_coords[:,:,0] * 180/np.pi - self.ra_agn
         dec_deg      = data_coords[:,:,1] * 180/np.pi - self.dec_agn
-        obsfreq      = data_coords2[:,:,2]
+        obsfreq      = data_coords2[0,0,2,:]
         print(obsfreq)
         dist_as      = np.sqrt(ra_deg**2 + dec_deg**2)
         theta_deg    = np.degrees(np.arctan2(ra_deg, dec_deg))
