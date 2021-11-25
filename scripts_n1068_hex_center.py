@@ -5,7 +5,20 @@ requirements:
 CASA Version 5.4.0-70, ananlysisUtils, astropy
 
 data:
-TBE.
+ALMA main Band 3 data 2013.1.00279.S
+ALMA spplements       2011.0.00061.S
+                      2012.1.00657.S
+                      2013.1.00060.S
+                      2015.1.00960.S
+                      2017.1.00586.S
+                      2018.1.01506.S
+                      2018.1.01684.S
+                      2019.1.00130.S
+imaging script        all processed by phangs pipeline v2
+                      Leroy et al. 2021, ApJS, 255, 19 (https://ui.adsabs.harvard.edu/abs/2021ApJS..255...19L)
+ancillary MUSE FITS   Mingozzi et al. 2019, A&A, 622, 146 (https://ui.adsabs.harvard.edu/abs/2019A%26A...622A.146M)
+                      SIII/SII ratio map (ionization parameter), ionized gas density, AV maps
+                      http://cdsarc.u-strasbg.fr/viz-bin/qcat?J/A+A/622/A146
 
 usage:
 > import os

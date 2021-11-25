@@ -12,7 +12,7 @@ ALMA CO(1-0)          2018.1.01684.S (PI: Tosaki Tomoka, 12m+7m)
                       processed at ADC:/home02/saitots/scripts/phangs_imaging_scripts/keys_ngc1068_b3/
                       products at ADC:/lfs02/saitots/proj_n1068_b3/derived/ngc1068_b3/
 imaging script        all processed by phangs pipeline v2
-                      Leroy et al. 2021, ApJS, 255, 19 (https://arxiv.org/abs/2104.07739)
+                      Leroy et al. 2021, ApJS, 255, 19 (https://ui.adsabs.harvard.edu/abs/2021ApJS..255...19L)
 ancillary MUSE FITS   Mingozzi et al. 2019, A&A, 622, 146 (https://ui.adsabs.harvard.edu/abs/2019A%26A...622A.146M)
                       SIII/SII ratio map (ionization parameter), ionized gas density, AV maps
                       http://cdsarc.u-strasbg.fr/viz-bin/qcat?J/A+A/622/A146
@@ -592,6 +592,7 @@ class ToolsOutflow():
         run_importfits(self.outfits_map_ci10,"template.image2")
         run_imregrid(self.outfits_ci10_outflow_mom0,"template.image2","template.image",axes=[0,1])
         cut, _       = imval_all("template.image")
+        cut          = cut["data"] * cut["mask"]
         os.system("rm -rf template.image template.image2")
 
         # extract outflow
@@ -623,7 +624,8 @@ class ToolsOutflow():
         ax1 = plt.subplot(gs[0:5,0:10])
         ax2 = plt.subplot(gs[5:10,0:10], sharex=ax1)
         ad = [0.215,0.83,0.10,0.90]
-        myax_set(ax1, "both", None, None, None, None, None, adjust=ad)
+        myax_set(ax1, "x", None, None, None, None, None, adjust=ad)
+        myax_set(ax2, "y", None, None, None, None, None, adjust=ad)
 
         # plot
         ax1.plot(vel, spec_co_cone, "-",  lw=2, c="tomato")
@@ -631,6 +633,7 @@ class ToolsOutflow():
         ax2.plot(vel, spec_co_fov1, "-",  lw=2, c="deepskyblue")
         ax2.plot(vel, spec_ci_fov1, "--", lw=2, c="deepskyblue")
 
+        plt.subplots_adjust(hspace=.0)
         plt.savefig("test.png", dpi=self.fig_dpi)
 
     ##################
