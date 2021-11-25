@@ -618,15 +618,17 @@ class ToolsOutflow():
         ########
         # plot #
         ########
-        ad  = [0.215,0.83,0.10,0.90]
+        ad       = [0.215,0.83,0.10,0.90]
+        ylim_ax1 = [np.max(spec_co_cone)*-0.1,np.max(spec_co_cone)*1.1]
+        ylim_ax2 = [np.max(spec_co_fov1)*-0.1,np.max(spec_co_fov1)*1.1]
 
         fig = plt.figure(figsize=(13,10))
         gs  = gridspec.GridSpec(nrows=10, ncols=10)
         ax1 = plt.subplot(gs[0:5,0:10])
         ax2 = plt.subplot(gs[5:10,0:10], sharex=ax1)
         plt.subplots_adjust(left=ad[0], right=ad[1], bottom=ad[2], top=ad[3])
-        myax_set(ax1, "x", None, None, None, None, "$T$ (K)", adjust=ad)
-        myax_set(ax2, "x", None, None, None, "Velocity (km s$^{-1}$)", "$T$ (K)", adjust=ad)
+        myax_set(ax1, "x", [-300,300], ylim_ax1, None, None, "$T_{mb}$ (K)", adjust=ad)
+        myax_set(ax2, "x", [-300,300], ylim_ax2, None, "Velocity (km s$^{-1}$)", "$T_{mb}$ (K)", adjust=ad)
         ax1.tick_params(labelbottom=False)
 
         # plot
