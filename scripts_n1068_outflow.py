@@ -562,7 +562,8 @@ class ToolsOutflow():
 
         data_coords  = imval(self.outfits_map_co10,box=box)["coords"]
 
-        print(data_coords)
+        print(data_coords[:,:,2])
+        print(data_coords[:,:,3])
 
         # calculate r,theta from the center
         ra_deg       = data_coords[:,:,0] * 180/np.pi - self.ra_agn
@@ -611,10 +612,10 @@ class ToolsOutflow():
         myax_set(ax1, "both", None, None, None, None, None, adjust=ad)
 
         # plot
-        ax1.scatter(range(len(spec_co_fov1)), spec_co_fov1, "-",  lw=0, c="deepskyblue", s=20)
-        ax1.scatter(range(len(spec_ci_fov1)), spec_co_fov1, "--", lw=0, c="deepskyblue", s=20)
-        ax1.scatter(range(len(spec_co_cone)), spec_co_fov1, "-",  lw=0, c="tomato", s=20)
-        ax1.scatter(range(len(spec_ci_cone)), spec_co_fov1, "--", lw=0, c="tomato", s=20)
+        ax1.plot(range(len(spec_co_fov1)), spec_co_fov1, "-",  lw=2, c="deepskyblue")
+        ax1.plot(range(len(spec_ci_fov1)), spec_co_fov1, "--", lw=2, c="deepskyblue")
+        ax1.plot(range(len(spec_co_cone)), spec_co_fov1, "-",  lw=2, c="tomato")
+        ax1.plot(range(len(spec_ci_cone)), spec_co_fov1, "--", lw=2, c="tomato")
 
         plt.savefig("test.png", dpi=self.fig_dpi)
 
