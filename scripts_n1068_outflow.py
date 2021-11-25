@@ -572,11 +572,6 @@ class ToolsOutflow():
         dist_as      = np.sqrt(ra_deg**2 + dec_deg**2) * 3600.
         theta_deg    = np.degrees(np.arctan2(ra_deg, dec_deg))
 
-        print(np.min(theta_deg),np.max(theta_deg))
-        print(np.sum(np.where((theta_deg>=-15)&(theta_deg<65)&(dist_as>self.r_cnd_as),True,False)))
-        print(np.sum(np.where((theta_deg>=-15)&(theta_deg<65),True,False)))
-        print(np.sum(np.where((theta_deg>=-15),True,False)))
-
         # extract FoV-1 data
         cut          = np.where(dist_as<fov_radius,True,False)
 
@@ -590,13 +585,24 @@ class ToolsOutflow():
         spec_ci_fov1 = np.nanmean(data_ci,axis=(1,2))
 
         ########################
-        # FoV-1 bicone spectra # mask cubes using CI outflow mom0 map? or just bicone?
+        # FoV-1 bicone spectra # exctracting outflow cone doesn't show nice spectra.
         ########################
-        # extract bicone (not map-based)
+         # get CI outflow mom0 map
+        run_importfits(self.outfits_map_ci10,"template.image2")
+        run_imregrid(self.outfits_ci10_outflow_mom0,"template.image2","template.image",axes=[0,1])
+        os.system("rm -rf template.image2")
+        cut, _       = imval_all(self.outfits_cube_co10)
+
+        # extract outflow
+        cut          = np.where(cut>0,True,False)
+
+        """
+        # extract bicone
         cut1         = np.where((theta_deg>=-15)&(theta_deg<65)&(dist_as>self.r_cnd_as),True,False)
         cut2         = np.where((theta_deg>=165)&(dist_as<fov_radius)&(dist_as>self.r_cnd_as),True,False)
         cut3         = np.where((theta_deg<-115)&(dist_as<fov_radius)&(dist_as>self.r_cnd_as),True,False)
         cut          = cut1 + cut2 + cut3
+        """
 
         data_co      = data_co * cut
         data_ci      = data_ci * cut
@@ -617,8 +623,6 @@ class ToolsOutflow():
         ax2 = plt.subplot(gs[5:10,0:10], sharex=ax1)
         ad = [0.215,0.83,0.10,0.90]
         myax_set(ax1, "both", None, None, None, None, None, adjust=ad)
-
-        print(np.c_[vel,spec_co_fov1,spec_co_cone])
 
         # plot
         ax1.plot(vel, spec_co_cone, "-",  lw=2, c="tomato")
