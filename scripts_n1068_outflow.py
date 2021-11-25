@@ -552,7 +552,6 @@ class ToolsOutflow():
         #####################
         # all FoV-1 spectra #
         #####################
-        """
         # import
         print("# imval_all for 3 cubes. Will take ~2x3 min.")
         print("# co cube")
@@ -562,9 +561,7 @@ class ToolsOutflow():
         print("# ci cube")
         data_ci, _   = imval_all(self.outfits_cube_ci10)
         data_ci      = data_ci["data"] * data_ci["mask"]
-        """
 
-        data_co, box = imval_all(self.outfits_map_ci10)
         data_coords  = imval(self.outfits_map_ci10,box=box)["coords"]
         data_coords2 = imval(self.outfits_cube_ci10,box=box)["coords"]
 
@@ -572,15 +569,14 @@ class ToolsOutflow():
         ra_deg       = data_coords[:,:,0] * 180/np.pi - self.ra_agn
         dec_deg      = data_coords[:,:,1] * 180/np.pi - self.dec_agn
         vel          = (data_coords2[0,0,:,2] - self.restfreq_ci*1e9) / (self.restfreq_ci*1e9) * 299792.458 # km/s
-        dist_as      = np.sqrt(ra_deg**2 + dec_deg**2)
+        dist_as      = np.sqrt(ra_deg**2 + dec_deg**2) * 3600.
         theta_deg    = np.degrees(np.arctan2(ra_deg, dec_deg))
 
         print(np.min(theta_deg),np.max(theta_deg))
-        print(np.where((theta_deg>=-15)&(theta_deg<65)&(dist_as>self.r_cnd_as),True,False))
-        print(np.where((theta_deg>=-15)&(theta_deg<65),True,False))
-        print(np.where((theta_deg>=-15),True,False))
+        print(np.sum(np.where((theta_deg>=-15)&(theta_deg<65)&(dist_as>self.r_cnd_as),True,False)))
+        print(np.sum(np.where((theta_deg>=-15)&(theta_deg<65),True,False)))
+        print(np.sum(np.where((theta_deg>=-15),True,False)))
 
-        """
         # extract FoV-1 data
         cut          = np.where(dist_as<fov_radius,True,False)
 
@@ -631,7 +627,6 @@ class ToolsOutflow():
         ax2.plot(vel, spec_ci_fov1, "--", lw=2, c="deepskyblue")
 
         plt.savefig("test.png", dpi=self.fig_dpi)
-        """
 
     #####################
     # _panel_chan_model #
