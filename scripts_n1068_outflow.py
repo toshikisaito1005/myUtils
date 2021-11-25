@@ -566,7 +566,8 @@ class ToolsOutflow():
         # calculate r,theta from the center
         ra_deg       = data_coords[:,:,0] * 180/np.pi - self.ra_agn
         dec_deg      = data_coords[:,:,1] * 180/np.pi - self.dec_agn
-        obsfreq      = data_coords2[0,0,2]
+        obsfreq      = data_coords2[:,:,2]
+        print(obsfreq)
         dist_as      = np.sqrt(ra_deg**2 + dec_deg**2)
         theta_deg    = np.degrees(np.arctan2(ra_deg, dec_deg))
 
@@ -579,8 +580,8 @@ class ToolsOutflow():
         data_co      = np.where(data_co!=0,data_co,np.nan)
         data_ci      = np.where(data_ci!=0,data_ci,np.nan)
 
-        spec_co_fov1 = np.shape(np.nanmean(data_co,axis=(1,2)))
-        spec_ci_fov1 = np.shape(np.nanmean(data_ci,axis=(1,2)))
+        spec_co_fov1 = np.nanmean(data_co,axis=(1,2))
+        spec_ci_fov1 = np.nanmean(data_ci,axis=(1,2))
 
         ########################
         # FoV-1 bicone spectra # mask cubes using CI outflow mom0 map? or just bicone?
@@ -597,8 +598,8 @@ class ToolsOutflow():
         data_co      = np.where(data_co!=0,data_co,np.nan)
         data_ci      = np.where(data_ci!=0,data_ci,np.nan)
 
-        spec_co_cone = np.shape(np.nanmean(data_co,axis=(1,2)))
-        spec_ci_cone = np.shape(np.nanmean(data_ci,axis=(1,2)))
+        spec_co_cone = np.nanmean(data_co,axis=(1,2))
+        spec_ci_cone = np.nanmean(data_ci,axis=(1,2))
 
         ########
         # plot #
