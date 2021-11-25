@@ -268,7 +268,6 @@ class ToolsOutflow():
         self.outpng_map_cico        = self.dir_products + self._read_key("png_map_cico")
         self.outpng_ci_vs_co        = self.dir_products + self._read_key("png_ci_vs_co")
         self.outpng_cico_vs_siiisii = self.dir_products + self._read_key("png_cico_vs_siiisii")
-        self.png_spectra            = self.dir_products + self._read_key("png_spectra")
 
         self.png_outflow_model      = self.dir_chan + self._read_key("png_outflow_model")
         self.outpng_outflow_chans   = self.dir_products + self._read_key("png_outflow_chans")
@@ -283,6 +282,10 @@ class ToolsOutflow():
         # supplement
         self.outtxt_slopes_7m       = self.dir_products + self._read_key("txt_slopes")
         self.outpng_slopes_7m       = self.dir_products + self._read_key("png_slopes")
+
+        # suggested analysis
+        self.png_spectra            = self.dir_products + self._read_key("png_spectra")
+        self.png_ci_cube_vs_co_cube = self.dir_products + self._read_key("png_ci_cube_vs_co_cube")
 
         # final products
         self.box_map                = self._read_key("box_map")
@@ -325,6 +328,7 @@ class ToolsOutflow():
         plot_showcase_multi = False,
         # suggested analysis
         plot_spectra        = False,
+        plot_scatter_spaxel = False,
         # supplement (not published)
         do_compare_7m       = False,
         ):
@@ -365,6 +369,9 @@ class ToolsOutflow():
         if plot_spectra==True:
             self.plot_spectra()
 
+        if plot_scatter_spaxel==True:
+            self.plot_ci_cube_vs_co_cube()
+
         # summarize figures
         if do_imagemagick==True:
             self.immagick_figures()
@@ -396,6 +403,7 @@ class ToolsOutflow():
             print("# create final_showcase (v1) #")
             print("##############################")
 
+            # 3x2 version
             combine_two_png(
                 self.outpng_map_ci,
                 self.outpng_ci_vs_co,
@@ -433,6 +441,7 @@ class ToolsOutflow():
                 )
 
             """
+            # 2x3 version
             combine_three_png(
                 self.outpng_map_ci,
                 self.outpng_map_co,
@@ -593,6 +602,85 @@ class ToolsOutflow():
         combine_two_png(self.final_showcase+"_tmp1.png",self.final_showcase+"_tmp2.png",
             self.final_showcase,"100000x100000+0+0","100000x100000+0+0",axis="column",delin=True)
         """
+
+    ###########################
+    # plot_ci_cube_vs_co_cube #
+    ###########################
+
+    def plot_ci_cube_vs_co_cube(
+        self,
+        ):
+        """
+        """
+
+        taskname = self.modname + sys._getframe().f_code.co_name
+        check_first(self.outfits_cube_co10,taskname)
+        fov_radius = 16.5 / 2.
+
+        #####################
+        # all FoV-1 spectra #
+        #####################
+        # import
+        print("# imval_all for 3 cubes. Will take ~2x3 min.")
+        print("# co cube")
+        data_co, box = imval_all(self.outfits_cube_co10)
+        data_co      = data_co["data"] * data_co["mask"]
+
+        print("# ci cube")
+        data_ci, _   = imval_all(self.outfits_cube_ci10)
+        data_ci      = data_ci["data"] * data_ci["mask"]
+
+        data_coords  = imval(self.outfits_map_ci10,box=box)["coords"]
+        data_coords2 = imval(self.outfits_cube_ci10,box=box)["coords"]
+
+        # calculate r,theta from the center
+        ra_deg       = data_coords[:,:,0] * 180/np.pi - self.ra_agn
+        dec_deg      = data_coords[:,:,1] * 180/np.pi - self.dec_agn
+        vel          = (self.restfreq_ci*1e9 - data_coords2[0,0,:,2]) / (self.restfreq_ci*1e9) * 299792.458 - 1116 # km/s
+        dist_as      = np.sqrt(ra_deg**2 + dec_deg**2) * 3600.
+        theta_deg    = np.degrees(np.arctan2(ra_deg, dec_deg))
+
+        # extract FoV-1 data
+        cut          = np.where(dist_as<fov_radius,True,False)
+
+        data_co      = data_co.transpose(2,0,1) * cut
+        data_ci      = data_ci.transpose(2,0,1) * cut
+
+        data_co_fov1 = np.where(data_co!=0,data_co,np.nan)
+        data_ci_fov1 = np.where(data_ci!=0,data_ci,np.nan)
+
+        ########################
+        # FoV-1 bicone spectra #
+        ########################
+         # get CI outflow mom0 map
+        run_importfits(self.outfits_map_ci10,"template.image2")
+        run_imregrid(self.outfits_ci10_outflow_mom0,"template.image2","template.image",axes=[0,1])
+        cut, _       = imval_all("template.image")
+        cut          = cut["data"] * cut["mask"]
+        os.system("rm -rf template.image template.image2")
+
+        # extract outflow
+        cut          = np.where(cut>0,True,False)
+
+        data_co      = data_co * cut
+        data_ci      = data_ci * cut
+
+        data_co_cone = np.where(data_co!=0,data_co,np.nan)
+        data_ci_cone = np.where(data_ci!=0,data_ci,np.nan)
+
+        # plot
+        self._plot_scatters(
+            self.png_ci_cube_vs_co_cube,
+            data_co_fov1, data_ci_fov1,
+            data_co_fov1, data_ci_fov1,
+            data_co_cone, data_ci_fov1,
+            dist_as,
+            "log $L'_{CO(1-0)}$ (K km s$^{-1}$ pc$^2$)",
+            "log $L'_{[CI](1-0)}$ (K km s$^{-1}$ pc$^2$)",
+            "(d) log $L'_{[CI](1-0)}$ vs. log $L'_{CO(1-0)}$",
+            None, None, #[-1,3.5], [-0.1,3.5],
+            plot_line = True,
+            )
 
     ################
     # plot_spectra #
