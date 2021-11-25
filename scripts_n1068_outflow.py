@@ -106,6 +106,12 @@ class ToolsOutflow():
         self.refresh      = refresh
         self.delete_inter = delete_inter
         self.taskname     = None
+
+        # initialize directories
+        self.dir_raw      = None
+        self.dir_ready    = None
+        self.dir_other    = None
+        self.dir_products = None
         self.fig_dpi      = 200
 
         # import parameters
@@ -322,6 +328,9 @@ class ToolsOutflow():
         # supplement (not published)
         do_compare_7m       = False,
         ):
+        """
+        This method runs all the methods which will create figures in the paper.
+        """
 
         if do_prepare==True:
             self.align_maps()
@@ -352,7 +361,7 @@ class ToolsOutflow():
         if plot_showcase_multi==True:
             self.showcase_multi()
 
-        # suggested analysis
+        # suggested analysis (v1 revision)
         if plot_spectra==True:
             self.plot_spectra()
 
@@ -653,11 +662,11 @@ class ToolsOutflow():
         ax2.plot(vel, spec_co_fov1, "-", lw=4, c="tomato")
         ax2.plot(vel, spec_ci_fov1, "-", lw=4, c="deepskyblue")
 
-        ax1.text(0.05,0.92, "Spectra (bicone)", color = "black", weight="bold", transform = ax.transAxes)
-        ax1.text(0.05,0.87, "CO(1-0)", color = "tomato", transform = ax.transAxes)
-        ax1.text(0.05,0.82, "[CI](1-0)", color = "deepskyblue", transform = ax.transAxes)
+        ax1.text(0.05,0.92, "Spectra (bicone)", color = "black", weight="bold", transform = ax1.transAxes)
+        ax1.text(0.05,0.87, "CO(1-0)", color = "tomato", transform = ax1.transAxes)
+        ax1.text(0.05,0.82, "[CI](1-0)", color = "deepskyblue", transform = ax1.transAxes)
 
-        ax2.text(0.05,0.92, "Spectra (all FoV-1)", color = "black", weight="bold", transform = ax.transAxes)
+        ax2.text(0.05,0.92, "Spectra (all FoV-1)", color = "black", weight="bold", transform = ax2.transAxes)
 
         # save
         plt.subplots_adjust(hspace=.0)

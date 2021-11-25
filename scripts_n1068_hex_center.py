@@ -83,9 +83,9 @@ class ToolsPCA():
 
     def __init__(
         self,
-        keyfile_fig = None,
-        keyfile_gal = None,
-        refresh = False,
+        keyfile_fig  = None,
+        keyfile_gal  = None,
+        refresh      = False,
         delete_inter = True,
         ):
         # initialize keys
@@ -102,109 +102,130 @@ class ToolsPCA():
         self.dir_ready    = None
         self.dir_other    = None
         self.dir_products = None
-
-        self.fig_dpi = 200
+        self.fig_dpi      = 200
 
         # import parameters
         if keyfile_fig is not None:
             self.modname = "ToolsPCA."
-            
-            # get directories
-            self.dir_proj                 = self._read_key("dir_proj")
-            self.dir_raw                  = self.dir_proj + self._read_key("dir_raw")
-            self.dir_ready                = self.dir_proj + self._read_key("dir_ready")
-            self.dir_other                = self.dir_proj + self._read_key("dir_other")
-            self.dir_products             = self.dir_proj + self._read_key("dir_products")
-            self.dir_final                = self.dir_proj + self._read_key("dir_final")
+            self._set_dir()            # directories
+            self._set_input_fits()     # input maps
+            self._set_output_fits()    # output maps
+            self._set_input_param()    # input parameters
+            self._set_output_txt_png() # output txt and png
 
-            self._create_dir(self.dir_ready)
-            self._create_dir(self.dir_products)
-            self._create_dir(self.dir_final)
+    def _set_dir(self):
+        """
+        """
 
-            # input maps
-            self.map_av                   = self.dir_other + self._read_key("map_av")
-            self.map_ionization           = self.dir_other + self._read_key("map_ionization")
-            self.maps_mom0                = glob.glob(self.dir_raw + self._read_key("maps_mom0"))
-            self.maps_mom0.sort()
-            self.maps_emom0               = glob.glob(self.dir_raw + self._read_key("maps_emom0"))
-            self.maps_emom0.sort()
+        self.dir_proj     = self._read_key("dir_proj")
+        self.dir_raw      = self.dir_proj + self._read_key("dir_raw")
+        self.dir_ready    = self.dir_proj + self._read_key("dir_ready")
+        self.dir_other    = self.dir_proj + self._read_key("dir_other")
+        self.dir_products = self.dir_proj + self._read_key("dir_products")
+        self.dir_final    = self.dir_proj + self._read_key("dir_final")
 
-            # ngc1068 properties
-            self.ra_agn                   = float(self._read_key("ra_agn", "gal").split("deg")[0])
-            self.dec_agn                  = float(self._read_key("dec_agn", "gal").split("deg")[0])
-            self.scale_pc                 = float(self._read_key("scale", "gal"))
-            self.scale_kpc                = self.scale_pc / 1000.
+        self._create_dir(self.dir_ready)
+        self._create_dir(self.dir_products)
+        self._create_dir(self.dir_final)
 
-            self.beam                     = 2.14859173174056 # 150pc in arcsec
-            self.snr_mom                  = 4.0
-            self.r_cnd                    = 3.0 * self.scale_pc / 1000. # kpc
-            self.r_cnd_as                 = 3.0
-            self.r_sbr                    = 10.0 * self.scale_pc / 1000. # kpc
-            self.r_sbr_as                 = 10.0
-            self.gridsize                 = 27 # int(np.ceil(self.r_sbr_as*2/self.beam))
+    def _set_input_fits(self):
+        """
+        """
 
-            # output maps
-            self.outmap_mom0              = self.dir_ready + self._read_key("outmaps_mom0")
-            self.outfits_mom0             = self.dir_ready + self._read_key("outfits_maps_mom0")
-            self.outmap_emom0             = self.dir_ready + self._read_key("outmaps_emom0")
-            self.outfits_emom0            = self.dir_ready + self._read_key("outfits_maps_emom0")
+        self.map_av         = self.dir_other + self._read_key("map_av")
+        self.map_ionization = self.dir_other + self._read_key("map_ionization")
+        self.maps_mom0      = glob.glob(self.dir_raw + self._read_key("maps_mom0"))
+        self.maps_emom0     = glob.glob(self.dir_raw + self._read_key("maps_emom0"))
+        self.maps_mom0.sort()
+        self.maps_emom0.sort()
 
-            # output txt and png
-            self.table_hex_obs            = self.dir_ready + self._read_key("table_hex_obs")
-            self.table_hex_pca_mom0       = self.dir_ready + self._read_key("table_hex_pca_mom0")
-            self.table_hex_pca_r13co      = self.dir_ready + self._read_key("table_hex_pca_r13co")
-            self.table_hex_pca_rhcn       = self.dir_ready + self._read_key("table_hex_pca_rhcn")
+    def _set_output_fits(self):
+        """
+        """
 
-            self.outpng_pca_mom0          = self.dir_products + self._read_key("outpng_pca_mom0")
-            self.outpng_pca_r13co         = self.dir_products + self._read_key("outpng_pca_r13co")
-            self.outpng_pca_rhcn          = self.dir_products + self._read_key("outpng_pca_rhcn")
+        self.outmap_mom0   = self.dir_ready + self._read_key("outmaps_mom0")
+        self.outfits_mom0  = self.dir_ready + self._read_key("outfits_maps_mom0")
+        self.outmap_emom0  = self.dir_ready + self._read_key("outmaps_emom0")
+        self.outfits_emom0 = self.dir_ready + self._read_key("outfits_maps_emom0")
 
-            self.outpng_mom0              = self.dir_products + self._read_key("outpng_mom0")
+    def _set_input_param(self):
+        """
+        """
 
-            self.outpng_pca_hexmap        = self.dir_products + self._read_key("outpng_pca_hexmap")
-            self.outpng_pca_scatter       = self.dir_products + self._read_key("outpng_pca_scatter")
-            self.outpng_pca_hexmap_r13co  = self.dir_products + self._read_key("outpng_pca_hexmap_r13co")
-            self.outpng_pca_scatter_r13co = self.dir_products + self._read_key("outpng_pca_scatter_r13co")
+        # ngc1068 properties
+        self.ra_agn    = float(self._read_key("ra_agn", "gal").split("deg")[0])
+        self.dec_agn   = float(self._read_key("dec_agn", "gal").split("deg")[0])
+        self.scale_pc  = float(self._read_key("scale", "gal"))
+        self.scale_kpc = self.scale_pc / 1000.
 
-            outpng_pca1_mom0_podium       = self.dir_products + self._read_key("outpng_pca1_mom0_podium")
-            self.outpng_pca1_mom0_1st     = outpng_pca1_mom0_podium.replace("???","1st")
-            self.outpng_pca1_mom0_2nd     = outpng_pca1_mom0_podium.replace("???","2nd")
-            self.outpng_pca1_mom0_3rd     = outpng_pca1_mom0_podium.replace("???","3rd")
-            self.outpng_pca1_mom0_4th     = outpng_pca1_mom0_podium.replace("???","4th")
+        self.beam      = 2.14859173174056 # 150pc in arcsec
+        self.snr_mom   = 4.0
+        self.r_cnd     = 3.0 * self.scale_pc / 1000. # kpc
+        self.r_cnd_as  = 3.0
+        self.r_sbr     = 10.0 * self.scale_pc / 1000. # kpc
+        self.r_sbr_as  = 10.0
+        self.gridsize  = 27 # int(np.ceil(self.r_sbr_as*2/self.beam))
 
-            outpng_pca2_mom0_podium       = self.dir_products + self._read_key("outpng_pca2_mom0_podium")
-            self.outpng_pca2_mom0_1st     = outpng_pca2_mom0_podium.replace("???","1st")
-            self.outpng_pca2_mom0_2nd     = outpng_pca2_mom0_podium.replace("???","2nd")
-            self.outpng_pca2_mom0_3rd     = outpng_pca2_mom0_podium.replace("???","3rd")
-            self.outpng_pca2_mom0_4th     = outpng_pca2_mom0_podium.replace("???","4th")
+    def _set_output_txt_png(self):
+        """
+        """
 
-            outpng_pca1_ratio_podium      = self.dir_products + self._read_key("outpng_pca1_ratio_podium")
-            self.outpng_pca1_ratio_1st    = outpng_pca1_ratio_podium.replace("???","1st")
-            self.outpng_pca1_ratio_2nd    = outpng_pca1_ratio_podium.replace("???","2nd")
-            self.outpng_pca1_ratio_3rd    = outpng_pca1_ratio_podium.replace("???","3rd")
-            self.outpng_pca1_ratio_4th    = outpng_pca1_ratio_podium.replace("???","4th")
+        # output txt and png
+        self.table_hex_obs            = self.dir_ready + self._read_key("table_hex_obs")
+        self.table_hex_pca_mom0       = self.dir_ready + self._read_key("table_hex_pca_mom0")
+        self.table_hex_pca_r13co      = self.dir_ready + self._read_key("table_hex_pca_r13co")
+        self.table_hex_pca_rhcn       = self.dir_ready + self._read_key("table_hex_pca_rhcn")
 
-            outpng_pca2_ratio_podium      = self.dir_products + self._read_key("outpng_pca2_ratio_podium")
-            self.outpng_pca2_ratio_1st    = outpng_pca2_ratio_podium.replace("???","1st")
-            self.outpng_pca2_ratio_2nd    = outpng_pca2_ratio_podium.replace("???","2nd")
-            self.outpng_pca2_ratio_3rd    = outpng_pca2_ratio_podium.replace("???","3rd")
-            self.outpng_pca2_ratio_4th    = outpng_pca2_ratio_podium.replace("???","4th")
+        self.outpng_pca_mom0          = self.dir_products + self._read_key("outpng_pca_mom0")
+        self.outpng_pca_r13co         = self.dir_products + self._read_key("outpng_pca_r13co")
+        self.outpng_pca_rhcn          = self.dir_products + self._read_key("outpng_pca_rhcn")
 
-            self.outpng_radial1           = self.dir_products + self._read_key("outpng_radial1")
-            self.outpng_radial2           = self.dir_products + self._read_key("outpng_radial2")
-            self.outpng_radial3           = self.dir_products + self._read_key("outpng_radial3")
+        self.outpng_mom0              = self.dir_products + self._read_key("outpng_mom0")
 
-            # final
-            self.final_pca_mom0           = self.dir_final + self._read_key("final_pca_mom0")
-            self.final_pca_r13co          = self.dir_final + self._read_key("final_pca_r13co")
-            self.final_pca_mom0_podium    = self.dir_final + self._read_key("final_pca_mom0_podium")
-            self.final_pca_ratio_podium   = self.dir_final + self._read_key("final_pca_ratio_podium")
-            self.final_hex_radial         = self.dir_final + self._read_key("final_hex_radial")
+        self.outpng_pca_hexmap        = self.dir_products + self._read_key("outpng_pca_hexmap")
+        self.outpng_pca_scatter       = self.dir_products + self._read_key("outpng_pca_scatter")
+        self.outpng_pca_hexmap_r13co  = self.dir_products + self._read_key("outpng_pca_hexmap_r13co")
+        self.outpng_pca_scatter_r13co = self.dir_products + self._read_key("outpng_pca_scatter_r13co")
 
-            self.box_map                  = self._read_key("box_map")
-            self.box_map_noxlabel         = self._read_key("box_map_noxlabel")
-            self.box_map_noylabel         = self._read_key("box_map_noylabel")
-            self.box_map_noxylabel        = self._read_key("box_map_noxylabel")
+        outpng_pca1_mom0_podium       = self.dir_products + self._read_key("outpng_pca1_mom0_podium")
+        self.outpng_pca1_mom0_1st     = outpng_pca1_mom0_podium.replace("???","1st")
+        self.outpng_pca1_mom0_2nd     = outpng_pca1_mom0_podium.replace("???","2nd")
+        self.outpng_pca1_mom0_3rd     = outpng_pca1_mom0_podium.replace("???","3rd")
+        self.outpng_pca1_mom0_4th     = outpng_pca1_mom0_podium.replace("???","4th")
+
+        outpng_pca2_mom0_podium       = self.dir_products + self._read_key("outpng_pca2_mom0_podium")
+        self.outpng_pca2_mom0_1st     = outpng_pca2_mom0_podium.replace("???","1st")
+        self.outpng_pca2_mom0_2nd     = outpng_pca2_mom0_podium.replace("???","2nd")
+        self.outpng_pca2_mom0_3rd     = outpng_pca2_mom0_podium.replace("???","3rd")
+        self.outpng_pca2_mom0_4th     = outpng_pca2_mom0_podium.replace("???","4th")
+
+        outpng_pca1_ratio_podium      = self.dir_products + self._read_key("outpng_pca1_ratio_podium")
+        self.outpng_pca1_ratio_1st    = outpng_pca1_ratio_podium.replace("???","1st")
+        self.outpng_pca1_ratio_2nd    = outpng_pca1_ratio_podium.replace("???","2nd")
+        self.outpng_pca1_ratio_3rd    = outpng_pca1_ratio_podium.replace("???","3rd")
+        self.outpng_pca1_ratio_4th    = outpng_pca1_ratio_podium.replace("???","4th")
+
+        outpng_pca2_ratio_podium      = self.dir_products + self._read_key("outpng_pca2_ratio_podium")
+        self.outpng_pca2_ratio_1st    = outpng_pca2_ratio_podium.replace("???","1st")
+        self.outpng_pca2_ratio_2nd    = outpng_pca2_ratio_podium.replace("???","2nd")
+        self.outpng_pca2_ratio_3rd    = outpng_pca2_ratio_podium.replace("???","3rd")
+        self.outpng_pca2_ratio_4th    = outpng_pca2_ratio_podium.replace("???","4th")
+
+        self.outpng_radial1           = self.dir_products + self._read_key("outpng_radial1")
+        self.outpng_radial2           = self.dir_products + self._read_key("outpng_radial2")
+        self.outpng_radial3           = self.dir_products + self._read_key("outpng_radial3")
+
+        # final
+        self.final_pca_mom0           = self.dir_final + self._read_key("final_pca_mom0")
+        self.final_pca_r13co          = self.dir_final + self._read_key("final_pca_r13co")
+        self.final_pca_mom0_podium    = self.dir_final + self._read_key("final_pca_mom0_podium")
+        self.final_pca_ratio_podium   = self.dir_final + self._read_key("final_pca_ratio_podium")
+        self.final_hex_radial         = self.dir_final + self._read_key("final_hex_radial")
+
+        self.box_map                  = self._read_key("box_map")
+        self.box_map_noxlabel         = self._read_key("box_map_noxlabel")
+        self.box_map_noylabel         = self._read_key("box_map_noylabel")
+        self.box_map_noxylabel        = self._read_key("box_map_noxylabel")
 
     ###################
     # run_ngc1068_pca #
