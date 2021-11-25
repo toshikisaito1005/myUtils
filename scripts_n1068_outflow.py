@@ -569,7 +569,7 @@ class ToolsOutflow():
         # calculate r,theta from the center
         ra_deg       = data_coords[:,:,0] * 180/np.pi - self.ra_agn
         dec_deg      = data_coords[:,:,1] * 180/np.pi - self.dec_agn
-        vel          = (data_coords2[0,0,:,2] - self.restfreq_ci*1e9) / (self.restfreq_ci*1e9) * 299792.458 # km/s
+        vel          = (self.restfreq_ci*1e9 - data_coords2[0,0,:,2]) / (self.restfreq_ci*1e9) * 299792.458 # km/s
         dist_as      = np.sqrt(ra_deg**2 + dec_deg**2) * 3600.
         theta_deg    = np.degrees(np.arctan2(ra_deg, dec_deg))
 
@@ -625,7 +625,8 @@ class ToolsOutflow():
         ax2 = plt.subplot(gs[5:10,0:10], sharex=ax1)
         ad = [0.215,0.83,0.10,0.90]
         myax_set(ax1, "x", None, None, None, None, None, adjust=ad)
-        myax_set(ax2, "y", None, None, None, None, None, adjust=ad)
+        myax_set(ax2, "x", None, None, None, None, None, adjust=ad)
+        ax1.axes.xaxis.set_ticklabels([])
 
         # plot
         ax1.plot(vel, spec_co_cone, "-",  lw=2, c="tomato")
