@@ -673,12 +673,10 @@ class ToolsOutflow():
         ########
         # plot #
         ########
-        xlim   = [-1.5,3.0]
-        ylim   = [-0.6,3.0]
+        xlim   = [0.1,1.5]
+        ylim   = [-1.0,1.0]
         xwidth = xlim[1]-xlim[0]
         ywidth = ylim[1]-ylim[0]
-        xlim   = [xlim[0], xlim[1]-xwidth*0.4]
-        ylim   = [ylim[0], ylim[1]-ywidth*0.4]
 
         self._plot_scatters(
             self.png_ci_cube_vs_co_cube,

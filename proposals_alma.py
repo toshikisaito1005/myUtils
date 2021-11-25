@@ -10,6 +10,7 @@ see "def _set_cycle_8p5a_specscan" for example
 ALMA timeline:
 cycle    release date         deadline
 C8supp   2021-08-08 15:00UT   2021-10-06 15:00UT
+C9       2022-??-?? 15:00UT   2022-??-?? 15:00UT
 
 history:
 2021-09-21   start by TS
@@ -62,17 +63,53 @@ class ProposalsALMA():
             # get alma cycle
             self.cycle = self._read_key("this_cycle")
             
-            # get directories
+            # set directories
             self._set_dir()
 
-            # cycle 8p5 (release = 2021/08/08/15:00UT, deadline = 2021/10/06/15:00UT)
+            # cycle 8p5
             if self.cycle=="cycle08p5":
                 self._set_cycle_8p5a_specscan()
                 self._set_cycle_8p5b_catom21()
 
             # cycle 9
             if self.cycle=="cycle09":
-                print("# write _set_cycle for cycle09 first")
+                self._set_cycle_9()
+
+    ############################################################################################
+    ############################################################################################
+    ##################################                        ##################################
+    ################################## ALMA cycle 9 main call ##################################
+    ##################################                        ##################################
+    ############################################################################################
+    ############################################################################################
+
+    ################
+    # _set_cycle_9 #
+    ################
+
+    def _set_cycle_9(
+        self,
+        ):
+        """
+        import os
+        from proposals_alma import ProposalsALMA as tools
+        
+        dir_proj = /home02/saitots/myUtils/keys_alma_proposal/
+        
+        ### Cycle 9 main call
+        # 2022.1.?????.S
+        # [explain]
+        tl = tools(
+            refresh     = False,
+            keyfile_fig = dir_proj + "key_cyle09.txt",
+            )
+        tl.run_cycle_9(
+            ??? = True,
+            )
+        
+        os.system("rm -rf *.last")
+        """
+        print("# write _set_cycle for cycle09 first")
 
     ############################################################################################
     ############################################################################################
@@ -262,177 +299,6 @@ class ProposalsALMA():
         if combine_figures==True:
             self.c8p5b_create_figure_catom21()
             self.c8p5b_create_figure_catom10()
-
-    ##########################
-    # c8p5b_plot_ci_co_ratio #
-    ##########################
-
-    def c8p5b_plot_ci_co_ratio(
-        self,
-        ):
-        """
-        """
-
-        taskname = self.modname + sys._getframe().f_code.co_name
-        check_first(self.image_ci10_1p64,taskname)
-
-        #
-        run_importfits(self.image_ci10_1p64,"template.image")
-        run_imregrid(self.image_co10_1p64,"template.image",self.image_co10_1p64+"_tmp1")
-        os.system("rm -rf template.image")
-        expr = "iif( IM1>0, IM1/IM0, 0 )"
-        run_immath_two(self.image_co10_1p64+"_tmp1",self.image_ci10_1p64,self.outfits_ci_co_ratio+"_tmp1",expr)
-        os.system("rm -rf " + self.image_co10_1p64 + "_tmp1")
-        run_exportfits(self.outfits_ci_co_ratio+"_tmp1",self.outfits_ci_co_ratio,True,True,True)
-
-        # plot
-        scalebar = 500 / self.scale
-
-        myfig_fits2png(
-            # general
-            self.image_ci10_1p64,
-            self.png_ci10_1p64,
-            self.image_ci10_1p64,
-            imsize_as=self.imsize_catom_as,
-            ra_cnt=self.ra,
-            dec_cnt=self.dec,
-            # contour 1
-            levels_cont1=[0.02,0.04,0.08,0.16,0.32,0.64,0.96],
-            width_cont1=[2.5],
-            color_cont1="black",
-            # imshow
-            fig_dpi=self.fig_dpi,
-            set_grid=None,
-            set_title="Observed [CI](1-0) map",
-            colorlog=True,
-            set_bg_color=cm.rainbow(0),
-            set_cmap="rainbow",
-            showzero=False,
-            showbeam=True,
-            color_beam="black",
-            scalebar=scalebar,
-            label_scalebar="0.5 kpc",
-            color_scalebar="black",
-            # annotation
-            #numann=5,
-            #textann=True,
-            #txtfiles=[self.txt_fov_b10_fov1,self.txt_fov_b10_fov2],
-            )
-
-        myfig_fits2png(
-            # general
-            self.outfits_ci_co_ratio,
-            self.png_ci_co_ratio_1p64,
-            self.image_ci10_1p64,
-            imsize_as=self.imsize_catom_as,
-            ra_cnt=self.ra,
-            dec_cnt=self.dec,
-            # contour 1
-            levels_cont1=[0.02,0.04,0.08,0.16,0.32,0.64,0.96],
-            width_cont1=[2.5],
-            color_cont1="black",
-            # imshow
-            fig_dpi=self.fig_dpi,
-            set_grid=None,
-            set_title="Observed [CI](1-0)/CO(1-0) ratio",
-            colorlog=False,
-            #set_bg_color=cm.rainbow(0),
-            set_cmap="rainbow",
-            clim=[0,1],
-            showzero=False,
-            showbeam=True,
-            color_beam="black",
-            scalebar=scalebar,
-            label_scalebar="0.5 kpc",
-            color_scalebar="black",
-            # annotation
-            #numann=5,
-            #textann=True,
-            #txtfiles=[self.txt_fov_b10_fov1,self.txt_fov_b10_fov2],
-            )
-
-    ###############################
-    # c8p5b_create_figure_catom10 #
-    ###############################
-
-    def c8p5b_create_figure_catom10(
-        self,
-        ):
-        """
-        """
-
-        taskname = self.modname + sys._getframe().f_code.co_name
-        check_first(self.png_ci_co_ratio_1p64,taskname)
-
-        combine_two_png(self.png_ci10_1p64,self.png_ci_co_ratio_1p64,
-            self.final_catom10,self.box_ci10_1p64,self.box_ci_co_ratio_1p64,delin=True)
-
-    ###############################
-    # c8p5b_create_figure_catom21 #
-    ###############################
-
-    def c8p5b_create_figure_catom21(
-        self,
-        ):
-        """
-        """
-
-        taskname = self.modname + sys._getframe().f_code.co_name
-        check_first(self.png_expected_catom21,taskname)
-
-        immagick_crop(self.png_expected_catom21,self.final_catom21,self.box_expected_catom21,True)
-
-    ###############################
-    # c8p5b_plot_expected_catom21 #
-    ###############################
-
-    def c8p5b_plot_expected_catom21(
-        self,
-        ):
-        """
-        """
-
-        taskname = self.modname + sys._getframe().f_code.co_name
-        check_first(self.image_cs21,taskname)
-
-        #
-        run_immath_one(self.tpeak_ci10,self.outfits_expected_ci21_tpeak+"_tmp1","IM0*0.7")
-        run_exportfits(self.outfits_expected_ci21_tpeak+"_tmp1",self.outfits_expected_ci21_tpeak,True,True,True)
-
-        # map
-        scalebar = 500 / self.scale
-
-        myfig_fits2png(
-            # general
-            self.outfits_expected_ci21_tpeak,
-            self.png_expected_catom21,
-            self.outfits_expected_ci21_tpeak,
-            imsize_as=self.imsize_catom_as,
-            ra_cnt=self.ra,
-            dec_cnt=self.dec,
-            # contour 1
-            unit_cont1=0.1, # required rms = 0.1 K
-            levels_cont1=[3,5],
-            width_cont1=[2.5],
-            color_cont1="black",
-            # imshow
-            fig_dpi=self.fig_dpi,
-            set_grid=None,
-            set_title="Expected [CI](2-1) peak temperature",
-            colorlog=True,
-            set_bg_color=cm.rainbow(0),
-            set_cmap="rainbow",
-            showzero=False,
-            showbeam=True,
-            color_beam="white",
-            scalebar=scalebar,
-            label_scalebar="0.5 kpc",
-            color_scalebar="white",
-            # annotation
-            numann=5,
-            textann=True,
-            txtfiles=[self.txt_fov_b10_fov1,self.txt_fov_b10_fov2],
-            )
 
     #####################
     # c8p5_fov_with_map #
@@ -960,6 +826,177 @@ class ProposalsALMA():
         ax1.text(115,1.0-width-0.1,"115",ha="center",va="top",fontsize=15)
 
         plt.savefig(self.png_specscan_b3, dpi=self.fig_dpi)
+
+    ##########################
+    # c8p5b_plot_ci_co_ratio #
+    ##########################
+
+    def c8p5b_plot_ci_co_ratio(
+        self,
+        ):
+        """
+        """
+
+        taskname = self.modname + sys._getframe().f_code.co_name
+        check_first(self.image_ci10_1p64,taskname)
+
+        #
+        run_importfits(self.image_ci10_1p64,"template.image")
+        run_imregrid(self.image_co10_1p64,"template.image",self.image_co10_1p64+"_tmp1")
+        os.system("rm -rf template.image")
+        expr = "iif( IM1>0, IM1/IM0, 0 )"
+        run_immath_two(self.image_co10_1p64+"_tmp1",self.image_ci10_1p64,self.outfits_ci_co_ratio+"_tmp1",expr)
+        os.system("rm -rf " + self.image_co10_1p64 + "_tmp1")
+        run_exportfits(self.outfits_ci_co_ratio+"_tmp1",self.outfits_ci_co_ratio,True,True,True)
+
+        # plot
+        scalebar = 500 / self.scale
+
+        myfig_fits2png(
+            # general
+            self.image_ci10_1p64,
+            self.png_ci10_1p64,
+            self.image_ci10_1p64,
+            imsize_as=self.imsize_catom_as,
+            ra_cnt=self.ra,
+            dec_cnt=self.dec,
+            # contour 1
+            levels_cont1=[0.02,0.04,0.08,0.16,0.32,0.64,0.96],
+            width_cont1=[2.5],
+            color_cont1="black",
+            # imshow
+            fig_dpi=self.fig_dpi,
+            set_grid=None,
+            set_title="Observed [CI](1-0) map",
+            colorlog=True,
+            set_bg_color=cm.rainbow(0),
+            set_cmap="rainbow",
+            showzero=False,
+            showbeam=True,
+            color_beam="black",
+            scalebar=scalebar,
+            label_scalebar="0.5 kpc",
+            color_scalebar="black",
+            # annotation
+            #numann=5,
+            #textann=True,
+            #txtfiles=[self.txt_fov_b10_fov1,self.txt_fov_b10_fov2],
+            )
+
+        myfig_fits2png(
+            # general
+            self.outfits_ci_co_ratio,
+            self.png_ci_co_ratio_1p64,
+            self.image_ci10_1p64,
+            imsize_as=self.imsize_catom_as,
+            ra_cnt=self.ra,
+            dec_cnt=self.dec,
+            # contour 1
+            levels_cont1=[0.02,0.04,0.08,0.16,0.32,0.64,0.96],
+            width_cont1=[2.5],
+            color_cont1="black",
+            # imshow
+            fig_dpi=self.fig_dpi,
+            set_grid=None,
+            set_title="Observed [CI](1-0)/CO(1-0) ratio",
+            colorlog=False,
+            #set_bg_color=cm.rainbow(0),
+            set_cmap="rainbow",
+            clim=[0,1],
+            showzero=False,
+            showbeam=True,
+            color_beam="black",
+            scalebar=scalebar,
+            label_scalebar="0.5 kpc",
+            color_scalebar="black",
+            # annotation
+            #numann=5,
+            #textann=True,
+            #txtfiles=[self.txt_fov_b10_fov1,self.txt_fov_b10_fov2],
+            )
+
+    ###############################
+    # c8p5b_create_figure_catom10 #
+    ###############################
+
+    def c8p5b_create_figure_catom10(
+        self,
+        ):
+        """
+        """
+
+        taskname = self.modname + sys._getframe().f_code.co_name
+        check_first(self.png_ci_co_ratio_1p64,taskname)
+
+        combine_two_png(self.png_ci10_1p64,self.png_ci_co_ratio_1p64,
+            self.final_catom10,self.box_ci10_1p64,self.box_ci_co_ratio_1p64,delin=True)
+
+    ###############################
+    # c8p5b_create_figure_catom21 #
+    ###############################
+
+    def c8p5b_create_figure_catom21(
+        self,
+        ):
+        """
+        """
+
+        taskname = self.modname + sys._getframe().f_code.co_name
+        check_first(self.png_expected_catom21,taskname)
+
+        immagick_crop(self.png_expected_catom21,self.final_catom21,self.box_expected_catom21,True)
+
+    ###############################
+    # c8p5b_plot_expected_catom21 #
+    ###############################
+
+    def c8p5b_plot_expected_catom21(
+        self,
+        ):
+        """
+        """
+
+        taskname = self.modname + sys._getframe().f_code.co_name
+        check_first(self.image_cs21,taskname)
+
+        #
+        run_immath_one(self.tpeak_ci10,self.outfits_expected_ci21_tpeak+"_tmp1","IM0*0.7")
+        run_exportfits(self.outfits_expected_ci21_tpeak+"_tmp1",self.outfits_expected_ci21_tpeak,True,True,True)
+
+        # map
+        scalebar = 500 / self.scale
+
+        myfig_fits2png(
+            # general
+            self.outfits_expected_ci21_tpeak,
+            self.png_expected_catom21,
+            self.outfits_expected_ci21_tpeak,
+            imsize_as=self.imsize_catom_as,
+            ra_cnt=self.ra,
+            dec_cnt=self.dec,
+            # contour 1
+            unit_cont1=0.1, # required rms = 0.1 K
+            levels_cont1=[3,5],
+            width_cont1=[2.5],
+            color_cont1="black",
+            # imshow
+            fig_dpi=self.fig_dpi,
+            set_grid=None,
+            set_title="Expected [CI](2-1) peak temperature",
+            colorlog=True,
+            set_bg_color=cm.rainbow(0),
+            set_cmap="rainbow",
+            showzero=False,
+            showbeam=True,
+            color_beam="white",
+            scalebar=scalebar,
+            label_scalebar="0.5 kpc",
+            color_scalebar="white",
+            # annotation
+            numann=5,
+            textann=True,
+            txtfiles=[self.txt_fov_b10_fov1,self.txt_fov_b10_fov2],
+            )
 
     ###########################################################################################
     ###########################################################################################
