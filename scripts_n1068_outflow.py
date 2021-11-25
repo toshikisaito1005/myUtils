@@ -216,6 +216,8 @@ class ToolsOutflow():
             self.chans_text = self._read_key("chans_text").split(",")
             self.chans_color = self._read_key("chans_color").split(",")
 
+            self.restfreq_ci = 492.16065100 # GHz
+
             # model parameters
             self.model_length       = float(self._read_key("model_length"))
             self.model_pa           = float(self._read_key("model_pa"))
@@ -566,8 +568,7 @@ class ToolsOutflow():
         # calculate r,theta from the center
         ra_deg       = data_coords[:,:,0] * 180/np.pi - self.ra_agn
         dec_deg      = data_coords[:,:,1] * 180/np.pi - self.dec_agn
-        obsfreq      = data_coords2[0,0,:,2]
-        print(obsfreq)
+        vel          = (data_coords2[0,0,:,2] - self.restfreq_ci*1e9) / self.restfreq_ci*1e9 * 299792.458 # km/s
         dist_as      = np.sqrt(ra_deg**2 + dec_deg**2)
         theta_deg    = np.degrees(np.arctan2(ra_deg, dec_deg))
 
@@ -611,14 +612,13 @@ class ToolsOutflow():
         ad = [0.215,0.83,0.10,0.90]
         myax_set(ax1, "both", None, None, None, None, None, adjust=ad)
 
-        print(np.shape(obsfreq))
-        print(np.shape(spec_co_fov1))
+        print(np.c_[vel,spec_co_fov1,spec_co_cone])
 
         # plot
-        ax1.plot(obsfreq, spec_co_fov1, "-",  lw=2, c="deepskyblue")
-        ax1.plot(obsfreq, spec_ci_fov1, "--", lw=2, c="deepskyblue")
-        ax1.plot(obsfreq, spec_co_cone, "-",  lw=2, c="tomato")
-        ax1.plot(obsfreq, spec_ci_cone, "--", lw=2, c="tomato")
+        ax1.plot(vel, spec_co_fov1, "-",  lw=2, c="deepskyblue")
+        ax1.plot(vel, spec_ci_fov1, "--", lw=2, c="deepskyblue")
+        ax1.plot(vel, spec_co_cone, "-",  lw=2, c="tomato")
+        ax1.plot(vel, spec_ci_cone, "--", lw=2, c="tomato")
 
         plt.savefig("test.png", dpi=self.fig_dpi)
 
