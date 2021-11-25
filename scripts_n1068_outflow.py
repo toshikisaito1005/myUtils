@@ -569,7 +569,7 @@ class ToolsOutflow():
         # calculate r,theta from the center
         ra_deg       = data_coords[:,:,0] * 180/np.pi - self.ra_agn
         dec_deg      = data_coords[:,:,1] * 180/np.pi - self.dec_agn
-        vel          = (self.restfreq_ci*1e9 - data_coords2[0,0,:,2]) / (self.restfreq_ci*1e9) * 299792.458 # km/s
+        vel          = (self.restfreq_ci*1e9 - data_coords2[0,0,:,2]) / (self.restfreq_ci*1e9) * 299792.458 - 1116 # km/s
         dist_as      = np.sqrt(ra_deg**2 + dec_deg**2) * 3600.
         theta_deg    = np.degrees(np.arctan2(ra_deg, dec_deg))
 
@@ -618,19 +618,22 @@ class ToolsOutflow():
         ########
         # plot #
         ########
+        ad  = [0.215,0.83,0.10,0.90]
 
         fig = plt.figure(figsize=(13,10))
-        gs = gridspec.GridSpec(nrows=10, ncols=10)
+        gs  = gridspec.GridSpec(nrows=10, ncols=10)
         ax1 = plt.subplot(gs[0:5,0:10])
         ax2 = plt.subplot(gs[5:10,0:10], sharex=ax1)
-        ad = [0.215,0.83,0.10,0.90]
-        myax_set(ax1, "x", None, None, None, None, None, adjust=ad)
-        myax_set(ax2, "x", None, None, None, None, None, adjust=ad)
+        plt.subplots_adjust(left=ad[0], right=ad[1], bottom=ad[2], top=ad[3])
+        myax_set(ax1, "x", None, None, None, None, "$T$ (K)", adjust=ad)
+        myax_set(ax2, "x", None, None, None, "Velocity (km s$^{-1}$)", "$T$ (K)", adjust=ad)
         ax1.tick_params(labelbottom=False)
 
         # plot
+        ax1.plot([vel,vel], [0,0], "--",  lw=1, c="black")
         ax1.plot(vel, spec_co_cone, "-",  lw=2, c="tomato")
         ax1.plot(vel, spec_ci_cone, "--", lw=2, c="tomato")
+        ax2.plot([vel,vel], [0,0], "--",  lw=1, c="black")
         ax2.plot(vel, spec_co_fov1, "-",  lw=2, c="deepskyblue")
         ax2.plot(vel, spec_ci_fov1, "--", lw=2, c="deepskyblue")
 
