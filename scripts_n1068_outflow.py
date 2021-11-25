@@ -396,6 +396,43 @@ class ToolsOutflow():
             print("# create final_showcase (v1) #")
             print("##############################")
 
+            combine_two_png(
+                self.outpng_map_ci,
+                self.outpng_ci_vs_co,
+                self.final_showcase+"_tmp1.png",
+                self.box_map,
+                self.box_map,
+                delin=delin,
+                )
+            combine_two_png(
+                self.outpng_map_co,
+                self.outpng_cico_vs_siiisii,
+                self.final_showcase+"_tmp2.png",
+                self.box_map,
+                self.box_map,
+                delin=delin,
+                )
+            combine_two_png(
+                self.outpng_map_cico,
+                self.png_spectra,
+                self.final_showcase+"_tmp3.png",
+                self.box_map,
+                self.box_map,
+                delin=delin,
+                )
+            combine_three_png(
+                self.final_showcase+"_tmp1.png",
+                self.final_showcase+"_tmp2.png",
+                self.final_showcase+"_tmp3.png",
+                self.final_showcase,
+                "100000x100000+0+0",
+                "100000x100000+0+0",
+                "100000x100000+0+0",
+                axis="colmun",
+                delin=True,
+                )
+
+            """
             combine_three_png(
                 self.outpng_map_ci,
                 self.outpng_map_co,
@@ -416,7 +453,6 @@ class ToolsOutflow():
                 self.box_map,
                 delin=delin,
                 )
-
             combine_two_png(
                 self.final_showcase+"_tmp1.png",
                 self.final_showcase+"_tmp2.png",
@@ -426,6 +462,7 @@ class ToolsOutflow():
                 axis="column",
                 delin=True,
                 )
+            """
 
         if do_final_channel==True:
             print("########################")
@@ -641,8 +678,8 @@ class ToolsOutflow():
         # plot #
         ########
         ad       = [0.215,0.83,0.10,0.90]
-        ylim_ax1 = [-0.180,1.800] # [np.max(spec_co_cone[spec_co_cone!=np.nan])*-0.1,np.max(spec_co_cone[spec_co_cone!=np.nan])*1.1]
-        ylim_ax2 = [-0.069,0.690] # [np.max(spec_co_fov1[spec_co_fov1!=np.nan])*-0.1,np.max(spec_co_fov1[spec_co_cone!=np.nan])*1.1]
+        ylim_ax1 = [-0.180,1.800]
+        ylim_ax2 = [-0.069,0.690]
 
         # prepare
         fig = plt.figure(figsize=(13,10))
@@ -665,7 +702,6 @@ class ToolsOutflow():
         ax1.text(0.05,0.90, "Spectra (bicone)", color="black", weight="bold", transform=ax1.transAxes)
         ax1.text(0.05,0.82, "CO(1-0)", color="tomato", transform=ax1.transAxes)
         ax1.text(0.05,0.74, "[CI](1-0)", color="deepskyblue", transform=ax1.transAxes)
-
         ax2.text(0.05,0.90, "Spectra (all FoV-1)", color="black", weight="bold", transform=ax2.transAxes)
 
         # save
