@@ -56,7 +56,7 @@ history:
 2021-11-10   created
 2021-11-14   2DPCA analysis for mom0 maps
 2021-11-15   start drafting
-2021-11-22   implement LOWESS and bootstrap standard deviation
+2021-11-22   implement LOWESS and bootstrapped standard deviation
 Toshiki Saito@Nichidai/NAOJ
 """
 

@@ -674,7 +674,7 @@ class ToolsOutflow():
             data_co_fov1, data_ci_fov1,
             data_co_fov1, data_ci_fov1,
             data_co_cone, data_ci_fov1,
-            dist_as,
+            None,
             "log $L'_{CO(1-0)}$ (K km s$^{-1}$ pc$^2$)",
             "log $L'_{[CI](1-0)}$ (K km s$^{-1}$ pc$^2$)",
             "(d) log $L'_{[CI](1-0)}$ vs. log $L'_{CO(1-0)}$",
@@ -1928,13 +1928,15 @@ class ToolsOutflow():
         # plot
         ax1.scatter(x1, y1, lw=0, c="gray", s=20)
         ax1.scatter(x2, y2, lw=0, c="black", s=40)
-        cs = ax1.scatter(x3, y3, lw=0, c=r3, cmap="rainbow_r", s=40)
-
-        # colorbar
-        cax = fig.add_axes([0.71, 0.13, 0.03, 0.34])
-        cbar = plt.colorbar(cs, cax=cax)
-        cbar.set_label("Distance (pc)")
-        cbar.set_ticks([100,200,300,400,500])
+        if r3!=None:
+            cs = ax1.scatter(x3, y3, lw=0, c=r3, cmap="rainbow_r", s=40)
+            # colorbar
+            cax = fig.add_axes([0.71, 0.13, 0.03, 0.34])
+            cbar = plt.colorbar(cs, cax=cax)
+            cbar.set_label("Distance (pc)")
+            cbar.set_ticks([100,200,300,400,500])
+        else:
+            ax1.scatter(x3, y3, lw=0, c="tomato", s=40)
 
         # plot line
         if plot_line==True:
@@ -2020,7 +2022,14 @@ class ToolsOutflow():
     # _align_one_map #
     ##################
 
-    def _align_one_map(self, imagename, template, outfits, beam="0.8arcsec", axes=-1):
+    def _align_one_map(
+        self,
+        imagename,
+        template,
+        outfits,
+        beam="0.8arcsec",
+        axes=-1,
+        ):
         """
         """
         delim  = False
