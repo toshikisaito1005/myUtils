@@ -111,118 +111,11 @@ class ToolsOutflow():
         # import parameters
         if keyfile_fig is not None:
             self.modname = "ToolsOutflow."
-            
-            # get directories
-            self._set_dir()
-
-            # input maps
-            self._set_input_fits()
-
-            # output maps
-            self._set_output_fits()
-
-            # get ngc1068 properties
-            self.ra_agn_str  = self._read_key("ra_agn", "gal")
-            self.ra_agn      = float(self.ra_agn_str.replace("deg",""))
-
-            self.dec_agn_str = self._read_key("dec_agn", "gal")
-            self.dec_agn     = float(self.dec_agn_str.replace("deg",""))
-
-            self.pa          = float(self._read_key("pa", "gal"))
-            self.incl        = float(self._read_key("incl", "gal"))
-            self.scale_pc    = float(self._read_key("scale", "gal"))
-            self.scale_kpc   = float(self._read_key("scale", "gal")) / 1000.
-            
-            # input parameters
-            self.fov_radius  = float(self._read_key("fov_radius_as")) * self.scale_pc
-
-            self.snr_cube    = float(self._read_key("snr_cube"))
-            self.snr_ratio   = float(self._read_key("snr_ratio"))
-            self.snr_chan    = float(self._read_key("snr_chan"))
-
-            l = self._read_key("imrebin_factor")
-            self.imrebin_factor = [int(s) for s in l.split(",")]
-
-            self.r_cnd       = float(self._read_key("r_cnd_as")) * self.scale_kpc
-            self.r_cnd_as    = float(self._read_key("r_cnd_as"))
-            self.r_sbr       = float(self._read_key("r_sbr_as")) * self.scale_kpc
-
-            l = self._read_key("chans_num")
-            self.chans_num   = [int(s) for s in l.split(",")]
-            self.chans_text  = self._read_key("chans_text").split(",")
-            self.chans_color = self._read_key("chans_color").split(",")
-
-            self.restfreq_ci = 492.16065100 # GHz
-
-            # model parameters
-            self.model_length       = float(self._read_key("model_length"))
-            self.model_pa           = float(self._read_key("model_pa"))
-            self.model_incl         = float(self._read_key("model_incl"))
-            self.model_theta_in     = float(self._read_key("model_theta_in"))
-            self.model_theta_out    = float(self._read_key("model_theta_out"))
-            self.model_maxvel_const = float(self._read_key("model_maxvel_const"))
-            self.model_maxvel_decv  = float(self._read_key("model_maxvel_decv"))
-            self.model_maxvel_best  = float(self._read_key("model_maxvel_best"))
-            self.model_cnd_rout     = float(self._read_key("model_cnd_rout"))
-            l = self._read_key("model_chanlist")
-            self.model_chanlist     = [float(s) for s in l.split(",")]
-
-            self.model_nbins        = 300 # 300
-            self.model_disk_width   = 100
-            self.model_pa_disk      = 286-270 # degree
-            self.model_incl_disk    = 41 # degree
-            self.model_r_turn       = 140 # pc
-            self.model_velindex     = 0.35 # decomission
-
-            # output txt and png
-            self.outtxt_slopes_7m     = self.dir_products + self._read_key("txt_slopes")
-            self.outpng_slopes_7m     = self.dir_products + self._read_key("png_slopes")
-
-            self.outpng_ci_vs_co      = self.dir_products + self._read_key("png_ci_vs_co")
-            self.outpng_cico_vs_siiisii = \
-                self.dir_products + self._read_key("png_cico_vs_siiisii")
-
-            self.imsize_as            = float(self._read_key("imsize_as"))
-            self.outpng_map_ci        = self.dir_products + self._read_key("png_map_ci")
-            self.outpng_map_co        = self.dir_products + self._read_key("png_map_co")
-            self.outpng_map_cico      = self.dir_products + self._read_key("png_map_cico")
-
-            self.outpng_outflow_chans = self.dir_products + self._read_key("png_outflow_chans")
-
-            self.png_outflow_model    = self.dir_chan + self._read_key("png_outflow_model")
-
-            self.png_spectra          = self.dir_products + self._read_key("png_spectra")
-
-            # appendix
-            self.outpng_outflow_mom0 = \
-                self.dir_products + self._read_key("png_outflow_mom0")
-            self.outpng_outflow_mom1 = \
-                self.dir_products + self._read_key("png_outflow_mom1")
-            self.png_map_oiii        = self.dir_products + self._read_key("png_map_oiii")
-            self.png_map_vla         = self.dir_products + self._read_key("png_map_vla")
-            self.png_map_siiisii     = self.dir_products + self._read_key("png_map_siiisii")
-
-            # final products
-            self.final_showcase = self.dir_final + self._read_key("final_showcase")
-            self.box_map        = self._read_key("box_map")
-
-            self.final_channel  = self.dir_final + self._read_key("final_channel")
-            l                   = self._read_key("box_chan_keys")
-            self.box_chan_keys  = [int(s) for s in l.split(",")]
-            self.box_chan_list  = [
-                self._read_key("box_chan_1"),
-                self._read_key("box_chan_2"),
-                self._read_key("box_chan_3"),
-                self._read_key("box_chan_4"),
-                self._read_key("box_chan_5"),
-                self._read_key("box_chan_6"),
-                ]
-
-            self.final_chan_model_best = self.dir_final + self._read_key("final_chan_model_best")
-            self.final_chan_model_decv = self.dir_final + self._read_key("final_chan_model_decv")
-            self.final_chan_model_cnst = self.dir_final + self._read_key("final_chan_model_cnst")
-
-            self.final_showcase_multi = self.dir_final + self._read_key("final_showcase_multi")
+            self._set_dir()            # directories
+            self._set_input_fits()     # input maps
+            self._set_output_fits()    # output maps
+            self._set_input_param()    # input parameters
+            self._set_output_txt_png() # output txt and png
 
     def _set_dir(self):
         """
@@ -302,6 +195,111 @@ class ToolsOutflow():
         self.outfits_cube_cico_rebin   = self.out_cube_cico.replace(".cube","_cube_rebin.fits")
         self.outfits_ci10_outflow_mom0 = self.dir_ready + self._read_key("out_ci10_outflow_mom0").replace(".image",".fits")
         self.outfits_ci10_outflow_mom1 = self.dir_ready + self._read_key("out_ci10_outflow_mom1").replace(".image",".fits")
+
+    def _set_input_param(self):
+        """
+        """
+
+        # get ngc1068 properties
+        self.ra_agn_str     = self._read_key("ra_agn", "gal")
+        self.ra_agn         = float(self.ra_agn_str.replace("deg",""))
+        self.dec_agn_str    = self._read_key("dec_agn", "gal")
+        self.dec_agn        = float(self.dec_agn_str.replace("deg",""))
+        self.pa             = float(self._read_key("pa", "gal"))
+        self.incl           = float(self._read_key("incl", "gal"))
+        self.scale_pc       = float(self._read_key("scale", "gal"))
+        self.scale_kpc      = float(self._read_key("scale", "gal")) / 1000.
+            
+        # input parameters
+        self.fov_radius     = float(self._read_key("fov_radius_as")) * self.scale_pc
+
+        self.snr_cube       = float(self._read_key("snr_cube"))
+        self.snr_ratio      = float(self._read_key("snr_ratio"))
+        self.snr_chan       = float(self._read_key("snr_chan"))
+
+        self.imsize_as      = float(self._read_key("imsize_as"))
+        l = self._read_key("imrebin_factor")
+        self.imrebin_factor = [int(s) for s in l.split(",")]
+
+        self.r_cnd          = float(self._read_key("r_cnd_as")) * self.scale_kpc
+        self.r_cnd_as       = float(self._read_key("r_cnd_as"))
+        self.r_sbr          = float(self._read_key("r_sbr_as")) * self.scale_kpc
+
+        l = self._read_key("chans_num")
+        self.chans_num      = [int(s) for s in l.split(",")]
+        self.chans_text     = self._read_key("chans_text").split(",")
+        self.chans_color    = self._read_key("chans_color").split(",")
+
+        self.restfreq_ci    = 492.16065100 # GHz
+
+        # model parameters
+        self.model_length       = float(self._read_key("model_length"))
+        self.model_pa           = float(self._read_key("model_pa"))
+        self.model_incl         = float(self._read_key("model_incl"))
+        self.model_theta_in     = float(self._read_key("model_theta_in"))
+        self.model_theta_out    = float(self._read_key("model_theta_out"))
+        self.model_maxvel_const = float(self._read_key("model_maxvel_const"))
+        self.model_maxvel_decv  = float(self._read_key("model_maxvel_decv"))
+        self.model_maxvel_best  = float(self._read_key("model_maxvel_best"))
+        self.model_cnd_rout     = float(self._read_key("model_cnd_rout"))
+        l = self._read_key("model_chanlist")
+        self.model_chanlist     = [float(s) for s in l.split(",")]
+
+        self.model_nbins        = 300
+        self.model_disk_width   = 100
+        self.model_pa_disk      = 286-270 # degree
+        self.model_incl_disk    = 41      # degree
+        self.model_r_turn       = 140     # pc
+        self.model_velindex     = 0.35    # decomission
+
+    def _set_output_txt_png(self):
+        """
+        """
+
+        # output txt and png
+        self.outpng_map_ci          = self.dir_products + self._read_key("png_map_ci")
+        self.outpng_map_co          = self.dir_products + self._read_key("png_map_co")
+        self.outpng_map_cico        = self.dir_products + self._read_key("png_map_cico")
+        self.outpng_ci_vs_co        = self.dir_products + self._read_key("png_ci_vs_co")
+        self.outpng_cico_vs_siiisii = self.dir_products + self._read_key("png_cico_vs_siiisii")
+        self.png_spectra            = self.dir_products + self._read_key("png_spectra")
+
+        self.png_outflow_model      = self.dir_chan + self._read_key("png_outflow_model")
+        self.outpng_outflow_chans   = self.dir_products + self._read_key("png_outflow_chans")
+
+        # appendix
+        self.outpng_outflow_mom0    = self.dir_products + self._read_key("png_outflow_mom0")
+        self.outpng_outflow_mom1    = self.dir_products + self._read_key("png_outflow_mom1")
+        self.png_map_oiii           = self.dir_products + self._read_key("png_map_oiii")
+        self.png_map_vla            = self.dir_products + self._read_key("png_map_vla")
+        self.png_map_siiisii        = self.dir_products + self._read_key("png_map_siiisii")
+
+        # supplement
+        self.outtxt_slopes_7m       = self.dir_products + self._read_key("txt_slopes")
+        self.outpng_slopes_7m       = self.dir_products + self._read_key("png_slopes")
+
+        # final products
+        self.box_map                = self._read_key("box_map")
+
+        self.final_showcase         = self.dir_final + self._read_key("final_showcase")
+
+        self.final_channel          = self.dir_final + self._read_key("final_channel")
+        l                           = self._read_key("box_chan_keys")
+        self.box_chan_keys          = [int(s) for s in l.split(",")]
+        self.box_chan_list          = [
+            self._read_key("box_chan_1"),
+            self._read_key("box_chan_2"),
+            self._read_key("box_chan_3"),
+            self._read_key("box_chan_4"),
+            self._read_key("box_chan_5"),
+            self._read_key("box_chan_6"),
+            ]
+
+        self.final_chan_model_best  = self.dir_final + self._read_key("final_chan_model_best")
+        self.final_chan_model_decv  = self.dir_final + self._read_key("final_chan_model_decv")
+        self.final_chan_model_cnst  = self.dir_final + self._read_key("final_chan_model_cnst")
+
+        self.final_showcase_multi   = self.dir_final + self._read_key("final_showcase_multi")
 
     ##################
     # run_ci_outflow #
@@ -633,8 +631,8 @@ class ToolsOutflow():
         # plot #
         ########
         ad       = [0.215,0.83,0.10,0.90]
-        ylim_ax1 = None#[np.max(spec_co_cone[spec_co_cone!=np.nan])*-0.1,np.max(spec_co_cone[spec_co_cone!=np.nan])*1.1]
-        ylim_ax2 = None#[np.max(spec_co_fov1[spec_co_fov1!=np.nan])*-0.1,np.max(spec_co_fov1[spec_co_cone!=np.nan])*1.1]
+        ylim_ax1 = None # [np.max(spec_co_cone[spec_co_cone!=np.nan])*-0.1,np.max(spec_co_cone[spec_co_cone!=np.nan])*1.1]
+        ylim_ax2 = None # [np.max(spec_co_fov1[spec_co_fov1!=np.nan])*-0.1,np.max(spec_co_fov1[spec_co_cone!=np.nan])*1.1]
 
         fig = plt.figure(figsize=(13,10))
         gs  = gridspec.GridSpec(nrows=10, ncols=10)
@@ -646,10 +644,10 @@ class ToolsOutflow():
         ax1.tick_params(labelbottom=False)
 
         # plot
-        ax1.plot([vel,vel], [0,0], "--",  lw=1, c="black")
+        ax1.plot([np.min(vel),np.max(vel)], [0,0], "--",  lw=1, c="black")
         ax1.plot(vel, spec_co_cone, "-",  lw=2, c="tomato")
         ax1.plot(vel, spec_ci_cone, "--", lw=2, c="tomato")
-        ax2.plot([vel,vel], [0,0], "--",  lw=1, c="black")
+        ax2.plot([np.min(vel),np.max(vel)], [0,0], "--",  lw=1, c="black")
         ax2.plot(vel, spec_co_fov1, "-",  lw=2, c="deepskyblue")
         ax2.plot(vel, spec_ci_fov1, "--", lw=2, c="deepskyblue")
 
@@ -1791,7 +1789,7 @@ class ToolsOutflow():
         cs = ax1.scatter(x3, y3, lw=0, c=r3, cmap="rainbow_r", s=40)
 
         # colorbar
-        cax = fig.add_axes([0.71, 0.15, 0.03, 0.3]) # fig.add_axes([0.75, 0.57, 0.03, 0.3])
+        cax = fig.add_axes([0.71, 0.13, 0.03, 0.34])
         cbar = plt.colorbar(cs, cax=cax)
         cbar.set_label("Distance (pc)")
         cbar.set_ticks([100,200,300,400,500])
