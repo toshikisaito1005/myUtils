@@ -30,19 +30,30 @@ usage:
 >     )
 > 
 > tl.run_ci_outflow(
->     do_prepare    = True, # align maps to the [CI](1-0) grid, and mask by [CI] FoVs
->     do_ratio_map  = True,
->     do_compare_7m = True,
->     plot_scatters = True,
->     plot_showcase = True,
->     plot_channel  = True,
+>     # prepare FITS
+>     do_prepare          = True,
+>     do_ratio_map        = True,
+>     # plot
+>     plot_scatters       = True,
+>     plot_showcase       = True,
+>     plot_channel        = True,
+>     do_modeling         = True,
+>     do_imagemagick      = True,
+>     # appendix
+>     plot_outflow_mom    = True,
+>     plot_showcase_multi = True,
+>     # suggested analysis
+>     plot_spectra        = True,
+>     # supplement (not published)
+>     do_compare_7m       = True,
 >     )
 > 
 > os.system("rm -rf *.last")
 
 paper drafts:
-Date         Filename                          To
-2021-06-04   draft_v0_210604.zip               Takano,Nakajima,Harada
+Date         Filename                To
+2021-06-04   draft_v0_210604.zip     Takano,Nakajima,Harada
+2021-11-25   draft_v1p5_211125.zip   all co-authors
 
 history:
 2021-04-22   start project, write README
@@ -54,6 +65,8 @@ history:
 2021-10-24   circulate v0.2 draft to the paper team
 2021-10-26   refactored align_maps
 2021-10-29   done all refactoring before v1 circular
+2021-11-05   v1 circular
+2021-11-24   start revision of draft and refactoring
 Toshiki Saito@Nichidai/NAOJ
 """
 
@@ -541,39 +554,69 @@ class ToolsOutflow():
         print("# imval_all for 2 cubes. Will take ~2x2 min.")
         print("# co cube")
         data_co, box = imval_all(self.outfits_cube_co10)
-        data_co = data_co["data"] * data_co["mask"]
+        data_co      = data_co["data"] * data_co["mask"]
 
         print("# ci cube")
         data_ci, _   = imval_all(self.outfits_cube_ci10)
-        data_ci = data_ci["data"] * data_ci["mask"]
+        data_ci      = data_ci["data"] * data_ci["mask"]
 
         data_coords  = imval(self.outfits_map_co10,box=box)["coords"]
 
-        # calculate relative distance from the center
-        ra_deg  = data_coords[:,:,0] * 180/np.pi - self.ra_agn
-        dec_deg = data_coords[:,:,1] * 180/np.pi - self.dec_agn
-        dist_as = np.sqrt(ra_deg**2 + dec_deg**2)
+        print(data_coords)
+
+        # calculate r,theta from the center
+        ra_deg       = data_coords[:,:,0] * 180/np.pi - self.ra_agn
+        dec_deg      = data_coords[:,:,1] * 180/np.pi - self.dec_agn
+        dist_as      = np.sqrt(ra_deg**2 + dec_deg**2)
+        theta_deg    = np.degrees(np.arctan2(ra_deg, dec_deg))
 
         # extract FoV-1 data
-        cut = np.where(dist_as<fov_radius,True,False)
-        data_co = data_co.transpose(2,0,1) * cut
-        data_ci = data_ci.transpose(2,0,1) * cut
+        cut          = np.where(dist_as<fov_radius,True,False)
 
-        data_co = np.where(data_co!=0,data_co,np.nan)
-        data_ci = np.where(data_ci!=0,data_ci,np.nan)
+        data_co      = data_co.transpose(2,0,1) * cut
+        data_ci      = data_ci.transpose(2,0,1) * cut
+
+        data_co      = np.where(data_co!=0,data_co,np.nan)
+        data_ci      = np.where(data_ci!=0,data_ci,np.nan)
 
         spec_co_fov1 = np.shape(np.nanmean(data_co,axis=(1,2)))
         spec_ci_fov1 = np.shape(np.nanmean(data_ci,axis=(1,2)))
 
-        print(np.shape(np.nanmean(data_co,axis=(1,2))))
-        print(np.shape(np.nanmean(data_ci,axis=(1,2))))
-
         ########################
-        # FoV-1 bicone spectra #
+        # FoV-1 bicone spectra # mask cubes using CI outflow mom0 map? or just bicone?
         ########################
-        # mask cubes using CI outflow mom0 map?
-        # imval
+        # extract bicone (not map-based)
+        cut1         = np.where((theta_deg>=-15)&(theta_deg<65)&(dist_as<fov_radius)&(dist_as>self.r_cnd_as),1,0)
+        cut2         = np.where((theta_deg>=165)&(dist_as<fov_radius)&(dist_as>self.r_cnd_as),1,0)
+        cut3         = np.where((theta_deg<-115)&(dist_as<fov_radius)&(dist_as>self.r_cnd_as),1,0)
+        cut          = cut1 + cut2 + cut3
 
+        data_co      = data_co * cut
+        data_ci      = data_ci * cut
+
+        data_co      = np.where(data_co!=0,data_co,np.nan)
+        data_ci      = np.where(data_ci!=0,data_ci,np.nan)
+
+        spec_co_cone = np.shape(np.nanmean(data_co,axis=(1,2)))
+        spec_ci_cone = np.shape(np.nanmean(data_ci,axis=(1,2)))
+
+        ########
+        # plot #
+        ########
+
+        fig = plt.figure(figsize=(13,10))
+        gs = gridspec.GridSpec(nrows=10, ncols=10)
+        ax1 = plt.subplot(gs[0:10,0:10])
+        ad = [0.215,0.83,0.10,0.90]
+        myax_set(ax1, "both", None, None, None, None, None, adjust=ad)
+
+        # plot
+        ax1.scatter(range(len(spec_co_fov1)), spec_co_fov1, "-",  lw=0, c="deepskyblue", s=20)
+        ax1.scatter(range(len(spec_ci_fov1)), spec_co_fov1, "--", lw=0, c="deepskyblue", s=20)
+        ax1.scatter(range(len(spec_co_cone)), spec_co_fov1, "-",  lw=0, c="tomato", s=20)
+        ax1.scatter(range(len(spec_ci_cone)), spec_co_fov1, "--", lw=0, c="tomato", s=20)
+
+        plt.savefig("test.png", dpi=self.fig_dpi)
 
     #####################
     # _panel_chan_model #
