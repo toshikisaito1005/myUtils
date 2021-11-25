@@ -564,6 +564,7 @@ class ToolsOutflow():
         data_ci      = data_ci["data"] * data_ci["mask"]
         """
 
+        data_co, box = imval_all(self.outfits_map_ci10)
         data_coords  = imval(self.outfits_map_ci10,box=box)["coords"]
         data_coords2 = imval(self.outfits_cube_ci10,box=box)["coords"]
 
