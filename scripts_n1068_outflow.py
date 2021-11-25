@@ -588,7 +588,7 @@ class ToolsOutflow():
         # FoV-1 bicone spectra # mask cubes using CI outflow mom0 map? or just bicone?
         ########################
         # extract bicone (not map-based)
-        cut1         = np.where((theta_deg>=-15)&(theta_deg<65)&(dist_as<fov_radius)&(dist_as>self.r_cnd_as),1,0)
+        cut1         = np.where((theta_deg>=-15)&(theta_deg<65)&(dist_as>self.r_cnd_as),1,0)
         cut2         = np.where((theta_deg>=165)&(dist_as<fov_radius)&(dist_as>self.r_cnd_as),1,0)
         cut3         = np.where((theta_deg<-115)&(dist_as<fov_radius)&(dist_as>self.r_cnd_as),1,0)
         cut          = cut1 + cut2 + cut3
@@ -612,6 +612,7 @@ class ToolsOutflow():
         ad = [0.215,0.83,0.10,0.90]
         myax_set(ax1, "both", None, None, None, None, None, adjust=ad)
 
+        print(np.sum(cut1))
         print(np.c_[vel,spec_co_fov1,spec_co_cone])
 
         # plot
