@@ -1,9 +1,47 @@
 """
 Python class for the NGC 1068 PCA project.
 
+requirements:
+CASA Version 5.4.0-70, ananlysisUtils, astropy
+
+data:
+TBE.
+
+usage:
+> import os
+> from scripts_n1068_hex_center import ToolsPCA as tools
+>
+> # key
+> tl = tools(
+>     refresh     = False,
+>     keyfile_gal = "/home02/saitots/myUtils/keys_n1068_hex_center/key_ngc1068.txt",
+>     keyfile_fig = "/home02/saitots/myUtils/keys_n1068_hex_center/key_figures.txt",
+>     )
+>
+> # main
+> tl.run_ngc1068_pca(
+>     # analysis
+>     do_prepare             = True,
+>     do_sampling            = True,
+>     do_pca                 = True,
+>     # plot
+>     plot_hexmap_pca        = True,
+>     plot_hexmap_pca_podium = True,
+>     plot_radial            = True,
+>     do_imagemagick         = True,
+>     # supplement
+>     plot_hexmap            = True,
+>     do_imagemagick_sub     = True,
+>     )
+>
+> os.system("rm -rf *.last")
+
+paper drafts:
+Date         Filename                To
+
 history:
 2021-11-10   created
-2021-11-14   pca analysis for mom0 and ratio and those mom0 maps
+2021-11-14   2DPCA analysis for mom0 maps
 2021-11-15   start drafting
 2021-11-22   implement LOWESS and bootstrap standard deviation
 Toshiki Saito@Nichidai/NAOJ
@@ -12,18 +50,15 @@ Toshiki Saito@Nichidai/NAOJ
 import os, sys, glob
 import numpy as np
 
-import mycasa_tasks as mytask
-reload(mytask)
-
-from mycasa_stacking import cube_stacking
 from mycasa_sampling import *
+from mycasa_lowess import *
+from mycasa_tasks import *
 from mycasa_plots import *
 from mycasa_pca import *
-from mycasa_lowess import *
 
-###########################
-### ToolsDense
-###########################
+############
+# ToolsPCA #
+############
 class ToolsPCA():
     """
     Class for the NGC 1068 PCA project.
@@ -1740,3 +1775,7 @@ class ToolsPCA():
         value    = values[np.where(keywords==key)[0][0]]
 
         return value
+
+###################
+# end of ToolsPCA #
+###################

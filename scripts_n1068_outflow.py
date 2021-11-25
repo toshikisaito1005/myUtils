@@ -22,13 +22,14 @@ ancillary VLA FITS    https://archive.nrao.edu/archive/archiveimage.html
 usage:
 > import os
 > from scripts_n1068_outflow import ToolsOutflow as tools
-> 
+>
+> # key
 > tl = tools(
 >     refresh     = False,
 >     keyfile_gal = "/home02/saitots/myUtils/keys_n1068_outflow/key_ngc1068.txt",
 >     keyfile_fig = "/home02/saitots/myUtils/keys_n1068_outflow/key_figures.txt",
 >     )
-> 
+>
 > tl.run_ci_outflow(
 >     # prepare FITS
 >     do_prepare          = True,
@@ -47,7 +48,7 @@ usage:
 >     # supplement (not published)
 >     do_compare_7m       = True,
 >     )
-> 
+>
 > os.system("rm -rf *.last")
 
 paper drafts:
@@ -58,7 +59,7 @@ Date         Filename                To
 history:
 2021-04-22   start project, write README
 2021-05-17   start to create paper-ready figures
-2021-05-26   start writing draft
+2021-05-26   start drafting
 2021-06-04   circulate v0 draft to the paper team
 2021-06-25   move to ADC due to issues with new laptop
 2021-08-06   created
@@ -73,13 +74,13 @@ Toshiki Saito@Nichidai/NAOJ
 import os, sys, glob
 import numpy as np
 
-from mycasa_tasks import *
 from mycasa_sampling import *
+from mycasa_tasks import *
 from mycasa_plots import *
 
-###########################
-### ToolsDense
-###########################
+##############
+# ToolsDense #
+##############
 class ToolsOutflow():
     """
     Class for the NGC 1068 CI outflow project.
@@ -590,8 +591,8 @@ class ToolsOutflow():
          # get CI outflow mom0 map
         run_importfits(self.outfits_map_ci10,"template.image2")
         run_imregrid(self.outfits_ci10_outflow_mom0,"template.image2","template.image",axes=[0,1])
-        os.system("rm -rf template.image2")
-        cut, _       = imval_all(self.outfits_cube_co10)
+        cut, _       = imval_all("template.image")
+        os.system("rm -rf template.image template.image2")
 
         # extract outflow
         cut          = np.where(cut>0,True,False)
@@ -631,69 +632,6 @@ class ToolsOutflow():
         ax2.plot(vel, spec_ci_fov1, "--", lw=2, c="deepskyblue")
 
         plt.savefig("test.png", dpi=self.fig_dpi)
-
-    #####################
-    # _panel_chan_model #
-    #####################
-
-    def _panel_chan_model(
-        self,
-        png_list_ready,
-        outfilename,
-        delin,
-        ):
-        combine_two_png(
-            png_list_ready[8],
-            png_list_ready[0],
-            outfilename + "_tmp1.png",
-            box1         = "10000x100000+0+0",
-            box2         = "10000x100000+0+0",
-            delin        = delin,
-            )
-        combine_two_png(
-            png_list_ready[7],
-            png_list_ready[1],
-            outfilename + "_tmp2.png",
-            box1         = "10000x100000+0+0",
-            box2         = "10000x100000+0+0",
-            delin        = delin,
-            )
-        combine_two_png(
-            png_list_ready[6],
-            png_list_ready[2],
-            outfilename + "_tmp3.png",
-            box1         = "10000x100000+0+0",
-            box2         = "10000x100000+0+0",
-            delin        = delin,
-            )
-        combine_two_png(
-            png_list_ready[5],
-            png_list_ready[3],
-            outfilename + "_tmp4.png",
-            box1         = "10000x100000+0+0",
-            box2         = "10000x100000+0+0",
-            delin        = delin,
-            )
-        combine_two_png(
-            outfilename + "_tmp1.png",
-            outfilename + "_tmp2.png",
-            outfilename + "_tmp12.png",
-            box1         = "10000x100000+0+0",
-            box2         = "10000x100000+0+0",
-            delin        = delin,
-            axis         = "column",
-            )
-        combine_three_png(
-            outfilename + "_tmp12.png",
-            outfilename + "_tmp3.png",
-            outfilename + "_tmp4.png",
-            outfilename,
-            box1         = "10000x100000+0+0",
-            box2         = "10000x100000+0+0",
-            box3         = "10000x100000+0+0",
-            delin        = delin,
-            axis         = "column",
-            )
 
     ##################
     # showcase_multi #
@@ -1436,51 +1374,6 @@ class ToolsOutflow():
             plot_line = True,
             )
 
-    def _plot_scatters(
-        self,
-        output,
-        x1, y1,
-        x2, y2,
-        x3, y3, r3,
-        xlabel, ylabel, title,
-        xlim, ylim,
-        plot_line = True,
-        ):
-
-        fig = plt.figure(figsize=(13,10))
-        gs = gridspec.GridSpec(nrows=10, ncols=10)
-        ax1 = plt.subplot(gs[0:10,0:10])
-        ad = [0.215,0.83,0.10,0.90]
-        myax_set(ax1, "both", xlim, ylim, title, xlabel, ylabel, adjust=ad)
-
-        # plot
-        ax1.scatter(x1, y1, lw=0, c="gray", s=20)
-        ax1.scatter(x2, y2, lw=0, c="black", s=40)
-        cs = ax1.scatter(x3, y3, lw=0, c=r3, cmap="rainbow_r", s=40)
-
-        # colorbar
-        cax = fig.add_axes([0.71, 0.15, 0.03, 0.3]) # fig.add_axes([0.75, 0.57, 0.03, 0.3])
-        cbar = plt.colorbar(cs, cax=cax)
-        cbar.set_label("Distance (pc)")
-        cbar.set_ticks([100,200,300,400,500])
-
-        # plot line
-        if plot_line==True:
-            ax1.plot([-1.0,8.0], [-1.0,8.0], "k-", lw=2)
-            ax1.plot([-1,8.0], [-1.30103,7.69897], "k-", lw=2)
-            ax1.plot([-1.0,8.0], [-2.0,7.0], "k-", lw=2)
-            ax1.text(3.42,3.41,"1:1",rotation=51.34,horizontalalignment="right")
-            ax1.text(3.42,3.12,"1:0.5",rotation=51.34,horizontalalignment="right")
-            ax1.text(3.42,2.43,"1:0.1",rotation=51.34,horizontalalignment="right")
-
-        # text
-        ax1.text(0.05,0.92,"FoV-1 Cone (colorized)",transform=ax1.transAxes)
-        ax1.text(0.05,0.87,"FoV-1 Non-cone (black)",transform=ax1.transAxes)
-        ax1.text(0.05,0.82,"FoV-2 (grey)",transform=ax1.transAxes)
-        ax1.text(0.05,0.77,"FoV-3 (grey)",transform=ax1.transAxes)
-
-        plt.savefig(output, dpi=self.fig_dpi)
-
     ####################
     # compare_7m_cubes #
     ####################
@@ -1846,6 +1739,118 @@ class ToolsOutflow():
         run_exportfits(self.out_map_av,self.outfits_map_av,True,True,True)
         run_exportfits(self.out_map_oiii,self.outfits_map_oiii,True,True,True)
         run_exportfits(self.out_map_radio,self.outfits_map_radio,True,True,True)
+
+    ##################
+    # _plot_scatters #
+    ##################
+
+    def _plot_scatters(
+        self,
+        output,
+        x1, y1,
+        x2, y2,
+        x3, y3, r3,
+        xlabel, ylabel, title,
+        xlim, ylim,
+        plot_line = True,
+        ):
+
+        fig = plt.figure(figsize=(13,10))
+        gs = gridspec.GridSpec(nrows=10, ncols=10)
+        ax1 = plt.subplot(gs[0:10,0:10])
+        ad = [0.215,0.83,0.10,0.90]
+        myax_set(ax1, "both", xlim, ylim, title, xlabel, ylabel, adjust=ad)
+
+        # plot
+        ax1.scatter(x1, y1, lw=0, c="gray", s=20)
+        ax1.scatter(x2, y2, lw=0, c="black", s=40)
+        cs = ax1.scatter(x3, y3, lw=0, c=r3, cmap="rainbow_r", s=40)
+
+        # colorbar
+        cax = fig.add_axes([0.71, 0.15, 0.03, 0.3]) # fig.add_axes([0.75, 0.57, 0.03, 0.3])
+        cbar = plt.colorbar(cs, cax=cax)
+        cbar.set_label("Distance (pc)")
+        cbar.set_ticks([100,200,300,400,500])
+
+        # plot line
+        if plot_line==True:
+            ax1.plot([-1.0,8.0], [-1.0,8.0], "k-", lw=2)
+            ax1.plot([-1,8.0], [-1.30103,7.69897], "k-", lw=2)
+            ax1.plot([-1.0,8.0], [-2.0,7.0], "k-", lw=2)
+            ax1.text(3.42,3.41,"1:1",rotation=51.34,horizontalalignment="right")
+            ax1.text(3.42,3.12,"1:0.5",rotation=51.34,horizontalalignment="right")
+            ax1.text(3.42,2.43,"1:0.1",rotation=51.34,horizontalalignment="right")
+
+        # text
+        ax1.text(0.05,0.92,"FoV-1 Cone (colorized)",transform=ax1.transAxes)
+        ax1.text(0.05,0.87,"FoV-1 Non-cone (black)",transform=ax1.transAxes)
+        ax1.text(0.05,0.82,"FoV-2 (grey)",transform=ax1.transAxes)
+        ax1.text(0.05,0.77,"FoV-3 (grey)",transform=ax1.transAxes)
+
+        plt.savefig(output, dpi=self.fig_dpi)
+
+    #####################
+    # _panel_chan_model #
+    #####################
+
+    def _panel_chan_model(
+        self,
+        png_list_ready,
+        outfilename,
+        delin,
+        ):
+        combine_two_png(
+            png_list_ready[8],
+            png_list_ready[0],
+            outfilename + "_tmp1.png",
+            box1         = "10000x100000+0+0",
+            box2         = "10000x100000+0+0",
+            delin        = delin,
+            )
+        combine_two_png(
+            png_list_ready[7],
+            png_list_ready[1],
+            outfilename + "_tmp2.png",
+            box1         = "10000x100000+0+0",
+            box2         = "10000x100000+0+0",
+            delin        = delin,
+            )
+        combine_two_png(
+            png_list_ready[6],
+            png_list_ready[2],
+            outfilename + "_tmp3.png",
+            box1         = "10000x100000+0+0",
+            box2         = "10000x100000+0+0",
+            delin        = delin,
+            )
+        combine_two_png(
+            png_list_ready[5],
+            png_list_ready[3],
+            outfilename + "_tmp4.png",
+            box1         = "10000x100000+0+0",
+            box2         = "10000x100000+0+0",
+            delin        = delin,
+            )
+        combine_two_png(
+            outfilename + "_tmp1.png",
+            outfilename + "_tmp2.png",
+            outfilename + "_tmp12.png",
+            box1         = "10000x100000+0+0",
+            box2         = "10000x100000+0+0",
+            delin        = delin,
+            axis         = "column",
+            )
+        combine_three_png(
+            outfilename + "_tmp12.png",
+            outfilename + "_tmp3.png",
+            outfilename + "_tmp4.png",
+            outfilename,
+            box1         = "10000x100000+0+0",
+            box2         = "10000x100000+0+0",
+            box3         = "10000x100000+0+0",
+            delin        = delin,
+            axis         = "column",
+            )
 
     ##################
     # _align_one_map #
@@ -2248,3 +2253,7 @@ class ToolsOutflow():
         value    = values[np.where(keywords==key)[0][0]]
 
         return value
+
+#####################
+# end of ToolsDense #
+#####################
