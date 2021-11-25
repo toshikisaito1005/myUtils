@@ -552,6 +552,7 @@ class ToolsOutflow():
         #####################
         # all FoV-1 spectra #
         #####################
+        """
         # import
         print("# imval_all for 3 cubes. Will take ~2x3 min.")
         print("# co cube")
@@ -561,6 +562,7 @@ class ToolsOutflow():
         print("# ci cube")
         data_ci, _   = imval_all(self.outfits_cube_ci10)
         data_ci      = data_ci["data"] * data_ci["mask"]
+        """
 
         data_coords  = imval(self.outfits_map_ci10,box=box)["coords"]
         data_coords2 = imval(self.outfits_cube_ci10,box=box)["coords"]
@@ -572,6 +574,12 @@ class ToolsOutflow():
         dist_as      = np.sqrt(ra_deg**2 + dec_deg**2)
         theta_deg    = np.degrees(np.arctan2(ra_deg, dec_deg))
 
+        print(np.min(theta_deg),np.max(theta_deg))
+        print(np.where((theta_deg>=-15)&(theta_deg<65)&(dist_as>self.r_cnd_as),True,False))
+        print(np.where((theta_deg>=-15)&(theta_deg<65),True,False))
+        print(np.where((theta_deg>=-15),True,False))
+
+        """
         # extract FoV-1 data
         cut          = np.where(dist_as<fov_radius,True,False)
 
@@ -588,13 +596,13 @@ class ToolsOutflow():
         # FoV-1 bicone spectra # mask cubes using CI outflow mom0 map? or just bicone?
         ########################
         # extract bicone (not map-based)
-        cut1         = np.where((theta_deg>=-15)&(theta_deg<65)&(dist_as>self.r_cnd_as),1,0)
-        cut2         = np.where((theta_deg>=165)&(dist_as<fov_radius)&(dist_as>self.r_cnd_as),1,0)
-        cut3         = np.where((theta_deg<-115)&(dist_as<fov_radius)&(dist_as>self.r_cnd_as),1,0)
+        cut1         = np.where((theta_deg>=-15)&(theta_deg<65)&(dist_as>self.r_cnd_as),True,False)
+        cut2         = np.where((theta_deg>=165)&(dist_as<fov_radius)&(dist_as>self.r_cnd_as),True,False)
+        cut3         = np.where((theta_deg<-115)&(dist_as<fov_radius)&(dist_as>self.r_cnd_as),True,False)
         cut          = cut1 + cut2 + cut3
 
-        data_co      = data_co * cut1
-        data_ci      = data_ci * cut1
+        data_co      = data_co * cut
+        data_ci      = data_ci * cut
 
         data_co      = np.where(data_co!=0,data_co,np.nan)
         data_ci      = np.where(data_ci!=0,data_ci,np.nan)
@@ -608,20 +616,21 @@ class ToolsOutflow():
 
         fig = plt.figure(figsize=(13,10))
         gs = gridspec.GridSpec(nrows=10, ncols=10)
-        ax1 = plt.subplot(gs[0:10,0:10])
+        ax1 = plt.subplot(gs[0:5,0:10])
+        ax2 = plt.subplot(gs[5:10,0:10], sharex=ax1)
         ad = [0.215,0.83,0.10,0.90]
         myax_set(ax1, "both", None, None, None, None, None, adjust=ad)
 
-        print(np.sum(cut1))
         print(np.c_[vel,spec_co_fov1,spec_co_cone])
 
         # plot
-        ax1.plot(vel, spec_co_fov1, "-",  lw=2, c="deepskyblue")
-        ax1.plot(vel, spec_ci_fov1, "--", lw=2, c="deepskyblue")
         ax1.plot(vel, spec_co_cone, "-",  lw=2, c="tomato")
         ax1.plot(vel, spec_ci_cone, "--", lw=2, c="tomato")
+        ax2.plot(vel, spec_co_fov1, "-",  lw=2, c="deepskyblue")
+        ax2.plot(vel, spec_ci_fov1, "--", lw=2, c="deepskyblue")
 
         plt.savefig("test.png", dpi=self.fig_dpi)
+        """
 
     #####################
     # _panel_chan_model #
