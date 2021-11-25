@@ -562,8 +562,7 @@ class ToolsOutflow():
 
         data_coords  = imval(self.outfits_map_co10,box=box)["coords"]
 
-        print(data_coords[:,:,2])
-        print(data_coords[:,:,3])
+        print(data_coords[:,:,:,1])
 
         # calculate r,theta from the center
         ra_deg       = data_coords[:,:,0] * 180/np.pi - self.ra_agn
