@@ -32,21 +32,22 @@ usage:
 >
 > tl.run_ci_outflow(
 >     # prepare FITS
->     do_prepare          = True,
->     do_ratio_map        = True,
+>     do_prepare          = False,
+>     do_ratio_map        = False,
 >     # plot
->     plot_scatters       = True,
->     plot_showcase       = True,
->     plot_channel        = True,
->     do_modeling         = True,
->     do_imagemagick      = True,
+>     plot_scatters       = False,
+>     plot_showcase       = False,
+>     plot_channel        = False,
+>     do_modeling         = False,
 >     # appendix
->     plot_outflow_mom    = True,
->     plot_showcase_multi = True,
+>     plot_outflow_mom    = False,
+>     plot_showcase_multi = False,
 >     # suggested analysis
 >     plot_spectra        = True,
->     # supplement (not published)
->     do_compare_7m       = True,
+>     # supplement
+>     do_compare_7m       = False,
+>     # summarize
+>     do_imagemagick      = True,
 >     )
 >
 > os.system("rm -rf *.last")
@@ -113,18 +114,18 @@ class ToolsOutflow():
             self.modname = "ToolsOutflow."
             
             # get directories
-            self.dir_proj = self._read_key("dir_proj")
-            self.dir_raw_co = self.dir_proj + self._read_key("dir_raw_co")
-            self.dir_raw_ci = self.dir_proj + self._read_key("dir_raw_ci")
-            self.dir_hst = self.dir_proj + self._read_key("dir_hst")
-            self.dir_vla = self.dir_proj + self._read_key("dir_vla")
-            self.dir_magnum = self.dir_proj + self._read_key("dir_magnum")
-            self.dir_7m = self.dir_proj + "data_raw/b8_7m_ci10_indiv_cube/"
+            self.dir_proj     = self._read_key("dir_proj")
+            self.dir_raw_co   = self.dir_proj + self._read_key("dir_raw_co")
+            self.dir_raw_ci   = self.dir_proj + self._read_key("dir_raw_ci")
+            self.dir_hst      = self.dir_proj + self._read_key("dir_hst")
+            self.dir_vla      = self.dir_proj + self._read_key("dir_vla")
+            self.dir_magnum   = self.dir_proj + self._read_key("dir_magnum")
+            self.dir_7m       = self.dir_proj + "data_raw/b8_7m_ci10_indiv_cube/"
 
-            self.dir_ready = self.dir_proj + self._read_key("dir_ready")
+            self.dir_ready    = self.dir_proj + self._read_key("dir_ready")
             self.dir_products = self.dir_proj + self._read_key("dir_products")
-            self.dir_chan = self.dir_proj + self._read_key("dir_chan")
-            self.dir_final = self.dir_proj + self._read_key("dir_final")
+            self.dir_chan     = self.dir_proj + self._read_key("dir_chan")
+            self.dir_final    = self.dir_proj + self._read_key("dir_final")
 
             self._create_dir(self.dir_ready)
             self._create_dir(self.dir_products)
@@ -132,54 +133,54 @@ class ToolsOutflow():
             self._create_dir(self.dir_final)
 
             # input maps
-            self.image_co10 = self.dir_raw_co + self._read_key("image_co10")
-            self.image_ci10 = self.dir_raw_ci + self._read_key("image_ci10")
-            self.image_eco10 = self.dir_raw_co + self._read_key("image_eco10")
-            self.image_eci10 = self.dir_raw_ci + self._read_key("image_eci10")
+            self.image_co10    = self.dir_raw_co + self._read_key("image_co10")
+            self.image_ci10    = self.dir_raw_ci + self._read_key("image_ci10")
+            self.image_eco10   = self.dir_raw_co + self._read_key("image_eco10")
+            self.image_eci10   = self.dir_raw_ci + self._read_key("image_eci10")
             self.image_siiisii = self.dir_magnum + self._read_key("image_siiisii")
-            self.image_av = self.dir_magnum + self._read_key("image_av")
-            self.image_oiii = self.dir_hst + self._read_key("hst_oiii")
-            self.image_vla = self.dir_vla + self._read_key("vla_radio")
+            self.image_av      = self.dir_magnum + self._read_key("image_av")
+            self.image_oiii    = self.dir_hst + self._read_key("hst_oiii")
+            self.image_vla     = self.dir_vla + self._read_key("vla_radio")
 
-            self.cube_co10 = self.dir_raw_co + self._read_key("cube_co10")
-            self.cube_ci10 = self.dir_raw_ci + self._read_key("cube_ci10")
-            self.ncube_co10 = self.dir_raw_co + self._read_key("ncube_co10")
-            self.ncube_ci10 = self.dir_raw_ci + self._read_key("ncube_ci10")
+            self.cube_co10     = self.dir_raw_co + self._read_key("cube_co10")
+            self.cube_ci10     = self.dir_raw_ci + self._read_key("cube_ci10")
+            self.ncube_co10    = self.dir_raw_co + self._read_key("ncube_co10")
+            self.ncube_ci10    = self.dir_raw_ci + self._read_key("ncube_ci10")
 
             # output maps
-            self.out_map_co10 = self.dir_ready + self._read_key("out_map_co10")
-            self.out_map_ci10 = self.dir_ready + self._read_key("out_map_ci10")
-            self.out_map_eco10 = self.dir_ready + self._read_key("out_map_eco10")
-            self.out_map_eci10 = self.dir_ready + self._read_key("out_map_eci10")
-            self.out_map_cico = self.dir_ready + self._read_key("out_map_cico")
-            self.out_cube_co10 = self.dir_ready + self._read_key("out_cube_co10")
-            self.out_cube_ci10 = self.dir_ready + self._read_key("out_cube_ci10")
-            self.out_cube_cico = self.dir_ready + self._read_key("out_cube_cico")
-            self.out_ncube_co10 = self.dir_ready + self._read_key("out_ncube_co10")
-            self.out_ncube_ci10 = self.dir_ready + self._read_key("out_ncube_ci10")
-            self.out_map_av = self.dir_ready + self._read_key("out_map_av")
-            self.out_map_oiii = self.dir_ready + self._read_key("out_map_oiii")
-            self.out_map_radio = self.dir_ready + self._read_key("out_map_radio")
-            self.out_map_siiisii = self.dir_ready + self._read_key("out_map_siiisii")
+            self.out_map_co10        = self.dir_ready + self._read_key("out_map_co10")
+            self.out_map_ci10        = self.dir_ready + self._read_key("out_map_ci10")
+            self.out_map_eco10       = self.dir_ready + self._read_key("out_map_eco10")
+            self.out_map_eci10       = self.dir_ready + self._read_key("out_map_eci10")
+            self.out_map_cico        = self.dir_ready + self._read_key("out_map_cico")
+            self.out_cube_co10       = self.dir_ready + self._read_key("out_cube_co10")
+            self.out_cube_ci10       = self.dir_ready + self._read_key("out_cube_ci10")
+            self.out_cube_cico       = self.dir_ready + self._read_key("out_cube_cico")
+            self.out_ncube_co10      = self.dir_ready + self._read_key("out_ncube_co10")
+            self.out_ncube_ci10      = self.dir_ready + self._read_key("out_ncube_ci10")
+            self.out_map_av          = self.dir_ready + self._read_key("out_map_av")
+            self.out_map_oiii        = self.dir_ready + self._read_key("out_map_oiii")
+            self.out_map_radio       = self.dir_ready + self._read_key("out_map_radio")
+            self.out_map_siiisii     = self.dir_ready + self._read_key("out_map_siiisii")
 
-            self.outfits_map_co10 = self.out_map_co10.replace(".image",".fits")
-            self.outfits_map_ci10 = self.out_map_ci10.replace(".image",".fits")
-            self.outfits_map_eco10 = self.out_map_eco10.replace(".image",".fits")
-            self.outfits_map_eci10 = self.out_map_eci10.replace(".image",".fits")
-            self.outfits_map_cico = self.out_map_cico.replace(".image",".fits")
-            self.outfits_cube_co10 = self.out_cube_co10.replace(".cube","_cube.fits")
-            self.outfits_cube_ci10 = self.out_cube_ci10.replace(".cube","_cube.fits")
-            self.outfits_cube_cico = self.out_cube_cico.replace(".cube","_cube.fits")
-            self.outfits_ncube_co10 =self.out_ncube_co10.replace(".cube.noise","_cube_err.fits")
-            self.outfits_ncube_ci10 =self.out_ncube_ci10.replace(".cube.noise","_cube_err.fits")
-            self.outfits_map_av = self.out_map_av.replace(".image",".fits")
-            self.outfits_map_oiii = self.out_map_oiii.replace(".image",".fits")
-            self.outfits_map_radio = self.out_map_radio.replace(".image",".fits")
+            self.outfits_map_co10    = self.out_map_co10.replace(".image",".fits")
+            self.outfits_map_ci10    = self.out_map_ci10.replace(".image",".fits")
+            self.outfits_map_eco10   = self.out_map_eco10.replace(".image",".fits")
+            self.outfits_map_eci10   = self.out_map_eci10.replace(".image",".fits")
+            self.outfits_map_cico    = self.out_map_cico.replace(".image",".fits")
+            self.outfits_cube_co10   = self.out_cube_co10.replace(".cube","_cube.fits")
+            self.outfits_cube_ci10   = self.out_cube_ci10.replace(".cube","_cube.fits")
+            self.outfits_cube_cico   = self.out_cube_cico.replace(".cube","_cube.fits")
+            self.outfits_ncube_co10  = self.out_ncube_co10.replace(".cube.noise","_cube_err.fits")
+            self.outfits_ncube_ci10  = self.out_ncube_ci10.replace(".cube.noise","_cube_err.fits")
+            self.outfits_map_av      = self.out_map_av.replace(".image",".fits")
+            self.outfits_map_oiii    = self.out_map_oiii.replace(".image",".fits")
+            self.outfits_map_radio   = self.out_map_radio.replace(".image",".fits")
             self.outfits_map_siiisii = self.out_map_siiisii.replace(".image",".fits")
 
-            self.outfits_cube_ci10_rebin = \
+            self.outfits_cube_ci10_rebin   = \
                 self.out_cube_ci10.replace(".cube","_cube_rebin.fits")
-            self.outfits_cube_cico_rebin = \
+            self.outfits_cube_cico_rebin   = \
                 self.out_cube_cico.replace(".cube","_cube_rebin.fits")
             self.outfits_ci10_outflow_mom0 = self.dir_ready + \
                 self._read_key("out_ci10_outflow_mom0").replace(".image",".fits")
@@ -187,34 +188,34 @@ class ToolsOutflow():
                 self._read_key("out_ci10_outflow_mom1").replace(".image",".fits")
 
             # get ngc1068 properties
-            self.ra_agn_str = self._read_key("ra_agn", "gal")
-            self.ra_agn     = float(self.ra_agn_str.replace("deg",""))
+            self.ra_agn_str  = self._read_key("ra_agn", "gal")
+            self.ra_agn      = float(self.ra_agn_str.replace("deg",""))
 
             self.dec_agn_str = self._read_key("dec_agn", "gal")
             self.dec_agn     = float(self.dec_agn_str.replace("deg",""))
 
-            self.pa        = float(self._read_key("pa", "gal"))
-            self.incl      = float(self._read_key("incl", "gal"))
-            self.scale_pc  = float(self._read_key("scale", "gal"))
-            self.scale_kpc = float(self._read_key("scale", "gal")) / 1000.
+            self.pa          = float(self._read_key("pa", "gal"))
+            self.incl        = float(self._read_key("incl", "gal"))
+            self.scale_pc    = float(self._read_key("scale", "gal"))
+            self.scale_kpc   = float(self._read_key("scale", "gal")) / 1000.
             
             # input parameters
-            self.fov_radius = float(self._read_key("fov_radius_as")) * self.scale_pc
+            self.fov_radius  = float(self._read_key("fov_radius_as")) * self.scale_pc
 
-            self.snr_cube  = float(self._read_key("snr_cube"))
-            self.snr_ratio = float(self._read_key("snr_ratio"))
-            self.snr_chan  = float(self._read_key("snr_chan"))
+            self.snr_cube    = float(self._read_key("snr_cube"))
+            self.snr_ratio   = float(self._read_key("snr_ratio"))
+            self.snr_chan    = float(self._read_key("snr_chan"))
 
             l = self._read_key("imrebin_factor")
             self.imrebin_factor = [int(s) for s in l.split(",")]
 
-            self.r_cnd    = float(self._read_key("r_cnd_as")) * self.scale_kpc
-            self.r_cnd_as = float(self._read_key("r_cnd_as"))
-            self.r_sbr    =float(self._read_key("r_sbr_as")) * self.scale_kpc
+            self.r_cnd       = float(self._read_key("r_cnd_as")) * self.scale_kpc
+            self.r_cnd_as    = float(self._read_key("r_cnd_as"))
+            self.r_sbr       = float(self._read_key("r_sbr_as")) * self.scale_kpc
 
             l = self._read_key("chans_num")
-            self.chans_num = [int(s) for s in l.split(",")]
-            self.chans_text = self._read_key("chans_text").split(",")
+            self.chans_num   = [int(s) for s in l.split(",")]
+            self.chans_text  = self._read_key("chans_text").split(",")
             self.chans_color = self._read_key("chans_color").split(",")
 
             self.restfreq_ci = 492.16065100 # GHz
@@ -240,32 +241,32 @@ class ToolsOutflow():
             self.model_velindex     = 0.35 # decomission
 
             # output txt and png
-            self.outtxt_slopes_7m = self.dir_products + self._read_key("txt_slopes")
-            self.outpng_slopes_7m = self.dir_products + self._read_key("png_slopes")
+            self.outtxt_slopes_7m     = self.dir_products + self._read_key("txt_slopes")
+            self.outpng_slopes_7m     = self.dir_products + self._read_key("png_slopes")
 
-            self.outpng_ci_vs_co = self.dir_products + self._read_key("png_ci_vs_co")
+            self.outpng_ci_vs_co      = self.dir_products + self._read_key("png_ci_vs_co")
             self.outpng_cico_vs_siiisii = \
                 self.dir_products + self._read_key("png_cico_vs_siiisii")
 
-            self.imsize_as       = float(self._read_key("imsize_as"))
-            self.outpng_map_ci   = self.dir_products + self._read_key("png_map_ci")
-            self.outpng_map_co   = self.dir_products + self._read_key("png_map_co")
-            self.outpng_map_cico = self.dir_products + self._read_key("png_map_cico")
+            self.imsize_as            = float(self._read_key("imsize_as"))
+            self.outpng_map_ci        = self.dir_products + self._read_key("png_map_ci")
+            self.outpng_map_co        = self.dir_products + self._read_key("png_map_co")
+            self.outpng_map_cico      = self.dir_products + self._read_key("png_map_cico")
 
-            self.outpng_outflow_chans = \
-                self.dir_products + self._read_key("png_outflow_chans")
+            self.outpng_outflow_chans = self.dir_products + self._read_key("png_outflow_chans")
 
-            self.png_outflow_model = \
-                self.dir_chan + self._read_key("png_outflow_model")
+            self.png_outflow_model    = self.dir_chan + self._read_key("png_outflow_model")
+
+            self.png_spectra          = self.dir_products + self._read_key("png_spectra")
 
             # appendix
             self.outpng_outflow_mom0 = \
                 self.dir_products + self._read_key("png_outflow_mom0")
             self.outpng_outflow_mom1 = \
                 self.dir_products + self._read_key("png_outflow_mom1")
-            self.png_map_oiii    = self.dir_products + self._read_key("png_map_oiii")
-            self.png_map_vla     = self.dir_products + self._read_key("png_map_vla")
-            self.png_map_siiisii = self.dir_products + self._read_key("png_map_siiisii")
+            self.png_map_oiii        = self.dir_products + self._read_key("png_map_oiii")
+            self.png_map_vla         = self.dir_products + self._read_key("png_map_vla")
+            self.png_map_siiisii     = self.dir_products + self._read_key("png_map_siiisii")
 
             # final products
             self.final_showcase = self.dir_final + self._read_key("final_showcase")
@@ -388,7 +389,7 @@ class ToolsOutflow():
             combine_three_png(
                 self.outpng_ci_vs_co,
                 self.outpng_cico_vs_siiisii,
-                self.outpng_ci_vs_co, # to be replaced
+                self.png_spectra,
                 self.final_showcase+"_tmp2.png",
                 self.box_map,
                 self.box_map,
@@ -619,8 +620,8 @@ class ToolsOutflow():
         # plot #
         ########
         ad       = [0.215,0.83,0.10,0.90]
-        ylim_ax1 = [np.max(spec_co_cone)*-0.1,np.max(spec_co_cone)*1.1]
-        ylim_ax2 = [np.max(spec_co_fov1)*-0.1,np.max(spec_co_fov1)*1.1]
+        ylim_ax1 = [np.max(spec_co_cone[spec_co_cone!=np.nan])*-0.1,np.max(spec_co_cone[spec_co_cone!=np.nan])*1.1]
+        ylim_ax2 = [np.max(spec_co_fov1[spec_co_fov1!=np.nan])*-0.1,np.max(spec_co_fov1[spec_co_cone!=np.nan])*1.1]
 
         fig = plt.figure(figsize=(13,10))
         gs  = gridspec.GridSpec(nrows=10, ncols=10)
@@ -640,7 +641,8 @@ class ToolsOutflow():
         ax2.plot(vel, spec_ci_fov1, "--", lw=2, c="deepskyblue")
 
         plt.subplots_adjust(hspace=.0)
-        plt.savefig("test.png", dpi=self.fig_dpi)
+        os.system("rm -rf " + self.png_spectra)
+        plt.savefig(self.png_spectra, dpi=self.fig_dpi)
 
     ##################
     # showcase_multi #
