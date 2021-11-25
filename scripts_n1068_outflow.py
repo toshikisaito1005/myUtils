@@ -560,20 +560,21 @@ class ToolsOutflow():
         data_ci, _   = imval_all(self.outfits_cube_ci10)
         data_ci      = data_ci["data"] * data_ci["mask"]
 
-        data_coords  = imval(self.outfits_cube_ci10,box=box)["coords"]
+        data_coords  = imval(self.outfits_ci10,box=box)["coords"]
+        data_coords2 = imval(self.outfits_cube_ci10,box=box)["coords"]
 
         # calculate r,theta from the center
         ra_deg       = data_coords[:,:,0] * 180/np.pi - self.ra_agn
         dec_deg      = data_coords[:,:,1] * 180/np.pi - self.dec_agn
-        obsfreq      = data_coords[:,:,2]
+        obsfreq      = data_coords2[:,:,2]
         dist_as      = np.sqrt(ra_deg**2 + dec_deg**2)
         theta_deg    = np.degrees(np.arctan2(ra_deg, dec_deg))
 
         # extract FoV-1 data
         cut          = np.where(dist_as<fov_radius,True,False)
 
-        data_co      = data_co * cut
-        data_ci      = data_ci * cut
+        data_co      = data_co.transpose(2,0,1) * cut
+        data_ci      = data_ci.transpose(2,0,1) * cut
 
         data_co      = np.where(data_co!=0,data_co,np.nan)
         data_ci      = np.where(data_ci!=0,data_ci,np.nan)
