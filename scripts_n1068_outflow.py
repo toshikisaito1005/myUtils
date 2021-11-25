@@ -560,7 +560,7 @@ class ToolsOutflow():
         data_ci, _   = imval_all(self.outfits_cube_ci10)
         data_ci      = data_ci["data"] * data_ci["mask"]
 
-        data_coords  = imval(self.outfits_ci10,box=box)["coords"]
+        data_coords  = imval(self.outfits_map_ci10,box=box)["coords"]
         data_coords2 = imval(self.outfits_cube_ci10,box=box)["coords"]
 
         # calculate r,theta from the center
