@@ -642,7 +642,7 @@ class ToolsOutflow():
         ########
         ad       = [0.215,0.83,0.10,0.90]
         ylim_ax1 = [-0.180,1.800] # [np.max(spec_co_cone[spec_co_cone!=np.nan])*-0.1,np.max(spec_co_cone[spec_co_cone!=np.nan])*1.1]
-        ylim_ax2 = [-0.065,0.650] # [np.max(spec_co_fov1[spec_co_fov1!=np.nan])*-0.1,np.max(spec_co_fov1[spec_co_cone!=np.nan])*1.1]
+        ylim_ax2 = [-0.069,0.690] # [np.max(spec_co_fov1[spec_co_fov1!=np.nan])*-0.1,np.max(spec_co_fov1[spec_co_cone!=np.nan])*1.1]
 
         # prepare
         fig = plt.figure(figsize=(13,10))
@@ -662,11 +662,11 @@ class ToolsOutflow():
         ax2.plot(vel, spec_co_fov1, "-", lw=4, c="tomato")
         ax2.plot(vel, spec_ci_fov1, "-", lw=4, c="deepskyblue")
 
-        ax1.text(0.05,0.92, "Spectra (bicone)", color = "black", weight="bold", transform = ax1.transAxes)
-        ax1.text(0.05,0.87, "CO(1-0)", color = "tomato", transform = ax1.transAxes)
-        ax1.text(0.05,0.82, "[CI](1-0)", color = "deepskyblue", transform = ax1.transAxes)
+        ax1.text(0.05,0.90, "Spectra (bicone)", color="black", weight="bold", transform=ax1.transAxes)
+        ax1.text(0.05,0.82, "CO(1-0)", color="tomato", transform=ax1.transAxes)
+        ax1.text(0.05,0.74, "[CI](1-0)", color="deepskyblue", transform=ax1.transAxes)
 
-        ax2.text(0.05,0.92, "Spectra (all FoV-1)", color = "black", weight="bold", transform = ax2.transAxes)
+        ax2.text(0.05,0.90, "Spectra (all FoV-1)", color="black", weight="bold", transform=ax2.transAxes)
 
         # save
         plt.subplots_adjust(hspace=.0)
