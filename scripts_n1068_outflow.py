@@ -551,7 +551,7 @@ class ToolsOutflow():
         # all FoV-1 spectra #
         #####################
         # import
-        print("# imval_all for 2 cubes. Will take ~2x2 min.")
+        print("# imval_all for 2 cubes. Will take ~2x3 min.")
         print("# co cube")
         data_co, box = imval_all(self.outfits_cube_co10)
         data_co      = data_co["data"] * data_co["mask"]
@@ -562,19 +562,18 @@ class ToolsOutflow():
 
         data_coords  = imval(self.outfits_cube_ci10,box=box)["coords"]
 
-        print(data_coords)
-
         # calculate r,theta from the center
         ra_deg       = data_coords[:,:,0] * 180/np.pi - self.ra_agn
         dec_deg      = data_coords[:,:,1] * 180/np.pi - self.dec_agn
+        obsfreq      = data_coords[:,:,2]
         dist_as      = np.sqrt(ra_deg**2 + dec_deg**2)
         theta_deg    = np.degrees(np.arctan2(ra_deg, dec_deg))
 
         # extract FoV-1 data
         cut          = np.where(dist_as<fov_radius,True,False)
 
-        data_co      = data_co.transpose(2,0,1) * cut
-        data_ci      = data_ci.transpose(2,0,1) * cut
+        data_co      = data_co * cut
+        data_ci      = data_ci * cut
 
         data_co      = np.where(data_co!=0,data_co,np.nan)
         data_ci      = np.where(data_ci!=0,data_ci,np.nan)
@@ -611,10 +610,10 @@ class ToolsOutflow():
         myax_set(ax1, "both", None, None, None, None, None, adjust=ad)
 
         # plot
-        ax1.plot(range(len(spec_co_fov1)), spec_co_fov1, "-",  lw=2, c="deepskyblue")
-        ax1.plot(range(len(spec_ci_fov1)), spec_co_fov1, "--", lw=2, c="deepskyblue")
-        ax1.plot(range(len(spec_co_cone)), spec_co_fov1, "-",  lw=2, c="tomato")
-        ax1.plot(range(len(spec_ci_cone)), spec_co_fov1, "--", lw=2, c="tomato")
+        ax1.plot(obsfreq, spec_co_fov1, "-",  lw=2, c="deepskyblue")
+        ax1.plot(obsfreq, spec_co_fov1, "--", lw=2, c="deepskyblue")
+        ax1.plot(obsfreq, spec_co_fov1, "-",  lw=2, c="tomato")
+        ax1.plot(obsfreq, spec_co_fov1, "--", lw=2, c="tomato")
 
         plt.savefig("test.png", dpi=self.fig_dpi)
 
