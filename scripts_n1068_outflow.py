@@ -428,7 +428,7 @@ class ToolsOutflow():
                 "100000x100000+0+0",
                 "100000x100000+0+0",
                 "100000x100000+0+0",
-                axis="colmun",
+                axis="column",
                 delin=True,
                 )
 
