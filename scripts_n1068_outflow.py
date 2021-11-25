@@ -639,8 +639,8 @@ class ToolsOutflow():
         ax1 = plt.subplot(gs[0:5,0:10])
         ax2 = plt.subplot(gs[5:10,0:10], sharex=ax1)
         plt.subplots_adjust(left=ad[0], right=ad[1], bottom=ad[2], top=ad[3])
-        myax_set(ax1, "x", [-300,300], ylim_ax1, "(f) Spectra", None, "$T_{mb}$ (K)", adjust=ad)
-        myax_set(ax2, "x", [-300,300], ylim_ax2, None, "Velocity (km s$^{-1}$)", "$T_{mb}$ (K)", adjust=ad)
+        myax_set(ax1, "both", [-300,300], ylim_ax1, "(f) Spectra", None, "$T_{mb}$ (K)", adjust=ad)
+        myax_set(ax2, "both", [-300,300], ylim_ax2, None, "Velocity (km s$^{-1}$)", "$T_{mb}$ (K)", adjust=ad)
         ax1.tick_params(labelbottom=False)
 
         # plot
