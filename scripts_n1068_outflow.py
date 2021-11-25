@@ -610,11 +610,14 @@ class ToolsOutflow():
         ad = [0.215,0.83,0.10,0.90]
         myax_set(ax1, "both", None, None, None, None, None, adjust=ad)
 
+        print(np.shape(obsfreq))
+        print(np.shape(spec_co_fov1))
+
         # plot
         ax1.plot(obsfreq, spec_co_fov1, "-",  lw=2, c="deepskyblue")
-        ax1.plot(obsfreq, spec_co_fov1, "--", lw=2, c="deepskyblue")
-        ax1.plot(obsfreq, spec_co_fov1, "-",  lw=2, c="tomato")
-        ax1.plot(obsfreq, spec_co_fov1, "--", lw=2, c="tomato")
+        ax1.plot(obsfreq, spec_ci_fov1, "--", lw=2, c="deepskyblue")
+        ax1.plot(obsfreq, spec_co_cone, "-",  lw=2, c="tomato")
+        ax1.plot(obsfreq, spec_ci_cone, "--", lw=2, c="tomato")
 
         plt.savefig("test.png", dpi=self.fig_dpi)
 
