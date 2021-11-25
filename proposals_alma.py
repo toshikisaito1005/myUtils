@@ -7,8 +7,9 @@ CASA Version 5.4.0-70, ananlysisUtils, astropy
 usage:
 see "def _set_cycle_8p5a_specscan" for example
 
-ALMA deadlines:
-C8supp   2021-10-06
+ALMA timeline:
+cycle    release date         deadline
+C8supp   2021-08-08 15:00UT   2021-10-06 15:00UT
 
 history:
 2021-09-21   start by TS
@@ -19,8 +20,8 @@ Toshiki Saito@Nichidai/NAOJ
 import os, sys, glob, csv
 import numpy as np
 
-from mycasa_tasks import *
 from mycasa_sampling import *
+from mycasa_tasks import *
 from mycasa_plots import *
 
 myia = aU.createCasaTool(iatool)
@@ -39,9 +40,9 @@ class ProposalsALMA():
 
     def __init__(
         self,
-        keyfile_fig = None,
-        keyfile_gal = None,
-        refresh = False,
+        keyfile_fig  = None,
+        keyfile_gal  = None,
+        refresh      = False,
         delete_inter = True,
         ):
         # initialize keys
@@ -62,16 +63,9 @@ class ProposalsALMA():
             self.cycle = self._read_key("this_cycle")
             
             # get directories
-            self.dir_proj     = self._read_key("dir_proj")
-            dir_raw           = self.dir_proj + self._read_key("dir_raw") + self.cycle + "/"
-            self.dir_ready    = self.dir_proj + self._read_key("dir_ready") + self.cycle + "/"
-            self.dir_products = self.dir_proj + self._read_key("dir_products") + self.cycle + "/"
-            self.dir_final    = self.dir_proj + self._read_key("dir_final") + self.cycle + "/"
-            self._create_dir(self.dir_ready)
-            self._create_dir(self.dir_products)
-            self._create_dir(self.dir_final)
+            self._set_dir()
 
-            # cycle 8p5
+            # cycle 8p5 (release = 2021/08/08/15:00UT, deadline = 2021/10/06/15:00UT)
             if self.cycle=="cycle08p5":
                 self._set_cycle_8p5a_specscan()
                 self._set_cycle_8p5b_catom21()
@@ -966,6 +960,31 @@ class ProposalsALMA():
         ax1.text(115,1.0-width-0.1,"115",ha="center",va="top",fontsize=15)
 
         plt.savefig(self.png_specscan_b3, dpi=self.fig_dpi)
+
+    ###########################################################################################
+    ###########################################################################################
+    #######################################             #######################################
+    ####################################### common part #######################################
+    #######################################             #######################################
+    ###########################################################################################
+    ###########################################################################################
+
+    ############
+    # _set_dir #
+    ############
+
+    def _set_dir(self):
+        """
+        """
+
+        self.dir_proj     = self._read_key("dir_proj")
+        dir_raw           = self.dir_proj + self._read_key("dir_raw") + self.cycle + "/"
+        self.dir_ready    = self.dir_proj + self._read_key("dir_ready") + self.cycle + "/"
+        self.dir_products = self.dir_proj + self._read_key("dir_products") + self.cycle + "/"
+        self.dir_final    = self.dir_proj + self._read_key("dir_final") + self.cycle + "/"
+        self._create_dir(self.dir_ready)
+        self._create_dir(self.dir_products)
+        self._create_dir(self.dir_final)
 
     ###############
     # _create_dir #
