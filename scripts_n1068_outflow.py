@@ -568,7 +568,7 @@ class ToolsOutflow():
         # calculate r,theta from the center
         ra_deg       = data_coords[:,:,0] * 180/np.pi - self.ra_agn
         dec_deg      = data_coords[:,:,1] * 180/np.pi - self.dec_agn
-        vel          = (data_coords2[0,0,:,2] - self.restfreq_ci*1e9) / self.restfreq_ci*1e9 * 299792.458 # km/s
+        vel          = (data_coords2[0,0,:,2] - self.restfreq_ci*1e9) / (self.restfreq_ci*1e9) * 299792.458 # km/s
         dist_as      = np.sqrt(ra_deg**2 + dec_deg**2)
         theta_deg    = np.degrees(np.arctan2(ra_deg, dec_deg))
 
@@ -593,8 +593,8 @@ class ToolsOutflow():
         cut3         = np.where((theta_deg<-115)&(dist_as<fov_radius)&(dist_as>self.r_cnd_as),1,0)
         cut          = cut1 + cut2 + cut3
 
-        data_co      = data_co * cut
-        data_ci      = data_ci * cut
+        data_co      = data_co * cut1
+        data_ci      = data_ci * cut1
 
         data_co      = np.where(data_co!=0,data_co,np.nan)
         data_ci      = np.where(data_ci!=0,data_ci,np.nan)
