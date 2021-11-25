@@ -646,8 +646,8 @@ class ToolsOutflow():
         data_co      = data_co.transpose(2,0,1) * cut
         data_ci      = data_ci.transpose(2,0,1) * cut
 
-        data_co_fov1 = np.where(data_co!=0,data_co,np.nan)
-        data_ci_fov1 = np.where(data_ci!=0,data_ci,np.nan)
+        data_co_fov1 = np.where(data_co>0.05,np.log10(data_co),np.nan)
+        data_ci_fov1 = np.where(data_ci>0.40,np.log10(data_ci),np.nan)
 
         ########################
         # FoV-1 bicone spectra #
@@ -675,9 +675,9 @@ class ToolsOutflow():
             data_co_fov1, data_ci_fov1,
             data_co_cone, data_ci_fov1,
             None,
-            "log $L'_{CO(1-0)}$ (K km s$^{-1}$ pc$^2$)",
-            "log $L'_{[CI](1-0)}$ (K km s$^{-1}$ pc$^2$)",
-            "(d) log $L'_{[CI](1-0)}$ vs. log $L'_{CO(1-0)}$",
+            "log $T_{CO(1-0)}$ (K)",
+            "log $T_{[CI](1-0)}$ (K)",
+            "(d) log $T_{[CI](1-0)}$ vs. log $T_{CO(1-0)}$",
             None, None, #[-1,3.5], [-0.1,3.5],
             plot_line = True,
             )
