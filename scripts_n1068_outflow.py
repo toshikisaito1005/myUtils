@@ -687,7 +687,7 @@ class ToolsOutflow():
             "log $T_{CO(1-0)}$ (K)",
             "log $T_{[CI](1-0)}$ (K)",
             "(d) log $T_{[CI](1-0)}$ vs. log $T_{CO(1-0)}$",
-            [-1.5,3.0], [-0.6,3.0],
+            xlim, ylim,
             plot_line = True,
             )
 
