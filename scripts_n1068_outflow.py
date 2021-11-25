@@ -649,8 +649,8 @@ class ToolsOutflow():
         data_co      = data_co.transpose(2,0,1) * cut
         data_ci      = data_ci.transpose(2,0,1) * cut
 
-        data_co_fov1 = np.where(data_co>0.05,np.log10(data_co),np.nan)
-        data_ci_fov1 = np.where(data_ci>0.40,np.log10(data_ci),np.nan)
+        data_co_fov1 = np.where(data_co>0.05*5.0,np.log10(data_co),np.nan)
+        data_ci_fov1 = np.where(data_ci>0.40*5.0,np.log10(data_ci),np.nan)
 
         #######################
         # FoV-1 bicone spaxel #
@@ -667,8 +667,8 @@ class ToolsOutflow():
         data_co      = data_co * cut
         data_ci      = data_ci * cut
 
-        data_co_cone = np.where(data_co>0.05,np.log10(data_co),np.nan)
-        data_ci_cone = np.where(data_ci>0.40,np.log10(data_ci),np.nan)
+        data_co_cone = np.where(data_co>0.05*5.0,np.log10(data_co),np.nan)
+        data_ci_cone = np.where(data_ci>0.40*5.0,np.log10(data_ci),np.nan)
 
         ########
         # plot #
@@ -682,7 +682,7 @@ class ToolsOutflow():
             "log $T_{CO(1-0)}$ (K)",
             "log $T_{[CI](1-0)}$ (K)",
             "(d) log $T_{[CI](1-0)}$ vs. log $T_{CO(1-0)}$",
-            None, None, #[-1,3.5], [-0.1,3.5],
+            [-1-1,3.5-1], [-0.1-1,3.5-1],
             plot_line = True,
             )
 
