@@ -646,10 +646,10 @@ class ToolsOutflow():
         ax1.tick_params(labelbottom=False)
 
         # plot
-        ax1.plot([np.min(vel),np.max(vel)], [0,0], "--",  lw=1, c="black")
+        ax1.plot([np.min(vel),np.max(vel)], [0,0], "-",  lw=2, c="black")
         ax1.plot(vel, spec_co_cone, "-", lw=4, c="tomato")
         ax1.plot(vel, spec_ci_cone, "-", lw=4, c="deepskyblue")
-        ax2.plot([np.min(vel),np.max(vel)], [0,0], "--",  lw=1, c="black")
+        ax2.plot([np.min(vel),np.max(vel)], [0,0], "-",  lw=2, c="black")
         ax2.plot(vel, spec_co_fov1, "-", lw=4, c="tomato")
         ax2.plot(vel, spec_ci_fov1, "-", lw=4, c="deepskyblue")
 
