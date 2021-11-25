@@ -626,7 +626,7 @@ class ToolsOutflow():
         ad = [0.215,0.83,0.10,0.90]
         myax_set(ax1, "x", None, None, None, None, None, adjust=ad)
         myax_set(ax2, "x", None, None, None, None, None, adjust=ad)
-        ax1.axes.xaxis.set_ticklabels([])
+        ax1.tick_params(labelbottom=False)
 
         # plot
         ax1.plot(vel, spec_co_cone, "-",  lw=2, c="tomato")
