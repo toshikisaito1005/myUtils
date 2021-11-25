@@ -96,57 +96,8 @@ class ProposalsALMA():
 
             # cycle 8p5
             if self.cycle=="cycle08p5":
+                self._set_cycle_8p5a_specscan()
             	### proposal specscan
-
-                # input data
-                self.image_co10_12m7m = dir_raw + self._read_key("image_co10_12m7m")
-                self.image_co10_12m = dir_raw + self._read_key("image_co10_12m")
-                self.image_cs21 = dir_raw + self._read_key("image_cs21")
-                self.archive_csv = dir_raw + self._read_key("archive_csv")
-                self.txt_fov_b3 = dir_raw + self._read_key("fov_b3")
-                self.txt_fov_b6 = dir_raw + self._read_key("fov_b6")
-
-                # spectral scan setup
-                self.line_key = self.dir_proj + "scripts/keys/key_lines.txt"
-                l = self._read_key("b3_spw_setup")
-                self.b3_spw_setup = [float(s) for s in l.split(",")]
-                l = self._read_key("b6_spw_setup")
-                self.b6_spw_setup = [float(s) for s in l.split(",")]
-
-                # ngc1068
-                self.z       = float(self._read_key("z"))
-                self.scale   = float(self._read_key("scale"))
-                self.ra      = self._read_key("ra")
-                self.dec     = self._read_key("dec")
-                self.ra_agn  = self._read_key("ra_agn")
-                self.dec_agn = self._read_key("dec_agn")
-
-                # output fits
-                self.outfits_missingflux = self.dir_ready + self._read_key("outfits_missingflux")
-                self.outfits_co10 = self.dir_ready + self._read_key("outfits_co10")
-
-                # output png
-                self.png_specscan_b3 = self.dir_products + self._read_key("png_specscan_b3")
-                self.png_specscan_b6 = self.dir_products + self._read_key("png_specscan_b6")
-
-                self.png_missingflux = self.dir_products + self._read_key("png_missingflux")
-                self.imsize_as       = float(self._read_key("imsize_as"))
-
-                self.png_histogram   = self.dir_products + self._read_key("png_histogram")
-
-                self.png_fov_map    = self.dir_products + self._read_key("png_fov_map")
-                self.imsize_fov_as  = float(self._read_key("imsize_fov_as"))
-
-                # final products
-                self.final_specscan = self.dir_final + self._read_key("final_specscan")
-                self.box_specscan = self._read_key("box_specscan")
-
-                self.final_missingflux = self.dir_final + self._read_key("final_missingflux")
-                self.box_missingflux = self._read_key("box_missingflux")
-                self.box_missingflux2 = self._read_key("box_missingflux2")
-
-                self.final_fov = self.dir_final + self._read_key("final_fov")
-                self.box_fov_map = self._read_key("box_fov_map")
 
                 ### proposal catom21
 
@@ -184,6 +135,60 @@ class ProposalsALMA():
     ##############################                                ##############################
     ############################################################################################
     ############################################################################################
+
+    def _set_cycle_8p5a_specscan(self):
+        """
+        """
+
+        # input data
+        self.image_co10_12m7m    = dir_raw + self._read_key("image_co10_12m7m")
+        self.image_co10_12m      = dir_raw + self._read_key("image_co10_12m")
+        self.image_cs21          = dir_raw + self._read_key("image_cs21")
+        self.archive_csv         = dir_raw + self._read_key("archive_csv")
+        self.txt_fov_b3          = dir_raw + self._read_key("fov_b3")
+        self.txt_fov_b6          = dir_raw + self._read_key("fov_b6")
+
+        # spectral scan setup
+        self.line_key            = self.dir_proj + "scripts/keys/key_lines.txt"
+        l                        = self._read_key("b3_spw_setup")
+        self.b3_spw_setup        = [float(s) for s in l.split(",")]
+        l                        = self._read_key("b6_spw_setup")
+        self.b6_spw_setup        = [float(s) for s in l.split(",")]
+
+        # ngc1068
+        self.z                   = float(self._read_key("z"))
+        self.scale               = float(self._read_key("scale"))
+        self.ra                  = self._read_key("ra")
+        self.dec                 = self._read_key("dec")
+        self.ra_agn              = self._read_key("ra_agn")
+        self.dec_agn             = self._read_key("dec_agn")
+
+        # output fits
+        self.outfits_missingflux = self.dir_ready + self._read_key("outfits_missingflux")
+        self.outfits_co10        = self.dir_ready + self._read_key("outfits_co10")
+
+        # output png
+        self.png_specscan_b3     = self.dir_products + self._read_key("png_specscan_b3")
+        self.png_specscan_b6     = self.dir_products + self._read_key("png_specscan_b6")
+
+        self.png_missingflux     = self.dir_products + self._read_key("png_missingflux")
+        self.imsize_as           = float(self._read_key("imsize_as"))
+
+        self.png_histogram       = self.dir_products + self._read_key("png_histogram")
+
+        self.png_fov_map         = self.dir_products + self._read_key("png_fov_map")
+        self.imsize_fov_as       = float(self._read_key("imsize_fov_as"))
+
+        # final products
+        self.final_specscan      = self.dir_final + self._read_key("final_specscan")
+        self.box_specscan        = self._read_key("box_specscan")
+
+        self.final_missingflux   = self.dir_final + self._read_key("final_missingflux")
+        self.box_missingflux     = self._read_key("box_missingflux")
+        self.box_missingflux2    = self._read_key("box_missingflux2")
+
+        self.final_fov           = self.dir_final + self._read_key("final_fov")
+        self.box_fov_map         = self._read_key("box_fov_map")
 
     def run_cycle_8p5a_specscan(
         self,
