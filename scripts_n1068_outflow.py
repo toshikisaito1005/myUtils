@@ -32,22 +32,22 @@ usage:
 >
 > tl.run_ci_outflow(
 >     # prepare FITS
->     do_prepare          = True,
->     do_ratio_map        = True,
+>     do_prepare             = True,
+>     do_ratio_map           = True,
 >     # plot
->     plot_scatters       = True,
->     plot_showcase       = True,
->     plot_channel        = True,
->     do_modeling         = True,
->     # suggested analysis
->     plot_spectra        = True,
+>     plot_scatters          = True,
+>     plot_showcase          = True,
+>     plot_channel           = True,
+>     do_modeling            = True,
+>     suggest_spectra        = True,
 >     # appendix
->     plot_outflow_mom    = True,
->     plot_showcase_multi = True,
+>     plot_outflow_mom       = True,
+>     plot_showcase_multi    = True,
 >     # summarize
->     do_imagemagick      = True,
->     # supplement
->     do_compare_7m       = True,
+>     do_imagemagick         = True,
+>     # supplement (not published)
+>     do_compare_7m          = True,
+>     suggest_scatter_spaxel = True,
 >     )
 >
 > os.system("rm -rf *.last")
@@ -316,26 +316,29 @@ class ToolsOutflow():
 
     def run_ci_outflow(
         self,
-        do_prepare          = False,
-        do_ratio_map        = False,
-        plot_scatters       = False,
-        plot_showcase       = False,
-        plot_channel        = False,
-        do_modeling         = False,
-        do_imagemagick      = False,
+        # prepare FITS
+        do_prepare             = False,
+        do_ratio_map           = False,
+        # plot
+        plot_scatters          = False,
+        plot_showcase          = False,
+        plot_channel           = False,
+        do_modeling            = False,
+        suggest_spectra        = False,
         # appendix
-        plot_outflow_mom    = False,
-        plot_showcase_multi = False,
-        # suggested analysis
-        plot_spectra        = False,
-        plot_scatter_spaxel = False,
+        plot_outflow_mom       = False,
+        plot_showcase_multi    = False,
+        # summarize
+        do_imagemagick         = False,
         # supplement (not published)
-        do_compare_7m       = False,
+        do_compare_7m          = False,
+        suggest_scatter_spaxel = False,
         ):
         """
         This method runs all the methods which will create figures in the paper.
         """
 
+        # prepare FITS
         if do_prepare==True:
             self.align_maps()
             self.ci_fov_masking()
@@ -344,6 +347,7 @@ class ToolsOutflow():
             self.ratio_map()
             self.ratio_cube()
 
+        # plot
         if plot_scatters==True:
             self.plot_ci_vs_co()
             self.plot_cico_vs_siiisii()
@@ -357,6 +361,9 @@ class ToolsOutflow():
         if do_modeling==True:
             self.bicone_modeling()
 
+        if suggest_spectra==True:
+            self.plot_spectra()
+
         # appendix
         if plot_outflow_mom==True:
             self.get_outflow_moments()
@@ -365,20 +372,16 @@ class ToolsOutflow():
         if plot_showcase_multi==True:
             self.showcase_multi()
 
-        # suggested analysis (v1 revision)
-        if plot_spectra==True:
-            self.plot_spectra()
-
-        if plot_scatter_spaxel==True:
-            self.plot_ci_cube_vs_co_cube()
-
-        # summarize figures
+        # summarize
         if do_imagemagick==True:
             self.immagick_figures()
 
-        # supplement
+        # supplement (not published)
         if do_compare_7m==True:
             self.compare_7m_cubes()
+
+        if suggest_scatter_spaxel==True:
+            self.plot_ci_cube_vs_co_cube()
 
     ####################
     # immagick_figures #
@@ -617,9 +620,9 @@ class ToolsOutflow():
         check_first(self.outfits_cube_co10,taskname)
         fov_radius = 16.5 / 2.
 
-        #####################
-        # all FoV-1 spectra #
-        #####################
+        ####################
+        # all FoV-1 spaxel #
+        ####################
         # import
         print("# imval_all for 3 cubes. Will take ~2x3 min.")
         print("# co cube")
@@ -649,10 +652,9 @@ class ToolsOutflow():
         data_co_fov1 = np.where(data_co>0.05,np.log10(data_co),np.nan)
         data_ci_fov1 = np.where(data_ci>0.40,np.log10(data_ci),np.nan)
 
-        ########################
-        # FoV-1 bicone spectra #
-        ########################
-         # get CI outflow mom0 map
+        #######################
+        # FoV-1 bicone spaxel #
+        #######################
         run_importfits(self.outfits_map_ci10,"template.image2")
         run_imregrid(self.outfits_ci10_outflow_mom0,"template.image2","template.image",axes=[0,1])
         cut, _       = imval_all("template.image")
@@ -665,10 +667,12 @@ class ToolsOutflow():
         data_co      = data_co * cut
         data_ci      = data_ci * cut
 
-        data_co_cone = np.where(data_co!=0,data_co,np.nan)
-        data_ci_cone = np.where(data_ci!=0,data_ci,np.nan)
+        data_co_cone = np.where(data_co>0.05,np.log10(data_co),np.nan)
+        data_ci_cone = np.where(data_ci>0.40,np.log10(data_ci),np.nan)
 
-        # plot
+        ########
+        # plot #
+        ########
         self._plot_scatters(
             self.png_ci_cube_vs_co_cube,
             data_co_fov1, data_ci_fov1,
