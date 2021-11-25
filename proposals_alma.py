@@ -5,25 +5,7 @@ requirements:
 CASA Version 5.4.0-70, ananlysisUtils, astropy
 
 usage:
-> import os
-> from proposals_alma import ProposalsALMA as tools
-> 
-> tl = tools(
->     refresh     = False,
->     keyfile_fig = "/home02/saitots/myUtils/keys_alma_proposal/key_cyle08p5.txt",
->     )
-> 
-> ### Cycle 8 supplemental call
-> # 2021.2.00049.S
-> # Band 3 and 6 spectral scans with 7m+TP toward NGC 1068.
-> tl.run_cycle_8p5a_specscan(
->     plot_spw_setup    = True,
->     plot_missingflux  = True,
->     plot_proposed_fov = True,
->     combine_figures   = True,
->     )
-> 
-> os.system("rm -rf *.last")
+see "def _set_cycle_8p5a_specscan" for example
 
 ALMA deadlines:
 C8supp   2021-10-06
@@ -43,9 +25,9 @@ from mycasa_plots import *
 
 myia = aU.createCasaTool(iatool)
 
-###########################
-### ToolsDense
-###########################
+#################
+# ProposalsALMA #
+#################
 class ProposalsALMA():
     """
     Class for ALMA proposals.
@@ -63,15 +45,14 @@ class ProposalsALMA():
         delete_inter = True,
         ):
         # initialize keys
-        self.keyfile_gal = keyfile_gal
-        self.keyfile_fig = keyfile_fig
+        self.keyfile_gal  = keyfile_gal
+        self.keyfile_fig  = keyfile_fig
 
         # intialize task
         self.refresh      = refresh
         self.delete_inter = delete_inter
         self.taskname     = None
-
-        self.fig_dpi = 500
+        self.fig_dpi      = 500
 
         # import parameters
         if keyfile_fig is not None:
@@ -81,52 +62,23 @@ class ProposalsALMA():
             self.cycle = self._read_key("this_cycle")
             
             # get directories
-            self.dir_proj = self._read_key("dir_proj")
-            dir_raw = self.dir_proj + self._read_key("dir_raw") + self.cycle + "/"
-            self.dir_ready = self.dir_proj + self._read_key("dir_ready") + self.cycle + "/"
+            self.dir_proj     = self._read_key("dir_proj")
+            dir_raw           = self.dir_proj + self._read_key("dir_raw") + self.cycle + "/"
+            self.dir_ready    = self.dir_proj + self._read_key("dir_ready") + self.cycle + "/"
             self.dir_products = self.dir_proj + self._read_key("dir_products") + self.cycle + "/"
-            self.dir_final = self.dir_proj + self._read_key("dir_final") + self.cycle + "/"
+            self.dir_final    = self.dir_proj + self._read_key("dir_final") + self.cycle + "/"
             self._create_dir(self.dir_ready)
             self._create_dir(self.dir_products)
             self._create_dir(self.dir_final)
 
-            if self.cycle=="cycle09":
-            # cycle 8p5
-                print("# write __init__ for cycle09")
-
             # cycle 8p5
             if self.cycle=="cycle08p5":
                 self._set_cycle_8p5a_specscan()
-            	### proposal specscan
+                self._set_cycle_8p5b_catom21()
 
-                ### proposal catom21
-
-                # input data
-                self.tpeak_ci10_1p64  = dir_raw + self._read_key("tpeak_ci10_1p64")
-                self.image_ci10_1p64  = dir_raw + self._read_key("image_ci10_1p64")
-                self.image_co10_1p64  = dir_raw + self._read_key("image_co10_1p64")
-
-                self.txt_fov_b10_fov1 = dir_raw + self._read_key("fov_b10_fov1")
-                self.txt_fov_b10_fov2 = dir_raw + self._read_key("fov_b10_fov2")
-                self.imsize_catom_as  = float(self._read_key("imsize_catom_as"))
-
-                # output fits
-                self.outfits_expected_ci21_tpeak = self.dir_ready + self._read_key("outfits_expected_ci21_tpeak")
-                self.outfits_ci_co_ratio = self.dir_ready + self._read_key("outfits_ci_co_ratio")
-
-                # output png
-                self.png_expected_catom21 = self.dir_products + self._read_key("png_expected_catom21")
-                self.box_expected_catom21 = self._read_key("box_expected_catom21")
-
-                self.png_ci10_1p64 = self.dir_products + self._read_key("png_ci10_1p64")
-                self.box_ci10_1p64 = self._read_key("box_ci10_1p64")
-
-                self.png_ci_co_ratio_1p64 = self.dir_products + self._read_key("png_ci_co_ratio_1p64")
-                self.box_ci_co_ratio_1p64 = self._read_key("box_ci_co_ratio_1p64")
-
-                # final products
-                self.final_catom10 = self.dir_final + self._read_key("final_catom10")
-                self.final_catom21 = self.dir_final + self._read_key("final_catom21")
+            # cycle 9
+            if self.cycle=="cycle09":
+                print("# write _set_cycle for cycle09 first")
 
     ############################################################################################
     ############################################################################################
@@ -136,8 +88,34 @@ class ProposalsALMA():
     ############################################################################################
     ############################################################################################
 
-    def _set_cycle_8p5a_specscan(self):
+    ##################
+    # _set_cycle_8p5 #
+    ##################
+
+    def _set_cycle_8p5a_specscan(
+        self,
+        ):
         """
+        import os
+        from proposals_alma import ProposalsALMA as tools
+        
+        dir_proj = /home02/saitots/myUtils/keys_alma_proposal/
+        
+        ### Cycle 8 supplemental call
+        # 2021.2.00049.S
+        # Band 3 and 6 spectral scans with 7m+TP toward NGC 1068.
+        tl = tools(
+            refresh           = False,
+            keyfile_fig       = dir_proj + "key_cyle08p5.txt",
+            )
+        tl.run_cycle_8p5a_specscan(
+            plot_spw_setup    = True,
+            plot_missingflux  = True,
+            plot_proposed_fov = True,
+            combine_figures   = True,
+            )
+        
+        os.system("rm -rf *.last")
         """
 
         # input data
@@ -189,6 +167,59 @@ class ProposalsALMA():
 
         self.final_fov           = self.dir_final + self._read_key("final_fov")
         self.box_fov_map         = self._read_key("box_fov_map")
+
+    def _set_cycle_8p5b_catom21(
+        self,
+        ):
+        """
+        import os
+        from proposals_alma import ProposalsALMA as tools
+        
+        dir_proj = /home02/saitots/myUtils/keys_alma_proposal/
+        
+        ### Cycle 8 supplemental call
+        # not submitted (no Band 10 mosaic in cycle 8)
+        # Band 10 7m-only mosaic toward NGC 1068
+        tl.run_cycle_8p5b_catom21(
+            plot_ci_co_ratio      = True,
+            plot_expected_catom21 = True,
+            combine_figures       = True,
+            )
+        
+        os.system("rm -rf *.last")
+        """
+
+        # input data
+        self.tpeak_ci10_1p64      = dir_raw + self._read_key("tpeak_ci10_1p64")
+        self.image_ci10_1p64      = dir_raw + self._read_key("image_ci10_1p64")
+        self.image_co10_1p64      = dir_raw + self._read_key("image_co10_1p64")
+
+        self.txt_fov_b10_fov1     = dir_raw + self._read_key("fov_b10_fov1")
+        self.txt_fov_b10_fov2     = dir_raw + self._read_key("fov_b10_fov2")
+        self.imsize_catom_as      = float(self._read_key("imsize_catom_as"))
+
+        # output fits
+        self.outfits_expected_ci21_tpeak \
+                                  = self.dir_ready + self._read_key("outfits_expected_ci21_tpeak")
+        self.outfits_ci_co_ratio  = self.dir_ready + self._read_key("outfits_ci_co_ratio")
+
+        # output png
+        self.png_expected_catom21 = self.dir_products + self._read_key("png_expected_catom21")
+        self.box_expected_catom21 = self._read_key("box_expected_catom21")
+
+        self.png_ci10_1p64        = self.dir_products + self._read_key("png_ci10_1p64")
+        self.box_ci10_1p64        = self._read_key("box_ci10_1p64")
+
+        self.png_ci_co_ratio_1p64 = self.dir_products + self._read_key("png_ci_co_ratio_1p64")
+        self.box_ci_co_ratio_1p64 = self._read_key("box_ci_co_ratio_1p64")
+
+        # final products
+        self.final_catom10        = self.dir_final + self._read_key("final_catom10")
+        self.final_catom21        = self.dir_final + self._read_key("final_catom21")
+
+    #################
+    # run_cycle_8p5 #
+    #################
 
     def run_cycle_8p5a_specscan(
         self,
@@ -971,3 +1002,8 @@ class ProposalsALMA():
         value    = values[np.where(keywords==key)[0][0]]
 
         return value
+
+
+########################
+# end of ProposalsALMA #
+########################
