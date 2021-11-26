@@ -440,6 +440,19 @@ class ToolsOutflow():
                 delin=True,
                 )
 
+            """
+            print("##############################")
+            print("# create final_showcase (v0) #")
+            print("##############################")
+
+            combine_two_png(self.outpng_map_ci,self.outpng_map_co,
+                self.final_showcase+"_tmp1.png",self.box_map,self.box_map,delin=delin)
+            combine_two_png(self.outpng_ci_vs_co,self.outpng_map_cico,
+                self.final_showcase+"_tmp2.png",self.box_map,self.box_map,delin=delin)
+            combine_two_png(self.final_showcase+"_tmp1.png",self.final_showcase+"_tmp2.png",
+                self.final_showcase,"100000x100000+0+0","100000x100000+0+0",axis="column",delin=True)
+            """
+
         if do_final_channel==True:
             print("########################")
             print("# create final_channel #")
@@ -585,19 +598,6 @@ class ToolsOutflow():
                 axis="column",
                 delin=True,
                 )
-
-        """
-        print("##############################")
-        print("# create final_showcase (v0) #")
-        print("##############################")
-
-        combine_two_png(self.outpng_map_ci,self.outpng_map_co,
-            self.final_showcase+"_tmp1.png",self.box_map,self.box_map,delin=delin)
-        combine_two_png(self.outpng_ci_vs_co,self.outpng_map_cico,
-            self.final_showcase+"_tmp2.png",self.box_map,self.box_map,delin=delin)
-        combine_two_png(self.final_showcase+"_tmp1.png",self.final_showcase+"_tmp2.png",
-            self.final_showcase,"100000x100000+0+0","100000x100000+0+0",axis="column",delin=True)
-        """
 
     ###########################
     # plot_ci_cube_vs_co_cube #
@@ -1127,11 +1127,12 @@ class ToolsOutflow():
                 scalebar=scalebar,
                 label_scalebar=label_scalebar,
                 set_cbar=True,
-                label_cbar="(K km s$^{-1}$)",
+                label_cbar="Ratio",
                 numann=1,
                 textann=False,
                 comment=this_text,
                 comment_color=this_c,
+                extend="max",
                 )
 
             # cleanup

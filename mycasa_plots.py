@@ -140,13 +140,14 @@ def _myax_cbar(
     clim=None,
     colorbarticks=None,
     colorbarticktexts=None,
+    extend=None,
     ):
 
     if colorbarticks is not None:
-        cb = fig.colorbar(data, ax=ax, ticks=colorbarticks)
+        cb = fig.colorbar(data, ax=ax, extend=extend, ticks=colorbarticks)
         cb.ax.set_yticklabels(colorbarticktexts)
     else:
-        cb = fig.colorbar(data, ax=ax)
+        cb = fig.colorbar(data, ax=ax, extend=extend)
     
     if label is not None:
         cb.set_label(label)
@@ -618,6 +619,7 @@ def myfig_fits2png(
     scalebar=None,
     label_scalebar=None,
     color_scalebar="black",
+    extend=None,
     comment=None,
     comment_color="black",
     # imshow colorbar
@@ -788,8 +790,16 @@ def myfig_fits2png(
     # colorbar
     cim.set_clim(clim)
     if set_cbar==True:
-        _myax_cbar(plt,ax,cim,label=label_cbar,clim=clim,
-            colorbarticks=colorbarticks,colorbarticktexts=colorbarticktexts)
+        _myax_cbar(
+            plt,
+            ax,
+            cim,
+            label=label_cbar,
+            clim=clim,
+            colorbarticks=colorbarticks,
+            colorbarticktexts=colorbarticktexts,
+            extend=extend,
+            )
 
     # add beam size
     if showbeam==True:
