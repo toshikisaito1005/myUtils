@@ -390,7 +390,8 @@ class ToolsOutflow():
     def immagick_figures(
         self,
         delin                   = False,
-        do_final_showcase       = True,
+        do_all                  = True,
+        do_final_showcase       = False,
         do_final_channel        = False,
         do_final_chan_models    = False,
         do_final_showcase_multi = False,
@@ -400,6 +401,12 @@ class ToolsOutflow():
 
         taskname = self.modname + sys._getframe().f_code.co_name
         check_first(self.outpng_map_ci,taskname)
+
+        if do_all==True:
+            do_final_showcase       = True
+            do_final_channel        = True
+            do_final_chan_models    = True
+            do_final_showcase_multi = True
 
         if do_final_showcase==True:
             print("##############################")
