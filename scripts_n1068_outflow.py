@@ -409,58 +409,16 @@ class ToolsOutflow():
             # 3x2 version
             combine_two_png(
                 self.outpng_map_ci,
-                self.outpng_ci_vs_co,
+                self.outpng_map_co,
                 self.final_showcase+"_tmp1.png",
                 self.box_map,
                 self.box_map,
                 delin=delin,
                 )
             combine_two_png(
-                self.outpng_map_co,
-                self.outpng_cico_vs_siiisii,
-                self.final_showcase+"_tmp2.png",
-                self.box_map,
-                self.box_map,
-                delin=delin,
-                )
-            combine_two_png(
-                self.outpng_map_cico,
-                self.png_spectra,
-                self.final_showcase+"_tmp3.png",
-                self.box_map,
-                self.box_map,
-                delin=delin,
-                )
-            combine_three_png(
-                self.final_showcase+"_tmp1.png",
-                self.final_showcase+"_tmp2.png",
-                self.final_showcase+"_tmp3.png",
-                self.final_showcase,
-                "100000x100000+0+0",
-                "100000x100000+0+0",
-                "100000x100000+0+0",
-                axis="column",
-                delin=True,
-                )
-
-            """
-            # 2x3 version
-            combine_three_png(
-                self.outpng_map_ci,
-                self.outpng_map_co,
-                self.outpng_map_cico,
-                self.final_showcase+"_tmp1.png",
-                self.box_map,
-                self.box_map,
-                self.box_map,
-                delin=delin,
-                )
-            combine_three_png(
                 self.outpng_ci_vs_co,
                 self.outpng_cico_vs_siiisii,
-                self.png_spectra,
                 self.final_showcase+"_tmp2.png",
-                self.box_map,
                 self.box_map,
                 self.box_map,
                 delin=delin,
@@ -474,7 +432,6 @@ class ToolsOutflow():
                 axis="column",
                 delin=True,
                 )
-            """
 
         if do_final_channel==True:
             print("########################")
@@ -586,12 +543,41 @@ class ToolsOutflow():
             print("# create final_showcase_multi #")
             print("###############################")
 
-            combine_two_png(self.outpng_outflow_mom0,self.png_map_oiii,
-                self.final_showcase_multi+"_tmp1.png",self.box_map,self.box_map,delin=delin)
-            combine_two_png(self.png_map_vla,self.png_map_siiisii,
-                self.final_showcase_multi+"_tmp2.png",self.box_map,self.box_map,delin=delin)
-            combine_two_png(self.final_showcase_multi+"_tmp1.png",self.final_showcase_multi+"_tmp2.png",
-                self.final_showcase_multi,"100000x100000+0+0","100000x100000+0+0",axis="column",delin=True)
+            combine_two_png(
+                self.outpng_outflow_mom0,
+                self.png_map_oiii,
+                self.final_showcase_multi+"_tmp1.png",
+                self.box_map,
+                self.box_map,
+                delin=delin,
+                )
+            combine_two_png(
+                self.png_map_vla,
+                self.png_map_siiisii,
+                self.final_showcase_multi+"_tmp2.png",
+                self.box_map,
+                self.box_map,
+                delin=delin,
+                )
+            combine_two_png(
+                self.outpng_map_cico,
+                self.png_spectra,
+                self.final_showcase_multi+"_tmp3.png",
+                self.box_map,
+                self.box_map,
+                delin=delin,
+                )
+            combine_three_png(
+                self.final_showcase_multi+"_tmp1.png",
+                self.final_showcase_multi+"_tmp2.png",
+                self.final_showcase_multi+"_tmp3.png",
+                self.final_showcase_multi,
+                "100000x100000+0+0",
+                "100000x100000+0+0",
+                "100000x100000+0+0",
+                axis="column",
+                delin=True,
+                )
 
         """
         print("##############################")
