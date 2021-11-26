@@ -567,7 +567,7 @@ class ToolsOutflow():
                 delin=delin,
                 )
             combine_two_png(
-                self.outpng_cico_vs_siiisii,,
+                self.outpng_cico_vs_siiisii,
                 self.png_spectra,
                 self.final_showcase_multi+"_tmp3.png",
                 self.box_map,
