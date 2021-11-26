@@ -423,8 +423,8 @@ class ToolsOutflow():
                 delin=delin,
                 )
             combine_two_png(
+                self.outpng_map_cico,
                 self.outpng_ci_vs_co,
-                self.outpng_cico_vs_siiisii,
                 self.final_showcase+"_tmp2.png",
                 self.box_map,
                 self.box_map,
@@ -567,7 +567,7 @@ class ToolsOutflow():
                 delin=delin,
                 )
             combine_two_png(
-                self.outpng_map_cico,
+                self.outpng_cico_vs_siiisii,,
                 self.png_spectra,
                 self.final_showcase_multi+"_tmp3.png",
                 self.box_map,
