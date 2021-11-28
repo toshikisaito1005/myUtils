@@ -993,7 +993,6 @@ class ToolsNGC3110():
         aco_lte_tkin_err = data[:,18]
         aco_ism_trot_err = data[:,19]
         aco_ism_tkin_err = data[:,20]
-        print(np.c_[aco_lte_trot,aco_lte_tkin])
 
         # process data
         dist_kpc  = np.sqrt(data_ra2**2+data_dec2**2) * 3600 * self.scale_kpc
@@ -1002,6 +1001,7 @@ class ToolsNGC3110():
         dist_lte_trot = dist_kpc[cut_lte]
         aco_lte_trot_err = 1/np.log(10) * aco_lte_trot_err[cut_lte]/aco_lte_trot[cut_lte]
         aco_lte_trot  = np.log10(aco_lte_trot[cut_lte])
+        print(np.mean(aco_lte_trot),np.min(aco_lte_trot),np.max(aco_lte_trot))
 
         cut_ism = np.where((aco_ism_trot>0) & (aco_ism_tkin>0) & (aco_ism_trot<aco_ism_tkin))
         dist_ism_trot = dist_kpc[cut_ism] # np.log10(dist[cut_ism])
