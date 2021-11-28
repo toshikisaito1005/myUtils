@@ -993,6 +993,7 @@ class ToolsNGC3110():
         aco_lte_tkin_err = data[:,18]
         aco_ism_trot_err = data[:,19]
         aco_ism_tkin_err = data[:,20]
+        print(np.c_[aco_lte_trot,aco_lte_tkin])
 
         # process data
         dist_kpc  = np.sqrt(data_ra2**2+data_dec2**2) * 3600 * self.scale_kpc
@@ -1071,7 +1072,6 @@ class ToolsNGC3110():
 
         #
         ax.bar(x1, y1+y2, lw=0, color="black", width=x1[1]-x1[0], alpha=0.5)
-        print(np.c_[x1, y1+y2])
         
         popt, pcov = curve_fit(self._func, x1, y1+y2, p0=[0.3,1.5,0.5])
         best_fit   = self._func(x2, popt[0],popt[1],popt[2])
