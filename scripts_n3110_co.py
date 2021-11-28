@@ -51,6 +51,7 @@ Date         Action
 2021-08-17   receive the 1st referee report
 2021-09-01   major update based on the 1st referee report
 2021-10-19   bug fix in the rotation diagram part (refactor equation, Snu2)
+2021-11-28   use eq1 of Nakajima et al. 2018
 Toshiki Saito@Nichidai/NAOJ
 """
 
@@ -1070,6 +1071,7 @@ class ToolsNGC3110():
 
         #
         ax.bar(x1, y1+y2, lw=0, color="black", width=x1[1]-x1[0], alpha=0.5)
+        print(np.c_[x1, y1+y2])
         
         popt, pcov = curve_fit(self._func, x1, y1+y2, p0=[0.3,1.5,0.5])
         best_fit   = self._func(x2, popt[0],popt[1],popt[2])
@@ -2320,8 +2322,6 @@ class ToolsNGC3110():
         Trot,
         flux_hj,
         txtdata,
-        lj_upp = 1,
-        hj_upp = 2,
         ):
         """
         use equation 1 of Nakajima et al. 2018
@@ -2355,6 +2355,7 @@ class ToolsNGC3110():
         log_Ntot  = log_item1 + log_item2 + log_item3
 
         """
+        # script before 1st referee comment
         k_B = 1.38064852e-16 # erg/K
         h_p = 6.6260755e-27 # erg.s
         Tbg = 2.73 # K
