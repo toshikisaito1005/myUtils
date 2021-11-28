@@ -144,10 +144,16 @@ def _myax_cbar(
     ):
 
     if colorbarticks is not None:
-        cb = fig.colorbar(data, ax=ax, extend=extend, ticks=colorbarticks)
+        if extend!=None:
+            cb = fig.colorbar(data, ax=ax, extend=extend, ticks=colorbarticks)
+        else:
+            cb = fig.colorbar(data, ax=ax, ticks=colorbarticks)
         cb.ax.set_yticklabels(colorbarticktexts)
     else:
-        cb = fig.colorbar(data, ax=ax, extend=extend)
+        if extend!=None:
+            cb = fig.colorbar(data, ax=ax, extend=extend)
+        else:
+            cb = fig.colorbar(data, ax=ax)
     
     if label is not None:
         cb.set_label(label)
