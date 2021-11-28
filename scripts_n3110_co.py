@@ -2316,14 +2316,45 @@ class ToolsNGC3110():
     ####################################
 
     def _trot_from_rotation_diagram_13co(
-    	self,
+        self,
         Trot,
         flux_hj,
         txtdata,
         lj_upp = 1,
         hj_upp = 2,
         ):
+        """
+        use equation 1 of Nakajima et al. 2018
+        """
 
+        # prepare
+        k_B       = 1.38064852e-16 # erg.K^-1
+        v_13co10  = 110.20135e9 # s^-1
+        v_13co21  = 220.39868e9 # s^-1
+        h_p       = 6.6260755e-27 # erg.s
+        clight    = 3e5 # km.s^-1
+        A_13co10  = 10**-7.198 # s^-1
+        A_13co21  = 10**-6.216 # s^-1
+        gu_13co10 = 3
+        gu_13co21 = 5
+        Eu_13co10 = 5.28880
+        Eu_13co21 = 15.86618
+
+        # item 1
+        numer = 8 * np.pi * k_B * v_13co21**2 * flux_hj
+        denom = h_p * clight**3 * A_13co21 * gu_13co21
+        log_item1 = np.log10(numer/denom)
+
+        # item 2
+        log_item2 = Eu_13co21 * np.log10(np.e) / Trot
+
+        # item 3
+        Qrot      = self._partition_func(Trot, datacol=1, txtdata=txtdata)
+        log_item3 = np.log10(Qrot)
+
+        log_Ntot  = log_item1 + log_item2 + log_item3
+
+        """
         k_B = 1.38064852e-16 # erg/K
         h_p = 6.6260755e-27 # erg.s
         Tbg = 2.73 # K
@@ -2369,6 +2400,7 @@ class ToolsNGC3110():
         gammaWg  = flux_hj * 8 * np.pi * k_B * (110.20135 * hj_upp)**2
         gammaWg  = gammaWg / (gu * h_p * (clight)**3 * Au) * 1e23 # cm^-2
         log_Ntot = np.log10( gammaWg * Qrot * np.exp(Eu[hj_upp]/Trot) )
+        """
 
         return round(log_Ntot, 2), round(Qrot, 2)
 
