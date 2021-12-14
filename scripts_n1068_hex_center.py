@@ -526,7 +526,7 @@ class ToolsPCA():
             self._f_opacity,
             cn10l_mom0,
             cn10h_mom0,
-            p0     = [1.0],
+            p0     = [1.4],
             maxfev = 10000,
             )
         opacity = popt
