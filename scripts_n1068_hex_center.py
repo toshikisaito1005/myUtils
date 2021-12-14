@@ -539,6 +539,7 @@ class ToolsPCA():
             else:
                 opacity.append(0)
 
+        opacity = -1 * np.log( np.array(opacity) )
         print(opacity)
 
         # plot
