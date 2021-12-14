@@ -523,6 +523,7 @@ class ToolsPCA():
 
         # fit
         opacity = []
+        opaciry_err = []
         for i in range(len(cn10l_mom0)):
             this_cn10l    = cn10l_mom0[i]
             this_cn10h    = cn10h_mom0[i]
@@ -530,7 +531,7 @@ class ToolsPCA():
             thiserr_cn10h = cn10h_emom0[i]
 
             if this_cn10l!=0 and this_cn10h!=0:
-                popt,_ = curve_fit(
+                popt,pcov = curve_fit(
                     self._f_opacity,
                     this_cn10l,
                     this_cn10h,
@@ -539,11 +540,14 @@ class ToolsPCA():
                     maxfev = 10000,
                     )
                 opacity.append(popt[0])
-                print(this_cn10h/this_cn10l, popt[0])
+
+                chi2 = np.sum(((ff(xx,popt[0],popt[1])-this_cn10h)/thiserr_cn10h)**2)
+                opaciry_err.append(math.sqrt(pcov[0,0]/chi2*18)))
             else:
                 opacity.append(0)
+                opaciry_err.append(0)
 
-        print(cn10h_mom0/cn10l_mom0)
+        print(np.c_[opacity,opaciry_err])
 
         # plot
         """
