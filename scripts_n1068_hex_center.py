@@ -547,7 +547,10 @@ class ToolsPCA():
                 opacity.append(0)
                 opaciry_err.append(0)
 
-        print(np.c_[opacity,opaciry_err])
+        test = np.c_[opacity,opaciry_err]
+        for i in range(len(opacity)):
+            if test[i][0]!=0:
+                print(test[i])
 
         # plot
         """
