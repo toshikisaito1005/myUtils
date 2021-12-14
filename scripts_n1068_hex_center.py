@@ -569,7 +569,7 @@ class ToolsPCA():
 
         k = 0.5
         
-        return (1-np.expr(-a)) / (1-np.expr(-a*k)) * x
+        return (1-np.exp(-a)) / (1-np.exp(-a*k)) * x
 
     ###############
     # plot_radial #
