@@ -244,6 +244,7 @@ class ToolsPCA():
         do_imagemagick         = False,
         # supplement
         plot_hexmap            = False,
+        plot_cn_excitation     = False,
         do_imagemagick_sub     = False,
         ):
         """
@@ -282,6 +283,9 @@ class ToolsPCA():
             self.plot_hexmap_mom0()
             self.plot_hexmap_ratio(denom="13co10")
             self.plot_hexmap_ratio(denom="hcn10")
+
+        if plot_cn_excitation==True:
+            self.plot_cn_excitation()
 
         if do_imagemagick_sub==True:
             self.immagick_figures_sub()
@@ -488,6 +492,75 @@ class ToolsPCA():
             self.box_map,
             delin=delin,
             )
+
+    ######################
+    # plot_cn_excitation #
+    ######################
+
+    def plot_cn_excitation(self):
+        """
+        """
+
+        taskname = self.modname + sys._getframe().f_code.co_name
+        check_first(self.table_hex_obs,taskname)
+
+        # extract mom0 data
+        header,data_mom0,data_emom0,x,y,r = self._read_table(self.table_hex_obs)
+
+        # extract cn10h
+        index       = np.where(header=="cn10h")
+        cn10h_mom0  = np.array(data_mom0[:,index].flatten())
+        cn10h_emom0 = np.array(data_mom0[:,index].flatten())
+        cn10h_mom0  = np.where(r<=self.r_sbr_as,cn10h_mom0,0)
+        cn10h_emom0 = np.where(r<=self.r_sbr_as,cn10h_emom0,0)
+
+        # extract cn10l
+        index       = np.where(header=="cn10l")
+        cn10l_mom0  = np.array(data_mom0[:,index].flatten())
+        cn10l_emom0 = np.array(data_mom0[:,index].flatten())
+        cn10l_mom0  = np.where(r<=self.r_sbr_as,cn10l_mom0,0)
+        cn10l_emom0 = np.where(r<=self.r_sbr_as,cn10l_emom0,0)
+
+        # fit
+        popt,_ = curve_fit(
+            self._f_opacity,
+            cn10l_mom0,
+            cn10h_mom0,
+            p0     = [1.0],
+            maxfev = 10000,
+            )
+        opacity = popt[0]
+        print(np.c_[opacity,cn10h_mom0])
+
+        # plot
+        """
+        self._plot_hexmap(
+            self.outpng_pca1_mom0_1st,
+            x,
+            y,
+            pc1_z1,
+            "CN Opacity",
+            cmap="Reds",
+            ann=True,
+            add_text=False,
+            lim=13,
+            size=3600,
+            label="(K km s$^{-1}$)",
+            )
+        """
+
+    ##############
+    # _f_opacity #
+    ##############
+
+    def _f_opacity(self, x, a):
+        """
+        Tcn10h = (1-a) / (1-a**k) * Tcn10l
+        """
+
+        k = 0.5
+        
+        return (1-a) / (1-a**k) * x
 
     ###############
     # plot_radial #
