@@ -522,6 +522,7 @@ class ToolsPCA():
         cn10l_emom0 = np.where(r<=self.r_sbr_as,cn10l_emom0,0)
 
         # fit
+        opacity = []
         for i in range(len(cn10l_mom0)):
             this_cn10l = cn10l_mom0[i]
             this_cn10h = cn10h_mom0[i]
@@ -533,7 +534,7 @@ class ToolsPCA():
                 maxfev = 10000,
                 )
             opacity.append(popt)
-        
+
         print(opacity)
 
         # plot
