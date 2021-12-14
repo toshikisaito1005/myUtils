@@ -539,7 +539,8 @@ class ToolsPCA():
             else:
                 opacity.append(0)
 
-        print(np.c_[opacity,cn10h_mom0/cn10l_mom0])
+        test = np.c_[opacity,cn10h_mom0/cn10l_mom0]
+        print(test[np.where(test[:,0])!=0])
 
         # plot
         """
