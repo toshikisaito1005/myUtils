@@ -524,14 +524,17 @@ class ToolsPCA():
         # fit
         opacity = []
         for i in range(len(cn10l_mom0)):
-            this_cn10l = cn10l_mom0[i]
-            this_cn10h = cn10h_mom0[i]
+            this_cn10l    = cn10l_mom0[i]
+            this_cn10h    = cn10h_mom0[i]
+            thiserr_cn10l = cn10l_emom0[i]
+            thiserr_cn10h = cn10h_emom0[i]
 
             if this_cn10l!=0 and this_cn10h!=0:
                 popt,_ = curve_fit(
                     self._f_opacity,
                     this_cn10l,
                     this_cn10h,
+                    sigma  = thiserr_cn10h,
                     p0     = [1.3],
                     maxfev = 10000,
                     )
