@@ -530,8 +530,8 @@ class ToolsPCA():
             if this_cn10l!=0 and this_cn10h!=0:
                 popt,_ = curve_fit(
                     self._f_opacity,
-                    this_cn10l,
                     this_cn10h,
+                    this_cn10l,
                     p0     = [1.3],
                     maxfev = 10000,
                     )
@@ -540,6 +540,7 @@ class ToolsPCA():
                 opacity.append(0)
 
         opacity = -1 * np.log( np.array(opacity) )
+        opacity[np.isinf(opacity)] = 0
         print(opacity)
 
         # plot
