@@ -522,16 +522,18 @@ class ToolsPCA():
         cn10l_emom0 = np.where(r<=self.r_sbr_as,cn10l_emom0,0)
 
         # fit
-        print(cn10l_mom0)
-        print(cn10h_mom0)
-        popt,_ = curve_fit(
-            self._f_opacity,
-            cn10l_mom0,
-            cn10h_mom0,
-            p0     = [1.4],
-            maxfev = 10000,
-            )
-        opacity = popt
+        for i in range(len(cn10l_mom0)):
+            this_cn10l = cn10l_mom0[i]
+            this_cn10h = cn10h_mom0[i]
+            popt,_ = curve_fit(
+                self._f_opacity,
+                this_cn10l,
+                this_cn10h,
+                p0     = [1.4],
+                maxfev = 10000,
+                )
+            opacity.append(popt)
+        
         print(opacity)
 
         # plot
