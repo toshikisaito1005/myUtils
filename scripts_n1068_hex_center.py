@@ -528,6 +528,7 @@ class ToolsPCA():
             this_cn10h = cn10h_mom0[i]
 
             if this_cn10l!=0 and this_cn10h!=0:
+                print(this_cn10h/this_cn10l)
                 popt,_ = curve_fit(
                     self._f_opacity,
                     this_cn10l,
