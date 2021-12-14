@@ -541,8 +541,8 @@ class ToolsPCA():
                     )
                 opacity.append(popt[0])
 
-                chi2 = np.sum(((ff(xx,popt[0],popt[1])-this_cn10h)/thiserr_cn10h)**2)
-                opaciry_err.append(math.sqrt(pcov[0,0]/chi2*18))
+                chi2 = np.sum(((self._f_opacity(this_cn10l,popt[0])-this_cn10h)/thiserr_cn10h)**2)
+                opaciry_err.append(math.sqrt(pcov[0]/chi2*18))
             else:
                 opacity.append(0)
                 opaciry_err.append(0)
