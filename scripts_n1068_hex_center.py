@@ -529,7 +529,7 @@ class ToolsPCA():
             p0     = [1.0],
             maxfev = 10000,
             )
-        opacity = popt[0]
+        opacity = popt
         print(opacity)
 
         # plot
