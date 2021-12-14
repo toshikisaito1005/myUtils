@@ -539,8 +539,6 @@ class ToolsPCA():
             else:
                 opacity.append(0)
 
-        opacity = -1 * np.log( np.array(opacity) )
-        opacity[np.isinf(opacity)] = 0
         print(opacity)
 
         # plot
@@ -571,7 +569,7 @@ class ToolsPCA():
 
         k = 0.5
         
-        return (1-a) / (1-a**k) * x
+        return (1-np.expr(-a)) / (1-np.expr(-a*k)) * x
 
     ###############
     # plot_radial #
