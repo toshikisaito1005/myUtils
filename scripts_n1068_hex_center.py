@@ -540,6 +540,7 @@ class ToolsPCA():
                     maxfev = 10000,
                     )
                 opacity.append(popt[0])
+                print(opacity)
             else:
                 opacity.append(0)
                 opaciry_err.append(0)
