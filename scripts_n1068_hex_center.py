@@ -539,7 +539,7 @@ class ToolsPCA():
             else:
                 opacity.append(0)
 
-        print(opacity)
+        print(np.c_[opacity,cn10h_mom0/cn10l_mom0])
 
         # plot
         """
@@ -562,14 +562,14 @@ class ToolsPCA():
     # _f_opacity #
     ##############
 
-    def _f_opacity(self, x, a):
+    def _f_opacity(self, x, tau):
         """
-        Tcn10h = (1-a) / (1-a**k) * Tcn10l
+        Tcn10h = (1-np.exp(-tau)) / (1-np.exp(-tau*k)) * Tcn10l
         """
 
         k = 0.5
         
-        return (1-np.exp(-a)) / (1-np.exp(-a*k)) * x
+        return (1-np.exp(-tau)) / (1-np.exp(-tau*k)) * x
 
     ###############
     # plot_radial #
