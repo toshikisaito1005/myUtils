@@ -536,21 +536,13 @@ class ToolsPCA():
                     this_cn10l,
                     this_cn10h,
                     sigma  = thiserr_cn10h,
-                    p0     = [1.3],
+                    p0     = [0.5],
                     maxfev = 10000,
                     )
                 opacity.append(popt[0])
-
-                chi2 = np.sum(((self._f_opacity(this_cn10l,popt[0])-this_cn10h)/thiserr_cn10h)**2)
-                opaciry_err.append(math.sqrt(pcov[0]/chi2*18))
             else:
                 opacity.append(0)
                 opaciry_err.append(0)
-
-        test = np.c_[opacity,opaciry_err]
-        for i in range(len(opacity)):
-            if test[i][0]!=0:
-                print(test[i])
 
         # plot
         """
