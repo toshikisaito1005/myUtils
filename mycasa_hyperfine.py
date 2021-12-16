@@ -12,6 +12,8 @@ Toshiki Saito@Nichidai/NAOJ
 import os, sys
 import mycasa_tasks as mytask
 reload(mytask)
+import mycasa_plots as myplot
+reload(myplot)
 
 execfile(os.environ["HOME"] + "/myUtils/stuff_casa.py")
 
@@ -23,7 +25,7 @@ execfile(os.environ["HOME"] + "/myUtils/stuff_casa.py")
 
 def hf_cn10(
     cubeimage,
-    snr=4.0,
+    snr=10.0,
     ra_cnt=40.669625, # 1068 agn, deg
     dec_cnt=-0.01331667, # 1068 agn, deg
     outpng_hist="plot_voxel_hist.png",
@@ -34,8 +36,14 @@ def hf_cn10(
     neiboring 8 pixels: https://qiita.com/yuji96/items/bfae04a043d35260ffb1
     """
 
+    # preamble
     taskname = sys._getframe().f_code.co_name
     mytask.check_first(cubeimage, taskname)
+
+    # constants
+    z          = 0.00379
+    freq_cn10l = 113.123337/(1+z)
+    freq_cn10h = 113.488126/(1+z)
 
     # get cube
     data,_  = mytask.imval_all(cubeimage)
@@ -65,67 +73,122 @@ def hf_cn10(
     y   = range(np.shape(data)[1])
     xy  = itertools.product(x, y)
 
-    mom0            = np.zeros((np.shape(data)[0],np.shape(data)[1]))
-    mom1            = np.zeros((np.shape(data)[0],np.shape(data)[1]))
-    mom2            = np.zeros((np.shape(data)[0],np.shape(data)[1]))
-    mom0_residual   = np.zeros((np.shape(data)[0],np.shape(data)[1]))
+    tau      = np.zeros((np.shape(data)[0],np.shape(data)[1]))
+    mom0     = np.zeros((np.shape(data)[0],np.shape(data)[1]))
+    mom1     = np.zeros((np.shape(data)[0],np.shape(data)[1]))
+    mom2     = np.zeros((np.shape(data)[0],np.shape(data)[1]))
+    mom0_res = np.zeros((np.shape(data)[0],np.shape(data)[1]))
+    ratio    = np.zeros((np.shape(data)[0],np.shape(data)[1]))
     r_squared_index = [0,0]
-    r_squared_value = 0.0#1.0
+    r_squared_value = 100.0
     for i in xy:
+        bw                 = 1
         this_x,this_y      = i[0],i[1]
         this_data_center   = data[this_x, this_y]
         this_freq_center   = freq[this_x, this_y]
-        this_data_neighbor = data[max(0,this_x-1):this_x+2, max(0,this_y-1):this_y+2]
-        this_freq_neighbor = freq[max(0,this_x-1):this_x+2, max(0,this_y-1):this_y+2]
+        this_data_neighbor = data[max(0,this_x-bw):this_x+1+bw, max(0,this_y-bw):this_y+1+bw]
+        this_freq_neighbor = freq[max(0,this_x-bw):this_x+1+bw, max(0,this_y-bw):this_y+1+bw]
         this_vel_center    = (freq_cn10h - this_freq_center) / freq_cn10h * 299792.458 # km/s
         chanwidth          = abs(this_vel_center[1] - this_vel_center[0])
+        chanwidth_GHz      = abs(this_freq_center[1] - this_freq_center[0])
 
         p0 = [
         np.max(this_data_center),
-        this_freq_center[np.argmax(this_data_center)],
-        len(this_data_center[this_data_center>=rms*snr]) / 2.35 * abs(this_freq_center[1]-this_freq_center[0]),
+        0.2,
+        freq_cn10l,
+        freq_cn10h,
+        np.max([len(this_data_center[this_data_center>=rms*snr])/2.35,2.0]) * chanwidth_GHz / 4.0,
         ]
 
         if np.max(this_data_center)<rms*snr:
             # add pixel
-            mom0[this_x,this_y]          = 0
-            mom1[this_x,this_y]          = 0
-            mom2[this_x,this_y]          = 0
-            mom0_residual[this_x,this_y] = 0
+            tau[this_x,this_y]      = 0
+            mom0[this_x,this_y]     = 0
+            mom1[this_x,this_y]     = 0
+            mom2[this_x,this_y]     = 0
+            mom0_res[this_x,this_y] = 0
+            ratio[this_x,this_y]    = 0
         else:
             # fitting
-            popt,_ = curve_fit(
+            popt,pcov = curve_fit(
                 _f_cn10,
                 this_freq_center,
-                this_data_center, #np.mean(this_data_neighbor,axis=(0,1))
+                np.mean(this_data_neighbor,axis=(0,1)),
+                #sigma=1./np.mean(this_data_neighbor,axis=(0,1)),
                 p0 = p0,
-                maxfev = 10000,
+                maxfev = 1000000,
                 )
+            area1,area2 = _f_cn10_areas(this_freq_center, *popt)
 
             # keep worst residual pixel
-            residuals      = this_data_center - _f_cn10(this_freq_center, *popt)
+            residuals      = np.mean(this_data_neighbor,axis=(0,1)) - _f_cn10(this_freq_center, *popt)
             ss_res         = np.sum(residuals**2)
             ss_tot         = np.sum((this_data_center-np.mean(this_data_center))**2)
             this_r_squared = 1 - (ss_res / ss_tot)
-            if ss_res>r_squared_value:
+            if ss_res<r_squared_value:
                 r_squared_value = ss_res
                 r_squared_index = [this_x,this_y]
 
+            # calc values
+            this_model    = _f_cn10(this_freq_center, *popt)
+            this_tau      = np.min([np.max([0.01, popt[1]]),10])
+            this_mom0     = np.sum(this_model) * chanwidth
+            this_mom1     = (freq_cn10h - popt[3]) / freq_cn10h * 299792.458 # km/s
+            this_mom2     = popt[4] * 299792.458 / freq_cn10h # km/s
+            this_mom0_res = np.sum(residuals) * chanwidth
+            this_ratio    = area1/area2
+
+            # calc errors
+            perr          = np.sqrt(np.diag(pcov))
+            this_tau_snr  = this_tau / perr[1]
+
+            print("tau = " + str(np.round(popt[1],2)).rjust(6) + " (SNR = " + str(np.round(popt[1]/perr[1],1)).rjust(4) + "), pos = " + str(this_x).rjust(3) + ", " + str(this_y).rjust(3) + ", ratio = " + str(np.round(area1/area2,2)))
+
+            if abs(this_mom2)>300 or this_mom2<0:
+                this_tau      = 0.0
+                this_mom0     = 0.0
+                this_mom1     = 0.0
+                this_mom2     = 0.0
+                this_mom0_res = 0.0
+                this_ratio    = 0.0
+
+            #if this_tau_snr<=1:
+            #    this_tau      = 0.0
+
             # add pixel
-            this_model = _f_cn10(this_freq_center, *popt)
-            mom0[this_x,this_y] = np.sum(this_model)*chanwidth
-            mom1[this_x,this_y] = popt[1]
-            mom2[this_x,this_y] = popt[2]
-            mom0_residual[this_x,this_y] = np.sum(residuals)*chanwidth
+            tau[this_x,this_y]      = this_tau
+            mom0[this_x,this_y]     = this_mom0
+            mom1[this_x,this_y]     = this_mom1
+            mom2[this_x,this_y]     = this_mom2
+            mom0_res[this_x,this_y] = this_mom0_res
+            ratio[this_x,this_y]    = this_ratio
 
-    # plot moments
-    plot_mom(ra,dec,mom0,lim,"mom0.png",logmom=True)
-    plot_mom(ra,dec,mom1,lim,"mom1.png")
-    plot_mom(ra,dec,mom2,lim,"mom2.png")
-    plot_mom(ra,dec,mom0_residual,lim,"mom0_residual.png")
+    # fits
+    fits_creation(tau.T,"tau.fits")
+    fits_creation(ratio.T,"ratio.fits")
+    fits_creation(mom0.T,"mom0.fits")
+    fits_creation(mom1.T,"mom1.fits")
+    fits_creation(mom2.T,"mom2.fits")
+    fits_creation(mom0_res.T,"mom0_residual.fits")
 
-    # plot worst spectrum
-    plot_spectrum(data,freq,r_squared_index,"plot_worst_spectrum.png")
+    # plot worst spectrum r_squared_index
+    plot_spectrum(data,freq,[17,57],"plot_worst_spectrum.png")
+
+#################
+# fits_creation #
+#################
+
+def fits_creation(
+    input_map,
+    output_map,
+    ):
+    """
+    """
+
+    os.system("rm -rf " + output_map)
+    hdu = fits.PrimaryHDU(input_map)
+    hdul = fits.HDUList([hdu])
+    hdul.writeto(output_map)
 
 #################
 # plot_spectrum #
@@ -140,6 +203,10 @@ def plot_spectrum(
     """
     """
 
+    z          = 0.00379
+    freq_cn10l = 113.123337/(1+z)
+    freq_cn10h = 113.490970/(1+z)
+
     this_data_worst = data[index_worst_fit[0], index_worst_fit[1]]
     this_freq_worst = freq[index_worst_fit[0], index_worst_fit[1]]
 
@@ -147,7 +214,7 @@ def plot_spectrum(
         _f_cn10,
         this_freq_worst,
         this_data_worst,
-        p0 = [np.max(this_data_worst),this_freq_worst[np.argmax(this_data_worst)],0.05],
+        p0 = [1,0.1,freq_cn10l,freq_cn10h,0.05],
         maxfev = 10000,
         )
     this_residual = this_data_worst - _f_cn10(this_freq_worst, *popt)
@@ -196,6 +263,7 @@ def plot_mom(
     plot_cbar=True,
     label="K km s$^{-1}$",
     logmom=False,
+    size=90,
     ):
     """
     """
@@ -221,7 +289,7 @@ def plot_mom(
         this_dec.flatten(),
         c=color,
         cmap="rainbow",
-        s=23, marker="s",
+        s=size, marker="s",
         linewidths=0,
         )
 
@@ -340,72 +408,108 @@ def _f_gauss(x, a, c):
 # _f_cn10 #
 ###########
 
-def _f_cn10(x,a,b,c):
+def _f_cn10(x,a,tau,b1,b2,c):
 
-    return a*np.exp(-(x-b)**2/(2*c**2))
+    z = 0.00379
+
+    # k factor
+    k_l1 =  1.23 / 33.33
+    k_l2 =  9.88 / 33.33
+    k_l3 =  9.88 / 33.33
+    k_l4 = 12.35 / 33.33
+
+    k_h1 = 12.35 / 33.33
+    k_h2 = 33.33 / 33.33
+    k_h3 =  9.88 / 33.33
+    k_h4 =  9.88 / 33.33
+    k_h5 =  1.23 / 33.33
+
+    # freq
+    f_l1 = 113.123337 / (1+z)
+    f_h1 = 113.488126 / (1+z)
+
+    b_l1 = 113.123337 / (1+z) - f_l1
+    b_l2 = 113.144122 / (1+z) - f_l1
+    b_l3 = 113.170502 / (1+z) - f_l1
+    b_l4 = 113.191287 / (1+z) - f_l1
+
+    b_h1 = 113.488126 / (1+z) - f_h1
+    b_h2 = 113.490943 / (1+z) - f_h1
+    b_h3 = 113.499629 / (1+z) - f_h1
+    b_h4 = 113.508911 / (1+z) - f_h1
+    b_h5 = 113.520414 / (1+z) - f_h1
+
+    gauss_cn10_l1 = a * np.exp( -(x+b_l1-b1)**2 / (2*c**2) ) * ( 1-np.exp(-tau*k_l1) )
+    gauss_cn10_l2 = a * np.exp( -(x+b_l2-b1)**2 / (2*c**2) ) * ( 1-np.exp(-tau*k_l2) )
+    gauss_cn10_l3 = a * np.exp( -(x+b_l3-b1)**2 / (2*c**2) ) * ( 1-np.exp(-tau*k_l3) )
+    gauss_cn10_l4 = a * np.exp( -(x+b_l4-b1)**2 / (2*c**2) ) * ( 1-np.exp(-tau*k_l4) )
+
+    gauss_cn10_h1 = a * np.exp( -(x+b_h1-b2)**2 / (2*c**2) ) * ( 1-np.exp(-tau*k_h1) )
+    gauss_cn10_h2 = a * np.exp( -(x+b_h2-b2)**2 / (2*c**2) ) * ( 1-np.exp(-tau*k_h2) )
+    gauss_cn10_h3 = a * np.exp( -(x+b_h3-b2)**2 / (2*c**2) ) * ( 1-np.exp(-tau*k_h3) )
+    gauss_cn10_h4 = a * np.exp( -(x+b_h4-b2)**2 / (2*c**2) ) * ( 1-np.exp(-tau*k_h4) )
+    gauss_cn10_h5 = a * np.exp( -(x+b_h5-b2)**2 / (2*c**2) ) * ( 1-np.exp(-tau*k_h5) )
+
+    func = gauss_cn10_l1 + gauss_cn10_l2 + gauss_cn10_l3 + gauss_cn10_l4 + gauss_cn10_h1 + gauss_cn10_h2 + gauss_cn10_h3 + gauss_cn10_h4 + gauss_cn10_h5
+
+    return func
+
+def _f_cn10_areas(x,a,tau,b1,b2,c):
+
+    z = 0.00379
+
+    # k factor
+    k_l1 =  1.23 / 33.33
+    k_l2 =  9.88 / 33.33
+    k_l3 =  9.88 / 33.33
+    k_l4 = 12.35 / 33.33
+
+    k_h1 = 12.35 / 33.33
+    k_h2 = 33.33 / 33.33
+    k_h3 =  9.88 / 33.33
+    k_h4 =  9.88 / 33.33
+    k_h5 =  1.23 / 33.33
+
+    # freq
+    f_l1 = 113.123337 / (1+z)
+    f_h1 = 113.488126 / (1+z)
+
+    b_l1 = 113.123337 / (1+z) - f_l1
+    b_l2 = 113.144122 / (1+z) - f_l1
+    b_l3 = 113.170502 / (1+z) - f_l1
+    b_l4 = 113.191287 / (1+z) - f_l1
+
+    b_h1 = 113.488126 / (1+z) - f_h1
+    b_h2 = 113.490943 / (1+z) - f_h1
+    b_h3 = 113.499629 / (1+z) - f_h1
+    b_h4 = 113.508911 / (1+z) - f_h1
+    b_h5 = 113.520414 / (1+z) - f_h1
+
+    gauss_cn10_l1 = a * np.exp( -(x+b_l1-b1)**2 / (2*c**2) ) * ( 1-np.exp(-tau*k_l1) )
+    gauss_cn10_l2 = a * np.exp( -(x+b_l2-b1)**2 / (2*c**2) ) * ( 1-np.exp(-tau*k_l2) )
+    gauss_cn10_l3 = a * np.exp( -(x+b_l3-b1)**2 / (2*c**2) ) * ( 1-np.exp(-tau*k_l3) )
+    gauss_cn10_l4 = a * np.exp( -(x+b_l4-b1)**2 / (2*c**2) ) * ( 1-np.exp(-tau*k_l4) )
+
+    gauss_cn10_h1 = a * np.exp( -(x+b_h1-b2)**2 / (2*c**2) ) * ( 1-np.exp(-tau*k_h1) )
+    gauss_cn10_h2 = a * np.exp( -(x+b_h2-b2)**2 / (2*c**2) ) * ( 1-np.exp(-tau*k_h2) )
+    gauss_cn10_h3 = a * np.exp( -(x+b_h3-b2)**2 / (2*c**2) ) * ( 1-np.exp(-tau*k_h3) )
+    gauss_cn10_h4 = a * np.exp( -(x+b_h4-b2)**2 / (2*c**2) ) * ( 1-np.exp(-tau*k_h4) )
+    gauss_cn10_h5 = a * np.exp( -(x+b_h5-b2)**2 / (2*c**2) ) * ( 1-np.exp(-tau*k_h5) )
+
+    area1 = np.sum(gauss_cn10_l1 + gauss_cn10_l2 + gauss_cn10_l3 + gauss_cn10_l4)
+    area2 = np.sum(gauss_cn10_h1 + gauss_cn10_h2 + gauss_cn10_h3 + gauss_cn10_h4 + gauss_cn10_h5)
+
+    return area1, area2
 
 """
-def _f_cn10(x,eta,Tex,tau,vel,width):
+def _f_cn10(x,a,tau,b1,b2,c1,c2):
 
-    # prepare
-    z       = 0.00379
+    k = 0.5
 
-    freq_l1 = 113.123337/(1+z)
-    freq_l2 = 113.144122/(1+z)
-    freq_l3 = 113.170502/(1+z)
-    freq_l4 = 113.191287/(1+z)
-    freq_h1 = 113.488126/(1+z)
-    freq_h2 = 113.490943/(1+z)
-    freq_h3 = 113.499629/(1+z)
-    freq_h4 = 113.508911/(1+z)
-    freq_h5 = 113.520414/(1+z)
+    gauss_cn10l = a * np.exp( -(x-b1)**2 / (2*c1**2) ) * (1-np.exp(tau*k))/(1-np.exp(tau)) * c1/c2
+    gauss_cn10h = a * np.exp( -(x-b2)**2 / (2*c2**2) )
 
-    k_l1    =  1.23 / 33.33
-    k_l2    =  9.88 / 33.33
-    k_l3    =  9.88 / 33.33
-    k_l4    = 12.35 / 33.33
-    k_h1    = 12.35 / 33.33
-    k_h2    = 33.33 / 33.33
-    k_h3    =  9.88 / 33.33
-    k_h4    =  9.88 / 33.33
-    k_h5    =  1.23 / 33.33
-
-    k_B     = 1.38064852e-16 # erg.K^-1
-    h_p     = 6.6260755e-27 # erg.s
-    Tbg     = 2.73 K
-
-    # define a
-    tpeak_l1 = eta * ( (h_p*freq_l1/k_B)/(np.exp(h_p*freq_l1/(k_B*Tex))-1) - (h_p*freq_l1/k_B)/(np.exp(h_p*freq_l1/(k_B*Tbg))-1) ) * ( 1-np.exp(-tau*k_l1) )
-    tpeak_l2 = eta * ( (h_p*freq_l2/k_B)/(np.exp(h_p*freq_l2/(k_B*Tex))-1) - (h_p*freq_l2/k_B)/(np.exp(h_p*freq_l2/(k_B*Tbg))-1) ) * ( 1-np.exp(-tau*k_l2) )
-    tpeak_l3 = eta * ( (h_p*freq_l3/k_B)/(np.exp(h_p*freq_l3/(k_B*Tex))-1) - (h_p*freq_l3/k_B)/(np.exp(h_p*freq_l3/(k_B*Tbg))-1) ) * ( 1-np.exp(-tau*k_l3) )
-    tpeak_l4 = eta * ( (h_p*freq_l4/k_B)/(np.exp(h_p*freq_l4/(k_B*Tex))-1) - (h_p*freq_l4/k_B)/(np.exp(h_p*freq_l4/(k_B*Tbg))-1) ) * ( 1-np.exp(-tau*k_l4) )
-    tpeak_h1 = eta * ( (h_p*freq_h1/k_B)/(np.exp(h_p*freq_h1/(k_B*Tex))-1) - (h_p*freq_h1/k_B)/(np.exp(h_p*freq_h1/(k_B*Tbg))-1) ) * ( 1-np.exp(-tau*k_h1) )
-    tpeak_h2 = eta * ( (h_p*freq_h2/k_B)/(np.exp(h_p*freq_h2/(k_B*Tex))-1) - (h_p*freq_h2/k_B)/(np.exp(h_p*freq_h2/(k_B*Tbg))-1) ) * ( 1-np.exp(-tau*k_h2) )
-    tpeak_h3 = eta * ( (h_p*freq_h3/k_B)/(np.exp(h_p*freq_h3/(k_B*Tex))-1) - (h_p*freq_h3/k_B)/(np.exp(h_p*freq_h3/(k_B*Tbg))-1) ) * ( 1-np.exp(-tau*k_h3) )
-    tpeak_h4 = eta * ( (h_p*freq_h4/k_B)/(np.exp(h_p*freq_h4/(k_B*Tex))-1) - (h_p*freq_h4/k_B)/(np.exp(h_p*freq_h4/(k_B*Tbg))-1) ) * ( 1-np.exp(-tau*k_h4) )
-    tpeak_h5 = eta * ( (h_p*freq_h5/k_B)/(np.exp(h_p*freq_h5/(k_B*Tex))-1) - (h_p*freq_h5/k_B)/(np.exp(h_p*freq_h5/(k_B*Tbg))-1) ) * ( 1-np.exp(-tau*k_h5) )
-
-    # define b
-    b_l1 = 113.123337/(1+z) - freq_l1
-    b_l2 = 113.144122/(1+z) - freq_l1
-    b_l3 = 113.170502/(1+z) - freq_l1
-    b_l4 = 113.191287/(1+z) - freq_l1
-    b_h1 = 113.488126/(1+z) - freq_l1
-    b_h2 = 113.490943/(1+z) - freq_l1
-    b_h3 = 113.499629/(1+z) - freq_l1
-    b_h4 = 113.508911/(1+z) - freq_l1
-    b_h5 = 113.520414/(1+z) - freq_l1
-
-    func = \
-    tpeak_l1 * np.exp( -(x+b_l1-vel)**2 / (2*width**2) ) + \
-    tpeak_l2 * np.exp( -(x+b_l2-vel)**2 / (2*width**2) ) + \
-    tpeak_l3 * np.exp( -(x+b_l3-vel)**2 / (2*width**2) ) + \
-    tpeak_l4 * np.exp( -(x+b_l4-vel)**2 / (2*width**2) ) + \
-    tpeak_m1 * np.exp( -(x+b_h1-vel)**2 / (2*width**2) ) + \
-    tpeak_m2 * np.exp( -(x+b_h2-vel)**2 / (2*width**2) ) + \
-    tpeak_m3 * np.exp( -(x+b_h3-vel)**2 / (2*width**2) ) + \
-    tpeak_m4 * np.exp( -(x+b_h4-vel)**2 / (2*width**2) ) + \
-    tpeak_m5 * np.exp( -(x+b_h5-vel)**2 / (2*width**2) )
+    func = gauss_cn10l + gauss_cn10h
 
     return func
 """
