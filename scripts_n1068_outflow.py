@@ -1182,8 +1182,6 @@ class ToolsOutflow():
 
         myfig_fits2png(
             imcolor=self.outfits_ci10_outflow_mom1,
-            imcontour1=self.outfits_ci10_outflow_mom0,
-            levels_cont1=[0.08,0.16,0.32,0.64,0.96],
             outfile=self.outpng_outflow_mom1,
             imcontour1=self.outfits_ci10_outflow_mom0,
             imsize_as=self.imsize_as,
