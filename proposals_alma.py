@@ -10,7 +10,8 @@ see "def _set_cycle_8p5a_specscan" for example
 ALMA timeline:
 cycle    release date         deadline
 C8supp   2021-08-08 15:00UT   2021-10-06 15:00UT
-C9       2022-??-?? 15:00UT   2022-??-?? 15:00UT
+outcome  2021-12-16 15:59UT
+C9main   2022-??-?? 15:00UT   2022-??-?? 15:00UT
 
 history:
 2021-09-21   start by TS
@@ -260,7 +261,12 @@ class ProposalsALMA():
         combine_figures   = False,
         ):
         """
-        Submitted (2021.2.00049.S). Band 3 and 6 spectral scans with 7m+TP toward NGC 1068.
+        Content: Band 3 and 6 spectral scans with 7m+TP toward NGC 1068.
+        Status:  submitted
+        Code:    2021.2.00049.S
+        Outcome: accepted (grade C)
+        Rank:    1,1,1,1,2,2,3,4,4,6
+        Note:    N/A
         """
 
         if plot_spw_setup==True:
@@ -285,6 +291,12 @@ class ProposalsALMA():
         combine_figures       = False,
         ):
         """
+        Content: CI 2-1 mapping of NGC 1068
+        Status:  Not submitted
+        Code:    N/A
+        Outcome: N/A
+        Rank:    N/A
+        Note:
         this proposal (7m-only Band 10 mosaic toward NGC 1068) was not submitted in Cycle8.5,
         because Cycle 8 did not offer Band 10 mosaic. This proposal will be modified and then
         submitted in the future main call (e.g., 12m+7m array).

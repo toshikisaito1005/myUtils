@@ -817,6 +817,8 @@ class ToolsOutflow():
 
         myfig_fits2png(
             imcolor=self.outfits_map_oiii,
+            imcontour1=self.outfits_ci10_outflow_mom0,
+            levels_cont1=[0.08,0.16,0.32,0.64,0.96],
             outfile=self.png_map_oiii,
             imsize_as=self.imsize_as,
             ra_cnt=self.ra_agn_str,
@@ -835,6 +837,8 @@ class ToolsOutflow():
 
         myfig_fits2png(
             imcolor=self.outfits_map_radio,
+            imcontour1=self.outfits_ci10_outflow_mom0,
+            levels_cont1=[0.08,0.16,0.32,0.64,0.96],
             outfile=self.png_map_vla,
             imsize_as=self.imsize_as,
             ra_cnt=self.ra_agn_str,
@@ -853,6 +857,8 @@ class ToolsOutflow():
 
         myfig_fits2png(
             imcolor=self.outfits_map_siiisii,
+            imcontour1=self.outfits_ci10_outflow_mom0,
+            levels_cont1=[0.08,0.16,0.32,0.64,0.96],
             outfile=self.png_map_siiisii,
             imsize_as=self.imsize_as,
             ra_cnt=self.ra_agn_str,
@@ -1157,6 +1163,8 @@ class ToolsOutflow():
 
         myfig_fits2png(
             imcolor=self.outfits_ci10_outflow_mom0,
+            imcontour1=self.outfits_ci10_outflow_mom0,
+            levels_cont1=[0.08,0.16,0.32,0.64,0.96],
             outfile=self.outpng_outflow_mom0,
             imsize_as=self.imsize_as,
             ra_cnt=self.ra_agn_str,
@@ -1174,6 +1182,8 @@ class ToolsOutflow():
 
         myfig_fits2png(
             imcolor=self.outfits_ci10_outflow_mom1,
+            imcontour1=self.outfits_ci10_outflow_mom0,
+            levels_cont1=[0.08,0.16,0.32,0.64,0.96],
             outfile=self.outpng_outflow_mom1,
             imcontour1=self.outfits_ci10_outflow_mom0,
             imsize_as=self.imsize_as,
@@ -1951,8 +1961,8 @@ class ToolsOutflow():
             ax1.text(3.42,2.43,"1:0.1",rotation=51.34,horizontalalignment="right")
 
         # text
-        ax1.text(0.05,0.92,"FoV-1 Cone (colorized)",transform=ax1.transAxes)
-        ax1.text(0.05,0.87,"FoV-1 Non-cone (black)",transform=ax1.transAxes)
+        ax1.text(0.05,0.92,"FoV-1, inside cone (colorized)",transform=ax1.transAxes)
+        ax1.text(0.05,0.87,"FoV-1, outside cone (black)",transform=ax1.transAxes)
         ax1.text(0.05,0.82,"FoV-2 (grey)",transform=ax1.transAxes)
         ax1.text(0.05,0.77,"FoV-3 (grey)",transform=ax1.transAxes)
 
