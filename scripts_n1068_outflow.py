@@ -390,11 +390,11 @@ class ToolsOutflow():
     def immagick_figures(
         self,
         delin                   = False,
-        do_all                  = True,
+        do_all                  = False,
         do_final_showcase       = False,
         do_final_channel        = False,
         do_final_chan_models    = False,
-        do_final_showcase_multi = False,
+        do_final_showcase_multi = True,
         ):
         """
         """
@@ -815,9 +815,16 @@ class ToolsOutflow():
         scalebar = 100. / self.scale_pc
         label_scalebar = "100 pc"
 
+        #
+        os.system("cp -r " + self.outfits_map_oiii + " template.fits")
+        run_imregrid(
+            imagename = self.outfits_ci10_outflow_mom0,
+            template = "template.fits",
+            output = self.outfits_ci10_outflow_mom0 + ".regrid",
+            )
         myfig_fits2png(
             imcolor=self.outfits_map_oiii,
-            imcontour1=self.outfits_ci10_outflow_mom0,
+            imcontour1=self.outfits_ci10_outflow_mom0 + ".regrid",
             levels_cont1=[0.08,0.16,0.32,0.64,0.96],
             outfile=self.png_map_oiii,
             imsize_as=self.imsize_as,
@@ -834,10 +841,19 @@ class ToolsOutflow():
             numann=1,
             textann=False,
             )
+        os.system("rm -rf " + self.outfits_ci10_outflow_mom0 + ".regrid")
+        os.system("rm -rf template.fits")
 
+        #
+        os.system("cp -r " + self.outfits_map_radio + " template.fits")
+        run_imregrid(
+            imagename = self.outfits_ci10_outflow_mom0,
+            template = "template.fits",
+            output = self.outfits_ci10_outflow_mom0 + ".regrid",
+            )
         myfig_fits2png(
             imcolor=self.outfits_map_radio,
-            imcontour1=self.outfits_ci10_outflow_mom0,
+            imcontour1=self.outfits_ci10_outflow_mom0 + ".regrid",
             levels_cont1=[0.08,0.16,0.32,0.64,0.96],
             outfile=self.png_map_vla,
             imsize_as=self.imsize_as,
@@ -854,10 +870,19 @@ class ToolsOutflow():
             numann=1,
             textann=False,
             )
+        os.system("rm -rf " + self.outfits_ci10_outflow_mom0 + ".regrid")
+        os.system("rm -rf template.fits")
 
+        #
+        os.system("cp -r " + self.outfits_map_siiisii + " template.fits")
+        run_imregrid(
+            imagename = self.outfits_ci10_outflow_mom0,
+            template = "template.fits",
+            output = self.outfits_ci10_outflow_mom0 + ".regrid",
+            )
         myfig_fits2png(
             imcolor=self.outfits_map_siiisii,
-            imcontour1=self.outfits_ci10_outflow_mom0,
+            imcontour1=self.outfits_ci10_outflow_mom0 + ".regrid",
             levels_cont1=[0.08,0.16,0.32,0.64,0.96],
             outfile=self.png_map_siiisii,
             imsize_as=self.imsize_as,
@@ -874,6 +899,8 @@ class ToolsOutflow():
             numann=1,
             textann=False,
             )
+        os.system("rm -rf " + self.outfits_ci10_outflow_mom0 + ".regrid")
+        os.system("rm -rf template.fits")
 
     ###################
     # bicone_modeling #
