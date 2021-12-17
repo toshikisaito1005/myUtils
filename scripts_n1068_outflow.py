@@ -56,6 +56,7 @@ paper drafts:
 Date         Filename                To
 2021-06-04   draft_v0_210604.zip     Takano,Nakajima,Harada
 2021-11-25   draft_v1p5_211125.zip   all co-authors
+2021-11-25   draft_v2_211217.zip     ApJL
 
 history:
 2021-04-22   start project, write README
@@ -69,6 +70,7 @@ history:
 2021-10-29   done all refactoring before v1 circular
 2021-11-05   v1 circular
 2021-11-24   start revision of draft and refactoring
+2021-12-17   submitted!
 Toshiki Saito@Nichidai/NAOJ
 """
 
@@ -815,7 +817,7 @@ class ToolsOutflow():
         scalebar = 100. / self.scale_pc
         label_scalebar = "100 pc"
 
-        #
+        # outfits_map_oiii
         run_importfits(
             fitsimage = self.outfits_map_oiii,
             imagename = "template.image",
@@ -847,7 +849,7 @@ class ToolsOutflow():
         os.system("rm -rf " + self.outfits_ci10_outflow_mom0 + ".regrid")
         os.system("rm -rf template.image")
 
-        #
+        # outfits_map_radio
         run_importfits(
             fitsimage = self.outfits_map_radio,
             imagename = "template.image",
@@ -879,7 +881,7 @@ class ToolsOutflow():
         os.system("rm -rf " + self.outfits_ci10_outflow_mom0 + ".regrid")
         os.system("rm -rf template.image")
 
-        #
+        # outfits_map_siiisii
         run_importfits(
             fitsimage = self.outfits_map_siiisii,
             imagename = "template.image",
