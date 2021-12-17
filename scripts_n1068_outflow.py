@@ -820,7 +820,7 @@ class ToolsOutflow():
         run_imregrid(
             imagename = self.outfits_ci10_outflow_mom0,
             template = "template.fits",
-            output = self.outfits_ci10_outflow_mom0 + ".regrid",
+            outfile = self.outfits_ci10_outflow_mom0 + ".regrid",
             )
         myfig_fits2png(
             imcolor=self.outfits_map_oiii,
@@ -849,7 +849,7 @@ class ToolsOutflow():
         run_imregrid(
             imagename = self.outfits_ci10_outflow_mom0,
             template = "template.fits",
-            output = self.outfits_ci10_outflow_mom0 + ".regrid",
+            outfile = self.outfits_ci10_outflow_mom0 + ".regrid",
             )
         myfig_fits2png(
             imcolor=self.outfits_map_radio,
@@ -878,7 +878,7 @@ class ToolsOutflow():
         run_imregrid(
             imagename = self.outfits_ci10_outflow_mom0,
             template = "template.fits",
-            output = self.outfits_ci10_outflow_mom0 + ".regrid",
+            outfile = self.outfits_ci10_outflow_mom0 + ".regrid",
             )
         myfig_fits2png(
             imcolor=self.outfits_map_siiisii,
