@@ -816,10 +816,13 @@ class ToolsOutflow():
         label_scalebar = "100 pc"
 
         #
-        os.system("cp -r " + self.outfits_map_oiii + " template.fits")
+        run_importfits(
+            fitsimage = self.outfits_map_oiii,
+            imagename = "template.image",
+            )
         run_imregrid(
             imagename = self.outfits_ci10_outflow_mom0,
-            template = "template.fits",
+            template = "template.image",
             outfile = self.outfits_ci10_outflow_mom0 + ".regrid",
             )
         myfig_fits2png(
@@ -842,13 +845,16 @@ class ToolsOutflow():
             textann=False,
             )
         os.system("rm -rf " + self.outfits_ci10_outflow_mom0 + ".regrid")
-        os.system("rm -rf template.fits")
+        os.system("rm -rf template.image")
 
         #
-        os.system("cp -r " + self.outfits_map_radio + " template.fits")
+        run_importfits(
+            fitsimage = self.outfits_map_radio,
+            imagename = "template.image",
+            )
         run_imregrid(
             imagename = self.outfits_ci10_outflow_mom0,
-            template = "template.fits",
+            template = "template.image",
             outfile = self.outfits_ci10_outflow_mom0 + ".regrid",
             )
         myfig_fits2png(
@@ -871,13 +877,16 @@ class ToolsOutflow():
             textann=False,
             )
         os.system("rm -rf " + self.outfits_ci10_outflow_mom0 + ".regrid")
-        os.system("rm -rf template.fits")
+        os.system("rm -rf template.image")
 
         #
-        os.system("cp -r " + self.outfits_map_siiisii + " template.fits")
+        run_importfits(
+            fitsimage = self.outfits_map_siiisii,
+            imagename = "template.image",
+            )
         run_imregrid(
             imagename = self.outfits_ci10_outflow_mom0,
-            template = "template.fits",
+            template = "template.image",
             outfile = self.outfits_ci10_outflow_mom0 + ".regrid",
             )
         myfig_fits2png(
@@ -900,7 +909,7 @@ class ToolsOutflow():
             textann=False,
             )
         os.system("rm -rf " + self.outfits_ci10_outflow_mom0 + ".regrid")
-        os.system("rm -rf template.fits")
+        os.system("rm -rf template.image")
 
     ###################
     # bicone_modeling #
