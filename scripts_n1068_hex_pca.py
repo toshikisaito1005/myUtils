@@ -22,13 +22,13 @@ ancillary MUSE FITS   Mingozzi et al. 2019, A&A, 622, 146 (https://ui.adsabs.har
 
 usage:
 > import os
-> from scripts_n1068_hex_center import ToolsPCA as tools
+> from scripts_n1068_hex_pca import ToolsPCA as tools
 >
 > # key
 > tl = tools(
 >     refresh     = False,
->     keyfile_gal = "/home02/saitots/myUtils/keys_n1068_hex_center/key_ngc1068.txt",
->     keyfile_fig = "/home02/saitots/myUtils/keys_n1068_hex_center/key_figures.txt",
+>     keyfile_gal = "/home02/saitots/myUtils/keys_n1068_hex_pca/key_ngc1068.txt",
+>     keyfile_fig = "/home02/saitots/myUtils/keys_n1068_hex_pca/key_figures.txt",
 >     )
 >
 > # main
