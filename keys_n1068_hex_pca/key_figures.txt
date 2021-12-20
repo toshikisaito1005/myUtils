@@ -1,7 +1,7 @@
 ###############
 # directories #
 ###############
-dir_proj                  ,,,/lfs13/saitots/proj_n1068_hex_center/
+dir_proj                  ,,,/lfs13/saitots/proj_n1068_hex_pca/
 dir_raw                   ,,,data_raw/
 dir_ready                 ,,,data_ready/
 dir_other                 ,,,data_other/
