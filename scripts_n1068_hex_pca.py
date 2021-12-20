@@ -318,7 +318,7 @@ class ToolsPCA():
             self.final_pca_mom0,
             self.box_map,
             "100000x100000+0+0",
-            col="",
+            axis="column",
             delin=delin,
             )
         os.system("rm -rf " + self.final_pca_mom0 + "_tmp1.png")
