@@ -472,8 +472,8 @@ class ToolsPCA():
             self.final_hex_radial+"_tmp1.png",
             self.outpng_radial3,
             self.final_hex_radial,
-            self.box_map,
             "100000x100000+0+0",
+            self.box_map,
             axis="column",
             delin=delin,
             )
