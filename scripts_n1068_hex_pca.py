@@ -529,12 +529,24 @@ class ToolsPCA():
         # plot
         xlim  = [2.1,9.6]
 
-        rdata = [data_cone_1st-data_cone_hcn10,data_disk_1st-data_disk_hcn10]
+        rdata = [data_cone_3rd-data_cone_co10,data_disk_3rd-data_disk_co10]
         self._plot_radial(
             self.outpng_radial1,
             r,
             rdata,
-            "Radial CN(1$_{3/2}$-0$_{1/2}$)/HCN(1-0) ratio",
+            "(a) Radial CCH(1-0)/CO(1-0) ratio",
+            size=1000/10,
+            ylabel="log Ratio",
+            xlim=xlim,
+            ylim=[-2.3,0.1],
+            )
+
+        rdata = [data_cone_1st-data_cone_hcn10,data_disk_1st-data_disk_hcn10]
+        self._plot_radial(
+            self.outpng_radial2,
+            r,
+            rdata,
+            "(b) Radial CN(1$_{3/2}$-0$_{1/2}$)/HCN(1-0) ratio",
             size=1000/10,
             ylabel="log Ratio",
             xlim=xlim,
@@ -544,26 +556,14 @@ class ToolsPCA():
 
         rdata = [data_cone_2nd-data_cone_hcn10,data_disk_2nd-data_disk_hcn10]
         self._plot_radial(
-            self.outpng_radial2,
+            self.outpng_radial3,
             r,
             rdata,
-            "Radial HNC(1-0)/HCN(1-0) ratio",
+            "(c) Radial HNC(1-0)/HCN(1-0) ratio",
             size=1000/10,
             ylabel="log Ratio",
             xlim=xlim,
             ylim=[-0.8,-0.1],
-            )
-
-        rdata = [data_cone_3rd-data_cone_hcn10,data_disk_3rd-data_disk_hcn10]
-        self._plot_radial(
-            self.outpng_radial3,
-            r,
-            rdata,
-            "Radial CCH(1-0)/HCN(1-0) ratio",
-            size=1000/10,
-            ylabel="log Ratio",
-            xlim=xlim,
-            ylim=[-2.3,0.1],
             )
 
     ######################
@@ -1264,7 +1264,7 @@ class ToolsPCA():
             else:
                 ax.text(pc1,pc2,score_name[i],fontsize=14)
 
-        ax.text(0.03, 0.93, "PC1 vs. PC2", color="black", transform=ax.transAxes, weight="bold", fontsize=24)
+        ax.text(0.03, 0.93, "(1) PC1 vs. PC2", color="black", transform=ax.transAxes, weight="bold", fontsize=24)
 
         # save
         os.system("rm -rf " + self.outpng_pca_scatter)
@@ -1296,7 +1296,7 @@ class ToolsPCA():
                 this_x,
                 this_y,
                 this_c,
-                "PC"+str(i+1)+" (intensity)",
+                "(" + str(i+2) + ") PC"+str(i+1),
                 cmap=thid_cmap,
                 ann=True,
                 add_text=this_text,
