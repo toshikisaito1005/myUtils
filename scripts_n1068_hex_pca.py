@@ -322,18 +322,6 @@ class ToolsPCA():
             delin=delin,
             )
         os.system("rm -rf " + self.final_pca_mom0 + "_tmp1.png")
-        """
-        combine_three_png(
-            self.outpng_pca_scatter,
-            self.outpng_pca_hexmap.replace("???","1"),
-            self.outpng_pca_hexmap.replace("???","2"),
-            self.final_pca_mom0,
-            self.box_map,
-            self.box_map,
-            self.box_map,
-            delin=delin,
-            )
-        """
 
         print("#################################")
         print("# create final_pca1_mom0_podium #")
@@ -472,6 +460,26 @@ class ToolsPCA():
         print("# create final_hex_radial #")
         print("###########################")
 
+        combine_two_png(
+            self.outpng_radial1,
+            self.outpng_radial2,
+            self.final_hex_radial+"_tmp1.png",
+            self.box_map,
+            self.box_map,
+            delin=delin,
+            )
+        combine_two_png(
+            self.final_hex_radial+"_tmp1.png",
+            self.outpng_radial3,
+            self.final_hex_radial,
+            self.box_map,
+            "100000x100000+0+0",
+            axis="column",
+            delin=delin,
+            )
+        os.system("rm -rf " + self.final_hex_radial + "_tmp1.png")
+
+        """
         combine_three_png(
             self.outpng_radial1,
             self.outpng_radial2,
@@ -482,6 +490,7 @@ class ToolsPCA():
             self.box_map,
             delin=delin,
             )
+        """
 
     ########################
     # immagick_figures_sub #
