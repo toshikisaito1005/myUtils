@@ -1284,7 +1284,7 @@ class ToolsPCA():
             else:
                 ax.text(pc1,pc2,score_name[i],fontsize=14)
 
-        ax.text(0.03, 0.93, "(1) PC1 vs. PC2", color="black", transform=ax.transAxes, weight="bold", fontsize=24)
+        ax.text(0.03, 0.93, "(a) PC1 vs. PC2", color="black", transform=ax.transAxes, weight="bold", fontsize=24)
 
         # save
         os.system("rm -rf " + self.outpng_pca_scatter)
@@ -1295,6 +1295,7 @@ class ToolsPCA():
         #################
         anntexts = [True,False]
         cmaps    = ["Reds","PuBu"]
+        headers  = ["b","c"]
         for i in range(len(data_pca[0])):
             this_c    = data_pca[:,i]
             this_x    = x[this_c!=0]
@@ -1316,7 +1317,7 @@ class ToolsPCA():
                 this_x,
                 this_y,
                 this_c,
-                "(" + str(i+2) + ") PC"+str(i+1),
+                "(" + headers[i] + ") PC"+str(i+1),
                 cmap=thid_cmap,
                 ann=True,
                 add_text=this_text,
