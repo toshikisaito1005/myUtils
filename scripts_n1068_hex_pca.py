@@ -559,6 +559,7 @@ class ToolsPCA():
             ylabel="log Ratio",
             xlim=xlim,
             ylim=[-2.3,0.1],
+            ann=1,
             )
 
         rdata = [data_cone_1st-data_cone_hcn10,data_disk_1st-data_disk_hcn10]
@@ -571,7 +572,6 @@ class ToolsPCA():
             ylabel="log Ratio",
             xlim=xlim,
             ylim=[-0.8,0.6],
-            ann=1,
             )
 
         rdata = [data_cone_2nd-data_cone_hcn10,data_disk_2nd-data_disk_hcn10]
