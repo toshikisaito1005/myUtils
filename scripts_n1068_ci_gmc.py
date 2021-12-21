@@ -283,8 +283,8 @@ class ToolsCIGMC():
         os.system("rm -rf " + template)
 
         # to fits
-        run_exportfits(self.hcn10_ready+".image",self.hcn10_ready+"2",delin=True)
-        run_exportfits(self.co10_ready+".image",self.co10_ready+"2",delin=True)
+        run_exportfits(self.hcn10_ready+".image",self.hcn10_ready+"2",delin=True,velocity=True)
+        run_exportfits(self.co10_ready+".image",self.co10_ready+"2",delin=True,velocity=True)
         os.system("cp -r " + self.cube_ci10 + " " + self.ci10_ready + "2")
 
         # change header to CPROPS format

@@ -605,6 +605,7 @@ def run_exportfits(
     dropdeg=False,
     dropstokes=False,
     delin=False,
+    velocity=False,
     ):
     """
     """
@@ -619,6 +620,7 @@ def run_exportfits(
         imagename  = imagename,
         dropdeg    = dropdeg,
         dropstokes = dropstokes,
+        velocity   = velocity,
         )
 
     # delete input
