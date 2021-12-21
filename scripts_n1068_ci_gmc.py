@@ -174,7 +174,7 @@ class ToolsCIGMC():
         if do_prepare==True:
             self.do_align()
 
-        if plot_clumpfind==True:
+        if do_cprops==True:
             print("TBE.")
 
     ####################
@@ -234,8 +234,8 @@ class ToolsCIGMC():
         os.system("rm -rf " + template)
 
         # to fits
-        run_exportfits(self.hcn10_ready+".image",self.hcn10_ready)
-        run_exportfits(self.hcn10_ready+".image",self.co10_ready)
+        run_exportfits(self.hcn10_ready+".image",self.hcn10_ready,delin=True)
+        run_exportfits(self.hcn10_ready+".image",self.co10_ready,delin=True)
         os.system("cp -r " + self.cube_ci10 + " " + self.ci10_ready)
 
 
