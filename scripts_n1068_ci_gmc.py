@@ -228,7 +228,7 @@ class ToolsCIGMC():
         template         = "template.image"
 
         # regrid to ci10 cube
-        run_importfits(self.cprops_ci10,template)
+        run_importfits(self.cube_ci10,template)
         run_imregrid(self.cube_hcn10,template,self.hcn10_ready)
         run_imregrid(self.cube_co10,template,self.co10_ready)
         os.system("rm -rf " + template)
