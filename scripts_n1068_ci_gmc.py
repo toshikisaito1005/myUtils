@@ -224,6 +224,11 @@ class ToolsCIGMC():
         self.ci10_ready  = self.dir_ready + self._read_key("cube_ci10")
         template         = "template.image"
 
+        # get restfreq
+        restf_hcn10 = imhead(self.cube_hcn10,mode="list")["restfreq"]
+        restf_co10  = imhead(self.cube_hcn10,mode="list")["restfreq"]
+        restf_ci10  = imhead(self.cube_hcn10,mode="list")["restfreq"]
+
         # regrid to ci10 cube
         run_importfits(self.cube_ci10,template)
         run_imregrid(self.cube_hcn10,template,self.hcn10_ready+".image",axes=[0,1])
@@ -239,18 +244,21 @@ class ToolsCIGMC():
         hdu = fits.open(self.hcn10_ready+"2")[0]
         d, h = hdu.data, hdu.header
         h["CTYPE3"] = "VELOCITY"
+        h["RESTFREQ"] = restf_hcn10
         fits.PrimaryHDU(d, h).writeto(self.hcn10_ready, overwrite=True)
         os.system("rm -rf " + self.hcn10_ready + "2")
 
         hdu = fits.open(self.co10_ready+"2")[0]
         d, h = hdu.data, hdu.header
         h["CTYPE3"] = "VELOCITY"
+        h["RESTFREQ"] = restf_co10
         fits.PrimaryHDU(d, h).writeto(self.co10_ready, overwrite=True)
         os.system("rm -rf " + self.co10_ready + "2")
 
         hdu = fits.open(self.ci10_ready+"2")[0]
         d, h = hdu.data, hdu.header
         h["CTYPE3"] = "VELOCITY"
+        h["RESTFREQ"] = restf_ci10
         fits.PrimaryHDU(d, h).writeto(self.ci10_ready, overwrite=True)
         os.system("rm -rf " + self.ci10_ready + "2")
 
