@@ -222,20 +222,20 @@ class ToolsCIGMC():
         taskname = self.modname + sys._getframe().f_code.co_name
         check_first(self.cube_ci10,taskname)
 
-        self.hcn10_ready = self.dir_ready + self._read_key("cube_hcn10") + ".regrid"
-        self.co10_ready  = self.dir_ready + self._read_key("cube_co10") + ".regrid"
+        self.hcn10_ready = self.dir_ready + self._read_key("cube_hcn10") + ".regrid.fits"
+        self.co10_ready  = self.dir_ready + self._read_key("cube_co10") + ".regrid.fits"
         self.ci10_ready  = self.dir_ready + self._read_key("cube_ci10")
         template         = "template.image"
 
         # regrid to ci10 cube
         run_importfits(self.cube_ci10,template)
-        run_imregrid(self.cube_hcn10,template,self.hcn10_ready)
-        run_imregrid(self.cube_co10,template,self.co10_ready)
+        run_imregrid(self.cube_hcn10,template,self.hcn10_ready+".image")
+        run_imregrid(self.cube_co10,template,self.co10_ready+".image")
         os.system("rm -rf " + template)
 
         # to fits
-        run_exportfits(self.hcn10_ready,self.hcn10_ready+".fits")
-        run_exportfits(self.hcn10_ready,self.co10_ready+".fits")
+        run_exportfits(self.hcn10_ready+".image",self.hcn10_ready)
+        run_exportfits(self.hcn10_ready+".image",self.co10_ready)
         os.system("cp -r " + self.cube_ci10 + " " + self.ci10_ready)
 
 
