@@ -158,9 +158,10 @@ class ToolsCIGMC():
     def run_ngc1068_cigmc(
         self,
         # analysis
-        do_prepare = False,
-        do_cprops  = False,
+        do_prepare        = False,
+        do_cprops         = False,
         # plot figures in paper
+        plot_stats_cprops = False,
         # supplement
         ):
         """
@@ -174,6 +175,9 @@ class ToolsCIGMC():
         if do_cprops==True:
             print("> conda activate cprops")
             print("> python scripts_cprops.py")
+
+        if plot_stats_cprops==True:
+            self.plot_stats_cprops()
 
     ####################
     # immagick_figures #
@@ -206,13 +210,55 @@ class ToolsCIGMC():
             )
         """
 
+    #####################
+    # plot_stats_cprops #
+    #####################
+
+    def plot_stats_cprops(
+        self,
+        delin=False,
+        ):
+        """
+        """
+
+        taskname = self.modname + sys._getframe().f_code.co_name
+        check_first(self.cprops_hcn10,taskname)
+
+        # import fits table
+        f = pyfits.open(self.cprops_hcn10)
+        tb_hcn10 = f[1].data
+        f = pyfits.open(self.cprops_co10)
+        tb_co10 = f[1].data
+        f = pyfits.open(self.cprops_ci10)
+        tb_ci10 = f[1].data
+
+        # extract tag
+        cnum_hcn10 = tb_hcn10["CLOUDNUM"]
+        cnum_co10  = tb_co10["CLOUDNUM"]
+        cnum_ci10  = tb_ci10["CLOUDNUM"]
+
+        ra_hcn10 = tb_hcn10["XCTR_DEG"]
+        ra_co10  = tb_co10["XCTR_DEG"]
+        ra_ci10  = tb_ci10["XCTR_DEG"]
+
+        dec_hcn10 = tb_hcn10["YCTR_DEG"]
+        dec_co10  = tb_co10["YCTR_DEG"]
+        dec_ci10  = tb_ci10["YCTR_DEG"]
+
+        v_hcn10 = tb_hcn10["VCTR_KMS"]
+        v_co10  = tb_co10["VCTR_KMS"]
+        v_ci10  = tb_ci10["VCTR_KMS"]
+
+        r_pc_hcn10 = tb_hcn10["RAD_PC"]
+        r_pc_co10  = tb_co10["RAD_PC"]
+        r_pc_ci10  = tb_ci10["RAD_PC"]
+
     ############
     # do_align #
     ############
 
     def do_align(
         self,
-        delin=False,
         ):
         """
         """
