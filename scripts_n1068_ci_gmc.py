@@ -225,9 +225,9 @@ class ToolsCIGMC():
         template         = "template.image"
 
         # get restfreq
-        restf_hcn10 = imhead(self.cube_hcn10,mode="list")["restfreq"]
-        restf_co10  = imhead(self.cube_hcn10,mode="list")["restfreq"]
-        restf_ci10  = imhead(self.cube_hcn10,mode="list")["restfreq"]
+        restf_hcn10 = imhead(self.cube_hcn10,mode="list")["restfreq"][0]
+        restf_co10  = imhead(self.cube_hcn10,mode="list")["restfreq"][0]
+        restf_ci10  = imhead(self.cube_hcn10,mode="list")["restfreq"][0]
 
         # regrid to ci10 cube
         run_importfits(self.cube_ci10,template)
