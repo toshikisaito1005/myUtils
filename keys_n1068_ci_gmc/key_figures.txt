@@ -17,12 +17,23 @@ final_       ,,,fig_.png
 ############
 # raw maps #
 ############
+cube_cn10h   ,,,ngc1068_b3_12m_cn10h_0p8as.fits
+cube_hcop10  ,,,ngc1068_b3_12m_hcop10_0p8as.fits
 cube_hcn10   ,,,ngc1068_b3_12m_hcn10_0p8as.fits
 cube_co10    ,,,ngc1068_b3_12m+7m_co10_0p8as.fits
 cube_ci10    ,,,ngc1068_b8_12m+7m_ci10.fits
+#
+ncube_cn10h  ,,,ngc1068_b3_12m_cn10h_0p8as_noise.fits
+ncube_hcop10 ,,,ngc1068_b3_12m_hcop10_0p8as_noise.fits
 ncube_hcn10  ,,,ngc1068_b3_12m_hcn10_0p8as_noise.fits
 ncube_co10   ,,,ngc1068_b3_12m+7m_co10_0p8as_noise.fits
 ncube_ci10   ,,,ngc1068_b8_12m+7m_ci10_noise.fits
+#
+mom0_cn10h   ,,,ngc1068_b3_12m_cn10h_0p8as_strict_mom0.fits
+mom0_hcop10  ,,,ngc1068_b3_12m_hcop10_0p8as_strict_mom0.fits
+mom0_hcn10   ,,,ngc1068_b3_12m_hcn10_0p8as_strict_mom0.fits
+mom0_co10    ,,,ngc1068_b3_12m+7m_co10_0p8as_strict_mom0.fits
+mom0_ci10    ,,,ngc1068_b8_12m+7m_ci10_strict_mom0.fits
 
 ###############
 # output maps #

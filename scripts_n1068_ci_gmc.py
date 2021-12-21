@@ -30,6 +30,10 @@ usage:
 paper drafts:
 Date         Filename                To
 
+references:
+https://github.com/PhangsTeam/pycprops
+https://qiita.com/Shinji_Fujita/items/7463038f70401040aedc
+
 history:
 2021-12-05   created (in Sinkansen!)
 Toshiki Saito@Nichidai/NAOJ
@@ -104,13 +108,23 @@ class ToolsCIGMC():
         """
         """
 
-        self.cube_hcn10  = self.dir_raw + self._read_key("cube_hcn10")
-        self.cube_co10   = self.dir_raw + self._read_key("cube_co10")
-        self.cube_ci10   = self.dir_raw + self._read_key("cube_ci10")
+        self.cube_cn10h   = self.dir_raw + self._read_key("cube_cn10h")
+        self.cube_hcop10  = self.dir_raw + self._read_key("cube_hcop10")
+        self.cube_hcn10   = self.dir_raw + self._read_key("cube_hcn10")
+        self.cube_co10    = self.dir_raw + self._read_key("cube_co10")
+        self.cube_ci10    = self.dir_raw + self._read_key("cube_ci10")
 
-        self.ncube_hcn10 = self.dir_raw + self._read_key("ncube_hcn10")
-        self.ncube_co10  = self.dir_raw + self._read_key("ncube_co10")
-        self.ncube_ci10  = self.dir_raw + self._read_key("ncube_ci10")
+        self.ncube_cn10h  = self.dir_raw + self._read_key("ncube_cn10h")
+        self.ncube_hcop10 = self.dir_raw + self._read_key("ncube_hcop10")
+        self.ncube_hcn10  = self.dir_raw + self._read_key("ncube_hcn10")
+        self.ncube_co10   = self.dir_raw + self._read_key("ncube_co10")
+        self.ncube_ci10   = self.dir_raw + self._read_key("ncube_ci10")
+
+        self.mom0_cn10h   = self.dir_raw + self._read_key("mom0_cn10h")
+        self.mom0_hcop10  = self.dir_raw + self._read_key("mom0_hcop10")
+        self.mom0_hcn10   = self.dir_raw + self._read_key("mom0_hcn10")
+        self.mom0_co10    = self.dir_raw + self._read_key("mom0_co10")
+        self.mom0_ci10    = self.dir_raw + self._read_key("mom0_ci10")
 
     def _set_output_fits(self):
         """
@@ -173,8 +187,41 @@ class ToolsCIGMC():
             self.do_align()
 
         if do_cprops==True:
-            print("> conda activate cprops")
-            print("> python scripts_cprops.py")
+            print("### conda activate cprops")
+            print("### python mypython_cprops.py")
+            print("")
+            print("import os, sys, pycprops")
+            print("import astropy.units as u")
+            print("from astropy.io import fits")
+            print("import numpy as np")
+            print("import matplotlib.pyplot as plt")
+            print("")
+            print("# https://qiita.com/Shinji_Fujita/items/7463038f70401040aedc")
+            print("")
+            print("# input")
+            print("cube_hcn10 = '../data_ready/ngc1068_b3_12m_hcn10_0p8as.regrid.fits'")
+            print("cube_co10  = '../data_ready/ngc1068_b3_12m+7m_co10_0p8as.regrid.fits'")
+            print("cube_ci10  = '../data_ready/ngc1068_b8_12m+7m_ci10.fits'")
+            print("d          = 13.97 * 1e6 * u.pc")
+            print("")
+            print("# output")
+            print("cprops_hcn10 = '../data_ready/ngc1068_hcn10_cprops.fits'")
+            print("cprops_co10  = '../data_ready/ngc1068_co10_cprops.fits'")
+            print("cprops_ci10  = '../data_ready/ngc1068_ci10_cprops.fits'")
+            print("")
+            print("# run (repeat by lines)")
+            print("cubefile = cube_hcn10")
+            print("outfile  = cprops_hcn10")
+            print("mask     = cubefile")
+            print("")
+            print("pycprops.fits2props(")
+            print("    cubefile,")
+            print("    mask_file=mask,")
+            print("    distance=d,")
+            print("    asgnname=cubefile[:-5]+'.asgn.fits',")
+            print("    propsname=cubefile[:-5]+'.props.fits',")
+            print("    )")
+            print("os.system('mv ' + cubefile[:-5]+'.props.fits' + ' ' + outfile)")
 
         if plot_stats_cprops==True:
             self.plot_stats_cprops()
@@ -253,6 +300,24 @@ class ToolsCIGMC():
         r_pc_co10  = tb_co10["RAD_PC"]
         r_pc_ci10  = tb_ci10["RAD_PC"]
 
+        sigma_hcn10 = tb_hcn10["SIGV_KMS"]
+        sigma_co10  = tb_co10["SIGV_KMS"]
+        sigma_ci10  = tb_ci10["SIGV_KMS"]
+
+        flux_hcn10 = tb_hcn10["FLUX_KKMS_PC2"]
+        flux_co10  = tb_co10["FLUX_KKMS_PC2"]
+        flux_ci10  = tb_ci10["FLUX_KKMS_PC2"]
+
+        mvir_hcn10 = tb_hcn10["MVIR_MSUN"]
+        mvir_co10  = tb_co10["MVIR_MSUN"]
+        mvir_ci10  = tb_ci10["MVIR_MSUN"]
+
+        snr_hcn10 = tb_hcn10["S2N"]
+        snr_co10  = tb_co10["S2N"]
+        snr_ci10  = tb_ci10["S2N"]
+
+        # plot
+
     ############
     # do_align #
     ############
@@ -266,28 +331,51 @@ class ToolsCIGMC():
         taskname = self.modname + sys._getframe().f_code.co_name
         check_first(self.cube_ci10,taskname)
 
-        self.hcn10_ready = self.dir_ready + self._read_key("cube_hcn10")[:-5] + ".regrid.fits"
-        self.co10_ready  = self.dir_ready + self._read_key("cube_co10")[:-5] + ".regrid.fits"
-        self.ci10_ready  = self.dir_ready + self._read_key("cube_ci10")
-        template         = "template.image"
+        self.cn10h_ready  = self.dir_ready + self._read_key("cube_cn10h")[:-5] + ".regrid.fits"
+        self.hcop10_ready = self.dir_ready + self._read_key("cube_hcop10")[:-5] + ".regrid.fits"
+        self.hcn10_ready  = self.dir_ready + self._read_key("cube_hcn10")[:-5] + ".regrid.fits"
+        self.co10_ready   = self.dir_ready + self._read_key("cube_co10")[:-5] + ".regrid.fits"
+        self.ci10_ready   = self.dir_ready + self._read_key("cube_ci10")
+        template          = "template.image"
 
         # get restfreq
-        restf_hcn10 = imhead(self.cube_hcn10,mode="list")["restfreq"][0]
-        restf_co10  = imhead(self.cube_hcn10,mode="list")["restfreq"][0]
-        restf_ci10  = imhead(self.cube_hcn10,mode="list")["restfreq"][0]
+        restf_cn10h  = imhead(self.cube_cn10h,mode="list")["restfreq"][0]
+        restf_hcop10 = imhead(self.cube_hcop10,mode="list")["restfreq"][0]
+        restf_hcn10  = imhead(self.cube_hcn10,mode="list")["restfreq"][0]
+        restf_co10   = imhead(self.cube_co10,mode="list")["restfreq"][0]
+        restf_ci10   = imhead(self.cube_ci10,mode="list")["restfreq"][0]
 
-        # regrid to ci10 cube
-        run_importfits(self.cube_ci10,template)
+        # regrid to ci10 cube 98,71,179,151
+        run_importfits(self.cube_ci10,template+"2")
+        imsubimage(template+"2",template,box="98,71,179,151")
+        run_imregrid(self.cube_cn10h,template,self.cn10h_ready+".image",axes=[0,1])
+        run_imregrid(self.cube_hcop10,template,self.hcop10_ready+".image",axes=[0,1])
         run_imregrid(self.cube_hcn10,template,self.hcn10_ready+".image",axes=[0,1])
         run_imregrid(self.cube_co10,template,self.co10_ready+".image",axes=[0,1])
-        os.system("rm -rf " + template)
+        os.system("rm -rf " + template + " " + template + "2")
 
         # to fits
+        run_exportfits(self.cn10h_ready+".image",self.cn10h_ready+"2",delin=True,velocity=True)
+        run_exportfits(self.hcop10_ready+".image",self.hcop10_ready+"2",delin=True,velocity=True)
         run_exportfits(self.hcn10_ready+".image",self.hcn10_ready+"2",delin=True,velocity=True)
         run_exportfits(self.co10_ready+".image",self.co10_ready+"2",delin=True,velocity=True)
         os.system("cp -r " + self.cube_ci10 + " " + self.ci10_ready + "2")
 
         # change header to CPROPS format
+        hdu = fits.open(self.cn10h_ready+"2")[0]
+        d, h = hdu.data, hdu.header
+        h["CTYPE3"] = "VELOCITY"
+        h["RESTFREQ"] = restf_hcn10
+        fits.PrimaryHDU(d, h).writeto(self.cn10h_ready, overwrite=True)
+        os.system("rm -rf " + self.cn10h_ready + "2")
+        
+        hdu = fits.open(self.hcop10_ready+"2")[0]
+        d, h = hdu.data, hdu.header
+        h["CTYPE3"] = "VELOCITY"
+        h["RESTFREQ"] = restf_hcn10
+        fits.PrimaryHDU(d, h).writeto(self.hcop10_ready, overwrite=True)
+        os.system("rm -rf " + self.hcop10_ready + "2")
+
         hdu = fits.open(self.hcn10_ready+"2")[0]
         d, h = hdu.data, hdu.header
         h["CTYPE3"] = "VELOCITY"
