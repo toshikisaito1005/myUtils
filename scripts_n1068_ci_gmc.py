@@ -172,7 +172,8 @@ class ToolsCIGMC():
             self.do_align()
 
         if do_cprops==True:
-            print("TBE.")
+            print("> conda activate cprops")
+            print("> python scripts_cprops.py")
 
     ####################
     # immagick_figures #
@@ -219,8 +220,8 @@ class ToolsCIGMC():
         taskname = self.modname + sys._getframe().f_code.co_name
         check_first(self.cube_ci10,taskname)
 
-        self.hcn10_ready = self.dir_ready + self._read_key("cube_hcn10") + ".regrid.fits"
-        self.co10_ready  = self.dir_ready + self._read_key("cube_co10") + ".regrid.fits"
+        self.hcn10_ready = self.dir_ready + self._read_key("cube_hcn10")[:-5] + ".regrid.fits"
+        self.co10_ready  = self.dir_ready + self._read_key("cube_co10")[:-5] + ".regrid.fits"
         self.ci10_ready  = self.dir_ready + self._read_key("cube_ci10")
         template         = "template.image"
 
