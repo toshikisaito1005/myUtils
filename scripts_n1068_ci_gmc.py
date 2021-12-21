@@ -38,11 +38,8 @@ Toshiki Saito@Nichidai/NAOJ
 import os, sys, glob
 import numpy as np
 
-from mycasa_sampling import *
-from mycasa_lowess import *
 from mycasa_tasks import *
 from mycasa_plots import *
-from mycasa_pca import *
 
 ############
 # ToolsPCA #
@@ -235,7 +232,7 @@ class ToolsCIGMC():
 
         # to fits
         run_exportfits(self.hcn10_ready+".image",self.hcn10_ready,delin=True)
-        run_exportfits(self.hcn10_ready+".image",self.co10_ready,delin=True)
+        run_exportfits(self.co10_ready+".image",self.co10_ready,delin=True)
         os.system("cp -r " + self.cube_ci10 + " " + self.ci10_ready)
 
 
