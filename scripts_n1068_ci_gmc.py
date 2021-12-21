@@ -231,10 +231,25 @@ class ToolsCIGMC():
         os.system("rm -rf " + template)
 
         # to fits
-        run_exportfits(self.hcn10_ready+".image",self.hcn10_ready,delin=True)
-        run_exportfits(self.co10_ready+".image",self.co10_ready,delin=True)
-        os.system("cp -r " + self.cube_ci10 + " " + self.ci10_ready)
+        run_exportfits(self.hcn10_ready+".image",self.hcn10_ready+"2",delin=True)
+        run_exportfits(self.co10_ready+".image",self.co10_ready+"2",delin=True)
+        os.system("cp -r " + self.cube_ci10 + " " + self.ci10_ready + "2")
 
+        # change header to CPROPS format
+        hdu = fits.open(self.hcn10_ready+"2")[0]
+        d, h = hdu.data, hdu.header
+        h["CTYPE3"] = "VELOCITY"
+        fits.PrimaryHDU(d, h).writeto(self.hcn10_ready, overwrite=True)
+
+        hdu = fits.open(self.cube_co10+"2")[0]
+        d, h = hdu.data, hdu.header
+        h["CTYPE3"] = "VELOCITY"
+        fits.PrimaryHDU(d, h).writeto(self.cube_co10, overwrite=True)
+
+        hdu = fits.open(self.cube_ci10+"2")[0]
+        d, h = hdu.data, hdu.header
+        h["CTYPE3"] = "VELOCITY"
+        fits.PrimaryHDU(d, h).writeto(self.cube_ci10, overwrite=True)
 
     ###############
     # _create_dir #
