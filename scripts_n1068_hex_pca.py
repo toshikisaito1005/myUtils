@@ -6,7 +6,7 @@ CASA Version 5.4.0-70, ananlysisUtils, astropy
 
 data:
 ALMA main Band 3 data 2013.1.00279.S
-ALMA spplements       2011.0.00061.S
+ALMA supplements      2011.0.00061.S
                       2012.1.00657.S
                       2013.1.00060.S
                       2015.1.00960.S
@@ -51,12 +51,14 @@ usage:
 
 paper drafts:
 Date         Filename                To
+2021-06-04   draft_v0_211221.zip     Takano-san,Nakajima-san,Harada-san,Tamura-san
 
 history:
 2021-11-10   created
 2021-11-14   2DPCA analysis for mom0 maps
 2021-11-15   start drafting
 2021-11-22   implement LOWESS and bootstrapped standard deviation
+2021-12-21   circulate v0 draft to the paper team
 Toshiki Saito@Nichidai/NAOJ
 """
 
@@ -478,19 +480,6 @@ class ToolsPCA():
             delin=delin,
             )
         os.system("rm -rf " + self.final_hex_radial + "_tmp1.png")
-
-        """
-        combine_three_png(
-            self.outpng_radial1,
-            self.outpng_radial2,
-            self.outpng_radial3,
-            self.final_hex_radial,
-            self.box_map,
-            self.box_map,
-            self.box_map,
-            delin=delin,
-            )
-        """
 
     ########################
     # immagick_figures_sub #

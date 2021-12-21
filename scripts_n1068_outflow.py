@@ -54,7 +54,7 @@ usage:
 
 paper drafts:
 Date         Filename                To
-2021-06-04   draft_v0_210604.zip     Takano,Nakajima,Harada
+2021-06-04   draft_v0_210604.zip     Takano-san,Nakajima-san,Harada-san
 2021-11-25   draft_v1p5_211125.zip   all co-authors
 2021-11-25   draft_v2_211217.zip     ApJL
 

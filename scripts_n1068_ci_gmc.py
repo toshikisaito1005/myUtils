@@ -107,16 +107,13 @@ class ToolsCIGMC():
         """
         """
 
-        self.map_av         = self.dir_other + self._read_key("map_av")
-        self.map_ionization = self.dir_other + self._read_key("map_ionization")
-        self.maps_mom0      = glob.glob(self.dir_raw + self._read_key("maps_mom0"))
-        self.maps_emom0     = glob.glob(self.dir_raw + self._read_key("maps_emom0"))
-        self.maps_mom0.sort()
-        self.maps_emom0.sort()
+        self.cube_hcn10  = self.dir_raw + self._read_key("cube_hcn10")
+        self.cube_co10   = self.dir_raw + self._read_key("cube_co10")
+        self.cube_ci10   = self.dir_raw + self._read_key("cube_ci10")
 
-        # inout table
-        # here I use test.dat provided by Tosaki-san on Dec 4th 2021.
-        self.table_clumpfind = self.dir_other + self._read_key("table_clumpfind")
+        self.ncube_hcn10 = self.dir_raw + self._read_key("ncube_hcn10")
+        self.ncube_co10  = self.dir_raw + self._read_key("ncube_co10")
+        self.ncube_ci10  = self.dir_raw + self._read_key("ncube_ci10")
 
     def _set_output_fits(self):
         """
@@ -146,6 +143,11 @@ class ToolsCIGMC():
         """
         """
 
+        # output fits
+        self.cprops_hcn10 = self.data_ready + self._read_key("cprops_hcn10")
+        self.cprops_co10  = self.data_ready + self._read_key("cprops_co10")
+        self.cprops_ci10  = self.data_ready + self._read_key("cprops_ci10")
+
         # output txt and png
         print("TBE.")
 
@@ -159,7 +161,8 @@ class ToolsCIGMC():
     def run_ngc1068_cigmc(
         self,
         # analysis
-        plot_clumpfind = False,
+        do_prepare = False,
+        do_cprops  = False,
         # plot figures in paper
         # supplement
         ):
@@ -168,8 +171,11 @@ class ToolsCIGMC():
         """
 
         # analysis
+        if do_prepare==True:
+            self.do_align()
+
         if plot_clumpfind==True:
-            self.plot_hist_clumpfind()
+            print("TBE.")
 
     ####################
     # immagick_figures #
@@ -202,11 +208,11 @@ class ToolsCIGMC():
             )
         """
 
-    #######################
-    # plot_hist_clumpfind #
-    #######################
+    ############
+    # do_align #
+    ############
 
-    def plot_hist_clumpfind(
+    def do_align(
         self,
         delin=False,
         ):
@@ -214,37 +220,19 @@ class ToolsCIGMC():
         """
 
         taskname = self.modname + sys._getframe().f_code.co_name
-        check_first(self.table_clumpfind,taskname)
+        check_first(self.cube_ci10,taskname)
 
-        ## get header
-        f = open(txtdata)
-        header = f.readline()
-        header = header.split(" ")[1:]
-        header = [s.split("\n")[0] for s in header]
-        f.close()
+        self.hcn10_ready = self.cube_hcn10 + ".regrid"
+        self.co10_ready  = self.cube_co10 + ".regrid"
+        self.ci10_ready  = self.cube_ci10
+        template         = "template.image"
 
-        ## extract data
-        data   = np.loadtxt(txtdata)
-        x      = data[:,1]
-        y      = data[:,2]
-        v      = data[:,3]
-        tpeak  = data[:,4]
-        xfwhm  = data[:,5]
-        yfwhm  = data[:,6]
-        r      = data[:,7]
-        vwidth = data[:,8]
-        flux   = data[:,9]
+        # regrid to ci10 cube
+        run_importfits(self.cprops_ci10,template)
+        run_imregrid(self.cube_hcn10,template,self.hcn10_ready)
+        run_imregrid(self.cube_co10,template,self.co10_ready)
+        os.system("rm -rf " + template)
 
-        ## plot
-        # map: x,y,r,flux
-
-        # histogram: tpeak
-
-        # histogram: r
-
-        # histogram: vwidth
-
-        # histogram: flux
 
     ###############
     # _create_dir #
