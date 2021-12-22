@@ -126,6 +126,11 @@ class ToolsSBR():
         self.outmap_ecube  = self.dir_ready + self._read_key("outmaps_ecube")
         self.outfits_ecube = self.dir_ready + self._read_key("outfits_maps_ecube")
 
+        self.outmaps_irac1 = self.dir_ready + self._read_key("outmaps_irac1")
+        self.outmaps_irac4 = self.dir_ready + self._read_key("outmaps_irac4")
+        self.outfits_irac1 = self.dir_ready + self._read_key("outfits_irac1")
+        self.outfits_irac4 = self.dir_ready + self._read_key("outfits_irac4")
+
     def _set_input_param(self):
         """
         """
@@ -588,6 +593,10 @@ class ToolsSBR():
         os.system("rm -rf " + self.table_hex_constrain)
         np.savetxt(self.table_hex_constrain,table,header=header)
 
+
+
+
+
     ################
     # hex_sampling #
     ################
@@ -661,6 +670,13 @@ class ToolsSBR():
 
         taskname = self.modname + sys._getframe().f_code.co_name
         check_first(template,taskname)
+
+        # other maps
+        run_imregrid(self.map_irac1, template, self.outmaps_irac1)
+        run_exportfits(self.outmaps_irac1, self.outfits_irac1, True, True, True)
+
+        run_imregrid(self.map_irac4, template, self.outmaps_irac4)
+        run_exportfits(self.outmaps_irac4, self.outfits_irac4, True, True, True)
 
         # regrid mom0
         for this_map in self.maps_mom0:

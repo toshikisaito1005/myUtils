@@ -39,7 +39,6 @@ hcop  ,,,15.2
 hnc   ,,,9.30
 n2hp  ,,,111.8
 
-
 ###############
 # output maps #
 ###############
@@ -51,6 +50,11 @@ outmaps_cube       ,,,n1068_???_cube.image
 outmaps_ecube      ,,,n1068_???_cube_err.image
 outfits_maps_cube  ,,,n1068_???_cube.fits
 outfits_maps_ecube ,,,n1068_???_cube_err.fits
+#
+outmaps_irac1      ,,,n1068_irac1.image
+outmaps_irac4      ,,,n1068_irac4.image
+outfits_irac1      ,,,n1068_irac1.fits
+outfits_irac4      ,,,n1068_irac4.fits
 
 ######################
 # output png and txt #
