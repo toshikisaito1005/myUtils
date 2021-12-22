@@ -608,7 +608,7 @@ class ToolsSBR():
         taskname = self.modname + sys._getframe().f_code.co_name
 
         # sampling mom0
-        maps_mom0 = self.outfits_irac1
+        maps_mom0 = [self.outfits_irac1]
         maps_mom0.extend(self.outfits_irac4)
         maps_mom0 = glob.glob(self.outfits_mom0.replace("???","*"))
         maps_mom0 = [s for s in maps_mom0 if "err" not in s]
