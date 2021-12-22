@@ -305,7 +305,11 @@ class ToolsCIGMC():
         tb_ci10 = f[1].data
 
         # extract tag
-        self._plot_all_param(tb_hcn10,"HCN",self.outpng_cprops_hcn10)
+        self._plot_all_param(tb_cn10h,"CN(1-0)h",self.outpng_cprops_cn10h)
+        self._plot_all_param(tb_hcop10,"HCO$^+$(1-0)",self.outpng_cprops_hcop10)
+        self._plot_all_param(tb_hcn10,"HCN(1-0)",self.outpng_cprops_hcn10)
+        self._plot_all_param(tb_co10,"CO(1-0)",self.outpng_cprops_co10)
+        self._plot_all_param(tb_ci10,"[CI](1-0)",self.outpng_cprops_ci10)
 
     ###################
     # _plot_all_param #
