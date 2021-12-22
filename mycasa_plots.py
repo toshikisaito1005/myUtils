@@ -852,13 +852,13 @@ def myax_fig2png_ann(ax,number,ra_cnt,dec_cnt,add_text=True,txtfiles=None):
                 this_x   = x[i]
                 this_y   = y[i]
                 this_pos = pos[i]
-                this_w   = width[i]
-                this_h   = height[i]
+                this_w   = major[i]
+                this_h   = minor[i]
 
                 ell = patches.Ellipse(
                     xy=(this_x,this_y),
-                    width=major,
-                    height=minor,
+                    width=this_w,
+                    height=this_h,
                     angle=this_pos,
                     fill=False,
                     edgecolor="black",
