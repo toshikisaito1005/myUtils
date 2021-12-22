@@ -841,7 +841,7 @@ def myax_fig2png_ann(ax,number,ra_cnt,dec_cnt,add_text=True,txtfiles=None):
     if number=="ci-gmc":
         x     = (txtfiles["XCTR_DEG"] - float(ra_cnt.split("deg")[0])) * 3600.
         y     = (txtfiles["YCTR_DEG"] - float(dec_cnt.split("deg")[0])) * 3600.
-        pos   = txtfiles["POSANG"]
+        pos   = txtfiles["POSANG"] * 180 / np.pi
         s2n   = txtfiles["S2N"]
         major = txtfiles["RAD_PC"] / 72.
         minor = txtfiles["MOMMINPIX"] / txtfiles["MOMMAJPIX"] * txtfiles["RAD_PC"] / 72.
@@ -853,7 +853,6 @@ def myax_fig2png_ann(ax,number,ra_cnt,dec_cnt,add_text=True,txtfiles=None):
                 this_pos = pos[i]
                 this_w   = major[i]
                 this_h   = minor[i]
-                print(this_pos)
 
                 ell = patches.Ellipse(
                     xy=(this_x,this_y),
