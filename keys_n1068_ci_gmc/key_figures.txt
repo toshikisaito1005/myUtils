@@ -50,6 +50,11 @@ cprops_ci10  ,,,ngc1068_ci10_cprops.fits
 # text files
 
 # png files
+outpng_cprops_cn10h  ,,,fig_cprops_cn10h
+outpng_cprops_hcop10 ,,,fig_cprops_hcop10
+outpng_cprops_hcn10  ,,,fig_cprops_hcn10
+outpng_cprops_co10   ,,,fig_cprops_co10
+outpng_cprops_ci10   ,,,fig_cprops_ci10
 
 # box for imagemajick
 

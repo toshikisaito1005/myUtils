@@ -160,7 +160,11 @@ class ToolsCIGMC():
         self.cprops_ci10  = self.dir_ready + self._read_key("cprops_ci10")
 
         # output txt and png
-        print("TBE.")
+        self.outpng_cprops_cn10h  = self.dir_products + self._read_key("outpng_cprops_cn10h")
+        self.outpng_cprops_hcop10 = self.dir_products + self._read_key("outpng_cprops_hcop10")
+        self.outpng_cprops_hcn10  = self.dir_products + self._read_key("outpng_cprops_hcn10")
+        self.outpng_cprops_co10   = self.dir_products + self._read_key("outpng_cprops_co10")
+        self.outpng_cprops_ci10   = self.dir_products + self._read_key("outpng_cprops_ci10")
 
         # final
         print("TBE.")
@@ -199,29 +203,40 @@ class ToolsCIGMC():
             print("# https://qiita.com/Shinji_Fujita/items/7463038f70401040aedc")
             print("")
             print("# input")
-            print("cube_hcn10 = '../data_ready/ngc1068_b3_12m_hcn10_0p8as.regrid.fits'")
-            print("cube_co10  = '../data_ready/ngc1068_b3_12m+7m_co10_0p8as.regrid.fits'")
-            print("cube_ci10  = '../data_ready/ngc1068_b8_12m+7m_ci10.fits'")
-            print("d          = 13.97 * 1e6 * u.pc")
+            print("cube_cn10h  = '../data_ready/ngc1068_b3_12m_cn10h_0p8as.regrid.fits'")
+            print("cube_hcop10 = '../data_ready/ngc1068_b3_12m_hcop10_0p8as.regrid.fits'")
+            print("cube_hcn10  = '../data_ready/ngc1068_b3_12m_hcn10_0p8as.regrid.fits'")
+            print("cube_co10   = '../data_ready/ngc1068_b3_12m+7m_co10_0p8as.regrid.fits'")
+            print("cube_ci10   = '../data_ready/ngc1068_b8_12m+7m_ci10.fits'")
+            print("d           = 13.97 * 1e6 * u.pc")
+            print("cubes       = [cube_cn10h,cube_hcop10,cube_hcn10,cube_co10,cube_ci10]")
             print("")
             print("# output")
-            print("cprops_hcn10 = '../data_ready/ngc1068_hcn10_cprops.fits'")
-            print("cprops_co10  = '../data_ready/ngc1068_co10_cprops.fits'")
-            print("cprops_ci10  = '../data_ready/ngc1068_ci10_cprops.fits'")
+            print("cprops_cn10h  = '../data_ready/ngc1068_cn10h_cprops.fits'")
+            print("cprops_hcop10 = '../data_ready/ngc1068_hcop10_cprops.fits'")
+            print("cprops_hcn10  = '../data_ready/ngc1068_hcn10_cprops.fits'")
+            print("cprops_co10   = '../data_ready/ngc1068_co10_cprops.fits'")
+            print("cprops_ci10   = '../data_ready/ngc1068_ci10_cprops.fits'")
+            print("outfiles = [cprops_cn10h,cprops_hcop10,cprops_hcn10,cprops_co10,cprops_ci10]")
             print("")
             print("# run (repeat by lines)")
             print("cubefile = cube_hcn10")
             print("outfile  = cprops_hcn10")
             print("mask     = cubefile")
             print("")
-            print("pycprops.fits2props(")
-            print("    cubefile,")
-            print("    mask_file=mask,")
-            print("    distance=d,")
-            print("    asgnname=cubefile[:-5]+'.asgn.fits',")
-            print("    propsname=cubefile[:-5]+'.props.fits',")
-            print("    )")
-            print("os.system('mv ' + cubefile[:-5]+'.props.fits' + ' ' + outfile)")
+            print("# run")
+            print("for i in range(len(cubes)):")
+            print("    cubefile = cubes[i]")
+            print("    outfile  = outfiles[i]")
+            print("    mask     = cubefile")
+            print("    pycprops.fits2props(")
+            print("        cubefile,")
+            print("        mask_file=mask,")
+            print("        distance=d,")
+            print("        asgnname=cubefile[:-5]+'.asgn.fits',")
+            print("        propsname=cubefile[:-5]+'.props.fits',")
+            print("        )")
+            print("    os.system('mv ' + cubefile[:-5]+'.props.fits' + ' ' + outfile)")
 
         if plot_stats_cprops==True:
             self.plot_stats_cprops()
@@ -272,51 +287,73 @@ class ToolsCIGMC():
         check_first(self.cprops_hcn10,taskname)
 
         # import fits table
+        f = pyfits.open(self.cprops_cn10h)
+        tb_cn10h = f[1].data
+
+        f = pyfits.open(self.cprops_hcop10)
+        tb_hcop10 = f[1].data
+
         f = pyfits.open(self.cprops_hcn10)
         tb_hcn10 = f[1].data
+
         f = pyfits.open(self.cprops_co10)
         tb_co10 = f[1].data
+
         f = pyfits.open(self.cprops_ci10)
         tb_ci10 = f[1].data
 
         # extract tag
-        cnum_hcn10 = tb_hcn10["CLOUDNUM"]
-        cnum_co10  = tb_co10["CLOUDNUM"]
-        cnum_ci10  = tb_ci10["CLOUDNUM"]
+        self._plot_all_param(tb_hcn10,"HCN",self.outpng_cprops_hcn10)
 
-        ra_hcn10 = tb_hcn10["XCTR_DEG"]
-        ra_co10  = tb_co10["XCTR_DEG"]
-        ra_ci10  = tb_ci10["XCTR_DEG"]
+    ###################
+    # _plot_all_param #
+    ###################
 
-        dec_hcn10 = tb_hcn10["YCTR_DEG"]
-        dec_co10  = tb_co10["YCTR_DEG"]
-        dec_ci10  = tb_ci10["YCTR_DEG"]
+    def _plot_all_param(
+        self,
+        this_tb,
+        linename,
+        outpng_header,
+        snr=5,
+        ):
+        """
+        # CLOUDNUM
+        # XCTR_DEG
+        # YCTR_DEG
+        # VCTR_KMS
+        # RAD_PC
+        # SIGV_KMS
+        # FLUX_KKMS_PC2
+        # MVIR_MSUN
+        # S2N
+        """
 
-        v_hcn10 = tb_hcn10["VCTR_KMS"]
-        v_co10  = tb_co10["VCTR_KMS"]
-        v_ci10  = tb_ci10["VCTR_KMS"]
+        # FLUX_KKMS_PC2
+        params = ["FLUX_KKMS_PC2","RAD_PC","SIGV_KMS"]
+        footers = ["flux","radius","disp"]
+        for i in range(len(params)):
+            this_param  = params[i]
+            this_footer = footers[i]
+            this_x      = this_tb["XCTR_DEG"][this_tb["S2N"]>=snr]
+            this_y      = this_tb["YCTR_DEG"][this_tb["S2N"]>=snr]
+            this_c      = this_tb[this_param][this_tb["S2N"]>=snr]
+            this_outpng = outpng_header+"_" + this_footer + ".png"
 
-        r_pc_hcn10 = tb_hcn10["RAD_PC"]
-        r_pc_co10  = tb_co10["RAD_PC"]
-        r_pc_ci10  = tb_ci10["RAD_PC"]
-
-        sigma_hcn10 = tb_hcn10["SIGV_KMS"]
-        sigma_co10  = tb_co10["SIGV_KMS"]
-        sigma_ci10  = tb_ci10["SIGV_KMS"]
-
-        flux_hcn10 = tb_hcn10["FLUX_KKMS_PC2"]
-        flux_co10  = tb_co10["FLUX_KKMS_PC2"]
-        flux_ci10  = tb_ci10["FLUX_KKMS_PC2"]
-
-        mvir_hcn10 = tb_hcn10["MVIR_MSUN"]
-        mvir_co10  = tb_co10["MVIR_MSUN"]
-        mvir_ci10  = tb_ci10["MVIR_MSUN"]
-
-        snr_hcn10 = tb_hcn10["S2N"]
-        snr_co10  = tb_co10["S2N"]
-        snr_ci10  = tb_ci10["S2N"]
-
-        # plot
+            self._plot_cpropsmap(
+                this_outpng,
+                this_x,
+                this_y,
+                this_c,
+                linename + " (" + this_param + ")",
+                title_cbar="(K km s$^{-1}$)",
+                cmap="rainbow",
+                plot_cbar=True,
+                ann=False,
+                lim=29.5,
+                size=100,
+                add_text=False,
+                label="",
+                )
 
     ############
     # do_align #
@@ -396,6 +433,94 @@ class ToolsCIGMC():
         h["RESTFREQ"] = restf_ci10
         fits.PrimaryHDU(d, h).writeto(self.ci10_ready, overwrite=True)
         os.system("rm -rf " + self.ci10_ready + "2")
+
+    ###################
+    # _plot_cpropsmap #
+    ###################
+
+    def _plot_cpropsmap(
+        self,
+        outpng,
+        x,y,c,
+        title,
+        title_cbar="(K km s$^{-1}$)",
+        cmap="rainbow",
+        plot_cbar=True,
+        ann=False,
+        lim=29.5,
+        size=100,
+        add_text=False,
+        label="",
+        ):
+        """
+        """
+
+        # set plt, ax
+        fig = plt.figure(figsize=(13,10))
+        plt.rcParams["font.size"] = 16
+        gs = gridspec.GridSpec(nrows=10, ncols=10)
+        ax = plt.subplot(gs[0:10,0:10])
+
+        # set ax parameter
+        myax_set(
+        ax,
+        grid=None,
+        xlim=[lim, -lim],
+        ylim=[-lim, lim],
+        xlabel="R.A. offset (arcsec)",
+        ylabel="Decl. offset (arcsec)",
+        adjust=[0.10,0.99,0.10,0.93],
+        )
+        ax.set_aspect('equal', adjustable='box')
+
+        # plot
+        im = ax.scatter(x, y, s=size, c=c, cmap=cmap, marker="o", linewidths=0)
+
+        # cbar
+        cbar = plt.colorbar(im)
+        if plot_cbar==True:
+            cax  = fig.add_axes([0.19, 0.12, 0.025, 0.35])
+            fig.colorbar(im, cax=cax).set_label(label)
+
+        # scale bar
+        bar = 100 / self.scale_pc
+        ax.plot([-10,-10+bar],[-10,-10],"-",color="black",lw=4)
+        ax.text(-10, -10.5, "100 pc",
+                horizontalalignment="right", verticalalignment="top")
+
+        # text
+        ax.text(0.03, 0.93, title, color="black", transform=ax.transAxes, weight="bold", fontsize=24)
+
+        # ann
+        if ann==True:
+            theta1      = -10.0 # degree
+            theta2      = 70.0 # degree
+            fov_diamter = 16.5 # arcsec (12m+7m Band 8)
+
+            fov_diamter = 16.5
+            efov1 = patches.Ellipse(xy=(-0,0), width=fov_diamter,
+                height=fov_diamter, angle=0, fill=False, edgecolor="black",
+                alpha=1.0, lw=3.5)
+
+            ax.add_patch(efov1)
+
+            # plot NGC 1068 AGN and outflow geometry
+            x1 = fov_diamter/2.0 * np.cos(np.radians(-1*theta1+90))
+            y1 = fov_diamter/2.0 * np.sin(np.radians(-1*theta1+90))
+            ax.plot([x1, -x1], [y1, -y1], "--", c="black", lw=3.5)
+            x2 = fov_diamter/2.0 * np.cos(np.radians(-1*theta2+90))
+            y2 = fov_diamter/2.0 * np.sin(np.radians(-1*theta2+90))
+            ax.plot([x2, -x2], [y2, -y2], "--", c="black", lw=3.5)
+
+        # add annotation comment
+        if add_text==True:
+            ax.plot([0,-7], [0,10], lw=3, c="black")
+            ax.text(-10.5, 10.5, "AGN position",
+                horizontalalignment="right", verticalalignment="center", weight="bold")
+
+        # save
+        os.system("rm -rf " + outpng)
+        plt.savefig(outpng, dpi=300)
 
     ###############
     # _create_dir #
