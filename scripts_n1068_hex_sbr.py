@@ -574,6 +574,8 @@ class ToolsSBR():
 
         # masking (1) center
         mask = np.where((dist_kpc<self.r_sbr)&(theta_deg>=-15)&(theta_deg<65),2,0)
+        mask = np.where((dist_kpc<self.r_sbr)&(theta_deg>=165),2,0)
+        mask = np.where((dist_kpc<self.r_sbr)&(theta_deg>=-115),2,0)
         data_c18o_masked = np.where(dist_kpc<self.r_sbr,0,data_c18o)
 
         # masking (2) CND
@@ -790,7 +792,7 @@ class ToolsSBR():
         ax.text(0.03, 0.93, title, color="black", transform=ax.transAxes, weight="bold", fontsize=24)
         if ann==True:
             ax.text(0, 0, "CND", color="black", va="center", ha="center", weight="bold")
-            ax.text(0, 6, "Center", color="black", va="center", ha="center", weight="bold")
+            ax.text(0, 6, "Bar/Outflow", color="black", va="center", ha="center", weight="bold")
             ax.text(8, 11, "Bar-end", color="black", va="center", ha="center", weight="bold", rotation=22.5)
             ax.text(-8, 11, "Inner Spiral", color="black", va="center", ha="center", weight="bold", rotation=-22.5)
             ax.text(-22, -5, "Outer Spiral", color="black", va="center", ha="center", weight="bold", rotation=-60)
