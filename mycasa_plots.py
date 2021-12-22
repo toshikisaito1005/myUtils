@@ -848,7 +848,7 @@ def myax_fig2png_ann(ax,number,ra_cnt,dec_cnt,add_text=True,txtfiles=None):
 
         for i in range(len(x)):
             if s2n[i]>=4.0:
-                print(this_x)
+                print(x[i])
                 this_x   = x[i]
                 this_y   = y[i]
                 this_pos = pos[i]
