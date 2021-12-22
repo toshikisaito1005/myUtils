@@ -855,7 +855,7 @@ def myax_fig2png_ann(ax,number,ra_cnt,dec_cnt,add_text=True,txtfiles=None):
                 this_w   = width[i]
                 this_h   = height[i]
 
-                efov1 = patches.Ellipse(
+                ell = patches.Ellipse(
                     xy=(-this_x,this_y),
                     width=this_w,
                     height=this_h,
@@ -863,7 +863,9 @@ def myax_fig2png_ann(ax,number,ra_cnt,dec_cnt,add_text=True,txtfiles=None):
                     fill=False,
                     edgecolor="black",
                     alpha=1.0,
-                    lw=1.0)  
+                    lw=1.0)
+
+                ax.add_patch(ell)
 
     #######################################
     # Figure 1 of the NGC 1068 CI outflow #
