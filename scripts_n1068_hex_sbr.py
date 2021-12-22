@@ -100,7 +100,7 @@ class ToolsSBR():
 
         self.map_av     = self.dir_other + self._read_key("map_av")
         self.map_irac1  = self.dir_other + self._read_key("irac1")
-        self.map_irac2  = self.dir_other + self._read_key("irac4")
+        self.map_irac4  = self.dir_other + self._read_key("irac4")
 
         self.maps_mom0  = glob.glob(self.dir_raw + self._read_key("maps_mom0"))
         self.maps_mom0.sort()
@@ -611,6 +611,9 @@ class ToolsSBR():
         maps_mom0 = glob.glob(self.outfits_mom0.replace("???","*"))
         maps_mom0 = [s for s in maps_mom0 if "err" not in s]
         maps_mom0.sort()
+
+        maps_mom0.extend(self.outfits_irac1)
+        maps_mom0.extend(self.outfits_irac4)
 
         check_first(maps_mom0[0],taskname)
 
