@@ -839,7 +839,6 @@ def myax_fig2png_ann(ax,number,ra_cnt,dec_cnt,add_text=True,txtfiles=None):
     ####################################
 
     if number=="ci-gmc":
-        print(txtfiles["XCTR_DEG"])
         x      = (txtfiles["XCTR_DEG"] - float(ra_cnt.split("deg")[0])) * 3600.
         y      = (txtfiles["YCTR_DEG"] - float(dec_cnt.split("deg")[0])) * 3600.
         pos    = txtfiles["POSANG"]
@@ -849,6 +848,7 @@ def myax_fig2png_ann(ax,number,ra_cnt,dec_cnt,add_text=True,txtfiles=None):
 
         for i in range(len(x)):
             if s2n[i]>=4.0:
+                print(this_x)
                 this_x   = x[i]
                 this_y   = y[i]
                 this_pos = pos[i]
