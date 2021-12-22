@@ -511,6 +511,7 @@ class ToolsSBR():
         theta_deg = np.degrees(np.arctan2(ra, dec))
 
         data_mom0 = data[:,4:len_data+2]
+        print(data_mom0)
 
         data_c18o = data_mom0[:,np.where(header=="c18o10")[0][0]]
 
