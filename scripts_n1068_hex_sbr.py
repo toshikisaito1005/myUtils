@@ -562,7 +562,7 @@ class ToolsSBR():
             self.outpng_comask,
             ra,
             dec,
-            mask_co,
+            data_co,
             "H$_2$ gas surface density mask",
             plot_cbar=False,
             ann=False,
