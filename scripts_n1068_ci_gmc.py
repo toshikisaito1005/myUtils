@@ -320,7 +320,7 @@ class ToolsCIGMC():
         this_tb,
         linename,
         outpng_header,
-        snr=5,
+        snr=4,
         ):
         """
         # CLOUDNUM
@@ -342,7 +342,7 @@ class ToolsCIGMC():
         for i in range(len(params)):
             this_param  = params[i]
             this_footer = footers[i]
-            cut         = np.where((this_tb["S2N"]>=snr) & (this_tb["RAD_PC"]>=radlimit) & (this_tb["RAD_PC"]<=radlimit*5))
+            cut         = np.where((this_tb["S2N"]>=snr) & (this_tb["RAD_PC"]>=radlimit) & (this_tb["RAD_PC"]<=radlimit*10))
             this_x      = (this_tb["XCTR_DEG"][cut] - self.ra_agn) * 3600.  
             this_y      = (this_tb["YCTR_DEG"][cut] - self.dec_agn) * 3600.  
             this_c      = this_tb[this_param][cut]
