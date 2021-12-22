@@ -155,9 +155,11 @@ class ToolsCIGMC():
         """
 
         # output fits
-        self.cprops_hcn10 = self.dir_ready + self._read_key("cprops_hcn10")
-        self.cprops_co10  = self.dir_ready + self._read_key("cprops_co10")
-        self.cprops_ci10  = self.dir_ready + self._read_key("cprops_ci10")
+        self.cprops_cn10h  = self.dir_ready + self._read_key("cprops_cn10h")
+        self.cprops_hcop10 = self.dir_ready + self._read_key("cprops_hcop10")
+        self.cprops_hcn10  = self.dir_ready + self._read_key("cprops_hcn10")
+        self.cprops_co10   = self.dir_ready + self._read_key("cprops_co10")
+        self.cprops_ci10   = self.dir_ready + self._read_key("cprops_ci10")
 
         # output txt and png
         self.outpng_cprops_cn10h  = self.dir_products + self._read_key("outpng_cprops_cn10h")
