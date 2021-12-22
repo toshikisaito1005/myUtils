@@ -552,8 +552,8 @@ class ToolsSBR():
         data_co = data_mom0[:,np.where(header=="co10")[0][0]]
         mask_co = data_co * 0
         for i in range(10):
-            left    = np.percentile(data_co[data_co>=0],i*10)
-            right   = np.percentile(data_co[data_co>=0],(i+1)*10)
+            left    = np.percentile(data_co[data_co>0],i*10)
+            right   = np.percentile(data_co[data_co>0],(i+1)*10)
             mask_co = np.where((data_co>left) & (data_co<=right), i+1, mask_co)
 
         # plot
@@ -565,6 +565,7 @@ class ToolsSBR():
             mask_co,
             "H$_2$ gas surface density mask",
             plot_cbar=False,
+            ann=False,
             )
 
         # save
