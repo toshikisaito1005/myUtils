@@ -839,12 +839,12 @@ def myax_fig2png_ann(ax,number,ra_cnt,dec_cnt,add_text=True,txtfiles=None):
     ####################################
 
     if number=="ci-gmc":
-        x      = (txtfiles["XCTR_DEG"] - float(ra_cnt.split("deg")[0])) * 3600.
-        y      = (txtfiles["YCTR_DEG"] - float(dec_cnt.split("deg")[0])) * 3600.
-        pos    = txtfiles["POSANG"]
-        s2n    = txtfiles["S2N"]
-        width  = txtfiles["MOMMAJPIX"]
-        height = txtfiles["MOMMINPIX"]
+        x     = (txtfiles["XCTR_DEG"] - float(ra_cnt.split("deg")[0])) * 3600.
+        y     = (txtfiles["YCTR_DEG"] - float(dec_cnt.split("deg")[0])) * 3600.
+        pos   = txtfiles["POSANG"]
+        s2n   = txtfiles["S2N"]
+        major = txtfiles["RAD_PC"]
+        minor = txtfiles["MOMMINPIX"] / txtfiles["MOMMAJPIX"] * txtfiles["RAD_PC"]
 
         for i in range(len(x)):
             if s2n[i]>=4.0:
@@ -856,9 +856,9 @@ def myax_fig2png_ann(ax,number,ra_cnt,dec_cnt,add_text=True,txtfiles=None):
                 this_h   = height[i]
 
                 ell = patches.Ellipse(
-                    xy=(-this_x,this_y),
-                    width=this_w,
-                    height=this_h,
+                    xy=(this_x,this_y),
+                    width=major,
+                    height=minor,
                     angle=this_pos,
                     fill=False,
                     edgecolor="black",
