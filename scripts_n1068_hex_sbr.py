@@ -573,7 +573,7 @@ class ToolsSBR():
         data_c18o = data_mom0[:,np.where(header=="c18o10")[0][0]]
 
         # masking (1) center
-        mask = np.where(dist_kpc<self.r_sbr,2,0)
+        mask = np.where((dist_kpc<self.r_sbr)&(theta_deg>=-15)&(theta_deg<65),2,0)
         data_c18o_masked = np.where(dist_kpc<self.r_sbr,0,data_c18o)
 
         # masking (2) CND
