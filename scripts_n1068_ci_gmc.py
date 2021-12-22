@@ -348,6 +348,9 @@ class ToolsCIGMC():
             this_c      = this_tb[this_param][cut]
             this_outpng = outpng_header+"_" + this_footer + ".png"
 
+            if this_param=="FLUX_KKMS_PC2":
+                this_c = np.log(this_c)
+
             self._plot_cpropsmap(
                 this_outpng,
                 this_x,
@@ -368,6 +371,7 @@ class ToolsCIGMC():
         self,
         ):
         """
+        add ncube alignment
         """
 
         taskname = self.modname + sys._getframe().f_code.co_name
@@ -379,6 +383,11 @@ class ToolsCIGMC():
         self.co10_ready   = self.dir_ready + self._read_key("cube_co10")[:-5] + ".regrid.fits"
         self.ci10_ready   = self.dir_ready + self._read_key("cube_ci10")
         template          = "template.image"
+
+        self.cn10h_nready  = self.dir_ready + self._read_key("ncube_cn10h")[:-5] + ".regrid.fits"
+        self.hcop10_nready = self.dir_ready + self._read_key("ncube_hcop10")[:-5] + ".regrid.fits"
+        self.hcn10_nready  = self.dir_ready + self._read_key("ncube_hcn10")[:-5] + ".regrid.fits"
+        self.co10_nready   = self.dir_ready + self._read_key("ncube_co10")[:-5] + ".regrid.fits"
 
         # get restfreq
         restf_cn10h  = imhead(self.cube_cn10h,mode="list")["restfreq"][0]
@@ -394,9 +403,19 @@ class ToolsCIGMC():
         run_imregrid(self.cube_hcop10,template,self.hcop10_ready+".image",axes=[0,1])
         run_imregrid(self.cube_hcn10,template,self.hcn10_ready+".image",axes=[0,1])
         run_imregrid(self.cube_co10,template,self.co10_ready+".image",axes=[0,1])
+
+        run_imregrid(self.ncube_cn10h,template,self.cn10h_nready+".image",axes=[0,1])
+        run_imregrid(self.ncube_hcop10,template,self.hcop10_nready+".image",axes=[0,1])
+        run_imregrid(self.ncube_hcn10,template,self.hcn10_nready+".image",axes=[0,1])
+        run_imregrid(self.ncube_co10,template,self.co10_nready+".image",axes=[0,1])
         os.system("rm -rf " + template + " " + template + "2")
 
         # to fits
+        run_exportfits(self.cn10h_nready+".image",self.cn10h_nready+"2",delin=True,velocity=True)
+        run_exportfits(self.hcop10_nready+".image",self.hcop10_nready+"2",delin=True,velocity=True)
+        run_exportfits(self.hcn10_nready+".image",self.hcn10_nready+"2",delin=True,velocity=True)
+        run_exportfits(self.co10_nready+".image",self.co10_nready+"2",delin=True,velocity=True)
+
         run_exportfits(self.cn10h_ready+".image",self.cn10h_ready+"2",delin=True,velocity=True)
         run_exportfits(self.hcop10_ready+".image",self.hcop10_ready+"2",delin=True,velocity=True)
         run_exportfits(self.hcn10_ready+".image",self.hcn10_ready+"2",delin=True,velocity=True)
@@ -438,6 +457,42 @@ class ToolsCIGMC():
         h["RESTFREQ"] = restf_ci10
         fits.PrimaryHDU(d, h).writeto(self.ci10_ready, overwrite=True)
         os.system("rm -rf " + self.ci10_ready + "2")
+
+        #
+        hdu = fits.open(self.cn10h_nready+"2")[0]
+        d, h = hdu.data, hdu.header
+        h["CTYPE3"] = "VELOCITY"
+        h["RESTFREQ"] = restf_hcn10
+        fits.PrimaryHDU(d, h).writeto(self.cn10h_nready, overwrite=True)
+        os.system("rm -rf " + self.cn10h_nready + "2")
+        
+        hdu = fits.open(self.hcop10_nready+"2")[0]
+        d, h = hdu.data, hdu.header
+        h["CTYPE3"] = "VELOCITY"
+        h["RESTFREQ"] = restf_hcn10
+        fits.PrimaryHDU(d, h).writeto(self.hcop10_nready, overwrite=True)
+        os.system("rm -rf " + self.hcop10_nready + "2")
+
+        hdu = fits.open(self.hcn10_nready+"2")[0]
+        d, h = hdu.data, hdu.header
+        h["CTYPE3"] = "VELOCITY"
+        h["RESTFREQ"] = restf_hcn10
+        fits.PrimaryHDU(d, h).writeto(self.hcn10_nready, overwrite=True)
+        os.system("rm -rf " + self.hcn10_nready + "2")
+
+        hdu = fits.open(self.co10_nready+"2")[0]
+        d, h = hdu.data, hdu.header
+        h["CTYPE3"] = "VELOCITY"
+        h["RESTFREQ"] = restf_co10
+        fits.PrimaryHDU(d, h).writeto(self.co10_nready, overwrite=True)
+        os.system("rm -rf " + self.co10_nready + "2")
+
+        hdu = fits.open(self.ci10_nready+"2")[0]
+        d, h = hdu.data, hdu.header
+        h["CTYPE3"] = "VELOCITY"
+        h["RESTFREQ"] = restf_ci10
+        fits.PrimaryHDU(d, h).writeto(self.ci10_nready, overwrite=True)
+        os.system("rm -rf " + self.ci10_nready + "2")
 
     ###################
     # _plot_cpropsmap #
