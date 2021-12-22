@@ -580,7 +580,7 @@ class ToolsSBR():
         mask = np.where(dist_kpc<=self.r_cnd,1,mask)
 
         # masking (2) molecular arms and SBR by C18O intensity
-        mask = np.where(data_c18o_masked>=4,3,mask)
+        mask = np.where(data_c18o_masked>0,3,mask)
 
         # masking (3) bar-ends
         #mask = np.where((mask==3)&(theta_deg>=0)&(theta_deg<65)&(dist_as<=18),4,mask)
