@@ -35,9 +35,9 @@ from mycasa_sampling import *
 from mycasa_plots import *
 from mycasa_pca import *
 
-###########################
-### ToolsDense
-###########################
+##############
+# ToolsDense #
+##############
 class ToolsSBR():
     """
     Class for the NGC 1068 outer region spectral scan project.
@@ -985,3 +985,7 @@ class ToolsSBR():
         value    = values[np.where(keywords==key)[0][0]]
 
         return value
+
+#####################
+# end of ToolsDense #
+#####################
