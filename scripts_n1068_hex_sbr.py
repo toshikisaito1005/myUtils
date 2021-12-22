@@ -640,6 +640,7 @@ class ToolsSBR():
 
         # sampling emom0
         maps_emom0 = glob.glob(self.outfits_emom0.replace("???","*"))
+        maps_emom0 = [s for s in maps_emom0 if "cube" not in s]
         maps_emom0.sort()
 
         for i in range(len(maps_emom0)):
