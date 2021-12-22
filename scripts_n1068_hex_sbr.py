@@ -609,7 +609,7 @@ class ToolsSBR():
 
         # sampling mom0
         maps_mom0 = [self.outfits_irac1]
-        maps_mom0.extend(self.outfits_irac4)
+        maps_mom0.append(self.outfits_irac4)
         maps_mom0_other = glob.glob(self.outfits_mom0.replace("???","*"))
         maps_mom0_other = [s for s in maps_mom0_other if "err" not in s]
         maps_mom0_other.sort()
