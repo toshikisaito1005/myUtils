@@ -613,6 +613,7 @@ class ToolsSBR():
         maps_mom0_other = glob.glob(self.outfits_mom0.replace("???","*"))
         maps_mom0_other = [s for s in maps_mom0_other if "err" not in s]
         maps_mom0_other = [s for s in maps_mom0_other if "cube" not in s]
+        maps_mom0_other = [s for s in maps_mom0_other if "irac" not in s]
         maps_mom0_other.sort()
         maps_mom0.extend(maps_mom0_other)
 
