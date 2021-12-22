@@ -155,7 +155,6 @@ class ToolsSBR():
         """
 
         self.table_hex_obs       = self.dir_ready + self._read_key("table_hex_obs")
-        self.table_hex_constrain = self.dir_ready + self._read_key("table_hex_constrain")
         self.table_hex_masks     = self.dir_ready + self._read_key("table_hex_masks")
 
         self.outpng_corner_slope = self.dir_products + self._read_key("outpng_corner_slope")
@@ -471,66 +470,6 @@ class ToolsSBR():
 
             self._plot_scatters(output,x,y,xlabel=xlabel,ylabel=ylabel)
 
-    ###################
-    # constrain_table #
-    ###################
-
-    def constrain_table(self,envmask):
-        """
-        """
-
-        taskname = self.modname + sys._getframe().f_code.co_name
-        check_first(self.table_hex_obs,taskname)
-
-        # read header
-        f = open(self.table_hex_obs)
-        header = f.readline()
-        header = header.split(" ")[1:]
-        f.close()
-
-        # read data
-        data       = np.loadtxt(self.table_hex_obs)
-        x          = data[:,0]
-        y          = data[:,1]
-        dist_kpc   = np.sqrt(x**2+y**2) * self.scale_kpc
-        len_data   = (len(data[0])-2)/2
-
-        data_mom0  = data[:,2:len_data+2]
-        data_emom0 = data[:,len_data+2:]
-        name_mom0  = np.array(header[2:len_data+2])
-        name_emom0 = np.array(header[len_data+2:])
-
-        n2hp_mom0  = data_mom0[:,np.where(name_mom0=="n2hp10")[0][0]]
-        n2hp_emom0 = data_emom0[:,np.where(name_mom0=="n2hp10")[0][0]]
-
-        # constrain data by radius and N2H+ detection
-        cut        = np.where((dist_kpc>=self.r_sbr) & (n2hp_mom0>=n2hp_emom0*self.snr_mom))
-        x          = x[cut]
-        y          = y[cut]
-        envmask    = envmask[cut]
-        dist_kpc   = dist_kpc[cut]
-        data_mom0  = data_mom0[cut]
-        data_emom0 = data_emom0[cut]
-
-        # constrain data by detected pixels
-        header = ["x(as) y(as) envmask dist(kpc)"]
-        table  = np.c_[x,y,envmask,dist_kpc]
-        for i in range(len(data_mom0[0])):
-            this_name   = name_mom0[i]
-            this_mom0   = data_mom0[:,i]
-            this_emom0  = data_emom0[:,i]
-            this_mom0   = np.where(this_mom0>=this_emom0*self.snr_mom,this_mom0,0)
-
-            detect_rate = len(this_mom0[this_mom0!=0]) / float(len(this_mom0))
-
-            if detect_rate>=self.detection_frac:
-                table = np.c_[table,np.array(this_mom0)]
-                header.append(this_name)
-
-        header = " ".join(header)
-        os.system("rm -rf " + self.table_hex_constrain)
-        np.savetxt(self.table_hex_constrain,table,header=header)
-
 
 
 
@@ -575,25 +514,25 @@ class ToolsSBR():
         data_c18o = data_mom0[:,np.where(header=="c18o10")[0][0]]
 
         # masking (1) center
-        mask = np.where((dist_kpc<self.r_sbr)&(theta_deg>=-15)&(theta_deg<65),2,0)
-        mask = np.where((dist_kpc<self.r_sbr)&(theta_deg>=165),2,mask)
-        mask = np.where((dist_kpc<self.r_sbr)&(theta_deg<=-115),2,mask)
+        mask_env = np.where((dist_kpc<self.r_sbr)&(theta_deg>=-15)&(theta_deg<65),2,0)
+        mask_env = np.where((dist_kpc<self.r_sbr)&(theta_deg>=165),2,mask_env)
+        mask_env = np.where((dist_kpc<self.r_sbr)&(theta_deg<=-115),2,mask_env)
         data_c18o_masked = np.where(dist_kpc<self.r_sbr,0,data_c18o)
 
         # masking (2) CND
-        mask = np.where(dist_kpc<=self.r_cnd,1,mask)
+        mask_env = np.where(dist_kpc<=self.r_cnd,1,mask_env)
 
         # masking (2) molecular arms and SBR by C18O intensity
-        mask = np.where(data_c18o_masked>1,3,mask)
+        mask_env = np.where(data_c18o_masked>1,3,mask_env)
 
         # masking (3) bar-ends
-        mask = np.where((mask==3)&(theta_deg>=0)&(theta_deg<65)&(dist_as<=18),4,mask)
-        mask = np.where((mask==3)&(theta_deg>=-180)&(theta_deg<-180+85)&(dist_as<=18),4,mask)
-        mask = np.where((mask==3)&(theta_deg>=-180)&(theta_deg<-180+45)&(dist_as<=24),4,mask)
+        mask_env = np.where((mask_env==3)&(theta_deg>=0)&(theta_deg<65)&(dist_as<=18),4,mask_env)
+        mask_env = np.where((mask_env==3)&(theta_deg>=-180)&(theta_deg<-180+85)&(dist_as<=18),4,mask_env)
+        mask_env = np.where((mask_env==3)&(theta_deg>=-180)&(theta_deg<-180+45)&(dist_as<=24),4,mask_env)
 
         # masking (4) shocked arms
-        mask = np.where((mask==3)&(theta_deg>=0)&(theta_deg<100),5,mask)
-        mask = np.where((mask==3)&(theta_deg>=-180)&(theta_deg<-180+100),5,mask)
+        mask_env = np.where((mask_env==3)&(theta_deg>=0)&(theta_deg<100),5,mask_env)
+        mask_env = np.where((mask_env==3)&(theta_deg>=-180)&(theta_deg<-180+100),5,mask_env)
 
         # plot
         print("# plot " + self.outpng_envmask)
@@ -601,14 +540,14 @@ class ToolsSBR():
             self.outpng_envmask,
             ra,
             dec,
-            mask,
+            mask_env,
             "Galactic Environments",
             plot_cbar=False,
             )
 
         # save
         header = "ra(deg) dec(deg) mask(0=inter-arm,1=CND,2=bar/outflow,3=inner-spiral,4=bar-end,5=outer-spiral)"
-        np.savetxt(self.table_hex_masks,np.c_[ra,dec,mask],header=header)
+        np.savetxt(self.table_hex_masks,np.c_[ra,dec,mask_env],header=header)
 
         """
         ###########
