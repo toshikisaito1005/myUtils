@@ -681,14 +681,14 @@ class ToolsSBR():
             this_output  = self.outmap_cube.replace("???",this_map.split("/")[-1].split("_")[3])
             this_outfits = self.outfits_cube.replace("???",this_map.split("/")[-1].split("_")[3])
             run_imregrid(this_map, template, this_output, axes=[0,1])
-            run_exportfits(this_output, this_outfits, True, True, True, axes=[0,1])
+            run_exportfits(this_output, this_outfits, True, True, True)
 
         # regrid ecube
         for this_map in self.maps_ecube:
             this_output  = self.outmap_ecube.replace("???",this_map.split("/")[-1].split("_")[3])
             this_outfits = self.outfits_ecube.replace("???",this_map.split("/")[-1].split("_")[3])
             run_imregrid(this_map, template, this_output, axes=[0,1])
-            run_exportfits(this_output, this_outfits, True, True, True, axes=[0,1])
+            run_exportfits(this_output, this_outfits, True, True, True)
 
         # cleanup
         os.system("rm -rf template")
