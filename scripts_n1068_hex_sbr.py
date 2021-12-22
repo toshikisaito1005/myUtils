@@ -170,16 +170,16 @@ class ToolsSBR():
     def run_ngc1068_sbr(
         self,
         # analysis
-        do_prepare       = False,
-        do_sampling      = False,
-        do_constrain     = False,
+        do_prepare  = False,
+        do_sampling = False,
+        #do_constrain     = False,
         # plot
-        plot_scatters    = False,
-        plot_corners     = False,
-        plot_showhex     = False,
+        #plot_scatters    = False,
+        #plot_corners     = False,
+        #plot_showhex     = False,
         # appendix
-        plot_showhex_all = False,
-        plot_showhex_ratio_all = False,
+        #plot_showhex_all = False,
+        #plot_showhex_ratio_all = False,
         ):
         """
         This method runs all the methods which will create figures in the paper.
@@ -189,10 +189,10 @@ class ToolsSBR():
         if do_prepare==True:
             self.align_maps()
 
-        """
         if do_sampling==True:
             self.hex_sampling()
 
+        """
         if do_constrain==True:
             envmask = self.create_envmask() # create and plot original envmask
             self.constrain_table(envmask)
@@ -608,12 +608,11 @@ class ToolsSBR():
         taskname = self.modname + sys._getframe().f_code.co_name
 
         # sampling mom0
+        maps_mom0 = self.outfits_irac1
+        maps_mom0.extend(self.outfits_irac4)
         maps_mom0 = glob.glob(self.outfits_mom0.replace("???","*"))
         maps_mom0 = [s for s in maps_mom0 if "err" not in s]
         maps_mom0.sort()
-
-        maps_mom0.extend(self.outfits_irac1)
-        maps_mom0.extend(self.outfits_irac4)
 
         check_first(maps_mom0[0],taskname)
 
@@ -710,7 +709,7 @@ class ToolsSBR():
             run_exportfits(this_output, this_outfits, True, True, True)
 
         # cleanup
-        os.system("rm -rf template")
+        os.system("rm -rf template.images")
 
     ################
     # _plot_hexmap #
