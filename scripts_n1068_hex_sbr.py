@@ -516,7 +516,7 @@ class ToolsSBR():
         mask_env = np.where((dist_kpc<self.r_sbr)&(theta_deg>=-15)&(theta_deg<65),2,0)
         mask_env = np.where((dist_kpc<self.r_sbr)&(theta_deg>=165),2,mask_env)
         mask_env = np.where((dist_kpc<self.r_sbr)&(theta_deg<=-115),2,mask_env)
-        data_c18o_masked = np.where(dist_kpc<self.r_sbr,0,data_c18o)
+        data_c18o_masked = np.where(dist_kpc<self.r_sbr,3,data_c18o)
 
         # masking (2) CND
         mask_env = np.where(dist_kpc<=self.r_cnd,1,mask_env)
@@ -560,7 +560,7 @@ class ToolsSBR():
             self.outpng_comask,
             ra,
             dec,
-            data_co,
+            mask_co,
             "H$_2$ gas surface density mask",
             plot_cbar=False,
             ann=False,
