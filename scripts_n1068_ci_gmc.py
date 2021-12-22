@@ -349,10 +349,6 @@ class ToolsCIGMC():
                 linename + " (" + this_param + ")",
                 title_cbar="(K km s$^{-1}$)",
                 cmap="rainbow",
-                plot_cbar=True,
-                ann=False,
-                lim=29.5,
-                size=100,
                 add_text=False,
                 label="",
                 )
