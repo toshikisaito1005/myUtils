@@ -307,6 +307,7 @@ class ToolsCIGMC():
 
         # extract tag
         self._plot_cprops_map(self.mom0_cn10h,tb_cn10h,"CN(1-0)h",self.outpng_cprops_cn10h)
+        self._plot_cprops_map(self.mom0_hcop10,tb_hcop10,"HCO$^+$(1-0)",self.outpng_cprops_hcop10)
         self._plot_cprops_map(self.mom0_hcn10,tb_hcn10,"HCN(1-0)",self.outpng_cprops_hcn10)
 
     ####################
@@ -338,7 +339,7 @@ class ToolsCIGMC():
         myfig_fits2png(
             imagename,
             outpng,
-            imsize_as = 26.0,
+            imsize_as = 18.0,
             ra_cnt    = str(self.ra_agn) + "deg",
             dec_cnt   = str(self.dec_agn) + "deg",
             numann    = "ci-gmc",
