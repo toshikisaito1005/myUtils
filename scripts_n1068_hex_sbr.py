@@ -499,7 +499,6 @@ class ToolsSBR():
         header = header.split(" ")[1:]
         header = np.array([s.split("\n")[0] for s in header])
         f.close()
-        print(header)
 
         # import data
         data      = np.loadtxt(self.table_hex_obs)
@@ -516,7 +515,7 @@ class ToolsSBR():
         mask_env = np.where((dist_kpc<self.r_sbr)&(theta_deg>=-15)&(theta_deg<65),2,0)
         mask_env = np.where((dist_kpc<self.r_sbr)&(theta_deg>=165),2,mask_env)
         mask_env = np.where((dist_kpc<self.r_sbr)&(theta_deg<=-115),2,mask_env)
-        data_c18o_masked = np.where(dist_kpc<self.r_sbr,3,data_c18o)
+        data_c18o_masked = np.where(dist_kpc<self.r_sbr,0,data_c18o)
 
         # masking (2) CND
         mask_env = np.where(dist_kpc<=self.r_cnd,1,mask_env)
