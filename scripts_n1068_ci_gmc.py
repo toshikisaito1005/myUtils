@@ -309,6 +309,8 @@ class ToolsCIGMC():
         self._plot_cprops_map(self.mom0_cn10h,tb_cn10h,"CN(1-0)h",self.outpng_cprops_cn10h)
         self._plot_cprops_map(self.mom0_hcop10,tb_hcop10,"HCO$^+$(1-0)",self.outpng_cprops_hcop10)
         self._plot_cprops_map(self.mom0_hcn10,tb_hcn10,"HCN(1-0)",self.outpng_cprops_hcn10)
+        self._plot_cprops_map(self.mom0_co10,tb_co10,"CO(1-0)",self.outpng_cprops_co10)
+        self._plot_cprops_map(self.mom0_ci10,tb_ci10,"[CI](1-0)",self.outpng_cprops_ci10)
 
     ####################
     # _plot_cprops_map #
