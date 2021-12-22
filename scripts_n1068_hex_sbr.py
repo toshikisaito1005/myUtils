@@ -164,6 +164,7 @@ class ToolsSBR():
         self.outpng_hexmap       = self.dir_products + self._read_key("outpng_hexmap")
         self.outpng_mom0         = self.dir_products + self._read_key("outpng_mom0")
         self.outpng_envmask      = self.dir_products + self._read_key("outpng_envmask")
+        self.outpng_comask       = self.dir_products + self._read_key("outpng_comask")
 
     ###################
     # run_ngc1068_sbr #
@@ -545,9 +546,30 @@ class ToolsSBR():
             plot_cbar=False,
             )
 
+        ###########
+        # Lco map #
+        ###########
+        data_co = data_mom0[:,np.where(header=="co10")[0][0]]
+        mask_co = data_co * 0
+        for i in range(10):
+            left    = np.percentile(data_co[data_co>=0],i*10)
+            right   = np.percentile(data_co[data_co>=0],(i+1)*10)
+            mask_co = np.where((data_co>left) & (data_co<=right), i+1, mask_co)
+
+        # plot
+        print("# plot " + self.outpng_envmask)
+        self._plot_hexmap(
+            self.outpng_comask,
+            ra,
+            dec,
+            mask_co,
+            "H$_2$ gas surface density mask",
+            plot_cbar=False,
+            )
+
         # save
-        header = "ra(deg) dec(deg) mask(0=inter-arm,1=CND,2=bar/outflow,3=inner-spiral,4=bar-end,5=outer-spiral)"
-        np.savetxt(self.table_hex_masks,np.c_[ra,dec,mask_env],header=header)
+        header = "ra(deg) dec(deg) env(0=inter-arm,1=CND,2=bar/outflow,3=inner-spiral,4=bar-end,5=outer-spiral),co"
+        np.savetxt(self.table_hex_masks,np.c_[ra,dec,mask_env,mask_co],header=header)
 
         """
         ###########

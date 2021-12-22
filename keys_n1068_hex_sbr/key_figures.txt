@@ -52,6 +52,7 @@ outpng_corner_score ,,,fig_corner_score.png
 outpng_hexmap       ,,,fig_hexmap_???.png
 outpng_mom0         ,,,fig_mom0_n2hp.png
 outpng_envmask      ,,,fig_hexmap_envmask.png
+outpng_comask       ,,,fig_hexmap_comask.png
 
 #########################
 # line parameters Snu^2 #
