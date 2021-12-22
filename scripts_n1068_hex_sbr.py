@@ -580,16 +580,16 @@ class ToolsSBR():
         mask = np.where(dist_kpc<=self.r_cnd,1,mask)
 
         # masking (2) molecular arms and SBR by C18O intensity
-        mask = np.where(data_c18o_masked>=4,3,mask)
+        #mask = np.where(data_c18o_masked>=4,3,mask)
 
         # masking (3) bar-ends
-        mask = np.where((mask==3)&(theta_deg>=0)&(theta_deg<65)&(dist_as<=18),4,mask)
-        mask = np.where((mask==3)&(theta_deg>=-180)&(theta_deg<-180+85)&(dist_as<=18),4,mask)
-        mask = np.where((mask==3)&(theta_deg>=-180)&(theta_deg<-180+45)&(dist_as<=24),4,mask)
+        #mask = np.where((mask==3)&(theta_deg>=0)&(theta_deg<65)&(dist_as<=18),4,mask)
+        #mask = np.where((mask==3)&(theta_deg>=-180)&(theta_deg<-180+85)&(dist_as<=18),4,mask)
+        #mask = np.where((mask==3)&(theta_deg>=-180)&(theta_deg<-180+45)&(dist_as<=24),4,mask)
 
         # masking (4) shocked arms
-        mask = np.where((mask==3)&(theta_deg>=0)&(theta_deg<100),5,mask)
-        mask = np.where((mask==3)&(theta_deg>=-180)&(theta_deg<-180+100),5,mask)
+        #mask = np.where((mask==3)&(theta_deg>=0)&(theta_deg<100),5,mask)
+        #mask = np.where((mask==3)&(theta_deg>=-180)&(theta_deg<-180+100),5,mask)
 
         # plot
         print("# plot " + self.outpng_envmask)
@@ -597,7 +597,7 @@ class ToolsSBR():
             self.outpng_envmask,
             ra,
             dec,
-            data_c18o,
+            mask,
             "Galactic Environments",
             plot_cbar=False,
             )
