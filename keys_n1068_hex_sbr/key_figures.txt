@@ -1,26 +1,28 @@
 ###############
 # directories #
 ###############
-dir_proj            ,,,/lfs13/saitots/proj_n1068_hex_sbr/
-dir_raw             ,,,data_raw/
-dir_ready           ,,,data_ready/
-dir_other           ,,,data_other/
-dir_products        ,,,products_png/
-dir_final           ,,,images/
+dir_proj     ,,,/lfs13/saitots/proj_n1068_hex_sbr/
+dir_raw      ,,,data_raw/
+dir_ready    ,,,data_ready/
+dir_other    ,,,data_other/
+dir_products ,,,products_png/
+dir_final    ,,,images/
 
 ##################
 # final products #
 ##################
-final_showcase      ,,,fig_showcase.png
+final_showcase ,,,fig_showcase.png
 
 ############
 # raw maps #
 ############
-maps_mom0           ,,,ngc1068_b3_12m_*_150pc_broad_mom0.fits
-maps_emom0          ,,,ngc1068_b3_12m_*_150pc_broad_emom0.fits
-map_av              ,,,NGC1068_extinction.fits
-irac1               ,,,tbe
-irac4               ,,,tbe
+maps_mom0  ,,,ngc1068_b3_12m_*_150pc_broad_mom0.fits
+maps_emom0 ,,,ngc1068_b3_12m_*_150pc_broad_emom0.fits
+maps_cube  ,,,ngc1068_b3_12m_*_150pc.fits
+maps_ecube ,,,ngc1068_b3_12m_*_150pc_noise.fits
+map_av     ,,,NGC1068_extinction.fits
+irac1      ,,,NGC1068_irac_ch1.fits
+irac4      ,,,NGC1068_irac_ch4.fits
 
 ########################
 # line parameters Snu^2#
@@ -41,10 +43,14 @@ n2hp  ,,,111.8
 ###############
 # output maps #
 ###############
-outmaps_mom0        ,,,n1068_???.image
-outmaps_emom0       ,,,n1068_???_err.image
-outfits_maps_mom0   ,,,n1068_???.fits
-outfits_maps_emom0  ,,,n1068_???_err.fits
+outmaps_mom0       ,,,n1068_???.image
+outmaps_emom0      ,,,n1068_???_err.image
+outfits_maps_mom0  ,,,n1068_???.fits
+outfits_maps_emom0 ,,,n1068_???_err.fits
+outmaps_cube       ,,,n1068_???_cube.image
+outmaps_ecube      ,,,n1068_???_cube_err.image
+outfits_maps_cube  ,,,n1068_???_cube.fits
+outfits_maps_ecube ,,,n1068_???_cube_err.fits
 
 ######################
 # output png and txt #
