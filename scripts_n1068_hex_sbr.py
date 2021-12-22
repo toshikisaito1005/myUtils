@@ -610,9 +610,10 @@ class ToolsSBR():
         # sampling mom0
         maps_mom0 = [self.outfits_irac1]
         maps_mom0.extend(self.outfits_irac4)
-        maps_mom0 = glob.glob(self.outfits_mom0.replace("???","*"))
-        maps_mom0 = [s for s in maps_mom0 if "err" not in s]
-        maps_mom0.sort()
+        maps_mom0_other = glob.glob(self.outfits_mom0.replace("???","*"))
+        maps_mom0_other = [s for s in maps_mom0_other if "err" not in s]
+        maps_mom0_other.sort()
+        maps_mom0.extend(maps_mom0_other)
 
         check_first(maps_mom0[0],taskname)
 
