@@ -345,7 +345,7 @@ class ToolsCIGMC():
             cut         = np.where((this_tb["S2N"]>=snr) & (this_tb["RAD_PC"]>=radlimit) & (this_tb["RAD_PC"]<=radlimit*5))
             this_x      = (this_tb["XCTR_DEG"][cut] - self.ra_agn) * 3600.  
             this_y      = (this_tb["YCTR_DEG"][cut] - self.dec_agn) * 3600.  
-            this_c      = this_tb[this_param][this_tb["S2N"]>=snr]
+            this_c      = this_tb[this_param][cut]
             this_outpng = outpng_header+"_" + this_footer + ".png"
 
             self._plot_cpropsmap(
