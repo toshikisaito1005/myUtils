@@ -499,7 +499,6 @@ class ToolsSBR():
         header = header.split(" ")[1:]
         header = np.array([s.split("\n")[0] for s in header])
         f.close()
-        print(header)
 
         # import data
         data      = np.loadtxt(self.table_hex_obs)
@@ -511,7 +510,7 @@ class ToolsSBR():
         dist_as   = np.sqrt(ra**2+dec**2)
         theta_deg = np.degrees(np.arctan2(ra, dec))
 
-        data_mom0 = data[:,5:len_data+2]
+        data_mom0 = data[:,4:len_data+2]
 
         data_c18o = data_mom0[:,np.where(header=="c18o10")[0][0]]
 
