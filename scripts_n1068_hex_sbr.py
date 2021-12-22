@@ -508,6 +508,7 @@ class ToolsSBR():
         dist_kpc  = np.sqrt(ra**2+dec**2) * self.scale_kpc
         dist_as   = np.sqrt(ra**2+dec**2)
         theta_deg = np.degrees(np.arctan2(ra, dec))
+        data_mom0 = data
 
         data_c18o = data_mom0[:,np.where(header=="c18o10")[0][0]]
 
