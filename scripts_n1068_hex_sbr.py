@@ -139,6 +139,8 @@ class ToolsSBR():
         self.dec_agn        = float(self._read_key("dec_agn", "gal").split("deg")[0])
         self.scale_pc       = float(self._read_key("scale", "gal"))
         self.scale_kpc      = self.scale_pc / 1000.
+        self.dist_Mpc       = float(self._read_key("distance", "gal"))
+        self.z              = 0.00379
 
         self.beam           = 2.14859173174056
         self.snr_mom        = 3.0
@@ -172,7 +174,7 @@ class ToolsSBR():
         # analysis
         do_prepare  = False,
         do_sampling = False,
-        #do_constrain     = False,
+        do_masks    = False,
         # plot
         #plot_scatters    = False,
         #plot_corners     = False,
@@ -192,11 +194,10 @@ class ToolsSBR():
         if do_sampling==True:
             self.hex_sampling()
 
-        """
-        if do_constrain==True:
-            envmask = self.create_envmask() # create and plot original envmask
-            self.constrain_table(envmask)
+        if do_masks==True:
+            self.create_masks() # create and plot original envmask
 
+        """
         # plot
         if plot_scatters==True:
             self.plot_scatters()
@@ -226,70 +227,6 @@ class ToolsSBR():
 
         taskname = self.modname + sys._getframe().f_code.co_name
         check_first(self.table_hex_obs,taskname)
-
-    ##################
-    # create_envmask #
-    ##################
-
-    def create_envmask(self):
-        """
-        """
-
-        taskname = self.modname + sys._getframe().f_code.co_name
-        check_first(self.table_hex_obs,taskname)
-
-        # read header
-        f      = open(self.table_hex_obs)
-        header = f.readline()
-        header = header.split(" ")[3:]
-        header = np.array([s.split("\n")[0] for s in header])
-        f.close()
-
-        # import data
-        data      = np.loadtxt(self.table_hex_obs)
-        len_data  = (len(data[0])-2)/2
-        header    = header[:len_data]
-        ra        = data[:,0]
-        dec       = data[:,1]
-        dist_kpc  = np.sqrt(ra**2+dec**2) * self.scale_kpc
-        dist_as   = np.sqrt(ra**2+dec**2)
-        theta_deg = np.degrees(np.arctan2(ra, dec))
-
-        data_mom0 = data[:,2:len_data+2]
-
-        data_c18o = data_mom0[:,np.where(header=="c18o10")[0][0]]
-
-        # masking (1) center
-        mask = np.where(dist_kpc<self.r_sbr,2,0)
-        data_c18o_masked = np.where(dist_kpc<self.r_sbr,0,data_c18o)
-
-        # masking (2) CND
-        mask = np.where(dist_kpc<=self.r_cnd,1,mask)
-
-        # masking (2) molecular arms and SBR by C18O intensity
-        mask = np.where(data_c18o_masked>=4,3,mask)
-
-        # masking (3) bar-ends
-        mask = np.where((mask==3)&(theta_deg>=0)&(theta_deg<65)&(dist_as<=18),4,mask)
-        mask = np.where((mask==3)&(theta_deg>=-180)&(theta_deg<-180+85)&(dist_as<=18),4,mask)
-        mask = np.where((mask==3)&(theta_deg>=-180)&(theta_deg<-180+45)&(dist_as<=24),4,mask)
-
-        # masking (4) shocked arms
-        mask = np.where((mask==3)&(theta_deg>=0)&(theta_deg<100),5,mask)
-        mask = np.where((mask==3)&(theta_deg>=-180)&(theta_deg<-180+100),5,mask)
-
-
-        print("# plot " + self.outpng_envmask)
-        self._plot_hexmap(
-            self.outpng_envmask,
-            ra,
-            dec,
-            mask,
-            "Galactic Environments",
-            plot_cbar=False,
-            )
-
-        return mask
 
     #################
     # plot_hex_n2hp #
@@ -596,6 +533,88 @@ class ToolsSBR():
 
 
 
+
+
+
+    ##################
+    # create_masks #
+    ##################
+
+    def create_masks(self):
+        """
+        """
+
+        taskname = self.modname + sys._getframe().f_code.co_name
+        check_first(self.table_hex_obs,taskname)
+
+        #######################
+        # environmental masks #
+        #######################
+
+        # read header
+        f      = open(self.table_hex_obs)
+        header = f.readline()
+        header = header.split(" ")[3:]
+        header = np.array([s.split("\n")[0] for s in header])
+        f.close()
+
+        # import data
+        data      = np.loadtxt(self.table_hex_obs)
+        len_data  = (len(data[0])-4)/2
+        header    = header[:len_data]
+        ra        = data[:,0]
+        dec       = data[:,1]
+        dist_kpc  = np.sqrt(ra**2+dec**2) * self.scale_kpc
+        dist_as   = np.sqrt(ra**2+dec**2)
+        theta_deg = np.degrees(np.arctan2(ra, dec))
+
+        data_mom0 = data[:,5:len_data+2]
+
+        data_c18o = data_mom0[:,np.where(header=="c18o10")[0][0]]
+
+        # masking (1) center
+        mask = np.where(dist_kpc<self.r_sbr,2,0)
+        data_c18o_masked = np.where(dist_kpc<self.r_sbr,0,data_c18o)
+
+        # masking (2) CND
+        mask = np.where(dist_kpc<=self.r_cnd,1,mask)
+
+        # masking (2) molecular arms and SBR by C18O intensity
+        mask = np.where(data_c18o_masked>=4,3,mask)
+
+        # masking (3) bar-ends
+        mask = np.where((mask==3)&(theta_deg>=0)&(theta_deg<65)&(dist_as<=18),4,mask)
+        mask = np.where((mask==3)&(theta_deg>=-180)&(theta_deg<-180+85)&(dist_as<=18),4,mask)
+        mask = np.where((mask==3)&(theta_deg>=-180)&(theta_deg<-180+45)&(dist_as<=24),4,mask)
+
+        # masking (4) shocked arms
+        mask = np.where((mask==3)&(theta_deg>=0)&(theta_deg<100),5,mask)
+        mask = np.where((mask==3)&(theta_deg>=-180)&(theta_deg<-180+100),5,mask)
+
+        # plot
+        print("# plot " + self.outpng_envmask)
+        self._plot_hexmap(
+            self.outpng_envmask,
+            ra,
+            dec,
+            mask,
+            "Galactic Environments",
+            plot_cbar=False,
+            )
+
+        ###########
+        # SFR map #
+        ###########
+        beam             = 2.0 * u.arcsec # in arcsec
+        beamarea         = (2*np.pi / (8*np.log(2))) * (beam**2).to(u.sr) # in str
+        pixelarea        = 0.2 * 0.2
+
+        irac1            = data[:,2] * 1e6 * beamarea # MJy/sr to Jy/beam
+        irac4            = data[:,3] * 1e6 * beamarea # MJy/sr to Jy/beam
+        irac4_corr       = (irac4-0.232*irac1) / (beamarea/pixelarea) # Jy/beam to Jy
+        luminosity_irac4 = 1.19e27 * irac4_corr * self.dist_Mpc**2 / (1 + self.z)**3 * 37.47405725e12 / 3.828e33
+        sfr              = luminosity_irac4 / 1.57e9
+        print(sfr)
 
     ################
     # hex_sampling #
