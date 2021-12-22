@@ -156,6 +156,7 @@ class ToolsSBR():
 
         self.table_hex_obs       = self.dir_ready + self._read_key("table_hex_obs")
         self.table_hex_constrain = self.dir_ready + self._read_key("table_hex_constrain")
+        self.table_hex_masks     = self.dir_ready + self._read_key("table_hex_masks")
 
         self.outpng_corner_slope = self.dir_products + self._read_key("outpng_corner_slope")
         self.outpng_corner_coeff = self.dir_products + self._read_key("outpng_corner_coeff")
@@ -195,7 +196,7 @@ class ToolsSBR():
             self.hex_sampling()
 
         if do_masks==True:
-            self.create_masks() # create and plot original envmask
+            self.create_masks()
 
         """
         # plot
@@ -536,9 +537,10 @@ class ToolsSBR():
 
 
 
-    ##################
+
+    ################
     # create_masks #
-    ##################
+    ################
 
     def create_masks(self):
         """
@@ -603,6 +605,10 @@ class ToolsSBR():
             "Galactic Environments",
             plot_cbar=False,
             )
+
+        # save
+        header = "ra(deg) dec(deg) mask(0=inter-arm,1=CND,2=bar/outflow,3=inner-spiral,4=bar-end,5=outer-spiral)"
+        np.savetxt(self.table_hex_masks,np.c_[ra,dec,mask],header=header)
 
         """
         ###########
@@ -796,53 +802,6 @@ class ToolsSBR():
             ax.text(8, 11, "Bar-end", color="black", va="center", ha="center", weight="bold", rotation=22.5)
             ax.text(-8, 11, "Inner Spiral", color="black", va="center", ha="center", weight="bold", rotation=-22.5)
             ax.text(-22, -5, "Outer Spiral", color="black", va="center", ha="center", weight="bold", rotation=-60)
-
-        """
-        # ann center
-        r_sbr = patches.Circle(xy=(-0,0), radius=self.r_sbr_as,
-            fill=False, alpha=1.0, ec="black", ls="dashed", lw=lw)
-        ax.add_patch(r_sbr)
-
-        ax.text(0, 7, "Center", color="black", va="center", ha="center", weight="bold")
-
-        # ann bar-end
-        cos = np.cos(np.radians(degree1))
-        sin = np.sin(np.radians(degree1))
-        ax.plot([0,0], [l1,l2], ls="dashed", color="black", lw=lw)
-        ax.plot([0,0], [-l1,-l2], ls="dashed", color="black", lw=lw)
-        ax.plot([l1*cos,l2*cos], [l1*sin,l2*sin], ls="dashed", color="black", lw=lw)
-        ax.plot([-l1*cos,-l2*cos], [-l1*sin,-l2*sin], ls="dashed", color="black", lw=lw)
-        arc1 = patches.Arc(xy=(0,0), width=l2*2, height=l2*2, ls="dashed",
-            angle=degree1, theta1=0, theta2=90-degree1, lw=lw, ec="black")
-        ax.add_patch(arc1)
-        arc2 = patches.Arc(xy=(0,0), width=l2*2, height=l2*2, ls="dashed",
-            angle=degree1+180, theta1=0, theta2=90-degree1, lw=lw, ec="black")
-        ax.add_patch(arc2)
-
-        cos = np.cos(np.radians(90/2.-degree1/2.))
-        sin = np.sin(np.radians(90/2.-degree1/2.))
-        ax.text((l2-3)*sin, (l2-3)*cos, "Bar-end", color="black", rotation=90/2.-degree1/2., va="center", ha="center", weight="bold")
-        ax.text(-(l2-3)*sin, -(l2-3)*cos, "Bar-end", color="black", rotation=90/2.-degree1/2., va="center", ha="center", weight="bold")
-
-        # ann inner-spiral
-        cos = np.cos(np.radians(degree2))
-        sin = np.sin(np.radians(degree2))
-        ax.plot([0,0], [l1,l2], ls="dashed", color="black", lw=lw)
-        ax.plot([0,0], [-l1,-l2], ls="dashed", color="black", lw=lw)
-        ax.plot([l1*cos,l2*cos], [-l1*sin,-l2*sin], ls="dashed", color="black", lw=lw)
-        ax.plot([-l1*cos,-l2*cos], [l1*sin,l2*sin], ls="dashed", color="black", lw=lw)
-        arc1 = patches.Arc(xy=(0,0), width=l2*2, height=l2*2, ls="dashed",
-            angle=90, theta1=0, theta2=90-degree2, lw=lw, ec="black")
-        ax.add_patch(arc1)
-        arc2 = patches.Arc(xy=(0,0), width=l2*2, height=l2*2, ls="dashed",
-            angle=90+180, theta1=0, theta2=90-degree2, lw=lw, ec="black")
-        ax.add_patch(arc2)
-
-        cos = np.cos(np.radians(-90/2.+degree2/2.))
-        sin = np.sin(np.radians(-90/2.+degree2/2.))
-        ax.text((l2-3)*sin, (l2-3)*cos, "Inner Arm", color="black", rotation=-90/2.+degree2/2., va="center", ha="center", weight="bold")
-        ax.text(-(l2-3)*sin, -(l2-3)*cos, "Inner Arm", color="black", rotation=-90/2.+degree2/2., va="center", ha="center", weight="bold")
-        """
 
         # save
         os.system("rm -rf " + outpng)
