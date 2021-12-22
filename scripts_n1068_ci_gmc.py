@@ -306,6 +306,7 @@ class ToolsCIGMC():
 
         # extract tag
         self._plot_cprops_map(self.mom0_cn10h,tb_cn10h,"CN(1-0)h",self.outpng_cprops_cn10h)
+        self._plot_cprops_map(self.mom0_hcn10,tb_hcn10,"HCN(1-0)",self.outpng_cprops_hcn10)
 
     ####################
     # _plot_cprops_map #
@@ -339,6 +340,7 @@ class ToolsCIGMC():
             numann    = "ci-gmc",
             txtfiles  = this_tb,
             set_title = linename + " Cloud Catalog",
+
             )
 
     ###################
