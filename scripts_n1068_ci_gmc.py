@@ -449,7 +449,7 @@ class ToolsCIGMC():
         cmap="rainbow",
         plot_cbar=True,
         ann=True,
-        lim=29.5,
+        lim=13.0,
         size=100,
         add_text=False,
         label="",
