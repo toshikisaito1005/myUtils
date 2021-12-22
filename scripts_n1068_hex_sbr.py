@@ -521,7 +521,7 @@ class ToolsSBR():
         mask_env = np.where(dist_kpc<=self.r_cnd,1,mask_env)
 
         # masking (2) molecular arms and SBR by C18O intensity
-        mask_env = np.where(data_c18o_masked>1,3,mask_env)
+        mask_env = np.where(data_c18o_masked>3,3,mask_env)
 
         # masking (3) bar-ends
         mask_env = np.where((mask_env==3)&(theta_deg>=0)&(theta_deg<65)&(dist_as<=18),4,mask_env)
