@@ -499,20 +499,15 @@ class ToolsSBR():
         header = header.split(" ")[1:]
         header = np.array([s.split("\n")[0] for s in header])
         f.close()
+        print(header)
 
         # import data
         data      = np.loadtxt(self.table_hex_obs)
-        len_data  = (len(data[0])-4)/2 + 2
-        header    = header[:len_data]
         ra        = data[:,0]
         dec       = data[:,1]
         dist_kpc  = np.sqrt(ra**2+dec**2) * self.scale_kpc
         dist_as   = np.sqrt(ra**2+dec**2)
         theta_deg = np.degrees(np.arctan2(ra, dec))
-
-        data_mom0 = data[:,2:len_data+2]
-        print(header)
-        print(data_mom0[0])
 
         data_c18o = data_mom0[:,np.where(header=="c18o10")[0][0]]
 
@@ -559,7 +554,7 @@ class ToolsSBR():
             mask_co = np.where((data_co>left) & (data_co<=right), i+1, mask_co)
 
         # plot
-        print("# plot " + self.outpng_envmask)
+        print("# plot " + self.outpng_comask)
         self._plot_hexmap(
             self.outpng_comask,
             ra,
