@@ -597,11 +597,12 @@ class ToolsSBR():
             self.outpng_envmask,
             ra,
             dec,
-            mask,
+            data_c18o,
             "Galactic Environments",
             plot_cbar=False,
             )
 
+        """
         ###########
         # SFR map #
         ###########
@@ -614,7 +615,7 @@ class ToolsSBR():
         irac4_corr       = (irac4-0.232*irac1) / (beamarea/pixelarea) # Jy/beam to Jy
         luminosity_irac4 = 1.19e27 * irac4_corr * self.dist_Mpc**2 / (1 + self.z)**3 / 3.828e33 # Lsun
         sfr              = luminosity_irac4 / 1.57e9
-        print(sfr)
+        """
 
     ################
     # hex_sampling #
