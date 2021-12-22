@@ -336,8 +336,8 @@ class ToolsCIGMC():
         for i in range(len(params)):
             this_param  = params[i]
             this_footer = footers[i]
-            this_x      = this_tb["XCTR_DEG"][this_tb["S2N"]>=snr]
-            this_y      = this_tb["YCTR_DEG"][this_tb["S2N"]>=snr]
+            this_x      = (this_tb["XCTR_DEG"][this_tb["S2N"]>=snr] - self.ra_agn) * 3600.  
+            this_y      = (this_tb["YCTR_DEG"][this_tb["S2N"]>=snr] - self.dec_agn) * 3600.  
             this_c      = this_tb[this_param][this_tb["S2N"]>=snr]
             this_outpng = outpng_header+"_" + this_footer + ".png"
 
@@ -448,7 +448,7 @@ class ToolsCIGMC():
         title_cbar="(K km s$^{-1}$)",
         cmap="rainbow",
         plot_cbar=True,
-        ann=False,
+        ann=True,
         lim=29.5,
         size=100,
         add_text=False,
