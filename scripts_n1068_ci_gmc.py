@@ -304,6 +304,7 @@ class ToolsCIGMC():
         f = pyfits.open(self.cprops_ci10)
         tb_ci10 = f[1].data
 
+
         # extract tag
         self._plot_cprops_map(self.mom0_cn10h,tb_cn10h,"CN(1-0)h",self.outpng_cprops_cn10h)
         self._plot_cprops_map(self.mom0_hcn10,tb_hcn10,"HCN(1-0)",self.outpng_cprops_hcn10)
@@ -331,6 +332,9 @@ class ToolsCIGMC():
         # S2N
         """
 
+        scalebar = 100. / self.scale_pc
+        label_scalebar = "100 pc"
+
         myfig_fits2png(
             imagename,
             outpng,
@@ -340,7 +344,8 @@ class ToolsCIGMC():
             numann    = "ci-gmc",
             txtfiles  = this_tb,
             set_title = linename + " Cloud Catalog",
-
+            scalebar  = scalebar,
+            label_scalebar = label_scalebar,
             )
 
     ###################
