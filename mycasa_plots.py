@@ -839,6 +839,7 @@ def myax_fig2png_ann(ax,number,ra_cnt,dec_cnt,add_text=True,txtfiles=None):
     ####################################
 
     if number=="ci-gmc":
+        print(txtfiles)
         x      = (txtfiles["XCTR_DEG"] - ra_cnt) * 3600.
         y      = (txtfiles["YCTR_DEG"] - dec_cnt) * 3600.
         pos    = txtfiles["POSANG"]
