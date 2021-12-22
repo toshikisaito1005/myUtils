@@ -415,6 +415,7 @@ class ToolsCIGMC():
         run_exportfits(self.hcop10_nready+".image",self.hcop10_nready+"2",delin=True,velocity=True)
         run_exportfits(self.hcn10_nready+".image",self.hcn10_nready+"2",delin=True,velocity=True)
         run_exportfits(self.co10_nready+".image",self.co10_nready+"2",delin=True,velocity=True)
+        os.system("cp -r " + self.ncube_ci10 + " " + self.ci10_nready + "2")
 
         run_exportfits(self.cn10h_ready+".image",self.cn10h_ready+"2",delin=True,velocity=True)
         run_exportfits(self.hcop10_ready+".image",self.hcop10_ready+"2",delin=True,velocity=True)
