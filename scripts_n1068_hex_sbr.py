@@ -605,14 +605,14 @@ class ToolsSBR():
         ###########
         # SFR map #
         ###########
-        beam             = 2.0 * u.arcsec # in arcsec
-        beamarea         = (2*np.pi / (8*np.log(2))) * (beam**2).to(u.sr) # in str
+        beam             = 2.0 * u.arcsec # arcsec
+        beamarea         = (2*np.pi / (8*np.log(2))) * (beam**2).to(u.sr) # str
         pixelarea        = 0.2 * 0.2
 
         irac1            = data[:,2] * 1e6 * beamarea # MJy/sr to Jy/beam
         irac4            = data[:,3] * 1e6 * beamarea # MJy/sr to Jy/beam
         irac4_corr       = (irac4-0.232*irac1) / (beamarea/pixelarea) # Jy/beam to Jy
-        luminosity_irac4 = 1.19e27 * irac4_corr * self.dist_Mpc**2 / (1 + self.z)**3 * 37.47405725e12 / 3.828e33
+        luminosity_irac4 = 1.19e27 * irac4_corr * self.dist_Mpc**2 / (1 + self.z)**3 / 3.828e33 # Lsun
         sfr              = luminosity_irac4 / 1.57e9
         print(sfr)
 
