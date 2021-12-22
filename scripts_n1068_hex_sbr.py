@@ -499,6 +499,7 @@ class ToolsSBR():
         header = header.split(" ")[3:]
         header = np.array([s.split("\n")[0] for s in header])
         f.close()
+        print(header)
 
         # import data
         data      = np.loadtxt(self.table_hex_obs)
