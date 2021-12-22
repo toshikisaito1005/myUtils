@@ -388,6 +388,7 @@ class ToolsCIGMC():
         self.hcop10_nready = self.dir_ready + self._read_key("ncube_hcop10")[:-5] + ".regrid.fits"
         self.hcn10_nready  = self.dir_ready + self._read_key("ncube_hcn10")[:-5] + ".regrid.fits"
         self.co10_nready   = self.dir_ready + self._read_key("ncube_co10")[:-5] + ".regrid.fits"
+        self.ci10_nready   = self.dir_ready + self._read_key("ncube_ci10")
 
         # get restfreq
         restf_cn10h  = imhead(self.cube_cn10h,mode="list")["restfreq"][0]
