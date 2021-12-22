@@ -834,6 +834,36 @@ def myax_fig2png_ann(ax,number,ra_cnt,dec_cnt,add_text=True,txtfiles=None):
     number==2 is used for Figure 1 of the NGC 3110 CO paper.
     """
 
+    ####################################
+    # Figures of CI-GMC NGC 1068 paper #
+    ####################################
+
+    if number=="ci-gmc":
+        x      = (txtfiles["XCTR_DEG"] - ra_cnt) * 3600.
+        y      = (txtfiles["YCTR_DEG"] - dec_cnt) * 3600.
+        pos    = txtfiles["POSANG"]
+        s2n    = txtfiles["S2N"]
+        width  = txtfiles["MOMMAJPIX"]
+        height = txtfiles["MOMMINPIX"]
+
+        for i in range(len(x)):
+            if s2n[i]>=4.0:
+                this_x   = x[i]
+                this_y   = y[i]
+                this_pos = pos[i]
+                this_w   = width[i]
+                this_h   = height[i]
+
+                efov1 = patches.Ellipse(
+                    xy=(-this_x,this_y),
+                    width=this_w,
+                    height=this_h,
+                    angle=this_pos,
+                    fill=False,
+                    edgecolor="black",
+                    alpha=1.0,
+                    lw=1.0)  
+
     #######################################
     # Figure 1 of the NGC 1068 CI outflow #
     #######################################
@@ -874,6 +904,7 @@ def myax_fig2png_ann(ax,number,ra_cnt,dec_cnt,add_text=True,txtfiles=None):
     ####################################
     # Figures of the NGC 3110 CO paper #
     ####################################
+
     if number=="n3110_irac":
         # add annotation comment
         if add_text==True:
@@ -903,6 +934,7 @@ def myax_fig2png_ann(ax,number,ra_cnt,dec_cnt,add_text=True,txtfiles=None):
     ###########################################
     # Figure 2 of C8.5 spectral scan proposal #
     ###########################################
+
     if number==3:
         # plot CND outer radius
         cnd_radius = 7.0 # racsec
@@ -990,6 +1022,7 @@ def myax_fig2png_ann(ax,number,ra_cnt,dec_cnt,add_text=True,txtfiles=None):
     #####################################
     # Figure 1 of C8.5 catom21 proposal #
     #####################################
+
     if number==5:
         for this_txt in txtfiles:
             # 10 fov

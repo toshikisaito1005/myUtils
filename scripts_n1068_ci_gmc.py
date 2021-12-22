@@ -305,11 +305,41 @@ class ToolsCIGMC():
         tb_ci10 = f[1].data
 
         # extract tag
-        self._plot_all_param(tb_cn10h,"CN(1-0)h",self.outpng_cprops_cn10h)
-        self._plot_all_param(tb_hcop10,"HCO$^+$(1-0)",self.outpng_cprops_hcop10)
-        self._plot_all_param(tb_hcn10,"HCN(1-0)",self.outpng_cprops_hcn10)
-        self._plot_all_param(tb_co10,"CO(1-0)",self.outpng_cprops_co10)
-        self._plot_all_param(tb_ci10,"[CI](1-0)",self.outpng_cprops_ci10)
+        self._plot_cprops_map(self.mom0_cn10h,tb_cn10h,"CN(1-0)h",self.outpng_cprops_cn10h)
+
+    ####################
+    # _plot_cprops_map #
+    ####################
+
+    def _plot_cprops_map(
+        self,
+        imagename,
+        this_tb,
+        linename,
+        outpng,
+        ):
+        """
+        # CLOUDNUM
+        # XCTR_DEG
+        # YCTR_DEG
+        # VCTR_KMS
+        # RAD_PC
+        # SIGV_KMS
+        # FLUX_KKMS_PC2
+        # MVIR_MSUN
+        # S2N
+        """
+
+        myfig_fits2png(
+            imagename,
+            outpng,
+            imsize_as = 26.0,
+            ra_cnt    = str(self.ra_agn) + "deg",
+            dec_cnt   = str(self.dec_agn) + "deg",
+            numann    = "ci-gmc",
+            txtfiles  = this_tb,
+            set_title = linename + " Cloud Catalog",
+            )
 
     ###################
     # _plot_all_param #
@@ -346,7 +376,7 @@ class ToolsCIGMC():
             this_x      = (this_tb["XCTR_DEG"][cut] - self.ra_agn) * 3600.  
             this_y      = (this_tb["YCTR_DEG"][cut] - self.dec_agn) * 3600.  
             this_c      = this_tb[this_param][cut]
-            this_outpng = outpng_header+"_" + this_footer + ".png"
+            this_outpng = outpng_header.replace(".png","_"+this_footer+".png")
 
             if this_param=="FLUX_KKMS_PC2":
                 this_c = np.log(this_c)
