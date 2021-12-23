@@ -501,7 +501,8 @@ class ToolsSBR():
         sum_mom0  = np.sum(data_mom0,axis=0)
         index     = np.argsort(sum_mom0)[::-1]
 
-        print(np.c_[header[index],sum_mom0[index]])
+        header    = header[index]
+        data_mom0 = [:,index]
 
     ################
     # create_masks #
