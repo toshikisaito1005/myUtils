@@ -173,10 +173,11 @@ class ToolsSBR():
     def run_ngc1068_sbr(
         self,
         # analysis
-        do_prepare  = False,
-        do_sampling = False,
-        do_masks    = False,
+        do_prepare     = False,
+        do_sampling    = False,
+        do_masks       = False,
         # plot
+        plot_bar_graph = False,
         #plot_scatters    = False,
         #plot_corners     = False,
         #plot_showhex     = False,
@@ -197,6 +198,10 @@ class ToolsSBR():
 
         if do_masks==True:
             self.create_masks()
+
+        # plot
+        if plot_bar_graph==True:
+            self.plot_masked_flux()
 
         """
         # plot
