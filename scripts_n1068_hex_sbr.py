@@ -218,6 +218,7 @@ class ToolsSBR():
             self.plot_hex_rhcn_all() # TBE
         """
 
+    """
     ######################
     # plot_hex_r13co_all #
     ######################
@@ -470,13 +471,36 @@ class ToolsSBR():
             output    = self.dir_products + "scatter_n2hp_vs_" + this_name + ".png"
 
             self._plot_scatters(output,x,y,xlabel=xlabel,ylabel=ylabel)
+    """
 
+    ####################
+    # plot_masked_flux #
+    ####################
 
+    def plot_masked_flux(self):
+        """
+        """
 
+        taskname = self.modname + sys._getframe().f_code.co_name
+        check_first(self.table_hex_obs,taskname)
 
+        # read header
+        f      = open(self.table_hex_obs)
+        header = f.readline()
+        header = header.split(" ")[1:]
+        header = np.array([s.split("\n")[0] for s in header])
+        f.close()
 
+        # import data
+        data      = np.loadtxt(self.table_hex_obs)
+        ra        = data[:,0]
+        dec       = data[:,1]
+        dist_kpc  = np.sqrt(ra**2+dec**2) * self.scale_kpc
+        dist_as   = np.sqrt(ra**2+dec**2)
+        theta_deg = np.degrees(np.arctan2(ra, dec))
+        data_mom0 = data
 
-
+        print(np.shape(data_mom0))
 
     ################
     # create_masks #
