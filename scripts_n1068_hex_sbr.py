@@ -498,9 +498,10 @@ class ToolsSBR():
         # constrain data
         header    = header[4:30]
         data_mom0 = data[:,4:30]
-
         sum_mom0  = np.sum(data_mom0,axis=0)
-        print(np.c_[header,np.argsort(sum_mom0),sum_mom0])
+        index     = np.argsort(sum_mom0)
+
+        print(np.c_[header[index],sum_mom0[index]])
 
     ################
     # create_masks #
