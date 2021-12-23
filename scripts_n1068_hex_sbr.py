@@ -499,9 +499,9 @@ class ToolsSBR():
         header    = header[4:30]
         data_mom0 = data[:,4:30]
 
-        sum_mom0  = np.sum(data_mom0,axis=1)
+        sum_mom0  = np.sum(data_mom0,axis=0)
         print(np.shape(sum_mom0))
-        print(np.argmax(sum_mom0))
+        print(np.argsort(sum_mom0))
 
     ################
     # create_masks #
