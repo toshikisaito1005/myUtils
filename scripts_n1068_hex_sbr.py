@@ -229,8 +229,6 @@ class ToolsSBR():
     ######################
 
     def plot_hex_r13co_all(self):
-        """
-        """
 
         taskname = self.modname + sys._getframe().f_code.co_name
         check_first(self.table_hex_obs,taskname)
@@ -240,8 +238,6 @@ class ToolsSBR():
     #################
 
     def plot_hex_n2hp(self):
-        """
-        """
 
         taskname = self.modname + sys._getframe().f_code.co_name
         check_first(self.table_hex_obs,taskname)
@@ -284,8 +280,6 @@ class ToolsSBR():
     ################
 
     def plot_hex_all(self):
-        """
-        """
 
         taskname = self.modname + sys._getframe().f_code.co_name
         check_first(self.table_hex_obs,taskname)
@@ -330,8 +324,6 @@ class ToolsSBR():
     ################
 
     def plot_corners(self):
-        """
-        """
 
         taskname = self.modname + sys._getframe().f_code.co_name
         check_first(self.table_hex_constrain,taskname)
@@ -434,8 +426,6 @@ class ToolsSBR():
     #################
 
     def plot_scatters(self):
-        """
-        """
 
         taskname = self.modname + sys._getframe().f_code.co_name
         check_first(self.table_hex_constrain,taskname)
