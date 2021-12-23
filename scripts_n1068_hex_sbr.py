@@ -496,7 +496,7 @@ class ToolsSBR():
         data_mom0 = data
 
         # constrain data
-        print(np.where((header!="ra(deg)")&(header!="dec(deg)")&(header="irac1")&(header="irac4")))
+        print(np.where((header!="ra(deg)")&(header!="dec(deg)")&(header!="irac1")&(header!="irac4")))
 
     ################
     # create_masks #
