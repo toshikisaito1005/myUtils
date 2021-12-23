@@ -496,9 +496,9 @@ class ToolsSBR():
         theta_deg = np.degrees(np.arctan2(ra, dec))
 
         # constrain data
-        cut       = np.where((header!="ra(deg)")&(header!="dec(deg)")&(header!="irac1")&(header!="irac4"))
-        header    = header[cut]
-        #data_mom0 = data[]
+        header    = header[3:30]
+        data_mom0 = data[3:30]
+        print(header)
 
     ################
     # create_masks #
