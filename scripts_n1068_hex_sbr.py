@@ -497,7 +497,7 @@ class ToolsSBR():
 
         # constrain data
         header    = header[4:30]
-        data_mom0 = data[4:30]
+        data_mom0 = data[:,4:30]
         print(header)
         print(np.shape(data_mom0))
 
