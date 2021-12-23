@@ -485,6 +485,7 @@ class ToolsSBR():
         header = header.split(" ")[1:]
         header = np.array([s.split("\n")[0] for s in header])
         f.close()
+        print(header)
 
         # import data
         data      = np.loadtxt(self.table_hex_obs)
@@ -493,10 +494,11 @@ class ToolsSBR():
         dist_kpc  = np.sqrt(ra**2+dec**2) * self.scale_kpc
         dist_as   = np.sqrt(ra**2+dec**2)
         theta_deg = np.degrees(np.arctan2(ra, dec))
-        data_mom0 = data
 
         # constrain data
-        print(np.where((header!="ra(deg)")&(header!="dec(deg)")&(header!="irac1")&(header!="irac4")))
+        cut       = np.where((header!="ra(deg)")&(header!="dec(deg)")&(header!="irac1")&(header!="irac4"))
+        header    = header[cut]
+        #data_mom0 = data[]
 
     ################
     # create_masks #
