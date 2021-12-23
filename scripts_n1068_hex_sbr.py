@@ -495,11 +495,11 @@ class ToolsSBR():
         dist_as   = np.sqrt(ra**2+dec**2)
         theta_deg = np.degrees(np.arctan2(ra, dec))
 
-        # constrain data
+        # constrain and sort data
         header    = header[4:30]
         data_mom0 = data[:,4:30]
         sum_mom0  = np.sum(data_mom0,axis=0)
-        index     = np.argsort(sum_mom0)
+        index     = np.argsort(sum_mom0)[::-1]
 
         print(np.c_[header[index],sum_mom0[index]])
 
