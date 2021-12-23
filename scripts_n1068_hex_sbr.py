@@ -495,6 +495,8 @@ class ToolsSBR():
         theta_deg = np.degrees(np.arctan2(ra, dec))
         data_mom0 = data
 
+        print(header)
+        print(np.shape(header))
         print(np.shape(data_mom0))
 
     ################
