@@ -502,7 +502,7 @@ class ToolsSBR():
         index     = np.argsort(sum_mom0)[::-1]
 
         header    = header[index]
-        data_mom0 = [:,index]
+        data_mom0 = data_mom0[:,index]
 
     ################
     # create_masks #
