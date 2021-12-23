@@ -500,7 +500,7 @@ class ToolsSBR():
         data_mom0 = data[:,4:30]
 
         sum_mom0  = np.sum(data_mom0,axis=0)
-        print(np.shape(sum_mom0))
+        print(header)
         print(np.argsort(sum_mom0))
 
     ################
