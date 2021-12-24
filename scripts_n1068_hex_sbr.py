@@ -523,7 +523,7 @@ class ToolsSBR():
         ##############
         # apply mask #
         ##############
-        for this_mask in range(num_env):
+        for this_mask in range_env:
             this_data = data_mom0[np.where(mask_env==this_mask)]
             this_mean = np.mean(this_data,axis=0)
             print(this_mean[25])
