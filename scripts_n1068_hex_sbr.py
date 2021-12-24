@@ -482,8 +482,8 @@ class ToolsSBR():
         mask_env  = data[:,2]
         range_env = [1,4,5,3,2,0] # CND, inner, outer, bar-end, outflow, inter
 
-        mask_gas  = data[:,3]
-        rangegas  = range(len(np.unique(mask_gas)))
+        #mask_gas  = data[:,3]
+        #rangegas  = range(len(np.unique(mask_gas)))
 
         #####################
         # import mom0 table #
@@ -517,7 +517,6 @@ class ToolsSBR():
         # apply mask #
         ##############
 
-        # env
         means_env = []
         for this_mask in range_env:
             this_data = data_mom0[np.where(mask_env==this_mask)]
@@ -532,8 +531,7 @@ class ToolsSBR():
 
         ad = [0.10,0.97,0.20,0.90]
 
-        # env
-        fig = plt.figure(figsize=(13,10))
+        fig = plt.figure(figsize=(15,10))
         gs  = gridspec.GridSpec(nrows=10, ncols=10)
         ax1 = plt.subplot(gs[0:10,0:10])
         plt.subplots_adjust(left=ad[0], right=ad[1], bottom=ad[2], top=ad[3])
@@ -547,7 +545,7 @@ class ToolsSBR():
             ax1.plot(x, y, "o-", lw=4, c=c, markeredgewidth=0, markersize=15)
 
         # text
-        x = 0.85
+        x = 0.80
         ax1.text(x,0.30, "CND", color=cm.rainbow_r(0/5.), transform=ax1.transAxes, weight="bold")
         ax1.text(x,0.25, "Inner arm", color=cm.rainbow_r(1/5.), transform=ax1.transAxes, weight="bold")
         ax1.text(x,0.20, "Outer arm", color=cm.rainbow_r(2/5.), transform=ax1.transAxes, weight="bold")
