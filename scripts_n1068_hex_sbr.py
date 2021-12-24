@@ -510,7 +510,7 @@ class ToolsSBR():
         header    = header[4:30]
         data_mom0 = data[:,4:30]
         sum_mom0  = np.sum(data_mom0[np.where(mask_gas==8)],axis=0)
-        index     = np.argsort(sum_mom0)[::-1]
+        index     = np.argsort(sum_mom0) # [::-1]
 
         header    = header[index]
         data_mom0 = data_mom0[:,index]
@@ -544,7 +544,7 @@ class ToolsSBR():
         for i in range(len(means_env[:,0])):
             x = range(len(means_env[0]))
             y = np.log10(means_env[i])
-            c = cm.rainbow_r(i/float(len(means_env[:,0])))
+            c = cm.rainbow(i/float(len(means_env[:,0])))
             ax1.plot(x, y, "o-", lw=4, c=c, markeredgewidth=0, markersize=15)
 
         # text
@@ -580,7 +580,7 @@ class ToolsSBR():
             x = range(len(means_env[0]))
             y_n2hp10 = means_env[i,np.where(header=="n2hp10")][0][0]
             y = np.log10(means_env[i]/y_n2hp10)
-            c = cm.rainbow_r(i/float(len(means_env[:,0])))
+            c = cm.rainbow(i/float(len(means_env[:,0])))
             ax1.plot(x, y, "o-", lw=4, c=c, markeredgewidth=0, markersize=15)
 
         # text
