@@ -582,7 +582,6 @@ class ToolsSBR():
         for i in range(len(means_env[:,0])):
             x = range(len(means_env[0]))
             y_n2hp10 = means_env[i,np.where(header=="n2hp10")][0][0]
-            print(y_n2hp10)
             y = np.log10(means_env[i]/y_n2hp10)
             c = cm.rainbow_r(i/float(len(means_env[:,0])))
             ax1.plot(x, y, "o-", lw=4, c=c, markeredgewidth=0, markersize=15)
@@ -606,6 +605,7 @@ class ToolsSBR():
         ax1.set_ylabel("log Integrated Intensity relative to N$_2$H$^+$")
 
         # save
+        plt.title("Mean flux at each galactic environment")
         plt.subplots_adjust(hspace=.0)
         os.system("rm -rf " +self.outpng_ratio_env)
         plt.savefig(self.outpng_ratio_env, dpi=self.fig_dpi)
