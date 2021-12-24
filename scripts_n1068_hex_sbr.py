@@ -154,10 +154,11 @@ class ToolsSBR():
         """
         """
 
-        self.table_hex_obs   = self.dir_ready + self._read_key("table_hex_obs")
-        self.table_hex_masks = self.dir_ready + self._read_key("table_hex_masks")
+        self.table_hex_obs    = self.dir_ready + self._read_key("table_hex_obs")
+        self.table_hex_masks  = self.dir_ready + self._read_key("table_hex_masks")
 
-        self.outpng_flux_env = self.dir_products + self._read_key("outpng_flux_env")
+        self.outpng_flux_env  = self.dir_products + self._read_key("outpng_flux_env")
+        self.outpng_ratio_env = self.dir_products + self._read_key("outpng_ratio_env")
 
     ###################
     # run_ngc1068_sbr #
@@ -194,7 +195,7 @@ class ToolsSBR():
 
         # plot
         if plot_bar_graph==True:
-            self.plot_masked_flux()
+            self.plot_masked_flux_and_ratio()
 
         """
         # plot
@@ -461,11 +462,11 @@ class ToolsSBR():
             self._plot_scatters(output,x,y,xlabel=xlabel,ylabel=ylabel)
     """
 
-    ####################
-    # plot_masked_flux #
-    ####################
+    ##############################
+    # plot_masked_flux_and_ratio #
+    ##############################
 
-    def plot_masked_flux(self):
+    def plot_masked_flux_and_ratio(self):
         """
         """
 
@@ -529,6 +530,7 @@ class ToolsSBR():
         # plot #
         ########
 
+        # intensity
         ad = [0.10,0.97,0.20,0.90]
 
         fig = plt.figure(figsize=(15,10))
@@ -566,6 +568,45 @@ class ToolsSBR():
         plt.subplots_adjust(hspace=.0)
         os.system("rm -rf " +self.outpng_flux_env)
         plt.savefig(self.outpng_flux_env, dpi=self.fig_dpi)
+
+        # ratio
+        ad = [0.10,0.97,0.20,0.90]
+
+        fig = plt.figure(figsize=(15,10))
+        gs  = gridspec.GridSpec(nrows=10, ncols=10)
+        ax1 = plt.subplot(gs[0:10,0:10])
+        plt.subplots_adjust(left=ad[0], right=ad[1], bottom=ad[2], top=ad[3])
+        myax_set(ax1, "both", None, None, None, None, None, adjust=ad)
+
+        # plot
+        for i in range(len(means_env[:,0])):
+            x = range(len(means_env[0]))
+            y = np.log10(means_env[i]/means_env(np.where(header=="n2hp10")))
+            c = cm.rainbow_r(i/float(len(means_env[:,0])))
+            ax1.plot(x, y, "o-", lw=4, c=c, markeredgewidth=0, markersize=15)
+
+        # text
+        x = 0.80
+        ax1.text(x,0.30, "CND", color=cm.rainbow_r(0/5.), transform=ax1.transAxes, weight="bold")
+        ax1.text(x,0.25, "Inner arm", color=cm.rainbow_r(1/5.), transform=ax1.transAxes, weight="bold")
+        ax1.text(x,0.20, "Outer arm", color=cm.rainbow_r(2/5.), transform=ax1.transAxes, weight="bold")
+        ax1.text(x,0.15, "Bar-end", color=cm.rainbow_r(3/5.), transform=ax1.transAxes, weight="bold")
+        ax1.text(x,0.10, "Bar/Outflow", color=cm.rainbow_r(4/5.), transform=ax1.transAxes, weight="bold")
+        ax1.text(x,0.05, "Inter-arm", color=cm.rainbow_r(5/5.), transform=ax1.transAxes, weight="bold")
+
+        # x axis
+        ax1.set_xlim([-1,len(header)])
+        ax1.set_xticks(range(len(header)))
+        ax1.set_xticklabels(header, rotation = 60, ha="right")
+        ax1.set_xlabel("Lines")
+
+        # y axis
+        ax1.set_ylabel("log Integrated Intensity relative to N$_2$H$^+$")
+
+        # save
+        plt.subplots_adjust(hspace=.0)
+        os.system("rm -rf " +self.outpng_ratio_env)
+        plt.savefig(self.outpng_ratio_env, dpi=self.fig_dpi)
 
     ################
     # create_masks #
