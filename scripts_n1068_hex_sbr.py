@@ -557,8 +557,7 @@ class ToolsSBR():
 
         # x axis
         ax1.set_xticks(range(len(header)))
-        ax1.set_xticklabels(header)
-        print(np.c_[range(len(header)),header])
+        ax1.set_xticklabels(header, rotation = 60)
 
         # save
         plt.subplots_adjust(hspace=.0)
