@@ -861,13 +861,14 @@ class ToolsSBR():
         sfr        = irac4_corr
 
         # masking center
-        mask_sfr = np.where((dist_kpc>=self.r_sbr),sfr,0)
+        sfr      = np.where((dist_kpc>=self.r_sbr),sfr,0)
+        mask_sfr = sfr * 0
 
         nbins = 8
         for i in range(nbins):
-            left     = np.percentile(mask_sfr[mask_sfr>0],i/float(nbins)*100)
-            right    = np.percentile(mask_sfr[mask_sfr>0],(i+1)/float(nbins)*100)
-            mask_sfr = np.where((mask_sfr>left) & (mask_sfr<=right), i+1, mask_sfr)
+            left     = np.percentile(sfr[sfr>0],i/float(nbins)*100)
+            right    = np.percentile(sfr[sfr>0],(i+1)/float(nbins)*100)
+            mask_sfr = np.where((sfr>left) & (sfr<=right), i+1, mask_sfr)
 
         # plot
         print("# plot " + self.outpng_sfrmask)
