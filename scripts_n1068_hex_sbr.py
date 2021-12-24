@@ -507,8 +507,8 @@ class ToolsSBR():
         # constrain and sort data
         header    = header[4:30]
         data_mom0 = data[:,4:30]
-        sum_mom0  = np.sum(data_mom0,axis=0)
-        index     = np.argsort(sum_mom0[np.where(range_env==1)]) # [::-1]
+        sum_mom0  = np.sum(data_mom0[np.where(range_env==1)],axis=0)
+        index     = np.argsort(sum_mom0) # [::-1]
 
         header    = header[index]
         data_mom0 = data_mom0[:,index]
@@ -530,7 +530,7 @@ class ToolsSBR():
         # plot #
         ########
 
-        ad       = [0.10,0.97,0.20,0.90]
+        ad = [0.10,0.97,0.20,0.90]
 
         # env
         fig = plt.figure(figsize=(13,10))
