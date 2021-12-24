@@ -599,7 +599,7 @@ class ToolsSBR():
         ax1.set_ylabel("log Integrated Intensity relative to " + denom)
 
         # save
-        plt.title("Mean ratio at each H$_2$ gas density")
+        plt.title("Mean ratio (line/" + denom + ") at each H$_2$ gas density")
         plt.subplots_adjust(hspace=.0)
         os.system("rm -rf " +self.outpng_ratio_gas)
         plt.savefig(self.outpng_ratio_gas[:-4]+denom+".png", dpi=self.fig_dpi)
@@ -748,7 +748,7 @@ class ToolsSBR():
         ax1.set_ylabel("log Integrated Intensity relative to " + denom)
 
         # save
-        plt.title("Mean ratio at each galactic environment")
+        plt.title("Mean ratio (line/" + denom + ") at each galactic environment")
         plt.subplots_adjust(hspace=.0)
         os.system("rm -rf " +self.outpng_ratio_env)
         plt.savefig(self.outpng_ratio_env[:-4]+denom+".png", dpi=self.fig_dpi)
