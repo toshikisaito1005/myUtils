@@ -530,7 +530,7 @@ class ToolsSBR():
         # plot #
         ########
 
-        ad       = [0.215,0.83,0.10,0.90]
+        ad       = [0.215,0.83,0.20,0.90]
 
         # env
         fig = plt.figure(figsize=(13,10))
@@ -538,7 +538,6 @@ class ToolsSBR():
         ax1 = plt.subplot(gs[0:10,0:10])
         plt.subplots_adjust(left=ad[0], right=ad[1], bottom=ad[2], top=ad[3])
         myax_set(ax1, "both", None, None, None, None, None, adjust=ad)
-        ax1.tick_params(labelbottom=False)
 
         # plot
         for i in range(len(means_env[:,0])):
