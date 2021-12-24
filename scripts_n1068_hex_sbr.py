@@ -516,6 +516,7 @@ class ToolsSBR():
 
         mask_env  = data[:,2]
         num_env   = len(np.unique(mask_env))
+        print(num_env)
 
         mask_gas  = data[:,3]
         num_gas   = len(np.unique(mask_gas))
