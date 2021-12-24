@@ -865,8 +865,8 @@ class ToolsSBR():
 
         nbins = 8
         for i in range(nbins):
-            left     = np.percentile(sfr[sfr>0],i/float(nbins)*100)
-            right    = np.percentile(sfr[sfr>0],(i+1)/float(nbins)*100)
+            left     = np.percentile(mask_sfr[mask_sfr>0],i/float(nbins)*100)
+            right    = np.percentile(mask_sfr[mask_sfr>0],(i+1)/float(nbins)*100)
             mask_sfr = np.where((mask_sfr>left) & (mask_sfr<=right), i+1, mask_sfr)
 
         # plot
