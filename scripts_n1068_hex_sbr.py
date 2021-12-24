@@ -160,6 +160,9 @@ class ToolsSBR():
         self.outpng_flux_env  = self.dir_products + self._read_key("outpng_flux_env")
         self.outpng_ratio_env = self.dir_products + self._read_key("outpng_ratio_env")
 
+        self.outpng_flux_gas  = self.dir_products + self._read_key("outpng_flux_gas")
+        self.outpng_ratio_gas = self.dir_products + self._read_key("outpng_ratio_gas")
+
     ###################
     # run_ngc1068_sbr #
     ###################
@@ -195,7 +198,8 @@ class ToolsSBR():
 
         # plot
         if plot_bar_graph==True:
-            self.plot_masked_flux_and_ratio()
+            self.plot_env_masked_flux_and_ratio()
+            self.plot_gas_masked_flux_and_ratio()
 
         """
         # plot
@@ -462,11 +466,147 @@ class ToolsSBR():
             self._plot_scatters(output,x,y,xlabel=xlabel,ylabel=ylabel)
     """
 
-    ##############################
-    # plot_masked_flux_and_ratio #
-    ##############################
+    ##################################
+    # plot_gas_masked_flux_and_ratio #
+    ##################################
 
-    def plot_masked_flux_and_ratio(self):
+    def plot_gas_masked_flux_and_ratio(self):
+        """
+        """
+
+        taskname = self.modname + sys._getframe().f_code.co_name
+        check_first(self.table_hex_obs,taskname)
+
+        #####################
+        # import mask table #
+        #####################
+
+        # read header
+        data      = np.loadtxt(self.table_hex_masks)
+
+        mask_gas  = data[:,3]
+        rangegas  = range(len(np.unique(mask_gas)))
+
+        #####################
+        # import mom0 table #
+        #####################
+
+        # read header
+        f      = open(self.table_hex_obs)
+        header = f.readline()
+        header = header.split(" ")[1:]
+        header = np.array([s.split("\n")[0] for s in header])
+        f.close()
+
+        # import data
+        data      = np.loadtxt(self.table_hex_obs)
+        ra        = data[:,0]
+        dec       = data[:,1]
+        dist_kpc  = np.sqrt(ra**2+dec**2) * self.scale_kpc
+        dist_as   = np.sqrt(ra**2+dec**2)
+        theta_deg = np.degrees(np.arctan2(ra, dec))
+
+        # constrain and sort data
+        header    = header[4:30]
+        data_mom0 = data[:,4:30]
+        sum_mom0  = np.sum(data_mom0[np.where(mask_gas==8)],axis=0)
+        index     = np.argsort(sum_mom0) # [::-1]
+
+        header    = header[index]
+        data_mom0 = data_mom0[:,index]
+
+        ##############
+        # apply mask #
+        ##############
+
+        means_env = []
+        for this_mask in rangegas:
+            this_data = data_mom0[np.where(mask_gas==this_mask)]
+            this_mean = np.mean(this_data,axis=0)
+            means_env.append(this_mean)
+
+        means_env = np.array(means_env)
+
+        ########
+        # plot #
+        ########
+
+        # intensity
+        ad = [0.10,0.97,0.20,0.90]
+
+        fig = plt.figure(figsize=(15,10))
+        gs  = gridspec.GridSpec(nrows=10, ncols=10)
+        ax1 = plt.subplot(gs[0:10,0:10])
+        plt.subplots_adjust(left=ad[0], right=ad[1], bottom=ad[2], top=ad[3])
+        myax_set(ax1, "both", None, None, None, None, None, adjust=ad)
+
+        # plot
+        for i in range(len(means_env[:,0])):
+            x = range(len(means_env[0]))
+            y = np.log10(means_env[i])
+            c = cm.rainbow_r(i/float(len(means_env[:,0])))
+            ax1.plot(x, y, "o-", lw=4, c=c, markeredgewidth=0, markersize=15)
+
+        # text
+        x = 0.80
+        #ax1.text(x,0.30, "CND", color=cm.rainbow_r(0/5.), transform=ax1.transAxes, weight="bold")
+
+        # x axis
+        ax1.set_xlim([-1,len(header)])
+        ax1.set_xticks(range(len(header)))
+        ax1.set_xticklabels(header, rotation = 60, ha="right")
+        ax1.set_xlabel("Lines")
+
+        # y axis
+        ax1.set_ylabel("log Integrated Intensity (K km s$^{-1}$)")
+
+        # save
+        plt.title("Mean flux at each H$_2$ gas density")
+        plt.subplots_adjust(hspace=.0)
+        os.system("rm -rf " +self.outpng_flux_gas)
+        plt.savefig(self.outpng_flux_gas, dpi=self.fig_dpi)
+
+        # ratio
+        ad = [0.10,0.97,0.20,0.90]
+
+        fig = plt.figure(figsize=(15,10))
+        gs  = gridspec.GridSpec(nrows=10, ncols=10)
+        ax1 = plt.subplot(gs[0:10,0:10])
+        plt.subplots_adjust(left=ad[0], right=ad[1], bottom=ad[2], top=ad[3])
+        myax_set(ax1, "both", None, None, None, None, None, adjust=ad)
+
+        # plot
+        for i in range(len(means_env[:,0])):
+            x = range(len(means_env[0]))
+            y_n2hp10 = means_env[i,np.where(header=="n2hp10")][0][0]
+            y = np.log10(means_env[i]/y_n2hp10)
+            c = cm.rainbow_r(i/float(len(means_env[:,0])))
+            ax1.plot(x, y, "o-", lw=4, c=c, markeredgewidth=0, markersize=15)
+
+        # text
+        x = 0.80
+        #ax1.text(x,0.30, "CND",         color=cm.rainbow_r(0/5.), transform=ax1.transAxes, weight="bold")
+
+        # x axis
+        ax1.set_xlim([-1,len(header)])
+        ax1.set_xticks(range(len(header)))
+        ax1.set_xticklabels(header, rotation = 60, ha="right")
+        ax1.set_xlabel("Lines")
+
+        # y axis
+        ax1.set_ylabel("log Integrated Intensity relative to N$_2$H$^+$")
+
+        # save
+        plt.title("Mean ratio at each H$_2$ gas density")
+        plt.subplots_adjust(hspace=.0)
+        os.system("rm -rf " +self.outpng_ratio_gas)
+        plt.savefig(self.outpng_ratio_gas, dpi=self.fig_dpi)
+
+    ##################################
+    # plot_env_masked_flux_and_ratio #
+    ##################################
+
+    def plot_env_masked_flux_and_ratio(self):
         """
         """
 
@@ -565,6 +705,7 @@ class ToolsSBR():
         ax1.set_ylabel("log Integrated Intensity (K km s$^{-1}$)")
 
         # save
+        plt.title("Mean flux at each galactic environment")
         plt.subplots_adjust(hspace=.0)
         os.system("rm -rf " +self.outpng_flux_env)
         plt.savefig(self.outpng_flux_env, dpi=self.fig_dpi)
@@ -605,7 +746,7 @@ class ToolsSBR():
         ax1.set_ylabel("log Integrated Intensity relative to N$_2$H$^+$")
 
         # save
-        plt.title("Mean flux at each galactic environment")
+        plt.title("Mean ratio at each galactic environment")
         plt.subplots_adjust(hspace=.0)
         os.system("rm -rf " +self.outpng_ratio_env)
         plt.savefig(self.outpng_ratio_env, dpi=self.fig_dpi)
