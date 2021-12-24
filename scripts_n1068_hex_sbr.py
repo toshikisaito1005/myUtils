@@ -154,17 +154,10 @@ class ToolsSBR():
         """
         """
 
-        self.table_hex_obs       = self.dir_ready + self._read_key("table_hex_obs")
-        self.table_hex_masks     = self.dir_ready + self._read_key("table_hex_masks")
+        self.table_hex_obs   = self.dir_ready + self._read_key("table_hex_obs")
+        self.table_hex_masks = self.dir_ready + self._read_key("table_hex_masks")
 
-        self.outpng_corner_slope = self.dir_products + self._read_key("outpng_corner_slope")
-        self.outpng_corner_coeff = self.dir_products + self._read_key("outpng_corner_coeff")
-        self.outpng_corner_score = self.dir_products + self._read_key("outpng_corner_score")
-
-        self.outpng_hexmap       = self.dir_products + self._read_key("outpng_hexmap")
-        self.outpng_mom0         = self.dir_products + self._read_key("outpng_mom0")
-        self.outpng_envmask      = self.dir_products + self._read_key("outpng_envmask")
-        self.outpng_comask       = self.dir_products + self._read_key("outpng_comask")
+        self.outpng_flux_env = self.dir_products + self._read_key("outpng_flux_env")
 
     ###################
     # run_ngc1068_sbr #
@@ -523,6 +516,8 @@ class ToolsSBR():
         ##############
         # apply mask #
         ##############
+
+        # env
         means_env = []
         for this_mask in range_env:
             this_data = data_mom0[np.where(mask_env==this_mask)]
@@ -530,14 +525,31 @@ class ToolsSBR():
             means_env.append(this_mean)
 
         means_env = np.array(means_env)
-        print(means_env)
-            
 
         ########
         # plot #
         ########
 
-        # bar plots
+        ad       = [0.215,0.83,0.10,0.90]
+
+        # env
+        fig = plt.figure(figsize=(13,10))
+        gs  = gridspec.GridSpec(nrows=10, ncols=10)
+        ax1 = plt.subplot(gs[0:10,0:10])
+        plt.subplots_adjust(left=ad[0], right=ad[1], bottom=ad[2], top=ad[3])
+        myax_set(ax1, "both", None, None, None, None, None, adjust=ad)
+        ax1.tick_params(labelbottom=False)
+
+        # plot
+        for i in range(len(means_env[:,0])):
+            x = range(len(means_env[0]))
+            y = means_env[i]
+            ax1.plot(x, y, "-",  lw=2, c="black")
+
+        # save
+        plt.subplots_adjust(hspace=.0)
+        os.system("rm -rf " +self.outpng_flux_env)
+        plt.savefig(self.outpng_flux_env, dpi=self.fig_dpi)
 
     ################
     # create_masks #
