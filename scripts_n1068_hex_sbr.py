@@ -581,7 +581,8 @@ class ToolsSBR():
         # plot
         for i in range(len(means_env[:,0])):
             x = range(len(means_env[0]))
-            y = np.log10(means_env[i]/means_env[np.where(header=="n2hp10")])
+            y_n2hp10 = means_env[i,np.where(header=="n2hp10")]
+            y = np.log10(means_env[i]/y_n2hp10)
             c = cm.rainbow_r(i/float(len(means_env[:,0])))
             ax1.plot(x, y, "o-", lw=4, c=c, markeredgewidth=0, markersize=15)
 
