@@ -582,18 +582,19 @@ class ToolsSBR():
         for i in range(len(means_env[:,0])):
             x = range(len(means_env[0]))
             y_n2hp10 = means_env[i,np.where(header=="n2hp10")]
+            print(y_n2hp10)
             y = np.log10(means_env[i]/y_n2hp10)
             c = cm.rainbow_r(i/float(len(means_env[:,0])))
             ax1.plot(x, y, "o-", lw=4, c=c, markeredgewidth=0, markersize=15)
 
         # text
         x = 0.80
-        ax1.text(x,0.30, "CND", color=cm.rainbow_r(0/5.), transform=ax1.transAxes, weight="bold")
-        ax1.text(x,0.25, "Inner arm", color=cm.rainbow_r(1/5.), transform=ax1.transAxes, weight="bold")
-        ax1.text(x,0.20, "Outer arm", color=cm.rainbow_r(2/5.), transform=ax1.transAxes, weight="bold")
-        ax1.text(x,0.15, "Bar-end", color=cm.rainbow_r(3/5.), transform=ax1.transAxes, weight="bold")
+        ax1.text(x,0.30, "CND",         color=cm.rainbow_r(0/5.), transform=ax1.transAxes, weight="bold")
+        ax1.text(x,0.25, "Inner arm",   color=cm.rainbow_r(1/5.), transform=ax1.transAxes, weight="bold")
+        ax1.text(x,0.20, "Outer arm",   color=cm.rainbow_r(2/5.), transform=ax1.transAxes, weight="bold")
+        ax1.text(x,0.15, "Bar-end",     color=cm.rainbow_r(3/5.), transform=ax1.transAxes, weight="bold")
         ax1.text(x,0.10, "Bar/Outflow", color=cm.rainbow_r(4/5.), transform=ax1.transAxes, weight="bold")
-        ax1.text(x,0.05, "Inter-arm", color=cm.rainbow_r(5/5.), transform=ax1.transAxes, weight="bold")
+        ax1.text(x,0.05, "Inter-arm",   color=cm.rainbow_r(5/5.), transform=ax1.transAxes, weight="bold")
 
         # x axis
         ax1.set_xlim([-1,len(header)])
