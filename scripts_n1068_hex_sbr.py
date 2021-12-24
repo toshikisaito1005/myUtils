@@ -581,7 +581,7 @@ class ToolsSBR():
         # plot
         for i in range(len(means_env[:,0])):
             x = range(len(means_env[0]))
-            y_n2hp10 = means_env[i,np.where(header=="n2hp10")]
+            y_n2hp10 = means_env[i,np.where(header=="n2hp10")][0][0]
             print(y_n2hp10)
             y = np.log10(means_env[i]/y_n2hp10)
             c = cm.rainbow_r(i/float(len(means_env[:,0])))
