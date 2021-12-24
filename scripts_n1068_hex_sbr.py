@@ -515,7 +515,7 @@ class ToolsSBR():
         data      = np.loadtxt(self.table_hex_masks)
 
         mask_env  = data[:,2]
-        range_env = [1,2,3,4,5,0] # CND, outflow, bar-end, inner, outer, inter
+        range_env = [1,4,5,3,2,0] # CND, inner, outer, bar-end, outflow, inter
 
         mask_gas  = data[:,3]
         rangegas  = range(len(np.unique(mask_gas)))
