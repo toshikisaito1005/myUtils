@@ -545,7 +545,7 @@ class ToolsSBR():
             x = range(len(means_env[0]))
             y = np.log10(means_env[i])
             c = cm.rainbow(i/float(len(means_env[:,0])))
-            ax1.plot(x, y, "o-", lw=4, c=c)
+            ax1.plot(x, y, "o-", lw=4, c=c, markeredgewidth=0, markersize=20)
 
         # save
         plt.subplots_adjust(hspace=.0)
