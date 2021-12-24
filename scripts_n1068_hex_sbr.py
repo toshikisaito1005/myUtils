@@ -26,6 +26,7 @@ Toshiki Saito@Nichidai/NAOJ
 
 import os, sys, glob
 import numpy as np
+import astropy.units as u
 
 import mycasa_tasks as mytask
 reload(mytask)
