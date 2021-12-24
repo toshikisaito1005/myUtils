@@ -199,7 +199,9 @@ class ToolsSBR():
         # plot
         if plot_bar_graph==True:
             self.plot_env_masked_flux_and_ratio()
+            self.plot_env_masked_flux_and_ratio(denom="hcn10")
             self.plot_gas_masked_flux_and_ratio()
+            self.plot_gas_masked_flux_and_ratio(denom="hcn10")
 
         """
         # plot
@@ -600,7 +602,7 @@ class ToolsSBR():
         plt.title("Mean ratio at each H$_2$ gas density")
         plt.subplots_adjust(hspace=.0)
         os.system("rm -rf " +self.outpng_ratio_gas)
-        plt.savefig(self.outpng_ratio_gas, dpi=self.fig_dpi)
+        plt.savefig(self.outpng_ratio_gas[:-4]+denom+".png", dpi=self.fig_dpi)
 
     ##################################
     # plot_env_masked_flux_and_ratio #
@@ -749,7 +751,7 @@ class ToolsSBR():
         plt.title("Mean ratio at each galactic environment")
         plt.subplots_adjust(hspace=.0)
         os.system("rm -rf " +self.outpng_ratio_env)
-        plt.savefig(self.outpng_ratio_env, dpi=self.fig_dpi)
+        plt.savefig(self.outpng_ratio_env[:-4]+denom+".png", dpi=self.fig_dpi)
 
     ################
     # create_masks #
