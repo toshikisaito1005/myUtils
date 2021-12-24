@@ -157,6 +157,10 @@ class ToolsSBR():
         self.table_hex_obs    = self.dir_ready + self._read_key("table_hex_obs")
         self.table_hex_masks  = self.dir_ready + self._read_key("table_hex_masks")
 
+        self.outpng_envmask   = self.dir_products + self._read_key("outpng_envmask")
+        self.outpng_comask    = self.dir_products + self._read_key("outpng_comask")
+        self.outpng_sfrmask   = self.dir_products + self._read_key("outpng_sfrmask")
+
         self.outpng_flux_env  = self.dir_products + self._read_key("outpng_flux_env")
         self.outpng_ratio_env = self.dir_products + self._read_key("outpng_ratio_env")
 
@@ -839,26 +843,47 @@ class ToolsSBR():
             "H$_2$ gas surface density mask",
             plot_cbar=False,
             ann=False,
+            cmap="gnuplot",
+            )
+
+        ###########
+        # SFR map #
+        ###########
+        beam       = 2.0 * u.arcsec # arcsec
+        beamarea   = (2*np.pi / (8*np.log(2))) * (beam**2).to(u.sr) # str
+        pixelarea  = 0.2 * 0.2
+
+        irac1      = data[:,2] * 1e6 * beamarea # MJy/sr to Jy/beam
+        irac4      = data[:,3] * 1e6 * beamarea # MJy/sr to Jy/beam
+        irac4_corr = (irac4-0.232*irac1) / (beamarea/pixelarea) # Jy/beam to Jy
+        #luminosity_irac4 = 1.19e27 * irac4_corr * self.dist_Mpc**2 / (1 + self.z)**3 / 3.828e33 # Lsun
+        sfr        = irac4_corr
+
+        # masking center
+        mask_sfr = np.where((dist_kpc<self.r_sbr),sfr,0)
+
+        nbins = 8
+        for i in range(nbins):
+            left     = np.percentile(sfr[sfr>0],i/float(nbins)*100)
+            right    = np.percentile(sfr[sfr>0],(i+1)/float(nbins)*100)
+            mask_sfr = np.where((sfr>left) & (sfr<=right), i+1, mask_sfr)
+
+        # plot
+        print("# plot " + self.outpng_sfrmask)
+        self._plot_hexmap(
+            self.outpng_sfrmask,
+            ra,
+            dec,
+            mask_sfr,
+            "SFR surface density mask",
+            plot_cbar=False,
+            ann=False,
+            cmap="gnuplot",
             )
 
         # save
         header = "ra(deg) dec(deg) env(0=inter-arm,1=CND,2=bar/outflow,3=inner-spiral,4=bar-end,5=outer-spiral),co"
         np.savetxt(self.table_hex_masks,np.c_[ra,dec,mask_env,mask_co],header=header)
-
-        """
-        ###########
-        # SFR map #
-        ###########
-        beam             = 2.0 * u.arcsec # arcsec
-        beamarea         = (2*np.pi / (8*np.log(2))) * (beam**2).to(u.sr) # str
-        pixelarea        = 0.2 * 0.2
-
-        irac1            = data[:,2] * 1e6 * beamarea # MJy/sr to Jy/beam
-        irac4            = data[:,3] * 1e6 * beamarea # MJy/sr to Jy/beam
-        irac4_corr       = (irac4-0.232*irac1) / (beamarea/pixelarea) # Jy/beam to Jy
-        luminosity_irac4 = 1.19e27 * irac4_corr * self.dist_Mpc**2 / (1 + self.z)**3 / 3.828e33 # Lsun
-        sfr              = luminosity_irac4 / 1.57e9
-        """
 
     ################
     # hex_sampling #
