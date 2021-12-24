@@ -545,7 +545,7 @@ class ToolsSBR():
             x = range(len(means_env[0]))
             y = np.log10(means_env[i])
             c = cm.rainbow_r(i/float(len(means_env[:,0])))
-            ax1.plot(x, y, "o-", lw=4, c=c, markeredgewidth=0, markersize=20)
+            ax1.plot(x, y, "o-", lw=4, c=c, markeredgewidth=0, markersize=15)
 
         # text
         x = 0.75
@@ -559,6 +559,7 @@ class ToolsSBR():
         # x axis
         ax1.set_xticks(range(len(header)))
         ax1.set_xticklabels(header)
+        print(np.c_[range(len(header)),header])
 
         # save
         plt.subplots_adjust(hspace=.0)
