@@ -543,8 +543,9 @@ class ToolsSBR():
         # plot
         for i in range(len(means_env[:,0])):
             x = range(len(means_env[0]))
-            y = means_env[i]
-            ax1.plot(x, y, "-",  lw=2, c="black")
+            y = np.log10(means_env[i])
+            c = cm.rainbow(i/float(len(means_env[:,0])))
+            ax1.plot(x, y, "o-", lw=4, c=c)
 
         # save
         plt.subplots_adjust(hspace=.0)
