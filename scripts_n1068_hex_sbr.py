@@ -515,10 +515,10 @@ class ToolsSBR():
         data      = np.loadtxt(self.table_hex_masks)
 
         mask_env  = data[:,2]
-        num_env   = len(np.unique(mask_env))
+        range_env = [1,2,3,4,5,0] # CND, outflow, bar-end, inner, outer, inter
 
         mask_gas  = data[:,3]
-        num_gas   = len(np.unique(mask_gas))
+        rangegas  = range(len(np.unique(mask_gas)))
 
         ##############
         # apply mask #
@@ -526,7 +526,7 @@ class ToolsSBR():
         for this_mask in range(num_env):
             this_data = data_mom0[np.where(mask_env==this_mask)]
             this_mean = np.mean(this_data,axis=0)
-            print(this_mean)
+            print(this_mean[25])
             
 
         ########
