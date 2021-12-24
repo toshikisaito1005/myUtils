@@ -556,8 +556,9 @@ class ToolsSBR():
         ax1.text(x,0.05, "Inter-arm", color=cm.rainbow_r(5/5.), transform=ax1.transAxes)
 
         # x axis
+        ax1.set_xlim([len(header)-1,len(header)+1])
         ax1.set_xticks(range(len(header)))
-        ax1.set_xticklabels(header, rotation = 60)
+        ax1.set_xticklabels(header, rotation = 60, ha="right")
 
         # save
         plt.subplots_adjust(hspace=.0)
