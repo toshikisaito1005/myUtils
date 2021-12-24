@@ -530,7 +530,7 @@ class ToolsSBR():
         # plot #
         ########
 
-        ad       = [0.215,0.83,0.20,0.90]
+        ad       = [0.10,0.97,0.20,0.90]
 
         # env
         fig = plt.figure(figsize=(13,10))
