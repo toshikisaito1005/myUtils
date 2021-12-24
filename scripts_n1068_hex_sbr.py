@@ -473,6 +473,19 @@ class ToolsSBR():
         check_first(self.table_hex_obs,taskname)
 
         #####################
+        # import mask table #
+        #####################
+
+        # read header
+        data      = np.loadtxt(self.table_hex_masks)
+
+        mask_env  = data[:,2]
+        range_env = [1,4,5,3,2,0] # CND, inner, outer, bar-end, outflow, inter
+
+        mask_gas  = data[:,3]
+        rangegas  = range(len(np.unique(mask_gas)))
+
+        #####################
         # import mom0 table #
         #####################
 
@@ -495,23 +508,10 @@ class ToolsSBR():
         header    = header[4:30]
         data_mom0 = data[:,4:30]
         sum_mom0  = np.sum(data_mom0,axis=0)
-        index     = np.argsort(sum_mom0) # [::-1]
+        index     = np.argsort(sum_mom0[np.where(range_env==1)]) # [::-1]
 
         header    = header[index]
         data_mom0 = data_mom0[:,index]
-
-        #####################
-        # import mask table #
-        #####################
-
-        # read header
-        data      = np.loadtxt(self.table_hex_masks)
-
-        mask_env  = data[:,2]
-        range_env = [1,4,5,3,2,0] # CND, inner, outer, bar-end, outflow, inter
-
-        mask_gas  = data[:,3]
-        rangegas  = range(len(np.unique(mask_gas)))
 
         ##############
         # apply mask #
@@ -547,13 +547,13 @@ class ToolsSBR():
             ax1.plot(x, y, "o-", lw=4, c=c, markeredgewidth=0, markersize=15)
 
         # text
-        x = 0.75
-        ax1.text(x,0.30, "CND", color=cm.rainbow_r(0/5.), transform=ax1.transAxes)
-        ax1.text(x,0.25, "Inner arm", color=cm.rainbow_r(1/5.), transform=ax1.transAxes)
-        ax1.text(x,0.20, "Outer arm", color=cm.rainbow_r(2/5.), transform=ax1.transAxes)
-        ax1.text(x,0.15, "Bar-end", color=cm.rainbow_r(3/5.), transform=ax1.transAxes)
-        ax1.text(x,0.10, "Bar/Outflow", color=cm.rainbow_r(4/5.), transform=ax1.transAxes)
-        ax1.text(x,0.05, "Inter-arm", color=cm.rainbow_r(5/5.), transform=ax1.transAxes)
+        x = 0.85
+        ax1.text(x,0.30, "CND", color=cm.rainbow_r(0/5.), transform=ax1.transAxes, weight="bold")
+        ax1.text(x,0.25, "Inner arm", color=cm.rainbow_r(1/5.), transform=ax1.transAxes, weight="bold")
+        ax1.text(x,0.20, "Outer arm", color=cm.rainbow_r(2/5.), transform=ax1.transAxes, weight="bold")
+        ax1.text(x,0.15, "Bar-end", color=cm.rainbow_r(3/5.), transform=ax1.transAxes, weight="bold")
+        ax1.text(x,0.10, "Bar/Outflow", color=cm.rainbow_r(4/5.), transform=ax1.transAxes, weight="bold")
+        ax1.text(x,0.05, "Inter-arm", color=cm.rainbow_r(5/5.), transform=ax1.transAxes, weight="bold")
 
         # x axis
         ax1.set_xlim([-1,len(header)])
