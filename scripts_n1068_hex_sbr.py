@@ -523,10 +523,14 @@ class ToolsSBR():
         ##############
         # apply mask #
         ##############
+        means_env = []
         for this_mask in range_env:
             this_data = data_mom0[np.where(mask_env==this_mask)]
             this_mean = np.mean(this_data,axis=0)
-            print(this_mean[25])
+            means_env.append(this_mean)
+
+        means_env = np.array(means_env)
+        print(means_env)
             
 
         ########
