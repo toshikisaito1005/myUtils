@@ -470,7 +470,7 @@ class ToolsSBR():
     # plot_gas_masked_flux_and_ratio #
     ##################################
 
-    def plot_gas_masked_flux_and_ratio(self):
+    def plot_gas_masked_flux_and_ratio(self,denom="13co10"):
         """
         """
 
@@ -578,7 +578,7 @@ class ToolsSBR():
         # plot
         for i in range(len(means_env[:,0])):
             x = range(len(means_env[0]))
-            y_n2hp10 = means_env[i,np.where(header=="cs21")][0][0]
+            y_n2hp10 = means_env[i,np.where(header==denom)][0][0]
             y = np.log10(means_env[i]/y_n2hp10)
             c = cm.rainbow(i/float(len(means_env[:,0])))
             ax1.plot(x, y, "o-", lw=4, c=c, markeredgewidth=0, markersize=15)
@@ -594,7 +594,7 @@ class ToolsSBR():
         ax1.set_xlabel("Lines")
 
         # y axis
-        ax1.set_ylabel("log Integrated Intensity relative to CS")
+        ax1.set_ylabel("log Integrated Intensity relative to " + denom)
 
         # save
         plt.title("Mean ratio at each H$_2$ gas density")
@@ -606,7 +606,7 @@ class ToolsSBR():
     # plot_env_masked_flux_and_ratio #
     ##################################
 
-    def plot_env_masked_flux_and_ratio(self):
+    def plot_env_masked_flux_and_ratio(self,denom="13co10"):
         """
         """
 
@@ -722,7 +722,7 @@ class ToolsSBR():
         # plot
         for i in range(len(means_env[:,0])):
             x = range(len(means_env[0]))
-            y_n2hp10 = means_env[i,np.where(header=="cs21")][0][0]
+            y_n2hp10 = means_env[i,np.where(header==denom)][0][0]
             y = np.log10(means_env[i]/y_n2hp10)
             c = cm.rainbow_r(i/float(len(means_env[:,0])))
             ax1.plot(x, y, "o-", lw=4, c=c, markeredgewidth=0, markersize=15)
@@ -743,7 +743,7 @@ class ToolsSBR():
         ax1.set_xlabel("Lines")
 
         # y axis
-        ax1.set_ylabel("log Integrated Intensity relative to CS")
+        ax1.set_ylabel("log Integrated Intensity relative to " + denom)
 
         # save
         plt.title("Mean ratio at each galactic environment")
