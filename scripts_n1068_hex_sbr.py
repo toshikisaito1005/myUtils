@@ -510,7 +510,7 @@ class ToolsSBR():
         header    = header[4:30]
         data_mom0 = data[:,4:30]
         sum_mom0  = np.sum(data_mom0[np.where(mask_gas==8)],axis=0)
-        index     = np.argsort(sum_mom0) # [::-1]
+        index     = np.argsort(sum_mom0)[::-1]
 
         header    = header[index]
         data_mom0 = data_mom0[:,index]
