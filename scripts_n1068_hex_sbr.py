@@ -630,9 +630,6 @@ class ToolsSBR():
         mask_env  = data[:,2]
         range_env = [1,4,5,3,2,0] # CND, inner, outer, bar-end, outflow, inter
 
-        #mask_gas  = data[:,3]
-        #rangegas  = range(len(np.unique(mask_gas)))
-
         #####################
         # import mom0 table #
         #####################
@@ -645,21 +642,17 @@ class ToolsSBR():
         f.close()
 
         # import data
-        data      = np.loadtxt(self.table_hex_obs)
-        ra        = data[:,0]
-        dec       = data[:,1]
-        dist_kpc  = np.sqrt(ra**2+dec**2) * self.scale_kpc
-        dist_as   = np.sqrt(ra**2+dec**2)
-        theta_deg = np.degrees(np.arctan2(ra, dec))
+        data       = np.loadtxt(self.table_hex_obs)
+        header     = header[4:30]
+        data_mom0  = data[:,4:30]
+        data_emom0 = data[:,30:]
 
-        # constrain and sort data
-        header    = header[4:30]
-        data_mom0 = data[:,4:30]
-        sum_mom0  = np.sum(data_mom0[np.where(mask_env==1)],axis=0)
-        index     = np.argsort(sum_mom0) # [::-1]
+        sum_mom0   = np.sum(data_mom0[np.where(mask_env==1)],axis=0)
+        index      = np.argsort(sum_mom0) # [::-1]
 
-        header    = header[index]
-        data_mom0 = data_mom0[:,index]
+        header     = header[index]
+        data_mom0  = data_mom0[:,index]
+        data_emom0 = data_emom0[:,index]
 
         ##############
         # apply mask #
@@ -764,6 +757,9 @@ class ToolsSBR():
 
     def create_masks(self):
         """
+        env mask: done
+        co mask: TODO calculate H2 surface density of each bin
+        sfr mask: TODO calculate SFR surface density of each bin
         """
 
         taskname = self.modname + sys._getframe().f_code.co_name
