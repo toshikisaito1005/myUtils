@@ -544,8 +544,16 @@ class ToolsSBR():
         for i in range(len(means_env[:,0])):
             x = range(len(means_env[0]))
             y = np.log10(means_env[i])
-            c = cm.rainbow(i/float(len(means_env[:,0])))
+            c = cm.rainbow_r(i/float(len(means_env[:,0])))
             ax1.plot(x, y, "o-", lw=4, c=c, markeredgewidth=0, markersize=20)
+
+        # text
+        ax1.text(0.90,0.45, "CND", color=cm.rainbow_r(0/5.), transform=ax1.transAxes)
+        ax1.text(0.90,0.35, "Inner arm", color=cm.rainbow_r(1/5.), transform=ax1.transAxes)
+        ax1.text(0.90,0.25, "Outer arm", color=cm.rainbow_r(2/5.), transform=ax1.transAxes)
+        ax1.text(0.90,0.15, "Bar-end", color=cm.rainbow_r(3/5.), transform=ax1.transAxes)
+        ax1.text(0.90,0.05, "Bar/Outflow", color=cm.rainbow_r(4/5.), transform=ax1.transAxes)
+        ax1.text(0.90,0.05, "Inter-arm", color=cm.rainbow_r(5/5.), transform=ax1.transAxes)
 
         # save
         plt.subplots_adjust(hspace=.0)
