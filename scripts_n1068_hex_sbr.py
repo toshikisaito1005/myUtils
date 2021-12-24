@@ -578,7 +578,7 @@ class ToolsSBR():
         # plot
         for i in range(len(means_env[:,0])):
             x = range(len(means_env[0]))
-            y_n2hp10 = means_env[i,np.where(header=="n2hp10")][0][0]
+            y_n2hp10 = means_env[i,np.where(header=="cs21")][0][0]
             y = np.log10(means_env[i]/y_n2hp10)
             c = cm.rainbow(i/float(len(means_env[:,0])))
             ax1.plot(x, y, "o-", lw=4, c=c, markeredgewidth=0, markersize=15)
@@ -594,7 +594,7 @@ class ToolsSBR():
         ax1.set_xlabel("Lines")
 
         # y axis
-        ax1.set_ylabel("log Integrated Intensity relative to N$_2$H$^+$")
+        ax1.set_ylabel("log Integrated Intensity relative to CS")
 
         # save
         plt.title("Mean ratio at each H$_2$ gas density")
@@ -722,7 +722,7 @@ class ToolsSBR():
         # plot
         for i in range(len(means_env[:,0])):
             x = range(len(means_env[0]))
-            y_n2hp10 = means_env[i,np.where(header=="n2hp10")][0][0]
+            y_n2hp10 = means_env[i,np.where(header=="cs21")][0][0]
             y = np.log10(means_env[i]/y_n2hp10)
             c = cm.rainbow_r(i/float(len(means_env[:,0])))
             ax1.plot(x, y, "o-", lw=4, c=c, markeredgewidth=0, markersize=15)
@@ -743,7 +743,7 @@ class ToolsSBR():
         ax1.set_xlabel("Lines")
 
         # y axis
-        ax1.set_ylabel("log Integrated Intensity relative to N$_2$H$^+$")
+        ax1.set_ylabel("log Integrated Intensity relative to CS")
 
         # save
         plt.title("Mean ratio at each galactic environment")
