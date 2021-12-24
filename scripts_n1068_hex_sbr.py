@@ -523,7 +523,7 @@ class ToolsSBR():
         ##############
         # apply mask #
         ##############
-        for this_mask in num_env:
+        for this_mask in range(num_env):
             this_mom0 = data_mom0[np.where(mask_env==this_mask),:]
             print(np.shape(this_mom0))
 
