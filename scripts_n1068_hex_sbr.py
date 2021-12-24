@@ -479,13 +479,16 @@ class ToolsSBR():
         taskname = self.modname + sys._getframe().f_code.co_name
         check_first(self.table_hex_obs,taskname)
 
+        #####################
+        # import mom0 table #
+        #####################
+
         # read header
         f      = open(self.table_hex_obs)
         header = f.readline()
         header = header.split(" ")[1:]
         header = np.array([s.split("\n")[0] for s in header])
         f.close()
-        print(header)
 
         # import data
         data      = np.loadtxt(self.table_hex_obs)
@@ -499,10 +502,36 @@ class ToolsSBR():
         header    = header[4:30]
         data_mom0 = data[:,4:30]
         sum_mom0  = np.sum(data_mom0,axis=0)
-        index     = np.argsort(sum_mom0)[::-1]
+        index     = np.argsort(sum_mom0) # [::-1]
 
         header    = header[index]
         data_mom0 = data_mom0[:,index]
+
+        #####################
+        # import mask table #
+        #####################
+
+        # read header
+        data      = np.loadtxt(self.table_hex_obs)
+
+        mask_env  = data[:,2]
+        num_env   = len(np.unique(mask_env))
+
+        mask_gas  = data[:,3]
+        num_gas   = len(np.unique(mask_gas))
+
+        ##############
+        # apply mask #
+        ##############
+        for this_mask in num_env:
+            this_mom0 = data_mom0[np.where(mask_env==this_mask),:]
+            print(np.shape(this_mom0))
+
+        ########
+        # plot #
+        ########
+
+        # bar plots
 
     ################
     # create_masks #
