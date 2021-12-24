@@ -512,11 +512,10 @@ class ToolsSBR():
         #####################
 
         # read header
-        data      = np.loadtxt(self.table_hex_obs)
+        data      = np.loadtxt(self.table_hex_masks)
 
         mask_env  = data[:,2]
         num_env   = len(np.unique(mask_env))
-        print(mask_env)
 
         mask_gas  = data[:,3]
         num_gas   = len(np.unique(mask_gas))
@@ -526,7 +525,7 @@ class ToolsSBR():
         ##############
         for this_mask in range(num_env):
             this_mom0 = data_mom0[np.where(mask_env==this_mask)]
-            #print(np.shape(this_mom0))
+            print(np.shape(this_mom0))
 
         ########
         # plot #
