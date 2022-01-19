@@ -627,7 +627,7 @@ class ToolsOutflow():
         run_immath_one(
             imagename = self.outfits_ci10_outflow_mom0,
             outfile   = "mask.image",
-            expr      = "iif(IM0>0>1,0)",
+            expr      = "iif(IM0>0,1,0)",
             )
 
     ###########################
