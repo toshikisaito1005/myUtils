@@ -639,7 +639,12 @@ class ToolsOutflow():
             "template.image",
             "mask.image2",
             )
-        os.system("rm -rf template.image mask.image")
+        run_immath_one(
+            imagename = "mask.image2",
+            outfile   = "mask.image3",
+            expr      = "iif(IM0>0,1,0)",
+            )
+        os.system("rm -rf template.image mask.image mask.image2")
 
         # get coords data
         data_co, box = imval_all(self.outfits_map_co10)
@@ -667,11 +672,11 @@ class ToolsOutflow():
         data_ci[np.isnan(data_ci)] = 0
 
         # mask
-        data_mask = imval("mask.image2",box=box)
+        data_mask = imval("mask.image3",box=box)
         data_mask = data_mask["data"] * data_mask["mask"]
         data_mask = data_mask.flatten()
         data_mask[np.isnan(data_mask)] = 0
-        os.system("rm -rf mask.image2")
+        os.system("rm -rf mask.image3")
 
         ### measure luminosity
         # prepare
@@ -697,7 +702,6 @@ class ToolsOutflow():
         pix_as   = abs(header["cdelt1"]) * 3600 * 180 / np.pi
         beam_as  = header["beamminor"]["value"]
         beamarea = np.pi * beam_as**2 / pix_as*2 / (4*np.log(2))
-        print(beam_as)
 
         # convert from K.km/s to Jy/beam.km/s
         factor_ci    = 1.222 * 10**6 / beam_as**2 / self.restfreq_ci**2
