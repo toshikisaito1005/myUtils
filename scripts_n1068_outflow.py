@@ -627,6 +627,16 @@ class ToolsOutflow():
             outfile   = "mask.image",
             expr      = "iif(IM0>0,1,0)",
             )
+        run_importfits(
+            self.outfits_map_co10,
+            "template.image",
+            )
+        run_imregrid(
+            "mask.image",
+            "template.image",
+            "mask.image2",
+            )
+        os.system("rm -rf template.image mask.image")
 
         # get coords data
         data_co, box = imval_all(self.outfits_map_co10)
@@ -654,11 +664,11 @@ class ToolsOutflow():
         data_ci[np.isnan(data_ci)] = 0
 
         # mask
-        data_mask = imval("mask.image",box=box)
+        data_mask = imval("mask.image2",box=box)
         data_mask = data_mask["data"] * data_mask["mask"]
         data_mask = data_mask.flatten()
         data_mask[np.isnan(data_mask)] = 0
-        os.system("rm -rf mask.image")
+        os.system("rm -rf mask.image2")
 
         ### measure luminosity
         # prepare
