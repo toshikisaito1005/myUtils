@@ -71,6 +71,7 @@ history:
 2021-11-05   v1 circular
 2021-11-24   start revision of draft and refactoring
 2021-12-17   submitted!
+2021-12-24   received the 1st referee report
 Toshiki Saito@Nichidai/NAOJ
 """
 
@@ -335,6 +336,8 @@ class ToolsOutflow():
         # supplement (not published)
         do_compare_7m          = False,
         suggest_scatter_spaxel = False,
+        # 1st referee comment
+        do_measure_luminosity  = False,
         ):
         """
         This method runs all the methods which will create figures in the paper.
@@ -384,6 +387,10 @@ class ToolsOutflow():
 
         if suggest_scatter_spaxel==True:
             self.plot_ci_cube_vs_co_cube()
+
+        # 1st referee comment
+        if do_measure_luminosity==True:
+            self.measure_luminosity()
 
     ####################
     # immagick_figures #
@@ -600,6 +607,28 @@ class ToolsOutflow():
                 axis="column",
                 delin=True,
                 )
+
+    ######################
+    # measure_luminosity #
+    ######################
+
+    def measure_luminosity(
+        self,
+        ):
+        """
+        """
+
+        taskname = self.modname + sys._getframe().f_code.co_name
+        check_first(self.outfits_ci10_outflow_mom0,taskname)
+
+        # self.outfits_map_ci10
+        # self.outfits_map_co10
+
+        run_immath_one(
+            imgaename = self.outfits_ci10_outflow_mom0,
+            outfile   = "mask.image",
+            expr      = "iif(IM0>0>1,0)",
+            )
 
     ###########################
     # plot_ci_cube_vs_co_cube #
