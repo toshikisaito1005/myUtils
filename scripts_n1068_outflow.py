@@ -688,6 +688,9 @@ class ToolsOutflow():
         co_c1_flux = np.sum(np.array(co_c1) * np.array(mask_c1))
         co_c2_flux = np.sum(np.array(co_c2) * np.array(mask_c2))
 
+        print(imhead(self.outfits_map_ci10,mode="list"))
+
+        # calculate
         print(co_c1_flux)
         print(co_c2_flux)
 
