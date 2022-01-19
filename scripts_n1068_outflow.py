@@ -688,7 +688,11 @@ class ToolsOutflow():
         co_c1_flux = np.sum(np.array(co_c1) * np.array(mask_c1))
         co_c2_flux = np.sum(np.array(co_c2) * np.array(mask_c2))
 
-        print(imhead(self.outfits_map_ci10,mode="list"))
+        header  = imhead(self.outfits_map_ci10,mode="list")
+        pix_as  = abs(header["cdelt1"]) * 3600 * 180 / np.pi
+        beam_as = header["beamminor"]["value"]
+        print("beam_as = " + str(beam_as))
+        print("pix_as = " + str(pix_as))
 
         # calculate
         print(co_c1_flux)
