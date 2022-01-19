@@ -218,6 +218,8 @@ class ToolsOutflow():
         self.incl           = float(self._read_key("incl", "gal"))
         self.scale_pc       = float(self._read_key("scale", "gal"))
         self.scale_kpc      = float(self._read_key("scale", "gal")) / 1000.
+        self.distance_Mpc   = float(self._read_key("distance", "gal"))
+        self.z              = 0.00379
             
         # input parameters
         self.fov_radius     = float(self._read_key("fov_radius_as")) * self.scale_pc
@@ -240,6 +242,7 @@ class ToolsOutflow():
         self.chans_color    = self._read_key("chans_color").split(",")
 
         self.restfreq_ci    = 492.16065100 # GHz
+        self.restfreq_co    = 115.27120 # GHz
 
         # model parameters
         self.model_length       = float(self._read_key("model_length"))
@@ -685,18 +688,34 @@ class ToolsOutflow():
         co_c1, ci_c1, mask_c1 = co[cut_c1], ci[cut_c1], mask[cut_c1]
         co_c2, ci_c2, mask_c2 = co[cut_c2], ci[cut_c2], mask[cut_c2]
 
-        co_c1_flux = np.sum(np.array(co_c1) * np.array(mask_c1))
-        co_c2_flux = np.sum(np.array(co_c2) * np.array(mask_c2))
+        co_c1_Kkms = np.sum(np.array(co_c1) * np.array(mask_c1))
+        co_c2_Kkms = np.sum(np.array(co_c2) * np.array(mask_c2))
+        ci_c1_Kkms = np.sum(np.array(ci_c1) * np.array(mask_c1))
+        ci_c2_Kkms = np.sum(np.array(ci_c2) * np.array(mask_c2))
 
-        header  = imhead(self.outfits_map_ci10,mode="list")
-        pix_as  = abs(header["cdelt1"]) * 3600 * 180 / np.pi
-        beam_as = header["beamminor"]["value"]
-        print("beam_as = " + str(beam_as))
-        print("pix_as = " + str(pix_as))
+        header   = imhead(self.outfits_map_ci10,mode="list")
+        pix_as   = abs(header["cdelt1"]) * 3600 * 180 / np.pi
+        beam_as  = header["beamminor"]["value"]
+        beamarea = 2 * np.pi * beam_as**2 / pix_as*:2
 
-        # calculate
-        print(co_c1_flux)
-        print(co_c2_flux)
+        # convert from K.km/s to Jy/beam.km/s
+        factor_ci    = 1.222 * 10**6 / beam_as**2 / self.restfreq_ci**2
+        factor_co    = 1.222 * 10**6 / beam_as**2 / self.restfreq_co**2
+        co_c1_Jykms = co_c1_Kkms / factor_co / beamarea
+        co_c2_Jykms = co_c2_Kkms / factor_co / beamarea
+        ci_c1_Jykms = ci_c1_Kkms / factor_ci / beamarea
+        ci_c2_Jykms = ci_c2_Kkms / factor_ci / beamarea
+
+        # flux to luminosity
+        logLco_c1 = np.round(np.log10(3.25 * 10**7 * co_c1_Jykms / self.restfreq_co**2 / self.distance_Mpc**2 / (1+self.z)),2)
+        logLco_c2 = np.round(np.log10(3.25 * 10**7 * co_c2_Jykms / self.restfreq_co**2 / self.distance_Mpc**2 / (1+self.z)),2)
+        logLci_c1 = np.round(np.log10(3.25 * 10**7 * ci_c1_Jykms / self.restfreq_ci**2 / self.distance_Mpc**2 / (1+self.z)),2)
+        logLci_c2 = np.round(np.log10(3.25 * 10**7 * ci_c2_Jykms / self.restfreq_ci**2 / self.distance_Mpc**2 / (1+self.z)),2)
+
+        print("logLco_c1",logLco_c1)
+        print("logLco_c2",logLco_c2)
+        print("logLci_c1",logLci_c1)
+        print("logLci_c2",logLci_c2)
 
     ###########################
     # plot_ci_cube_vs_co_cube #
