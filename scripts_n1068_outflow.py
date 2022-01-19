@@ -697,6 +697,7 @@ class ToolsOutflow():
         pix_as   = abs(header["cdelt1"]) * 3600 * 180 / np.pi
         beam_as  = header["beamminor"]["value"]
         beamarea = 2 * np.pi * beam_as**2 / pix_as*2
+        print(beamarea)
 
         # convert from K.km/s to Jy/beam.km/s
         factor_ci    = 1.222 * 10**6 / beam_as**2 / self.restfreq_ci**2
