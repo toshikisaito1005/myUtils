@@ -713,10 +713,10 @@ class ToolsOutflow():
         print(co_c1_Jykms)
 
         # flux to luminosity
-        logLco_c1 = 3.25 * 10**7 * co_c1_Jykms / self.restfreq_co**2 / self.distance_Mpc**2 / (1+self.z)
-        logLco_c2 = 3.25 * 10**7 * co_c2_Jykms / self.restfreq_co**2 / self.distance_Mpc**2 / (1+self.z)
-        logLci_c1 = 3.25 * 10**7 * ci_c1_Jykms / self.restfreq_ci**2 / self.distance_Mpc**2 / (1+self.z)
-        logLci_c2 = 3.25 * 10**7 * ci_c2_Jykms / self.restfreq_ci**2 / self.distance_Mpc**2 / (1+self.z)
+        logLco_c1 = 3.25 * 10**7 * co_c1_Jykms / self.restfreq_co**2 * self.distance_Mpc**2 / (1+self.z)
+        logLco_c2 = 3.25 * 10**7 * co_c2_Jykms / self.restfreq_co**2 * self.distance_Mpc**2 / (1+self.z)
+        logLci_c1 = 3.25 * 10**7 * ci_c1_Jykms / self.restfreq_ci**2 * self.distance_Mpc**2 / (1+self.z)
+        logLci_c2 = 3.25 * 10**7 * ci_c2_Jykms / self.restfreq_ci**2 * self.distance_Mpc**2 / (1+self.z)
 
         print("logLco_c1",logLco_c1)
         print("logLco_c2",logLco_c2)
