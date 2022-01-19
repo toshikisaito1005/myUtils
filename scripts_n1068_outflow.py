@@ -696,7 +696,7 @@ class ToolsOutflow():
         header   = imhead(self.outfits_map_ci10,mode="list")
         pix_as   = abs(header["cdelt1"]) * 3600 * 180 / np.pi
         beam_as  = header["beamminor"]["value"]
-        beamarea = 2 * np.pi * beam_as**2 / pix_as*2
+        beamarea = np.pi * beam_as**2 / pix_as*2 / (4*np.log(2))
         print(beamarea)
 
         # convert from K.km/s to Jy/beam.km/s
