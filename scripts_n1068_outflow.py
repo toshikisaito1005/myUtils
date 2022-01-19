@@ -697,7 +697,6 @@ class ToolsOutflow():
         pix_as   = abs(header["cdelt1"]) * 3600 * 180 / np.pi
         beam_as  = header["beamminor"]["value"]
         beamarea = np.pi * beam_as**2 / pix_as*2 / (4*np.log(2))
-        print(beamarea)
 
         # convert from K.km/s to Jy/beam.km/s
         factor_ci    = 1.222 * 10**6 / beam_as**2 / self.restfreq_ci**2
@@ -706,6 +705,7 @@ class ToolsOutflow():
         co_c2_Jykms = co_c2_Kkms / factor_co / beamarea
         ci_c1_Jykms = ci_c1_Kkms / factor_ci / beamarea
         ci_c2_Jykms = ci_c2_Kkms / factor_ci / beamarea
+        print(co_c1_Jykms)
 
         # flux to luminosity
         logLco_c1 = 3.25 * 10**7 * co_c1_Jykms / self.restfreq_co**2 / self.distance_Mpc**2 / (1+self.z)
