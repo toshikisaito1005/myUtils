@@ -558,7 +558,7 @@ def _w_pctl(data, percents, weights=None):
 
 ##################
 # get_reldist_pc #
-#####g############
+##################
 
 def get_reldist_pc(
     ra_deg,
@@ -586,7 +586,7 @@ def get_reldist_pc(
 
 ##################
 # myfig_fits2png #
-#####g############
+##################
 
 def myfig_fits2png(
     # general
@@ -1323,3 +1323,7 @@ def combine_three_png(
         os.system("rm -rf " + infile1)
         os.system("rm -rf " + infile2)
         os.system("rm -rf " + infile3)
+
+#######
+# end #
+#######

@@ -621,14 +621,65 @@ class ToolsOutflow():
         taskname = self.modname + sys._getframe().f_code.co_name
         check_first(self.outfits_ci10_outflow_mom0,taskname)
 
-        # self.outfits_map_ci10
-        # self.outfits_map_co10
-
+        ### get data into array
         run_immath_one(
             imagename = self.outfits_ci10_outflow_mom0,
             outfile   = "mask.image",
             expr      = "iif(IM0>0,1,0)",
             )
+
+        # get coords data
+        data_co, box = imval_all(self.outfits_map_co10)
+        data_coords  = imval(self.outfits_map_co10,box=box)["coords"]
+
+        ra_deg  = data_coords[:,:,0] * 180/np.pi
+        ra_deg  = ra_deg.flatten()
+
+        dec_deg = data_coords[:,:,1] * 180/np.pi
+        dec_deg = dec_deg.flatten()
+
+        dist_pc, theta = get_reldist_pc(ra_deg, dec_deg, self.ra_agn,
+            self.dec_agn, self.scale_pc, self.pa, self.incl)
+
+        # co10
+        data_co = imval(self.outfits_map_co10,box=box)
+        data_co = data_co["data"] * data_co["mask"]
+        data_co = data_co.flatten()
+        data_co[np.isnan(data_co)] = 0
+
+        # ci10
+        data_ci = imval(self.outfits_map_ci10,box=box)
+        data_ci = data_ci["data"] * data_ci["mask"]
+        data_ci = data_ci.flatten()
+        data_ci[np.isnan(data_ci)] = 0
+
+        # mask
+        data_mask = imval("mask.image",box=box)
+        data_mask = data_mask["data"] * data_mask["mask"]
+        data_mask = data_mask.flatten()
+        data_mask[np.isnan(data_mask)] = 0
+        os.system("rm -rf mask.image")
+
+        ### measure luminosity
+        # prepare
+        cut  = np.where((data_co>0) & (data_ci>0) & (mask>0))
+        co   = np.log10(data_co[cut])
+        ci   = np.log10(data_ci[cut])
+        mask = data_mask[cut]
+        r    = dist_pc[cut]
+        t    = theta[cut]
+
+        cut_c1 = np.where( (r<=self.fov_radius) & (t>=0) & (t<=60) )
+        cut_c2 = np.where( (r<=self.fov_radius) & (t<=-120) & (t>=-180) )
+
+        co_c1, ci_c1, mask_c1 = co[cut_c1], ci[cut_c1], mask[cut_c1]
+        co_c2, ci_c2, mask_c2 = co[cut_c2], ci[cut_c2], mask[cut_c2]
+
+        co_c1_flux = np.sum(np.array(co_c1) * np.array(mask_c1))
+        co_c2_flux = np.sum(np.array(co_c2) * np.array(mask_c2))
+
+        print(co_c1_flux)
+        print(co_c2_flux)
 
     ###########################
     # plot_ci_cube_vs_co_cube #
@@ -1546,7 +1597,7 @@ class ToolsOutflow():
         taskname = self.modname + sys._getframe().f_code.co_name
         check_first(self.outfits_map_co10,taskname)
 
-      	# get coords data
+        # get coords data
         data_co, box = imval_all(self.outfits_map_co10)
         data_coords  = imval(self.outfits_map_co10,box=box)["coords"]
 
@@ -2292,7 +2343,7 @@ class ToolsOutflow():
         y0 = R
         z0 = np.tan(angle)*R*np.sin(t)
         r0 = np.sqrt(x0**2 + y0**2 + z0**2)
-        ## incine it based on inc
+        ## incline it based on inc
         x1 = x0
         y1 = y0*np.cos(incl) - z0*np.sin(incl)
         z1 = y0*np.sin(incl) + z0*np.cos(incl)
