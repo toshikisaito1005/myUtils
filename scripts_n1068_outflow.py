@@ -672,7 +672,7 @@ class ToolsOutflow():
 
         ### measure luminosity
         # prepare
-        cut  = np.where((data_co>0) & (data_ci>0) & (mask>0))
+        cut  = np.where((data_co>0) & (data_ci>0) & (data_mask>0))
         co   = np.log10(data_co[cut])
         ci   = np.log10(data_ci[cut])
         mask = data_mask[cut]
