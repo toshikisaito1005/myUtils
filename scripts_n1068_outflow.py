@@ -693,6 +693,7 @@ class ToolsOutflow():
         co_c1, ci_c1, mask_c1 = co[cut_c1], ci[cut_c1], mask[cut_c1]
         co_c2, ci_c2, mask_c2 = co[cut_c2], ci[cut_c2], mask[cut_c2]
 
+        co_all_Kkms = np.sum(np.array(data_co))
         co_c1_Kkms = np.sum(np.array(co_c1) * np.array(mask_c1))
         co_c2_Kkms = np.sum(np.array(co_c2) * np.array(mask_c2))
         ci_c1_Kkms = np.sum(np.array(ci_c1) * np.array(mask_c1))
@@ -706,18 +707,20 @@ class ToolsOutflow():
         # convert from K.km/s to Jy/beam.km/s
         factor_ci    = 1.222 * 10**6 / beam_as**2 / self.restfreq_ci**2
         factor_co    = 1.222 * 10**6 / beam_as**2 / self.restfreq_co**2
+        co_all_Jykms = co_all_Kkms / factor_co / beamarea
         co_c1_Jykms = co_c1_Kkms / factor_co / beamarea
         co_c2_Jykms = co_c2_Kkms / factor_co / beamarea
         ci_c1_Jykms = ci_c1_Kkms / factor_ci / beamarea
         ci_c2_Jykms = ci_c2_Kkms / factor_ci / beamarea
-        print(co_c1_Jykms)
 
         # flux to luminosity
+        logLco_all = 3.25 * 10**7 * co_all_Jykms / self.restfreq_co**2 * self.distance_Mpc**2 / (1+self.z)
         logLco_c1 = 3.25 * 10**7 * co_c1_Jykms / self.restfreq_co**2 * self.distance_Mpc**2 / (1+self.z)
         logLco_c2 = 3.25 * 10**7 * co_c2_Jykms / self.restfreq_co**2 * self.distance_Mpc**2 / (1+self.z)
         logLci_c1 = 3.25 * 10**7 * ci_c1_Jykms / self.restfreq_ci**2 * self.distance_Mpc**2 / (1+self.z)
         logLci_c2 = 3.25 * 10**7 * ci_c2_Jykms / self.restfreq_ci**2 * self.distance_Mpc**2 / (1+self.z)
 
+        print("logLco_all",logLco_all)
         print("logLco_c1",logLco_c1)
         print("logLco_c2",logLco_c2)
         print("logLci_c1",logLci_c1)
