@@ -1795,7 +1795,7 @@ class ToolsPCA():
             this_cerr = data_err[:,i]
             this_name = header[i]
 
-            cut = np.where((this_c>0) & (r<=self.r_sbr_as))
+            cut = np.where(r<=self.r_sbr_as)
             this_x    = ra[cut]
             this_y    = dec[cut]
             this_c    = this_c[cut]
