@@ -362,11 +362,83 @@ class ToolsPCA():
             delin=True,
             )
 
+        # panel 3
+        combine_two_png(
+            self.outpng_mom0.replace("???","cs21"),
+            self.outpng_mom0.replace("???","hc3n1110"),
+            self.final_mom0+"_tmp1.png",
+            self.box_map_noxylabel,
+            self.box_map_noxylabel,
+            delin=delin,
+            )
+        combine_two_png(
+            self.outpng_mom0.replace("???","hc3n1211"),
+            self.outpng_mom0.replace("???","c18o10"),
+            self.final_mom0+"_tmp2.png",
+            self.box_map_noxylabel,
+            self.box_map_noxylabel,
+            delin=delin,
+            )
+        combine_two_png(
+            self.final_mom0+"_tmp1.png",
+            self.final_mom0+"_tmp2.png",
+            self.final_mom0+"_panel3.png",
+            "100000x100000+0+0",
+            "100000x100000+0+0",
+            delin=True,
+            )
+
+        # panel 4
+        combine_two_png(
+            self.outpng_mom0.replace("???","13co10"),
+            self.outpng_mom0.replace("???","cn10l"),
+            self.final_mom0+"_tmp1.png",
+            self.box_map_noxylabel,
+            self.box_map_noxylabel,
+            delin=delin,
+            )
+        combine_two_png(
+            self.outpng_mom0.replace("???","cn10h"),
+            self.outpng_mom0.replace("???","co10"),
+            self.final_mom0+"_tmp2.png",
+            self.box_map_noxylabel,
+            self.box_map_noxylabel,
+            delin=delin,
+            )
+        combine_two_png(
+            self.final_mom0+"_tmp1.png",
+            self.final_mom0+"_tmp2.png",
+            self.final_mom0+"_panel4.png",
+            "100000x100000+0+0",
+            "100000x100000+0+0",
+            delin=True,
+            )
+
         # combine
         combine_two_png(
             self.final_mom0+"_panel1.png",
             self.final_mom0+"_panel2.png",
             self.final_mom0+"_panel12.png",
+            "100000x100000+0+0",
+            "100000x100000+0+0",
+            delin=True,
+            axis="column",
+            )
+
+        combine_two_png(
+            self.final_mom0+"_panel3.png",
+            self.final_mom0+"_panel4.png",
+            self.final_mom0+"_panel34.png",
+            "100000x100000+0+0",
+            "100000x100000+0+0",
+            delin=True,
+            axis="column",
+            )
+
+        combine_two_png(
+            self.final_mom0+"_panel12.png",
+            self.final_mom0+"_panel23.png",
+            self.final_mom0+"_panel1234.png",
             "100000x100000+0+0",
             "100000x100000+0+0",
             delin=True,
