@@ -1791,9 +1791,8 @@ class ToolsPCA():
         for i in range(len(header)):
             this_c    = data_mom0[:,i]
             this_name = header[i]
-            this_r    = r[i]
 
-            cut = np.where((this_c>0) & (this_r<=self.r_sbr_as))
+            cut = np.where((this_c>0) & (<=self.r_sbr_as))
             this_x = ra[cut]
             this_y = dec[cut]
             this_c = this_c[cut]
