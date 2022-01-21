@@ -72,7 +72,7 @@ def pca_2d_hex(
     print("The number of axes which first achieve 80%: " + str(index[0] + 1))
 
     # visualize
-    principals = index[0] + 1
+    principals = index[0] + 1 + 3
     if reverse==True:
         u_compressed = u[:, 0:principals] * -1
     else:

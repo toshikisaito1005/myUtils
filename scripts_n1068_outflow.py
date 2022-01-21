@@ -72,7 +72,7 @@ history:
 2021-11-24   start revision of draft and refactoring
 2021-12-17   v2 submitted!
 2021-12-24   received the 1st referee report
-2022-01-21   v3 circular
+2022-01-19   v3 circular
 Toshiki Saito@Nichidai/NAOJ
 """
 

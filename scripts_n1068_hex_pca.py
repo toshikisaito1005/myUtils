@@ -1,5 +1,5 @@
 """
-Python class for the NGC 1068 PCA project.
+Python class for the NGC 1068 PCA project
 
 requirements:
 CASA Version 5.4.0-70, ananlysisUtils, astropy
@@ -51,7 +51,7 @@ usage:
 
 paper drafts:
 Date         Filename                To
-2021-06-04   draft_v0_211221.zip     Takano-san,Nakajima-san,Harada-san,Tamura-san
+2021-12-21   draft_v0_211221.zip     Takano-san,Nakajima-san,Harada-san,Tamura-san
 
 history:
 2021-11-10   created
