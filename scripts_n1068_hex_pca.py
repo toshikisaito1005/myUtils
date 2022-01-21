@@ -1618,7 +1618,7 @@ class ToolsPCA():
                     ann      = True,
                     add_text = False,
                     lim      = 30,
-                    size     = 350,
+                    size     = 500,
                     label    = "(K km s$^{-1}$)",
                     )  
 
