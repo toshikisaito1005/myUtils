@@ -1792,9 +1792,10 @@ class ToolsPCA():
             this_c = data_mom0[:,i]
             this_name = header[i]
 
-            this_x = ra[this_c>0]
-            this_y = dec[this_c>0]
-            this_c = this_c[this_c>0]
+            cut = np.where((this_c>0) & (this_r<=self.r_sbr_as))
+            this_x = ra[cut]
+            this_y = dec[cut]
+            this_c = this_c[cut]
 
             output = self.outpng_mom0.replace("???",this_name)
 
@@ -1806,11 +1807,11 @@ class ToolsPCA():
                     this_y,
                     this_c,
                     this_name,
-                    ann     = True,
-                    add_text= False,
-                    lim     = 13,
-                    size    = 3600,
-                    label   = "(K km s$^{-1}$)",
+                    ann      = True,
+                    add_text = False,
+                    lim      = 13,
+                    size     = 3600,
+                    label    = "(K km s$^{-1}$)",
                     )
 
     ###############
