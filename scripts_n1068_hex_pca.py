@@ -1659,6 +1659,7 @@ class ToolsPCA():
         size=690,
         add_text=False,
         label="",
+        bgcolor="white",
         ):
         """
         """
@@ -1668,6 +1669,7 @@ class ToolsPCA():
         plt.rcParams["font.size"] = 16
         gs = gridspec.GridSpec(nrows=10, ncols=10)
         ax = plt.subplot(gs[0:10,0:10])
+        fig.patch.set_facecolor(bgcolor)
 
         # set ax parameter
         myax_set(
@@ -1793,10 +1795,11 @@ class ToolsPCA():
             this_cerr = data_err[:,i]
             this_name = header[i]
 
-            cut = np.where((this_c>0) & (r<=self.r_sbr_as) & (this_c>=this_cerr*self.snr_mom))
+            cut = np.where((this_c>0) & (r<=self.r_sbr_as))
             this_x = ra[cut]
             this_y = dec[cut]
             this_c = this_c[cut]
+            this_c = np.where(this_c>=this_cerr*self.snr_mom,this_c,0)
 
             output = self.outpng_mom0.replace("???",this_name)
 
@@ -1813,6 +1816,7 @@ class ToolsPCA():
                     lim      = 13,
                     size     = 3600,
                     label    = "(K km s$^{-1}$)",
+                    #bgcolor  = cm.rainbow(0),
                     )
 
     ###############
