@@ -309,8 +309,8 @@ class ToolsPCA():
         print("#####################")
         print("# create final_mom0 #")
         print("#####################")
-                #self.final_mom0
 
+        # panel 1
         combine_two_png(
             self.outpng_mom0.replace("???","h13cn10"),
             self.outpng_mom0.replace("???","cch10"),
@@ -334,6 +334,43 @@ class ToolsPCA():
             "100000x100000+0+0",
             "100000x100000+0+0",
             delin=True,
+            )
+
+        # panel 2
+        combine_two_png(
+            self.outpng_mom0.replace("???","hnc10"),
+            self.outpng_mom0.replace("???","hc3n109"),
+            self.final_mom0+"_tmp1.png",
+            self.box_map_noxylabel,
+            self.box_map_noxylabel,
+            delin=delin,
+            )
+        combine_two_png(
+            self.outpng_mom0.replace("???","n2hp10"),
+            self.outpng_mom0.replace("???","ch3oh21"),
+            self.final_mom0+"_tmp2.png",
+            self.box_map_noxylabel,
+            self.box_map_noxylabel,
+            delin=delin,
+            )
+        combine_two_png(
+            self.final_mom0+"_tmp1.png",
+            self.final_mom0+"_tmp2.png",
+            self.final_mom0+"_panel2.png",
+            "100000x100000+0+0",
+            "100000x100000+0+0",
+            delin=True,
+            )
+
+        # combine
+        combine_two_png(
+            self.final_mom0+"_panel1.png",
+            self.final_mom0+"_panel2.png",
+            self.final_mom0+"_panel12.png",
+            "100000x100000+0+0",
+            "100000x100000+0+0",
+            delin=True,
+            axis="column",
             )
 
         """
