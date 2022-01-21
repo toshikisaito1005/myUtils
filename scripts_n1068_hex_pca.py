@@ -414,6 +414,16 @@ class ToolsPCA():
             delin=True,
             )
 
+        # panel 5
+        combine_two_png(
+            self.outpng_mom0.replace("???","ci10"),
+            self.outpng_mom0.replace("???","siiisii_ratio"),
+            self.final_mom0+"_panel5.png",
+            self.box_map,
+            self.box_map_noxlabel,
+            delin=delin,
+            )
+
         # combine
         combine_two_png(
             self.final_mom0+"_panel1.png",
@@ -439,6 +449,16 @@ class ToolsPCA():
             self.final_mom0+"_panel12.png",
             self.final_mom0+"_panel34.png",
             self.final_mom0+"_panel1234.png",
+            "100000x100000+0+0",
+            "100000x100000+0+0",
+            delin=True,
+            axis="column",
+            )
+
+        combine_two_png(
+            self.final_mom0+"_panel1234.png",
+            self.final_mom0+"_panel5.png",
+            self.final_mom0,
             "100000x100000+0+0",
             "100000x100000+0+0",
             delin=True,
