@@ -218,6 +218,7 @@ class ToolsPCA():
         self.outpng_radial3           = self.dir_products + self._read_key("outpng_radial3")
 
         # final
+        self.final_mom0               = self.dir_final + self._read_key("final_mom0")
         self.final_pca_mom0           = self.dir_final + self._read_key("final_pca_mom0")
         self.final_pca_r13co          = self.dir_final + self._read_key("final_pca_r13co")
         self.final_pca_mom0_podium    = self.dir_final + self._read_key("final_pca_mom0_podium")
@@ -305,6 +306,37 @@ class ToolsPCA():
         taskname = self.modname + sys._getframe().f_code.co_name
         check_first(self.outpng_pca_hexmap.replace("???","1"),taskname)
 
+        print("#####################")
+        print("# create final_mom0 #")
+        print("#####################")
+                #self.final_mom0
+
+        combine_two_png(
+            self.outpng_mom0.replace("???","h13cn10"),
+            self.outpng_mom0.replace("???","cch10"),
+            self.final_mom0+"_tmp1.png",
+            self.box_map_noxylabel,
+            self.box_map_noxylabel,
+            delin=delin,
+            )
+        combine_two_png(
+            self.outpng_mom0.replace("???","hcn10"),
+            self.outpng_mom0.replace("???","hcop10"),
+            self.final_mom0+"_tmp2.png",
+            self.box_map_noxylabel,
+            self.box_map_noxylabel,
+            delin=delin,
+            )
+        combine_two_png(
+            self.final_mom0+"_tmp1.png",
+            self.final_mom0+"_tmp2.png",
+            self.final_mom0+"_panel1.png",
+            "100000x100000+0+0",
+            "100000x100000+0+0",
+            delin=True,
+            )
+
+        """
         print("#########################")
         print("# create final_pca_mom0 #")
         print("#########################")
@@ -483,6 +515,7 @@ class ToolsPCA():
             delin=delin,
             )
         os.system("rm -rf " + self.final_hex_radial + "_tmp1.png")
+        """
 
     ########################
     # immagick_figures_sub #
