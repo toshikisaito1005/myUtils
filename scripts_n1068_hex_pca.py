@@ -1560,6 +1560,70 @@ class ToolsPCA():
         header = "line PC1 PC2 ..."
         np.savetxt(outtxt.replace(".txt","_score.txt"),pca_score,header=header,fmt="%s")
 
+    ####################
+    # plot_hexmap_mom0 #
+    ####################
+
+    def plot_hexmap_mom0(self):
+        """
+        """
+
+        taskname = self.modname + sys._getframe().f_code.co_name
+        check_first(self.table_hex_obs,taskname)
+
+        # extract line name
+        header,data_mom0,data_err,ra,dec,r = self._read_table(self.table_hex_obs)
+
+        # plot
+        for i in range(len(header)):
+            this_c    = data_mom0[:,i]
+            this_cerr = data_err[:,i]
+            this_name = header[i]
+
+            cut = np.where(r<=self.r_sbr_as)
+            this_x    = ra[cut]
+            this_y    = dec[cut]
+            this_c    = this_c[cut]
+            this_cerr = this_cerr[cut]
+            this_c    = np.where(this_c>=this_cerr*self.snr_mom,this_c,0)
+
+            output = self.outpng_mom0.replace("???",this_name)
+
+            if len(this_c[this_c!=0])>=10:
+                this_name = this_name.replace("1110","(11-10)")
+                this_name = this_name.replace("1211","(12-11)")
+                this_name = this_name.replace("10","(1-0)")
+                this_name = this_name.replace("21","(2-1)")
+                this_name = this_name.replace("(1-0)9","(10-9)")
+                this_name = this_name.replace("12","$^{12}$")
+                this_name = this_name.replace("13","$^{13}$")
+                this_name = this_name.replace("18","$^{18}$")
+                this_name = this_name.replace("c3","c$_3$").replace("h3","H$_3$")
+                this_name = this_name.replace("ci","[CI]").replace("n2","n$_2$")
+                this_name = this_name.replace("c","C").replace("o","O")
+                this_name = this_name.replace("n","N").replace("h","H")
+                this_name = this_name.replace("p","$^+$").replace("s","S")
+                this_name = this_name.replace("SiiiSii_ratiO","[SIII]/[SII] ratio")
+                this_name = this_name.replace("(1-0)H","(1-0)h")
+                this_name = this_name.replace("11-(1-0)","11-10")
+                this_name = this_name.replace("($^{12}$-11)","(12-11)")
+
+                # plot
+                print("# plot " + output)
+                self._plot_hexmap(
+                    output,
+                    this_x,
+                    this_y,
+                    this_c,
+                    this_name + "($N_{pixel}$ = " + str(len(this_c[this_c!=0])) + ")",
+                    ann      = True,
+                    add_text = False,
+                    lim      = 13,
+                    size     = 3600,
+                    label    = "(K km s$^{-1}$)",
+                    #bgcolor  = cm.rainbow(0),
+                    )
+
     ################
     # hex_sampling #
     ################
@@ -1935,70 +1999,6 @@ class ToolsPCA():
                     this_c,
                     this_name,
                     ann=False,
-                    )
-
-    ####################
-    # plot_hexmap_mom0 #
-    ####################
-
-    def plot_hexmap_mom0(self):
-        """
-        """
-
-        taskname = self.modname + sys._getframe().f_code.co_name
-        check_first(self.table_hex_obs,taskname)
-
-        # extract line name
-        header,data_mom0,data_err,ra,dec,r = self._read_table(self.table_hex_obs)
-
-        # plot
-        for i in range(len(header)):
-            this_c    = data_mom0[:,i]
-            this_cerr = data_err[:,i]
-            this_name = header[i]
-
-            cut = np.where(r<=self.r_sbr_as)
-            this_x    = ra[cut]
-            this_y    = dec[cut]
-            this_c    = this_c[cut]
-            this_cerr = this_cerr[cut]
-            this_c    = np.where(this_c>=this_cerr*self.snr_mom,this_c,0)
-
-            output = self.outpng_mom0.replace("???",this_name)
-
-            if len(this_c[this_c!=0])>=10:
-                this_name = this_name.replace("1110","(11-10)")
-                this_name = this_name.replace("1211","(12-11)")
-                this_name = this_name.replace("10","(1-0)")
-                this_name = this_name.replace("21","(2-1)")
-                this_name = this_name.replace("(1-0)9","(10-9)")
-                this_name = this_name.replace("12","$^{12}$")
-                this_name = this_name.replace("13","$^{13}$")
-                this_name = this_name.replace("18","$^{18}$")
-                this_name = this_name.replace("c3","c$_3$").replace("h3","H$_3$")
-                this_name = this_name.replace("ci","[CI]").replace("n2","n$_2$")
-                this_name = this_name.replace("c","C").replace("o","O")
-                this_name = this_name.replace("n","N").replace("h","H")
-                this_name = this_name.replace("p","$^+$").replace("s","S")
-                this_name = this_name.replace("SiiiSii_ratiO","[SIII]/[SII] ratio")
-                this_name = this_name.replace("(1-0)H","(1-0)h")
-                this_name = this_name.replace("11-(1-0)","11-10")
-                this_name = this_name.replace("($^{12}$-11)","(12-11)")
-
-                # plot
-                print("# plot " + output)
-                self._plot_hexmap(
-                    output,
-                    this_x,
-                    this_y,
-                    this_c,
-                    this_name,
-                    ann      = True,
-                    add_text = False,
-                    lim      = 13,
-                    size     = 3600,
-                    label    = "(K km s$^{-1}$)",
-                    #bgcolor  = cm.rainbow(0),
                     )
 
     ###############
