@@ -1682,7 +1682,7 @@ class ToolsPCA():
         ax.set_aspect('equal', adjustable='box')
 
         # plot
-        im = ax.scatter(x, y, s=size, c=c, cmap=cmap, marker="h", linewidths=0)
+        im = ax.scatter(x, y, s=size, c=c, cmap=cmap, marker="h", linewidths=0, vmin=0)
 
         # cbar
         cbar = plt.colorbar(im)
