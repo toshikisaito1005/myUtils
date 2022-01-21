@@ -265,6 +265,9 @@ class ToolsPCA():
             self.run_hex_pca(output=self.outpng_pca_r13co,outtxt=self.table_hex_pca_r13co,denom="13co10",reverse=True)
 
         # plot figures in paper
+        if plot_hex_mom0==True:
+            self.plot_hexmap_mom0()
+
         if plot_hexmap_pca==True:
             self.plot_hexmap_pca()
             self.plot_hexmap_pca_r13co()
@@ -281,7 +284,6 @@ class ToolsPCA():
 
         # supplement
         if plot_hexmap==True:
-            self.plot_hexmap_mom0()
             self.plot_hexmap_ratio(denom="13co10")
             self.plot_hexmap_ratio(denom="hcn10")
 
