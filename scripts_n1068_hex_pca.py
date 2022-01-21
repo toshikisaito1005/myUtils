@@ -1615,7 +1615,7 @@ class ToolsPCA():
                     this_x,
                     this_y,
                     this_c,
-                    this_name + "($N_{pixel}$ = " + str(len(this_c[this_c!=0])) + ")",
+                    this_name + " [$N_{pixel}$ = " + str(len(this_c[this_c!=0])) + "]",
                     ann      = True,
                     add_text = False,
                     lim      = 13,
