@@ -1804,7 +1804,7 @@ class ToolsPCA():
 
             output = self.outpng_mom0.replace("???",this_name)
 
-            if len(this_c)>=10:
+            if len(this_c[this_c!=0])>=10:
                 print("# plot " + output)
                 self._plot_hexmap(
                     output,
