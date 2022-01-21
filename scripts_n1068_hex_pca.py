@@ -183,7 +183,7 @@ class ToolsPCA():
         self.outpng_pca_rhcn          = self.dir_products + self._read_key("outpng_pca_rhcn")
 
         self.outpng_mom0              = self.dir_products + self._read_key("outpng_mom0")
-        self.outpng_12co10_oveall     = self.outpng_mom0
+        self.outpng_12co10_oveall     = self.outpng_mom0.replace("???","12co10_overall")
 
         self.outpng_pca_hexmap        = self.dir_products + self._read_key("outpng_pca_hexmap")
         self.outpng_pca_scatter       = self.dir_products + self._read_key("outpng_pca_scatter")
