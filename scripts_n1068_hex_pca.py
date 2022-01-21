@@ -1633,9 +1633,9 @@ class ToolsPCA():
                     ann      = True,
                     add_text = False,
                     lim      = 28,
-                    size     = 770,
+                    size     = 780,
                     label    = "(K km s$^{-1}$)",
-                    scalebar = False,
+                    scalebar = "500pc",
                     )  
 
             if len(this_c[this_c!=0])>=10:
@@ -1934,7 +1934,7 @@ class ToolsPCA():
         add_text=False,
         label="",
         bgcolor="white",
-        scalebar=True,
+        scalebar="100pc",
         ):
         """
         """
@@ -1968,10 +1968,15 @@ class ToolsPCA():
             fig.colorbar(im, cax=cax).set_label(label)
 
         # scale bar
-        if scalebar==True:
+        if scalebar=="100pc":
             bar = 100 / self.scale_pc
             ax.plot([-10,-10+bar],[-10,-10],"-",color="black",lw=4)
             ax.text(-10, -10.5, "100 pc",
+                    horizontalalignment="right", verticalalignment="top")
+        elif scalebar=="500pc":
+            bar = 500 / self.scale_pc
+            ax.plot([-22,-22+bar],[-22,-22],"-",color="black",lw=4)
+            ax.text(-22, -22.5, "500 pc",
                     horizontalalignment="right", verticalalignment="top")
 
         # text
