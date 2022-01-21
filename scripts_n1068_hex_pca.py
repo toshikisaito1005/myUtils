@@ -1811,12 +1811,13 @@ class ToolsPCA():
                 this_name = this_name.replace("21","(2-1)")
                 this_name = this_name.replace("(1-0)9","(10-9)")
                 this_name = this_name.replace("12","^{12}")
-                this_name = this_name.replace("12","^{13}")
+                this_name = this_name.replace("13","^{13}")
+                this_name = this_name.replace("18","^{18}")
                 this_name = this_name.replace("c3","c_3")
                 this_name = this_name.replace("ci","[CI]")
                 this_name = this_name.replace("c","C").replace("o","O")
                 this_name = this_name.replace("n","N").replace("h","H")
-                this_name = this_name.replace("p","^+")
+                this_name = this_name.replace("p","^+").replace("s","S")
                 this_name = this_name.replace("siiisii_ratio","[SIII]/[SII] ratio")
 
                 # plot
