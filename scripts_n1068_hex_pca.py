@@ -240,6 +240,7 @@ class ToolsPCA():
         do_sampling            = False,
         do_pca                 = False,
         # plot figures in paper
+        plot_hexmap_mom0       = False,
         plot_hexmap_pca        = False,
         plot_hexmap_pca_podium = False,
         plot_radial            = False,
@@ -265,7 +266,7 @@ class ToolsPCA():
             self.run_hex_pca(output=self.outpng_pca_r13co,outtxt=self.table_hex_pca_r13co,denom="13co10",reverse=True)
 
         # plot figures in paper
-        if plot_hex_mom0==True:
+        if plot_hexmap_mom0==True:
             self.plot_hexmap_mom0()
 
         if plot_hexmap_pca==True:
