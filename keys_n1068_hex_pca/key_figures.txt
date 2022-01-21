@@ -12,6 +12,7 @@ dir_final                 ,,,images/
 # final products #
 ##################
 # paper
+final_overall             ,,,fig_overall.png
 final_mom0                ,,,fig_mom0.png
 final_pca_mom0            ,,,fig_pca_mom0.png
 final_hex_radial          ,,,fig_hex_radial.png

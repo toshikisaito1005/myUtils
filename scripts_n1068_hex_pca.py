@@ -219,6 +219,7 @@ class ToolsPCA():
         self.outpng_radial3           = self.dir_products + self._read_key("outpng_radial3")
 
         # final
+        self.final_overall            = self.dir_final + self._read_key("final_overall")
         self.final_mom0               = self.dir_final + self._read_key("final_mom0")
         self.final_pca_mom0           = self.dir_final + self._read_key("final_pca_mom0")
         self.final_pca_r13co          = self.dir_final + self._read_key("final_pca_r13co")
@@ -299,13 +300,14 @@ class ToolsPCA():
 
     def immagick_figures(
         self,
-        delin                   = False,
-        do_all                  = False,
-        do_final_mom0           = False,
-        final_pca_mom0          = False,
-        final_pca1_mom0_podium  = False,
-        final_pca1_ratio_podium = False,
-        final_hex_radial        = False,
+        delin                      = False,
+        do_all                     = False,
+        do_final_overall           = False,
+        do_final_mom0              = False,
+        do_final_pca_mom0          = False,
+        do_final_pca1_mom0_podium  = False,
+        do_final_pca1_ratio_podium = False,
+        do_final_hex_radial        = False,
         ):
         """
         """
@@ -314,11 +316,24 @@ class ToolsPCA():
         check_first(self.outpng_pca_hexmap.replace("???","1"),taskname)
 
         if do_all==True:
-            do_final_mom0           = True
-            final_pca_mom0          = True
-            final_pca1_mom0_podium  = True
-            final_pca1_ratio_podium = True
-            final_hex_radial        = True
+            do_final_overall           = True
+            do_final_mom0              = True
+            do_final_pca_mom0          = True
+            do_final_pca1_mom0_podium  = True
+            do_final_pca1_ratio_podium = True
+            do_final_hex_radial        = True
+
+        if do_final_overall==True:
+            print("#####################")
+            print("# create final_mom0 #")
+            print("#####################")
+
+            immagick_crop(
+                self.outpng_12co10_oveall,
+                self.final_overall,
+                self.box_map,
+                delin=delin,
+                )
 
         if do_final_mom0==True:
             print("#####################")
@@ -480,7 +495,7 @@ class ToolsPCA():
                 axis="column",
                 )
  
-        if final_pca_mom0==True:
+        if do_final_pca_mom0==True:
             print("#########################")
             print("# create final_pca_mom0 #")
             print("#########################")
@@ -504,7 +519,7 @@ class ToolsPCA():
                 )
             os.system("rm -rf " + self.final_pca_mom0 + "_tmp1.png")
 
-        if final_pca1_mom0_podium==True:
+        if do_final_pca1_mom0_podium==True:
             print("#################################")
             print("# create final_pca1_mom0_podium #")
             print("#################################")
@@ -572,7 +587,7 @@ class ToolsPCA():
                 delin=True,
                 )
 
-        if final_pca1_ratio_podium==True:
+        if do_final_pca1_ratio_podium==True:
             print("##################################")
             print("# create final_pca1_ratio_podium #")
             print("##################################")
@@ -639,7 +654,7 @@ class ToolsPCA():
                 delin=True,
                 )
 
-        if final_hex_radial==True:
+        if do_final_hex_radial==True:
             print("###########################")
             print("# create final_hex_radial #")
             print("###########################")
@@ -1620,6 +1635,7 @@ class ToolsPCA():
                     lim      = 28,
                     size     = 770,
                     label    = "(K km s$^{-1}$)",
+                    scalebar = False,
                     )  
 
             if len(this_c[this_c!=0])>=10:
@@ -1918,6 +1934,7 @@ class ToolsPCA():
         add_text=False,
         label="",
         bgcolor="white",
+        scalebar=True,
         ):
         """
         """
@@ -1951,10 +1968,11 @@ class ToolsPCA():
             fig.colorbar(im, cax=cax).set_label(label)
 
         # scale bar
-        bar = 100 / self.scale_pc
-        ax.plot([-10,-10+bar],[-10,-10],"-",color="black",lw=4)
-        ax.text(-10, -10.5, "100 pc",
-                horizontalalignment="right", verticalalignment="top")
+        if scalebar==True:
+            bar = 100 / self.scale_pc
+            ax.plot([-10,-10+bar],[-10,-10],"-",color="black",lw=4)
+            ax.text(-10, -10.5, "100 pc",
+                    horizontalalignment="right", verticalalignment="top")
 
         # text
         ax.text(0.03, 0.93, title, color="black", transform=ax.transAxes, weight="bold", fontsize=32)
