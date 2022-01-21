@@ -315,7 +315,7 @@ class ToolsPCA():
             self.outpng_mom0.replace("???","h13cn10"),
             self.outpng_mom0.replace("???","cch10"),
             self.final_mom0+"_tmp1.png",
-            self.box_map_noxylabel,
+            self.box_map_noxlabel,
             self.box_map_noxylabel,
             delin=delin,
             )
@@ -341,7 +341,7 @@ class ToolsPCA():
             self.outpng_mom0.replace("???","hnc10"),
             self.outpng_mom0.replace("???","hc3n109"),
             self.final_mom0+"_tmp1.png",
-            self.box_map_noxylabel,
+            self.box_map_noxlabel,
             self.box_map_noxylabel,
             delin=delin,
             )
@@ -367,7 +367,7 @@ class ToolsPCA():
             self.outpng_mom0.replace("???","cs21"),
             self.outpng_mom0.replace("???","hc3n1110"),
             self.final_mom0+"_tmp1.png",
-            self.box_map_noxylabel,
+            self.box_map_noxlabel,
             self.box_map_noxylabel,
             delin=delin,
             )
@@ -393,7 +393,7 @@ class ToolsPCA():
             self.outpng_mom0.replace("???","13co10"),
             self.outpng_mom0.replace("???","cn10l"),
             self.final_mom0+"_tmp1.png",
-            self.box_map_noxylabel,
+            self.box_map_noxlabel,
             self.box_map_noxylabel,
             delin=delin,
             )
@@ -437,14 +437,14 @@ class ToolsPCA():
 
         combine_two_png(
             self.final_mom0+"_panel12.png",
-            self.final_mom0+"_panel23.png",
+            self.final_mom0+"_panel34.png",
             self.final_mom0+"_panel1234.png",
             "100000x100000+0+0",
             "100000x100000+0+0",
             delin=True,
             axis="column",
             )
-
+ 
         """
         print("#########################")
         print("# create final_pca_mom0 #")
