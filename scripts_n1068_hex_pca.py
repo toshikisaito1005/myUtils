@@ -1796,10 +1796,11 @@ class ToolsPCA():
             this_name = header[i]
 
             cut = np.where((this_c>0) & (r<=self.r_sbr_as))
-            this_x = ra[cut]
-            this_y = dec[cut]
-            this_c = this_c[cut]
-            this_c = np.where(this_c>=this_cerr*self.snr_mom,this_c,0)
+            this_x    = ra[cut]
+            this_y    = dec[cut]
+            this_c    = this_c[cut]
+            this_cerr = this_cerr[cut]
+            this_c    = np.where(this_c>=this_cerr*self.snr_mom,this_c,0)
 
             output = self.outpng_mom0.replace("???",this_name)
 
