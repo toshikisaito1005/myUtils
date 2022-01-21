@@ -1805,6 +1805,21 @@ class ToolsPCA():
             output = self.outpng_mom0.replace("???",this_name)
 
             if len(this_c[this_c!=0])>=10:
+                this_name = this_name.replace("1110","(11-10)")
+                this_name = this_name.replace("1211","(12-11)")
+                this_name = this_name.replace("10","(1-0)")
+                this_name = this_name.replace("21","(2-1)")
+                this_name = this_name.replace("(1-0)9","(10-9)")
+                this_name = this_name.replace("12","^{12}")
+                this_name = this_name.replace("12","^{13}")
+                this_name = this_name.replace("c3","c_3")
+                this_name = this_name.replace("ci","[CI]")
+                this_name = this_name.replace("c","C").replace("o","O")
+                this_name = this_name.replace("n","N").replace("h","H")
+                this_name = this_name.replace("p","^+")
+                this_name = this_name.replace("siiisii_ratio","[SIII]/[SII] ratio")
+
+                # plot
                 print("# plot " + output)
                 self._plot_hexmap(
                     output,
