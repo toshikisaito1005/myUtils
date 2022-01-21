@@ -183,6 +183,7 @@ class ToolsPCA():
         self.outpng_pca_rhcn          = self.dir_products + self._read_key("outpng_pca_rhcn")
 
         self.outpng_mom0              = self.dir_products + self._read_key("outpng_mom0")
+        self.outpng_12co10_oveall     = self.outpng_mom0
 
         self.outpng_pca_hexmap        = self.dir_products + self._read_key("outpng_pca_hexmap")
         self.outpng_pca_scatter       = self.dir_products + self._read_key("outpng_pca_scatter")
@@ -298,7 +299,13 @@ class ToolsPCA():
 
     def immagick_figures(
         self,
-        delin=False,
+        delin                   = False,
+        do_all                  = False,
+        do_final_mom0           = False,
+        final_pca_mom0          = False,
+        final_pca1_mom0_podium  = False,
+        final_pca1_ratio_podium = False,
+        final_hex_radial        = False,
         ):
         """
         """
@@ -306,345 +313,355 @@ class ToolsPCA():
         taskname = self.modname + sys._getframe().f_code.co_name
         check_first(self.outpng_pca_hexmap.replace("???","1"),taskname)
 
-        print("#####################")
-        print("# create final_mom0 #")
-        print("#####################")
+        if do_all==True:
+            do_final_mom0           = True
+            final_pca_mom0          = True
+            final_pca1_mom0_podium  = True
+            final_pca1_ratio_podium = True
+            final_hex_radial        = True
 
-        # panel 1
-        combine_two_png(
-            self.outpng_mom0.replace("???","h13cn10"),
-            self.outpng_mom0.replace("???","cch10"),
-            self.final_mom0+"_tmp1.png",
-            self.box_map_noylabel,
-            self.box_map_noxylabel,
-            delin=delin,
-            )
-        combine_two_png(
-            self.outpng_mom0.replace("???","hcn10"),
-            self.outpng_mom0.replace("???","hcop10"),
-            self.final_mom0+"_tmp2.png",
-            self.box_map_noxylabel,
-            self.box_map_noxylabel,
-            delin=delin,
-            )
-        combine_two_png(
-            self.final_mom0+"_tmp1.png",
-            self.final_mom0+"_tmp2.png",
-            self.final_mom0+"_panel1.png",
-            "100000x100000+0+0",
-            "100000x100000+0+0",
-            delin=True,
-            )
+        if do_final_mom0==True:
+            print("#####################")
+            print("# create final_mom0 #")
+            print("#####################")
 
-        # panel 2
-        combine_two_png(
-            self.outpng_mom0.replace("???","hnc10"),
-            self.outpng_mom0.replace("???","hc3n109"),
-            self.final_mom0+"_tmp1.png",
-            self.box_map_noylabel,
-            self.box_map_noxylabel,
-            delin=delin,
-            )
-        combine_two_png(
-            self.outpng_mom0.replace("???","n2hp10"),
-            self.outpng_mom0.replace("???","ch3oh21"),
-            self.final_mom0+"_tmp2.png",
-            self.box_map_noxylabel,
-            self.box_map_noxylabel,
-            delin=delin,
-            )
-        combine_two_png(
-            self.final_mom0+"_tmp1.png",
-            self.final_mom0+"_tmp2.png",
-            self.final_mom0+"_panel2.png",
-            "100000x100000+0+0",
-            "100000x100000+0+0",
-            delin=True,
-            )
+            # panel 1
+            combine_two_png(
+                self.outpng_mom0.replace("???","h13cn10"),
+                self.outpng_mom0.replace("???","cch10"),
+                self.final_mom0+"_tmp1.png",
+                self.box_map_noylabel,
+                self.box_map_noxylabel,
+                delin=delin,
+                )
+            combine_two_png(
+                self.outpng_mom0.replace("???","hcn10"),
+                self.outpng_mom0.replace("???","hcop10"),
+                self.final_mom0+"_tmp2.png",
+                self.box_map_noxylabel,
+                self.box_map_noxylabel,
+                delin=delin,
+                )
+            combine_two_png(
+                self.final_mom0+"_tmp1.png",
+                self.final_mom0+"_tmp2.png",
+                self.final_mom0+"_panel1.png",
+                "100000x100000+0+0",
+                "100000x100000+0+0",
+                delin=True,
+                )
 
-        # panel 3
-        combine_two_png(
-            self.outpng_mom0.replace("???","cs21"),
-            self.outpng_mom0.replace("???","hc3n1110"),
-            self.final_mom0+"_tmp1.png",
-            self.box_map_noylabel,
-            self.box_map_noxylabel,
-            delin=delin,
-            )
-        combine_two_png(
-            self.outpng_mom0.replace("???","hc3n1211"),
-            self.outpng_mom0.replace("???","c18o10"),
-            self.final_mom0+"_tmp2.png",
-            self.box_map_noxylabel,
-            self.box_map_noxylabel,
-            delin=delin,
-            )
-        combine_two_png(
-            self.final_mom0+"_tmp1.png",
-            self.final_mom0+"_tmp2.png",
-            self.final_mom0+"_panel3.png",
-            "100000x100000+0+0",
-            "100000x100000+0+0",
-            delin=True,
-            )
+            # panel 2
+            combine_two_png(
+                self.outpng_mom0.replace("???","hnc10"),
+                self.outpng_mom0.replace("???","hc3n109"),
+                self.final_mom0+"_tmp1.png",
+                self.box_map_noylabel,
+                self.box_map_noxylabel,
+                delin=delin,
+                )
+            combine_two_png(
+                self.outpng_mom0.replace("???","n2hp10"),
+                self.outpng_mom0.replace("???","ch3oh21"),
+                self.final_mom0+"_tmp2.png",
+                self.box_map_noxylabel,
+                self.box_map_noxylabel,
+                delin=delin,
+                )
+            combine_two_png(
+                self.final_mom0+"_tmp1.png",
+                self.final_mom0+"_tmp2.png",
+                self.final_mom0+"_panel2.png",
+                "100000x100000+0+0",
+                "100000x100000+0+0",
+                delin=True,
+                )
 
-        # panel 4
-        combine_two_png(
-            self.outpng_mom0.replace("???","13co10"),
-            self.outpng_mom0.replace("???","cn10l"),
-            self.final_mom0+"_tmp1.png",
-            self.box_map_noylabel,
-            self.box_map_noxylabel,
-            delin=delin,
-            )
-        combine_two_png(
-            self.outpng_mom0.replace("???","cn10h"),
-            self.outpng_mom0.replace("???","co10"),
-            self.final_mom0+"_tmp2.png",
-            self.box_map_noxylabel,
-            self.box_map_noxylabel,
-            delin=delin,
-            )
-        combine_two_png(
-            self.final_mom0+"_tmp1.png",
-            self.final_mom0+"_tmp2.png",
-            self.final_mom0+"_panel4.png",
-            "100000x100000+0+0",
-            "100000x100000+0+0",
-            delin=True,
-            )
+            # panel 3
+            combine_two_png(
+                self.outpng_mom0.replace("???","cs21"),
+                self.outpng_mom0.replace("???","hc3n1110"),
+                self.final_mom0+"_tmp1.png",
+                self.box_map_noylabel,
+                self.box_map_noxylabel,
+                delin=delin,
+                )
+            combine_two_png(
+                self.outpng_mom0.replace("???","hc3n1211"),
+                self.outpng_mom0.replace("???","c18o10"),
+                self.final_mom0+"_tmp2.png",
+                self.box_map_noxylabel,
+                self.box_map_noxylabel,
+                delin=delin,
+                )
+            combine_two_png(
+                self.final_mom0+"_tmp1.png",
+                self.final_mom0+"_tmp2.png",
+                self.final_mom0+"_panel3.png",
+                "100000x100000+0+0",
+                "100000x100000+0+0",
+                delin=True,
+                )
 
-        # panel 5
-        combine_two_png(
-            self.outpng_mom0.replace("???","ci10"),
-            self.outpng_mom0.replace("???","siiisii_ratio"),
-            self.final_mom0+"_panel5.png",
-            self.box_map,
-            self.box_map_noxlabel,
-            delin=delin,
-            )
+            # panel 4
+            combine_two_png(
+                self.outpng_mom0.replace("???","13co10"),
+                self.outpng_mom0.replace("???","cn10l"),
+                self.final_mom0+"_tmp1.png",
+                self.box_map_noylabel,
+                self.box_map_noxylabel,
+                delin=delin,
+                )
+            combine_two_png(
+                self.outpng_mom0.replace("???","cn10h"),
+                self.outpng_mom0.replace("???","co10"),
+                self.final_mom0+"_tmp2.png",
+                self.box_map_noxylabel,
+                self.box_map_noxylabel,
+                delin=delin,
+                )
+            combine_two_png(
+                self.final_mom0+"_tmp1.png",
+                self.final_mom0+"_tmp2.png",
+                self.final_mom0+"_panel4.png",
+                "100000x100000+0+0",
+                "100000x100000+0+0",
+                delin=True,
+                )
 
-        # combine
-        combine_two_png(
-            self.final_mom0+"_panel1.png",
-            self.final_mom0+"_panel2.png",
-            self.final_mom0+"_panel12.png",
-            "100000x100000+0+0",
-            "100000x100000+0+0",
-            delin=True,
-            axis="column",
-            )
+            # panel 5
+            combine_two_png(
+                self.outpng_mom0.replace("???","ci10"),
+                self.outpng_mom0.replace("???","siiisii_ratio"),
+                self.final_mom0+"_panel5.png",
+                self.box_map,
+                self.box_map_noxlabel,
+                delin=delin,
+                )
 
-        combine_two_png(
-            self.final_mom0+"_panel3.png",
-            self.final_mom0+"_panel4.png",
-            self.final_mom0+"_panel34.png",
-            "100000x100000+0+0",
-            "100000x100000+0+0",
-            delin=True,
-            axis="column",
-            )
+            # combine
+            combine_two_png(
+                self.final_mom0+"_panel1.png",
+                self.final_mom0+"_panel2.png",
+                self.final_mom0+"_panel12.png",
+                "100000x100000+0+0",
+                "100000x100000+0+0",
+                delin=True,
+                axis="column",
+                )
 
-        combine_two_png(
-            self.final_mom0+"_panel12.png",
-            self.final_mom0+"_panel34.png",
-            self.final_mom0+"_panel1234.png",
-            "100000x100000+0+0",
-            "100000x100000+0+0",
-            delin=True,
-            axis="column",
-            )
+            combine_two_png(
+                self.final_mom0+"_panel3.png",
+                self.final_mom0+"_panel4.png",
+                self.final_mom0+"_panel34.png",
+                "100000x100000+0+0",
+                "100000x100000+0+0",
+                delin=True,
+                axis="column",
+                )
 
-        combine_two_png(
-            self.final_mom0+"_panel1234.png",
-            self.final_mom0+"_panel5.png",
-            self.final_mom0,
-            "100000x100000+0+0",
-            "100000x100000+0+0",
-            delin=True,
-            axis="column",
-            )
+            combine_two_png(
+                self.final_mom0+"_panel12.png",
+                self.final_mom0+"_panel34.png",
+                self.final_mom0+"_panel1234.png",
+                "100000x100000+0+0",
+                "100000x100000+0+0",
+                delin=True,
+                axis="column",
+                )
+
+            combine_two_png(
+                self.final_mom0+"_panel1234.png",
+                self.final_mom0+"_panel5.png",
+                self.final_mom0,
+                "100000x100000+0+0",
+                "100000x100000+0+0",
+                delin=True,
+                axis="column",
+                )
  
-        """
-        print("#########################")
-        print("# create final_pca_mom0 #")
-        print("#########################")
+        if final_pca_mom0==True:
+            print("#########################")
+            print("# create final_pca_mom0 #")
+            print("#########################")
 
-        combine_two_png(
-            self.outpng_pca_hexmap.replace("???","1"),
-            self.outpng_pca_hexmap.replace("???","2"),
-            self.final_pca_mom0+"_tmp1.png",
-            self.box_map,
-            self.box_map,
-            delin=delin,
-            )
-        combine_two_png(
-            self.outpng_pca_scatter,
-            self.final_pca_mom0+"_tmp1.png",
-            self.final_pca_mom0,
-            self.box_map,
-            "100000x100000+0+0",
-            axis="column",
-            delin=delin,
-            )
-        os.system("rm -rf " + self.final_pca_mom0 + "_tmp1.png")
+            combine_two_png(
+                self.outpng_pca_hexmap.replace("???","1"),
+                self.outpng_pca_hexmap.replace("???","2"),
+                self.final_pca_mom0+"_tmp1.png",
+                self.box_map,
+                self.box_map,
+                delin=delin,
+                )
+            combine_two_png(
+                self.outpng_pca_scatter,
+                self.final_pca_mom0+"_tmp1.png",
+                self.final_pca_mom0,
+                self.box_map,
+                "100000x100000+0+0",
+                axis="column",
+                delin=delin,
+                )
+            os.system("rm -rf " + self.final_pca_mom0 + "_tmp1.png")
 
-        print("#################################")
-        print("# create final_pca1_mom0_podium #")
-        print("#################################")
+        if final_pca1_mom0_podium==True:
+            print("#################################")
+            print("# create final_pca1_mom0_podium #")
+            print("#################################")
 
-        # pca1 mom0
-        combine_two_png(
-            self.outpng_pca1_mom0_1st,
-            self.outpng_pca1_mom0_2nd,
-            self.final_pca_mom0_podium+"_tmp1.png",
-            self.box_map_noylabel,
-            self.box_map_noxylabel,
-            delin=delin,
-            )
-        combine_two_png(
-            self.outpng_pca1_mom0_3rd,
-            self.outpng_pca1_mom0_4th,
-            self.final_pca_mom0_podium+"_tmp2.png",
-            self.box_map_noxylabel,
-            self.box_map_noxylabel,
-            delin=delin,
-            )
-        combine_two_png(
-            self.final_pca_mom0_podium+"_tmp1.png",
-            self.final_pca_mom0_podium+"_tmp2.png",
-            self.final_pca_mom0_podium+"_pca1.png",
-            "10000x10000+0+0",
-            "10000x10000+0+0",
-            delin=True,
-            )
+            # pca1 mom0
+            combine_two_png(
+                self.outpng_pca1_mom0_1st,
+                self.outpng_pca1_mom0_2nd,
+                self.final_pca_mom0_podium+"_tmp1.png",
+                self.box_map_noylabel,
+                self.box_map_noxylabel,
+                delin=delin,
+                )
+            combine_two_png(
+                self.outpng_pca1_mom0_3rd,
+                self.outpng_pca1_mom0_4th,
+                self.final_pca_mom0_podium+"_tmp2.png",
+                self.box_map_noxylabel,
+                self.box_map_noxylabel,
+                delin=delin,
+                )
+            combine_two_png(
+                self.final_pca_mom0_podium+"_tmp1.png",
+                self.final_pca_mom0_podium+"_tmp2.png",
+                self.final_pca_mom0_podium+"_pca1.png",
+                "10000x10000+0+0",
+                "10000x10000+0+0",
+                delin=True,
+                )
 
-        " pca2 mom0"
-        combine_two_png(
-            self.outpng_pca2_mom0_1st,
-            self.outpng_pca2_mom0_2nd,
-            self.final_pca_mom0_podium+"_tmp1.png",
-            self.box_map,
-            self.box_map_noxlabel,
-            delin=delin,
-            )
-        combine_two_png(
-            self.outpng_pca2_mom0_3rd,
-            self.outpng_pca2_mom0_4th,
-            self.final_pca_mom0_podium+"_tmp2.png",
-            self.box_map_noxlabel,
-            self.box_map_noxlabel,
-            delin=delin,
-            )
-        combine_two_png(
-            self.final_pca_mom0_podium+"_tmp1.png",
-            self.final_pca_mom0_podium+"_tmp2.png",
-            self.final_pca_mom0_podium+"_pca2.png",
-            "100000x100000+0+0",
-            "100000x100000+0+0",
-            delin=True,
-            )
+            # pca2 mom0
+            combine_two_png(
+                self.outpng_pca2_mom0_1st,
+                self.outpng_pca2_mom0_2nd,
+                self.final_pca_mom0_podium+"_tmp1.png",
+                self.box_map,
+                self.box_map_noxlabel,
+                delin=delin,
+                )
+            combine_two_png(
+                self.outpng_pca2_mom0_3rd,
+                self.outpng_pca2_mom0_4th,
+                self.final_pca_mom0_podium+"_tmp2.png",
+                self.box_map_noxlabel,
+                self.box_map_noxlabel,
+                delin=delin,
+                )
+            combine_two_png(
+                self.final_pca_mom0_podium+"_tmp1.png",
+                self.final_pca_mom0_podium+"_tmp2.png",
+                self.final_pca_mom0_podium+"_pca2.png",
+                "100000x100000+0+0",
+                "100000x100000+0+0",
+                delin=True,
+                )
 
-        # combine
-        combine_two_png(
-            self.final_pca_mom0_podium+"_pca1.png",
-            self.final_pca_mom0_podium+"_pca2.png",
-            self.final_pca_mom0_podium,
-            "100000x100000+0+0",
-            "100000x100000+0+0",
-            axis="column",
-            delin=True,
-            )
+            # combine
+            combine_two_png(
+                self.final_pca_mom0_podium+"_pca1.png",
+                self.final_pca_mom0_podium+"_pca2.png",
+                self.final_pca_mom0_podium,
+                "100000x100000+0+0",
+                "100000x100000+0+0",
+                axis="column",
+                delin=True,
+                )
 
-        print("##################################")
-        print("# create final_pca1_ratio_podium #")
-        print("##################################")
+        if final_pca1_ratio_podium==True:
+            print("##################################")
+            print("# create final_pca1_ratio_podium #")
+            print("##################################")
 
-        # pca1 mom0
-        combine_two_png(
-            self.outpng_pca1_ratio_1st,
-            self.outpng_pca1_ratio_2nd,
-            self.final_pca_ratio_podium+"_tmp1.png",
-            self.box_map_noylabel,
-            self.box_map_noxylabel,
-            delin=delin,
-            )
-        combine_two_png(
-            self.outpng_pca1_ratio_3rd,
-            self.outpng_pca1_ratio_4th,
-            self.final_pca_ratio_podium+"_tmp2.png",
-            self.box_map_noxylabel,
-            self.box_map_noxylabel,
-            delin=delin,
-            )
-        combine_two_png(
-            self.final_pca_ratio_podium+"_tmp1.png",
-            self.final_pca_ratio_podium+"_tmp2.png",
-            self.final_pca_ratio_podium+"_pca1.png",
-            "10000x10000+0+0",
-            "10000x10000+0+0",
-            delin=True,
-            )
+            # pca1 mom0
+            combine_two_png(
+                self.outpng_pca1_ratio_1st,
+                self.outpng_pca1_ratio_2nd,
+                self.final_pca_ratio_podium+"_tmp1.png",
+                self.box_map_noylabel,
+                self.box_map_noxylabel,
+                delin=delin,
+                )
+            combine_two_png(
+                self.outpng_pca1_ratio_3rd,
+                self.outpng_pca1_ratio_4th,
+                self.final_pca_ratio_podium+"_tmp2.png",
+                self.box_map_noxylabel,
+                self.box_map_noxylabel,
+                delin=delin,
+                )
+            combine_two_png(
+                self.final_pca_ratio_podium+"_tmp1.png",
+                self.final_pca_ratio_podium+"_tmp2.png",
+                self.final_pca_ratio_podium+"_pca1.png",
+                "10000x10000+0+0",
+                "10000x10000+0+0",
+                delin=True,
+                )
 
-        combine_two_png(
-            self.outpng_pca2_ratio_1st,
-            self.outpng_pca2_ratio_2nd,
-            self.final_pca_ratio_podium+"_tmp1.png",
-            self.box_map,
-            self.box_map_noxlabel,
-            delin=delin,
-            )
-        combine_two_png(
-            self.outpng_pca2_ratio_3rd,
-            self.outpng_pca2_ratio_4th,
-            self.final_pca_ratio_podium+"_tmp2.png",
-            self.box_map_noxlabel,
-            self.box_map_noxlabel,
-            delin=delin,
-            )
-        combine_two_png(
-            self.final_pca_ratio_podium+"_tmp1.png",
-            self.final_pca_ratio_podium+"_tmp2.png",
-            self.final_pca_ratio_podium+"_pca2.png",
-            "100000x100000+0+0",
-            "100000x100000+0+0",
-            delin=True,
-            )
+            combine_two_png(
+                self.outpng_pca2_ratio_1st,
+                self.outpng_pca2_ratio_2nd,
+                self.final_pca_ratio_podium+"_tmp1.png",
+                self.box_map,
+                self.box_map_noxlabel,
+                delin=delin,
+                )
+            combine_two_png(
+                self.outpng_pca2_ratio_3rd,
+                self.outpng_pca2_ratio_4th,
+                self.final_pca_ratio_podium+"_tmp2.png",
+                self.box_map_noxlabel,
+                self.box_map_noxlabel,
+                delin=delin,
+                )
+            combine_two_png(
+                self.final_pca_ratio_podium+"_tmp1.png",
+                self.final_pca_ratio_podium+"_tmp2.png",
+                self.final_pca_ratio_podium+"_pca2.png",
+                "100000x100000+0+0",
+                "100000x100000+0+0",
+                delin=True,
+                )
 
-        # combine
-        combine_two_png(
-            self.final_pca_ratio_podium+"_pca1.png",
-            self.final_pca_ratio_podium+"_pca2.png",
-            self.final_pca_ratio_podium,
-            "100000x100000+0+0",
-            "100000x100000+0+0",
-            axis="column",
-            delin=True,
-            )
+            # combine
+            combine_two_png(
+                self.final_pca_ratio_podium+"_pca1.png",
+                self.final_pca_ratio_podium+"_pca2.png",
+                self.final_pca_ratio_podium,
+                "100000x100000+0+0",
+                "100000x100000+0+0",
+                axis="column",
+                delin=True,
+                )
 
-        print("###########################")
-        print("# create final_hex_radial #")
-        print("###########################")
+        if final_hex_radial==True:
+            print("###########################")
+            print("# create final_hex_radial #")
+            print("###########################")
 
-        combine_two_png(
-            self.outpng_radial1,
-            self.outpng_radial2,
-            self.final_hex_radial+"_tmp1.png",
-            self.box_map,
-            self.box_map,
-            delin=delin,
-            )
-        combine_two_png(
-            self.final_hex_radial+"_tmp1.png",
-            self.outpng_radial3,
-            self.final_hex_radial,
-            "100000x100000+0+0",
-            self.box_map,
-            axis="column",
-            delin=delin,
-            )
-        os.system("rm -rf " + self.final_hex_radial + "_tmp1.png")
-        """
+            combine_two_png(
+                self.outpng_radial1,
+                self.outpng_radial2,
+                self.final_hex_radial+"_tmp1.png",
+                self.box_map,
+                self.box_map,
+                delin=delin,
+                )
+            combine_two_png(
+                self.final_hex_radial+"_tmp1.png",
+                self.outpng_radial3,
+                self.final_hex_radial,
+                "100000x100000+0+0",
+                self.box_map,
+                axis="column",
+                delin=delin,
+                )
+            os.system("rm -rf " + self.final_hex_radial + "_tmp1.png")
 
     ########################
     # immagick_figures_sub #
@@ -1589,6 +1606,22 @@ class ToolsPCA():
 
             output = self.outpng_mom0.replace("???",this_name)
 
+            if this_name=="12co10":
+                12co10 = data_mom0[:,i]
+                print("# plot overall " + self.outpng_12co10_oveall)
+                self._plot_hexmap(
+                    self.outpng_12co10_oveall,
+                    ra,
+                    dec,
+                    12co10,
+                    this_name,
+                    ann      = True,
+                    add_text = False,
+                    lim      = 13*5,
+                    size     = 3600/5,
+                    label    = "(K km s$^{-1}$)",
+                    )  
+
             if len(this_c[this_c!=0])>=10:
                 this_name = this_name.replace("1110","(11-10)")
                 this_name = this_name.replace("1211","(12-11)")
@@ -1621,7 +1654,6 @@ class ToolsPCA():
                     lim      = 13,
                     size     = 3600,
                     label    = "(K km s$^{-1}$)",
-                    #bgcolor  = cm.rainbow(0),
                     )
 
     ################
