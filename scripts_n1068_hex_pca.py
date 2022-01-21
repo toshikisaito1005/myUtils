@@ -1806,7 +1806,11 @@ class ToolsPCA():
                     this_y,
                     this_c,
                     this_name,
-                    ann=False,
+                    ann     = True,
+                    add_text= False,
+                    lim     = 13,
+                    size    = 3600,
+                    label   = "(K km s$^{-1}$)",
                     )
 
     ###############
