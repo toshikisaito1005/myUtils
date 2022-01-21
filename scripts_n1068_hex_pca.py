@@ -1841,7 +1841,7 @@ class ToolsPCA():
                 horizontalalignment="right", verticalalignment="top")
 
         # text
-        ax.text(0.03, 0.93, title, color="black", transform=ax.transAxes, weight="bold", fontsize=24)
+        ax.text(0.03, 0.93, title, color="black", transform=ax.transAxes, weight="bold", fontsize=32)
 
         # ann
         if ann==True:
