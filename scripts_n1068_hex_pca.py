@@ -1785,14 +1785,15 @@ class ToolsPCA():
         check_first(self.table_hex_obs,taskname)
 
         # extract line name
-        header,data_mom0,_,ra,dec,r = self._read_table(self.table_hex_obs)
+        header,data_mom0,data_err,ra,dec,r = self._read_table(self.table_hex_obs)
 
         # plot
         for i in range(len(header)):
             this_c    = data_mom0[:,i]
+            this_cerr = data_err[:,i]
             this_name = header[i]
 
-            cut = np.where((this_c>0) & (r<=self.r_sbr_as))
+            cut = np.where((this_c>0) & (r<=self.r_sbr_as) & (this_c>=this_cerr*self.snr_mom))
             this_x = ra[cut]
             this_y = dec[cut]
             this_c = this_c[cut]
