@@ -1606,7 +1606,7 @@ class ToolsPCA():
 
             output = self.outpng_mom0.replace("???",this_name)
 
-            if this_name=="12co10":
+            if this_name=="co10":
                 co10 = data_mom0[:,i]
                 print("# plot overall " + self.outpng_12co10_oveall)
                 self._plot_hexmap(
@@ -1614,7 +1614,7 @@ class ToolsPCA():
                     ra,
                     dec,
                     co10,
-                    this_name,
+                    "$^{12}$CO(1-0)",
                     ann      = True,
                     add_text = False,
                     lim      = 13*5,
