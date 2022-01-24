@@ -753,7 +753,8 @@ class ToolsPCA():
                 raduis    = self.r_cnd_as
                 this_cnd  = np.where(r<raduis,data_line,0)
                 tco_cnd   = np.where(r<raduis,data_tco,0)
-                this_cnd  = this_cnd / tco_cnd
+                if this_name!="siiisii_ratio":
+                    this_cnd  = this_cnd / tco_cnd
 
                 this_no   = np.where((theta_deg>=angle1)&(theta_deg<angle4)&(r<self.r_sbr_as)&(r>=raduis),data_line,0)
                 this_zo   = np.where((theta_deg>=angle3)&(r<self.r_sbr_as)&(r>=raduis),data_line,0)
@@ -763,7 +764,8 @@ class ToolsPCA():
                 tco_zo    = np.where((theta_deg>=angle3)&(r<self.r_sbr_as)&(r>=raduis),data_tco,0)
                 tco_zo    = np.where((theta_deg<angle2)&(r<self.r_sbr_as)&(r>=raduis),data_tco,tco_zo)
                 tco_out   = np.array(tco_no + tco_zo)
-                this_out  = this_out / tco_out
+                if this_name!="siiisii_ratio":
+                    this_out  = this_out / tco_out
 
                 this_wd   = np.where((theta_deg<=angle1)&(theta_deg>angle2)&(r<self.r_sbr_as)&(r>=raduis),data_line,0)
                 this_ed   = np.where((theta_deg<=angle3)&(theta_deg>angle4)&(r<self.r_sbr_as)&(r>=raduis),data_line,0)
@@ -771,7 +773,8 @@ class ToolsPCA():
                 tco_wd    = np.where((theta_deg<=angle1)&(theta_deg>angle2)&(r<self.r_sbr_as)&(r>=raduis),data_tco,0)
                 tco_ed    = np.where((theta_deg<=angle3)&(theta_deg>angle4)&(r<self.r_sbr_as)&(r>=raduis),data_tco,0)
                 tco_disk  = np.array(tco_wd + tco_ed)
-                this_disk = this_disk / tco_disk
+                if this_name!="siiisii_ratio":
+                    this_disk = this_disk / tco_disk
 
                 if this_name!="co10":
                     list_name.append(this_name)
