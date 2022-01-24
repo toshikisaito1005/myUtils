@@ -779,7 +779,7 @@ class ToolsPCA():
                     list_out.append(np.round(np.nanmax(this_out), 3))
                     list_disk.append(np.round(np.nanmax(this_disk), 3))
 
-        list_output = np.c_[list_name, np.array(list_cnd)/np.array(list_disk), np.array(list_out)/np.array(list_disk), list_disk]
+        list_output = np.c_[list_name, list_cnd, list_out, list_disk]
         print(list_output)
 
         # plot
