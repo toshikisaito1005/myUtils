@@ -813,9 +813,9 @@ class ToolsPCA():
         adjust=[0.023,0.963,0.10,0.93],
         )
 
-        ax.plot(x,y_cnd,c="black",lw=2,,marker="o",markersize=30)
-        ax.plot(x,y_out,c="tomato",lw=2,,marker="o",markersize=30)
-        ax.plot(x,y_disk,c="deepskyblue",lw=2,,marker="o",markersize=30)
+        ax.plot(x,y_cnd,c="black",lw=2,marker="o",markersize=30)
+        ax.plot(x,y_out,c="tomato",lw=2,marker="o",markersize=30)
+        ax.plot(x,y_disk,c="deepskyblue",lw=2,marker="o",markersize=30)
 
         # save
         os.system("rm -rf " + self.outpng_line_graph)
