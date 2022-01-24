@@ -813,6 +813,8 @@ class ToolsPCA():
             this_name = this_name.replace("(1-0)H","(1-0)h")
             this_name = this_name.replace("11-(1-0)","11-10")
             this_name = this_name.replace("($^{12}$-11)","(12-11)")
+            this_name = this_name.replace("(1-0)l","(1$_{1/2}$-0$_{1/2}$)")
+            this_name = this_name.replace("(1-0)h","(1$_{3/2}$-0$_{1/2}$)")
             x.append(this_name)
 
         # set plt, ax
@@ -829,12 +831,12 @@ class ToolsPCA():
         ylim=None,#[-1.6,3.4],
         xlabel="Lines",
         ylabel="Ratio relative to $^{13}$CO(1-0)",
-        adjust=[0.1,0.963,0.20,0.93],
+        adjust=[0.1,0.963,0.25,0.93],
         )
 
-        ax.plot(range(len(x)),y_cnd,c="black",lw=2,marker="o",markersize=30,markeredgewidth=0)
-        ax.plot(range(len(x)),y_out,c="tomato",lw=2,marker="o",markersize=30,markeredgewidth=0)
-        ax.plot(range(len(x)),y_disk,c="deepskyblue",lw=2,marker="o",markersize=30,markeredgewidth=0)
+        ax.plot(range(len(x)),y_cnd,c="black",lw=2,marker="o",markersize=20,markeredgewidth=0)
+        ax.plot(range(len(x)),y_out,c="tomato",lw=2,marker="o",markersize=20,markeredgewidth=0)
+        ax.plot(range(len(x)),y_disk,c="deepskyblue",lw=2,marker="o",markersize=20,markeredgewidth=0)
 
         # x axis
         ax.set_xticks(range(len(x)))
