@@ -818,8 +818,8 @@ class ToolsPCA():
         ax.plot(x,y_disk,c="deepskyblue",lw=2,marker="o",markersize=30,markeredgewidth=0)
 
         # x axis
-        ax1.set_xticks(range(len(list_output_sort[:,0])))
-        ax1.set_xticklabels(list_output_sort[:,0], rotation = 60, ha="right")
+        ax.set_xticks(range(len(list_output_sort[:,0])))
+        ax.set_xticklabels(list_output_sort[:,0], rotation = 60, ha="right")
 
         # save
         os.system("rm -rf " + self.outpng_line_graph)
