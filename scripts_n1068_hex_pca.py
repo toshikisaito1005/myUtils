@@ -775,13 +775,13 @@ class ToolsPCA():
 
                 if this_name!="co10":
                     list_name.append(this_name)
-                    list_cnd.append(np.round(np.nanpercentile(this_cnd,50), 3))
-                    list_out.append(np.round(np.nanpercentile(this_out,50), 3))
-                    list_disk.append(np.round(np.nanpercentile(this_disk,50), 3))
+                    list_cnd.append(np.round(np.nanpercentile(this_cnd,84), 3))
+                    list_out.append(np.round(np.nanpercentile(this_out,84), 3))
+                    list_disk.append(np.round(np.nanpercentile(this_disk,84), 3))
 
         list_output = np.c_[list_name, list_cnd, list_out, list_disk]
 
-        list_output_sort = list_output[np.argsort(list_output[:, 2].astype("float32")/list_output[:, 3].astype("float32"))]
+        list_output_sort = list_output[np.argsort(list_output[:, 1].astype("float32")]
         print(list_output)
         print(list_output_sort)
 
