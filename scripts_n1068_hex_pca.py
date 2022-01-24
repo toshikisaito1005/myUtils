@@ -724,20 +724,23 @@ class ToolsPCA():
 
         # get table
         header,data_mom0,_,x,y,r = self._read_table(self.table_hex_obs)
-        theta_deg  = np.degrees(np.arctan2(x, y))
+        theta_deg = np.degrees(np.arctan2(x, y))
+        header    = [s for s in header if not "extinction"]
 
         # get line data
-        print(header)
-        linenames = 1
 
-        line_index = np.where(header==name)
-        data_line  = np.array(data_mom0[:,line_index].flatten())
-        data_line[np.isinf(data_line)] = 0
-        data_line[np.isnan(data_line)] = 0
-        data_line  = np.where(r<=self.r_sbr_as,data_line,0)
+        for i in range(len(header)):
+            this_name  = header[i]
+            line_index = np.where(header==this_name)
+            data_line  = np.array(data_mom0[:,line_index].flatten())
+            data_line[np.isinf(data_line)] = 0
+            data_line[np.isnan(data_line)] = 0
+            data_line  = np.where(r<=self.r_sbr_as,data_line,0)
+
+            this_cnd = np.where(r<self.r_cnd_as,data_line,0)
+            print(len(this_cnd))
 
         # get line bicone
-        line_zc    = np.where(r<1,data_line,0)
         line_zn    = np.where((theta_deg>=angle1)&(theta_deg<angle4)&(r<self.r_sbr_as),data_line,0)
         line_zs    = np.where((theta_deg>=angle3)&(r<self.r_sbr_as),data_line,0)
         line_zs    = np.where((theta_deg<angle2)&(r<self.r_sbr_as),data_line,line_zs)
