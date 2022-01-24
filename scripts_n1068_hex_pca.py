@@ -797,7 +797,7 @@ class ToolsPCA():
         y_disk = np.log10(list_output_sort[:,3].astype("float32"))
 
         # set plt, ax
-        fig = plt.figure(figsize=(13,7))
+        fig = plt.figure(figsize=(13,9))
         plt.rcParams["font.size"] = 16
         gs = gridspec.GridSpec(nrows=10, ncols=10)
         ax = plt.subplot(gs[0:10,0:10])
@@ -808,7 +808,7 @@ class ToolsPCA():
         grid=None,
         xlim=[-0.5,16.5],
         ylim=None,#[-1.6,3.4],
-        xlabel="Molecular lines",
+        xlabel="Lines",
         ylabel="Ratio relative to $^{13}$CO(1-0)",
         adjust=[0.1,0.963,0.10,0.93],
         )
@@ -816,6 +816,10 @@ class ToolsPCA():
         ax.plot(x,y_cnd,c="black",lw=2,marker="o",markersize=30,markeredgewidth=0)
         ax.plot(x,y_out,c="tomato",lw=2,marker="o",markersize=30,markeredgewidth=0)
         ax.plot(x,y_disk,c="deepskyblue",lw=2,marker="o",markersize=30,markeredgewidth=0)
+
+        # x axis
+        ax1.set_xticks(range(len(list_output_sort[:,0])))
+        ax1.set_xticklabels(list_output_sort[:,0], rotation = 60, ha="right")
 
         # save
         os.system("rm -rf " + self.outpng_line_graph)
