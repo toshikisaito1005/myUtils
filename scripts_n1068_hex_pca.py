@@ -775,9 +775,9 @@ class ToolsPCA():
 
                 if this_name!="co10":
                     list_name.append(this_name)
-                    list_cnd.append(np.round(np.nanmax(this_cnd), 2))
-                    list_out.append(np.round(np.nanmax(this_out), 2))
-                    list_disk.append(np.round(np.nanmax(this_disk), 2))
+                    list_cnd.append(np.round(np.nanmax(this_cnd), 3))
+                    list_out.append(np.round(np.nanmax(this_out), 3))
+                    list_disk.append(np.round(np.nanmax(this_disk), 3))
 
         list_output = np.c_[list_name, list_cnd, list_out, list_disk]
         print(list_output)
