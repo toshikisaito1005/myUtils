@@ -765,9 +765,9 @@ class ToolsPCA():
                 tco_disk  = data_tco - tco_out
                 this_disk = this_disk / tco_disk
 
-                med_cnd   = np.round(np.median(this_cnd[this_cnd>0]), 2)
-                med_out   = np.round(np.median(this_out[this_out>0]), 2)
-                med_disk  = np.round(np.median(this_disk[this_disk>0]), 2)
+                med_cnd   = np.round(np.mean(this_cnd[this_cnd>0]), 2)
+                med_out   = np.round(np.mean(this_out[this_out>0]), 2)
+                med_disk  = np.round(np.mean(this_disk[this_disk>0]), 2)
 
                 print(this_name, med_cnd, med_out, med_disk)
 
