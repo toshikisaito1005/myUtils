@@ -815,6 +815,7 @@ class ToolsPCA():
             this_name = this_name.replace("($^{12}$-11)","(12-11)")
             this_name = this_name.replace("(1-0)l","(1$_{1/2}$-0$_{1/2}$)")
             this_name = this_name.replace("(1-0)h","(1$_{3/2}$-0$_{1/2}$)")
+            this_name = this_name.replace("CH$_3$OH(2-1)","CH$_3$OH(2$_K$-1$_K$)")
             x.append(this_name)
 
         # set plt, ax
