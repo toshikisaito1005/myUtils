@@ -767,11 +767,10 @@ class ToolsPCA():
                 this_disk = this_disk / tco_disk
                 this_disk[np.isinf(this_disk)] = 0
                 this_disk[np.isnan(this_disk)] = 0
-                print(this_disk)
 
-                med_cnd   = np.round(np.max(this_cnd), 2)
-                med_out   = np.round(np.max(this_out), 2)
-                med_disk  = np.round(np.max(this_disk), 2)
+                med_cnd   = np.round(np.nanmax(this_cnd), 2)
+                med_out   = np.round(np.nanmax(this_out), 2)
+                med_disk  = np.round(np.nanmax(this_disk), 2)
 
                 print(this_name, med_cnd, med_out, med_disk)
 
