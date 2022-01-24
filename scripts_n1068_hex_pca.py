@@ -832,13 +832,13 @@ class ToolsPCA():
         adjust=[0.1,0.963,0.20,0.93],
         )
 
-        ax.plot(x,y_cnd,c="black",lw=2,marker="o",markersize=30,markeredgewidth=0)
-        ax.plot(x,y_out,c="tomato",lw=2,marker="o",markersize=30,markeredgewidth=0)
-        ax.plot(x,y_disk,c="deepskyblue",lw=2,marker="o",markersize=30,markeredgewidth=0)
+        ax.plot(range(len(x)),y_cnd,c="black",lw=2,marker="o",markersize=30,markeredgewidth=0)
+        ax.plot(range(len(x)),y_out,c="tomato",lw=2,marker="o",markersize=30,markeredgewidth=0)
+        ax.plot(range(len(x)),y_disk,c="deepskyblue",lw=2,marker="o",markersize=30,markeredgewidth=0)
 
         # x axis
-        ax.set_xticks(range(len(list_output_sort[:,0])))
-        ax.set_xticklabels(list_output_sort[:,0], rotation = 60, ha="right")
+        ax.set_xticks(range(len(x)))
+        ax.set_xticklabels(x, rotation = 60, ha="right")
 
         # save
         os.system("rm -rf " + self.outpng_line_graph)
