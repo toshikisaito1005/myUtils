@@ -842,7 +842,7 @@ class ToolsPCA():
         ax.plot(len(x),float(siiisii_ratio[3]),c="black",lw=2,marker="s",markersize=20,markeredgewidth=0)
 
         # x axis
-        x=x.append("[SIII]/[SII] ratio")
+        x.append("[SIII]/[SII] ratio")
         ax.set_xticks(range(len(x)))
         ax.set_xticklabels(x, rotation = 60, ha="right")
 
