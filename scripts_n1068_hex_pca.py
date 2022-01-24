@@ -791,7 +791,11 @@ class ToolsPCA():
         list_output_sort = np.array([s for s in list_output_sort if not "siiisii_ratio" in s[0]])
 
         # plot
-        x = range(len(list_output_sort[:,0]))
+        x      = range(len(list_output_sort[:,0]))
+        y_cnd  = np.log10(list_output_sort[:,1].astype("float32"))
+        y_out  = np.log10(list_output_sort[:,2].astype("float32"))
+        y_disk = np.log10(list_output_sort[:,3].astype("float32"))
+
         # set plt, ax
         fig = plt.figure(figsize=(13,10))
         plt.rcParams["font.size"] = 16
@@ -809,9 +813,9 @@ class ToolsPCA():
         adjust=[0.023,0.963,0.10,0.93],
         )
 
-        ax.plot(x,np.log10(list_output_sort[:,1]),c="black",lw=2,markersize=30)
-        ax.plot(x,np.log10(list_output_sort[:,2]),c="tomato",lw=2,markersize=30)
-        ax.plot(x,np.log10(list_output_sort[:,3]),c="deepskyblue",lw=2,markersize=30)
+        ax.plot(x,y_cnd,c="black",lw=2,,marker="o",markersize=30)
+        ax.plot(x,y_out,c="tomato",lw=2,,marker="o",markersize=30)
+        ax.plot(x,y_disk,c="deepskyblue",lw=2,,marker="o",markersize=30)
 
         # save
         os.system("rm -rf " + self.outpng_line_graph)
