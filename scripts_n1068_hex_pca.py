@@ -762,11 +762,14 @@ class ToolsPCA():
                 tco_out   = np.array(tco_no + tco_zo)
                 this_out  = this_out / tco_out
 
-                this_disk = data_line - this_out
-                tco_disk  = data_tco - tco_out
+                this_wd   = np.where((theta_deg<=angle1)&(theta_deg>angle2)&(r<self.r_sbr_as)&(r>=raduis),data_line,0)
+                this_ed   = np.where((theta_deg<=angle3)&(theta_deg>angle4)&(r<self.r_sbr_as)&(r>=raduis),data_line,0)
+                this_disk = np.array(this_wd + this_ed)
+                tco_wd    = np.where((theta_deg<=angle1)&(theta_deg>angle2)&(r<self.r_sbr_as)&(r>=raduis),data_line,0)
+                tco_ed    = np.where((theta_deg<=angle3)&(theta_deg>angle4)&(r<self.r_sbr_as)&(r>=raduis),data_line,0)
+                tco_disk  = np.array(tco_wd + tco_ed)
                 this_disk = this_disk / tco_disk
-                this_disk[np.isinf(this_disk)] = 0
-                this_disk[np.isnan(this_disk)] = 0
+
 
                 med_cnd   = np.round(np.nanmax(this_cnd), 2)
                 med_out   = np.round(np.nanmax(this_out), 2)
