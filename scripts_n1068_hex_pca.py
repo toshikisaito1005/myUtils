@@ -743,7 +743,7 @@ class ToolsPCA():
                 this_no   = np.where((theta_deg>=angle1)&(theta_deg<angle4)&(r<self.r_sbr_as)&(r>=self.r_cnd_as),data_line,0)
                 this_zo   = np.where((theta_deg>=angle3)&(r<self.r_sbr_as)&(r>=self.r_cnd_as),data_line,0)
                 this_zo   = np.where((theta_deg<angle2)&(r<self.r_sbr_as)&(r>=self.r_cnd_as),data_line,this_zo)
-                this_out  = this_no + this_zo
+                this_out  = np.array(this_no + this_zo)
 
                 this_disk = data_line - this_out
 
@@ -751,7 +751,7 @@ class ToolsPCA():
                 med_out   = np.round(np.median(this_out[this_out>0]), 2)
                 med_disk  = np.round(np.median(this_disk[this_disk>0]), 2)
 
-                print(this_name, this_cnd, this_out, this_disk)
+                print(this_name, med_cnd, med_out, med_disk)
 
 
     ################################
