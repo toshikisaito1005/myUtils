@@ -828,7 +828,7 @@ class ToolsPCA():
         ax,
         grid=None,
         xlim=[-0.5,16.5],
-        ylim=None,#[-1.6,3.4],
+        ylim=[-2.4,2.4],
         xlabel="Lines",
         ylabel="log Ratio relative to $^{12}$CO(1-0)",
         adjust=[0.1,0.963,0.25,0.93],
@@ -842,8 +842,11 @@ class ToolsPCA():
         ax.plot(len(x),float(siiisii_ratio[3]),c="black",lw=2,marker="s",markersize=20,markeredgewidth=0)
 
         # x axis
-        ax.set_xticks(range(len(x)))
-        ax.set_xticklabels(x, rotation = 60, ha="right")
+        ax.set_xticks(range(len(x)+1))
+        ax.set_xticklabels(x.append("[SIII]/[SII] ratio"), rotation = 60, ha="right")
+
+        # yaxis
+        ax.plot([15.5,15.5],[-2.4,2.4]."-",c="black",lw=2)
 
         # save
         os.system("rm -rf " + self.outpng_line_graph)
