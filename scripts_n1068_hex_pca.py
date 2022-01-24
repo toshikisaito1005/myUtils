@@ -246,10 +246,10 @@ class ToolsPCA():
         plot_hexmap_mom0       = False,
         plot_hexmap_pca        = False,
         plot_hexmap_pca_podium = False,
-        plot_radial            = False,
+        plot_median_line_graph = False,
         do_imagemagick         = False,
         # supplement
-        plot_hexmap            = False,
+        plot_supplements       = False,
         do_imagemagick_sub     = False,
         ):
         """
@@ -274,20 +274,20 @@ class ToolsPCA():
 
         if plot_hexmap_pca==True:
             self.plot_hexmap_pca()
-            self.plot_hexmap_pca_r13co()
 
         if plot_hexmap_pca_podium==True:
-            self.plot_hexmap_pca_podium()
             self.plot_hexmap_pca_ratio_podium()
 
-        if plot_radial==True:
-            self.plot_radial()
+        if plot_median_line_graph==True:
+            self.plot_median_line_graph()
 
         if do_imagemagick==True:
             self.immagick_figures()
 
         # supplement
-        if plot_hexmap==True:
+        if plot_supplements==True:
+            self.plot_radial()
+            self.plot_hexmap_pca_podium()
             self.plot_hexmap_ratio(denom="13co10")
             self.plot_hexmap_ratio(denom="hcn10")
 
@@ -305,9 +305,7 @@ class ToolsPCA():
         do_final_overall           = True,
         do_final_mom0              = False,
         do_final_pca_mom0          = False,
-        do_final_pca1_mom0_podium  = False,
         do_final_pca1_ratio_podium = False,
-        do_final_hex_radial        = False,
         ):
         """
         """
@@ -319,9 +317,7 @@ class ToolsPCA():
             do_final_overall           = True
             do_final_mom0              = True
             do_final_pca_mom0          = True
-            do_final_pca1_mom0_podium  = True
             do_final_pca1_ratio_podium = True
-            do_final_hex_radial        = True
 
         if do_final_overall==True:
             print("#####################")
@@ -519,6 +515,87 @@ class ToolsPCA():
                 )
             os.system("rm -rf " + self.final_pca_mom0 + "_tmp1.png")
 
+        if do_final_pca1_ratio_podium==True:
+            print("##################################")
+            print("# create final_pca1_ratio_podium #")
+            print("##################################")
+
+            # pca1 mom0
+            combine_two_png(
+                self.outpng_pca1_ratio_1st,
+                self.outpng_pca1_ratio_2nd,
+                self.final_pca_ratio_podium+"_tmp1.png",
+                self.box_map_noylabel,
+                self.box_map_noxylabel,
+                delin=delin,
+                )
+            combine_two_png(
+                self.outpng_pca1_ratio_3rd,
+                self.outpng_pca1_ratio_4th,
+                self.final_pca_ratio_podium+"_tmp2.png",
+                self.box_map_noxylabel,
+                self.box_map_noxylabel,
+                delin=delin,
+                )
+            combine_two_png(
+                self.final_pca_ratio_podium+"_tmp1.png",
+                self.final_pca_ratio_podium+"_tmp2.png",
+                self.final_pca_ratio_podium+"_pca1.png",
+                "10000x10000+0+0",
+                "10000x10000+0+0",
+                delin=True,
+                )
+
+            combine_two_png(
+                self.outpng_pca2_ratio_1st,
+                self.outpng_pca2_ratio_2nd,
+                self.final_pca_ratio_podium+"_tmp1.png",
+                self.box_map,
+                self.box_map_noxlabel,
+                delin=delin,
+                )
+            combine_two_png(
+                self.outpng_pca2_ratio_3rd,
+                self.outpng_pca2_ratio_4th,
+                self.final_pca_ratio_podium+"_tmp2.png",
+                self.box_map_noxlabel,
+                self.box_map_noxlabel,
+                delin=delin,
+                )
+            combine_two_png(
+                self.final_pca_ratio_podium+"_tmp1.png",
+                self.final_pca_ratio_podium+"_tmp2.png",
+                self.final_pca_ratio_podium+"_pca2.png",
+                "100000x100000+0+0",
+                "100000x100000+0+0",
+                delin=True,
+                )
+
+            # combine
+            combine_two_png(
+                self.final_pca_ratio_podium+"_pca1.png",
+                self.final_pca_ratio_podium+"_pca2.png",
+                self.final_pca_ratio_podium,
+                "100000x100000+0+0",
+                "100000x100000+0+0",
+                axis="column",
+                delin=True,
+                )
+
+    ########################
+    # immagick_figures_sub #
+    ########################
+
+    def immagick_figures_sub(
+        self,
+        delin                     = False,
+        do_final_pca1_mom0_podium = False,
+        do_final_hex_radial       = False,
+        do_final_pca_r13co        = False,
+        ):
+        """
+        """
+
         if do_final_pca1_mom0_podium==True:
             print("#################################")
             print("# create final_pca1_mom0_podium #")
@@ -587,73 +664,6 @@ class ToolsPCA():
                 delin=True,
                 )
 
-        if do_final_pca1_ratio_podium==True:
-            print("##################################")
-            print("# create final_pca1_ratio_podium #")
-            print("##################################")
-
-            # pca1 mom0
-            combine_two_png(
-                self.outpng_pca1_ratio_1st,
-                self.outpng_pca1_ratio_2nd,
-                self.final_pca_ratio_podium+"_tmp1.png",
-                self.box_map_noylabel,
-                self.box_map_noxylabel,
-                delin=delin,
-                )
-            combine_two_png(
-                self.outpng_pca1_ratio_3rd,
-                self.outpng_pca1_ratio_4th,
-                self.final_pca_ratio_podium+"_tmp2.png",
-                self.box_map_noxylabel,
-                self.box_map_noxylabel,
-                delin=delin,
-                )
-            combine_two_png(
-                self.final_pca_ratio_podium+"_tmp1.png",
-                self.final_pca_ratio_podium+"_tmp2.png",
-                self.final_pca_ratio_podium+"_pca1.png",
-                "10000x10000+0+0",
-                "10000x10000+0+0",
-                delin=True,
-                )
-
-            combine_two_png(
-                self.outpng_pca2_ratio_1st,
-                self.outpng_pca2_ratio_2nd,
-                self.final_pca_ratio_podium+"_tmp1.png",
-                self.box_map,
-                self.box_map_noxlabel,
-                delin=delin,
-                )
-            combine_two_png(
-                self.outpng_pca2_ratio_3rd,
-                self.outpng_pca2_ratio_4th,
-                self.final_pca_ratio_podium+"_tmp2.png",
-                self.box_map_noxlabel,
-                self.box_map_noxlabel,
-                delin=delin,
-                )
-            combine_two_png(
-                self.final_pca_ratio_podium+"_tmp1.png",
-                self.final_pca_ratio_podium+"_tmp2.png",
-                self.final_pca_ratio_podium+"_pca2.png",
-                "100000x100000+0+0",
-                "100000x100000+0+0",
-                delin=True,
-                )
-
-            # combine
-            combine_two_png(
-                self.final_pca_ratio_podium+"_pca1.png",
-                self.final_pca_ratio_podium+"_pca2.png",
-                self.final_pca_ratio_podium,
-                "100000x100000+0+0",
-                "100000x100000+0+0",
-                axis="column",
-                delin=True,
-                )
-
         if do_final_hex_radial==True:
             print("###########################")
             print("# create final_hex_radial #")
@@ -678,121 +688,34 @@ class ToolsPCA():
                 )
             os.system("rm -rf " + self.final_hex_radial + "_tmp1.png")
 
-    ########################
-    # immagick_figures_sub #
-    ########################
+        if do_final_pca_r13co==True:
+            print("##########################")
+            print("# create final_pca_r13co #")
+            print("##########################")
 
-    def immagick_figures_sub(
-        self,
-        delin=False,
-        ):
-        """
-        """
+            combine_three_png(
+                self.outpng_pca_hexmap_r13co.replace("???","1"),
+                self.outpng_pca_hexmap_r13co.replace("???","2"),
+                self.outpng_pca_scatter_r13co,
+                self.final_pca_r13co,
+                self.box_map,
+                self.box_map,
+                self.box_map,
+                delin=delin,
+                )
 
-        print("##########################")
-        print("# create final_pca_r13co #")
-        print("##########################")
+    ##########################
+    # plot_median_line_graph #
+    ##########################
 
-        combine_three_png(
-            self.outpng_pca_hexmap_r13co.replace("???","1"),
-            self.outpng_pca_hexmap_r13co.replace("???","2"),
-            self.outpng_pca_scatter_r13co,
-            self.final_pca_r13co,
-            self.box_map,
-            self.box_map,
-            self.box_map,
-            delin=delin,
-            )
-
-    ##############
-    # _f_opacity #
-    ##############
-
-    def _f_opacity(self, x, tau):
-        """
-        Tcn10h = (1-np.exp(-tau)) / (1-np.exp(-tau*k)) * Tcn10l
-        """
-
-        k = 0.5
-        
-        return (1-np.exp(-tau)) / (1-np.exp(-tau*k)) * x
-
-    ###############
-    # plot_radial #
-    ###############
-
-    def plot_radial(self):
+    def plot_median_line_graph(self):
         """
         """
 
         taskname = self.modname + sys._getframe().f_code.co_name
         check_first(self.table_hex_obs,taskname)
 
-        # get data
-        data_cone_co10,r  = self._get_bicone_radial("co10")
-        data_cone_hcn10,_ = self._get_bicone_radial("hcn10")
-        data_cone_1st,_   = self._get_bicone_radial("cn10h")
-        data_cone_2nd,_   = self._get_bicone_radial("hnc10")
-        data_cone_3rd,_   = self._get_bicone_radial("cch10")
-
-        data_disk_co10,_  = self._get_bicone_radial("co10",cone="out")
-        data_disk_hcn10,_ = self._get_bicone_radial("hcn10",cone="out")
-        data_disk_1st,_   = self._get_bicone_radial("cn10h",cone="out")
-        data_disk_2nd,_   = self._get_bicone_radial("hnc10",cone="out")
-        data_disk_3rd,_   = self._get_bicone_radial("cch10",cone="out")
-
-        # plot
-        xlim  = [2.1,9.6]
-
-        rdata = [data_cone_3rd-data_cone_co10,data_disk_3rd-data_disk_co10]
-        self._plot_radial(
-            self.outpng_radial1,
-            r,
-            rdata,
-            "(a) Radial CCH(1-0)/CO(1-0) ratio",
-            size=1000/10,
-            ylabel="log Ratio",
-            xlim=xlim,
-            ylim=[-2.3,0.1],
-            ann=1,
-            )
-
-        rdata = [data_cone_1st-data_cone_hcn10,data_disk_1st-data_disk_hcn10]
-        self._plot_radial(
-            self.outpng_radial2,
-            r,
-            rdata,
-            "(b) Radial CN(1$_{3/2}$-0$_{1/2}$)/HCN(1-0) ratio",
-            size=1000/10,
-            ylabel="log Ratio",
-            xlim=xlim,
-            ylim=[-0.8,0.6],
-            )
-
-        rdata = [data_cone_2nd-data_cone_hcn10,data_disk_2nd-data_disk_hcn10]
-        self._plot_radial(
-            self.outpng_radial3,
-            r,
-            rdata,
-            "(c) Radial HNC(1-0)/HCN(1-0) ratio",
-            size=1000/10,
-            ylabel="log Ratio",
-            xlim=xlim,
-            ylim=[-0.8,-0.1],
-            )
-
-    ######################
-    # _get_bicone_radial #
-    ######################
-
-    def _get_bicone_radial(
-        self,
-        name,
-        cone="in",
-        ):
-        """
-        """
-
+        # start
         offset = 10
         angle1 = -15 - offset
         angle2 = -115 + offset
@@ -802,6 +725,7 @@ class ToolsPCA():
         # get table
         header,data_mom0,_,x,y,r = self._read_table(self.table_hex_obs)
         theta_deg  =  np.degrees(np.arctan2(x, y))
+        print(r)
 
         # get line data
         line_index = np.where(header==name)
@@ -816,15 +740,8 @@ class ToolsPCA():
         line_zs    = np.where((theta_deg>=angle3)&(r<self.r_sbr_as),data_line,0)
         line_zs    = np.where((theta_deg<angle2)&(r<self.r_sbr_as),data_line,line_zs)
 
-        if cone=="in":
-            data_line = np.log10(line_zn + line_zs + line_zc)
-        elif cone=="out":
-            data_line = np.log10(data_line - line_zn - line_zs)
-
-        return data_line, r
-
     ################################
-    # plot_hexmap_pca_ratio_podium #
+    # plot_hexmap_pca_ratio_podium # Figure 4
     ################################
 
     def plot_hexmap_pca_ratio_podium(self,denom1="co10",denom2="co10"):
@@ -1070,9 +987,693 @@ class ToolsPCA():
             label="",
             )
 
+    ###################
+    # plot_hexmap_pca # Figure 3
+    ###################
+
+    def plot_hexmap_pca(self):
+        """
+        """
+
+        taskname = self.modname + sys._getframe().f_code.co_name
+        check_first(self.table_hex_pca_mom0,taskname)
+
+        # extract mom0 data
+        data = np.loadtxt(self.table_hex_pca_mom0)
+        x        = data[:,0]
+        y        = data[:,1]
+        r        = np.sqrt(x**2 + y**2)
+        data_pca = data[:,2:]
+
+        ###################
+        # plot PC scatter #
+        ###################
+        print("# plot " + self.outpng_pca_scatter)
+
+        table_hex_pca_mom0_score = self.table_hex_pca_mom0.replace(".txt","_score.txt")
+        data_score = np.loadtxt(table_hex_pca_mom0_score,dtype="str")
+        score_name = data_score[:,0]
+        score_pc1  = data_score[:,1].astype(np.float64)
+        score_pc2  = data_score[:,2].astype(np.float64)
+        score_pc1  = score_pc1 / np.std(score_pc1)
+        score_pc2  = score_pc2 / np.std(score_pc2) * -1
+
+        # set plt, ax
+        fig = plt.figure(figsize=(13,10))
+        plt.rcParams["font.size"] = 16
+        gs = gridspec.GridSpec(nrows=10, ncols=10)
+        ax = plt.subplot(gs[0:10,0:10])
+
+        # set ax parameter
+        myax_set(
+        ax,
+        grid=None,
+        xlim=[-3.2,1.8],
+        ylim=[-1.6,3.4],
+        xlabel="PC1",
+        ylabel="PC2",
+        adjust=[0.023,0.963,0.10,0.93],
+        )
+        ax.set_aspect('equal', adjustable='box')
+
+        for i in range(len(score_name)):
+            pc1 = score_pc1[i]
+            pc2 = score_pc2[i]
+            ax.plot([0,pc1],[0,pc2],"-",color="grey",lw=2)
+
+            if score_name[i]=="n2hp10":
+                ax.text(pc1,pc2,"N$_2$H$^+$",fontsize=18,ha="center",va="top")
+            elif score_name[i]=="hc3n109":
+                continue
+            elif score_name[i]=="hc3n1110":
+                continue
+            elif score_name[i]=="hc3n1211":
+                ax.text(pc1,pc2-0.15,"HC$_3$Nx3",fontsize=18,ha="left",va="center")
+            elif score_name[i]=="h13cn10":
+                ax.text(pc1,pc2-0.1,"H$^{13}$CN",fontsize=18,ha="left",va="bottom")
+            elif score_name[i]=="cs21":
+                ax.text(pc1,pc2,"CS",fontsize=18,ha="center",va="top")
+            elif score_name[i]=="hcn10":
+                ax.text(pc1,pc2,"HCN",fontsize=18,ha="left",va="center")
+            elif score_name[i]=="hcop10":
+                ax.text(pc1,pc2,"HCO$^+$",fontsize=18,ha="left",va="center")
+            elif score_name[i]=="cn10l":
+                ax.text(pc1,pc2,"CN(1-0)l",fontsize=18,ha="left",va="center")
+            elif score_name[i]=="hnc10":
+                ax.text(pc1,pc2,"HNC",fontsize=18,ha="center",va="bottom")
+            elif score_name[i]=="cn10h":
+                ax.text(pc1,pc2,"CN(1-0)h",fontsize=18,ha="center",va="bottom")
+            elif score_name[i]=="ci10":
+                ax.text(pc1,pc2,"[CI]",fontsize=18,ha="center",va="bottom")
+            elif score_name[i]=="cch10":
+                ax.text(pc1,pc2,"CCH",fontsize=18,ha="right",va="bottom")
+            elif score_name[i]=="siiisii_ratio":
+                ax.text(pc1,pc2,"[SIII]/[SII] ratio",fontsize=18,ha="center",va="bottom")
+            elif score_name[i]=="co10":
+                ax.text(pc1,pc2,"CO",fontsize=18,ha="right",va="center")
+            elif score_name[i]=="13co10":
+                ax.text(pc1,pc2,"$^{13}$CO",fontsize=18,ha="right",va="center")
+            elif score_name[i]=="c18o10":
+                ax.text(pc1,pc2,"C$^{18}$O",fontsize=18,ha="right",va="center")
+            elif score_name[i]=="ch3oh21":
+                ax.text(pc1,pc2,"CH$_3$OH",fontsize=18,ha="center",va="top")
+            else:
+                ax.text(pc1,pc2,score_name[i],fontsize=14)
+
+        ax.text(0.03, 0.93, "(a) PC1 vs. PC2", color="black", transform=ax.transAxes, weight="bold", fontsize=24)
+
+        # save
+        os.system("rm -rf " + self.outpng_pca_scatter)
+        plt.savefig(self.outpng_pca_scatter, dpi=300)
+
+        #################
+        # plot PCA maps #
+        #################
+        anntexts = [True,False]
+        cmaps    = ["Reds","PuBu"]
+        headers  = ["b","c"]
+        for i in range(len(data_pca[0])):
+            this_c    = data_pca[:,i]
+            this_x    = x[this_c!=0]
+            this_y    = y[this_c!=0]
+            this_c    = this_c[this_c!=0]
+            this_text = anntexts[i]
+            thid_cmap = cmaps[i]
+
+            if abs(np.min(this_c))>abs(np.max(this_c)):
+                this_c = this_c * -1
+
+            this_c = np.where(this_c>np.max(this_c)/1.5,np.max(this_c)/1.5,this_c)
+
+            output = self.outpng_pca_hexmap.replace("???",str(i+1))
+
+            print("# plot " + output)
+            self._plot_hexmap(
+                output,
+                this_x,
+                this_y,
+                this_c,
+                "(" + headers[i] + ") PC"+str(i+1),
+                cmap=thid_cmap,
+                ann=True,
+                add_text=this_text,
+                lim=13,
+                size=3600,
+                )
+
+    ####################
+    # plot_hexmap_mom0 # Figures 1 and 2
+    ####################
+
+    def plot_hexmap_mom0(self):
+        """
+        """
+
+        taskname = self.modname + sys._getframe().f_code.co_name
+        check_first(self.table_hex_obs,taskname)
+
+        # extract line name
+        header,data_mom0,data_err,ra,dec,r = self._read_table(self.table_hex_obs)
+
+        # plot
+        for i in range(len(header)):
+            this_c    = data_mom0[:,i]
+            this_cerr = data_err[:,i]
+            this_name = header[i]
+
+            cut = np.where(r<=self.r_sbr_as)
+            this_x    = ra[cut]
+            this_y    = dec[cut]
+            this_c    = this_c[cut]
+            this_cerr = this_cerr[cut]
+            this_c    = np.where(this_c>=this_cerr*self.snr_mom,this_c,0)
+
+            output = self.outpng_mom0.replace("???",this_name)
+
+            if this_name=="co10":
+                co10 = data_mom0[:,i]
+                print("# plot overall " + self.outpng_12co10_oveall)
+                self._plot_hexmap(
+                    self.outpng_12co10_oveall,
+                    ra,
+                    dec,
+                    co10,
+                    "$^{12}$CO(1-0)",
+                    ann      = True,
+                    add_text = False,
+                    lim      = 28,
+                    size     = 780,
+                    label    = "(K km s$^{-1}$)",
+                    scalebar = "500pc",
+                    )  
+
+            if len(this_c[this_c!=0])>=10:
+                this_name = this_name.replace("1110","(11-10)")
+                this_name = this_name.replace("1211","(12-11)")
+                this_name = this_name.replace("10","(1-0)")
+                this_name = this_name.replace("21","(2-1)")
+                this_name = this_name.replace("(1-0)9","(10-9)")
+                this_name = this_name.replace("12","$^{12}$")
+                this_name = this_name.replace("13","$^{13}$")
+                this_name = this_name.replace("18","$^{18}$")
+                this_name = this_name.replace("c3","c$_3$").replace("h3","H$_3$")
+                this_name = this_name.replace("ci","[CI]").replace("n2","n$_2$")
+                this_name = this_name.replace("c","C").replace("o","O")
+                this_name = this_name.replace("n","N").replace("h","H")
+                this_name = this_name.replace("p","$^+$").replace("s","S")
+                this_name = this_name.replace("SiiiSii_ratiO","[SIII]/[SII] ratio")
+                this_name = this_name.replace("(1-0)H","(1-0)h")
+                this_name = this_name.replace("11-(1-0)","11-10")
+                this_name = this_name.replace("($^{12}$-11)","(12-11)")
+
+                # plot
+                print("# plot " + output)
+                self._plot_hexmap(
+                    output,
+                    this_x,
+                    this_y,
+                    this_c,
+                    this_name + " [$N_{pixel}$ = " + str(len(this_c[this_c!=0])) + "]",
+                    ann      = True,
+                    add_text = False,
+                    lim      = 13,
+                    size     = 3600,
+                    label    = "(K km s$^{-1}$)",
+                    )
+
+    ###############
+    # run_hex_pca #
+    ###############
+
+    def run_hex_pca(
+        self,
+        output,
+        outtxt,
+        denom=None,
+        reverse=False,
+        ):
+        """
+        """
+
+        taskname = self.modname + sys._getframe().f_code.co_name
+        check_first(self.table_hex_obs,taskname)
+
+        # extract line name
+        list_name,array_data,array_err,x,y,r = self._read_table(self.table_hex_obs)
+
+        # main
+        data, data_name = [], []
+        for i in range(len(list_name)):
+            this_flux = array_data[:,i]
+            this_err  = array_err[:,i]
+            this_name = list_name[i]
+
+            if this_name==denom:
+                continue
+
+            if denom!=None:
+                index      = np.where(list_name==denom)[0][0]
+                data_denom = array_data[:,index]
+                err_denom  = array_err[:,index]
+            else:
+                data_denom = None
+                err_denom  = None
+
+            # sn cut and zero padding
+            this_flux = self._process_hex_for_pca(this_flux,this_err,r,data_denom,err_denom)
+
+            # limiting by #data
+            len_data = len(this_flux[this_flux>0])
+            if len_data>=10:
+                print("# meet " + this_name + " #=" + str(len_data))
+                data.append(this_flux.flatten())
+                data_name.append(this_name)
+            else:
+                print("# skip " + this_name + " #=" + str(len_data))
+
+        # run
+        os.system("rm -rf " + output)
+        array_hex_pca, pca_score = pca_2d_hex(
+            x,
+            y,
+            data,
+            data_name,
+            output,
+            "_150pc",
+            self.snr_mom,
+            self.beam,
+            self.gridsize,
+            reverse=reverse,
+            factor=2,
+            )
+
+        header = "ra(deg) dec(deg) PC1 PC2 ..."
+        np.savetxt(outtxt,array_hex_pca,header=header)
+
+        header = "line PC1 PC2 ..."
+        np.savetxt(outtxt.replace(".txt","_score.txt"),pca_score,header=header,fmt="%s")
+
+    ################
+    # hex_sampling #
+    ################
+
+    def hex_sampling(self):
+        """
+        """
+
+        taskname = self.modname + sys._getframe().f_code.co_name
+
+        # sampling mom0
+        maps_mom0 = glob.glob(self.outfits_mom0.replace("???","*"))
+        maps_mom0 = [s for s in maps_mom0 if "err" not in s]
+        maps_mom0.sort()
+        maps_mom0.append(self.map_av)
+        maps_mom0.append(self.map_ionization)
+
+        check_first(maps_mom0[0],taskname)
+
+        header = ["ra(deg)","dec(deg)"]
+        for i in range(len(maps_mom0)):
+            this_mom0 = maps_mom0[i]
+            this_line = this_mom0.split("/")[-1].split("n1068_")[1].split(".fits")[0]
+            print("# sampling " + this_mom0.split("/")[-1])
+            x,y,z = hexbin_sampling(
+                this_mom0,
+                self.ra_agn,
+                self.dec_agn,
+                beam=self.beam,
+                gridsize=self.gridsize,
+                err=False,
+                )
+
+            if i==0:
+                output_hex = np.c_[x,y]
+
+            output_hex = np.c_[output_hex,z]
+            header.append(this_line)
+
+        # sampling emom0
+        maps_emom0 = glob.glob(self.outfits_emom0.replace("???","*"))
+        maps_emom0.sort()
+        maps_emom0.append(self.map_av)
+        maps_emom0.append(self.map_ionization)
+
+        for i in range(len(maps_emom0)):
+            this_emom0 = maps_emom0[i]
+            this_line  = this_emom0.split("/")[-1].split("n1068_")[1].split(".fits")[0]
+            print("# sampling " + this_emom0.split("/")[-1])
+            x,y,z = hexbin_sampling(
+                this_emom0,
+                self.ra_agn,
+                self.dec_agn,
+                beam=self.beam,
+                gridsize=self.gridsize,
+                err=True,
+                )
+
+            if this_line=="extinction":
+                z = z * 0
+            elif this_line=="siiisii_ratio":
+                z = z * 0
+
+            output_hex = np.c_[output_hex,z]
+            header.append(this_line+"(err)")
+
+        header = " ".join(header)
+        np.savetxt(self.table_hex_obs,output_hex,header=header)
+
+    ##############
+    # align_maps #
+    ##############
+
+    def align_maps(self):
+        """
+        """
+
+        template = "template.image"
+        run_importfits(self.map_av,template)
+
+        taskname = self.modname + sys._getframe().f_code.co_name
+        check_first(template,taskname)
+
+        # regrid mom0
+        for this_map in self.maps_mom0:
+            this_output  = self.outmap_mom0.replace("???",this_map.split("/")[-1].split("_")[3])
+            this_outfits = self.outfits_mom0.replace("???",this_map.split("/")[-1].split("_")[3])
+            run_imregrid(this_map, template, this_output)
+            run_exportfits(this_output, this_outfits, True, True, True)
+
+        # regrid emom0
+        for this_map in self.maps_emom0:
+            this_output  = self.outmap_emom0.replace("???",this_map.split("/")[-1].split("_")[3])
+            this_outfits = self.outfits_emom0.replace("???",this_map.split("/")[-1].split("_")[3])
+            run_imregrid(this_map, template, this_output)
+            run_exportfits(this_output, this_outfits, True, True, True)
+
+        # cleanup
+        os.system("rm -rf template.image")
+
+    ########################
+    # _process_hex_for_pca #
+    ########################
+
+    def _process_hex_for_pca(
+        self,
+        this_flux,
+        this_err,
+        this_r,
+        denom_flux=None,
+        denom_err=None,
+        ):
+        """
+        """
+
+        # sn cut
+        this_thres = abs(this_err * self.snr_mom)
+        this_flux  = np.where(this_flux>=this_thres, this_flux, 0)
+
+        if denom_flux!=None:
+            denom_flux = np.where(denom_flux>=denom_err*self.snr_mom, denom_flux, 0)
+            this_flux  = this_flux / denom_flux
+            this_flux[np.isinf(this_flux)] = 0
+            this_flux[np.isnan(this_flux)] = 0
+
+        # normalize
+        this_flux  = ( this_flux - np.mean(this_flux) ) / np.std(this_flux)
+
+        # zero padding
+        this_flux[np.isnan(this_flux)] = 0
+        this_flux[np.isinf(this_flux)] = 0
+
+        # extract center by masking
+        this_flux = np.where(this_r<=self.r_sbr_as, this_flux, 0)
+        this_err  = np.where(this_r<=self.r_sbr_as, this_err, 0)
+
+        return this_flux
+
+    ###############
+    # _read_table #
+    ###############
+
+    def _read_table(self,txtdata):
+        """
+        """
+
+        # extract line name
+        f = open(txtdata)
+        header = f.readline()
+        header = header.split(" ")[1:]
+        header = [s.split("\n")[0] for s in header]
+        f.close()
+
+        # extract mom0 data
+        data = np.loadtxt(txtdata)
+        x          = data[:,0]
+        y          = data[:,1]
+        r          = np.sqrt(x**2 + y**2)
+        len_data   = (len(data[0])-2)/2
+
+        array_data = data[:,2:len_data+2]
+        array_err  = data[:,len_data+2:]
+        list_name  = np.array(header[2:len_data+2])
+
+        return list_name, array_data, array_err, x, y, r
+
+    ################
+    # _plot_hexmap #
+    ################
+
+    def _plot_hexmap(
+        self,
+        outpng,
+        x,y,c,
+        title,
+        title_cbar="(K km s$^{-1}$)",
+        cmap="rainbow",
+        plot_cbar=True,
+        ann=False,
+        lim=29.5,
+        size=690,
+        add_text=False,
+        label="",
+        bgcolor="white",
+        scalebar="100pc",
+        ):
+        """
+        """
+
+        # set plt, ax
+        fig = plt.figure(figsize=(13,10))
+        plt.rcParams["font.size"] = 16
+        gs = gridspec.GridSpec(nrows=10, ncols=10)
+        ax = plt.subplot(gs[0:10,0:10])
+        fig.patch.set_facecolor(bgcolor)
+
+        # set ax parameter
+        myax_set(
+        ax,
+        grid=None,
+        xlim=[lim, -lim],
+        ylim=[-lim, lim],
+        xlabel="R.A. offset (arcsec)",
+        ylabel="Decl. offset (arcsec)",
+        adjust=[0.10,0.99,0.10,0.93],
+        )
+        ax.set_aspect('equal', adjustable='box')
+
+        # plot
+        im = ax.scatter(x, y, s=size, c=c, cmap=cmap, marker="h", linewidths=0, vmin=0)
+
+        # cbar
+        cbar = plt.colorbar(im)
+        if plot_cbar==True:
+            cax  = fig.add_axes([0.19, 0.12, 0.025, 0.35])
+            fig.colorbar(im, cax=cax).set_label(label)
+
+        # scale bar
+        if scalebar=="100pc":
+            bar = 100 / self.scale_pc
+            ax.plot([-10,-10+bar],[-10,-10],"-",color="black",lw=4)
+            ax.text(-10, -10.5, "100 pc",
+                    horizontalalignment="right", verticalalignment="top")
+        elif scalebar=="500pc":
+            bar = 500 / self.scale_pc
+            ax.plot([-22,-22+bar],[-22,-22],"-",color="black",lw=4)
+            ax.text(-22, -22.5, "500 pc",
+                    horizontalalignment="right", verticalalignment="top")
+
+        # text
+        ax.text(0.03, 0.93, title, color="black", transform=ax.transAxes, weight="bold", fontsize=32)
+
+        # ann
+        if ann==True:
+            theta1      = -10.0 # degree
+            theta2      = 70.0 # degree
+            fov_diamter = 16.5 # arcsec (12m+7m Band 8)
+
+            fov_diamter = 16.5
+            efov1 = patches.Ellipse(xy=(-0,0), width=fov_diamter,
+                height=fov_diamter, angle=0, fill=False, edgecolor="black",
+                alpha=1.0, lw=3.5)
+
+            ax.add_patch(efov1)
+
+            # plot NGC 1068 AGN and outflow geometry
+            x1 = fov_diamter/2.0 * np.cos(np.radians(-1*theta1+90))
+            y1 = fov_diamter/2.0 * np.sin(np.radians(-1*theta1+90))
+            ax.plot([x1, -x1], [y1, -y1], "--", c="black", lw=3.5)
+            x2 = fov_diamter/2.0 * np.cos(np.radians(-1*theta2+90))
+            y2 = fov_diamter/2.0 * np.sin(np.radians(-1*theta2+90))
+            ax.plot([x2, -x2], [y2, -y2], "--", c="black", lw=3.5)
+
+        # add annotation comment
+        if add_text==True:
+            ax.plot([0,-7], [0,10], lw=3, c="black")
+            ax.text(-10.5, 10.5, "AGN position",
+                horizontalalignment="right", verticalalignment="center", weight="bold")
+
+        # save
+        os.system("rm -rf " + outpng)
+        plt.savefig(outpng, dpi=300)
+
+    ###############
+    # _create_dir #
+    ###############
+
+    def _create_dir(self, this_dir):
+
+        if self.refresh==True:
+            print("## refresh " + this_dir)
+            os.system("rm -rf " + this_dir)
+
+        if not glob.glob(this_dir):
+            print("## create " + this_dir)
+            os.mkdir(this_dir)
+
+        else:
+            print("## not refresh " + this_dir)
+
+    #############
+    # _read_key #
+    #############
+
+    def _read_key(self, key, keyfile="fig", delimiter=",,,"):
+
+        if keyfile=="gal":
+            keyfile = self.keyfile_gal
+        elif keyfile=="fig":
+            keyfile = self.keyfile_fig
+
+        keydata  = np.loadtxt(keyfile,dtype="str",delimiter=delimiter)
+        keywords =\
+             np.array([s.replace(" ","") for s in keydata[:,0]])
+        values   = keydata[:,1]
+        value    = values[np.where(keywords==key)[0][0]]
+
+        return value
+
     ##########################
-    # plot_hexmap_pca_podium #
+    # will be decommissioned #
     ##########################
+
+    def plot_radial(self):
+        """
+        """
+
+        taskname = self.modname + sys._getframe().f_code.co_name
+        check_first(self.table_hex_obs,taskname)
+
+        # get data
+        data_cone_co10,r  = self._get_bicone_radial("co10")
+        data_cone_hcn10,_ = self._get_bicone_radial("hcn10")
+        data_cone_1st,_   = self._get_bicone_radial("cn10h")
+        data_cone_2nd,_   = self._get_bicone_radial("hnc10")
+        data_cone_3rd,_   = self._get_bicone_radial("cch10")
+
+        data_disk_co10,_  = self._get_bicone_radial("co10",cone="out")
+        data_disk_hcn10,_ = self._get_bicone_radial("hcn10",cone="out")
+        data_disk_1st,_   = self._get_bicone_radial("cn10h",cone="out")
+        data_disk_2nd,_   = self._get_bicone_radial("hnc10",cone="out")
+        data_disk_3rd,_   = self._get_bicone_radial("cch10",cone="out")
+
+        # plot
+        xlim  = [2.1,9.6]
+
+        rdata = [data_cone_3rd-data_cone_co10,data_disk_3rd-data_disk_co10]
+        self._plot_radial(
+            self.outpng_radial1,
+            r,
+            rdata,
+            "(a) Radial CCH(1-0)/CO(1-0) ratio",
+            size=1000/10,
+            ylabel="log Ratio",
+            xlim=xlim,
+            ylim=[-2.3,0.1],
+            ann=1,
+            )
+
+        rdata = [data_cone_1st-data_cone_hcn10,data_disk_1st-data_disk_hcn10]
+        self._plot_radial(
+            self.outpng_radial2,
+            r,
+            rdata,
+            "(b) Radial CN(1$_{3/2}$-0$_{1/2}$)/HCN(1-0) ratio",
+            size=1000/10,
+            ylabel="log Ratio",
+            xlim=xlim,
+            ylim=[-0.8,0.6],
+            )
+
+        rdata = [data_cone_2nd-data_cone_hcn10,data_disk_2nd-data_disk_hcn10]
+        self._plot_radial(
+            self.outpng_radial3,
+            r,
+            rdata,
+            "(c) Radial HNC(1-0)/HCN(1-0) ratio",
+            size=1000/10,
+            ylabel="log Ratio",
+            xlim=xlim,
+            ylim=[-0.8,-0.1],
+            ) 
+
+    def plot_hexmap_ratio(self,denom=None):
+        """
+        """
+
+        taskname = self.modname + sys._getframe().f_code.co_name
+        check_first(self.table_hex_obs,taskname)
+
+        # extract line name
+        header,data_mom0,_,ra,dec,_ = self._read_table(self.table_hex_obs)
+        data_denom = data_mom0[:,np.where(header==denom)[0][0]]
+
+        # plot
+        for i in range(len(header)):
+            this_c = data_mom0[:,i] / data_denom
+            this_c[np.where(np.isinf(this_c))] = 0
+            this_c[np.where(np.isnan(this_c))] = 0
+            this_name = header[i]
+
+            this_x = ra[this_c>0]
+            this_y = dec[this_c>0]
+            this_c = this_c[this_c>0]
+
+            this_c = np.log10(this_c)
+            this_c[np.where(np.isinf(this_c))] = 0
+            this_c[np.where(np.isnan(this_c))] = 0
+
+            output = self.outpng_mom0.replace("???","r_"+this_name+"_"+denom)
+
+            if len(this_c)!=0:
+                print("# plot " + output)
+                self._plot_hexmap(
+                    output,
+                    this_x,
+                    this_y,
+                    this_c,
+                    this_name,
+                    ann=False,
+                    )
 
     def plot_hexmap_pca_podium(self):
         """
@@ -1251,10 +1852,6 @@ class ToolsPCA():
             label="(K km s$^{-1}$)",
             )
 
-    #########################
-    # plot_hexmap_pca_r13co #
-    #########################
-
     def plot_hexmap_pca_r13co(self):
         """
         """
@@ -1386,458 +1983,6 @@ class ToolsPCA():
                 size=3600,
                 )
 
-    ###################
-    # plot_hexmap_pca #
-    ###################
-
-    def plot_hexmap_pca(self):
-        """
-        """
-
-        taskname = self.modname + sys._getframe().f_code.co_name
-        check_first(self.table_hex_pca_mom0,taskname)
-
-        # extract mom0 data
-        data = np.loadtxt(self.table_hex_pca_mom0)
-        x        = data[:,0]
-        y        = data[:,1]
-        r        = np.sqrt(x**2 + y**2)
-        data_pca = data[:,2:]
-
-        ###################
-        # plot PC scatter #
-        ###################
-        print("# plot " + self.outpng_pca_scatter)
-
-        table_hex_pca_mom0_score = self.table_hex_pca_mom0.replace(".txt","_score.txt")
-        data_score = np.loadtxt(table_hex_pca_mom0_score,dtype="str")
-        score_name = data_score[:,0]
-        score_pc1  = data_score[:,1].astype(np.float64)
-        score_pc2  = data_score[:,2].astype(np.float64)
-        score_pc1  = score_pc1 / np.std(score_pc1)
-        score_pc2  = score_pc2 / np.std(score_pc2) * -1
-
-        # set plt, ax
-        fig = plt.figure(figsize=(13,10))
-        plt.rcParams["font.size"] = 16
-        gs = gridspec.GridSpec(nrows=10, ncols=10)
-        ax = plt.subplot(gs[0:10,0:10])
-
-        # set ax parameter
-        myax_set(
-        ax,
-        grid=None,
-        xlim=[-3.2,1.8],
-        ylim=[-1.6,3.4],
-        xlabel="PC1",
-        ylabel="PC2",
-        adjust=[0.023,0.963,0.10,0.93],
-        )
-        ax.set_aspect('equal', adjustable='box')
-
-        for i in range(len(score_name)):
-            pc1 = score_pc1[i]
-            pc2 = score_pc2[i]
-            ax.plot([0,pc1],[0,pc2],"-",color="grey",lw=2)
-
-            if score_name[i]=="n2hp10":
-                ax.text(pc1,pc2,"N$_2$H$^+$",fontsize=18,ha="center",va="top")
-            elif score_name[i]=="hc3n109":
-                continue
-            elif score_name[i]=="hc3n1110":
-                continue
-            elif score_name[i]=="hc3n1211":
-                ax.text(pc1,pc2-0.15,"HC$_3$Nx3",fontsize=18,ha="left",va="center")
-            elif score_name[i]=="h13cn10":
-                ax.text(pc1,pc2-0.1,"H$^{13}$CN",fontsize=18,ha="left",va="bottom")
-            elif score_name[i]=="cs21":
-                ax.text(pc1,pc2,"CS",fontsize=18,ha="center",va="top")
-            elif score_name[i]=="hcn10":
-                ax.text(pc1,pc2,"HCN",fontsize=18,ha="left",va="center")
-            elif score_name[i]=="hcop10":
-                ax.text(pc1,pc2,"HCO$^+$",fontsize=18,ha="left",va="center")
-            elif score_name[i]=="cn10l":
-                ax.text(pc1,pc2,"CN(1-0)l",fontsize=18,ha="left",va="center")
-            elif score_name[i]=="hnc10":
-                ax.text(pc1,pc2,"HNC",fontsize=18,ha="center",va="bottom")
-            elif score_name[i]=="cn10h":
-                ax.text(pc1,pc2,"CN(1-0)h",fontsize=18,ha="center",va="bottom")
-            elif score_name[i]=="ci10":
-                ax.text(pc1,pc2,"[CI]",fontsize=18,ha="center",va="bottom")
-            elif score_name[i]=="cch10":
-                ax.text(pc1,pc2,"CCH",fontsize=18,ha="right",va="bottom")
-            elif score_name[i]=="siiisii_ratio":
-                ax.text(pc1,pc2,"[SIII]/[SII] ratio",fontsize=18,ha="center",va="bottom")
-            elif score_name[i]=="co10":
-                ax.text(pc1,pc2,"CO",fontsize=18,ha="right",va="center")
-            elif score_name[i]=="13co10":
-                ax.text(pc1,pc2,"$^{13}$CO",fontsize=18,ha="right",va="center")
-            elif score_name[i]=="c18o10":
-                ax.text(pc1,pc2,"C$^{18}$O",fontsize=18,ha="right",va="center")
-            elif score_name[i]=="ch3oh21":
-                ax.text(pc1,pc2,"CH$_3$OH",fontsize=18,ha="center",va="top")
-            else:
-                ax.text(pc1,pc2,score_name[i],fontsize=14)
-
-        ax.text(0.03, 0.93, "(a) PC1 vs. PC2", color="black", transform=ax.transAxes, weight="bold", fontsize=24)
-
-        # save
-        os.system("rm -rf " + self.outpng_pca_scatter)
-        plt.savefig(self.outpng_pca_scatter, dpi=300)
-
-        #################
-        # plot PCA maps #
-        #################
-        anntexts = [True,False]
-        cmaps    = ["Reds","PuBu"]
-        headers  = ["b","c"]
-        for i in range(len(data_pca[0])):
-            this_c    = data_pca[:,i]
-            this_x    = x[this_c!=0]
-            this_y    = y[this_c!=0]
-            this_c    = this_c[this_c!=0]
-            this_text = anntexts[i]
-            thid_cmap = cmaps[i]
-
-            if abs(np.min(this_c))>abs(np.max(this_c)):
-                this_c = this_c * -1
-
-            this_c = np.where(this_c>np.max(this_c)/1.5,np.max(this_c)/1.5,this_c)
-
-            output = self.outpng_pca_hexmap.replace("???",str(i+1))
-
-            print("# plot " + output)
-            self._plot_hexmap(
-                output,
-                this_x,
-                this_y,
-                this_c,
-                "(" + headers[i] + ") PC"+str(i+1),
-                cmap=thid_cmap,
-                ann=True,
-                add_text=this_text,
-                lim=13,
-                size=3600,
-                )
-
-    ###############
-    # run_hex_pca #
-    ###############
-
-    def run_hex_pca(
-        self,
-        output,
-        outtxt,
-        denom=None,
-        reverse=False,
-        ):
-        """
-        """
-
-        taskname = self.modname + sys._getframe().f_code.co_name
-        check_first(self.table_hex_obs,taskname)
-
-        # extract line name
-        list_name,array_data,array_err,x,y,r = self._read_table(self.table_hex_obs)
-
-        # main
-        data, data_name = [], []
-        for i in range(len(list_name)):
-            this_flux = array_data[:,i]
-            this_err  = array_err[:,i]
-            this_name = list_name[i]
-
-            if this_name==denom:
-                continue
-
-            if denom!=None:
-                index      = np.where(list_name==denom)[0][0]
-                data_denom = array_data[:,index]
-                err_denom  = array_err[:,index]
-            else:
-                data_denom = None
-                err_denom  = None
-
-            # sn cut and zero padding
-            this_flux = self._process_hex_for_pca(this_flux,this_err,r,data_denom,err_denom)
-
-            # limiting by #data
-            len_data = len(this_flux[this_flux>0])
-            if len_data>=10:
-                print("# meet " + this_name + " #=" + str(len_data))
-                data.append(this_flux.flatten())
-                data_name.append(this_name)
-            else:
-                print("# skip " + this_name + " #=" + str(len_data))
-
-        # run
-        os.system("rm -rf " + output)
-        array_hex_pca, pca_score = pca_2d_hex(
-            x,
-            y,
-            data,
-            data_name,
-            output,
-            "_150pc",
-            self.snr_mom,
-            self.beam,
-            self.gridsize,
-            reverse=reverse,
-            factor=2,
-            )
-
-        header = "ra(deg) dec(deg) PC1 PC2 ..."
-        np.savetxt(outtxt,array_hex_pca,header=header)
-
-        header = "line PC1 PC2 ..."
-        np.savetxt(outtxt.replace(".txt","_score.txt"),pca_score,header=header,fmt="%s")
-
-    ####################
-    # plot_hexmap_mom0 #
-    ####################
-
-    def plot_hexmap_mom0(self):
-        """
-        """
-
-        taskname = self.modname + sys._getframe().f_code.co_name
-        check_first(self.table_hex_obs,taskname)
-
-        # extract line name
-        header,data_mom0,data_err,ra,dec,r = self._read_table(self.table_hex_obs)
-
-        # plot
-        for i in range(len(header)):
-            this_c    = data_mom0[:,i]
-            this_cerr = data_err[:,i]
-            this_name = header[i]
-
-            cut = np.where(r<=self.r_sbr_as)
-            this_x    = ra[cut]
-            this_y    = dec[cut]
-            this_c    = this_c[cut]
-            this_cerr = this_cerr[cut]
-            this_c    = np.where(this_c>=this_cerr*self.snr_mom,this_c,0)
-
-            output = self.outpng_mom0.replace("???",this_name)
-
-            if this_name=="co10":
-                co10 = data_mom0[:,i]
-                print("# plot overall " + self.outpng_12co10_oveall)
-                self._plot_hexmap(
-                    self.outpng_12co10_oveall,
-                    ra,
-                    dec,
-                    co10,
-                    "$^{12}$CO(1-0)",
-                    ann      = True,
-                    add_text = False,
-                    lim      = 28,
-                    size     = 780,
-                    label    = "(K km s$^{-1}$)",
-                    scalebar = "500pc",
-                    )  
-
-            if len(this_c[this_c!=0])>=10:
-                this_name = this_name.replace("1110","(11-10)")
-                this_name = this_name.replace("1211","(12-11)")
-                this_name = this_name.replace("10","(1-0)")
-                this_name = this_name.replace("21","(2-1)")
-                this_name = this_name.replace("(1-0)9","(10-9)")
-                this_name = this_name.replace("12","$^{12}$")
-                this_name = this_name.replace("13","$^{13}$")
-                this_name = this_name.replace("18","$^{18}$")
-                this_name = this_name.replace("c3","c$_3$").replace("h3","H$_3$")
-                this_name = this_name.replace("ci","[CI]").replace("n2","n$_2$")
-                this_name = this_name.replace("c","C").replace("o","O")
-                this_name = this_name.replace("n","N").replace("h","H")
-                this_name = this_name.replace("p","$^+$").replace("s","S")
-                this_name = this_name.replace("SiiiSii_ratiO","[SIII]/[SII] ratio")
-                this_name = this_name.replace("(1-0)H","(1-0)h")
-                this_name = this_name.replace("11-(1-0)","11-10")
-                this_name = this_name.replace("($^{12}$-11)","(12-11)")
-
-                # plot
-                print("# plot " + output)
-                self._plot_hexmap(
-                    output,
-                    this_x,
-                    this_y,
-                    this_c,
-                    this_name + " [$N_{pixel}$ = " + str(len(this_c[this_c!=0])) + "]",
-                    ann      = True,
-                    add_text = False,
-                    lim      = 13,
-                    size     = 3600,
-                    label    = "(K km s$^{-1}$)",
-                    )
-
-    ################
-    # hex_sampling #
-    ################
-
-    def hex_sampling(self):
-        """
-        """
-
-        taskname = self.modname + sys._getframe().f_code.co_name
-
-        # sampling mom0
-        maps_mom0 = glob.glob(self.outfits_mom0.replace("???","*"))
-        maps_mom0 = [s for s in maps_mom0 if "err" not in s]
-        maps_mom0.sort()
-        maps_mom0.append(self.map_av)
-        maps_mom0.append(self.map_ionization)
-
-        check_first(maps_mom0[0],taskname)
-
-        header = ["ra(deg)","dec(deg)"]
-        for i in range(len(maps_mom0)):
-            this_mom0 = maps_mom0[i]
-            this_line = this_mom0.split("/")[-1].split("n1068_")[1].split(".fits")[0]
-            print("# sampling " + this_mom0.split("/")[-1])
-            x,y,z = hexbin_sampling(
-                this_mom0,
-                self.ra_agn,
-                self.dec_agn,
-                beam=self.beam,
-                gridsize=self.gridsize,
-                err=False,
-                )
-
-            if i==0:
-                output_hex = np.c_[x,y]
-
-            output_hex = np.c_[output_hex,z]
-            header.append(this_line)
-
-        # sampling emom0
-        maps_emom0 = glob.glob(self.outfits_emom0.replace("???","*"))
-        maps_emom0.sort()
-        maps_emom0.append(self.map_av)
-        maps_emom0.append(self.map_ionization)
-
-        for i in range(len(maps_emom0)):
-            this_emom0 = maps_emom0[i]
-            this_line  = this_emom0.split("/")[-1].split("n1068_")[1].split(".fits")[0]
-            print("# sampling " + this_emom0.split("/")[-1])
-            x,y,z = hexbin_sampling(
-                this_emom0,
-                self.ra_agn,
-                self.dec_agn,
-                beam=self.beam,
-                gridsize=self.gridsize,
-                err=True,
-                )
-
-            if this_line=="extinction":
-                z = z * 0
-            elif this_line=="siiisii_ratio":
-                z = z * 0
-
-            output_hex = np.c_[output_hex,z]
-            header.append(this_line+"(err)")
-
-        header = " ".join(header)
-        np.savetxt(self.table_hex_obs,output_hex,header=header)
-
-    ##############
-    # align_maps #
-    ##############
-
-    def align_maps(self):
-        """
-        """
-
-        template = "template.image"
-        run_importfits(self.map_av,template)
-
-        taskname = self.modname + sys._getframe().f_code.co_name
-        check_first(template,taskname)
-
-        # regrid mom0
-        for this_map in self.maps_mom0:
-            this_output  = self.outmap_mom0.replace("???",this_map.split("/")[-1].split("_")[3])
-            this_outfits = self.outfits_mom0.replace("???",this_map.split("/")[-1].split("_")[3])
-            run_imregrid(this_map, template, this_output)
-            run_exportfits(this_output, this_outfits, True, True, True)
-
-        # regrid emom0
-        for this_map in self.maps_emom0:
-            this_output  = self.outmap_emom0.replace("???",this_map.split("/")[-1].split("_")[3])
-            this_outfits = self.outfits_emom0.replace("???",this_map.split("/")[-1].split("_")[3])
-            run_imregrid(this_map, template, this_output)
-            run_exportfits(this_output, this_outfits, True, True, True)
-
-        # cleanup
-        os.system("rm -rf template.image")
-
-    ########################
-    # _process_hex_for_pca #
-    ########################
-
-    def _process_hex_for_pca(
-        self,
-        this_flux,
-        this_err,
-        this_r,
-        denom_flux=None,
-        denom_err=None,
-        ):
-        """
-        """
-
-        # sn cut
-        this_thres = abs(this_err * self.snr_mom)
-        this_flux  = np.where(this_flux>=this_thres, this_flux, 0)
-
-        if denom_flux!=None:
-            denom_flux = np.where(denom_flux>=denom_err*self.snr_mom, denom_flux, 0)
-            this_flux  = this_flux / denom_flux
-            this_flux[np.isinf(this_flux)] = 0
-            this_flux[np.isnan(this_flux)] = 0
-
-        # normalize
-        this_flux  = ( this_flux - np.mean(this_flux) ) / np.std(this_flux)
-
-        # zero padding
-        this_flux[np.isnan(this_flux)] = 0
-        this_flux[np.isinf(this_flux)] = 0
-
-        # extract center by masking
-        this_flux = np.where(this_r<=self.r_sbr_as, this_flux, 0)
-        this_err  = np.where(this_r<=self.r_sbr_as, this_err, 0)
-
-        return this_flux
-
-    ###############
-    # _read_table #
-    ###############
-
-    def _read_table(self,txtdata):
-        """
-        """
-
-        # extract line name
-        f = open(txtdata)
-        header = f.readline()
-        header = header.split(" ")[1:]
-        header = [s.split("\n")[0] for s in header]
-        f.close()
-
-        # extract mom0 data
-        data = np.loadtxt(txtdata)
-        x          = data[:,0]
-        y          = data[:,1]
-        r          = np.sqrt(x**2 + y**2)
-        len_data   = (len(data[0])-2)/2
-
-        array_data = data[:,2:len_data+2]
-        array_err  = data[:,len_data+2:]
-        list_name  = np.array(header[2:len_data+2])
-
-        return list_name, array_data, array_err, x, y, r
-
     ################
     # _plot_radial #
     ################
@@ -1916,181 +2061,43 @@ class ToolsPCA():
         os.system("rm -rf " + outpng)
         plt.savefig(outpng, dpi=300)
 
-    ################
-    # _plot_hexmap #
-    ################
-
-    def _plot_hexmap(
+    def _get_bicone_radial(
         self,
-        outpng,
-        x,y,c,
-        title,
-        title_cbar="(K km s$^{-1}$)",
-        cmap="rainbow",
-        plot_cbar=True,
-        ann=False,
-        lim=29.5,
-        size=690,
-        add_text=False,
-        label="",
-        bgcolor="white",
-        scalebar="100pc",
+        name,
+        cone="in",
         ):
         """
         """
 
-        # set plt, ax
-        fig = plt.figure(figsize=(13,10))
-        plt.rcParams["font.size"] = 16
-        gs = gridspec.GridSpec(nrows=10, ncols=10)
-        ax = plt.subplot(gs[0:10,0:10])
-        fig.patch.set_facecolor(bgcolor)
+        offset = 10
+        angle1 = -15 - offset
+        angle2 = -115 + offset
+        angle3 = 165 - offset
+        angle4 = 65 + offset
 
-        # set ax parameter
-        myax_set(
-        ax,
-        grid=None,
-        xlim=[lim, -lim],
-        ylim=[-lim, lim],
-        xlabel="R.A. offset (arcsec)",
-        ylabel="Decl. offset (arcsec)",
-        adjust=[0.10,0.99,0.10,0.93],
-        )
-        ax.set_aspect('equal', adjustable='box')
+        # get table
+        header,data_mom0,_,x,y,r = self._read_table(self.table_hex_obs)
+        theta_deg  =  np.degrees(np.arctan2(x, y))
 
-        # plot
-        im = ax.scatter(x, y, s=size, c=c, cmap=cmap, marker="h", linewidths=0, vmin=0)
+        # get line data
+        line_index = np.where(header==name)
+        data_line  = np.array(data_mom0[:,line_index].flatten())
+        data_line[np.isinf(data_line)] = 0
+        data_line[np.isnan(data_line)] = 0
+        data_line  = np.where(r<=self.r_sbr_as,data_line,0)
 
-        # cbar
-        cbar = plt.colorbar(im)
-        if plot_cbar==True:
-            cax  = fig.add_axes([0.19, 0.12, 0.025, 0.35])
-            fig.colorbar(im, cax=cax).set_label(label)
+        # get line bicone
+        line_zc    = np.where(r<1,data_line,0)
+        line_zn    = np.where((theta_deg>=angle1)&(theta_deg<angle4)&(r<self.r_sbr_as),data_line,0)
+        line_zs    = np.where((theta_deg>=angle3)&(r<self.r_sbr_as),data_line,0)
+        line_zs    = np.where((theta_deg<angle2)&(r<self.r_sbr_as),data_line,line_zs)
 
-        # scale bar
-        if scalebar=="100pc":
-            bar = 100 / self.scale_pc
-            ax.plot([-10,-10+bar],[-10,-10],"-",color="black",lw=4)
-            ax.text(-10, -10.5, "100 pc",
-                    horizontalalignment="right", verticalalignment="top")
-        elif scalebar=="500pc":
-            bar = 500 / self.scale_pc
-            ax.plot([-22,-22+bar],[-22,-22],"-",color="black",lw=4)
-            ax.text(-22, -22.5, "500 pc",
-                    horizontalalignment="right", verticalalignment="top")
+        if cone=="in":
+            data_line = np.log10(line_zn + line_zs + line_zc)
+        elif cone=="out":
+            data_line = np.log10(data_line - line_zn - line_zs)
 
-        # text
-        ax.text(0.03, 0.93, title, color="black", transform=ax.transAxes, weight="bold", fontsize=32)
-
-        # ann
-        if ann==True:
-            theta1      = -10.0 # degree
-            theta2      = 70.0 # degree
-            fov_diamter = 16.5 # arcsec (12m+7m Band 8)
-
-            fov_diamter = 16.5
-            efov1 = patches.Ellipse(xy=(-0,0), width=fov_diamter,
-                height=fov_diamter, angle=0, fill=False, edgecolor="black",
-                alpha=1.0, lw=3.5)
-
-            ax.add_patch(efov1)
-
-            # plot NGC 1068 AGN and outflow geometry
-            x1 = fov_diamter/2.0 * np.cos(np.radians(-1*theta1+90))
-            y1 = fov_diamter/2.0 * np.sin(np.radians(-1*theta1+90))
-            ax.plot([x1, -x1], [y1, -y1], "--", c="black", lw=3.5)
-            x2 = fov_diamter/2.0 * np.cos(np.radians(-1*theta2+90))
-            y2 = fov_diamter/2.0 * np.sin(np.radians(-1*theta2+90))
-            ax.plot([x2, -x2], [y2, -y2], "--", c="black", lw=3.5)
-
-        # add annotation comment
-        if add_text==True:
-            ax.plot([0,-7], [0,10], lw=3, c="black")
-            ax.text(-10.5, 10.5, "AGN position",
-                horizontalalignment="right", verticalalignment="center", weight="bold")
-
-        # save
-        os.system("rm -rf " + outpng)
-        plt.savefig(outpng, dpi=300)
-
-    #####################
-    # plot_hexmap_ratio #
-    #####################
-
-    def plot_hexmap_ratio(self,denom=None):
-        """
-        """
-
-        taskname = self.modname + sys._getframe().f_code.co_name
-        check_first(self.table_hex_obs,taskname)
-
-        # extract line name
-        header,data_mom0,_,ra,dec,_ = self._read_table(self.table_hex_obs)
-        data_denom = data_mom0[:,np.where(header==denom)[0][0]]
-
-        # plot
-        for i in range(len(header)):
-            this_c = data_mom0[:,i] / data_denom
-            this_c[np.where(np.isinf(this_c))] = 0
-            this_c[np.where(np.isnan(this_c))] = 0
-            this_name = header[i]
-
-            this_x = ra[this_c>0]
-            this_y = dec[this_c>0]
-            this_c = this_c[this_c>0]
-
-            this_c = np.log10(this_c)
-            this_c[np.where(np.isinf(this_c))] = 0
-            this_c[np.where(np.isnan(this_c))] = 0
-
-            output = self.outpng_mom0.replace("???","r_"+this_name+"_"+denom)
-
-            if len(this_c)!=0:
-                print("# plot " + output)
-                self._plot_hexmap(
-                    output,
-                    this_x,
-                    this_y,
-                    this_c,
-                    this_name,
-                    ann=False,
-                    )
-
-    ###############
-    # _create_dir #
-    ###############
-
-    def _create_dir(self, this_dir):
-
-        if self.refresh==True:
-            print("## refresh " + this_dir)
-            os.system("rm -rf " + this_dir)
-
-        if not glob.glob(this_dir):
-            print("## create " + this_dir)
-            os.mkdir(this_dir)
-
-        else:
-            print("## not refresh " + this_dir)
-
-    #############
-    # _read_key #
-    #############
-
-    def _read_key(self, key, keyfile="fig", delimiter=",,,"):
-
-        if keyfile=="gal":
-            keyfile = self.keyfile_gal
-        elif keyfile=="fig":
-            keyfile = self.keyfile_fig
-
-        keydata  = np.loadtxt(keyfile,dtype="str",delimiter=delimiter)
-        keywords =\
-             np.array([s.replace(" ","") for s in keydata[:,0]])
-        values   = keydata[:,1]
-        value    = values[np.where(keywords==key)[0][0]]
-
-        return value
+        return data_line, r
 
 ###################
 # end of ToolsPCA #

@@ -471,6 +471,19 @@ class ToolsSBR():
             output    = self.dir_products + "scatter_n2hp_vs_" + this_name + ".png"
 
             self._plot_scatters(output,x,y,xlabel=xlabel,ylabel=ylabel)
+
+    ##############
+    # _f_opacity #
+    ##############
+
+    def _f_opacity(self, x, tau):
+        """
+        Tcn10h = (1-np.exp(-tau)) / (1-np.exp(-tau*k)) * Tcn10l
+        """
+
+        k = 0.5
+        
+        return (1-np.exp(-tau)) / (1-np.exp(-tau*k)) * x
     """
 
     ##################################
