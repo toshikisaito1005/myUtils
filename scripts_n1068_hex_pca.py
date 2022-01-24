@@ -829,7 +829,7 @@ class ToolsPCA():
         grid=None,
         xlim=[-0.5,16.5],
         ylim=[-2.4,2.4],
-        xlabel="Lines",
+        xlabel=None,
         ylabel="log Ratio relative to $^{12}$CO(1-0)",
         adjust=[0.1,0.963,0.25,0.93],
         )
@@ -848,6 +848,11 @@ class ToolsPCA():
 
         # yaxis
         ax.plot([15.5,15.5],[-2.4,2.4],"-",c="black",lw=2)
+
+        # text
+        ax.text(0.03, 0.93, "Bicone", color="deepskyblue", transform=ax.transAxes, weight="bold", fontsize=24)
+        ax.text(0.03, 0.88, "CND", color="tomato", transform=ax.transAxes, weight="bold", fontsize=24)
+        ax.text(0.03, 0.83, "Disk", color="black", transform=ax.transAxes, weight="bold", fontsize=24)
 
         # save
         os.system("rm -rf " + self.outpng_line_graph)
