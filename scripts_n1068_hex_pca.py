@@ -830,13 +830,13 @@ class ToolsPCA():
         xlim=[-0.5,16.5],
         ylim=None,#[-1.6,3.4],
         xlabel="Lines",
-        ylabel="Ratio relative to $^{13}$CO(1-0)",
+        ylabel="log Ratio relative to $^{12}$CO(1-0)",
         adjust=[0.1,0.963,0.25,0.93],
         )
 
-        ax.plot(range(len(x)),y_cnd,c="black",lw=2,marker="o",markersize=20,markeredgewidth=0)
-        ax.plot(range(len(x)),y_out,c="tomato",lw=2,marker="o",markersize=20,markeredgewidth=0)
-        ax.plot(range(len(x)),y_disk,c="deepskyblue",lw=2,marker="o",markersize=20,markeredgewidth=0)
+        ax.plot(range(len(x)),y_cnd,c="tomato",lw=2,marker="o",markersize=20,markeredgewidth=0)
+        ax.plot(range(len(x)),y_out,c="deepskyblue",lw=2,marker="o",markersize=20,markeredgewidth=0)
+        ax.plot(range(len(x)),y_disk,c="black",lw=2,marker="o",markersize=20,markeredgewidth=0)
 
         # x axis
         ax.set_xticks(range(len(x)))
