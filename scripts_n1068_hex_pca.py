@@ -829,7 +829,7 @@ class ToolsPCA():
         ax,
         grid=None,
         xlim=[-0.5,16.5],
-        ylim=[-2.4,2.4],
+        ylim=[-2.4,1.0],
         xlabel=None,
         ylabel="log Ratio relative to $^{12}$CO(1-0)",
         adjust=[0.1,0.963,0.25,0.93],
@@ -857,7 +857,7 @@ class ToolsPCA():
 
         # ann
         ax.plot([8.5,8.5],[-2.4,2.4],"--",c="black",lw=2)
-        ax.text(8.7, 1.0, "Lines enhanced in the bicone", color="black", fontsize=20, ha="left")
+        ax.text(8.7, 0.9, "Lines enhanced in the bicone", color="black", fontsize=20, ha="left")
 
         ax.plot([3.5,3.5],[-2.4,2.4],"--",c="black",lw=2)
         ax.text(-0.4, 0.4, "Lines suppressed", color="black", fontsize=20, ha="left")
