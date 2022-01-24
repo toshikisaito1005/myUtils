@@ -780,7 +780,9 @@ class ToolsPCA():
                     list_disk.append(np.round(np.nanmax(this_disk), 3))
 
         list_output = np.c_[list_name, list_cnd, list_out, list_disk]
-        print(list_output)
+
+        list_output_sort = list_output[np.argsort(list_output[:, 2])]
+        print(list_output_sort)
 
         # plot
 
