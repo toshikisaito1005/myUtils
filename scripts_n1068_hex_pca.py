@@ -741,9 +741,9 @@ class ToolsPCA():
             print(len(this_cnd))
 
         # get line bicone
-        line_zn    = np.where((theta_deg>=angle1)&(theta_deg<angle4)&(r<self.r_sbr_as),data_line,0)
-        line_zs    = np.where((theta_deg>=angle3)&(r<self.r_sbr_as),data_line,0)
-        line_zs    = np.where((theta_deg<angle2)&(r<self.r_sbr_as),data_line,line_zs)
+        #line_zn    = np.where((theta_deg>=angle1)&(theta_deg<angle4)&(r<self.r_sbr_as),data_line,0)
+        #line_zs    = np.where((theta_deg>=angle3)&(r<self.r_sbr_as),data_line,0)
+        #line_zs    = np.where((theta_deg<angle2)&(r<self.r_sbr_as),data_line,line_zs)
 
     ################################
     # plot_hexmap_pca_ratio_podium # Figure 4
