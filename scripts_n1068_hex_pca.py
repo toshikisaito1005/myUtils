@@ -738,16 +738,20 @@ class ToolsPCA():
             data_line  = np.where((r<=self.r_sbr_as)&(data_line>=err_line*self.snr_mom),data_line,0)
 
             if len(data_line[data_line>0])>=10:
-                this_cnd = np.where(r<self.r_cnd_as,data_line,0)
-                this_cnd = np.median(this_cnd[this_cnd>0])
+                this_cnd  = np.where(r<self.r_cnd_as,data_line,0)
 
-                this_no  = np.where((theta_deg>=angle1)&(theta_deg<angle4)&(r<self.r_sbr_as)&(r>=self.r_cnd_as),data_line,0)
-                this_zo  = np.where((theta_deg>=angle3)&(r<self.r_sbr_as)&(r>=self.r_cnd_as),data_line,0)
-                this_zo  = np.where((theta_deg<angle2)&(r<self.r_sbr_as)&(r>=self.r_cnd_as),data_line,this_zo)
-                this_out = this_no + this_zo
-                this_out = np.median(this_out[this_out>0])
+                this_no   = np.where((theta_deg>=angle1)&(theta_deg<angle4)&(r<self.r_sbr_as)&(r>=self.r_cnd_as),data_line,0)
+                this_zo   = np.where((theta_deg>=angle3)&(r<self.r_sbr_as)&(r>=self.r_cnd_as),data_line,0)
+                this_zo   = np.where((theta_deg<angle2)&(r<self.r_sbr_as)&(r>=self.r_cnd_as),data_line,this_zo)
+                this_out  = this_no + this_zo
 
-                print(this_name, this_cnd, this_out)
+                this_disk = data_line - this_out
+
+                med_cnd   = np.round(np.median(this_cnd[this_cnd>0]), 2)
+                med_out   = np.round(np.median(this_out[this_out>0]), 2)
+                med_disk  = np.round(np.median(this_disk[this_disk>0]), 2)
+
+                print(this_name, this_cnd, this_out, this_disk)
 
 
     ################################
