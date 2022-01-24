@@ -786,7 +786,7 @@ class ToolsPCA():
         list_output = np.c_[list_name, list_cnd, list_out, list_disk]
         list_output_sort = list_output[ np.argsort(list_output[:,2].astype("float32")/list_output[:,3].astype("float32")) ]
         siiisii_ratio    = np.array([s for s in list_output_sort if "siiisii_ratio" in s[0]])
-        list_output_sort = np.array([s for s in list_output_sort if not "siiisii_ratio" in s[0]])
+        list_output_sort = np.array([s for s in list_output_sort if not "siiisii_ratio" in s[0]][0])
         print(list_output_sort)
         print(siiisii_ratio)
 
