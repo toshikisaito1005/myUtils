@@ -855,6 +855,10 @@ class ToolsPCA():
         ax.text(0.03, 0.88, "CND", color="tomato", transform=ax.transAxes, weight="bold", fontsize=24)
         ax.text(0.03, 0.83, "Disk", color="black", transform=ax.transAxes, weight="bold", fontsize=24)
 
+        # ann
+        ax.plot([8.5,8.5],[-2.4,2.4],"--",c="black",lw=2)
+        ax.text(8.55, 0.93, "Lines enhanced in the bicone", color="black", transform=ax.transAxes, fontsize=22, ha="left")
+
         # save
         os.system("rm -rf " + self.outpng_line_graph)
         plt.savefig(self.outpng_line_graph, dpi=300)
