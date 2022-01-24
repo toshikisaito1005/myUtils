@@ -743,7 +743,7 @@ class ToolsPCA():
 
                 this_no  = np.where((theta_deg>=angle1)&(theta_deg<angle4)&(r<self.r_sbr_as)&(r>=self.r_cnd_as),data_line,0)
                 this_zo  = np.where((theta_deg>=angle3)&(r<self.r_sbr_as)&(r>=self.r_cnd_as),data_line,0)
-                this_zo  = np.where((theta_deg<angle2)&(r<self.r_sbr_as)&(r>=self.r_cnd_as),data_line,line_zs)
+                this_zo  = np.where((theta_deg<angle2)&(r<self.r_sbr_as)&(r>=self.r_cnd_as),data_line,this_zo)
                 this_out = this_no + this_zo
                 this_out = np.median(this_out[this_out>0])
 
