@@ -726,7 +726,6 @@ class ToolsPCA():
         header,data_mom0,_,x,y,r = self._read_table(self.table_hex_obs)
         theta_deg = np.degrees(np.arctan2(x, y))
         header    = np.array([s for s in header if not "extinction" in s])
-        print(header)
 
         # get line data
 
@@ -737,8 +736,9 @@ class ToolsPCA():
             data_line[np.isnan(data_line)] = 0
             data_line  = np.where(r<=self.r_sbr_as,data_line,0)
 
-            this_cnd = np.where(r<self.r_cnd_as,data_line,0)
-            print(this_name, len(this_cnd[this_cnd!=0]))
+            if len(data_line)>=10:
+                this_cnd = np.where(r<self.r_cnd_as,data_line,0)
+                print(this_name, len(this_cnd[this_cnd!=0]))
 
         # get line bicone
         #line_zn    = np.where((theta_deg>=angle1)&(theta_deg<angle4)&(r<self.r_sbr_as),data_line,0)
