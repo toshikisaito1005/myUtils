@@ -707,7 +707,7 @@ class ToolsPCA():
                 )
 
     #######################
-    # plot_max_line_graph #
+    # plot_max_line_graph # Figure 5
     #######################
 
     def plot_max_line_graph(self):
@@ -1309,7 +1309,7 @@ class ToolsPCA():
                 this_name = this_name.replace("CH$_3$OH(2-1)","CH$_3$OH(2$_K$-1$_K$)")
 
                 # plot
-                print("# plot " + output)
+                print("# plot " + output + " " + this_name)
                 self._plot_hexmap(
                     output,
                     this_x,
