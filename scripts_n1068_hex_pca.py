@@ -838,9 +838,9 @@ class ToolsPCA():
         ax.plot(range(len(x)),y_cnd,c="tomato",lw=2,marker="o",markersize=20,markeredgewidth=0)
         ax.plot(range(len(x)),y_out,c="deepskyblue",lw=2,marker="o",markersize=20,markeredgewidth=0)
         ax.plot(range(len(x)),y_disk,c="black",lw=2,marker="o",markersize=20,markeredgewidth=0)
-        ax.plot(len(x),float(siiisii_ratio[1]),c="tomato",lw=2,marker="s",markersize=20,markeredgewidth=0)
-        ax.plot(len(x),float(siiisii_ratio[2]),c="deepskyblue",lw=2,marker="s",markersize=20,markeredgewidth=0)
-        ax.plot(len(x),float(siiisii_ratio[3]),c="black",lw=2,marker="s",markersize=20,markeredgewidth=0)
+        ax.plot(len(x),np.log10(float(siiisii_ratio[1])),c="tomato",lw=2,marker="s",markersize=20,markeredgewidth=0)
+        ax.plot(len(x),np.log10(float(siiisii_ratio[2])),c="deepskyblue",lw=2,marker="s",markersize=20,markeredgewidth=0)
+        ax.plot(len(x),np.log10(float(siiisii_ratio[3])),c="black",lw=2,marker="s",markersize=20,markeredgewidth=0)
 
         # x axis
         x.append("[SIII]/[SII] ratio")
@@ -851,9 +851,9 @@ class ToolsPCA():
         ax.plot([15.5,15.5],[-2.4,2.4],"-",c="black",lw=2)
 
         # text
-        ax.text(0.03, 0.93, "Bicone", color="deepskyblue", transform=ax.transAxes, weight="bold", fontsize=24)
-        ax.text(0.03, 0.88, "CND", color="tomato", transform=ax.transAxes, weight="bold", fontsize=24)
-        ax.text(0.03, 0.83, "Disk", color="black", transform=ax.transAxes, weight="bold", fontsize=24)
+        ax.text(0.02, 0.93, "Bicone", color="deepskyblue", transform=ax.transAxes, weight="bold", fontsize=24)
+        ax.text(0.02, 0.88, "CND", color="tomato", transform=ax.transAxes, weight="bold", fontsize=24)
+        ax.text(0.02, 0.83, "Disk", color="black", transform=ax.transAxes, weight="bold", fontsize=24)
 
         # ann
         ax.plot([8.5,8.5],[-2.4,2.4],"--",c="black",lw=2)
@@ -861,7 +861,7 @@ class ToolsPCA():
 
         ax.plot([3.5,3.5],[-2.4,2.4],"--",c="black",lw=2)
         ax.text(-0.4, 0.4, "Lines suppressed", color="black", fontsize=20, ha="left")
-        ax.text(-0.4, 0.23, "in the bicone", color="black", fontsize=20, ha="left")
+        ax.text(-0.4, 0.21, "in the bicone", color="black", fontsize=20, ha="left")
 
         # save
         os.system("rm -rf " + self.outpng_line_graph)
