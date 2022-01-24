@@ -723,7 +723,7 @@ class ToolsPCA():
         angle4 = 65 + offset
 
         # get table
-        header,data_mom0,_,x,y,r = self._read_table(self.table_hex_obs)
+        header,data_mom0,data_err,x,y,r = self._read_table(self.table_hex_obs)
         theta_deg = np.degrees(np.arctan2(x, y))
         header    = np.array([s for s in header if not "extinction" in s])
 
@@ -732,9 +732,10 @@ class ToolsPCA():
         for this_name in header:
             line_index = np.where(header==this_name)
             data_line  = np.array(data_mom0[:,line_index].flatten())
+            err_line   = np.array(data_err[:,line_index].flatten())
             data_line[np.isinf(data_line)] = 0
             data_line[np.isnan(data_line)] = 0
-            data_line  = np.where(r<=self.r_sbr_as,data_line,0)
+            data_line  = np.where((r<=self.r_sbr_as)&(data_line>=err_line*self.snr_mom),data_line,0)
 
             if len(data_line[data_line>0])>=10:
                 this_cnd = np.where(r<self.r_cnd_as,data_line,0)
