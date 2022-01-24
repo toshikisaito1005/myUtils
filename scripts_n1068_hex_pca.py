@@ -228,6 +228,7 @@ class ToolsPCA():
         self.final_pca_mom0_podium    = self.dir_final + self._read_key("final_pca_mom0_podium")
         self.final_pca_ratio_podium   = self.dir_final + self._read_key("final_pca_ratio_podium")
         self.final_hex_radial         = self.dir_final + self._read_key("final_hex_radial")
+        self.final_line_graph         = self.dir_final + self._read_key("final_line_graph")
 
         self.box_map                  = self._read_key("box_map")
         self.box_map_noxlabel         = self._read_key("box_map_noxlabel")
@@ -305,9 +306,10 @@ class ToolsPCA():
         delin                      = False,
         do_all                     = False,
         do_final_overall           = False,
-        do_final_mom0              = True,
+        do_final_mom0              = False,
         do_final_pca_mom0          = False,
         do_final_pca1_ratio_podium = False,
+        do_final_line_graph        = True,
         ):
         """
         """
@@ -320,6 +322,7 @@ class ToolsPCA():
             do_final_mom0              = True
             do_final_pca_mom0          = True
             do_final_pca1_ratio_podium = True
+            do_final_line_graph        = True
 
         if do_final_overall==True:
             print("#####################")
@@ -582,6 +585,18 @@ class ToolsPCA():
                 "100000x100000+0+0",
                 axis="column",
                 delin=True,
+                )
+
+        if do_final_line_graph==True:
+            print("##############################")
+            print("# create do_final_line_graph #")
+            print("##############################")
+
+            immagick_crop(
+                self.outpng_line_graph,
+                self.final_line_graph,
+                "100000x100000+0+0",
+                delin=delin,
                 )
 
     ########################
