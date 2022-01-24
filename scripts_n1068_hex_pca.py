@@ -740,12 +740,15 @@ class ToolsPCA():
             if len(data_line[data_line>0])>=10:
                 this_cnd = np.where(r<self.r_cnd_as,data_line,0)
                 this_cnd = np.median(this_cnd[this_cnd>0])
-                print(this_name, "CND", this_cnd)
 
-        # get line bicone
-        #line_zn    = np.where((theta_deg>=angle1)&(theta_deg<angle4)&(r<self.r_sbr_as),data_line,0)
-        #line_zs    = np.where((theta_deg>=angle3)&(r<self.r_sbr_as),data_line,0)
-        #line_zs    = np.where((theta_deg<angle2)&(r<self.r_sbr_as),data_line,line_zs)
+                this_no  = np.where((theta_deg>=angle1)&(theta_deg<angle4)&(r<self.r_sbr_as)&(r>=self.r_cnd_as),data_line,0)
+                this_zo  = np.where((theta_deg>=angle3)&(r<self.r_sbr_as)&(r>=self.r_cnd_as),data_line,0)
+                this_zo  = np.where((theta_deg<angle2)&(r<self.r_sbr_as)&(r>=self.r_cnd_as),data_line,line_zs)
+                this_out = this_no + this_zo
+                this_out = np.median(this_out[this_out>0])
+
+                print(this_name, this_cnd, this_out)
+
 
     ################################
     # plot_hexmap_pca_ratio_podium # Figure 4
