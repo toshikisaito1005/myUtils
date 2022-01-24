@@ -806,7 +806,7 @@ class ToolsPCA():
         myax_set(
         ax,
         grid=None,
-        xlim=None,#[-3.2,1.8],
+        xlim=[-0.5,16.5],
         ylim=None,#[-1.6,3.4],
         xlabel="Molecular lines",
         ylabel="Ratio relative to $^{13}$CO(1-0)",
