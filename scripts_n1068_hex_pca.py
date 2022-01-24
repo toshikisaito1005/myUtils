@@ -846,7 +846,7 @@ class ToolsPCA():
         ax.set_xticklabels(x.append("[SIII]/[SII] ratio"), rotation = 60, ha="right")
 
         # yaxis
-        ax.plot([15.5,15.5],[-2.4,2.4]."-",c="black",lw=2)
+        ax.plot([15.5,15.5],[-2.4,2.4],"-",c="black",lw=2)
 
         # save
         os.system("rm -rf " + self.outpng_line_graph)
