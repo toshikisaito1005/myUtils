@@ -837,6 +837,9 @@ class ToolsPCA():
         ax.plot(range(len(x)),y_cnd,c="tomato",lw=2,marker="o",markersize=20,markeredgewidth=0)
         ax.plot(range(len(x)),y_out,c="deepskyblue",lw=2,marker="o",markersize=20,markeredgewidth=0)
         ax.plot(range(len(x)),y_disk,c="black",lw=2,marker="o",markersize=20,markeredgewidth=0)
+        ax.plot(len(x),siiisii_ratio[1],c="tomato",lw=2,marker="s",markersize=20,markeredgewidth=0)
+        ax.plot(len(x),siiisii_ratio[2],c="deepskyblue",lw=2,marker="s",markersize=20,markeredgewidth=0)
+        ax.plot(len(x),siiisii_ratio[3],c="black",lw=2,marker="s",markersize=20,markeredgewidth=0)
 
         # x axis
         ax.set_xticks(range(len(x)))
