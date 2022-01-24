@@ -781,7 +781,7 @@ class ToolsPCA():
 
         list_output = np.c_[list_name, list_cnd, list_out, list_disk]
 
-        list_output_sort = list_output[ np.argsort(list_output[:, 1].astype("float32")) ]
+        list_output_sort = list_output[ np.argsort(list_output[:,2].astype("float32")/list_output[:,3].astype("float32")) ]
         print(list_output)
         print(list_output_sort)
 
