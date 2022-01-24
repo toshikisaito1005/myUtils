@@ -736,7 +736,7 @@ class ToolsPCA():
             data_line[np.isnan(data_line)] = 0
             data_line  = np.where(r<=self.r_sbr_as,data_line,0)
 
-            if len(data_line)>=10:
+            if len(data_line[data_line!=0])>=10:
                 this_cnd = np.where(r<self.r_cnd_as,data_line,0)
                 print(this_name, len(this_cnd[this_cnd!=0]))
 
