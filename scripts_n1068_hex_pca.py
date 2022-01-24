@@ -857,11 +857,11 @@ class ToolsPCA():
 
         # ann
         ax.plot([8.5,8.5],[-2.4,2.4],"--",c="black",lw=2)
-        ax.text(8.55, 2.0, "Lines enhanced in the bicone", color="black", fontsize=20, ha="left")
+        ax.text(8.6, 1.0, "Lines enhanced in the bicone", color="black", fontsize=20, ha="left")
 
         ax.plot([3.5,3.5],[-2.4,2.4],"--",c="black",lw=2)
-        ax.text(0.05, 1.0, "Lines suppressed", color="black", fontsize=20, ha="left")
-        ax.text(0.05, 0.9, "in the bicone", color="black", fontsize=20, ha="left")
+        ax.text(0.02, 0.5, "Lines suppressed", color="black", fontsize=20, ha="left")
+        ax.text(0.02, 0.35, "in the bicone", color="black", fontsize=20, ha="left")
 
         # save
         os.system("rm -rf " + self.outpng_line_graph)
