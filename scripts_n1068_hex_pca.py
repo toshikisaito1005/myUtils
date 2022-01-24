@@ -747,17 +747,18 @@ class ToolsPCA():
             data_tco   = np.where((r<=self.r_sbr_as)&(data_line>=err_line*self.snr_mom),data_tco,0)
 
             if len(data_line[data_line>0])>=10:
-                this_cnd  = np.where(r<self.r_cnd_as,data_line,0)
-                tco_cnd   = np.where(r<self.r_cnd_as,data_tco,0)
+                raduis    = self.r_cnd_as
+                this_cnd  = np.where(r<raduis,data_line,0)
+                tco_cnd   = np.where(r<raduis,data_tco,0)
                 this_cnd  = this_cnd / tco_cnd
 
-                this_no   = np.where((theta_deg>=angle1)&(theta_deg<angle4)&(r<self.r_sbr_as)&(r>=self.r_cnd_as),data_line,0)
-                this_zo   = np.where((theta_deg>=angle3)&(r<self.r_sbr_as)&(r>=self.r_cnd_as),data_line,0)
-                this_zo   = np.where((theta_deg<angle2)&(r<self.r_sbr_as)&(r>=self.r_cnd_as),data_line,this_zo)
+                this_no   = np.where((theta_deg>=angle1)&(theta_deg<angle4)&(r<self.r_sbr_as)&(r>=raduis),data_line,0)
+                this_zo   = np.where((theta_deg>=angle3)&(r<self.r_sbr_as)&(r>=raduis),data_line,0)
+                this_zo   = np.where((theta_deg<angle2)&(r<self.r_sbr_as)&(r>=raduis),data_line,this_zo)
                 this_out  = np.array(this_no + this_zo)
-                tco_no    = np.where((theta_deg>=angle1)&(theta_deg<angle4)&(r<self.r_sbr_as)&(r>=self.r_cnd_as),data_tco,0)
-                tco_zo    = np.where((theta_deg>=angle3)&(r<self.r_sbr_as)&(r>=self.r_cnd_as),data_tco,0)
-                tco_zo    = np.where((theta_deg<angle2)&(r<self.r_sbr_as)&(r>=self.r_cnd_as),data_tco,tco_zo)
+                tco_no    = np.where((theta_deg>=angle1)&(theta_deg<angle4)&(r<self.r_sbr_as)&(r>=raduis),data_tco,0)
+                tco_zo    = np.where((theta_deg>=angle3)&(r<self.r_sbr_as)&(r>=raduis),data_tco,0)
+                tco_zo    = np.where((theta_deg<angle2)&(r<self.r_sbr_as)&(r>=raduis),data_tco,tco_zo)
                 tco_out   = np.array(tco_no + tco_zo)
                 this_out  = this_out / tco_out
 
