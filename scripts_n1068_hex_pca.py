@@ -739,7 +739,7 @@ class ToolsPCA():
             data_line  = np.where((r<=self.r_sbr_as)&(data_line>=err_line*self.snr_mom),data_line,0)
 
             # 13co10
-            tco_index  = np.where(header=="13co10")
+            tco_index  = np.where(header=="co10")
             data_tco   = np.array(data_mom0[:,tco_index].flatten())
             err_tco    = np.array(data_err[:,tco_index].flatten())
             data_tco[np.isinf(data_tco)] = 0
