@@ -738,7 +738,7 @@ class ToolsPCA():
             data_line  = np.where(r<=self.r_sbr_as,data_line,0)
 
             this_cnd = np.where(r<self.r_cnd_as,data_line,0)
-            print(len(this_cnd[this_cnd!=0]))
+            print(this_name, len(this_cnd[this_cnd!=0]))
 
         # get line bicone
         #line_zn    = np.where((theta_deg>=angle1)&(theta_deg<angle4)&(r<self.r_sbr_as),data_line,0)
