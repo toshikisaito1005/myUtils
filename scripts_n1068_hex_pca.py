@@ -747,7 +747,7 @@ class ToolsPCA():
             data_tco   = np.where((r<=self.r_sbr_as)&(data_line>=err_line*self.snr_mom),data_tco,0)
 
             if len(data_line[data_line>0])>=10:
-                raduis    = 1 # self.r_cnd_as
+                raduis    = self.r_cnd_as
                 this_cnd  = np.where(r<raduis,data_line,0)
                 tco_cnd   = np.where(r<raduis,data_tco,0)
                 this_cnd  = this_cnd / tco_cnd
@@ -766,9 +766,9 @@ class ToolsPCA():
                 tco_disk  = data_tco - tco_out
                 this_disk = this_disk / tco_disk
 
-                med_cnd   = np.round(np.mean(this_cnd[this_cnd>0]), 2)
-                med_out   = np.round(np.mean(this_out[this_out>0]), 2)
-                med_disk  = np.round(np.mean(this_disk[this_disk>0]), 2)
+                med_cnd   = np.round(np.max(this_cnd[this_cnd>0]), 2)
+                med_out   = np.round(np.max(this_out[this_out>0]), 2)
+                med_disk  = np.round(np.max(this_disk[this_disk>0]), 2)
 
                 print(this_name, med_cnd, med_out, med_disk)
 
