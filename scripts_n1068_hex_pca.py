@@ -747,7 +747,7 @@ class ToolsPCA():
             data_tco   = np.where((r<=self.r_sbr_as)&(data_line>=err_line*self.snr_mom),data_tco,0)
 
             if len(data_line[data_line>0])>=10:
-                raduis    = self.r_cnd_as
+                raduis    = 1 # self.r_cnd_as
                 this_cnd  = np.where(r<raduis,data_line,0)
                 tco_cnd   = np.where(r<raduis,data_tco,0)
                 this_cnd  = this_cnd / tco_cnd
