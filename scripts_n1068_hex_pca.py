@@ -836,12 +836,12 @@ class ToolsPCA():
         )
 
         markersize = 15
-        ax.plot(range(len(x)),y_cnd,c="tomato",lw=2,marker="s",markersize=markersize,markeredgewidth=0)
-        ax.plot(range(len(x)),y_out,c="deepskyblue",lw=2,marker="s",markersize=markersize,markeredgewidth=0)
         ax.plot(range(len(x)),y_disk,c="black",lw=2,marker="s",markersize=markersize,markeredgewidth=0)
-        ax.plot(len(x),np.log10(float(siiisii_ratio[1])),c="tomato",lw=2,marker="o",markersize=markersize,markeredgewidth=0)
-        ax.plot(len(x),np.log10(float(siiisii_ratio[2])),c="deepskyblue",lw=2,marker="o",markersize=markersize,markeredgewidth=0)
+        ax.plot(range(len(x)),y_out,c="deepskyblue",lw=2,marker="s",markersize=markersize,markeredgewidth=0)
+        ax.plot(range(len(x)),y_cnd,c="tomato",lw=2,marker="s",markersize=markersize,markeredgewidth=0)
         ax.plot(len(x),np.log10(float(siiisii_ratio[3])),c="black",lw=2,marker="o",markersize=markersize,markeredgewidth=0)
+        ax.plot(len(x),np.log10(float(siiisii_ratio[2])),c="deepskyblue",lw=2,marker="o",markersize=markersize,markeredgewidth=0)
+        ax.plot(len(x),np.log10(float(siiisii_ratio[1])),c="tomato",lw=2,marker="o",markersize=markersize,markeredgewidth=0)
 
         # x axis
         x.append("[SIII]/[SII] ratio")
