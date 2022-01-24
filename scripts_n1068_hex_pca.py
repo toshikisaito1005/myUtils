@@ -716,7 +716,7 @@ class ToolsPCA():
         check_first(self.table_hex_obs,taskname)
 
         # start
-        offset = 10
+        offset = 0 # 10
         angle1 = -15 - offset
         angle2 = -115 + offset
         angle3 = 165 - offset
