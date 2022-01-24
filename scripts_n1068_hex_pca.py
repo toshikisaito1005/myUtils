@@ -835,7 +835,7 @@ class ToolsPCA():
         adjust=[0.1,0.963,0.25,0.93],
         )
 
-        markersize = 15
+        markersize = 10
         ax.plot(range(len(x)),y_cnd,c="tomato",lw=2,marker="o",markersize=markersize,markeredgewidth=0)
         ax.plot(range(len(x)),y_out,c="deepskyblue",lw=2,marker="o",markersize=markersize,markeredgewidth=0)
         ax.plot(range(len(x)),y_disk,c="black",lw=2,marker="o",markersize=markersize,markeredgewidth=0)
@@ -849,7 +849,7 @@ class ToolsPCA():
         ax.set_xticklabels(x, rotation = 60, ha="right")
 
         # yaxis
-        ax.plot([15.5,15.5],[-2.4,2.4],"-",c="black",lw=2)
+        ax.plot([15.5,15.5],[-2.4,2.4],"-",c="black",lw=2.5)
 
         # text
         ax.text(0.02, 0.93, "Bicone", color="deepskyblue", transform=ax.transAxes, weight="bold", fontsize=24)
