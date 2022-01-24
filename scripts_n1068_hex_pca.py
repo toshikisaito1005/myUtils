@@ -729,13 +729,12 @@ class ToolsPCA():
 
         # get line data
 
-        for i in range(len(header)):
-            this_name  = header[i]
+        for this_name in header:
             line_index = np.where(header==this_name)
             data_line  = np.array(data_mom0[:,line_index].flatten())
             data_line[np.isinf(data_line)] = 0
             data_line[np.isnan(data_line)] = 0
-            print(line_index, len(r), len(data_line))
+            print(this_name, line_index, len(r), len(data_line))
             data_line  = np.where(r<=self.r_sbr_as,data_line,0)
 
             this_cnd = np.where(r<self.r_cnd_as,data_line,0)
