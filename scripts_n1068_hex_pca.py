@@ -765,8 +765,8 @@ class ToolsPCA():
                 this_wd   = np.where((theta_deg<=angle1)&(theta_deg>angle2)&(r<self.r_sbr_as)&(r>=raduis),data_line,0)
                 this_ed   = np.where((theta_deg<=angle3)&(theta_deg>angle4)&(r<self.r_sbr_as)&(r>=raduis),data_line,0)
                 this_disk = np.array(this_wd + this_ed)
-                tco_wd    = np.where((theta_deg<=angle1)&(theta_deg>angle2)&(r<self.r_sbr_as)&(r>=raduis),data_line,0)
-                tco_ed    = np.where((theta_deg<=angle3)&(theta_deg>angle4)&(r<self.r_sbr_as)&(r>=raduis),data_line,0)
+                tco_wd    = np.where((theta_deg<=angle1)&(theta_deg>angle2)&(r<self.r_sbr_as)&(r>=raduis),data_tco,0)
+                tco_ed    = np.where((theta_deg<=angle3)&(theta_deg>angle4)&(r<self.r_sbr_as)&(r>=raduis),data_tco,0)
                 tco_disk  = np.array(tco_wd + tco_ed)
                 this_disk = this_disk / tco_disk
 
