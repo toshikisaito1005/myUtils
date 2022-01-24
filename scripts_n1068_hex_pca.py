@@ -816,6 +816,7 @@ class ToolsPCA():
             this_name = this_name.replace("(1-0)l","(1$_{1/2}$-0$_{1/2}$)")
             this_name = this_name.replace("(1-0)h","(1$_{3/2}$-0$_{1/2}$)")
             x.append(this_name)
+        x=x.append("[SIII]/[SII] ratio")
 
         # set plt, ax
         fig = plt.figure(figsize=(13,9))
@@ -834,16 +835,16 @@ class ToolsPCA():
         adjust=[0.1,0.963,0.25,0.93],
         )
 
-        ax.plot(range(len(x)),y_cnd,c="tomato",lw=2,marker="o",markersize=20,markeredgewidth=0)
-        ax.plot(range(len(x)),y_out,c="deepskyblue",lw=2,marker="o",markersize=20,markeredgewidth=0)
-        ax.plot(range(len(x)),y_disk,c="black",lw=2,marker="o",markersize=20,markeredgewidth=0)
-        ax.plot(len(x),float(siiisii_ratio[1]),c="tomato",lw=2,marker="s",markersize=20,markeredgewidth=0)
-        ax.plot(len(x),float(siiisii_ratio[2]),c="deepskyblue",lw=2,marker="s",markersize=20,markeredgewidth=0)
-        ax.plot(len(x),float(siiisii_ratio[3]),c="black",lw=2,marker="s",markersize=20,markeredgewidth=0)
+        ax.plot(range(len(x)-1),y_cnd,c="tomato",lw=2,marker="o",markersize=20,markeredgewidth=0)
+        ax.plot(range(len(x)-1),y_out,c="deepskyblue",lw=2,marker="o",markersize=20,markeredgewidth=0)
+        ax.plot(range(len(x)-1),y_disk,c="black",lw=2,marker="o",markersize=20,markeredgewidth=0)
+        ax.plot(len(x)-1,float(siiisii_ratio[1]),c="tomato",lw=2,marker="s",markersize=20,markeredgewidth=0)
+        ax.plot(len(x)-1,float(siiisii_ratio[2]),c="deepskyblue",lw=2,marker="s",markersize=20,markeredgewidth=0)
+        ax.plot(len(x)-1,float(siiisii_ratio[3]),c="black",lw=2,marker="s",markersize=20,markeredgewidth=0)
 
         # x axis
-        ax.set_xticks(range(len(x)+1))
-        ax.set_xticklabels(x.extend("[SIII]/[SII] ratio"), rotation = 60, ha="right")
+        ax.set_xticks(range(len(x)))
+        ax.set_xticklabels(x, rotation = 60, ha="right")
 
         # yaxis
         ax.plot([15.5,15.5],[-2.4,2.4],"-",c="black",lw=2)
