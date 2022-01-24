@@ -791,10 +791,29 @@ class ToolsPCA():
         list_output_sort = np.array([s for s in list_output_sort if not "siiisii_ratio" in s[0]])
 
         # plot
-        x      = range(len(list_output_sort[:,0]))
         y_cnd  = np.log10(list_output_sort[:,1].astype("float32"))
         y_out  = np.log10(list_output_sort[:,2].astype("float32"))
         y_disk = np.log10(list_output_sort[:,3].astype("float32"))
+        x = []
+        for this_name in list_output_sort[:,0]:
+            this_name = this_name.replace("1110","(11-10)")
+            this_name = this_name.replace("1211","(12-11)")
+            this_name = this_name.replace("10","(1-0)")
+            this_name = this_name.replace("21","(2-1)")
+            this_name = this_name.replace("(1-0)9","(10-9)")
+            this_name = this_name.replace("12","$^{12}$")
+            this_name = this_name.replace("13","$^{13}$")
+            this_name = this_name.replace("18","$^{18}$")
+            this_name = this_name.replace("c3","c$_3$").replace("h3","H$_3$")
+            this_name = this_name.replace("ci","[CI]").replace("n2","n$_2$")
+            this_name = this_name.replace("c","C").replace("o","O")
+            this_name = this_name.replace("n","N").replace("h","H")
+            this_name = this_name.replace("p","$^+$").replace("s","S")
+            this_name = this_name.replace("SiiiSii_ratiO","[SIII]/[SII] ratio")
+            this_name = this_name.replace("(1-0)H","(1-0)h")
+            this_name = this_name.replace("11-(1-0)","11-10")
+            this_name = this_name.replace("($^{12}$-11)","(12-11)")
+            x.append(this_name)
 
         # set plt, ax
         fig = plt.figure(figsize=(13,9))
@@ -810,7 +829,7 @@ class ToolsPCA():
         ylim=None,#[-1.6,3.4],
         xlabel="Lines",
         ylabel="Ratio relative to $^{13}$CO(1-0)",
-        adjust=[0.1,0.963,0.10,0.93],
+        adjust=[0.1,0.963,0.20,0.93],
         )
 
         ax.plot(x,y_cnd,c="black",lw=2,marker="o",markersize=30,markeredgewidth=0)
