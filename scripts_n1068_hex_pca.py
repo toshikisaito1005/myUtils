@@ -781,7 +781,7 @@ class ToolsPCA():
 
         list_output = np.c_[list_name, list_cnd, list_out, list_disk]
 
-        list_output_sort = list_output[np.argsort(list_output[:, 2])]
+        list_output_sort = list_output[np.argsort(list_output[:, 2]/list_output[:, 3])]
         print(list_output_sort)
 
         # plot
