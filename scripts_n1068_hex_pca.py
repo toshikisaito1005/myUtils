@@ -782,11 +782,11 @@ class ToolsPCA():
                     list_out.append(np.round(np.nanmax(this_out), 3))
                     list_disk.append(np.round(np.nanmax(this_disk), 3))
 
+        # summalize
         list_output = np.c_[list_name, list_cnd, list_out, list_disk]
-
         list_output_sort = list_output[ np.argsort(list_output[:,2].astype("float32")/list_output[:,3].astype("float32")) ]
-        list_output_sort = np.array([s for s in list_output_sort if not "siiisii_ratio" in s[0]])
         siiisii_ratio    = np.array([s for s in list_output_sort if "siiisii_ratio" in s[0]])
+        list_output_sort = np.array([s for s in list_output_sort if not "siiisii_ratio" in s[0]])
         print(list_output_sort)
         print(siiisii_ratio)
 
