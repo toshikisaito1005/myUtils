@@ -15,12 +15,12 @@ dir_final                 ,,,images/
 final_overall             ,,,fig_overall.png
 final_mom0                ,,,fig_mom0.png
 final_pca_mom0            ,,,fig_pca_mom0.png
-final_hex_radial          ,,,fig_hex_radial.png
-# appendix
-final_pca_mom0_podium     ,,,fig_pca_mom0_podium.png
 final_pca_ratio_podium    ,,,fig_pca_ratio_podium.png
+# appendix
 # supplement
+final_hex_radial          ,,,fig_hex_radial.png
 final_pca_r13co           ,,,fig_pca_r13co.png
+final_pca_mom0_podium     ,,,fig_pca_mom0_podium.png
 
 ############
 # raw maps #
@@ -62,6 +62,7 @@ outpng_pca2_ratio_podium  ,,,fig_hexmap_pc2_ratio_???.png
 outpng_radial1            ,,,fig_radial1.png
 outpng_radial2            ,,,fig_radial2.png
 outpng_radial3            ,,,fig_radial3.png
+outpng_line_graph         ,,,fig_line_graph.png
 # box for imagemajick
 box_map                   ,,,2870x2750+350+150
 box_map_noxlabel          ,,,2550x2750+670+150

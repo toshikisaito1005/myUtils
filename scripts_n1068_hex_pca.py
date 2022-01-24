@@ -218,6 +218,8 @@ class ToolsPCA():
         self.outpng_radial2           = self.dir_products + self._read_key("outpng_radial2")
         self.outpng_radial3           = self.dir_products + self._read_key("outpng_radial3")
 
+        self.outpng_line_graph        = self.dir_products + self._read_key("outpng_line_graph")
+
         # final
         self.final_overall            = self.dir_final + self._read_key("final_overall")
         self.final_mom0               = self.dir_final + self._read_key("final_mom0")
@@ -279,7 +281,7 @@ class ToolsPCA():
             self.plot_hexmap_pca_ratio_podium()
 
         if plot_median_line_graph==True:
-            self.plot_median_line_graph()
+            self.plot_max_line_graph()
 
         if do_imagemagick==True:
             self.immagick_figures()
@@ -704,11 +706,11 @@ class ToolsPCA():
                 delin=delin,
                 )
 
-    ##########################
-    # plot_median_line_graph #
-    ##########################
+    #######################
+    # plot_max_line_graph #
+    #######################
 
-    def plot_median_line_graph(self):
+    def plot_max_line_graph(self):
         """
         """
 
@@ -787,10 +789,30 @@ class ToolsPCA():
         list_output_sort = list_output[ np.argsort(list_output[:,2].astype("float32")/list_output[:,3].astype("float32")) ]
         siiisii_ratio    = np.array([s for s in list_output_sort if "siiisii_ratio" in s[0]][0])
         list_output_sort = np.array([s for s in list_output_sort if not "siiisii_ratio" in s[0]])
-        print(list_output_sort)
-        print(siiisii_ratio)
 
         # plot
+        # set plt, ax
+        fig = plt.figure(figsize=(13,10))
+        plt.rcParams["font.size"] = 16
+        gs = gridspec.GridSpec(nrows=10, ncols=10)
+        ax = plt.subplot(gs[0:10,0:10])
+
+        # set ax parameter
+        myax_set(
+        ax,
+        grid=None,
+        xlim=None,#[-3.2,1.8],
+        ylim=None,#[-1.6,3.4],
+        xlabel="Molecular lines",
+        ylabel="Ratio relative to $^{13}$CO(1-0)",
+        adjust=[0.023,0.963,0.10,0.93],
+        )
+
+        ax.plot(list_output_sort[:,0],list_output_sort[:,1])
+
+        # save
+        os.system("rm -rf " + self.outpng_line_graph)
+        plt.savefig(self.outpng_line_graph, dpi=300)
 
     ################################
     # plot_hexmap_pca_ratio_podium # Figure 4
