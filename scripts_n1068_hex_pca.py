@@ -785,8 +785,10 @@ class ToolsPCA():
         list_output = np.c_[list_name, list_cnd, list_out, list_disk]
 
         list_output_sort = list_output[ np.argsort(list_output[:,2].astype("float32")/list_output[:,3].astype("float32")) ]
-        print(list_output)
+        list_output_sort = [s for s in list_output_sort if not "siiisii_ratio" in s]
+        siiisii_ratio    = list_output_sort[list_output_sort[:,0]=="siiisii_ratio"]
         print(list_output_sort)
+        print(siiisii_ratio)
 
         # plot
 
