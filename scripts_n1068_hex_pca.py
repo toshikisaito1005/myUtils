@@ -726,7 +726,6 @@ class ToolsPCA():
         header,data_mom0,_,x,y,r = self._read_table(self.table_hex_obs)
         theta_deg = np.degrees(np.arctan2(x, y))
         header    = [s for s in header if not "extinction" in s]
-        print(header)
 
         # get line data
 
@@ -736,7 +735,7 @@ class ToolsPCA():
             data_line  = np.array(data_mom0[:,line_index].flatten())
             data_line[np.isinf(data_line)] = 0
             data_line[np.isnan(data_line)] = 0
-            print(len(r), len(data_line))
+            print(line_index, len(r), len(data_line))
             data_line  = np.where(r<=self.r_sbr_as,data_line,0)
 
             this_cnd = np.where(r<self.r_cnd_as,data_line,0)
