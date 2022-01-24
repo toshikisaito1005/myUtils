@@ -728,7 +728,10 @@ class ToolsPCA():
         header    = np.array([s for s in header if not "extinction" in s])
 
         # get line data
-
+        list_name = []
+        list_cnd  = []
+        list_out  = []
+        list_disk = []
         for this_name in header:
             # this_line
             line_index = np.where(header==this_name)
@@ -770,13 +773,14 @@ class ToolsPCA():
                 tco_disk  = np.array(tco_wd + tco_ed)
                 this_disk = this_disk / tco_disk
 
+                if this_name!="co10":
+                    list_name.append(this_name)
+                    list_cnd.append(np.round(np.nanmax(this_cnd), 2))
+                    list_out.append(np.round(np.nanmax(this_out), 2))
+                    list_disk.append(np.round(np.nanmax(this_disk), 2))
 
-                med_cnd   = np.round(np.nanmax(this_cnd), 2)
-                med_out   = np.round(np.nanmax(this_out), 2)
-                med_disk  = np.round(np.nanmax(this_disk), 2)
-
-                print(this_name, med_cnd, med_out, med_disk)
-
+        list_output = np.c_[list_name, list_cnd, list_out, list_disk]
+        print(list_output)
 
     ################################
     # plot_hexmap_pca_ratio_podium # Figure 4
