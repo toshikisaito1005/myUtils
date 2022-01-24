@@ -726,6 +726,7 @@ class ToolsPCA():
         header,data_mom0,_,x,y,r = self._read_table(self.table_hex_obs)
         theta_deg = np.degrees(np.arctan2(x, y))
         header    = [s for s in header if not "extinction" in s]
+        print(header)
 
         # get line data
 
