@@ -730,6 +730,7 @@ class ToolsPCA():
         # get line data
 
         for this_name in header:
+            # this_line
             line_index = np.where(header==this_name)
             data_line  = np.array(data_mom0[:,line_index].flatten())
             err_line   = np.array(data_err[:,line_index].flatten())
@@ -737,15 +738,32 @@ class ToolsPCA():
             data_line[np.isnan(data_line)] = 0
             data_line  = np.where((r<=self.r_sbr_as)&(data_line>=err_line*self.snr_mom),data_line,0)
 
+            # 13co10
+            tco_index  = np.where(header=="13co10")
+            data_tco   = np.array(data_mom0[:,tco_index].flatten())
+            err_tco    = np.array(data_err[:,tco_index].flatten())
+            data_tco[np.isinf(data_tco)] = 0
+            data_tco[np.isnan(data_tco)] = 0
+            data_tco   = np.where((r<=self.r_sbr_as)&(data_line>=err_line*self.snr_mom),data_tco,0)
+
             if len(data_line[data_line>0])>=10:
                 this_cnd  = np.where(r<self.r_cnd_as,data_line,0)
+                tco_cnd   = np.where(r<self.r_cnd_as,data_tco,0)
+                this_cnd  = this_cnd / tco_cnd
 
                 this_no   = np.where((theta_deg>=angle1)&(theta_deg<angle4)&(r<self.r_sbr_as)&(r>=self.r_cnd_as),data_line,0)
                 this_zo   = np.where((theta_deg>=angle3)&(r<self.r_sbr_as)&(r>=self.r_cnd_as),data_line,0)
                 this_zo   = np.where((theta_deg<angle2)&(r<self.r_sbr_as)&(r>=self.r_cnd_as),data_line,this_zo)
                 this_out  = np.array(this_no + this_zo)
+                tco_no    = np.where((theta_deg>=angle1)&(theta_deg<angle4)&(r<self.r_sbr_as)&(r>=self.r_cnd_as),data_tco,0)
+                tco_zo    = np.where((theta_deg>=angle3)&(r<self.r_sbr_as)&(r>=self.r_cnd_as),data_tco,0)
+                tco_zo    = np.where((theta_deg<angle2)&(r<self.r_sbr_as)&(r>=self.r_cnd_as),data_tco,tco_zo)
+                tco_out   = np.array(tco_no + tco_zo)
+                this_out  = this_out / tco_out
 
                 this_disk = data_line - this_out
+                tco_disk  = data_tco - tco_out
+                this_disk = this_disk / tco_disk
 
                 med_cnd   = np.round(np.median(this_cnd[this_cnd>0]), 2)
                 med_out   = np.round(np.median(this_out[this_out>0]), 2)
