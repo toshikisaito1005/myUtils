@@ -762,9 +762,11 @@ class ToolsPCA():
                 tco_out   = np.array(tco_no + tco_zo)
                 this_out  = this_out / tco_out
 
-                this_disk = data_line - this_out
-                tco_disk  = data_tco - tco_out
+                this_disk = np.logical_not(this_out)
+                tco_disk  = np.logical_not(tco_out)
                 this_disk = this_disk / tco_disk
+                this_disk[np.isinf(this_disk)] = 0
+                this_disk[np.isnan(this_disk)] = 0
 
                 med_cnd   = np.round(np.max(this_cnd[this_cnd>0]), 2)
                 med_out   = np.round(np.max(this_out[this_out>0]), 2)
