@@ -779,8 +779,10 @@ class ToolsPCA():
                     list_out.append(np.round(np.nanmax(this_out), 3))
                     list_disk.append(np.round(np.nanmax(this_disk), 3))
 
-        list_output = np.c_[list_name, list_cnd, list_out, list_disk]
+        list_output = np.c_[list_name, list_cnd, list_out/list_disk, list_disk]
         print(list_output)
+
+        # plot
 
     ################################
     # plot_hexmap_pca_ratio_podium # Figure 4
