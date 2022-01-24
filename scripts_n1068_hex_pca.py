@@ -809,9 +809,9 @@ class ToolsPCA():
         adjust=[0.023,0.963,0.10,0.93],
         )
 
-        ax.plot(x,list_output_sort[:,1])
-        ax.plot(x,list_output_sort[:,2])
-        ax.plot(x,list_output_sort[:,3])
+        ax.plot(x,np.log10(list_output_sort[:,1]),c="black",lw=2,markersize=30)
+        ax.plot(x,np.log10(list_output_sort[:,2]),c="tomato",lw=2,markersize=30)
+        ax.plot(x,np.log10(list_output_sort[:,3]),c="deepskyblue",lw=2,markersize=30)
 
         # save
         os.system("rm -rf " + self.outpng_line_graph)
