@@ -829,18 +829,19 @@ class ToolsPCA():
         ax,
         grid=None,
         xlim=[-0.5,16.5],
-        ylim=[-2.4,1.0],
+        ylim=[-2.2,0.9],
         xlabel=None,
         ylabel="log Ratio relative to $^{12}$CO(1-0)",
         adjust=[0.1,0.963,0.25,0.93],
         )
 
-        ax.plot(range(len(x)),y_cnd,c="tomato",lw=2,marker="o",markersize=20,markeredgewidth=0)
-        ax.plot(range(len(x)),y_out,c="deepskyblue",lw=2,marker="o",markersize=20,markeredgewidth=0)
-        ax.plot(range(len(x)),y_disk,c="black",lw=2,marker="o",markersize=20,markeredgewidth=0)
-        ax.plot(len(x),np.log10(float(siiisii_ratio[1])),c="tomato",lw=2,marker="s",markersize=20,markeredgewidth=0)
-        ax.plot(len(x),np.log10(float(siiisii_ratio[2])),c="deepskyblue",lw=2,marker="s",markersize=20,markeredgewidth=0)
-        ax.plot(len(x),np.log10(float(siiisii_ratio[3])),c="black",lw=2,marker="s",markersize=20,markeredgewidth=0)
+        markersize = 15
+        ax.plot(range(len(x)),y_cnd,c="tomato",lw=2,marker="o",markersize=markersize,markeredgewidth=0)
+        ax.plot(range(len(x)),y_out,c="deepskyblue",lw=2,marker="o",markersize=markersize,markeredgewidth=0)
+        ax.plot(range(len(x)),y_disk,c="black",lw=2,marker="o",markersize=markersize,markeredgewidth=0)
+        ax.plot(len(x),np.log10(float(siiisii_ratio[1])),c="tomato",lw=2,marker="s",markersize=markersize,markeredgewidth=0)
+        ax.plot(len(x),np.log10(float(siiisii_ratio[2])),c="deepskyblue",lw=2,marker="s",markersize=markersize,markeredgewidth=0)
+        ax.plot(len(x),np.log10(float(siiisii_ratio[3])),c="black",lw=2,marker="s",markersize=markersize,markeredgewidth=0)
 
         # x axis
         x.append("[SIII]/[SII] ratio")
@@ -857,11 +858,11 @@ class ToolsPCA():
 
         # ann
         ax.plot([8.5,8.5],[-2.4,2.4],"--",c="black",lw=2)
-        ax.text(8.7, 0.9, "Lines enhanced in the bicone", color="black", fontsize=20, ha="left")
+        ax.text(8.7, -1.5, "Lines enhanced in the bicone", color="black", fontsize=20, ha="left")
 
         ax.plot([3.5,3.5],[-2.4,2.4],"--",c="black",lw=2)
-        ax.text(-0.4, 0.4, "Lines suppressed", color="black", fontsize=20, ha="left")
-        ax.text(-0.4, 0.21, "in the bicone", color="black", fontsize=20, ha="left")
+        ax.text(-0.4, 0.2, "Lines suppressed", color="black", fontsize=20, ha="left")
+        ax.text(-0.4, 0.01, "in the bicone", color="black", fontsize=20, ha="left")
 
         # save
         os.system("rm -rf " + self.outpng_line_graph)
