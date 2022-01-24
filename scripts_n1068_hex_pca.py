@@ -770,7 +770,7 @@ class ToolsPCA():
 
                 med_cnd   = np.round(np.max(this_cnd[this_cnd>0]), 2)
                 med_out   = np.round(np.max(this_out[this_out>0]), 2)
-                if this_disk[this_disk>0]>0:
+                if len(this_disk[this_disk>0])>0:
                     med_disk = np.round(np.max(this_disk[this_disk>0]), 2)
                 else:
                     med_disk = 0
