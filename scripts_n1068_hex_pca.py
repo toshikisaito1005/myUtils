@@ -311,11 +311,11 @@ class ToolsPCA():
         self,
         delin                      = False,
         do_all                     = False,
-        do_final_overall           = False,
-        do_final_mom0              = False,
-        do_final_pca_mom0          = False,
-        do_final_pca1_ratio_podium = False,
-        do_final_line_graph        = True,
+        do_final_overall           = False, # Figure 1
+        do_final_mom0              = False, # Figure 2
+        do_final_pca_mom0          = False, # Figure 3
+        do_final_pca1_ratio_podium = False, # Figure 4
+        do_final_line_graph        = True, # Figure 5
         ):
         """
         """
