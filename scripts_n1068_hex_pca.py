@@ -894,13 +894,14 @@ class ToolsPCA():
         ax2.set_xticklabels(["[SIII]/[SII] ratio"], rotation = 60, ha="right")
 
         # text
-        ax.text(0.02, 0.93, "Outflow", color="deepskyblue", transform=ax.transAxes, weight="bold", fontsize=22)
-        ax.text(0.02, 0.88, "CND", color="tomato", transform=ax.transAxes, weight="bold", fontsize=22)
-        ax.text(0.02, 0.83, "Non-outflow", color="grey", transform=ax.transAxes, weight="bold", fontsize=22)
+        ax.text(0.015, 0.93, "Outflow", color="deepskyblue", transform=ax.transAxes, weight="bold", fontsize=22)
+        ax.text(0.015, 0.88, "CND", color="tomato", transform=ax.transAxes, weight="bold", fontsize=22)
+        ax.text(0.015, 0.83, "Non-outflow", color="grey", transform=ax.transAxes, weight="bold", fontsize=22)
 
         # ann
         ax.plot([8.5,8.5],[-2.4,2.4],"--",c="black",lw=2)
-        ax.text(12.0, -1.5, "Lines enhanced in the bicone", color="black", fontsize=18, ha="center")
+        ax.text(12.0, -1.5, "Lines enhanced", color="black", fontsize=18, ha="center")
+        ax.text(12.0, -1.69, "in the bicone", color="black", fontsize=18, ha="center")
 
         ax.plot([3.5,3.5],[-2.4,2.4],"--",c="black",lw=2)
         ax.text(1.5, 0.1, "Lines suppressed", color="black", fontsize=18, ha="center")
