@@ -14,6 +14,7 @@ dir_final                 ,,,images/
 # paper
 final_overall             ,,,fig_overall.png
 final_mom0                ,,,fig_mom0.png
+final_envmask             ,,,fig_envmask.png
 final_pca_mom0            ,,,fig_pca_mom0.png
 final_pca_ratio_podium    ,,,fig_pca_ratio_podium.png
 final_line_graph          ,,,fig_line_graph.png

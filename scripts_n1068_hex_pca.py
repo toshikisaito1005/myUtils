@@ -1293,9 +1293,9 @@ class ToolsPCA():
 
         #
         mask = np.where(r<self.r_sbr_as,1,0)
-        mask = np.where((theta_deg>=angle1)&(theta_deg<angle4)&(r<self.r_sbr_as)&(r>=raduis),2,mask)
-        mask = np.where((theta_deg>=angle3)&(r<self.r_sbr_as)&(r>=raduis),2,mask)
-        mask = np.where((theta_deg<angle2)&(r<self.r_sbr_as)&(r>=raduis),2,mask)
+        mask = np.where((theta_deg>=angle1)&(theta_deg<angle4)&(r<self.r_sbr_as)&(r>=self.r_cnd_as),2,mask)
+        mask = np.where((theta_deg>=angle3)&(r<self.r_sbr_as)&(r>=self.r_cnd_as),2,mask)
+        mask = np.where((theta_deg<angle2)&(r<self.r_sbr_as)&(r>=self.r_cnd_as),2,mask)
         mask = np.where(r<self.r_cnd_as,3,0)
 
         os.system("rm -rf " + self.outpng_envmask)
