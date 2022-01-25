@@ -1307,8 +1307,9 @@ class ToolsPCA():
             dec,
             mask,
             "Region definition",
+            cmap      = "gnuplot",
             ann       = True,
-            add_text  = False,
+            add_text  ="env",
             lim       = 13,
             size      = 3600,
             label     = None,
@@ -1726,8 +1727,11 @@ class ToolsPCA():
         # add annotation comment
         if add_text==True:
             ax.plot([0,-7], [0,10], lw=3, c="black")
-            ax.text(-10.5, 10.5, "AGN position",
-                horizontalalignment="right", verticalalignment="center", weight="bold")
+            ax.text(-10.5, 10.5, "AGN position", ha="right", va="center", weight="bold")
+        elif add_text=="env":
+            ax.text(-7.5, 12, "CND", ha="left", va="center", c=cm.gnuplot(0/3.))
+            ax.text(-6.5, 12, "Outflow", ha="left", va="center", c=cm.gnuplot(1/3.))
+            ax.text(-5.5, 12, "Non-outflow", ha="left", va="center", c=cm.gnuplot(2/3.))
 
         # save
         os.system("rm -rf " + outpng)
