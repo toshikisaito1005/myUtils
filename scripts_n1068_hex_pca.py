@@ -1307,7 +1307,7 @@ class ToolsPCA():
             dec,
             mask,
             "Region definition",
-            cmap      = "gnuplot",
+            cmap      = "gist_rainbow",
             ann       = True,
             add_text  ="env",
             lim       = 13,
@@ -1729,9 +1729,9 @@ class ToolsPCA():
             ax.plot([0,-7], [0,10], lw=3, c="black")
             ax.text(-10.5, 10.5, "AGN position", ha="right", va="center", weight="bold")
         elif add_text=="env":
-            ax.text(12, -7.5, "CND", ha="left", va="center", color=cm.gnuplot(1/3.))
-            ax.text(12, -6.5, "Outflow", ha="left", va="center", color=cm.gnuplot(2/3.))
-            ax.text(12, -5.5, "Non-outflow", ha="left", va="center", color=cm.gnuplot(3/3.))
+            ax.text(12, -10, "CND", ha="left", va="center", color=cm.gist_rainbow(1/3.))
+            ax.text(12, -11, "Outflow", ha="left", va="center", color=cm.gist_rainbow(2/3.))
+            ax.text(12, -12, "Non-outflow", ha="left", va="center", color=cm.gist_rainbow(3/3.))
 
         # save
         os.system("rm -rf " + outpng)
