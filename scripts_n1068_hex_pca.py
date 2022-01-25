@@ -901,11 +901,11 @@ class ToolsPCA():
         # ann
         ax.plot([8.5,8.5],[-2.4,2.4],"--",c="black",lw=2)
         ax.text(12.0, -1.5, "Lines enhanced", color="black", fontsize=18, ha="center")
-        ax.text(12.0, -1.69, "in the bicone", color="black", fontsize=18, ha="center")
+        ax.text(12.0, -1.69, "in the outflow", color="black", fontsize=18, ha="center")
 
         ax.plot([3.5,3.5],[-2.4,2.4],"--",c="black",lw=2)
         ax.text(1.5, 0.1, "Lines suppressed", color="black", fontsize=18, ha="center")
-        ax.text(1.5, -0.09, "in the bicone", color="black", fontsize=18, ha="center")
+        ax.text(1.5, -0.09, "in the outflow", color="black", fontsize=18, ha="center")
 
         # save
         os.system("rm -rf " + self.outpng_line_graph)
