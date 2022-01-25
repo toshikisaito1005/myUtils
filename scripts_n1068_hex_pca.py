@@ -1421,7 +1421,7 @@ class ToolsPCA():
 
                 # plot
                 if this_name=="[SIII]/[SII] ratio":
-                    label = None
+                    label = "Ratio"
                 else:
                     label = "(K km s$^{-1}$)"
 
