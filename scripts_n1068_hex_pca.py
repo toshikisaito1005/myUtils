@@ -1683,7 +1683,7 @@ class ToolsPCA():
         if add_text!="env":
             im = ax.scatter(x, y, s=size, c=c, cmap=cmap, marker="h", linewidths=0, vmin=0)
         else:
-            ax.scatter(x[c==3], y[c==3], s=size, c="tomato", marker="h", linewidths=0)
+            im = ax.scatter(x[c==3], y[c==3], s=size, c="tomato", marker="h", linewidths=0)
             ax.scatter(x[c==2], y[c==2], s=size, c="deepskyblue", marker="h", linewidths=0)
             ax.scatter(x[c==1], y[c==1], s=size, c="grey", marker="h", linewidths=0)
 
