@@ -219,6 +219,7 @@ class ToolsPCA():
         self.outpng_radial3           = self.dir_products + self._read_key("outpng_radial3")
 
         self.outpng_line_graph        = self.dir_products + self._read_key("outpng_line_graph")
+        self.outpng_envmask           = self.dir_products + self._read_key("outpng_envmask")
 
         # final
         self.final_overall            = self.dir_final + self._read_key("final_overall")
@@ -247,6 +248,7 @@ class ToolsPCA():
         do_pca                 = False,
         # plot figures in paper
         plot_hexmap_mom0       = False,
+        plot_envmask           = False,
         plot_hexmap_pca        = False,
         plot_hexmap_pca_podium = False,
         plot_median_line_graph = False,
@@ -274,6 +276,9 @@ class ToolsPCA():
         # plot figures in paper
         if plot_hexmap_mom0==True:
             self.plot_hexmap_mom0()
+
+        if plot_envmask==True:
+            self.plot_envmask()
 
         if plot_hexmap_pca==True:
             self.plot_hexmap_pca()
@@ -1264,8 +1269,52 @@ class ToolsPCA():
                 size=3600,
                 )
 
+    ################
+    # plot_envmask # Figures 1b
+    ################
+
+    def plot_envmask(self):
+        """
+        """
+
+        taskname = self.modname + sys._getframe().f_code.co_name
+        check_first(self.table_hex_obs,taskname)
+
+        # start
+        offset = 0 # 10
+        angle1 = -15 - offset
+        angle2 = -115 + offset
+        angle3 = 165 - offset
+        angle4 = 65 + offset
+
+        # extract line name
+        _,_,_,ra,dec,r = self._read_table(self.table_hex_obs)
+        theta_deg = np.degrees(np.arctan2(x, y))
+
+        #
+        mask = np.where(r<self.r_sbr_as,1,0)
+        mask = np.where((theta_deg>=angle1)&(theta_deg<angle4)&(r<self.r_sbr_as)&(r>=raduis),2,mask)
+        mask = np.where((theta_deg>=angle3)&(r<self.r_sbr_as)&(r>=raduis),2,mask)
+        mask = np.where((theta_deg<angle2)&(r<self.r_sbr_as)&(r>=raduis),2,mask)
+        mask = np.where(r<self.r_cnd_as,3,0)
+
+        os.system("rm -rf " + self.outpng_envmask)
+        self._plot_hexmap(
+            self.outpng_envmask,
+            ra,
+            dec,
+            mask,
+            "Region definition",
+            ann       = True,
+            add_text  = False,
+            lim       = 13,
+            size      = 3600,
+            label     = None,
+            plot_cbar = False,
+            )
+
     ####################
-    # plot_hexmap_mom0 # Figures 1 and 2
+    # plot_hexmap_mom0 # Figures 1a and 2
     ####################
 
     def plot_hexmap_mom0(self):
@@ -1308,7 +1357,7 @@ class ToolsPCA():
                     size     = 780,
                     label    = "(K km s$^{-1}$)",
                     scalebar = "500pc",
-                    )  
+                    )
 
             if len(this_c[this_c!=0])>=10:
                 this_name = this_name.replace("1110","(11-10)")

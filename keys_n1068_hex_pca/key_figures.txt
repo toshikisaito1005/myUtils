@@ -64,6 +64,7 @@ outpng_radial1            ,,,fig_radial1.png
 outpng_radial2            ,,,fig_radial2.png
 outpng_radial3            ,,,fig_radial3.png
 outpng_line_graph         ,,,fig_line_graph.png
+outpng_envmask            ,,,fig_envmask.png
 # box for imagemajick
 box_map                   ,,,2870x2750+350+150
 box_map_noxlabel          ,,,2550x2750+670+150
