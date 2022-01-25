@@ -287,8 +287,8 @@ class ToolsPCA():
             self.plot_hexmap_pca_ratio_podium()
 
         if plot_median_line_graph==True:
-            self.plot_max_line_graph(self,denom="co10")
-            self.plot_max_line_graph(self,denom="hcn10")
+            self.plot_max_line_graph(denom="co10")
+            self.plot_max_line_graph(denom="hcn10")
 
         if do_imagemagick==True:
             self.immagick_figures()
