@@ -880,8 +880,8 @@ class ToolsPCA():
         x.append("[SIII]/[SII] ratio")
         ax.set_xticks(range(len(x)))
         ax.set_xticklabels(x, rotation = 60, ha="right")
-        ax.set_xticks(16.0)
-        ax.set_xticklabels("[SIII]/[SII] ratio", rotation = 60, ha="right")
+        ax.set_xticks([16.0])
+        ax.set_xticklabels(["[SIII]/[SII] ratio"], rotation = 60, ha="right")
         ax.tick_params(labelleft=False)
 
         # text
