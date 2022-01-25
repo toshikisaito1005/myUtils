@@ -858,10 +858,10 @@ class ToolsPCA():
         )
 
         markersize = 15
-        ax.plot(range(len(x)),y_disk,c="black",lw=2,marker="s",markersize=markersize,markeredgewidth=0)
+        ax.plot(range(len(x)),y_disk,c="grey",lw=2,marker="s",markersize=markersize,markeredgewidth=0)
         ax.plot(range(len(x)),y_cnd,c="tomato",lw=2,marker="s",markersize=markersize,markeredgewidth=0)
         ax.plot(range(len(x)),y_out,c="deepskyblue",lw=2,marker="s",markersize=markersize,markeredgewidth=0)
-        ax.plot(len(x),np.log10(float(siiisii_ratio[3])),c="black",lw=2,marker="o",markersize=markersize,markeredgewidth=0)
+        ax.plot(len(x),np.log10(float(siiisii_ratio[3])),c="grey",lw=2,marker="o",markersize=markersize,markeredgewidth=0)
         ax.plot(len(x),np.log10(float(siiisii_ratio[1])),c="tomato",lw=2,marker="o",markersize=markersize,markeredgewidth=0)
         ax.plot(len(x),np.log10(float(siiisii_ratio[2])),c="deepskyblue",lw=2,marker="o",markersize=markersize,markeredgewidth=0)
 
@@ -874,9 +874,9 @@ class ToolsPCA():
         ax.plot([15.5,15.5],[-2.4,2.4],"-",c="black",lw=2.5)
 
         # text
-        ax.text(0.02, 0.93, "Bicone", color="deepskyblue", transform=ax.transAxes, weight="bold", fontsize=24)
+        ax.text(0.02, 0.93, "Outflow", color="deepskyblue", transform=ax.transAxes, weight="bold", fontsize=24)
         ax.text(0.02, 0.88, "CND", color="tomato", transform=ax.transAxes, weight="bold", fontsize=24)
-        ax.text(0.02, 0.83, "Disk", color="black", transform=ax.transAxes, weight="bold", fontsize=24)
+        ax.text(0.02, 0.83, "Non-outflow", color="grey", transform=ax.transAxes, weight="bold", fontsize=24)
 
         # ann
         ax.plot([8.5,8.5],[-2.4,2.4],"--",c="black",lw=2)
