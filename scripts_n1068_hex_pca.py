@@ -310,7 +310,7 @@ class ToolsPCA():
         self,
         delin                      = False,
         do_all                     = False,
-        do_final_overall           = True,
+        do_final_overall           = False,
         do_final_mom0              = False,
         do_final_pca_mom0          = False,
         do_final_pca1_ratio_podium = False,
@@ -841,19 +841,29 @@ class ToolsPCA():
             x.append(this_name)
 
         # set plt, ax
-        fig = plt.figure(figsize=(13,9))
+        fig  = plt.figure(figsize=(13,9))
         plt.rcParams["font.size"] = 16
-        gs = gridspec.GridSpec(nrows=10, ncols=10)
-        ax = plt.subplot(gs[0:10,0:10])
+        gs  = gridspec.GridSpec(nrows=10, ncols=10)
+        ax  = plt.subplot(gs[0:9,0:10])
+        ax2 = plt.subplot(gs[9:10,0:10])
 
         # set ax parameter
         myax_set(
         ax,
         grid=None,
-        xlim=[-0.5,16.5],
+        xlim=[-0.5,15.5],
         ylim=[-2.2,0.9],
         xlabel=None,
         ylabel="log Ratio relative to $^{12}$CO(1-0)",
+        adjust=[0.1,0.963,0.25,0.93],
+        )
+        myax_set(
+        ax2,
+        grid=None,
+        xlim=[15.5,16.5],
+        ylim=[-2.2,0.9],
+        xlabel=None,
+        ylabel=None,
         adjust=[0.1,0.963,0.25,0.93],
         )
 
@@ -861,17 +871,14 @@ class ToolsPCA():
         ax.plot(range(len(x)),y_disk,c="grey",lw=2,marker="s",markersize=markersize,markeredgewidth=0)
         ax.plot(range(len(x)),y_cnd,c="tomato",lw=2,marker="s",markersize=markersize,markeredgewidth=0)
         ax.plot(range(len(x)),y_out,c="deepskyblue",lw=2,marker="s",markersize=markersize,markeredgewidth=0)
-        ax.plot(len(x),np.log10(float(siiisii_ratio[3])),c="grey",lw=2,marker="o",markersize=markersize,markeredgewidth=0)
-        ax.plot(len(x),np.log10(float(siiisii_ratio[1])),c="tomato",lw=2,marker="o",markersize=markersize,markeredgewidth=0)
-        ax.plot(len(x),np.log10(float(siiisii_ratio[2])),c="deepskyblue",lw=2,marker="o",markersize=markersize,markeredgewidth=0)
+        ax2.plot(len(x),np.log10(float(siiisii_ratio[3])),c="grey",lw=2,marker="o",markersize=markersize,markeredgewidth=0)
+        ax2.plot(len(x),np.log10(float(siiisii_ratio[1])),c="tomato",lw=2,marker="o",markersize=markersize,markeredgewidth=0)
+        ax2.plot(len(x),np.log10(float(siiisii_ratio[2])),c="deepskyblue",lw=2,marker="o",markersize=markersize,markeredgewidth=0)
 
         # x axis
         x.append("[SIII]/[SII] ratio")
         ax.set_xticks(range(len(x)))
         ax.set_xticklabels(x, rotation = 60, ha="right")
-
-        # yaxis
-        ax.plot([15.5,15.5],[-2.4,2.4],"-",c="black",lw=2.5)
 
         # text
         ax.text(0.02, 0.93, "Outflow", color="deepskyblue", transform=ax.transAxes, weight="bold", fontsize=24)
