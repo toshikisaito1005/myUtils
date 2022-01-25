@@ -335,7 +335,7 @@ class ToolsPCA():
             print("#####################")
 
             combine_two_png(
-                self.outpng_mom0.replace("???","cch10"),
+                self.outpng_12co10_oveall,
                 self.outpng_envmask,
                 self.final_overall,
                 self.box_map,
@@ -1298,7 +1298,7 @@ class ToolsPCA():
         mask = np.where((theta_deg>=angle1)&(theta_deg<angle4)&(r<self.r_sbr_as)&(r>=self.r_cnd_as),2,mask)
         mask = np.where((theta_deg>=angle3)&(r<self.r_sbr_as)&(r>=self.r_cnd_as),2,mask)
         mask = np.where((theta_deg<angle2)&(r<self.r_sbr_as)&(r>=self.r_cnd_as),2,mask)
-        mask = np.where(r<self.r_cnd_as,3,0)
+        mask = np.where(r<self.r_cnd_as,3,mask)
 
         os.system("rm -rf " + self.outpng_envmask)
         self._plot_hexmap(
