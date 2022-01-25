@@ -843,9 +843,10 @@ class ToolsPCA():
         # set plt, ax
         fig  = plt.figure(figsize=(13,9))
         plt.rcParams["font.size"] = 16
-        gs  = gridspec.GridSpec(nrows=11, ncols=11)
-        ax  = plt.subplot(gs[0:10,0:9])
-        ax2 = plt.subplot(gs[0:10,9:10])
+        gs   = gridspec.GridSpec(nrows=11, ncols=11)
+        ax   = plt.subplot(gs[0:10,0:9])
+        ax2  = plt.subplot(gs[0:10,9:10])
+        ax2b = ax2.twinx()
 
         # set ax parameter
         myax_set(
@@ -871,27 +872,30 @@ class ToolsPCA():
         ax.plot(range(len(x)),y_disk,c="grey",lw=2,marker="s",markersize=markersize,markeredgewidth=0)
         ax.plot(range(len(x)),y_cnd,c="tomato",lw=2,marker="s",markersize=markersize,markeredgewidth=0)
         ax.plot(range(len(x)),y_out,c="deepskyblue",lw=2,marker="s",markersize=markersize,markeredgewidth=0)
-        ax2.plot(len(x),np.log10(float(siiisii_ratio[3])),c="grey",lw=2,marker="o",markersize=markersize,markeredgewidth=0)
-        ax2.plot(len(x),np.log10(float(siiisii_ratio[1])),c="tomato",lw=2,marker="o",markersize=markersize,markeredgewidth=0)
-        ax2.plot(len(x),np.log10(float(siiisii_ratio[2])),c="deepskyblue",lw=2,marker="o",markersize=markersize,markeredgewidth=0)
+        ax2b.plot(len(x),np.log10(float(siiisii_ratio[3])),c="grey",lw=2,marker="o",markersize=markersize,markeredgewidth=0)
+        ax2b.plot(len(x),np.log10(float(siiisii_ratio[1])),c="tomato",lw=2,marker="o",markersize=markersize,markeredgewidth=0)
+        ax2b.plot(len(x),np.log10(float(siiisii_ratio[2])),c="deepskyblue",lw=2,marker="o",markersize=markersize,markeredgewidth=0)
 
         # x axis
         x.append("[SIII]/[SII] ratio")
         ax.set_xticks(range(len(x)))
         ax.set_xticklabels(x, rotation = 60, ha="right")
+        ax.set_xticks(16.0)
+        ax.set_xticklabels("[SIII]/[SII] ratio", rotation = 60, ha="right")
+        ax.tick_params(labelleft=False)
 
         # text
-        ax.text(0.02, 0.93, "Outflow", color="deepskyblue", transform=ax.transAxes, weight="bold", fontsize=24)
-        ax.text(0.02, 0.88, "CND", color="tomato", transform=ax.transAxes, weight="bold", fontsize=24)
-        ax.text(0.02, 0.83, "Non-outflow", color="grey", transform=ax.transAxes, weight="bold", fontsize=24)
+        ax.text(0.02, 0.93, "Outflow", color="deepskyblue", transform=ax.transAxes, weight="bold", fontsize=22)
+        ax.text(0.02, 0.88, "CND", color="tomato", transform=ax.transAxes, weight="bold", fontsize=22)
+        ax.text(0.02, 0.83, "Non-outflow", color="grey", transform=ax.transAxes, weight="bold", fontsize=22)
 
         # ann
         ax.plot([8.5,8.5],[-2.4,2.4],"--",c="black",lw=2)
-        ax.text(9.0, -1.5, "Lines enhanced in the bicone", color="black", fontsize=20, ha="left")
+        ax.text(9.0, -1.5, "Lines enhanced in the bicone", color="black", fontsize=18, ha="left")
 
         ax.plot([3.5,3.5],[-2.4,2.4],"--",c="black",lw=2)
-        ax.text(1.5, 0.1, "Lines suppressed", color="black", fontsize=20, ha="center")
-        ax.text(1.5, -0.09, "in the bicone", color="black", fontsize=20, ha="center")
+        ax.text(1.5, 0.1, "Lines suppressed", color="black", fontsize=18, ha="center")
+        ax.text(1.5, -0.09, "in the bicone", color="black", fontsize=18, ha="center")
 
         # save
         os.system("rm -rf " + self.outpng_line_graph)
