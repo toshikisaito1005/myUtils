@@ -913,12 +913,12 @@ class ToolsPCA():
 
         # ann
         ax.plot([8.5,8.5],[-2.4,2.4],"--",c="black",lw=2)
-        ax.text(12.0, -1.5, "Lines enhanced", color="black", fontsize=18, ha="center")
-        ax.text(12.0, -1.69, "in the outflow", color="black", fontsize=18, ha="center")
+        ax.text(12.0, -1.5, "Lines enhanced", color="black", fontsize=18, ha="center", style="italic")
+        ax.text(12.0, -1.69, "in the outflow", color="black", fontsize=18, ha="center", style="italic")
 
         ax.plot([3.5,3.5],[-2.4,2.4],"--",c="black",lw=2)
-        ax.text(1.5, 0.05, "Lines suppressed", color="black", fontsize=18, ha="center")
-        ax.text(1.5, -0.14, "in the outflow", color="black", fontsize=18, ha="center")
+        ax.text(1.5, 0.05, "Lines suppressed", color="black", fontsize=18, ha="center", style="italic")
+        ax.text(1.5, -0.14, "in the outflow", color="black", fontsize=18, ha="center", style="italic")
 
         # save
         os.system("rm -rf " + self.outpng_line_graph.replace(".png","_"+denom+".png"))
