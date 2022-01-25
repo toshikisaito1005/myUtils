@@ -334,9 +334,11 @@ class ToolsPCA():
             print("# create final_mom0 #")
             print("#####################")
 
-            immagick_crop(
-                self.outpng_12co10_oveall,
+            combine_two_png(
+                self.outpng_mom0.replace("???","cch10"),
+                self.outpng_envmask,
                 self.final_overall,
+                self.box_map,
                 self.box_map,
                 delin=delin,
                 )
