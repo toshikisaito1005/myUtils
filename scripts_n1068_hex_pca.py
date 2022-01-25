@@ -843,7 +843,7 @@ class ToolsPCA():
         # set plt, ax
         fig  = plt.figure(figsize=(13,9))
         plt.rcParams["font.size"] = 16
-        gs  = gridspec.GridSpec(nrows=10, ncols=10)
+        gs  = gridspec.GridSpec(nrows=11, ncols=11)
         ax  = plt.subplot(gs[0:10,0:9])
         ax2 = plt.subplot(gs[0:10,9:10])
 
