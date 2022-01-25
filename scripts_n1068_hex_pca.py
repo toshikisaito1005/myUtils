@@ -867,6 +867,15 @@ class ToolsPCA():
         ylabel=None,
         adjust=[0.1,0.963,0.25,0.93],
         )
+        myax_set(
+        ax2b,
+        grid=None,
+        xlim=[15.5,16.5],
+        ylim=[-2.2,0.9],
+        xlabel=None,
+        ylabel=None,
+        adjust=[0.1,0.963,0.25,0.93],
+        )
         ax2.tick_params(labelleft=False)
 
         markersize = 15
@@ -878,7 +887,6 @@ class ToolsPCA():
         ax2b.plot(len(x),np.log10(float(siiisii_ratio[2])),c="deepskyblue",lw=2,marker="o",markersize=markersize,markeredgewidth=0)
 
         # x axis
-        x.append("[SIII]/[SII] ratio")
         ax.set_xticks(range(len(x)))
         ax.set_xticklabels(x, rotation = 60, ha="right")
         ax2.set_xticks([16.0])
