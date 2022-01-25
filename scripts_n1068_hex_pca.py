@@ -288,7 +288,7 @@ class ToolsPCA():
 
         if plot_median_line_graph==True:
             self.plot_max_line_graph(denom="co10",ylim=[-2.2,0.9])
-            self.plot_max_line_graph(denom="hcn10",ylim=[-1.8,2.0])
+            #self.plot_max_line_graph(denom="hcn10",ylim=[-1.8,2.0])
 
         if do_imagemagick==True:
             self.immagick_figures()
@@ -600,6 +600,14 @@ class ToolsPCA():
             print("# create do_final_line_graph #")
             print("##############################")
 
+            immagick_crop(
+                self.outpng_line_graph.replace(".png","_co10.png"),
+                self.final_line_graph,
+                "100000x100000+0+0",
+                delin=delin,
+                )
+
+            """
             combine_two_png(
                 self.outpng_line_graph.replace(".png","_co10.png"),
                 self.outpng_line_graph.replace(".png","_hcn10.png"),
@@ -609,6 +617,7 @@ class ToolsPCA():
                 delin=delin,
                 axis="column",
                 )
+            """
 
     ########################
     # immagick_figures_sub #
