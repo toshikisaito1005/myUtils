@@ -900,7 +900,7 @@ class ToolsPCA():
 
         # ann
         ax.plot([8.5,8.5],[-2.4,2.4],"--",c="black",lw=2)
-        ax.text(9.0, -1.5, "Lines enhanced in the bicone", color="black", fontsize=18, ha="left")
+        ax.text(12.0, -1.5, "Lines enhanced in the bicone", color="black", fontsize=18, ha="center")
 
         ax.plot([3.5,3.5],[-2.4,2.4],"--",c="black",lw=2)
         ax.text(1.5, 0.1, "Lines suppressed", color="black", fontsize=18, ha="center")
