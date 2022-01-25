@@ -287,8 +287,8 @@ class ToolsPCA():
             self.plot_hexmap_pca_ratio_podium()
 
         if plot_median_line_graph==True:
-            self.plot_max_line_graph(denom="co10")
-            self.plot_max_line_graph(denom="hcn10")
+            self.plot_max_line_graph(denom="co10",ylim=[-2.2,0.9])
+            self.plot_max_line_graph(denom="hcn10",ylim=[-1.8,2.0])
 
         if do_imagemagick==True:
             self.immagick_figures()
@@ -603,7 +603,7 @@ class ToolsPCA():
             combine_two_png(
                 self.outpng_line_graph.replace(".png","_co10.png"),
                 self.outpng_line_graph.replace(".png","_hcn10.png"),
-                self.final_overall,
+                self.final_line_graph,
                 "100000x100000+0+0",
                 "100000x100000+0+0",
                 delin=delin,
@@ -736,7 +736,7 @@ class ToolsPCA():
     # plot_max_line_graph # Figure 5
     #######################
 
-    def plot_max_line_graph(self,denom="co10"):
+    def plot_max_line_graph(self,denom="co10",ylim=[-2.2,0.9]):
         """
         """
 
@@ -845,7 +845,7 @@ class ToolsPCA():
             x.append(this_name)
 
         # set plt, ax
-        fig  = plt.figure(figsize=(13,9))
+        fig  = plt.figure(figsize=(13,8))
         plt.rcParams["font.size"] = 16
         gs   = gridspec.GridSpec(nrows=11, ncols=11)
         ax   = plt.subplot(gs[0:10,0:9])
@@ -857,7 +857,7 @@ class ToolsPCA():
         ax,
         grid=None,
         xlim=[-0.5,15.5],
-        ylim=[-2.2,0.9],
+        ylim=ylim,
         xlabel=None,
         ylabel="log Ratio relative to $^{12}$CO(1-0)",
         adjust=[0.1,0.963,0.25,0.93],
@@ -866,7 +866,7 @@ class ToolsPCA():
         ax2,
         grid=None,
         xlim=[15.5,16.5],
-        ylim=[-2.2,0.9],
+        ylim=ylim,
         xlabel=None,
         ylabel=None,
         adjust=[0.1,0.963,0.25,0.93],
@@ -875,7 +875,7 @@ class ToolsPCA():
         ax2b,
         grid=None,
         xlim=[15.5,16.5],
-        ylim=[-2.2,0.9],
+        ylim=ylim,
         xlabel=None,
         ylabel="log [SIII]/[SII] ratio",
         adjust=[0.1,0.963,0.25,0.93],
