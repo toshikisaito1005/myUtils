@@ -867,6 +867,7 @@ class ToolsPCA():
         ylabel=None,
         adjust=[0.1,0.963,0.25,0.93],
         )
+        ax2.tick_params(labelleft=False)
 
         markersize = 15
         ax.plot(range(len(x)),y_disk,c="grey",lw=2,marker="s",markersize=markersize,markeredgewidth=0)
@@ -880,9 +881,8 @@ class ToolsPCA():
         x.append("[SIII]/[SII] ratio")
         ax.set_xticks(range(len(x)))
         ax.set_xticklabels(x, rotation = 60, ha="right")
-        ax.set_xticks([16.0])
-        ax.set_xticklabels(["[SIII]/[SII] ratio"], rotation = 60, ha="right")
-        ax.tick_params(labelleft=False)
+        ax2.set_xticks([16.0])
+        ax2.set_xticklabels(["[SIII]/[SII] ratio"], rotation = 60, ha="right")
 
         # text
         ax.text(0.02, 0.93, "Outflow", color="deepskyblue", transform=ax.transAxes, weight="bold", fontsize=22)
