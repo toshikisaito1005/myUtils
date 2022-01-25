@@ -314,7 +314,7 @@ class ToolsPCA():
         do_final_mom0              = False,
         do_final_pca_mom0          = False,
         do_final_pca1_ratio_podium = False,
-        do_final_line_graph        = False,
+        do_final_line_graph        = True,
         ):
         """
         """
