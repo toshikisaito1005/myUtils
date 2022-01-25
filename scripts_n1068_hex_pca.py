@@ -1729,9 +1729,9 @@ class ToolsPCA():
             ax.plot([0,-7], [0,10], lw=3, c="black")
             ax.text(-10.5, 10.5, "AGN position", ha="right", va="center", weight="bold")
         elif add_text=="env":
-            ax.text(-7.5, 12, "CND", ha="left", va="center", color=cm.gnuplot(0/3.))
-            ax.text(-6.5, 12, "Outflow", ha="left", va="center", color=cm.gnuplot(1/3.))
-            ax.text(-5.5, 12, "Non-outflow", ha="left", va="center", color=cm.gnuplot(2/3.))
+            ax.text(12, -7.5, "CND", ha="left", va="center", color=cm.gnuplot(1/3.))
+            ax.text(12, -6.5, "Outflow", ha="left", va="center", color=cm.gnuplot(2/3.))
+            ax.text(12, -5.5, "Non-outflow", ha="left", va="center", color=cm.gnuplot(3/3.))
 
         # save
         os.system("rm -rf " + outpng)
