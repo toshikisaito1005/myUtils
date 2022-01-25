@@ -287,7 +287,8 @@ class ToolsPCA():
             self.plot_hexmap_pca_ratio_podium()
 
         if plot_median_line_graph==True:
-            self.plot_max_line_graph()
+            plot_max_line_graph(self,denom="co10")
+            plot_max_line_graph(self,denom="hcn10")
 
         if do_imagemagick==True:
             self.immagick_figures()
@@ -599,11 +600,14 @@ class ToolsPCA():
             print("# create do_final_line_graph #")
             print("##############################")
 
-            immagick_crop(
-                self.outpng_line_graph,
-                self.final_line_graph,
+            combine_two_png(
+                self.outpng_line_graph.replace(".png","_co10.png"),
+                self.outpng_line_graph.replace(".png","_hcn10.png"),
+                self.final_overall,
+                "100000x100000+0+0",
                 "100000x100000+0+0",
                 delin=delin,
+                axis="column",
                 )
 
     ########################
@@ -732,7 +736,7 @@ class ToolsPCA():
     # plot_max_line_graph # Figure 5
     #######################
 
-    def plot_max_line_graph(self):
+    def plot_max_line_graph(self,denom="co10"):
         """
         """
 
@@ -766,7 +770,7 @@ class ToolsPCA():
             data_line  = np.where((r<=self.r_sbr_as)&(data_line>=err_line*self.snr_mom),data_line,0)
 
             # 13co10
-            tco_index  = np.where(header=="co10")
+            tco_index  = np.where(header==denom)
             data_tco   = np.array(data_mom0[:,tco_index].flatten())
             err_tco    = np.array(data_err[:,tco_index].flatten())
             data_tco[np.isinf(data_tco)] = 0
@@ -800,7 +804,7 @@ class ToolsPCA():
                 if this_name!="siiisii_ratio":
                     this_disk = this_disk / tco_disk
 
-                if this_name!="co10":
+                if this_name!=denom:
                     list_name.append(this_name)
                     list_cnd.append(np.round(np.nanmax(this_cnd), 3))
                     list_out.append(np.round(np.nanmax(this_out), 3))
@@ -908,8 +912,8 @@ class ToolsPCA():
         ax.text(1.5, -0.09, "in the outflow", color="black", fontsize=18, ha="center")
 
         # save
-        os.system("rm -rf " + self.outpng_line_graph)
-        plt.savefig(self.outpng_line_graph, dpi=300)
+        os.system("rm -rf " + self.outpng_line_graph.replace(".png","_"+denom+".png"))
+        plt.savefig(self.outpng_line_graph.replace(".png","_"+denom+".png"), dpi=300)
 
     ################################
     # plot_hexmap_pca_ratio_podium # Figure 4
