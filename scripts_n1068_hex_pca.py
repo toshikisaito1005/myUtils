@@ -873,10 +873,11 @@ class ToolsPCA():
         xlim=[15.5,16.5],
         ylim=[-2.2,0.9],
         xlabel=None,
-        ylabel=None,
+        ylabel="log [SIII]/[SII] ratio",
         adjust=[0.1,0.963,0.25,0.93],
         )
         ax2.tick_params(labelleft=False)
+        ax2b.tick_params(labelleft=False)
 
         markersize = 15
         ax.plot(range(len(x)),y_disk,c="grey",lw=2,marker="s",markersize=markersize,markeredgewidth=0)
