@@ -1289,7 +1289,7 @@ class ToolsPCA():
 
         # extract line name
         _,_,_,ra,dec,r = self._read_table(self.table_hex_obs)
-        theta_deg = np.degrees(np.arctan2(x, y))
+        theta_deg = np.degrees(np.arctan2(ra, dec))
 
         #
         mask = np.where(r<self.r_sbr_as,1,0)
