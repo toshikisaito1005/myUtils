@@ -909,7 +909,7 @@ class ToolsPCA():
         # text
         ax.text(0.015, 0.91, "Outflow", color="deepskyblue", transform=ax.transAxes, weight="bold", fontsize=22)
         ax.text(0.015, 0.85, "CND", color="tomato", transform=ax.transAxes, weight="bold", fontsize=22)
-        ax.text(0.015, 0.80, "Non-outflow", color="grey", transform=ax.transAxes, weight="bold", fontsize=22)
+        ax.text(0.015, 0.79, "Non-outflow", color="grey", transform=ax.transAxes, weight="bold", fontsize=22)
 
         # ann
         ax.plot([8.5,8.5],[-2.4,2.4],"--",c="black",lw=2)
