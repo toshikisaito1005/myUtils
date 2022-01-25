@@ -59,6 +59,7 @@ history:
 2021-11-15   start drafting
 2021-11-22   implement LOWESS and bootstrapped standard deviation
 2021-12-21   circulate v0 draft to the paper team
+2022-01-25   replace radial plot with line graph
 Toshiki Saito@Nichidai/NAOJ
 """
 
@@ -1419,6 +1420,11 @@ class ToolsPCA():
                 this_name = this_name.replace("CH$_3$OH(2-1)","CH$_3$OH(2$_K$-1$_K$)")
 
                 # plot
+                if this_name=="[SIII]/[SII] ratio":
+                    label = None
+                else:
+                    label = "(K km s$^{-1}$)"
+                
                 print("# plot " + output + " " + this_name)
                 self._plot_hexmap(
                     output,
@@ -1430,7 +1436,7 @@ class ToolsPCA():
                     add_text = False,
                     lim      = 13,
                     size     = 3600,
-                    label    = "(K km s$^{-1}$)",
+                    label    = label,
                     )
 
     ###############
