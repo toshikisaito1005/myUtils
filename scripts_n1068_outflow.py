@@ -341,6 +341,7 @@ class ToolsOutflow():
         referee_measure_luminosity = False,
         # summarize
         do_imagemagick             = False,
+        immagick_all               = False,
         # supplement (not published)
         do_compare_7m              = False,
         suggest_scatter_spaxel     = False,
@@ -380,13 +381,16 @@ class ToolsOutflow():
         if plot_showcase_multi==True:
             self.showcase_multi()
 
-        # co-I suggestion
+        # co-I and referee
         if suggest_spectra==True:
             self.plot_spectra()
 
+        if referee_measure_luminosity==True:
+            self.measure_luminosity()
+
         # summarize
         if do_imagemagick==True:
-            self.immagick_figures()
+            self.immagick_figures(do_all=immagick_all)
 
         # supplement (not published)
         if do_compare_7m==True:
@@ -394,10 +398,6 @@ class ToolsOutflow():
 
         if suggest_scatter_spaxel==True:
             self.plot_ci_cube_vs_co_cube()
-
-        # 1st referee comment
-        if referee_measure_luminosity==True:
-            self.measure_luminosity()
 
     ####################
     # immagick_figures #
@@ -410,7 +410,7 @@ class ToolsOutflow():
         do_final_showcase       = False,
         do_final_channel        = False,
         do_final_chan_models    = False,
-        do_final_showcase_multi = True,
+        do_final_showcase_multi = False,
         ):
         """
         """
