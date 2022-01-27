@@ -326,24 +326,24 @@ class ToolsOutflow():
     def run_ci_outflow(
         self,
         # prepare FITS
-        do_prepare             = False,
-        do_ratio_map           = False,
+        do_prepare                 = False,
+        do_ratio_map               = False,
         # plot
-        plot_scatters          = False,
-        plot_showcase          = False,
-        plot_channel           = False,
-        do_modeling            = False,
-        suggest_spectra        = False,
+        plot_scatters              = False,
+        plot_showcase              = False,
+        plot_channel               = False,
+        do_modeling                = False,
+        suggest_spectra            = False,
         # appendix
-        plot_outflow_mom       = False,
-        plot_showcase_multi    = False,
+        plot_outflow_mom           = False,
+        plot_showcase_multi        = False,
         # summarize
-        do_imagemagick         = False,
+        do_imagemagick             = False,
         # supplement (not published)
-        do_compare_7m          = False,
-        suggest_scatter_spaxel = False,
+        do_compare_7m              = False,
+        suggest_scatter_spaxel     = False,
         # 1st referee comment
-        do_measure_luminosity  = False,
+        referee_measure_luminosity = False,
         ):
         """
         This method runs all the methods which will create figures in the paper.
@@ -372,9 +372,6 @@ class ToolsOutflow():
         if do_modeling==True:
             self.bicone_modeling()
 
-        if suggest_spectra==True:
-            self.plot_spectra()
-
         # appendix
         if plot_outflow_mom==True:
             self.get_outflow_moments()
@@ -382,6 +379,10 @@ class ToolsOutflow():
 
         if plot_showcase_multi==True:
             self.showcase_multi()
+
+        # co-I suggestion
+        if suggest_spectra==True:
+            self.plot_spectra()
 
         # summarize
         if do_imagemagick==True:
@@ -395,7 +396,7 @@ class ToolsOutflow():
             self.plot_ci_cube_vs_co_cube()
 
         # 1st referee comment
-        if do_measure_luminosity==True:
+        if referee_measure_luminosity==True:
             self.measure_luminosity()
 
     ####################
