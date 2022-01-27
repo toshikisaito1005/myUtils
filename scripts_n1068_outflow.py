@@ -20,6 +20,8 @@ ancillary HST FITS    https://hla.stsci.edu/
 ancillary VLA FITS    https://archive.nrao.edu/archive/archiveimage.html
 
 usage:
+require data_raw/*, data_other/*, scripts/script_figures.py at your working directory
+an example of script_figures.py below:
 > import os
 > from scripts_n1068_outflow import ToolsOutflow as tools
 >
@@ -347,7 +349,7 @@ class ToolsOutflow():
         do_imagemagick         = False,
         immagick_all           = False,
         # supplement (not published)
-        do_compare_7m          = False,
+        do_compare_7m          = False, # decomissioned
         suggest_scatter_spaxel = False,
         ):
         """
@@ -373,7 +375,7 @@ class ToolsOutflow():
             do_imagemagick         = True
             immagick_all           = True
             # supplement (not published)
-            do_compare_7m          = True
+            #do_compare_7m          = True
             suggest_scatter_spaxel = True
 
         # prepare FITS
