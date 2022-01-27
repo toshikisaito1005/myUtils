@@ -32,22 +32,25 @@ usage:
 >
 > tl.run_ci_outflow(
 >     # prepare FITS
->     do_prepare             = True,
->     do_ratio_map           = True,
+>     do_prepare             = False,
+>     do_ratio_map           = False,
 >     # plot
->     plot_scatters          = True,
->     plot_showcase          = True,
->     plot_channel           = True,
->     do_modeling            = True,
->     suggest_spectra        = True,
+>     plot_scatters          = False,
+>     plot_showcase          = False,
+>     plot_channel           = False,
+>     do_modeling            = False,
 >     # appendix
->     plot_outflow_mom       = True,
->     plot_showcase_multi    = True,
+>     plot_outflow_mom       = False,
+>     plot_showcase_multi    = False,
+>     # co-I and referee
+>     suggest_spectra        = False,
+>     referee_measure_lumi   = False,
 >     # summarize
->     do_imagemagick         = True,
+>     do_imagemagick         = False,
+>     immagick_all           = False,
 >     # supplement (not published)
->     do_compare_7m          = True,
->     suggest_scatter_spaxel = True,
+>     do_compare_7m          = False,
+>     suggest_scatter_spaxel = False,
 >     )
 >
 > os.system("rm -rf *.last")
@@ -325,30 +328,53 @@ class ToolsOutflow():
 
     def run_ci_outflow(
         self,
+        do_all                 = False,
         # prepare FITS
-        do_prepare                 = False,
-        do_ratio_map               = False,
+        do_prepare             = False,
+        do_ratio_map           = False,
         # plot
-        plot_scatters              = False,
-        plot_showcase              = False,
-        plot_channel               = False,
-        do_modeling                = False,
+        plot_scatters          = False,
+        plot_showcase          = False,
+        plot_channel           = False,
+        do_modeling            = False,
         # appendix
-        plot_outflow_mom           = False,
-        plot_showcase_multi        = False,
+        plot_outflow_mom       = False,
+        plot_showcase_multi    = False,
         # co-I and referee
-        suggest_spectra            = False,
-        referee_measure_luminosity = False,
+        suggest_spectra        = False,
+        referee_measure_lumi   = False,
         # summarize
-        do_imagemagick             = False,
-        immagick_all               = False,
+        do_imagemagick         = False,
+        immagick_all           = False,
         # supplement (not published)
-        do_compare_7m              = False,
-        suggest_scatter_spaxel     = False,
+        do_compare_7m          = False,
+        suggest_scatter_spaxel = False,
         ):
         """
         This method runs all the methods which will create figures in the paper.
         """
+
+        if do_all==True:
+            # prepare FITS
+            do_prepare             = True
+            do_ratio_map           = True
+            # plot
+            plot_scatters          = True
+            plot_showcase          = True
+            plot_channel           = True
+            do_modeling            = True
+            # appendix
+            plot_outflow_mom       = True
+            plot_showcase_multi    = True
+            # co-I and referee
+            suggest_spectra        = True
+            referee_measure_lumi   = True
+            # summarize
+            do_imagemagick         = True
+            immagick_all           = True
+            # supplement (not published)
+            do_compare_7m          = True
+            suggest_scatter_spaxel = True
 
         # prepare FITS
         if do_prepare==True:
@@ -385,7 +411,7 @@ class ToolsOutflow():
         if suggest_spectra==True:
             self.plot_spectra()
 
-        if referee_measure_luminosity==True:
+        if referee_measure_lumi==True:
             self.measure_luminosity()
 
         # summarize
@@ -877,14 +903,6 @@ class ToolsOutflow():
 
         # extract outflow
         cut          = np.where(cut>0,True,False)
-
-        """
-        # extract bicone
-        cut1         = np.where((theta_deg>=-15)&(theta_deg<65)&(dist_as>self.r_cnd_as),True,False)
-        cut2         = np.where((theta_deg>=165)&(dist_as<fov_radius)&(dist_as>self.r_cnd_as),True,False)
-        cut3         = np.where((theta_deg<-115)&(dist_as<fov_radius)&(dist_as>self.r_cnd_as),True,False)
-        cut          = cut1 + cut2 + cut3
-        """
 
         data_co      = data_co * cut
         data_ci      = data_ci * cut
