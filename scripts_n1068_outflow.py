@@ -869,8 +869,8 @@ class ToolsOutflow():
         ########################
          # get CI outflow mom0 map
         run_importfits(self.outfits_map_ci10,"template.image2")
-        run_imregrid(self.outfits_ci10_outflow_mom0,"template.image2","template.image",axes=[0,1])
-        cut, _       = imval_all("template.image2")
+        run_imregrid(self.outfits_ci10_outflow_mom0,"template.image2","template.image")
+        cut, _       = imval_all("template.image")
         cut          = cut["data"] * cut["mask"]
         os.system("rm -rf template.image template.image2")
 
