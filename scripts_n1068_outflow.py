@@ -333,17 +333,17 @@ class ToolsOutflow():
         plot_showcase              = False,
         plot_channel               = False,
         do_modeling                = False,
-        suggest_spectra            = False,
         # appendix
         plot_outflow_mom           = False,
         plot_showcase_multi        = False,
+        # co-I and referee
+        suggest_spectra            = False,
+        referee_measure_luminosity = False,
         # summarize
         do_imagemagick             = False,
         # supplement (not published)
         do_compare_7m              = False,
         suggest_scatter_spaxel     = False,
-        # 1st referee comment
-        referee_measure_luminosity = False,
         ):
         """
         This method runs all the methods which will create figures in the paper.
