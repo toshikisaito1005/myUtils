@@ -1195,7 +1195,7 @@ def _get_extent(
 
 def _get_contour_levels(fitsimage,unit_contour,levels_contour):
 
-    hdu = fits.open(fitsimage)
+    hdu = pyfits.open(fitsimage)
     contour_data = hdu[0].data[:,:]
 
     if unit_contour==None:
