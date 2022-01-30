@@ -179,13 +179,38 @@ class ToolsNcol():
         """
         """
 
-        # prepare for mom0
-        input_13co10   = self.cube_13co10_60pc
-        input_13co21   = self.cube_13co21_60pc
-        output_13co10  = self.outcubes_13co10.replace("???","60pc")
-        output_13co21  = self.outcubes_13co21.replace("???","60pc")
-        ra             = str(self.ra_agn)+"deg"
-        dec            = str(self.dec_agn)+"deg"
+        self._align_a_map(
+            self.cube_13co10_60pc,
+            self.cube_13co21_60pc,
+            self.outcubes_13co10.replace("???","60pc"),
+            self.outcubes_13co21.replace("???","60pc"),
+            self.ecube_13co10_60pc,
+            self.ecube_13co21_60pc,
+            self.outecubes_13co10.replace("???","60pc"),
+            self.outecubes_13co21.replace("???","60pc"),
+            )
+
+
+    ################
+    # _align_a_map #
+    ################
+
+    def _align_a_map(
+        self,
+        input_13co10,
+        input_13co21,
+        output_13co10,
+        output_13co21,
+        input_e13co10,
+        input_e13co21,
+        output_e13co10,
+        output_e13co21,
+        ):
+        """
+        """
+
+        ra  = str(self.ra_agn)+"deg"
+        dec = str(self.dec_agn)+"deg"
 
         # regrid 13co10 mom0
         imrebin2(input_13co10,output_13co10,imsize=self.imsize,direction_ra=ra,direction_dec=dec)
@@ -194,23 +219,19 @@ class ToolsNcol():
         run_imregrid(input_13co21,output_13co10,output_13co21,axes=[0,1])
 
         # prepare for emom0
-        input_e13co10  = self.ecube_13co10_60pc
-        input_e13co21  = self.ecube_13co21_60pc
-        output_e13co10 = self.outecubes_13co10.replace("???","60pc")
-        output_e13co21 = self.outecubes_13co21.replace("???","60pc")
         pix_before     = abs(imhead(imagename=input_13co10,mode="list")["cdelt1"]) * 3600 * 180 / np.pi
         pix_after      = abs(imhead(imagename=output_13co10,mode="list")["cdelt1"]) * 3600 * 180 / np.pi
         numpix         = pix_after**2/pix_before**2
 
         # regrid 13co10 emom0
         run_immath_one(input_e13co10,input_e13co10+"_tmp1","IM0*IM0")
-        run_imregrid(input_e13co10+"_tmp1",output_13co10,input_e13co10+"_tmp2",axes=[0,1])
-        run_immath_one(input_e13co10+"_tmp2",output_e13co10,"sqrt(IM0)/sqrt("+str(numpix)+")")
+        run_imregrid(input_e13co10+"_tmp1",output_13co10,input_e13co10+"_tmp2",axes=[0,1],delin=True)
+        run_immath_one(input_e13co10+"_tmp2",output_e13co10,"sqrt(IM0)/sqrt("+str(numpix)+")",delin=True)
 
         # regrid 13co21 emom0
         run_immath_one(input_e13co21,input_e13co21+"_tmp1","IM0*IM0")
-        run_imregrid(input_e13co21+"_tmp1",output_13co21,input_e13co21+"_tmp2",axes=[0,1])
-        run_immath_one(input_e13co21+"_tmp2",output_e13co21,"sqrt(IM0)/sqrt("+str(numpix)+")")
+        run_imregrid(input_e13co21+"_tmp1",output_13co21,input_e13co21+"_tmp2",axes=[0,1],delin=True)
+        run_immath_one(input_e13co21+"_tmp2",output_e13co21,"sqrt(IM0)/sqrt("+str(numpix)+")",delin=True)
 
     ###############
     # _create_dir #
