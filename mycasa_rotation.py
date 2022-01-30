@@ -96,6 +96,8 @@ def fitting_two(
     else:
         os.system("mv " + cubelow + " " + cubelow + ".boxed")
         os.system("mv " + cubehigh + " " + cubehigh + ".boxed")
+        cubelow = cubelow + ".boxed"
+        cubehigh = cubehigh + ".boxed"
 
     # read cube
     data_low,freq_low,ra_deg,dec_deg = _get_data(cubelow,ra_cnt,dec_cnt)
