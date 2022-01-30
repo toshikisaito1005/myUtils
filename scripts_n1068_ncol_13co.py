@@ -180,8 +180,7 @@ class ToolsNcol():
         """
 
         run_importfits(self.cube_13co21_60pc,"b6fov.mask_tmp1",defaultaxes=True)
-        run_immath_one("b6fov.mask_tmp1","b6fov.mask_tmp2","IM0",chans="1",delin=True)
-        signal_masking("b6fov.mask_tmp2","b6fov.mask",0,delin=True)
+        run_immath_one("b6fov.mask_tmp1","b6fov.mask","iif(IM0>-1000000,1,0)",chans="1",delin=True)
 
         """
         imrebin2(
