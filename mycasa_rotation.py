@@ -158,7 +158,6 @@ def fitting_two(
         guess_b,
         40.,
         ]
-        print(p0)
 
         # fit
         if np.max(this_data)<this_rms*snr:
@@ -254,8 +253,8 @@ def fits_creation(
     """
 
     os.system("rm -rf " + output_map)
-    hdu = fits.PrimaryHDU(input_map)
-    hdul = fits.HDUList([hdu])
+    hdu = pyfits.PrimaryHDU(input_map)
+    hdul = pyfits.HDUList([hdu])
     hdul.writeto(output_map)
 
 #############
