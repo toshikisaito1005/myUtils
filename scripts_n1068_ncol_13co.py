@@ -179,7 +179,7 @@ class ToolsNcol():
         """
         """
 
-        signal_masking(self.cube_13co21_60pc,"b6fov.mask",0)
+        boolean_masking(self.cube_13co21_60pc,"b6fov.mask")
 
         """
         imrebin2(
