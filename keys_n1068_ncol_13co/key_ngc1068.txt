@@ -1,0 +1,21 @@
+########################################
+### galaxy properties (str(np.round(np.tan(np.radians(1/3600.))*9.84*1e6,1)))
+########################################
+# Armus et al. 2009, PASP, 121, 559
+# vsys from Garcia-Burillo et al. 2014
+ra         ,,,40.67144167deg
+dec        ,,,-0.0150275deg
+scale      ,,,67.7
+incl       ,,,0.0
+pa         ,,,0.0
+morphology ,,,(R)SA(rs)b
+distance   ,,,13.97
+ra_agn     ,,,40.669625deg
+dec_agn    ,,,-0.01331667deg
+ra_eknot   ,,,40.66985deg
+dec_eknot  ,,,-0.01335333deg
+ra_wknot   ,,,40.669125deg
+dec_wknot  ,,,-0.01354528deg
+ra_sbr     ,,,40.66800417deg
+dec_sbr    ,,,-0.01721417deg
+vsys       ,,,1116kms

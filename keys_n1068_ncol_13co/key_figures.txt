@@ -1,0 +1,44 @@
+###############
+# directories #
+###############
+dir_proj            ,,,/lfs13/saitots/proj_n1068_ncol/
+dir_raw             ,,,data_raw/
+dir_ready           ,,,data_ready/
+dir_other           ,,,data_other/
+dir_products        ,,,products_png/
+dir_final           ,,,images/
+
+##################
+# final products #
+##################
+# paper
+final_overall       ,,,fig_overall.png
+
+############
+# raw maps #
+############
+cube_13co10_60pc    ,,,ngc1068_b3_12m_13co10_60pc.fits
+ecube_13co10_60pc   ,,,ngc1068_b3_12m_13co10_60pc_noise.fits
+cube_13co21_60pc    ,,,ngc1068_b6_12m_13co21_60pc.fits
+ecube_13co21_60pc   ,,,ngc1068_b6_12m_13co21_60pc_noise.fits
+
+###############
+# output maps #
+###############
+outmaps_13co10      ,,,n1068_13co10_???.image
+outmaps_13co21      ,,,n1068_13co21_???.image
+outmaps_13co_trot   ,,,n1068_13co_trot_???.image
+outmaps_13co_ncol   ,,,n1068_13co_ncol_???.image
+
+######################
+# output png and txt #
+######################
+# text files
+# png files
+outpng_pca_mom0     ,,,fig_hexmap_pca_mom0_150pc.png
+# box for imagemajick
+box_map             ,,,2870x2750+350+150
+
+#######
+# end #
+#######
