@@ -17,16 +17,13 @@ reload(myplot)
 
 execfile(os.environ["HOME"] + "/myUtils/stuff_casa.py")
 
-# rotation_two("ngc1068_b3_12m_hnco43_150pc.fits","ngc1068_b3_12m_hnco54_150pc.fits")
+###############
+# fitting_two #
+###############
 
-###########
-# hf_cn10 #
-###########
-
-def rotation_two(
+def fitting_two(
     cubelow,
     cubehigh,
-    z=0.00379,
     ra_cnt=40.669625, # 1068 agn, deg
     dec_cnt=-0.01331667, # 1068 agn, deg
     box="92,103,363,333",
@@ -182,6 +179,7 @@ def rotation_two(
             mom1[this_x,this_y]      = popt[2]
             mom2[this_x,this_y]      = popt[3]
 
+            """
             # plot
             if this_x==4 and this_y==23:
                 print(p0)
@@ -218,6 +216,7 @@ def rotation_two(
                 plt.title( str(np.round(peak,3)) )
 
                 plt.savefig("spectra.png", dpi=100)
+            """
 
     # fits
     fits_creation(mom0_low.T,"mom0_low.fits")
@@ -249,34 +248,6 @@ def fits_creation(
     hdu = fits.PrimaryHDU(input_map)
     hdul = fits.HDUList([hdu])
     hdul.writeto(output_map)
-
-##################
-# fits_creation2 #
-##################
-
-def fits_creation2(
-    cubelow,
-    data,
-    output_map,
-    ):
-    """
-    TBE
-    """
-
-    os.system("rm -rf " + output_map + ".image")
-    imsubimage(
-        imagename=cubelow,
-        chans="1",
-        outfile=output_map+".image",
-        )
-
-    ia.open(output_map+".image")
-    chunk=ia.getchunk()
-    chunk=data
-    ia.putchunk(chunk)
-    ia.done()
-
-    run_exportfits(output_map+".image",output_map,delin=True)
 
 #############
 # plot_hist #

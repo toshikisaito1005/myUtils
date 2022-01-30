@@ -42,6 +42,7 @@ from mycasa_lowess import *
 from mycasa_tasks import *
 from mycasa_plots import *
 from mycasa_pca import *
+from mycasa_rotation import *
 
 ############
 # ToolsPCA #
@@ -160,6 +161,7 @@ class ToolsNcol():
         self,
         # analysis
         do_prepare = False,
+        do_fitting = False,
         # plot figures in paper
         # supplement
         ):
@@ -170,6 +172,31 @@ class ToolsNcol():
         # analysis
         if do_prepare==True:
             self.align_maps()
+
+        if do_fitting==True:
+            self.multi_fitting()
+
+    #################
+    # multi_fitting #
+    #################
+
+    def multi_fitting(self):
+        """
+        """
+
+        shape = imhead(self.outcubes_13co10.replace("???","60pc"),mode="list")["shape"]
+        box   = "0,0," + str(shape[0]-1) + "," + str(shape[1]-1)
+
+        fitting_two(
+            self.outcubes_13co10.replace("???","60pc"),
+            self.outcubes_13co21.replace("???","60pc"),
+            ra_cnt=self.ra_agn,
+            dec_cnt=self.dec_agn,
+            box=box,
+            factor=[1,1],
+            snr=5.0,
+            smooth=0,
+            )
 
     ##############
     # align_maps #
@@ -189,7 +216,6 @@ class ToolsNcol():
             self.outecubes_13co10.replace("???","60pc"),
             self.outecubes_13co21.replace("???","60pc"),
             )
-
 
     ########################
     # _align_maps_at_a_res #
@@ -219,9 +245,9 @@ class ToolsNcol():
         run_imregrid(input_13co21,output_13co10,output_13co21,axes=[0,1])
 
         # prepare for emom0
-        pix_before     = abs(imhead(imagename=input_13co10,mode="list")["cdelt1"]) * 3600 * 180 / np.pi
-        pix_after      = abs(imhead(imagename=output_13co10,mode="list")["cdelt1"]) * 3600 * 180 / np.pi
-        numpix         = pix_after**2/pix_before**2
+        pix_before = abs(imhead(imagename=input_13co10,mode="list")["cdelt1"]) * 3600 * 180 / np.pi
+        pix_after  = abs(imhead(imagename=output_13co10,mode="list")["cdelt1"]) * 3600 * 180 / np.pi
+        numpix     = pix_after**2/pix_before**2
 
         # regrid 13co10 emom0
         run_immath_one(input_e13co10,input_e13co10+"_tmp1","IM0*IM0")
