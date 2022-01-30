@@ -179,7 +179,7 @@ class ToolsNcol():
         """
         """
 
-        self._align_a_map(
+        self._align_maps_at_a_res(
             self.cube_13co10_60pc,
             self.cube_13co21_60pc,
             self.outcubes_13co10.replace("???","60pc"),
@@ -191,11 +191,11 @@ class ToolsNcol():
             )
 
 
-    ################
-    # _align_a_map #
-    ################
+    ########################
+    # _align_maps_at_a_res #
+    ########################
 
-    def _align_a_map(
+    def _align_maps_at_a_res(
         self,
         input_13co10,
         input_13co21,
