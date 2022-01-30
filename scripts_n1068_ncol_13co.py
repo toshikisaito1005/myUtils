@@ -179,13 +179,15 @@ class ToolsNcol():
         """
         """
 
-        imrebin2(
-            self.cube_13co10_60pc,
-            self.outcubes_13co10.replace("???","60pc"),
-            imsize=self.imsize,
-            direction_ra=str(self.ra_agn)+"deg",
-            direction_dec=str(self.dec_agn)+"deg",
-            )
+        input_13co10  = self.cube_13co10_60pc
+        input_13co21  = self.cube_13co21_60pc
+        output_13co10 = self.outcubes_13co10.replace("???","60pc")
+        output_13co21 = self.outcubes_13co21.replace("???","60pc")
+        ra            = str(self.ra_agn)+"deg"
+        dec           = str(self.dec_agn)+"deg"
+
+        imrebin2(input_13co10,output_13co10,imsize=self.imsize,direction_ra=ra,direction_dec=dec)
+        run_imregrid(input_13co21,output_13co10,output_13co21,axes=[0,1])
 
     ###############
     # _create_dir #
