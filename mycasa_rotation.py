@@ -47,59 +47,6 @@ def fitting_two(
     restfreq_low  = header_low["restfreq"][0] / 1e9
     restfreq_high = header_high["restfreq"][0] / 1e9
 
-    """
-    # regrid
-    area_low  = header_low["shape"][0] * header_low["shape"][1]
-    area_high = header_high["shape"][0] * header_high["shape"][1]
-    index     = np.argmin([area_low,area_high])
-    mytask.run_importfits([cubelow,cubehigh][index],"template.image")
-
-    index     = np.argmax([area_low,area_high])
-    mytask.run_imregrid(
-        [cubelow,cubehigh][index],
-        "template.image",
-        [cubelow,cubehigh][index] + ".regrid",
-        )
-    os.system("rm -rf template.image")
-
-    # set path to the regridded file
-    if np.argmin([area_low,area_high])==0:
-        cubelow  = cubelow
-        cubehigh = cubehigh + ".regrid"
-    else:
-        cubelow  = cubelow + ".regrid"
-        cubehigh = cubehigh
-
-    print("### two cubes to proceed.")
-    print("# cubelow  = " + cubelow.split("/")[-1])
-    print("# cubehigh = " + cubehigh.split("/")[-1])
-    print("")
-
-    # imsubimage with box
-    if factor!=None:
-        os.system("rm -rf " + cubelow + ".boxed")
-        imrebin(
-            imagename = cubelow,
-            box = box,
-            factor = factor,
-            outfile = cubelow + ".boxed",
-            )
-
-        os.system("rm -rf " + cubehigh + ".boxed")
-        imrebin(
-            imagename = cubehigh,
-            box = box,
-            factor = factor,
-            outfile = cubehigh + ".boxed",
-            )
-    else:
-        os.system("mv " + cubelow + " " + cubelow + ".boxed")
-        os.system("mv " + cubehigh + " " + cubehigh + ".boxed")
-
-    cubelow = cubelow + ".boxed"
-    cubehigh = cubehigh + ".boxed"
-    """
-
     # read cube
     data_low,freq_low,ra_deg,dec_deg = _get_data(cubelow,ra_cnt,dec_cnt)
     data_high,freq_high,_,_ = _get_data(cubehigh,ra_cnt,dec_cnt)
@@ -112,6 +59,8 @@ def fitting_two(
 
     rms_high = plot_hist(data_high,"plot_voxel_hist_cubehigh.png")
     snr_high = np.max(data_high) / rms_high
+
+    os.system("rm -rf plot_voxel_hist_cubelow.png plot_voxel_hist_cubehigh.png")
 
     # determine the base data
     index     = np.argmax([snr_low,snr_high])
@@ -229,7 +178,7 @@ def fitting_two(
     # fits
     fits_creation(mom0_low.T,"mom0_low.fits")
     fits_creation(mom0_high.T,"mom0_high.fits")
-    fits_creation(mom0_low.T/mom0_high.T,"ratio.fits")
+    fits_creation(mom0_high.T/mom0_low.T,"ratio.fits")
     fits_creation(mom1.T,"mom1.fits")
     fits_creation(mom2.T,"mom2.fits")
 
