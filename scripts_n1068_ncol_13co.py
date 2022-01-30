@@ -193,7 +193,7 @@ class ToolsNcol():
             ra_cnt=self.ra_agn,
             dec_cnt=self.dec_agn,
             box=box,
-            factor=[1,1],
+            factor=None,
             snr=5.0,
             smooth=0,
             )

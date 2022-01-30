@@ -27,7 +27,7 @@ def fitting_two(
     ra_cnt=40.669625, # 1068 agn, deg
     dec_cnt=-0.01331667, # 1068 agn, deg
     box="92,103,363,333",
-    factor=[5,5],
+    factor=None,
     snr=7.0,
     smooth=0,
     ):
@@ -75,23 +75,27 @@ def fitting_two(
     print("")
 
     # imsubimage with box
-    os.system("rm -rf " + cubelow + ".boxed")
-    imrebin(
-        imagename = cubelow,
-        box = box,
-        factor = factor,
-        outfile = cubelow + ".boxed",
-        )
-    cubelow = cubelow + ".boxed"
+    if factor!=None:
+        os.system("rm -rf " + cubelow + ".boxed")
+        imrebin(
+            imagename = cubelow,
+            box = box,
+            factor = factor,
+            outfile = cubelow + ".boxed",
+            )
+        cubelow = cubelow + ".boxed"
 
-    os.system("rm -rf " + cubehigh + ".boxed")
-    imrebin(
-        imagename = cubehigh,
-        box = box,
-        factor = factor,
-        outfile = cubehigh + ".boxed",
-        )
-    cubehigh = cubehigh + ".boxed"
+        os.system("rm -rf " + cubehigh + ".boxed")
+        imrebin(
+            imagename = cubehigh,
+            box = box,
+            factor = factor,
+            outfile = cubehigh + ".boxed",
+            )
+        cubehigh = cubehigh + ".boxed"
+    else:
+        os.system("mv " + cubelow + " " + cubelow + ".boxed")
+        os.system("mv " + cubehigh + " " + cubehigh + ".boxed")
 
     # read cube
     data_low,freq_low,ra_deg,dec_deg = _get_data(cubelow,ra_cnt,dec_cnt)
