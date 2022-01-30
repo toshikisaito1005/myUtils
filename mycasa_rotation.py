@@ -9,7 +9,7 @@ history:
 Toshiki Saito@Nichidai/NAOJ
 """
 
-import os, sys
+import os, sys, pyfits
 import mycasa_tasks as mytask
 reload(mytask)
 import mycasa_plots as myplot
