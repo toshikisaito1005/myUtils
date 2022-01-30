@@ -150,10 +150,7 @@ def fitting_two(
         this_data = np.r_[this_data_low, this_data_high]
 
         # p0 guess
-        guess_b1 = (restfreq_high - this_freq_high[np.argmax(this_data_high)]) / restfreq_high * 299792.458
-        guess_b2 = (restfreq_high - this_freq_high[np.argmin(this_data_high)]) / restfreq_high * 299792.458
-        guess_b  = (guess_b1+guess_b2)/2.0
-        print(guess_b1,guess_b2,guess_b)
+        guess_b = (restfreq_high - this_freq_high[np.nanargmax(this_data_high)]) / restfreq_high * 299792.458
 
         p0 = [
         np.max(this_data)/2.0,
