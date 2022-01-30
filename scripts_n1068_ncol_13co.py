@@ -130,7 +130,7 @@ class ToolsNcol():
         """
         """
 
-        imsize = 40
+        self.imsize = 40
 
         # ngc1068 properties
         self.ra_agn    = float(self._read_key("ra_agn", "gal").split("deg")[0])
@@ -181,7 +181,10 @@ class ToolsNcol():
 
         imrebin2(
             self.cube_13co10_60pc,
-            self.outcubes_13co10.replace("???","60pc")
+            self.outcubes_13co10.replace("???","60pc"),
+            imsize=self.imsize,
+            direction_ra=str(self.ra_agn)+"deg",
+            direction_dec=str(self.dec_agn)+"deg",
             )
 
     ###############
