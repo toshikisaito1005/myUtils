@@ -25,6 +25,11 @@ ecube_13co21_60pc   ,,,ngc1068_b6_12m_13co21_60pc_noise.fits
 ###############
 # output maps #
 ###############
+outcubes_13co10     ,,,n1068_13co10_???.cube
+outecubes_13co10    ,,,n1068_13co10_???.ecube
+outcubes_13co21     ,,,n1068_13co21_???.cube
+outecubes_13co21    ,,,n1068_13co21_???.ecube
+#
 outmaps_13co10      ,,,n1068_13co10_???.image
 outmaps_13co21      ,,,n1068_13co21_???.image
 outmaps_13co_trot   ,,,n1068_13co_trot_???.image

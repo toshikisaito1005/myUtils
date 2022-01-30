@@ -158,7 +158,7 @@ def imrebin2(
     mycl.addcomponent(dir=direction,
                       flux=1.0,
                       fluxunit="Jy",
-                      freq="230.0GHz",
+                      freq=str(obsfreq)+"GHz",
                       shape="Gaussian",
                       majoraxis="0.1arcmin",
                       minoraxis="0.05arcmin",
@@ -192,6 +192,8 @@ def imrebin2(
 
     # regrid
     run_imregrid(imagename,"template.image",outfile,axes=[0,1])
+
+    os.system("rm -rf template.image")
 
 ################
 # relabelimage #

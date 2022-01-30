@@ -118,12 +118,19 @@ class ToolsNcol():
         """
         """
 
+        self.outcubes_13co10  = self.dir_ready + self._read_key("outcubes_13co10")
+        self.outecubes_13co10 = self.dir_ready + self._read_key("outecubes_13co10")
+        self.outcubes_13co21  = self.dir_ready + self._read_key("outcubes_13co21")
+        self.outecubes_13co21 = self.dir_ready + self._read_key("outecubes_13co21")
+
         self.outmaps_13co10 = self.dir_ready + self._read_key("outmaps_13co10")
         self.outmaps_13co21 = self.dir_ready + self._read_key("outmaps_13co21")
 
     def _set_input_param(self):
         """
         """
+
+        imsize = 40
 
         # ngc1068 properties
         self.ra_agn    = float(self._read_key("ra_agn", "gal").split("deg")[0])
@@ -152,19 +159,9 @@ class ToolsNcol():
     def run_ngc1068_ncol(
         self,
         # analysis
-        do_prepare             = False,
-        do_sampling            = False,
-        do_pca                 = False,
+        do_prepare = False,
         # plot figures in paper
-        plot_hexmap_mom0       = False,
-        plot_envmask           = False,
-        plot_hexmap_pca        = False,
-        plot_hexmap_pca_podium = False,
-        plot_median_line_graph = False,
-        do_imagemagick         = False,
         # supplement
-        plot_supplements       = False,
-        do_imagemagick_sub     = False,
         ):
         """
         This method runs all the methods which will create figures in the paper.
@@ -174,44 +171,6 @@ class ToolsNcol():
         if do_prepare==True:
             self.align_maps()
 
-        if do_sampling==True:
-            self.hex_sampling()
-
-        if do_pca==True:
-            self.run_hex_pca(output=self.outpng_pca_mom0,outtxt=self.table_hex_pca_mom0,reverse=True)
-            #self.run_hex_pca(output=self.outpng_pca_rhcn,outtxt=self.table_hex_pca_rhcn,denom="hcn10",reverse=True)
-            #self.run_hex_pca(output=self.outpng_pca_r13co,outtxt=self.table_hex_pca_r13co,denom="13co10",reverse=True)
-
-        # plot figures in paper
-        if plot_hexmap_mom0==True:
-            self.plot_hexmap_mom0()
-
-        if plot_envmask==True:
-            self.plot_envmask()
-
-        if plot_hexmap_pca==True:
-            self.plot_hexmap_pca()
-
-        if plot_hexmap_pca_podium==True:
-            self.plot_hexmap_pca_ratio_podium()
-
-        if plot_median_line_graph==True:
-            self.plot_max_line_graph(denom="co10",ylim=[-2.2,0.9])
-            #self.plot_max_line_graph(denom="hcn10",ylim=[-1.8,2.0])
-
-        if do_imagemagick==True:
-            self.immagick_figures()
-
-        # supplement
-        if plot_supplements==True:
-            self.plot_radial()
-            self.plot_hexmap_pca_podium()
-            self.plot_hexmap_ratio(denom="13co10")
-            self.plot_hexmap_ratio(denom="hcn10")
-
-        if do_imagemagick_sub==True:
-            self.immagick_figures_sub()
-
     ##############
     # align_maps #
     ##############
@@ -220,28 +179,14 @@ class ToolsNcol():
         """
         """
 
-        template = "template.image"
-        run_importfits(self.map_av,template)
+        signal_masking(self.cube_13co21_60pc,"b6fov.mask",0)
 
-        taskname = self.modname + sys._getframe().f_code.co_name
-        check_first(template,taskname)
-
-        # regrid mom0
-        for this_map in self.maps_mom0:
-            this_output  = self.outmap_mom0.replace("???",this_map.split("/")[-1].split("_")[3])
-            this_outfits = self.outfits_mom0.replace("???",this_map.split("/")[-1].split("_")[3])
-            run_imregrid(this_map, template, this_output)
-            run_exportfits(this_output, this_outfits, True, True, True)
-
-        # regrid emom0
-        for this_map in self.maps_emom0:
-            this_output  = self.outmap_emom0.replace("???",this_map.split("/")[-1].split("_")[3])
-            this_outfits = self.outfits_emom0.replace("???",this_map.split("/")[-1].split("_")[3])
-            run_imregrid(this_map, template, this_output)
-            run_exportfits(this_output, this_outfits, True, True, True)
-
-        # cleanup
-        os.system("rm -rf template.image")
+        """
+        imrebin2(
+            self.cube_13co10_60pc,
+            self.outcubes_13co10.replace("???","60pc")
+            )
+        """
 
     ###############
     # _create_dir #
