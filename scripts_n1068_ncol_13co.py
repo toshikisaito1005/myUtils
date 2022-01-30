@@ -182,12 +182,8 @@ class ToolsNcol():
         # masking with bad 6 fov
         run_importfits(self.cube_13co21_60pc,"b6fov.mask_tmp1",defaultaxes=True)
         run_immath_one("b6fov.mask_tmp1","b6fov.mask","iif(IM0>-1000000,1,0)",chans="1",delin=True)
-        immath(
-            imagename = self.cube_13co10_60pc,
-            expr      = "IM0",
-            outfile   = self.cube_13co10_60pc + ".masked",
-            mask      = "b6fov.mask",
-            )
+        run_immath_two(self.cube_13co10_60pc,"b6fov.mask",self.cube_13co10_60pc+".masked","IM0*IM1")
+
 
         """
         imrebin2(
