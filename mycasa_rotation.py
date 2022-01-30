@@ -150,7 +150,7 @@ def fitting_two(
         this_data = np.r_[this_data_low, this_data_high]
 
         # p0 guess
-        guess_b = (restfreq_high - this_freq_high[np.nanargmax(this_data_high)]) / restfreq_high * 299792.458
+        guess_b = (restfreq_low - this_freq_low[np.nanargmax(this_data_low)]) / restfreq_low * 299792.458
 
         p0 = [
         np.max(this_data)/2.0,
