@@ -194,7 +194,7 @@ class ToolsNcol():
             dec_cnt=self.dec_agn,
             box=box,
             factor=None,
-            snr=7.0,
+            snr=6.0,
             smooth=0,
             )
 
