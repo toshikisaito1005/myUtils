@@ -47,6 +47,7 @@ def fitting_two(
     restfreq_low  = header_low["restfreq"][0] / 1e9
     restfreq_high = header_high["restfreq"][0] / 1e9
 
+    """
     # regrid
     area_low  = header_low["shape"][0] * header_low["shape"][1]
     area_high = header_high["shape"][0] * header_high["shape"][1]
@@ -83,7 +84,6 @@ def fitting_two(
             factor = factor,
             outfile = cubelow + ".boxed",
             )
-        cubelow = cubelow + ".boxed"
 
         os.system("rm -rf " + cubehigh + ".boxed")
         imrebin(
@@ -92,12 +92,13 @@ def fitting_two(
             factor = factor,
             outfile = cubehigh + ".boxed",
             )
-        cubehigh = cubehigh + ".boxed"
     else:
         os.system("mv " + cubelow + " " + cubelow + ".boxed")
         os.system("mv " + cubehigh + " " + cubehigh + ".boxed")
-        cubelow = cubelow + ".boxed"
-        cubehigh = cubehigh + ".boxed"
+
+    cubelow = cubelow + ".boxed"
+    cubehigh = cubehigh + ".boxed"
+    """
 
     # read cube
     data_low,freq_low,ra_deg,dec_deg = _get_data(cubelow,ra_cnt,dec_cnt)
