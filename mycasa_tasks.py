@@ -117,6 +117,82 @@ def f_lin(x, a, b):
     """
     return a * x + b
 
+############
+# imrebin2 #
+############
+
+def imrebin2(
+    imagename,
+    outfile,
+    imsize,
+    direction_ra,
+    direction_dec,
+    ):
+    """
+    input : imagename, imsize, direction_ra, direction_dec
+    output: ./template.image
+    """
+
+    taskname = modname + sys._getframe().f_code.co_name
+    check_first(imagename, taskname)
+
+    ### main
+    os.system("rm -rf template.im template.fits template.image")
+
+    # prepare
+    obsfreq = 115.27120
+
+    # create tempalte image
+    blc_ra_tmp  = imstat(imagename)["blcf"].split(", ")[0]
+    blc_dec_tmp = imstat(imagename)["blcf"].split(", ")[1]
+    blc_ra      = blc_ra_tmp.replace(":","h",1).replace(":","m",1)+"s"
+    blc_dec     = blc_dec_tmp.replace(".","d",1).replace(".","m",1)+"s"
+
+    beamsize    = round(imhead(imagename,"list")["beamminor"]["value"], 2)
+    pix_size    = round(beamsize/4.53, 2)
+    size_x      = int(imsize / pix_size)
+    size_y      = size_x
+
+    direction   = "J2000 " + direction_ra + " " + direction_dec
+    mycl.done()
+    mycl.addcomponent(dir=direction,
+                      flux=1.0,
+                      fluxunit="Jy",
+                      freq="230.0GHz",
+                      shape="Gaussian",
+                      majoraxis="0.1arcmin",
+                      minoraxis="0.05arcmin",
+                      positionangle="45.0deg")
+
+    myia.fromshape("template.im",[size_x,size_y,1,1],overwrite=True)
+    mycs        = myia.coordsys()
+    mycs.setunits(["rad","rad","","Hz"])
+    cell_rad    = myqa.convert(myqa.quantity(str(pix_size) + "arcsec"),"rad")["value"]
+    mycs.setincrement([-cell_rad,cell_rad],"direction")
+    mycs.setreferencevalue([myqa.convert(direction_ra,"rad")["value"],
+                            myqa.convert(direction_dec,"rad")["value"]],
+                           type = "direction")
+    mycs.setreferencevalue(str(obsfreq)+"GHz","spectral")
+    mycs.setincrement("1GHz","spectral")
+    myia.setcoordsys(mycs.torecord())
+    myia.setbrightnessunit("Jy/pixel")
+    myia.modify(mycl.torecord(),subtract=False)
+    exportfits(imagename = "template.im",
+               fitsimage = "template.fits",
+               overwrite = True)
+
+    os.system("rm -rf template.image")
+    importfits(fitsimage = "template.fits",
+               imagename = "template.image")
+
+    myia.close()
+    mycl.close()
+
+    os.system("rm -rf template.im template.fits")
+
+    # regrid
+    run_imregrid(imagename,"template.image",outfile,axes=[0,1])
+
 ################
 # relabelimage #
 ################
@@ -161,7 +237,6 @@ def relabelimage(
 ######################
 # remove_small_masks #
 ######################
-
 def remove_small_masks(
     maskname,
     output=None,
@@ -203,7 +278,6 @@ def remove_small_masks(
 #############
 # beam_area #
 #############
-
 def beam_area(
     imagename,
     ):
@@ -244,10 +318,9 @@ def imval_all(
         data  = imval(imagename,region=region)
         return data
     
-########################################
-### measure_rms
-########################################
-
+###############
+# measure_rms #
+###############
 def measure_rms(
     imagename,
     snr=3.0,
@@ -291,10 +364,9 @@ def measure_rms(
         # use percentile
         return p84
 
-########################################
-### boolean_masking
-########################################
-
+###################
+# boolean_masking #
+###################
 def boolean_masking(
     imagename,
     outfile,
@@ -322,10 +394,9 @@ def boolean_masking(
     if delin==True:
         os.system("rm -rf " + imagename)
 
-########################################
-### signal_masking
-########################################
-
+##################
+# signal_masking #
+##################
 def signal_masking(
     imagename,
     outfile,
@@ -364,10 +435,9 @@ def signal_masking(
     if delin==True:
         os.system("rm -rf " + imagename)
 
-########################################
-### run_immath_three
-########################################
-
+####################
+# run_immath_three #
+####################
 def run_immath_three(
     imagename1,
     imagename2,
@@ -397,10 +467,9 @@ def run_immath_three(
         os.system("rm -rf " + imagename2)
         os.system("rm -rf " + imagename3)
 
-########################################
-### run_immath_two
-########################################
-
+##################
+# run_immath_two #
+##################
 def run_immath_two(
     imagename1,
     imagename2,
@@ -429,10 +498,9 @@ def run_immath_two(
         os.system("rm -rf " + imagename1)
         os.system("rm -rf " + imagename2)
 
-########################################
-### run_immath_one
-########################################
-
+##################
+# run_immath_one #
+##################
 def run_immath_one(
     imagename,
     outfile,
@@ -458,10 +526,9 @@ def run_immath_one(
     if delin==True:
         os.system("rm -rf " + imagename)
 
-########################################
-### run_imregrid
-########################################
-
+################
+# run_imregrid #
+################
 def run_imregrid(
     imagename,
     template,
@@ -487,10 +554,9 @@ def run_imregrid(
     if delin==True:
         os.system("rm -rf " + imagename)
 
-########################################
-### unit_Jyb_K
-########################################
-
+##############
+# unit_Jyb_K #
+##############
 def unitconv_Jyb_K(
     imagename,
     outfile,
@@ -545,10 +611,9 @@ def unitconv_Jyb_K(
     if delin==True:
         os.system("rm -rf " + imagename)
 
-########################################
-### run_imrebin
-########################################
-
+###############
+# run_imrebin #
+###############
 def run_imrebin(
     imagename,
     outfile,
@@ -595,10 +660,9 @@ def run_imrebin(
     if delin==True:
         os.system("rm -rf " + imagename)
 
-########################################
-### run_exportfits
-########################################
-
+##################
+# run_exportfits #
+##################
 def run_exportfits(
     imagename,
     fitsimage,
@@ -627,10 +691,9 @@ def run_exportfits(
     if delin==True:
         os.system("rm -rf " + imagename)
 
-########################################
-### run_importfits
-########################################
-
+##################
+# run_importfits #
+##################
 def run_importfits(
     fitsimage,
     imagename,
@@ -657,10 +720,9 @@ def run_importfits(
     if delin==True:
         os.system("rm -rf " + fitsimage)
 
-########################################
-### run_immoments
-########################################
-
+#################
+# run_immoments #
+#################
 def run_immoments(
     imagename,
     maskimage,
@@ -727,10 +789,9 @@ def run_immoments(
                 outfile_snr,
                 )
 
-########################################
-### run_impbcor
-########################################
-
+###############
+# run_impbcor #
+###############
 def run_impbcor(
     imagename,
     pbimage,
@@ -759,10 +820,9 @@ def run_impbcor(
     if delin==True:
         os.system("rm -rf " + imagename)
 
-########################################
-### run_roundsmooth
-########################################
-
+###################
+# run_roundsmooth #
+###################
 def run_roundsmooth(
     imagename,
     outfile,
@@ -802,79 +862,6 @@ def run_roundsmooth(
     if delin==True:
         os.system("rm -rf " + imagename)
 
-########################################
-### will be decomissioned as PHANGS-ALMA pipeline already do this for you.
-########################################
-
-def _make_gridtemplate(
-    imagename,
-    imsize,
-    direction_ra,
-    direction_dec,
-    taskname="mytask.n1068citool.make_gridtemplate",
-    ):
-    """
-    input : imagename, imsize, direction_ra, direction_dec
-    output: ./template.image
-    """
-    print("# make_gridtemplate")
-    ### time stamp
-    timestamp(taskname=taskname)
-    #
-    ###
-    os.system("rm -rf template.im template.fits template.image")
-    # get native grid information
-    num_x_pix = imhead(imagename,mode="list")["shape"][0]
-    num_y_pix = imhead(imagename,mode="list")["shape"][1]
-    pix_radian = imhead(imagename,mode="list")["cdelt2"]
-    obsfreq = 115.27120 # imhead(imagename,mode="list")["restfreq"][0]/1e9
-    pix_arcsec = round(pix_radian * 3600 * 180 / np.pi, 3)
-
-    # create tempalte image
-    blc_ra_tmp=imstat(imagename)["blcf"].split(", ")[0]
-    blc_dec_tmp=imstat(imagename)["blcf"].split(", ")[1]
-    blc_ra = blc_ra_tmp.replace(":","h",1).replace(":","m",1)+"s"
-    blc_dec = blc_dec_tmp.replace(".","d",1).replace(".","m",1)+"s"
-    beamsize=round(imhead(imagename,"list")["beammajor"]["value"], 2)
-    pix_size=round(beamsize/4.53, 2)
-    size_x = int(imsize / pix_size)
-    size_y = size_x
-    c = SkyCoord(blc_ra, blc_dec)
-    ra_dgr = str(c.ra.degree)
-    dec_dgr = str(c.dec.degree)
-    direction="J2000 "+direction_ra+" "+direction_dec
-    mycl.done()
-    mycl.addcomponent(dir=direction,
-                      flux=1.0,
-                      fluxunit="Jy",
-                      freq="230.0GHz",
-                      shape="Gaussian",
-                      majoraxis="0.1arcmin",
-                      minoraxis="0.05arcmin",
-                      positionangle="45.0deg")
-
-    myia.fromshape("template.im",[size_x,size_y,1,1],overwrite=True)
-    mycs=myia.coordsys()
-    mycs.setunits(["rad","rad","","Hz"])
-    cell_rad=myqa.convert(myqa.quantity(str(pix_size)+"arcsec"),"rad")["value"]
-    mycs.setincrement([-cell_rad,cell_rad],"direction")
-    mycs.setreferencevalue([myqa.convert(direction_ra,"rad")["value"],
-                            myqa.convert(direction_dec,"rad")["value"]],
-                           type="direction")
-    mycs.setreferencevalue(str(obsfreq)+"GHz","spectral")
-    mycs.setincrement("1GHz","spectral")
-    myia.setcoordsys(mycs.torecord())
-    myia.setbrightnessunit("Jy/pixel")
-    myia.modify(mycl.torecord(),subtract=False)
-    exportfits(imagename="template.im",
-               fitsimage="template.fits",
-               overwrite=True)
-
-    os.system("rm -rf template.image")
-    importfits(fitsimage="template.fits",
-               imagename="template.image")
-
-    myia.close()
-    mycl.close()
-    #
-    os.system("rm -rf template.im template.fits")
+#######
+# end #
+#######
