@@ -121,8 +121,8 @@ def fitting_two(
     this_cube = [cubelow,cubehigh][index]
 
     print("### " + this_cube.split("/")[-1] + " has better SNR.")
-    print("# rms = " + str(np.round(this_rms,4)))
-    print("# SNR = " + str(np.round(this_snr,1)))
+    print("# rms     = " + str(np.round(this_rms,4)))
+    print("# max SNR = " + str(np.round(this_snr,1)))
     print("")
 
     # fitting spectra
@@ -153,6 +153,8 @@ def fitting_two(
         guess_b1 = (restfreq_high - this_freq_high[np.argmax(this_data_high)]) / restfreq_high * 299792.458
         guess_b2 = (restfreq_high - this_freq_high[np.argmin(this_data_high)]) / restfreq_high * 299792.458
         guess_b  = (guess_b1+guess_b2)/2.0
+        print(guess_b1,guess_b2,guess_b)
+
         p0 = [
         np.max(this_data)/2.0,
         np.max(this_data),
