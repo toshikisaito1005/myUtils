@@ -157,6 +157,7 @@ def fitting_two(
         guess_b,
         40.,
         ]
+        print(guess_b)
 
         # fit
         if np.max(this_data)<this_rms*snr:
