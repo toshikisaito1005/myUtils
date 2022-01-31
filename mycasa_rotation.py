@@ -91,10 +91,11 @@ def fitting_two(
         this_err  = np.r_[this_err_low, this_err_high]
 
         # p0 guess
+        guess_b = (restfreq_low - this_freq_low[np.nanargmax(this_data_low)]) / restfreq_low * 299792.458
         p0 = [
         np.max(this_data)/2.0,
         np.max(this_data),
-        (restfreq_low - this_freq_low[np.nanargmax(this_data_low)]) / restfreq_low * 299792.458,
+        guess_b,
         40.,
         ]
 
@@ -104,7 +105,7 @@ def fitting_two(
             this_f_two = lambda x, a1, a2, b, c: _f_two(x, a1, a2, b, c, restfreq_low, restfreq_high)
             popt,pcov = curve_fit(this_f_two,this_freq,this_data,sigma=this_err,p0=p0,maxfev=100000)
 
-            if popt[1]/popt[0]>0 and popt[1]/popt[0]<=ratio_max and popt[0]<=np.max(this_data_low)*1.5 and popt[1]<=np.max(this_data_low)*1.5:
+            if popt[1]/popt[0]>0 and popt[1]/popt[0]<=ratio_max and popt[2]!=guess_b and popt[3]!=40:
                 # add pixel
                 mom0_low[this_x,this_y]  = popt[0] * popt[3] * np.sqrt(2*np.pi)
                 mom0_high[this_x,this_y] = popt[1] * popt[3] * np.sqrt(2*np.pi)
@@ -123,13 +124,10 @@ def fitting_two(
             mom1[this_x,this_y]      = 0
             mom2[this_x,this_y]      = 0
 
-    # ratio
-    ratio = mom0_high.T/mom0_low.T
-
     # fits
     fits_creation(mom0_low.T,"mom0_low.fits")
     fits_creation(mom0_high.T,"mom0_high.fits")
-    fits_creation(ratio,"ratio.fits")
+    fits_creation(mom0_high.T/mom0_low.T,"ratio.fits")
     fits_creation(mom1.T,"mom1.fits")
     fits_creation(mom2.T,"mom2.fits")
 
@@ -324,14 +322,6 @@ def _f_two(x, a1, a2, b, c, freq1, freq2):
 
     return func
 
-############
-# _f_gauss #
-############
-
-def _f_noise(x, a, c):
-
-    return a*np.exp(-(x)**2/(2*c**2))
-
 #############
 # _get_data #
 #############
@@ -370,20 +360,6 @@ def _get_data(
     freq      = np.delete(freq,index,2)
 
     return data, err, freq, ra_deg, dec_deg
-
-#############
-# _get_grid #
-#############
-
-def _get_grid(imagename):
-
-    print("# _get_grid " + imagename.split("/")[-1])
-
-    head  = imhead(imagename,mode="list")
-    shape = head["shape"][0:2]
-    pix   = abs(head["cdelt1"]) * 3600 * 180/np.pi
-    
-    return shape, pix
 
 #######
 # end #
