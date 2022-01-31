@@ -99,16 +99,23 @@ def fitting_two(
         ]
 
         # fit
-        if np.max(this_data_low/this_err_low)>=snr and np.max(this_data_high/this_err_high)>=snr and popt[1]/popt[0]>0 and popt[1]/popt[0]<=ratio_max:
+        if np.max(this_data_low/this_err_low)>=snr and np.max(this_data_high/this_err_high)>=snr:
             # fitting
             this_f_two = lambda x, a1, a2, b, c: _f_two(x, a1, a2, b, c, restfreq_low, restfreq_high)
             popt,pcov = curve_fit(this_f_two,this_freq,this_data,sigma=this_err,p0=p0,maxfev=100000)
 
-            # add pixel
-            mom0_low[this_x,this_y]  = popt[0] * popt[3] * np.sqrt(2*np.pi)
-            mom0_high[this_x,this_y] = popt[1] * popt[3] * np.sqrt(2*np.pi)
-            mom1[this_x,this_y]      = popt[2]
-            mom2[this_x,this_y]      = popt[3]
+            if popt[1]/popt[0]>0 and popt[1]/popt[0]<=ratio_max
+                # add pixel
+                mom0_low[this_x,this_y]  = popt[0] * popt[3] * np.sqrt(2*np.pi)
+                mom0_high[this_x,this_y] = popt[1] * popt[3] * np.sqrt(2*np.pi)
+                mom1[this_x,this_y]      = popt[2]
+                mom2[this_x,this_y]      = popt[3]
+            else:
+                # add pixel
+                mom0_low[this_x,this_y]  = 0
+                mom0_high[this_x,this_y] = 0
+                mom1[this_x,this_y]      = 0
+                mom2[this_x,this_y]      = 0
         else:
             # add pixel
             mom0_low[this_x,this_y]  = 0
