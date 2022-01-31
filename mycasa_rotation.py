@@ -28,8 +28,8 @@ def fitting_two(
     ecubehigh,
     restfreq_low=None,
     restfreq_high=None,
-    ra_cnt=40.669625, # 1068 agn, deg
-    dec_cnt=-0.01331667, # 1068 agn, deg
+    ra_cnt=40.669625, # deg
+    dec_cnt=-0.01331667, # deg
     snr=10.0,
     smooth=0,
     ):
@@ -50,10 +50,8 @@ def fitting_two(
         restfreq_high = header_high["restfreq"][0] / 1e9
 
     # read cube
-    data_low,freq_low,ra_deg,dec_deg = _get_data(cubelow,ra_cnt,dec_cnt)
-    data_high,freq_high,_,_          = _get_data(cubehigh,ra_cnt,dec_cnt)
-    err_low,_,_,_                    = _get_data(ecubelow,ra_cnt,dec_cnt)
-    err_high,_,_,_                   = _get_data(ecubehigh,ra_cnt,dec_cnt)
+    data_low,err_low,freq_low,ra_deg,dec_deg = _get_data(cubelow,ecubelow,ra_cnt,dec_cnt)
+    data_high,err_high,freq_high,_,_         = _get_data(cubehigh,ecubehigh,ra_cnt,dec_cnt)
 
     ra  = ra_deg[:,:,0] * 3600
     dec = dec_deg[:,:,0] * 3600
@@ -310,97 +308,6 @@ def fits_creation(
     hdul = pyfits.HDUList([hdu])
     hdul.writeto(output_map)
 
-#############
-# plot_hist #
-#############
-
-def plot_hist(data,output,snr_for_fit=1.0):
-    """
-    plot voxel distribution in the input data. Zero will be ignored.
-    output units will be mK.
-    """
-
-    # prepare
-    data = data.flatten()
-    data[np.isnan(data)] = 0
-    data[np.isinf(data)] = 0
-    data = data[data!=0] * 1000
-
-    if output.endswith("image.png"):
-        title = ".image histogram"
-    elif output.endswith("residual.png"):
-        title = ".residual histogram"
-    else:
-        title = "None"
-
-    # get voxel histogram
-    bins   = int( np.ceil( np.log2(len(data))+1 ) * 10 )
-    p84    = np.percentile(data, 16) * -1
-    hrange = [-5*p84, 5*p84]
-    hist   = np.histogram(data, bins=bins, range=hrange)
-
-    x,y   = hist[1][:-1], hist[0]/float(np.sum(hist[0])) * 1000
-    histx = x[x<p84*snr_for_fit]
-    histy = y[x<p84*snr_for_fit]
-
-    # fit
-    x_bestfit = np.linspace(hrange[0], hrange[1], bins)
-    popt,_ = curve_fit(_f_noise, histx, histy, p0=[np.max(histy),p84], maxfev=10000)
-
-    # best fit
-    peak      = popt[0]
-    rms_mK    = np.round(popt[1],3)
-    y_bestfit = _f_noise(x_bestfit, peak, rms_mK)
-
-    # plot
-    ymax  = np.max(y) * 1.1
-    cpos  = "tomato"
-    cneg  = "deepskyblue"
-    cfit  = "black"
-    snr_a = 1.0
-    snr_b = 3.0
-
-    tpos  = "positive side"
-    tneg  = "(flipped) negative side"
-    tfit  = "best fit Gaussian"
-    ha    = "left"
-    w     = "bold"
-    tsnr_a = "1$\sigma$ = \n"+str(np.round(rms_mK*snr_a,3))+" mJy"
-    tsnr_b = "3$\sigma$ = \n"+str(np.round(rms_mK*snr_b,3))+" mJy"
-
-    fig = plt.figure(figsize=(10,10))
-    plt.rcParams["font.size"] = 22
-    plt.rcParams["legend.fontsize"] = 20
-
-    gs = gridspec.GridSpec(nrows=30, ncols=30)
-    ax = plt.subplot(gs[0:30,0:30])
-    ax.grid(axis="both", ls="--")
-
-    ax.step(x, y, color=cpos, lw=4, where="mid")
-    ax.bar(x, y, lw=0, color=cpos, alpha=0.2, width=x[1]-x[0], align="center")
-    ax.step(-x, y, color=cneg, lw=4, where="mid")
-    ax.bar(-x, y, lw=0, color=cneg, alpha=0.2, width=x[1]-x[0], align="center")
-    ax.plot(x_bestfit, y_bestfit, "k-", lw=3)
-    ax.plot([snr_a*rms_mK,snr_a*rms_mK], [0,ymax], "k--", lw=1)
-    ax.plot([snr_b*rms_mK,snr_b*rms_mK], [0,ymax], "k--", lw=1)
-
-    tf = ax.transAxes
-    ax.text(0.45,0.93,tpos,color=cpos,transform=tf,horizontalalignment=ha,weight=w)
-    ax.text(0.45,0.88,tneg,color=cneg,transform=tf,horizontalalignment=ha,weight=w)
-    ax.text(0.45,0.83,tfit,color=cfit,transform=tf,horizontalalignment=ha,weight=w)
-    ax.text(rms_mK*snr_a,ymax*0.8,tsnr_a,rotation=90)
-    ax.text(rms_mK*snr_b,ymax*0.5,tsnr_b,rotation=90)
-
-    ax.set_title(title)
-    ax.set_xlabel("Pixel value (mJy)")
-    ax.set_ylabel("Pixel count density * 10$^{3}$")
-    ax.set_xlim([0,5*p84])
-    ax.set_ylim([0,ymax])
-
-    plt.savefig(output, dpi=100)
-
-    return rms_mK / 1000.
-
 ##########
 # _f_two #
 ##########
@@ -433,6 +340,7 @@ def _f_noise(x, a, c):
 
 def _get_data(
     cubeimage,
+    cubeerr,
     ra_cnt,
     dec_cnt,
     ):
@@ -440,19 +348,30 @@ def _get_data(
     """
 
     data,_    = mytask.imval_all(cubeimage)
+    err,_     = mytask.imval_all(cubeerr)
     coords    = data["coords"]
     data      = data["data"]
+    err       = err["data"]   
     ra_deg    = coords[:,:,:,0] * 180/np.pi - ra_cnt
     dec_deg   = coords[:,:,:,1] * 180/np.pi - dec_cnt
     freq      = coords[:,:,:,2] / 1e9
 
     data[np.isnan(data)] = 0
-    spec_mean = np.sum(data,axis=(0,1))
-    index     = np.where(spec_mean==0)[0]
+    err[np.isnan(err)]   = 0
+    spec_data = np.sum(data,axis=(0,1))
+    spec_err  = np.sum(err,axis=(0,1))
+
+    index     = np.where(spec_data==0)[0]
     data      = np.delete(data,index,2)
+    err       = np.delete(err,index,2)
     freq      = np.delete(freq,index,2)
 
-    return data, freq, ra_deg, dec_deg
+    index     = np.where(spec_err==0)[0]
+    data      = np.delete(data,index,2)
+    err       = np.delete(err,index,2)
+    freq      = np.delete(freq,index,2)
+
+    return data, err, freq, ra_deg, dec_deg
 
 #############
 # _get_grid #
