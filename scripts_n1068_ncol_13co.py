@@ -187,6 +187,8 @@ class ToolsNcol():
         fitting_two(
             self.outcubes_13co10.replace("???","60pc"),
             self.outcubes_13co21.replace("???","60pc"),
+            self.outecubes_13co10.replace("???","60pc"),
+            self.outecubes_13co21.replace("???","60pc"),
             ra_cnt=self.ra_agn,
             dec_cnt=self.dec_agn,
             snr=6.0,
