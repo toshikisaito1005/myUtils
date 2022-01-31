@@ -148,8 +148,6 @@ def fitting_two(
     snr=7.0,
     smooth=0,
     ):
-    """
-    """
 
     # preamble
     taskname = sys._getframe().f_code.co_name
