@@ -235,23 +235,12 @@ def fitting_two(
             this_f_two = lambda x, a1, a2, b, c: _f_two(x, a1, a2, b, c, restfreq_low, restfreq_high)
             popt,pcov = curve_fit(this_f_two,this_freq,this_data,p0=p0,maxfev=100000)
 
-            # calc values
-            """
-            this_model    = _f_cn10(this_freq_center, *popt)
-            this_mom0     = np.sum(this_model) * chanwidth
-            this_mom1     = (freq_cn10h - popt[3]) / freq_cn10h * 299792.458 # km/s
-            this_mom2     = popt[4] * 299792.458 / freq_cn10h # km/s
-            this_mom0_res = np.sum(residuals) * chanwidth
-            this_ratio    = area1/area2
-            """
-
             # add pixel
             mom0_low[this_x,this_y]  = popt[0]
             mom0_high[this_x,this_y] = popt[1]
             mom1[this_x,this_y]      = popt[2]
             mom2[this_x,this_y]      = popt[3]
 
-            """
             # plot
             if this_x==4 and this_y==23:
                 print(p0)
@@ -288,7 +277,6 @@ def fitting_two(
                 plt.title( str(np.round(peak,3)) )
 
                 plt.savefig("spectra.png", dpi=100)
-            """
 
     # fits
     fits_creation(mom0_low.T,"mom0_low.fits")
