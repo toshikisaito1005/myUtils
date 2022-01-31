@@ -32,6 +32,7 @@ def fitting_two(
     dec_cnt=-0.01331667, # deg
     snr=10.0,
     smooth=0,
+    ratio_max=2.0,
     ):
     """
     """
@@ -98,7 +99,7 @@ def fitting_two(
         ]
 
         # fit
-        if np.max(this_data_low/this_err_low)>=snr and np.max(this_data_high/this_err_high)>=snr:
+        if np.max(this_data_low/this_err_low)>=snr and np.max(this_data_high/this_err_high)>=snr and popt[1]/popt[0]>0 and popt[1]/popt[0]<=ratio_max:
             # fitting
             this_f_two = lambda x, a1, a2, b, c: _f_two(x, a1, a2, b, c, restfreq_low, restfreq_high)
             popt,pcov = curve_fit(this_f_two,this_freq,this_data,sigma=this_err,p0=p0,maxfev=100000)
@@ -117,8 +118,6 @@ def fitting_two(
 
     # ratio
     ratio = mom0_high.T/mom0_low.T
-    ratio[ratio>=2] = 0
-    ratio[ratio<0] = 0
 
     # fits
     fits_creation(mom0_low.T,"mom0_low.fits")
