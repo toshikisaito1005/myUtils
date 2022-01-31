@@ -104,7 +104,7 @@ def fitting_two(
             this_f_two = lambda x, a1, a2, b, c: _f_two(x, a1, a2, b, c, restfreq_low, restfreq_high)
             popt,pcov = curve_fit(this_f_two,this_freq,this_data,sigma=this_err,p0=p0,maxfev=100000)
 
-            if popt[1]/popt[0]>0 and popt[1]/popt[0]<=ratio_max and popt[0]<=np.max(this_data_low)*2.0 and popt[1]<=np.min(this_data_low)*2.0:
+            if popt[1]/popt[0]>0 and popt[1]/popt[0]<=ratio_max and popt[0]<=np.max(this_data_low)*1.5 and popt[1]<=np.max(this_data_low)*1.5:
                 # add pixel
                 mom0_low[this_x,this_y]  = popt[0] * popt[3] * np.sqrt(2*np.pi)
                 mom0_high[this_x,this_y] = popt[1] * popt[3] * np.sqrt(2*np.pi)
