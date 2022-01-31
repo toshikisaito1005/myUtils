@@ -184,16 +184,11 @@ class ToolsNcol():
         """
         """
 
-        shape = imhead(self.outcubes_13co10.replace("???","60pc"),mode="list")["shape"]
-        box   = "0,0," + str(shape[0]-1) + "," + str(shape[1]-1)
-
         fitting_two(
             self.outcubes_13co10.replace("???","60pc"),
             self.outcubes_13co21.replace("???","60pc"),
             ra_cnt=self.ra_agn,
             dec_cnt=self.dec_agn,
-            box=box,
-            factor=None,
             snr=6.0,
             smooth=0,
             )
