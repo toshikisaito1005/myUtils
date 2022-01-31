@@ -35,6 +35,9 @@ paper drafts:
 Date         Filename                          To
 2021-06-10   draft_v0_210610.zip               all co-Is
 2021-07-02   draft_v1_210702_submitted.zip     journal
+2022-01-31   draft_v2_220131.zip               all co-Is
+2022-01-31   reply_v1_220131.pdf               all co-Is
+
 2021-10-??   reply_2110??_1st_revised.pdf      referee
 2021-10-??   draft_v2_2110??_1st_revised.zip   journal
 
@@ -52,6 +55,7 @@ Date         Action
 2021-09-01   major update based on the 1st referee report
 2021-10-19   bug fix in the rotation diagram part (refactor equation, Snu2)
 2021-11-28   use eq1 of Nakajima et al. 2018
+2022-01-31   circulate the revised draft and the reply to the whole team
 Toshiki Saito@Nichidai/NAOJ
 """
 
