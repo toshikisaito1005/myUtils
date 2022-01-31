@@ -191,7 +191,7 @@ class ToolsNcol():
             self.outecubes_13co21.replace("???","60pc"),
             ra_cnt=self.ra_agn,
             dec_cnt=self.dec_agn,
-            snr=6.0,
+            snr=4.0,
             smooth=0,
             )
 

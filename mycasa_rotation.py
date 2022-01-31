@@ -98,7 +98,7 @@ def fitting_two(
         ]
 
         # fit
-        if np.max(this_data/this_err)<snr:
+        if np.max(this_data_low/this_err_low)<snr and np.max(this_data_high/this_err_high)<snr:
             # add pixel
             mom0_low[this_x,this_y]  = 0
             mom0_high[this_x,this_y] = 0
@@ -126,14 +126,6 @@ def fitting_two(
     fits_creation(ratio,"ratio.fits")
     fits_creation(mom1.T,"mom1.fits")
     fits_creation(mom2.T,"mom2.fits")
-
-    # cleanup
-    os.system("rm -rf " + cubelow_original + ".boxed")
-    os.system("rm -rf " + cubehigh_original + ".boxed")
-    os.system("rm -rf " + cubelow_original + ".regrid")
-    os.system("rm -rf " + cubehigh_original + ".regrid")
-    os.system("rm -rf " + cubelow_original + ".regrid.boxed")
-    os.system("rm -rf " + cubehigh_original + ".regrid.boxed")
 
 """
 def fitting_two(
