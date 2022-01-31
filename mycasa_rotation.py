@@ -113,16 +113,16 @@ def fitting_two(
                 mom2[this_x,this_y]      = popt[3]
             else:
                 # add pixel
-                mom0_low[this_x,this_y]  = 0
-                mom0_high[this_x,this_y] = 0
-                mom1[this_x,this_y]      = 0
-                mom2[this_x,this_y]      = 0
+                mom0_low[this_x,this_y]  = np.nan
+                mom0_high[this_x,this_y] = np.nan
+                mom1[this_x,this_y]      = np.nan
+                mom2[this_x,this_y]      = np.nan
         else:
             # add pixel
-            mom0_low[this_x,this_y]  = 0
-            mom0_high[this_x,this_y] = 0
-            mom1[this_x,this_y]      = 0
-            mom2[this_x,this_y]      = 0
+            mom0_low[this_x,this_y]  = np.nan
+            mom0_high[this_x,this_y] = np.nan
+            mom1[this_x,this_y]      = np.nan
+            mom2[this_x,this_y]      = np.nan
 
     # fits
     fits_creation(mom0_low.T,"mom0_low.fits")
