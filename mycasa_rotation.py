@@ -70,7 +70,7 @@ def rotation_13co21_13co10(
     max_high = np.nanmax(data_high)
 
     # fitting spectra
-    bw  = smooth
+    #bw  = smooth
     lim = np.max([np.max(abs(ra)), np.max(abs(dec))])
     x   = range(np.shape(data_low)[0])
     y   = range(np.shape(data_low)[1])
@@ -257,6 +257,8 @@ def fits_creation(
     coords_template,
     ):
     """
+    Reference:
+    https://stackoverflow.com/questions/45744394/write-a-new-fits-file-after-modification-in-pixel-values
     """
     os.system("rm -rf " + output_map)
     os.system("cp " + coords_template + " " + output_map)
