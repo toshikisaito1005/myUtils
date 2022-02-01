@@ -67,12 +67,16 @@ def fitting_two(
     y   = range(np.shape(data_low)[1])
     xy  = itertools.product(x, y)
 
-    map_Trot  = np.zeros((np.shape(data_low)[0],np.shape(data_low)[1]))
-    map_Nmol  = np.zeros((np.shape(data_low)[0],np.shape(data_low)[1]))
-    mom0_low  = np.zeros((np.shape(data_low)[0],np.shape(data_low)[1]))
-    mom0_high = np.zeros((np.shape(data_low)[0],np.shape(data_low)[1]))
-    mom1      = np.zeros((np.shape(data_low)[0],np.shape(data_low)[1]))
-    mom2      = np.zeros((np.shape(data_low)[0],np.shape(data_low)[1]))
+    mom0_low   = np.zeros((np.shape(data_low)[0],np.shape(data_low)[1]))
+    mom0_high  = np.zeros((np.shape(data_low)[0],np.shape(data_low)[1]))
+    mom1       = np.zeros((np.shape(data_low)[0],np.shape(data_low)[1]))
+    mom2       = np.zeros((np.shape(data_low)[0],np.shape(data_low)[1]))
+    ratio      = np.zeros((np.shape(data_low)[0],np.shape(data_low)[1]))
+    emom0_low  = np.zeros((np.shape(data_low)[0],np.shape(data_low)[1]))
+    emom0_high = np.zeros((np.shape(data_low)[0],np.shape(data_low)[1]))
+    emom1      = np.zeros((np.shape(data_low)[0],np.shape(data_low)[1]))
+    emom2      = np.zeros((np.shape(data_low)[0],np.shape(data_low)[1]))
+    eratio     = np.zeros((np.shape(data_low)[0],np.shape(data_low)[1]))
 
     for i in xy:
         # get data of this sightline
@@ -98,8 +102,8 @@ def fitting_two(
         # p0 guess
         guess_b = (restfreq_low - this_freq_low[np.nanargmax(this_data_low)]) / restfreq_low * 299792.458
         p0 = [
-        15.0,#np.max(this_data)/2.0,
-        2*10**16,#np.max(this_data),
+        np.max(this_data)/2.0,
+        np.max(this_data),
         guess_b,
         40.,
         ]
@@ -107,45 +111,60 @@ def fitting_two(
         # fit
         if np.max(this_data_low/this_err_low)>=snr and np.max(this_data_high/this_err_high)>=snr:
             # fitting
-            #this_f_two = lambda x, a1, a2, b, c: _f_two(x, a1, a2, b, c, restfreq_low, restfreq_high)
-            this_f_two = lambda x, Trot, Nmol, b, c: _f_two_rot_13co21_13co10(x, Trot, Nmol, b, c, restfreq_low, restfreq_high)
-            popt,pcov = curve_fit(this_f_two,this_freq,this_data,sigma=this_err,p0=p0,maxfev=100000)
-            print(popt)
+            this_f_two = lambda x, a1, a2, b, c: _f_two(x, a1, a2, b, c, restfreq_low, restfreq_high)
+            popt,pcov  = curve_fit(this_f_two,this_freq,this_data,sigma=this_err,p0=p0,maxfev=100000)
+            perr       = np.sqrt(np.diag(pcov))
 
-            #if popt[1]/popt[0]>0 and popt[1]/popt[0]<=ratio_max and popt[2]!=guess_b and popt[3]!=40 and popt[0]<max_low*2 and popt[1]<max_low*2:
-            if popt[0]>0 and popt[0]<=100. and popt[2]!=guess_b and popt[3]!=40:
+            if popt[1]/popt[0]>0 and popt[1]/popt[0]<=ratio_max and popt[2]!=guess_b and popt[3]!=40 and popt[0]<max_low*2 and popt[1]<max_low*2:
                 # add pixel
-                map_Trot[this_x,this_y]   = popt[0]
-                map_Nmol[this_x,this_y]   = np.log10(popt[1])
-                #mom0_low[this_x,this_y]  = popt[0] * abs(popt[3]) * np.sqrt(2*np.pi)
-                #mom0_high[this_x,this_y] = popt[1] * abs(popt[3]) * np.sqrt(2*np.pi)
-                mom1[this_x,this_y]      = popt[2]
-                mom2[this_x,this_y]      = abs(popt[3])
+                mom0_low[this_x,this_y]   = popt[0] * abs(popt[3]) * np.sqrt(2*np.pi)
+                mom0_high[this_x,this_y]  = popt[1] * abs(popt[3]) * np.sqrt(2*np.pi)
+                mom1[this_x,this_y]       = popt[2]
+                mom2[this_x,this_y]       = abs(popt[3])
+                ratio[this_x,this_y]      = popt[1]/popt[0]
+                emom0_low[this_x,this_y]  = np.sqrt(2*np.pi) * np.sqrt(popt[0]**2*perr[3]**2 + popt[3]**2*perr[0]**2)
+                emom0_high[this_x,this_y] = np.sqrt(2*np.pi) * np.sqrt(popt[1]**2*perr[3]**2 + popt[3]**2*perr[1]**2)
+                emom1[this_x,this_y]      = perr[2]
+                emom2[this_x,this_y]      = abs(perr[3])
+                eratio[this_x,this_y]     = popt[1]/popt[0] * np.sqrt(perr[0]**2/popt[0]**2 + perr[1]**2/popt[1]**2)
             else:
-                map_Trot[this_x,this_y]   = np.nan
-                map_Nmol[this_x,this_y]   = np.nan
                 # add pixel
-                #mom0_low[this_x,this_y]  = np.nan
-                #mom0_high[this_x,this_y] = np.nan
-                mom1[this_x,this_y]      = np.nan
-                mom2[this_x,this_y]      = np.nan
+                mom0_low[this_x,this_y]   = np.nan
+                mom0_high[this_x,this_y]  = np.nan
+                mom1[this_x,this_y]       = np.nan
+                mom2[this_x,this_y]       = np.nan
+                ratio[this_x,this_y]      = np.nan
+                emom0_low[this_x,this_y]  = np.nan
+                emom0_high[this_x,this_y] = np.nan
+                emom1[this_x,this_y]      = np.nan
+                emom2[this_x,this_y]      = np.nan
+                eratio[this_x,this_y]     = np.nan
         else:
             # add pixel
-            map_Trot[this_x,this_y]   = np.nan
-            map_Nmol[this_x,this_y]   = np.nan
-            #mom0_low[this_x,this_y]  = np.nan
-            #mom0_high[this_x,this_y] = np.nan
-            mom1[this_x,this_y]      = np.nan
-            mom2[this_x,this_y]      = np.nan
+            mom0_low[this_x,this_y]   = np.nan
+            mom0_high[this_x,this_y]  = np.nan
+            mom1[this_x,this_y]       = np.nan
+            mom2[this_x,this_y]       = np.nan
+            ratio[this_x,this_y]      = np.nan
+            emom0_low[this_x,this_y]  = np.nan
+            emom0_high[this_x,this_y] = np.nan
+            emom1[this_x,this_y]      = np.nan
+            emom2[this_x,this_y]      = np.nan
+            eratio[this_x,this_y]     = np.nan
 
     # fits
-    fits_creation(map_Trot.T,"Trot.fits")
-    fits_creation(map_Nmol.T,"Nmol.fits")
-    #fits_creation(mom0_low.T,"mom0_low.fits")
-    #fits_creation(mom0_high.T,"mom0_high.fits")
-    #fits_creation(mom0_high.T/mom0_low.T,"ratio.fits")
+    fits_creation(mom0_low.T,"mom0_low.fits")
+    fits_creation(mom0_high.T,"mom0_high.fits")
+    fits_creation(ratio.T,"ratio.fits")
     fits_creation(mom1.T,"mom1.fits")
     fits_creation(mom2.T,"mom2.fits")
+
+    # efits
+    fits_creation(mom0_low.T,"emom0_low.fits")
+    fits_creation(mom0_high.T,"emom0_high.fits")
+    fits_creation(ratio.T,"eratio.fits")
+    fits_creation(mom1.T,"emom1.fits")
+    fits_creation(mom2.T,"emom2.fits")
 
 #################
 # fits_creation #
