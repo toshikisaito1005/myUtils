@@ -115,7 +115,7 @@ def fitting_two(
             popt,pcov  = curve_fit(this_f_two,this_freq,this_data,sigma=this_err,p0=p0,maxfev=100000)
             perr       = np.sqrt(np.diag(pcov))
 
-            if popt[1]/popt[0]>0 and popt[1]/popt[0]<=ratio_max and popt[2]!=guess_b and popt[3]!=40 and popt[0]<max_low*2 and popt[1]<max_low*2:
+            if popt[1]/popt[0]>0 and popt[1]/popt[0]<=ratio_max and popt[2]!=guess_b and popt[3]!=40 and popt[0]<max_low*2 and popt[1]<max_low*2 and perr[0]<max_low*2 and perr[1]<max_low*2:
                 # add pixel
                 mom0_low[this_x,this_y]   = popt[0] * abs(popt[3]) * np.sqrt(2*np.pi)
                 mom0_high[this_x,this_y]  = popt[1] * abs(popt[3]) * np.sqrt(2*np.pi)
