@@ -113,7 +113,7 @@ def fitting_two(
             print(popt)
 
             #if popt[1]/popt[0]>0 and popt[1]/popt[0]<=ratio_max and popt[2]!=guess_b and popt[3]!=40 and popt[0]<max_low*2 and popt[1]<max_low*2:
-            if popt[0]>0 and popt[0]<=100. and popt[2]!=guess_b and popt[3]!=40 and popt[0]<max_low*2 and popt[1]<max_low*2:
+            if popt[0]>0 and popt[0]<=100. and popt[2]!=guess_b and popt[3]!=40:
                 # add pixel
                 map_Trot[this_x,this_y]   = popt[0]
                 map_Nmol[this_x,this_y]   = np.log10(popt[1])
