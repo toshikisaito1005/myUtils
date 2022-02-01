@@ -38,7 +38,7 @@ def rotation_13co21_13co10(
     smooth=0,
     ratio_max=2.0,
     Aul_low=10**-7.198,
-    Aul_hogh=10**-6.216,
+    Aul_high=10**-6.216,
     gu_low=3,
     gu_high=5,
     Eu_low=5.28880,
