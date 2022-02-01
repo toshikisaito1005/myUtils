@@ -225,7 +225,7 @@ def rotation_13co21_13co10(
 
 def derive_Nu(
     mom0, # K.km/s
-    freq, # Hz
+    freq, # GHz
     Aul,  # s^-1
     gu=3,
     gl=1,
@@ -234,7 +234,7 @@ def derive_Nu(
     """
     """
 
-    return (8*np.pi*k*freq**2)/(h*c**3*Aul*gu*gl*gk) * mom0
+    return (8*np.pi*k*(freq)*10**9**2)/(h*c**3*Aul*gu*gl*gk) * mom0
 
 #################
 # derive_Z_13co #
