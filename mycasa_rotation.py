@@ -134,7 +134,6 @@ def rotation_13co21_13co10(
 
                 log10_Nugu_low   = np.log10(derive_Nu(this_mom0_low, restfreq_low, Aul_low, gu_low) / gu_low)
                 log10_Nugu_high  = np.log10(derive_Nu(this_mom0_high, restfreq_high, Aul_high, gu_high) / gu_high)
-                print(log10_Nugu_low)
 
                 elog10_Nugu_low  = np.log10(derive_Nu(this_emom0_low, restfreq_low, Aul_low, gu_low) / gu_low)
                 elog10_Nugu_high = np.log10(derive_Nu(this_emom0_high, restfreq_high, Aul_high, gu_high) / gu_high)
@@ -234,7 +233,7 @@ def derive_Nu(
     """
     """
 
-    return (8*np.pi*k*(freq)*10**9**2)/(h*c**3*Aul*gu*gl*gk) * mom0
+    return (8*np.pi*k*(freq*10**9)**2)/(h*c**3*Aul*gu*gl*gk) * mom0
 
 #################
 # derive_Z_13co #
