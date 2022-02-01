@@ -210,16 +210,16 @@ def rotation_13co21_13co10(
 #############
 
 def derive_Nu(
-    mom0, # K.km/s => the 10**3 term
-    freq, # GHz    => the 10**9 term
+    mom0, # K.km/s => the *10**3 term
+    freq, # GHz    => the *10**9 term
     Aul,  # s^-1
     ):
     """
-    return Nu in cm^2 => the 10**4 term
+    return Nu in cm^-2 => the /10**4 term
     """
 
     Nu_m2  = (8*np.pi*k*(freq*10**9)**2) / (h*c**3*Aul) * mom0 * 10**3
-    Nu_cm2 = Nu_m2 * 10**4
+    Nu_cm2 = Nu_m2 / 10**4
 
     return Nu_cm2
 
