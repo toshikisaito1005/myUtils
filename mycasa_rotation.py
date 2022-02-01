@@ -231,9 +231,13 @@ def derive_Nu(
     gk=1,
     ):
     """
+    return Nu in cm^2
     """
 
-    return (8*np.pi*k*(freq*10**9)**2)/(h*c**3*Aul*gu*gl*gk) * mom0
+    Nu_m2  = (8*np.pi*k*(freq*10**9)**2) / (h*c**3*Aul*gu*gl*gk) * mom0 * 10**3
+    Nu_cm2 = Nu_m2 * 10**4
+
+    return Nu_cm2
 
 #################
 # derive_Z_13co #
