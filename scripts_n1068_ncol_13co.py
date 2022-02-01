@@ -184,7 +184,7 @@ class ToolsNcol():
         """
         """
 
-        fitting_two(
+        rotation_13co21_13co10(
             self.outcubes_13co10.replace("???","60pc"),
             self.outcubes_13co21.replace("???","60pc"),
             self.outecubes_13co10.replace("???","60pc"),
