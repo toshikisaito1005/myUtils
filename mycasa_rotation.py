@@ -93,6 +93,22 @@ def rotation_13co21_13co10(
     emom2      = np.zeros((np.shape(data_low)[0],np.shape(data_low)[1]))
     eratio     = np.zeros((np.shape(data_low)[0],np.shape(data_low)[1]))
 
+    map_Trot[:,:]  = np.nan
+    map_logN[:,:]  = np.nan
+    mom0_low[:,:]  = np.nan
+    mom0_high[:,:] = np.nan
+    mom1[:,:]      = np.nan
+    mom2[:,:]      = np.nan
+    ratio[:,:]     = np.nan
+
+    emap_Trot[:,:]  = np.nan
+    emap_logN[:,:]  = np.nan
+    emom0_low[:,:]  = np.nan
+    emom0_high[:,:] = np.nan
+    emom1[:,:]      = np.nan
+    emom2[:,:]      = np.nan
+    eratio[:,:]     = np.nan
+
     for i in xy:
         # get data of this sightline
         this_x,this_y  = i[0],i[1]
@@ -136,8 +152,8 @@ def rotation_13co21_13co10(
                 log10_Nugu_low   = np.log10(derive_Nu(this_mom0_low, restfreq_low, Aul_low) / gu_low)
                 log10_Nugu_high  = np.log10(derive_Nu(this_mom0_high, restfreq_high, Aul_high) / gu_high)
 
-                elog10_Nugu_low  = np.log10(derive_Nu(this_emom0_low, restfreq_low, Aul_low) / gu_low)
-                elog10_Nugu_high = np.log10(derive_Nu(this_emom0_high, restfreq_high, Aul_high) / gu_high)
+                elog10_Nugu_low  = derive_Nu(this_emom0_low, restfreq_low, Aul_low) / derive_Nu(this_mom0_low, restfreq_low, Aul_low) / np.log(10)
+                elog10_Nugu_high = derive_Nu(this_emom0_high, restfreq_high, Aul_high) / derive_Nu(this_mom0_high, restfreq_high, Aul_high) / np.log(10)
 
                 x_data       = np.array([Eu_low, Eu_high])
                 y_data       = np.array([log10_Nugu_low, log10_Nugu_high])
@@ -168,38 +184,6 @@ def rotation_13co21_13co10(
                 eratio[this_x,this_y]     = popt[1]/popt[0] * np.sqrt(perr[0]**2/popt[0]**2 + perr[1]**2/popt[1]**2)
                 emap_Trot[this_x,this_y]  = eTrot
                 emap_logN[this_x,this_y]  = elogNmol
-            else:
-                # add pixel
-                mom0_low[this_x,this_y]   = np.nan
-                mom0_high[this_x,this_y]  = np.nan
-                mom1[this_x,this_y]       = np.nan
-                mom2[this_x,this_y]       = np.nan
-                ratio[this_x,this_y]      = np.nan
-                map_Trot[this_x,this_y]   = np.nan
-                map_logN[this_x,this_y]   = np.nan
-                emom0_low[this_x,this_y]  = np.nan
-                emom0_high[this_x,this_y] = np.nan
-                emom1[this_x,this_y]      = np.nan
-                emom2[this_x,this_y]      = np.nan
-                eratio[this_x,this_y]     = np.nan
-                emap_Trot[this_x,this_y]  = np.nan
-                emap_logN[this_x,this_y]  = np.nan
-        else:
-            # add pixel
-            mom0_low[this_x,this_y]   = np.nan
-            mom0_high[this_x,this_y]  = np.nan
-            mom1[this_x,this_y]       = np.nan
-            mom2[this_x,this_y]       = np.nan
-            ratio[this_x,this_y]      = np.nan
-            map_Trot[this_x,this_y]   = np.nan
-            map_logN[this_x,this_y]   = np.nan
-            emom0_low[this_x,this_y]  = np.nan
-            emom0_high[this_x,this_y] = np.nan
-            emom1[this_x,this_y]      = np.nan
-            emom2[this_x,this_y]      = np.nan
-            eratio[this_x,this_y]     = np.nan
-            emap_Trot[this_x,this_y]  = np.nan
-            emap_logN[this_x,this_y]  = np.nan
 
     # fits
     fits_creation(map_Trot.T,"Trot.fits")
