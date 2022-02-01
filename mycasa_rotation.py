@@ -57,6 +57,9 @@ def fitting_two(
     ra  = ra_deg[:,:,0] * 3600
     dec = dec_deg[:,:,0] * 3600
 
+    max_low  = np.nanmax(data_low)
+    max_high = np.nanmax(data_high)
+
     # fitting spectra
     bw  = smooth
     lim = np.max([np.max(abs(ra)), np.max(abs(dec))])
@@ -82,8 +85,8 @@ def fitting_two(
         this_err_low   = err_low[this_x, this_y]
         this_err_high  = err_high[this_x, this_y]
 
-        this_data_low  = np.mean(data_low[max(0,this_x-bw):this_x+1+bw, max(0,this_y-bw):this_y+1+bw],axis=(0,1)) # data_low[this_x, this_y]
-        this_data_high = np.mean(data_high[max(0,this_x-bw):this_x+1+bw, max(0,this_y-bw):this_y+1+bw],axis=(0,1)) # data_high[this_x, this_y]
+        #this_data_low  = np.mean(data_low[max(0,this_x-bw):this_x+1+bw, max(0,this_y-bw):this_y+1+bw],axis=(0,1)) # data_low[this_x, this_y]
+        #this_data_high = np.mean(data_high[max(0,this_x-bw):this_x+1+bw, max(0,this_y-bw):this_y+1+bw],axis=(0,1)) # data_high[this_x, this_y]
 
         # combine two data
         this_freq = np.r_[this_freq_low, this_freq_high]
@@ -105,7 +108,7 @@ def fitting_two(
             this_f_two = lambda x, a1, a2, b, c: _f_two(x, a1, a2, b, c, restfreq_low, restfreq_high)
             popt,pcov = curve_fit(this_f_two,this_freq,this_data,sigma=this_err,p0=p0,maxfev=100000)
 
-            if popt[1]/popt[0]>0 and popt[1]/popt[0]<=ratio_max and popt[2]!=guess_b and popt[3]!=40:
+            if popt[1]/popt[0]>0 and popt[1]/popt[0]<=ratio_max and popt[2]!=guess_b and popt[3]!=40 and popt[0]<max_low*2 and popt[1]<max_low*high:
                 # add pixel
                 mom0_low[this_x,this_y]  = popt[0] * popt[3] * np.sqrt(2*np.pi)
                 mom0_high[this_x,this_y] = popt[1] * popt[3] * np.sqrt(2*np.pi)
