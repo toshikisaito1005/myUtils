@@ -111,7 +111,8 @@ def fitting_two(
             this_f_two = lambda x, Trot, Nmol, b, c: _f_two_rot_13co21_13co10(x, Trot, Nmol, b, c, restfreq_low, restfreq_high)
             popt,pcov = curve_fit(this_f_two,this_freq,this_data,sigma=this_err,p0=p0,maxfev=100000)
 
-            if popt[1]/popt[0]>0 and popt[1]/popt[0]<=ratio_max and popt[2]!=guess_b and popt[3]!=40 and popt[0]<max_low*2 and popt[1]<max_low*2:
+            #if popt[1]/popt[0]>0 and popt[1]/popt[0]<=ratio_max and popt[2]!=guess_b and popt[3]!=40 and popt[0]<max_low*2 and popt[1]<max_low*2:
+            if popt[0]>0 and popt[0]<=100. and popt[2]!=guess_b and popt[3]!=40 and popt[0]<max_low*2 and popt[1]<max_low*2:
                 # add pixel
                 Trot                     = popt[0]
                 Nmol                     = np.log10(popt[1])
@@ -199,11 +200,13 @@ def _f_two_rot_13co21_13co10(x, Trot, Nmol, b, c, freq_l, freq_h):
     gu_l  = 3
     gl_l  = 1
     gk_l  = 1
+    Eu_l  = 5.28880
 
     Aul_u = 10**-6.216
     gu_u  = 5
     gl_u  = 1
     gk_u  = 1
+    Eu_u  = 15.86618
 
     # lower-J equation
     A_l = np.log10( Nmol/Z )
