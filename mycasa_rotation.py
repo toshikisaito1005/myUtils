@@ -110,10 +110,10 @@ def fitting_two(
 
             if popt[1]/popt[0]>0 and popt[1]/popt[0]<=ratio_max and popt[2]!=guess_b and popt[3]!=40 and popt[0]<max_low*2 and popt[1]<max_low*2:
                 # add pixel
-                mom0_low[this_x,this_y]  = popt[0] * popt[3] * np.sqrt(2*np.pi)
-                mom0_high[this_x,this_y] = popt[1] * popt[3] * np.sqrt(2*np.pi)
+                mom0_low[this_x,this_y]  = popt[0] * abs(popt[3]) * np.sqrt(2*np.pi)
+                mom0_high[this_x,this_y] = popt[1] * abs(popt[3]) * np.sqrt(2*np.pi)
                 mom1[this_x,this_y]      = popt[2]
-                mom2[this_x,this_y]      = popt[3]
+                mom2[this_x,this_y]      = abs(popt[3])
             else:
                 # add pixel
                 mom0_low[this_x,this_y]  = np.nan
