@@ -17,6 +17,72 @@ reload(myplot)
 
 execfile(os.environ["HOME"] + "/myUtils/stuff_casa.py")
 
+##########################
+# rotation_13co21_13co10 #
+##########################
+
+def rotation_13co21_13co10(
+    mom_u,
+    mom_l,
+    emom_u,
+    emom_l,
+    freq_u,
+    freq_l,
+    ):
+    """
+    equation 1 of Nakajima et al. 2018
+
+    input parameters:
+    freq_l in GHz
+    freq_u in GHz
+
+    free parameters:
+    Nmol
+    Trot
+    """
+
+    # constants
+    Z = 3*np.exp(-5.28880/Trot) \
+      + 5*np.exp(-15.86618/Trot) \
+      + 7*np.exp(-31.73179/Trot) \
+      + 9*np.exp(-52.88517/Trot) \
+      + 11*np.exp(-79.32525/Trot) \
+      + 13*np.exp(-111.05126/Trot) \
+      + 15*np.exp(-148.06215/Trot) \
+      + 17*np.exp(-190.35628/Trot) \
+      + 19*np.exp(-237.93232/Trot) \
+      + 21*np.exp(-290.78848/Trot) \
+      + 21*np.exp(-348.92271/Trot)
+
+    k = 1.38 * 10**-16 # erg/K
+    h = 6.626 * 10**-27 # erg.s
+    c = 299792458.0 # m/s
+
+    Aul_l = 10**-7.198
+    gu_l  = 3
+    gl_l  = 1
+    gk_l  = 1
+    Eu_l  = 5.28880
+
+    Aul_u = 10**-6.216
+    gu_u  = 5
+    gl_u  = 1
+    gk_u  = 1
+    Eu_u  = 15.86618
+
+    # lower-J equation
+    A_l = np.log10( Nmol/Z )
+    B_l = np.log10( (8*np.pi*k*(freq_l*10**9)**2)/(h*c**3*Aul_l*gu_l*gl_l*gk_l) )
+    C_l = Eu_l / k * np.log10(np.e) / Trot
+    W_l = 10**(A_l - B_l - C_l)
+
+    A_u = np.log10( Nmol/Z )
+    B_u = np.log10( (8*np.pi*k*(freq_u*10**9)**2)/(h*c**3*Aul_u*gu_u*gl_u*gk_u) )
+    C_u = Eu_u / k * np.log10(np.e) / Trot
+    W_u = 10**(A_u - B_u - C_u)
+
+
+
 ###############
 # fitting_two #
 ###############
@@ -115,7 +181,7 @@ def fitting_two(
             popt,pcov  = curve_fit(this_f_two,this_freq,this_data,sigma=this_err,p0=p0,maxfev=100000)
             perr       = np.sqrt(np.diag(pcov))
 
-            if popt[1]/popt[0]>0 and popt[1]/popt[0]<=ratio_max and popt[2]!=guess_b and popt[3]!=40 and popt[0]<max_low*2 and popt[1]<max_low*2 and perr[0]<max_low*2 and perr[1]<max_low*2:
+            if popt[1]/popt[0]>0 and popt[1]/popt[0]<=ratio_max and popt[2]!=guess_b and popt[3]!=40 and popt[0]<max_low*2 and popt[1]<max_low*2 and perr[0]<popt[0] and perr[1]<popt[1]:
                 # add pixel
                 mom0_low[this_x,this_y]   = popt[0] * abs(popt[3]) * np.sqrt(2*np.pi)
                 mom0_high[this_x,this_y]  = popt[1] * abs(popt[3]) * np.sqrt(2*np.pi)
@@ -181,79 +247,6 @@ def fits_creation(
     hdu = pyfits.PrimaryHDU(input_map)
     hdul = pyfits.HDUList([hdu])
     hdul.writeto(output_map)
-
-############################
-# _f_two_rot_13co21_13co10 #
-############################
-
-def _f_two_rot_13co21_13co10(x, Trot, Nmol, b, c, freq_l, freq_u):
-    """
-    equation 1 of Nakajima et al. 2018
-
-    input parameters:
-    freq_l in GHz
-    freq_u in GHz
-
-    free parameters:
-    Nmol
-    Trot
-    """
-
-    # constants
-    Z = 3*np.exp(-5.28880/Trot) \
-      + 5*np.exp(-15.86618/Trot) \
-      + 7*np.exp(-31.73179/Trot) \
-      + 9*np.exp(-52.88517/Trot) \
-      + 11*np.exp(-79.32525/Trot) \
-      + 13*np.exp(-111.05126/Trot) \
-      + 15*np.exp(-148.06215/Trot) \
-      + 17*np.exp(-190.35628/Trot) \
-      + 19*np.exp(-237.93232/Trot) \
-      + 21*np.exp(-290.78848/Trot) \
-      + 21*np.exp(-348.92271/Trot)
-
-    k = 1.38 * 10**-16 # erg/K
-    h = 6.626 * 10**-27 # erg.s
-    c = 299792458.0 # m/s
-
-    Aul_l = 10**-7.198
-    gu_l  = 3
-    gl_l  = 1
-    gk_l  = 1
-    Eu_l  = 5.28880
-
-    Aul_u = 10**-6.216
-    gu_u  = 5
-    gl_u  = 1
-    gk_u  = 1
-    Eu_u  = 15.86618
-
-    # lower-J equation
-    A_l = np.log10( Nmol/Z )
-    B_l = np.log10( (8*np.pi*k*(freq_l*10**9)**2)/(h*c**3*Aul_l*gu_l*gl_l*gk_l) )
-    C_l = Eu_l / k * np.log10(np.e) / Trot
-    W_l = 10**(A_l - B_l - C_l)
-
-    A_u = np.log10( Nmol/Z )
-    B_u = np.log10( (8*np.pi*k*(freq_u*10**9)**2)/(h*c**3*Aul_u*gu_u*gl_u*gk_u) )
-    C_u = Eu_u / k * np.log10(np.e) / Trot
-    W_u = 10**(A_u - B_u - C_u)
-
-    # fitting function
-    offset1 = b /299792.458 * freq_l # km/s
-    offset2 = b /299792.458 * freq_u # km/s
-
-    width1 = c /299792.458 * freq_l # km/s
-    width2 = c /299792.458 * freq_u # km/s
-
-    a1 = W_l / (width1 * np.sqrt(2*np.pi))
-    a2 = W_u / (width2 * np.sqrt(2*np.pi))
-
-    func = \
-        a1 * np.exp( -(x-freq_l+offset1)**2/(2*width1**2) ) + \
-        a2 * np.exp( -(x-freq_u+offset2)**2/(2*width2**2) )
-
-    return func
 
 ##########
 # _f_two #
