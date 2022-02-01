@@ -189,11 +189,19 @@ class ToolsNcol():
         """
         """
 
+        # input
+        cube_13co10  = self.outcubes_13co10.replace("???","60pc")
+        cube_13co21  = self.outcubes_13co21.replace("???","60pc")
+        ecube_13co10 = self.outecubes_13co10.replace("???","60pc")
+        ecube_13co21 = self.outecubes_13co21.replace("???","60pc")
+
+        # output
+
         rotation_13co21_13co10(
-            self.outcubes_13co10.replace("???","60pc"),
-            self.outcubes_13co21.replace("???","60pc"),
-            self.outecubes_13co10.replace("???","60pc"),
-            self.outecubes_13co21.replace("???","60pc"),
+            cube_13co10,
+            cube_13co21,
+            ecube_13co10,
+            ecube_13co21,
             ra_cnt=self.ra_agn,
             dec_cnt=self.dec_agn,
             snr=4.0,

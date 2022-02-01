@@ -186,22 +186,22 @@ def rotation_13co21_13co10(
                 emap_logN[this_x,this_y]  = elogNmol
 
     # fits
-    fits_creation(map_Trot.T,"Trot.fits",cubelow)
-    fits_creation(map_logN.T,"logN.fits",cubelow)
-    fits_creation(mom0_low.T,"mom0_low.fits",cubelow)
-    fits_creation(mom0_high.T,"mom0_high.fits",cubelow)
-    fits_creation(ratio.T,"ratio.fits",cubelow)
-    fits_creation(mom1.T,"mom1.fits",cubelow)
-    fits_creation(mom2.T,"mom2.fits",cubelow)
+    fits_creation(map_Trot.T,"Trot.fits",cubelow,"K")
+    fits_creation(map_logN.T,"logN.fits",cubelow,"cm**-2 in log10")
+    fits_creation(mom0_low.T,"mom0_low.fits",cubelow,"K.km/s")
+    fits_creation(mom0_high.T,"mom0_high.fits",cubelow,"K.km/s")
+    fits_creation(ratio.T,"ratio.fits",cubelow,"")
+    fits_creation(mom1.T,"mom1.fits",cubelow,"km/s")
+    fits_creation(mom2.T,"mom2.fits",cubelow,"km/s")
 
     # efits
-    fits_creation(emap_Trot.T,"eTrot.fits",cubelow)
-    fits_creation(emap_logN.T,"elogN.fits",cubelow)
-    fits_creation(emom0_low.T,"emom0_low.fits",cubelow)
-    fits_creation(emom0_high.T,"emom0_high.fits",cubelow)
-    fits_creation(eratio.T,"eratio.fits",cubelow)
-    fits_creation(emom1.T,"emom1.fits",cubelow)
-    fits_creation(emom2.T,"emom2.fits",cubelow)
+    fits_creation(emap_Trot.T,"eTrot.fits",cubelow,"K")
+    fits_creation(emap_logN.T,"elogN.fits",cubelow,"cm**-2 in log10")
+    fits_creation(emom0_low.T,"emom0_low.fits",cubelow,"K.km/s")
+    fits_creation(emom0_high.T,"emom0_high.fits",cubelow,"K.km/s")
+    fits_creation(eratio.T,"eratio.fits",cubelow,"")
+    fits_creation(emom1.T,"emom1.fits",cubelow,"km/s")
+    fits_creation(emom2.T,"emom2.fits",cubelow,"km/s")
 
 #############
 # derive_Nu #
@@ -253,6 +253,7 @@ def fits_creation(
     input_array,
     output_map,
     coords_template,
+    bunit="K",
     ):
     """
     Reference:
@@ -264,6 +265,9 @@ def fits_creation(
     obj = pyfits.open(output_map)
     obj[0].data = input_array
     obj.writeto(output_map, clobber=True)
+
+    with open(output_map, mode="update") as hdul:
+        hdul[0].header.append(("bunit", bunit))
 
     #hdu = pyfits.PrimaryHDU(input_array)
     #hdul = pyfits.HDUList([hdu])
