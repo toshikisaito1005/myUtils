@@ -35,7 +35,6 @@ def rotation_13co21_13co10(
     ra_cnt=40.669625, # deg
     dec_cnt=-0.01331667, # deg
     snr=10.0,
-    smooth=0,
     ratio_max=2.0,
     Aul_low=10**-7.198,
     Aul_high=10**-6.216,
@@ -153,8 +152,8 @@ def rotation_13co21_13co10(
                 log10_Nugu_low   = np.log10(derive_Nu(this_mom0_low, restfreq_low, Aul_low) / gu_low)
                 log10_Nugu_high  = np.log10(derive_Nu(this_mom0_high, restfreq_high, Aul_high) / gu_high)
 
-                elog10_Nugu_low  = derive_Nu(this_emom0_low, restfreq_low, Aul_low) / derive_Nu(this_mom0_low, restfreq_low, Aul_low) / np.log(10)
-                elog10_Nugu_high = derive_Nu(this_emom0_high, restfreq_high, Aul_high) / derive_Nu(this_mom0_high, restfreq_high, Aul_high) / np.log(10)
+                elog10_Nugu_low  = derive_Nu(this_emom0_low, restfreq_low, Aul_low) / abs(derive_Nu(this_mom0_low, restfreq_low, Aul_low)) / np.log(10)
+                elog10_Nugu_high = derive_Nu(this_emom0_high, restfreq_high, Aul_high) / abs(derive_Nu(this_mom0_high, restfreq_high, Aul_high)) / np.log(10)
 
                 x_data       = np.array([Eu_low, Eu_high])
                 y_data       = np.array([log10_Nugu_low, log10_Nugu_high])
@@ -187,7 +186,8 @@ def rotation_13co21_13co10(
                 emap_logN[this_x,this_y]  = elogNmol
 
     # fits
-    fits_creation(map_Trot.T,"Trot.fits")
+    fits_creation(map_Trot.T,"Trot.fits",cubelow)
+    """
     fits_creation(map_logN.T,"logN.fits")
     fits_creation(mom0_low.T,"mom0_low.fits")
     fits_creation(mom0_high.T,"mom0_high.fits")
@@ -203,6 +203,7 @@ def rotation_13co21_13co10(
     fits_creation(eratio.T,"eratio.fits")
     fits_creation(emom1.T,"emom1.fits")
     fits_creation(emom2.T,"emom2.fits")
+    """
 
 #############
 # derive_Nu #
@@ -214,7 +215,7 @@ def derive_Nu(
     Aul,  # s^-1
     ):
     """
-    return Nu in cm^-2 => the /10**4 term
+    return Nu (not in m^-2) in cm^-2 => the /10**4 term
     """
 
     Nu_m2  = (8*np.pi*k*(freq*10**9)**2) / (h*c**3*Aul) * mom0 * 10**3
@@ -251,16 +252,22 @@ def derive_Z_13co(
 #################
 
 def fits_creation(
-    input_map,
+    input_array,
     output_map,
+    coords_template,
     ):
     """
     """
-
     os.system("rm -rf " + output_map)
-    hdu = pyfits.PrimaryHDU(input_map)
-    hdul = pyfits.HDUList([hdu])
-    hdul.writeto(output_map)
+    os.system("cp " + coords_template + " " + output_map)
+
+    obj = pyfits.open(output_map)
+    obj[0].data = input_array
+    obj.writeto(output_map, clobber=True)
+
+    #hdu = pyfits.PrimaryHDU(input_array)
+    #hdul = pyfits.HDUList([hdu])
+    #hdul.writeto(output_map)
 
 #####################
 # fitting functions #

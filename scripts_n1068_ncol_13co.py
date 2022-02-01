@@ -192,7 +192,6 @@ class ToolsNcol():
             ra_cnt=self.ra_agn,
             dec_cnt=self.dec_agn,
             snr=4.0,
-            smooth=0,
             )
 
     ##############
