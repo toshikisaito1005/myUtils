@@ -119,13 +119,18 @@ class ToolsNcol():
         """
         """
 
-        self.outcubes_13co10  = self.dir_ready + self._read_key("outcubes_13co10")
-        self.outecubes_13co10 = self.dir_ready + self._read_key("outecubes_13co10")
-        self.outcubes_13co21  = self.dir_ready + self._read_key("outcubes_13co21")
-        self.outecubes_13co21 = self.dir_ready + self._read_key("outecubes_13co21")
+        self.outcubes_13co10     = self.dir_ready + self._read_key("outcubes_13co10")
+        self.outecubes_13co10    = self.dir_ready + self._read_key("outecubes_13co10")
+        self.outcubes_13co21     = self.dir_ready + self._read_key("outcubes_13co21")
+        self.outecubes_13co21    = self.dir_ready + self._read_key("outecubes_13co21")
 
-        self.outmaps_13co10 = self.dir_ready + self._read_key("outmaps_13co10")
-        self.outmaps_13co21 = self.dir_ready + self._read_key("outmaps_13co21")
+        self.outmaps_mom0_13co10 = self.dir_ready + self._read_key("outmaps_13co10")
+        self.outmaps_mom0_13co21 = self.dir_ready + self._read_key("outmaps_13co21")
+        self.outmaps_mom1        = self.dir_ready + self._read_key("outmaps_mom1")
+        self.outmaps_mom2        = self.dir_ready + self._read_key("outmaps_mom2")
+        self.outmaps_ratio       = self.dir_ready + self._read_key("outmaps_ratio")
+        self.outmaps_13co_trot   = self.dir_ready + self._read_key("outmaps_13co_trot")
+        self.outmaps_13co_ncol   = self.dir_ready + self._read_key("outmaps_13co_ncol")
 
     def _set_input_param(self):
         """
@@ -193,6 +198,13 @@ class ToolsNcol():
             dec_cnt=self.dec_agn,
             snr=4.0,
             )
+        os.system("cp mom0_low.fits " + self.outmaps_mom0_13co10.replace("???","60pc"))
+        os.system("cp mom0_high.fits " + self.outmaps_mom0_13co21.replace("???","60pc"))
+        os.system("cp mom1.fits " + self.outmaps_mom1.replace("???","60pc"))
+        os.system("cp mom2.fits " + self.outmaps_mom2.replace("???","60pc"))
+        os.system("cp ratio.fits " + self.outmaps_ratio.replace("???","60pc"))
+        os.system("cp Trot.fits " + self.outmaps_13co_trot.replace("???","60pc"))
+        os.system("cp logN.fits " + self.outmaps_13co_ncol.replace("???","60pc"))
 
     ##############
     # align_maps #

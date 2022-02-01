@@ -30,10 +30,13 @@ outecubes_13co10    ,,,n1068_13co10_???.ecube.fits
 outcubes_13co21     ,,,n1068_13co21_???.cube.fits
 outecubes_13co21    ,,,n1068_13co21_???.ecube.fits
 #
-outmaps_13co10      ,,,n1068_13co10_???.fits
-outmaps_13co21      ,,,n1068_13co21_???.fits
+outmaps_13co10      ,,,n1068_mom0_13co10_???.fits
+outmaps_13co21      ,,,n1068_mom0_13co21_???.fits
+outmaps_mom1        ,,,n1068_mom1_???.fits
+outmaps_mom2        ,,,n1068_mom2_???.fits
+outmaps_ratio       ,,,n1068_ratio_???.fits
 outmaps_13co_trot   ,,,n1068_13co_trot_???.fits
-outmaps_13co_ncol   ,,,n1068_13co_ncol_???.fits
+outmaps_13co_ncol   ,,,n1068_13co_log_ncol_???.fits
 
 ######################
 # output png and txt #
