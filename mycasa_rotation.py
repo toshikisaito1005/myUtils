@@ -152,7 +152,6 @@ def rotation_13co21_13co10(
 
                 log10_Nugu_low   = np.log10(derive_Nu(this_mom0_low, restfreq_low, Aul_low) / gu_low)
                 log10_Nugu_high  = np.log10(derive_Nu(this_mom0_high, restfreq_high, Aul_high) / gu_high)
-                print(log10_Nugu_low)
 
                 elog10_Nugu_low  = derive_Nu(this_emom0_low, restfreq_low, Aul_low) / derive_Nu(this_mom0_low, restfreq_low, Aul_low) / np.log(10)
                 elog10_Nugu_high = derive_Nu(this_emom0_high, restfreq_high, Aul_high) / derive_Nu(this_mom0_high, restfreq_high, Aul_high) / np.log(10)
@@ -160,7 +159,7 @@ def rotation_13co21_13co10(
                 x_data       = np.array([Eu_low, Eu_high])
                 y_data       = np.array([log10_Nugu_low, log10_Nugu_high])
                 y_err        = np.array([elog10_Nugu_low, elog10_Nugu_high])
-                popt2, pcov2 = curve_fit(_f_linear,x_data,y_data,sigma=y_err,p0=[10.0,14.0])
+                popt2, pcov2 = curve_fit(_f_linear,x_data,y_data,sigma=y_err,p0=[8.0,16.5])
                 perr2        = np.sqrt(np.diag(pcov2))
 
                 Trot  = popt2[0]
