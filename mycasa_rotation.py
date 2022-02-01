@@ -264,10 +264,8 @@ def fits_creation(
 
     obj = pyfits.open(output_map)
     obj[0].data = input_array
+    hdul[0].header.append(("bunit", bunit))
     obj.writeto(output_map, clobber=True)
-
-    with open(output_map, mode="U") as hdul:
-        hdul[0].header.append(("bunit", bunit))
 
     #hdu = pyfits.PrimaryHDU(input_array)
     #hdul = pyfits.HDUList([hdu])
