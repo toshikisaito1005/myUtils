@@ -67,8 +67,8 @@ def fitting_two(
     y   = range(np.shape(data_low)[1])
     xy  = itertools.product(x, y)
 
-    Trot      = np.zeros((np.shape(data_low)[0],np.shape(data_low)[1]))
-    Nmol      = np.zeros((np.shape(data_low)[0],np.shape(data_low)[1]))
+    map_Trot  = np.zeros((np.shape(data_low)[0],np.shape(data_low)[1]))
+    map_Nmol  = np.zeros((np.shape(data_low)[0],np.shape(data_low)[1]))
     mom0_low  = np.zeros((np.shape(data_low)[0],np.shape(data_low)[1]))
     mom0_high = np.zeros((np.shape(data_low)[0],np.shape(data_low)[1]))
     mom1      = np.zeros((np.shape(data_low)[0],np.shape(data_low)[1]))
@@ -114,15 +114,15 @@ def fitting_two(
             #if popt[1]/popt[0]>0 and popt[1]/popt[0]<=ratio_max and popt[2]!=guess_b and popt[3]!=40 and popt[0]<max_low*2 and popt[1]<max_low*2:
             if popt[0]>0 and popt[0]<=100. and popt[2]!=guess_b and popt[3]!=40 and popt[0]<max_low*2 and popt[1]<max_low*2:
                 # add pixel
-                Trot                     = popt[0]
-                Nmol                     = np.log10(popt[1])
+                map_Trot[this_x,this_y]   = popt[0]
+                map_Nmol[this_x,this_y]   = np.log10(popt[1])
                 #mom0_low[this_x,this_y]  = popt[0] * abs(popt[3]) * np.sqrt(2*np.pi)
                 #mom0_high[this_x,this_y] = popt[1] * abs(popt[3]) * np.sqrt(2*np.pi)
                 mom1[this_x,this_y]      = popt[2]
                 mom2[this_x,this_y]      = abs(popt[3])
             else:
-                Trot                     = np.nan
-                Nmol                     = np.nan
+                map_Trot[this_x,this_y]   = np.nan
+                map_Nmol[this_x,this_y]   = np.nan
                 # add pixel
                 #mom0_low[this_x,this_y]  = np.nan
                 #mom0_high[this_x,this_y] = np.nan
@@ -130,16 +130,16 @@ def fitting_two(
                 mom2[this_x,this_y]      = np.nan
         else:
             # add pixel
-            Trot                     = np.nan
-            Nmol                     = np.nan
+            map_Trot[this_x,this_y]   = np.nan
+            map_Nmol[this_x,this_y]   = np.nan
             #mom0_low[this_x,this_y]  = np.nan
             #mom0_high[this_x,this_y] = np.nan
             mom1[this_x,this_y]      = np.nan
             mom2[this_x,this_y]      = np.nan
 
     # fits
-    fits_creation(Trot.T,"Trot.fits")
-    fits_creation(Nmol.T,"Nmol.fits")
+    fits_creation(map_Trot.T,"Trot.fits")
+    fits_creation(map_Nmol.T,"Nmol.fits")
     #fits_creation(mom0_low.T,"mom0_low.fits")
     #fits_creation(mom0_high.T,"mom0_high.fits")
     #fits_creation(mom0_high.T/mom0_low.T,"ratio.fits")
