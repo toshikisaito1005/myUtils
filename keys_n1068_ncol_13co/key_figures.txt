@@ -17,10 +17,10 @@ final_overall       ,,,fig_overall.png
 ############
 # raw maps #
 ############
-cube_13co10_60pc    ,,,ngc1068_b3_12m_13co10_60pc.fits
-ecube_13co10_60pc   ,,,ngc1068_b3_12m_13co10_60pc_noise.fits
-cube_13co21_60pc    ,,,ngc1068_b6_12m_13co21_60pc.fits
-ecube_13co21_60pc   ,,,ngc1068_b6_12m_13co21_60pc_noise.fits
+cube_13co10    ,,,ngc1068_b3_12m_13co10_???pc.fits
+ecube_13co10   ,,,ngc1068_b3_12m_13co10_???pc_noise.fits
+cube_13co21    ,,,ngc1068_b6_12m_13co21_???pc.fits
+ecube_13co21   ,,,ngc1068_b6_12m_13co21_???pc_noise.fits
 
 ###############
 # output maps #

@@ -107,13 +107,10 @@ class ToolsNcol():
         """
         """
 
-        self.cube_13co10_60pc = self.dir_raw + self._read_key("cube_13co10_60pc")
-
-        self.ecube_13co10_60pc = self.dir_raw + self._read_key("ecube_13co10_60pc")
-
-        self.cube_13co21_60pc = self.dir_raw + self._read_key("cube_13co21_60pc")
-
-        self.ecube_13co21_60pc = self.dir_raw + self._read_key("ecube_13co21_60pc")
+        self.cube_13co10 = self.dir_raw + self._read_key("cube_13co10")
+        self.ecube_13co10 = self.dir_raw + self._read_key("ecube_13co10")
+        self.cube_13co21 = self.dir_raw + self._read_key("cube_13co21")
+        self.ecube_13co21 = self.dir_raw + self._read_key("ecube_13co21")
 
     def _set_output_fits(self):
         """
@@ -189,14 +186,13 @@ class ToolsNcol():
         """
         """
 
+        beam = "60pc"
         # input
-        cube_13co10  = self.outcubes_13co10.replace("???","60pc")
-        cube_13co21  = self.outcubes_13co21.replace("???","60pc")
-        ecube_13co10 = self.outecubes_13co10.replace("???","60pc")
-        ecube_13co21 = self.outecubes_13co21.replace("???","60pc")
-
+        cube_13co10  = self.outcubes_13co10.replace("???",beam)
+        cube_13co21  = self.outcubes_13co21.replace("???",beam)
+        ecube_13co10 = self.outecubes_13co10.replace("???",beam)
+        ecube_13co21 = self.outecubes_13co21.replace("???",beam)
         # output
-
         rotation_13co21_13co10(
             cube_13co10,
             cube_13co21,
@@ -206,13 +202,37 @@ class ToolsNcol():
             dec_cnt=self.dec_agn,
             snr=4.0,
             )
-        os.system("mv mom0_low.fits " + self.outmaps_mom0_13co10.replace("???","60pc"))
-        os.system("mv mom0_high.fits " + self.outmaps_mom0_13co21.replace("???","60pc"))
-        os.system("mv mom1.fits " + self.outmaps_mom1.replace("???","60pc"))
-        os.system("mv mom2.fits " + self.outmaps_mom2.replace("???","60pc"))
-        os.system("mv ratio.fits " + self.outmaps_ratio.replace("???","60pc"))
-        os.system("mv Trot.fits " + self.outmaps_13co_trot.replace("???","60pc"))
-        os.system("mv logN.fits " + self.outmaps_13co_ncol.replace("???","60pc"))
+        os.system("mv mom0_low.fits " + self.outmaps_mom0_13co10.replace("???",beam))
+        os.system("mv mom0_high.fits " + self.outmaps_mom0_13co21.replace("???",beam))
+        os.system("mv mom1.fits " + self.outmaps_mom1.replace("???",beam))
+        os.system("mv mom2.fits " + self.outmaps_mom2.replace("???",beam))
+        os.system("mv ratio.fits " + self.outmaps_ratio.replace("???",beam))
+        os.system("mv Trot.fits " + self.outmaps_13co_trot.replace("???",beam))
+        os.system("mv logN.fits " + self.outmaps_13co_ncol.replace("???",beam))
+
+        beam = "150pc"
+        # input
+        cube_13co10  = self.outcubes_13co10.replace("???",beam)
+        cube_13co21  = self.outcubes_13co21.replace("???",beam)
+        ecube_13co10 = self.outecubes_13co10.replace("???",beam)
+        ecube_13co21 = self.outecubes_13co21.replace("???",beam)
+        # output
+        rotation_13co21_13co10(
+            cube_13co10,
+            cube_13co21,
+            ecube_13co10,
+            ecube_13co21,
+            ra_cnt=self.ra_agn,
+            dec_cnt=self.dec_agn,
+            snr=4.0,
+            )
+        os.system("mv mom0_low.fits " + self.outmaps_mom0_13co10.replace("???",beam))
+        os.system("mv mom0_high.fits " + self.outmaps_mom0_13co21.replace("???",beam))
+        os.system("mv mom1.fits " + self.outmaps_mom1.replace("???",beam))
+        os.system("mv mom2.fits " + self.outmaps_mom2.replace("???",beam))
+        os.system("mv ratio.fits " + self.outmaps_ratio.replace("???",beam))
+        os.system("mv Trot.fits " + self.outmaps_13co_trot.replace("???",beam))
+        os.system("mv logN.fits " + self.outmaps_13co_ncol.replace("???",beam))
 
     ##############
     # align_maps #
@@ -222,15 +242,28 @@ class ToolsNcol():
         """
         """
 
+        beam = "60pc"
         self._align_maps_at_a_res(
-            self.cube_13co10_60pc,
-            self.cube_13co21_60pc,
-            self.outcubes_13co10.replace("???","60pc"),
-            self.outcubes_13co21.replace("???","60pc"),
-            self.ecube_13co10_60pc,
-            self.ecube_13co21_60pc,
-            self.outecubes_13co10.replace("???","60pc"),
-            self.outecubes_13co21.replace("???","60pc"),
+            self.cube_13co10.replace("???",beam),
+            self.cube_13co21.replace("???",beam),
+            self.outcubes_13co10.replace("???",beam),
+            self.outcubes_13co21.replace("???",beam),
+            self.ecube_13co10.replace("???",beam),
+            self.ecube_13co21.replace("???",beam),
+            self.outecubes_13co10.replace("???",beam),
+            self.outecubes_13co21.replace("???",beam),
+            )
+
+        beam = "150pc"
+        self._align_maps_at_a_res(
+            self.cube_13co10.replace("???",beam),
+            self.cube_13co21.replace("???",beam),
+            self.outcubes_13co10.replace("???",beam),
+            self.outcubes_13co21.replace("???",beam),
+            self.ecube_13co10.replace("???",beam),
+            self.ecube_13co21.replace("???",beam),
+            self.outecubes_13co10.replace("???",beam),
+            self.outecubes_13co21.replace("???",beam),
             )
 
     ########################
