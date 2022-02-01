@@ -187,23 +187,21 @@ def rotation_13co21_13co10(
 
     # fits
     fits_creation(map_Trot.T,"Trot.fits",cubelow)
-    """
-    fits_creation(map_logN.T,"logN.fits")
-    fits_creation(mom0_low.T,"mom0_low.fits")
-    fits_creation(mom0_high.T,"mom0_high.fits")
-    fits_creation(ratio.T,"ratio.fits")
-    fits_creation(mom1.T,"mom1.fits")
-    fits_creation(mom2.T,"mom2.fits")
+    fits_creation(map_logN.T,"logN.fits",cubelow)
+    fits_creation(mom0_low.T,"mom0_low.fits",cubelow)
+    fits_creation(mom0_high.T,"mom0_high.fits",cubelow)
+    fits_creation(ratio.T,"ratio.fits",cubelow)
+    fits_creation(mom1.T,"mom1.fits",cubelow)
+    fits_creation(mom2.T,"mom2.fits",cubelow)
 
     # efits
-    fits_creation(emap_Trot.T,"eTrot.fits")
-    fits_creation(emap_logN.T,"elogN.fits")
-    fits_creation(emom0_low.T,"emom0_low.fits")
-    fits_creation(emom0_high.T,"emom0_high.fits")
-    fits_creation(eratio.T,"eratio.fits")
-    fits_creation(emom1.T,"emom1.fits")
-    fits_creation(emom2.T,"emom2.fits")
-    """
+    fits_creation(emap_Trot.T,"eTrot.fits",cubelow)
+    fits_creation(emap_logN.T,"elogN.fits",cubelow)
+    fits_creation(emom0_low.T,"emom0_low.fits",cubelow)
+    fits_creation(emom0_high.T,"emom0_high.fits",cubelow)
+    fits_creation(eratio.T,"eratio.fits",cubelow)
+    fits_creation(emom1.T,"emom1.fits",cubelow)
+    fits_creation(emom2.T,"emom2.fits",cubelow)
 
 #############
 # derive_Nu #
