@@ -206,13 +206,13 @@ class ToolsNcol():
             dec_cnt=self.dec_agn,
             snr=4.0,
             )
-        os.system("cp mom0_low.fits " + self.outmaps_mom0_13co10.replace("???","60pc"))
-        os.system("cp mom0_high.fits " + self.outmaps_mom0_13co21.replace("???","60pc"))
-        os.system("cp mom1.fits " + self.outmaps_mom1.replace("???","60pc"))
-        os.system("cp mom2.fits " + self.outmaps_mom2.replace("???","60pc"))
-        os.system("cp ratio.fits " + self.outmaps_ratio.replace("???","60pc"))
-        os.system("cp Trot.fits " + self.outmaps_13co_trot.replace("???","60pc"))
-        os.system("cp logN.fits " + self.outmaps_13co_ncol.replace("???","60pc"))
+        os.system("mv mom0_low.fits " + self.outmaps_mom0_13co10.replace("???","60pc"))
+        os.system("mv mom0_high.fits " + self.outmaps_mom0_13co21.replace("???","60pc"))
+        os.system("mv mom1.fits " + self.outmaps_mom1.replace("???","60pc"))
+        os.system("mv mom2.fits " + self.outmaps_mom2.replace("???","60pc"))
+        os.system("mv ratio.fits " + self.outmaps_ratio.replace("???","60pc"))
+        os.system("mv Trot.fits " + self.outmaps_13co_trot.replace("???","60pc"))
+        os.system("mv logN.fits " + self.outmaps_13co_ncol.replace("???","60pc"))
 
     ##############
     # align_maps #
