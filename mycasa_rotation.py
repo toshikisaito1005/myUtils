@@ -132,16 +132,16 @@ def rotation_13co21_13co10(
                 this_emom0_low   = np.sqrt(2*np.pi) * np.sqrt(popt[0]**2*perr[3]**2 + popt[3]**2*perr[0]**2)
                 this_emom0_high  = np.sqrt(2*np.pi) * np.sqrt(popt[1]**2*perr[3]**2 + popt[3]**2*perr[1]**2)
 
-                log10_Nugu_low   = np.log10(derive_Nu(this_mom0_low, restfreq_low, Aul_low, gu_low) / gu_low)
-                log10_Nugu_high  = np.log10(derive_Nu(this_mom0_high, restfreq_high, Aul_high, gu_high) / gu_high)
+                log10_Nugu_low   = np.log10(derive_Nu(this_mom0_low, restfreq_low, Aul_low) / gu_low)
+                log10_Nugu_high  = np.log10(derive_Nu(this_mom0_high, restfreq_high, Aul_high) / gu_high)
 
-                elog10_Nugu_low  = np.log10(derive_Nu(this_emom0_low, restfreq_low, Aul_low, gu_low) / gu_low)
-                elog10_Nugu_high = np.log10(derive_Nu(this_emom0_high, restfreq_high, Aul_high, gu_high) / gu_high)
+                elog10_Nugu_low  = np.log10(derive_Nu(this_emom0_low, restfreq_low, Aul_low) / gu_low)
+                elog10_Nugu_high = np.log10(derive_Nu(this_emom0_high, restfreq_high, Aul_high) / gu_high)
 
                 x_data       = np.array([Eu_low, Eu_high])
                 y_data       = np.array([log10_Nugu_low, log10_Nugu_high])
                 y_err        = np.array([elog10_Nugu_low, elog10_Nugu_high])
-                popt2, pcov2 = curve_fit(_f_linear,x_data,y_data,sigma=y_err)
+                popt2, pcov2 = curve_fit(_f_linear,x_data,y_data,sigma=y_err,po=[10.0,14.0])
                 perr2        = np.sqrt(np.diag(pcov2))
 
                 Trot  = popt2[0]
@@ -223,18 +223,15 @@ def rotation_13co21_13co10(
 #############
 
 def derive_Nu(
-    mom0, # K.km/s
-    freq, # GHz
+    mom0, # K.km/s => the 10**3 term
+    freq, # GHz    => the 10**9 term
     Aul,  # s^-1
-    gu=3,
-    gl=1,
-    gk=1,
     ):
     """
-    return Nu in cm^2
+    return Nu in cm^2 => the 10**4 term
     """
 
-    Nu_m2  = (8*np.pi*k*(freq*10**9)**2) / (h*c**3*Aul*gu*gl*gk) * mom0 * 10**3
+    Nu_m2  = (8*np.pi*k*(freq*10**9)**2) / (h*c**3*Aul) * mom0 * 10**3
     Nu_cm2 = Nu_m2 * 10**4
 
     return Nu_cm2
