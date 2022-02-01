@@ -127,17 +127,22 @@ def rotation_13co21_13co10(
 
             if popt[1]/popt[0]>0 and popt[1]/popt[0]<=ratio_max and popt[2]!=guess_b and popt[3]!=40 and popt[0]<max_low*2 and popt[1]<max_low*2 and perr[0]<popt[0] and perr[1]<popt[1]:
                 # rotation diagram fitting
-                this_mom0_low   = popt[0] * abs(popt[3]) * np.sqrt(2*np.pi)
-                this_mom0_high  = popt[1] * abs(popt[3]) * np.sqrt(2*np.pi)
-                this_emom0_low  = np.sqrt(2*np.pi) * np.sqrt(popt[0]**2*perr[3]**2 + popt[3]**2*perr[0]**2)
-                this_emom0_high = np.sqrt(2*np.pi) * np.sqrt(popt[1]**2*perr[3]**2 + popt[3]**2*perr[1]**2)
+                this_mom0_low    = popt[0] * abs(popt[3]) * np.sqrt(2*np.pi)
+                this_mom0_high   = popt[1] * abs(popt[3]) * np.sqrt(2*np.pi)
+                this_emom0_low   = np.sqrt(2*np.pi) * np.sqrt(popt[0]**2*perr[3]**2 + popt[3]**2*perr[0]**2)
+                this_emom0_high  = np.sqrt(2*np.pi) * np.sqrt(popt[1]**2*perr[3]**2 + popt[3]**2*perr[1]**2)
 
-                log10_Nugu_low  = np.log10(derive_Nu(this_mom0_low, restfreq_low, Aul_low, gu_low) / gu_low)
-                log10_Nugu_high = np.log10(derive_Nu(this_mom0_high, restfreq_high, Aul_high, gu_high) / gu_high)
+                log10_Nugu_low   = np.log10(derive_Nu(this_mom0_low, restfreq_low, Aul_low, gu_low) / gu_low)
+                log10_Nugu_high  = np.log10(derive_Nu(this_mom0_high, restfreq_high, Aul_high, gu_high) / gu_high)
+                print(log10_Nugu_low)
+
+                elog10_Nugu_low  = np.log10(derive_Nu(this_emom0_low, restfreq_low, Aul_low, gu_low) / gu_low)
+                elog10_Nugu_high = np.log10(derive_Nu(this_emom0_high, restfreq_high, Aul_high, gu_high) / gu_high)
 
                 x_data       = np.array([Eu_low, Eu_high])
                 y_data       = np.array([log10_Nugu_low, log10_Nugu_high])
-                popt2, pcov2 = curve_fit(_f_linear,x_data,y_data)
+                y_err        = np.array([elog10_Nugu_low, elog10_Nugu_high])
+                popt2, pcov2 = curve_fit(_f_linear,x_data,y_data,sigma=y_err)
                 perr2        = np.sqrt(np.diag(pcov2))
 
                 Trot  = popt2[0]
@@ -276,7 +281,7 @@ def fits_creation(
 #####################
 
 def _f_linear(x, Trot, b):
-    func = b + x * ( -1 * np.log10(np.e)/Trot )
+    func = b - x * ( np.log10(np.e)/Trot )
 
     return func
 
