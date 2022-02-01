@@ -172,7 +172,7 @@ def _f_two_rot_13co21_13co10(x, Trot, Nmol, b, c, freq_l, freq_u):
 
     input parameters:
     freq_l in GHz
-    freq_h in GHz
+    freq_u in GHz
 
     free parameters:
     Nmol
@@ -227,7 +227,7 @@ def _f_two_rot_13co21_13co10(x, Trot, Nmol, b, c, freq_l, freq_u):
     width2 = c /299792.458 * freq_u # km/s
 
     a1 = W_l / (width1 * np.sqrt(2*np.pi))
-    a2 = W_h / (width2 * np.sqrt(2*np.pi))
+    a2 = W_u / (width2 * np.sqrt(2*np.pi))
 
     func = \
         a1 * np.exp( -(x-freq_l+offset1)**2/(2*width1**2) ) + \
