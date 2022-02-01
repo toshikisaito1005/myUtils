@@ -17,77 +17,15 @@ reload(myplot)
 
 execfile(os.environ["HOME"] + "/myUtils/stuff_casa.py")
 
+k = 1.38 * 10**-16 # erg/K
+h = 6.626 * 10**-27 # erg.s
+c = 299792458.0 # m/s
+
 ##########################
 # rotation_13co21_13co10 #
 ##########################
 
 def rotation_13co21_13co10(
-    mom_u,
-    mom_l,
-    emom_u,
-    emom_l,
-    freq_u,
-    freq_l,
-    ):
-    """
-    equation 1 of Nakajima et al. 2018
-
-    input parameters:
-    freq_l in GHz
-    freq_u in GHz
-
-    free parameters:
-    Nmol
-    Trot
-    """
-
-    # constants
-    Z = 3*np.exp(-5.28880/Trot) \
-      + 5*np.exp(-15.86618/Trot) \
-      + 7*np.exp(-31.73179/Trot) \
-      + 9*np.exp(-52.88517/Trot) \
-      + 11*np.exp(-79.32525/Trot) \
-      + 13*np.exp(-111.05126/Trot) \
-      + 15*np.exp(-148.06215/Trot) \
-      + 17*np.exp(-190.35628/Trot) \
-      + 19*np.exp(-237.93232/Trot) \
-      + 21*np.exp(-290.78848/Trot) \
-      + 21*np.exp(-348.92271/Trot)
-
-    k = 1.38 * 10**-16 # erg/K
-    h = 6.626 * 10**-27 # erg.s
-    c = 299792458.0 # m/s
-
-    Aul_l = 10**-7.198
-    gu_l  = 3
-    gl_l  = 1
-    gk_l  = 1
-    Eu_l  = 5.28880
-
-    Aul_u = 10**-6.216
-    gu_u  = 5
-    gl_u  = 1
-    gk_u  = 1
-    Eu_u  = 15.86618
-
-    # lower-J equation
-    A_l = np.log10( Nmol/Z )
-    B_l = np.log10( (8*np.pi*k*(freq_l*10**9)**2)/(h*c**3*Aul_l*gu_l*gl_l*gk_l) )
-    C_l = Eu_l / k * np.log10(np.e) / Trot
-    W_l = 10**(A_l - B_l - C_l)
-
-    A_u = np.log10( Nmol/Z )
-    B_u = np.log10( (8*np.pi*k*(freq_u*10**9)**2)/(h*c**3*Aul_u*gu_u*gl_u*gk_u) )
-    C_u = Eu_u / k * np.log10(np.e) / Trot
-    W_u = 10**(A_u - B_u - C_u)
-
-
-
-###############
-# fitting_two #
-###############
-
-def fitting_two(
     cubelow,
     cubehigh,
     ecubelow,
@@ -99,6 +37,12 @@ def fitting_two(
     snr=10.0,
     smooth=0,
     ratio_max=2.0,
+    Aul_low=10**-7.198,
+    Aul_hogh=10**-6.216,
+    gu_low=3,
+    gu_high=5,
+    Eu_low=5.28880,
+    Eu_high=15.86618,
     ):
     """
     """
@@ -133,11 +77,16 @@ def fitting_two(
     y   = range(np.shape(data_low)[1])
     xy  = itertools.product(x, y)
 
+    map_Trot   = np.zeros((np.shape(data_low)[0],np.shape(data_low)[1]))
+    map_logN   = np.zeros((np.shape(data_low)[0],np.shape(data_low)[1]))
     mom0_low   = np.zeros((np.shape(data_low)[0],np.shape(data_low)[1]))
     mom0_high  = np.zeros((np.shape(data_low)[0],np.shape(data_low)[1]))
     mom1       = np.zeros((np.shape(data_low)[0],np.shape(data_low)[1]))
     mom2       = np.zeros((np.shape(data_low)[0],np.shape(data_low)[1]))
     ratio      = np.zeros((np.shape(data_low)[0],np.shape(data_low)[1]))
+
+    emap_Trot  = np.zeros((np.shape(data_low)[0],np.shape(data_low)[1]))
+    emap_logN  = np.zeros((np.shape(data_low)[0],np.shape(data_low)[1]))
     emom0_low  = np.zeros((np.shape(data_low)[0],np.shape(data_low)[1]))
     emom0_high = np.zeros((np.shape(data_low)[0],np.shape(data_low)[1]))
     emom1      = np.zeros((np.shape(data_low)[0],np.shape(data_low)[1]))
@@ -167,12 +116,7 @@ def fitting_two(
 
         # p0 guess
         guess_b = (restfreq_low - this_freq_low[np.nanargmax(this_data_low)]) / restfreq_low * 299792.458
-        p0 = [
-        np.max(this_data)/2.0,
-        np.max(this_data),
-        guess_b,
-        40.,
-        ]
+        p0 = [np.max(this_data)/2.0,np.max(this_data),guess_b,40.]
 
         # fit
         if np.max(this_data_low/this_err_low)>=snr and np.max(this_data_high/this_err_high)>=snr:
@@ -182,17 +126,43 @@ def fitting_two(
             perr       = np.sqrt(np.diag(pcov))
 
             if popt[1]/popt[0]>0 and popt[1]/popt[0]<=ratio_max and popt[2]!=guess_b and popt[3]!=40 and popt[0]<max_low*2 and popt[1]<max_low*2 and perr[0]<popt[0] and perr[1]<popt[1]:
+                # rotation diagram fitting
+                this_mom0_low   = popt[0] * abs(popt[3]) * np.sqrt(2*np.pi)
+                this_mom0_high  = popt[1] * abs(popt[3]) * np.sqrt(2*np.pi)
+                this_emom0_low  = np.sqrt(2*np.pi) * np.sqrt(popt[0]**2*perr[3]**2 + popt[3]**2*perr[0]**2)
+                this_emom0_high = np.sqrt(2*np.pi) * np.sqrt(popt[1]**2*perr[3]**2 + popt[3]**2*perr[1]**2)
+
+                log10_Nugu_low  = np.log10(derive_Nu(this_mom0_low, restfreq_low, Aul_low, gu_low) / gu_low)
+                log10_Nugu_high = np.log10(derive_Nu(this_mom0_high, restfreq_high, Aul_high, gu_high) / gu_high)
+
+                x_data       = np.array([Eu_low, Eu_high])
+                y_data       = np.array([log10_Nugu_low, log10_Nugu_high])
+                popt2, pcov2 = curve_fit(_f_linear,x_data,y_data)
+                perr2        = np.sqrt(np.diag(pcov2))
+
+                Trot  = popt2[0]
+                eTrot = perr2[0]
+
+                Z = derive_Z_13co(Trot)
+
+                logNmol  = popt2[1] + np.log10(Z)
+                elogNmol = perr2[1] + np.log10(Z)
+
                 # add pixel
-                mom0_low[this_x,this_y]   = popt[0] * abs(popt[3]) * np.sqrt(2*np.pi)
-                mom0_high[this_x,this_y]  = popt[1] * abs(popt[3]) * np.sqrt(2*np.pi)
+                mom0_low[this_x,this_y]   = this_mom0_low
+                mom0_high[this_x,this_y]  = this_mom0_high
                 mom1[this_x,this_y]       = popt[2]
                 mom2[this_x,this_y]       = abs(popt[3])
                 ratio[this_x,this_y]      = popt[1]/popt[0]
-                emom0_low[this_x,this_y]  = np.sqrt(2*np.pi) * np.sqrt(popt[0]**2*perr[3]**2 + popt[3]**2*perr[0]**2)
-                emom0_high[this_x,this_y] = np.sqrt(2*np.pi) * np.sqrt(popt[1]**2*perr[3]**2 + popt[3]**2*perr[1]**2)
+                map_Trot[this_x,this_y]   = Trot
+                map_logN[this_x,this_y]   = logNmol
+                emom0_low[this_x,this_y]  = this_emom0_low
+                emom0_high[this_x,this_y] = this_emom0_high
                 emom1[this_x,this_y]      = perr[2]
                 emom2[this_x,this_y]      = abs(perr[3])
                 eratio[this_x,this_y]     = popt[1]/popt[0] * np.sqrt(perr[0]**2/popt[0]**2 + perr[1]**2/popt[1]**2)
+                emap_Trot[this_x,this_y]  = eTrot
+                emap_logN[this_x,this_y]  = elogNmol
             else:
                 # add pixel
                 mom0_low[this_x,this_y]   = np.nan
@@ -200,11 +170,15 @@ def fitting_two(
                 mom1[this_x,this_y]       = np.nan
                 mom2[this_x,this_y]       = np.nan
                 ratio[this_x,this_y]      = np.nan
+                map_Trot[this_x,this_y]   = np.nan
+                map_logN[this_x,this_y]   = np.nan
                 emom0_low[this_x,this_y]  = np.nan
                 emom0_high[this_x,this_y] = np.nan
                 emom1[this_x,this_y]      = np.nan
                 emom2[this_x,this_y]      = np.nan
                 eratio[this_x,this_y]     = np.nan
+                emap_Trot[this_x,this_y]  = np.nan
+                emap_logN[this_x,this_y]  = np.nan
         else:
             # add pixel
             mom0_low[this_x,this_y]   = np.nan
@@ -212,13 +186,19 @@ def fitting_two(
             mom1[this_x,this_y]       = np.nan
             mom2[this_x,this_y]       = np.nan
             ratio[this_x,this_y]      = np.nan
+            map_Trot[this_x,this_y]   = np.nan
+            map_logN[this_x,this_y]   = np.nan
             emom0_low[this_x,this_y]  = np.nan
             emom0_high[this_x,this_y] = np.nan
             emom1[this_x,this_y]      = np.nan
             emom2[this_x,this_y]      = np.nan
             eratio[this_x,this_y]     = np.nan
+            emap_Trot[this_x,this_y]  = np.nan
+            emap_logN[this_x,this_y]  = np.nan
 
     # fits
+    fits_creation(map_Trot.T,"Trot.fits")
+    fits_creation(map_logN.T,"logN.fits")
     fits_creation(mom0_low.T,"mom0_low.fits")
     fits_creation(mom0_high.T,"mom0_high.fits")
     fits_creation(ratio.T,"ratio.fits")
@@ -226,11 +206,54 @@ def fitting_two(
     fits_creation(mom2.T,"mom2.fits")
 
     # efits
+    fits_creation(emap_Trot.T,"eTrot.fits")
+    fits_creation(emap_logN.T,"elogN.fits")
     fits_creation(emom0_low.T,"emom0_low.fits")
     fits_creation(emom0_high.T,"emom0_high.fits")
     fits_creation(eratio.T,"eratio.fits")
     fits_creation(emom1.T,"emom1.fits")
     fits_creation(emom2.T,"emom2.fits")
+
+#############
+# derive_Nu #
+#############
+
+def derive_Nu(
+    mom0, # K.km/s
+    freq, # Hz
+    Aul,  # s^-1
+    gu=3,
+    gl=1,
+    gk=1,
+    ):
+    """
+    """
+
+    return (8*np.pi*k*freq**2)/(h*c**3*Aul*gu*gl*gk) * mom0
+
+#################
+# derive_Z_13co #
+#################
+
+def derive_Z_13co(
+    Trot,
+    ):
+    """
+    """
+
+    Z = 3*np.exp(-5.28880/Trot) \
+      + 5*np.exp(-15.86618/Trot) \
+      + 7*np.exp(-31.73179/Trot) \
+      + 9*np.exp(-52.88517/Trot) \
+      + 11*np.exp(-79.32525/Trot) \
+      + 13*np.exp(-111.05126/Trot) \
+      + 15*np.exp(-148.06215/Trot) \
+      + 17*np.exp(-190.35628/Trot) \
+      + 19*np.exp(-237.93232/Trot) \
+      + 21*np.exp(-290.78848/Trot) \
+      + 21*np.exp(-348.92271/Trot)
+
+    return Z
 
 #################
 # fits_creation #
@@ -248,9 +271,14 @@ def fits_creation(
     hdul = pyfits.HDUList([hdu])
     hdul.writeto(output_map)
 
-##########
-# _f_two #
-##########
+#####################
+# fitting functions #
+#####################
+
+def _f_linear(x, Trot, b):
+    func = b + x * ( -1 * np.log10(np.e)/Trot )
+
+    return func
 
 def _f_two(x, a1, a2, b, c, freq1, freq2):
 
