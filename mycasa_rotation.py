@@ -160,11 +160,11 @@ def fitting_two(
     fits_creation(mom2.T,"mom2.fits")
 
     # efits
-    fits_creation(mom0_low.T,"emom0_low.fits")
-    fits_creation(mom0_high.T,"emom0_high.fits")
-    fits_creation(ratio.T,"eratio.fits")
-    fits_creation(mom1.T,"emom1.fits")
-    fits_creation(mom2.T,"emom2.fits")
+    fits_creation(emom0_low.T,"emom0_low.fits")
+    fits_creation(emom0_high.T,"emom0_high.fits")
+    fits_creation(eratio.T,"eratio.fits")
+    fits_creation(emom1.T,"emom1.fits")
+    fits_creation(emom2.T,"emom2.fits")
 
 #################
 # fits_creation #
