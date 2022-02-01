@@ -146,11 +146,13 @@ def rotation_13co21_13co10(
                 # rotation diagram fitting
                 this_mom0_low    = popt[0] * abs(popt[3]) * np.sqrt(2*np.pi)
                 this_mom0_high   = popt[1] * abs(popt[3]) * np.sqrt(2*np.pi)
+
                 this_emom0_low   = np.sqrt(2*np.pi) * np.sqrt(popt[0]**2*perr[3]**2 + popt[3]**2*perr[0]**2)
                 this_emom0_high  = np.sqrt(2*np.pi) * np.sqrt(popt[1]**2*perr[3]**2 + popt[3]**2*perr[1]**2)
 
                 log10_Nugu_low   = np.log10(derive_Nu(this_mom0_low, restfreq_low, Aul_low) / gu_low)
                 log10_Nugu_high  = np.log10(derive_Nu(this_mom0_high, restfreq_high, Aul_high) / gu_high)
+                print(log10_Nugu_low)
 
                 elog10_Nugu_low  = derive_Nu(this_emom0_low, restfreq_low, Aul_low) / derive_Nu(this_mom0_low, restfreq_low, Aul_low) / np.log(10)
                 elog10_Nugu_high = derive_Nu(this_emom0_high, restfreq_high, Aul_high) / derive_Nu(this_mom0_high, restfreq_high, Aul_high) / np.log(10)
