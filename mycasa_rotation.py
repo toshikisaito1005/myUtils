@@ -137,10 +137,10 @@ def rotation_13co21_13co10(
             err_mom0_13co21 = perr[1]
             err_mom2        = abs(perr[3])
 
-            snr_13co10 = mom0_13co10/err_mom0_13co10
-            snr_13co21 = mom0_13co21/err_mom0_13co21
+            snr_13co10 = abs(mom0_13co10/err_mom0_13co10)
+            snr_13co21 = abs(mom0_13co21/err_mom0_13co21)
 
-            if popt_ratio>0 and popt_ratio<=ratio_max and mom1!=guess_b and mom2!=40 and mom0_13co10<max_low and mom0_13co21<max_high:# and snr_13co10>1 and snr_13co21>1:
+            if popt_ratio>0 and popt_ratio<=ratio_max and mom1!=guess_b and mom2!=40 and mom0_13co10<max_low and mom0_13co21<max_high and snr_13co10>1 and snr_13co21>1:
                 # rotation diagram fitting
                 this_mom0_low    = mom0_13co10 * mom2 * np.sqrt(2*np.pi)
                 this_mom0_high   = mom0_13co21 * mom2 * np.sqrt(2*np.pi)
