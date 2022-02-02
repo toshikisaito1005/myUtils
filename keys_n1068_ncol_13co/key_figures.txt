@@ -12,15 +12,15 @@ dir_final           ,,,images/
 # final products #
 ##################
 # paper
-final_overall       ,,,fig_overall.png
+final_13co10_mom0   ,,,fig_map_13co10_mom0.png
 
 ############
 # raw maps #
 ############
-cube_13co10    ,,,ngc1068_b3_12m_13co10_???.fits
-ecube_13co10   ,,,ngc1068_b3_12m_13co10_???_noise.fits
-cube_13co21    ,,,ngc1068_b6_12m_13co21_???.fits
-ecube_13co21   ,,,ngc1068_b6_12m_13co21_???_noise.fits
+cube_13co10         ,,,ngc1068_b3_12m_13co10_???.fits
+ecube_13co10        ,,,ngc1068_b3_12m_13co10_???_noise.fits
+cube_13co21         ,,,ngc1068_b6_12m_13co21_???.fits
+ecube_13co21        ,,,ngc1068_b6_12m_13co21_???_noise.fits
 
 ###############
 # output maps #
@@ -55,6 +55,9 @@ outpng_13co_trot    ,,,fig_map_trot_???.png
 outpng_13co_ncol    ,,,fig_map_ncol_???.png
 # box for imagemajick
 box_map             ,,,2870x2750+350+150
+box_map_noxlabel    ,,,2550x2750+670+150
+box_map_noylabel    ,,,2870x2560+350+150
+box_map_noxylabel   ,,,2550x2560+670+150
 
 #######
 # end #

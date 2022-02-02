@@ -162,6 +162,13 @@ class ToolsNcol():
         self.outpng_13co_trot   = self.dir_products + self._read_key("outpng_13co_trot")
         self.outpng_13co_ncol   = self.dir_products + self._read_key("outpng_13co_ncol")
 
+        # finals
+        self.final_13co10_mom0  = self.dir_products + self._read_key("final_13co10_mom0")
+
+        # box
+        self.box_map            = self._read_key("box_map")
+        self.box_map_noxylabel  = self._read_key("box_map_noxylabel")
+
     ####################
     # run_ngc1068_ncol #
     ####################
@@ -189,6 +196,93 @@ class ToolsNcol():
         # plot figures in paper
         if plot_showcase==True:
             self.showcase()
+
+    ####################
+    # immagick_figures #
+    ####################
+
+    def immagick_figures(
+        self,
+        delin                = False,
+        do_all               = False,
+        do_final_13co10_mom0 = False,
+        ):
+        """
+        """
+
+        taskname = self.modname + sys._getframe().f_code.co_name
+        check_first(self.outpng_map_ci,taskname)
+
+        if do_all==True:
+            do_final_13co10_mom0 = True
+
+        if do_final_13co10_mom0==True:
+            print("############################")
+            print("# create final_13co10_mom0 #")
+            print("############################")
+
+            combine_two_png(
+                self.outpng_mom0_13co10.replace("???","60pc"),
+                self.outpng_mom0_13co10.replace("???","70pc"),
+                self.final_13co10_mom0+"_tmp1.png",
+                self.box_map_noxylabel,
+                self.box_map_noxylabel,
+                delin=delin,
+                )
+            combine_three_png(
+                self.outpng_mom0_13co10.replace("???","80pc"),
+                self.outpng_mom0_13co10.replace("???","90pc"),
+                self.outpng_mom0_13co10.replace("???","100pc"),
+                self.final_13co10_mom0+"_tmp2.png",
+                self.box_map_noxylabel,
+                self.box_map_noxylabel,
+                self.box_map_noxylabel,
+                delin=delin,
+                )
+            combine_two_png(
+                self.outpng_mom0_13co10.replace("???","110pc"),
+                self.outpng_mom0_13co10.replace("???","120pc"),
+                self.final_13co10_mom0+"_tmp3.png",
+                self.box_map_noxylabel,
+                self.box_map_noxylabel,
+                delin=delin,
+                )
+            combine_three_png(
+                self.outpng_mom0_13co10.replace("???","130pc"),
+                self.outpng_mom0_13co10.replace("???","140pc"),
+                self.outpng_mom0_13co10.replace("???","150pc"),
+                self.final_13co10_mom0+"_tmp4.png",
+                self.box_map_noxylabel,
+                self.box_map_noxylabel,
+                self.box_map_noxylabel,
+                delin=delin,
+                )
+
+            combine_two_png(
+                self.final_13co10_mom0+"_tmp1.png",
+                self.final_13co10_mom0+"_tmp2.png",
+                self.final_13co10_mom0+"_tmp12.png",
+                "10000x100000+0+0",
+                "10000x100000+0+0",
+                delin=True,
+                )
+            combine_two_png(
+                self.final_13co10_mom0+"_tmp3.png",
+                self.final_13co10_mom0+"_tmp4.png",
+                self.final_13co10_mom0+"_tmp34.png",
+                "10000x100000+0+0",
+                "10000x100000+0+0",
+                delin=True,
+                )
+            combine_two_png(
+                self.final_13co10_mom0+"_tmp12.png",
+                self.final_13co10_mom0+"_tmp34.png",
+                self.final_13co10_mom0,
+                "10000x100000+0+0",
+                "10000x100000+0+0",
+                delin=True,
+                axis="column",
+                )
 
     ############
     # showcase #
@@ -286,7 +380,7 @@ class ToolsNcol():
                 label_scalebar=label_scalebar,
                 set_cbar=True,
                 label_cbar="(K)",
-                clim=[0,8],
+                clim=[2.73,8],
                 set_bg_color=cm.rainbow(0),
                 )
 
