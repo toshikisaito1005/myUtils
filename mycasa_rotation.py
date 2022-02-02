@@ -152,7 +152,7 @@ def rotation_13co21_13co10(
 
             popt0 = popt[0] # 1-0
             popt1 = popt[1] # 2-1
-            poptr = p1/p0 # 2-1/1-0
+            poptr = popt1/popt0 # 2-1/1-0
             popt2 = popt[2]
             popt3 = abs(popt[3])
 
