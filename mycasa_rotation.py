@@ -75,13 +75,13 @@ def rotation_13co21_13co10(
     array_nan      = np.zeros((np.shape(data_low)[0],np.shape(data_low)[1]))
     array_nan[:,:] = np.nan
 
-    map_Trot, emap_Trot   = array_nan, array_nan
-    map_logN, emap_logN   = array_nan, array_nan
-    mom0_low, emom0_low   = array_nan, array_nan
-    mom0_high, emom0_high = array_nan, array_nan
-    mom1, emom1           = array_nan, array_nan
-    mom2, emom2           = array_nan, array_nan
-    ratio, eratio         = array_nan, array_nan
+    map_Trot, map_eTrot           = array_nan, array_nan
+    map_logN, map_elogN           = array_nan, array_nan
+    map_mom0_low, map_emom0_low   = array_nan, array_nan
+    map_mom0_high, map_emom0_high = array_nan, array_nan
+    map_mom1, map_emom1           = array_nan, array_nan
+    map_mom2, map_emom2           = array_nan, array_nan
+    map_ratio, map_eratio         = array_nan, array_nan
 
     for i in xy:
         # get data of this sightline
@@ -167,20 +167,20 @@ def rotation_13co21_13co10(
                 elogNmol = perr2[1] + np.log10(Z)
 
                 # add pixel
-                mom0_low[this_x,this_y]   = this_mom0_low
-                mom0_high[this_x,this_y]  = this_mom0_high
-                mom1[this_x,this_y]       = popt[2]
-                mom2[this_x,this_y]       = abs(popt[3])
-                ratio[this_x,this_y]      = popt[1]/popt[0]
-                map_Trot[this_x,this_y]   = Trot
-                map_logN[this_x,this_y]   = logNmol
-                emom0_low[this_x,this_y]  = this_emom0_low
-                emom0_high[this_x,this_y] = this_emom0_high
-                emom1[this_x,this_y]      = perr[2]
-                emom2[this_x,this_y]      = abs(perr[3])
-                eratio[this_x,this_y]     = popt[1]/popt[0] * np.sqrt(perr[0]**2/popt[0]**2 + perr[1]**2/popt[1]**2)
-                emap_Trot[this_x,this_y]  = eTrot
-                emap_logN[this_x,this_y]  = elogNmol
+                map_mom0_low[this_x,this_y]   = this_mom0_low
+                map_mom0_high[this_x,this_y]  = this_mom0_high
+                map_mom1[this_x,this_y]       = popt[2]
+                map_mom2[this_x,this_y]       = abs(popt[3])
+                map_ratio[this_x,this_y]      = popt[1]/popt[0]
+                map_Trot[this_x,this_y]       = Trot
+                map_logN[this_x,this_y]       = logNmol
+                map_emom0_low[this_x,this_y]  = this_emom0_low
+                map_emom0_high[this_x,this_y] = this_emom0_high
+                map_emom1[this_x,this_y]      = perr[2]
+                map_emom2[this_x,this_y]      = abs(perr[3])
+                map_eratio[this_x,this_y]     = popt[1]/popt[0] * np.sqrt(perr[0]**2/popt[0]**2 + perr[1]**2/popt[1]**2)
+                map_eTrot[this_x,this_y]      = eTrot
+                map_elogN[this_x,this_y]      = elogNmol
 
     # fits
     fits_creation(map_Trot.T,"Trot.fits",cubelow,"K")
@@ -192,8 +192,8 @@ def rotation_13co21_13co10(
     fits_creation(mom2.T,"mom2.fits",cubelow,"km/s")
 
     # efits
-    fits_creation(emap_Trot.T,"eTrot.fits",cubelow,"K")
-    fits_creation(emap_logN.T,"elogN.fits",cubelow,"cm**-2 in log10")
+    fits_creation(map_eTrot.T,"eTrot.fits",cubelow,"K")
+    fits_creation(map_elogN.T,"elogN.fits",cubelow,"cm**-2 in log10")
     fits_creation(emom0_low.T,"emom0_low.fits",cubelow,"K.km/s")
     fits_creation(emom0_high.T,"emom0_high.fits",cubelow,"K.km/s")
     fits_creation(eratio.T,"eratio.fits",cubelow,"")
