@@ -150,25 +150,25 @@ def rotation_13co21_13co10(
                 )
             perr = np.sqrt(np.diag(pcov))
 
-            p0 = popt[0] # 1-0
-            p1 = popt[1] # 2-1
-            pr = p1/p0 # 2-1/1-0
-            p2 = popt[2]
-            p3 = abs(popt[3])
+            popt0 = popt[0] # 1-0
+            popt1 = popt[1] # 2-1
+            poptr = p1/p0 # 2-1/1-0
+            popt2 = popt[2]
+            popt3 = abs(popt[3])
 
-            e0 = perr[0]
-            e1 = perr[1]
-            e2 = perr[2]
-            e3 = abs(perr[3])
+            err0 = perr[0]
+            err1 = perr[1]
+            err2 = perr[2]
+            err3 = abs(perr[3])
 
-            #if p0>0 and p0<max_low and p1>0 and p1<max_high and pr>0 and pr<=ratio_max and p2!=guess_b and p3!=40:
-            # derive parameters
-            this_mom0_low   = p0 * p3 * np.sqrt(2*np.pi)
-            this_mom0_high  = p1 * p3 * np.sqrt(2*np.pi)
+            if popt0>0 and popt0<max_low and popt1>0 and popt1<max_high and poptr>0 and poptr<=ratio_max and popt2!=guess_b and popt3!=40:
+                # derive parameters
+                this_mom0_low   = popt0 * popt3 * np.sqrt(2*np.pi)
+                this_mom0_high  = popt1 * popt3 * np.sqrt(2*np.pi)
 
-            # write
-            map_mom0_low[this_x,this_y]   = this_mom0_low
-            map_mom0_high[this_x,this_y]  = this_mom0_high
+                # write
+                map_mom0_low[this_x,this_y]   = this_mom0_low
+                map_mom0_high[this_x,this_y]  = this_mom0_high
 
             """
             if p0>0 and p0<max_low and p1>0 and p1<max_high and pr>0 and pr<=ratio_max and p2!=guess_b and p3!=40:
