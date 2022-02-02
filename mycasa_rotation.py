@@ -124,7 +124,6 @@ def rotation_13co21_13co10(
                 maxfev = 100000,
                 )
             perr = np.sqrt(np.diag(pcov))
-            print(popt)
 
             mom0_13co10 = popt[0]
             mom0_13co21 = popt[1]
@@ -143,7 +142,6 @@ def rotation_13co21_13co10(
                 # rotation diagram fitting
                 this_mom0_low    = mom0_13co10 * mom2 * np.sqrt(2*np.pi)
                 this_mom0_high   = mom0_13co21 * mom2 * np.sqrt(2*np.pi)
-                print(mom0_13co10, mom2, this_mom0_low)
 
                 this_emom0_low   = np.sqrt(2*np.pi) * np.sqrt(mom0_13co10**2*err_mom2**2 + mom2**2*err_mom0_13co10**2)
                 this_emom0_high  = np.sqrt(2*np.pi) * np.sqrt(mom0_13co21**2*err_mom2**2 + mom2**2*err_mom0_13co21**2)
@@ -187,6 +185,7 @@ def rotation_13co21_13co10(
                     map_elogN[this_x,this_y]  = elogNmol
 
     # fits
+    print(map_mom0_low.T)
     fits_creation(map_Trot.T,"Trot.fits",cubelow,"K")
     fits_creation(map_logN.T,"logN.fits",cubelow,"cm**-2 in log10")
     fits_creation(map_mom0_low.T,"mom0_low.fits",cubelow,"K.km/s")
@@ -265,7 +264,7 @@ def fits_creation(
 
     obj = pyfits.open(output_map)
     obj[0].data = input_array
-    obj[0].header.append(("BUNIT", bunit))
+    #obj[0].header.append(("BUNIT", bunit))
     obj.writeto(output_map, clobber=True)
 
     #hdu = pyfits.PrimaryHDU(input_array)
