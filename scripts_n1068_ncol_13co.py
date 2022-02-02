@@ -215,7 +215,7 @@ class ToolsNcol():
         """
 
         taskname = self.modname + sys._getframe().f_code.co_name
-        check_first(self.outpng_map_ci,taskname)
+        check_first(self.outpng_mom0_13co10.replace("???","60pc"),taskname)
 
         if do_all==True:
             do_final_13co10_mom0 = True
