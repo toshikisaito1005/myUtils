@@ -206,6 +206,7 @@ class ToolsNcol():
             print("# myfig_fits2png at " + this_beam)
 
             maxval = imstat(self.outmaps_13co_trot.replace("???",this_beam))["max"]
+            maxval = maxval / 2.0
             myfig_fits2png(
                 imcolor=self.outmaps_13co_trot.replace("???",this_beam),
                 outfile=self.outpng_13co_trot.replace("???",this_beam),
