@@ -216,10 +216,15 @@ def rotation_13co21_13co10(
                 map_elogN[this_x,this_y]  = elogNmol
             """
 
-    # fits
+    # low-J mom0 to fits
     fits_creation(map_mom0_low.T,"mom0_low.fits",cubelow,"K.km/s")
-    """
+    fits_creation(map_emom0_low.T,"emom0_low.fits",cubelow,"K.km/s")
+
+    # high-J mom0 to fits
     fits_creation(map_mom0_high.T,"mom0_high.fits",cubelow,"K.km/s")
+    fits_creation(map_emom0_high.T,"emom0_high.fits",cubelow,"K.km/s")
+
+    """
     fits_creation(map_Trot.T,"Trot.fits",cubelow,"K")
     fits_creation(map_logN.T,"logN.fits",cubelow,"cm**-2 in log10")
     fits_creation(map_ratio.T,"ratio.fits",cubelow,"")
@@ -227,8 +232,6 @@ def rotation_13co21_13co10(
     fits_creation(map_mom2.T,"mom2.fits",cubelow,"km/s")
 
     # efits
-    fits_creation(map_emom0_low.T,"emom0_low.fits",cubelow,"K.km/s")
-    fits_creation(map_emom0_high.T,"emom0_high.fits",cubelow,"K.km/s")
     fits_creation(map_eTrot.T,"eTrot.fits",cubelow,"K")
     fits_creation(map_elogN.T,"elogN.fits",cubelow,"cm**-2 in log10")
     fits_creation(map_eratio.T,"eratio.fits",cubelow,"")
