@@ -52,9 +52,10 @@ def rotation_13co21_13co10(
     mytask.check_first(cubelow, taskname)
 
     # template
-    template = "template.image"
-    os.system("rm -rf " + template)
-    imsubimage(cubelow,template,chans="1")
+    template = "template.fits"
+    os.system("rm -rf " + template+".image")
+    imsubimage(cubelow,template+".image",chans="1")
+    run_exportfits(template+".image",template)
 
     # constants
     if restfreq_low==None:
