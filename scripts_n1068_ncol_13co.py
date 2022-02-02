@@ -5,30 +5,38 @@ requirements:
 CASA Version 5.4.0-70, ananlysisUtils, astropy
 
 data:
-ALMA main Band 3 data 2011.0.00061.S
-                      2012.1.00657.S
-                      2013.1.00060.S
-                      2018.1.01506.S
-                      2018.1.01684.S
-                      2019.1.00130.S
-ALMA main Band 6 data 2013.1.00221.S
-                      2019.2.00129.S (TP and 7m not used)
-imaging script        all processed by phangs pipeline v2
-                      Leroy et al. 2021, ApJS, 255, 19 (https://ui.adsabs.harvard.edu/abs/2021ApJS..255...19L)
+ALMA Band 3 data 2011.0.00061.S
+                 2012.1.00657.S
+                 2013.1.00060.S
+                 2018.1.01506.S
+                 2018.1.01684.S
+                 2019.1.00130.S
+ALMA Band 6 data 2013.1.00221.S
+                 2019.2.00129.S (TP and 7m not used)
+imaging script   all processed by phangs pipeline v2
+                 Leroy et al. 2021, ApJS, 255, 19 (https://ui.adsabs.harvard.edu/abs/2021ApJS..255...19L)
 
 usage:
 > import os
-> from scripts_n1068_hex_pca import ToolsPCA as tools
+> from scripts_n1068_ncol_13co import ToolsNcol as tools
 >
 > # key
 > tl = tools(
 >     refresh     = False,
->     keyfile_gal = "/home02/saitots/myUtils/keys_n1068_hex_pca/key_ngc1068.txt",
->     keyfile_fig = "/home02/saitots/myUtils/keys_n1068_hex_pca/key_figures.txt",
+>     keyfile_gal = "/home02/saitots/myUtils/keys_n1068_ncol_13co/key_ngc1068.txt",
+>     keyfile_fig = "/home02/saitots/myUtils/keys_n1068_ncol_13co/key_figures.txt",
 >     )
 >
 > # main
-> tl.run_ngc1068_pca(
+> tl.run_ngc1068_ncol(
+>     # analysis
+>     do_prepare     = False,
+>     do_fitting     = False,
+>     # plot
+>     plot_showcase  = True,
+>     do_imagemagick = True,
+>     immagick_all   = False,
+>     # supplement
 >     )
 >
 > os.system("rm -rf *.last")
@@ -51,9 +59,9 @@ from mycasa_tasks import *
 from mycasa_plots import *
 from mycasa_pca import *
 
-############
-# ToolsPCA #
-############
+#############
+# ToolsNcol #
+#############
 class ToolsNcol():
     """
     Class for the NGC 1068 Ncol project.
@@ -218,6 +226,7 @@ class ToolsNcol():
         # plot figures in paper
         plot_showcase  = False,
         do_imagemagick = False,
+        immagick_all   = False,
         # supplement
         ):
         """
@@ -236,7 +245,7 @@ class ToolsNcol():
             self.showcase()
 
         if do_imagemagick==True:
-            self.immagick_figures()
+            self.immagick_figures(do_all=immagick_all,delin=False)
 
     ####################
     # immagick_figures #

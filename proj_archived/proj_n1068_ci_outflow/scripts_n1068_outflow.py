@@ -33,6 +33,7 @@ an example of script_figures.py below:
 >     )
 >
 > tl.run_ci_outflow(
+>     do_all                 = True,
 >     # prepare FITS
 >     do_prepare             = False,
 >     do_ratio_map           = False,
@@ -51,7 +52,6 @@ an example of script_figures.py below:
 >     do_imagemagick         = False,
 >     immagick_all           = False,
 >     # supplement (not published)
->     do_compare_7m          = False,
 >     suggest_scatter_spaxel = False,
 >     )
 >
@@ -64,6 +64,7 @@ Date         Filename                To
 2021-12-17   draft_v2_211217.zip     ApJL
 2022-01-19   draft_v3_220119.zip     all co-authors
 2022-02-03   draft_v4                ApJL
+2022-02-03   reply_v2                ApJL
 
 history:
 2021-04-22   start project, write README
@@ -79,7 +80,8 @@ history:
 2021-11-24   start revision of draft and refactoring
 2021-12-17   submitted v2 draft!
 2021-12-24   received the 1st referee report
-2022-01-19   v3 circular
+2022-01-19   v3 draft and v1 reply circular
+2022-02-03   submitted v4 draft and v2 reply!
 Toshiki Saito@Nichidai/NAOJ
 """
 
@@ -349,7 +351,6 @@ class ToolsOutflow():
         do_imagemagick         = False,
         immagick_all           = False,
         # supplement (not published)
-        do_compare_7m          = False, # decomissioned
         suggest_scatter_spaxel = False,
         ):
         """
@@ -375,7 +376,6 @@ class ToolsOutflow():
             do_imagemagick         = True
             immagick_all           = True
             # supplement (not published)
-            #do_compare_7m          = True
             suggest_scatter_spaxel = True
 
         # prepare FITS
@@ -418,14 +418,15 @@ class ToolsOutflow():
 
         # summarize
         if do_imagemagick==True:
-            self.immagick_figures(do_all=immagick_all,delin=False)
+            self.immagick_figures(do_all=immagick_all,delin=True)
 
         # supplement (not published)
-        if do_compare_7m==True:
-            self.compare_7m_cubes()
-
         if suggest_scatter_spaxel==True:
             self.plot_ci_cube_vs_co_cube()
+
+        # decomissioned
+        if do_compare_7m==True:
+            self.compare_7m_cubes()
 
     ####################
     # immagick_figures #
@@ -435,7 +436,7 @@ class ToolsOutflow():
         self,
         delin                   = False,
         do_all                  = False,
-        do_final_showcase       = True,
+        do_final_showcase       = False,
         do_final_channel        = False,
         do_final_chan_models    = False,
         do_final_showcase_multi = False,
