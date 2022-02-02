@@ -211,12 +211,12 @@ class ToolsNcol():
     def immagick_figures(
         self,
         delin                = False,
-        do_all               = False,
+        do_all               = True,
         do_final_13co10_mom0 = False,
         do_final_13co21_mom0 = False,
-        do_final_mom1        = True,
-        do_final_trot        = True,
-        do_final_ncol        = True,
+        do_final_mom1        = False,
+        do_final_trot        = False,
+        do_final_ncol        = False,
         ):
         """
         """
