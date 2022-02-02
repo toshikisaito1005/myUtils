@@ -126,11 +126,10 @@ def rotation_13co21_13co10(
                 maxfev = 100000,
                 )
             perr = np.sqrt(np.diag(pcov))
-            print(popt)
 
             p0 = popt[0]
             p1 = popt[1]
-            pr = p1/p0
+            pr = p0/p1
             p2 = popt[2]
             p3 = abs(popt[3])
 
