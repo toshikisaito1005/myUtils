@@ -155,41 +155,46 @@ def rotation_13co21_13co10(
                 )
             perr = np.sqrt(np.diag(pcov))
 
-            popt0 = popt[0] # 1-0
-            popt1 = popt[1] # 2-1
-            poptr = popt1/popt0 # 2-1/1-0
-            popt2 = popt[2]
-            popt3 = abs(popt[3])
+            p0 = popt[0] # 1-0
+            p1 = popt[1] # 2-1
+            pr = popt1/popt0 # 2-1/1-0
+            p2 = popt[2]
+            p3 = abs(popt[3])
 
-            err0 = perr[0]
-            err1 = perr[1]
-            err2 = perr[2]
-            err3 = abs(perr[3])
+            e0 = perr[0]
+            e1 = perr[1]
+            e2 = perr[2]
+            e3 = abs(perr[3])
 
-            if popt0>0 and popt0<max_low and popt1>0 and popt1<max_high and poptr>0 and poptr<=ratio_max and popt2!=guess_b and popt3!=40:
+            if p0>0 and p0<max_low and p1>0 and p1<max_high and pr>0 and pr<=ratio_max and p2!=guess_b and p3!=40:
                 # derive parameters
                 this_mom0_low   = p0 * p3 * np.sqrt(2*np.pi)
                 this_mom0_high  = p1 * p3 * np.sqrt(2*np.pi)
                 this_mom1       = p2
                 this_mom2       = p3
+                this_ratio      = this_mom0_high / this_mom0_low
 
-                this_emom0_low  = np.sqrt(2*np.pi) * np.sqrt(p0**2*e3**2 + p3**2*e0**2)
-                this_emom0_high = np.sqrt(2*np.pi) * np.sqrt(p1**2*e3**2 + p3**2*e1**2)
-                this_emom1      = e2
-                this_emom2      = e3
-
+                # writing them
                 map_mom0_low[this_x,this_y]   = this_mom0_low
                 map_mom0_high[this_x,this_y]  = this_mom0_high
                 map_mom1[this_x,this_y]       = this_mom1
                 map_mom2[this_x,this_y]       = this_mom2
+                map_ratio[this_x,this_y]      = this_ratio
 
+                # derive error parameters
+                this_emom0_low  = np.sqrt(2*np.pi) * np.sqrt(p0**2*e3**2 + p3**2*e0**2)
+                this_emom0_high = np.sqrt(2*np.pi) * np.sqrt(p1**2*e3**2 + p3**2*e1**2)
+                this_emom1      = e2
+                this_emom2      = e3
+                this_eratio     = p1/p0 * np.sqrt(e0**2/p0**2 + e1**2/p1**2)
+
+                # writing them
                 map_emom0_low[this_x,this_y]  = this_emom0_low
                 map_emom0_high[this_x,this_y] = this_emom0_high
                 map_emom1[this_x,this_y]      = this_emom1
                 map_emom2[this_x,this_y]      = this_emom2
+                map_eratio[this_x,this_y]     = this_ratio
 
-            """
-            if popt0>0 and popt0<max_low and popt1>0 and popt1<max_high and poptr>0 and poptr<=ratio_max and popt2!=guess_b and popt3!=40:
                 # rotation diagram fitting
                 log10_Nugu_low   = np.log10(derive_Nu(this_mom0_low, restfreq_low, Aul_low) / gu_low)
                 log10_Nugu_high  = np.log10(derive_Nu(this_mom0_high, restfreq_high, Aul_high) / gu_high)
@@ -211,42 +216,37 @@ def rotation_13co21_13co10(
                 logNmol  = popt2[1] + np.log10(Z)
                 elogNmol = perr2[1] + np.log10(Z)
 
-                # add pixel
-                print(this_x,this_y,this_mom0_low)
-                map_ratio[this_x,this_y]      = popt[1]/popt[0]
-                map_eratio[this_x,this_y]     = popt[1]/popt[0] * np.sqrt(perr[0]**2/popt[0]**2 + perr[1]**2/popt[1]**2)
-                map_Trot[this_x,this_y]   = Trot
-                map_logN[this_x,this_y]   = logNmol
-                map_eTrot[this_x,this_y]  = eTrot
-                map_elogN[this_x,this_y]  = elogNmol
-            """
+                if Trot>2.73:
+                    # add pixel
+                    map_Trot[this_x,this_y]   = Trot
+                    map_logN[this_x,this_y]   = logNmol
+                    map_eTrot[this_x,this_y]  = eTrot
+                    map_elogN[this_x,this_y]  = elogNmol
 
     # low-J mom0 to fits
     print(np.nanmax(map_mom0_low.T))
     fits_creation(map_mom0_low.T,"mom0_low.fits",template,"K.km/s")
-    #fits_creation(map_emom0_low.T,"emom0_low.fits",cubelow,"K.km/s")
+    fits_creation(map_emom0_low.T,"emom0_low.fits",cubelow,"K.km/s")
 
     # high-J mom0 to fits
     print(np.nanmax(map_mom0_high.T))
     fits_creation(map_mom0_high.T,"mom0_high.fits",template,"K.km/s")
-    #fits_creation(map_emom0_high.T,"emom0_high.fits",cubelow,"K.km/s")
+    fits_creation(map_emom0_high.T,"emom0_high.fits",cubelow,"K.km/s")
 
     # mom1
-    #fits_creation(map_mom1.T,"mom1.fits",cubelow,"km/s")
-    #fits_creation(map_emom1.T,"emom1.fits",cubelow,"km/s")
+    fits_creation(map_mom1.T,"mom1.fits",cubelow,"km/s")
+    fits_creation(map_emom1.T,"emom1.fits",cubelow,"km/s")
 
     # mom2
-    #fits_creation(map_mom2.T,"mom2.fits",cubelow,"km/s")
-    #fits_creation(map_emom2.T,"emom2.fits",cubelow,"km/s")
+    fits_creation(map_mom2.T,"mom2.fits",cubelow,"km/s")
+    fits_creation(map_emom2.T,"emom2.fits",cubelow,"km/s")
 
-    """
     fits_creation(map_Trot.T,"Trot.fits",cubelow,"K")
     fits_creation(map_logN.T,"logN.fits",cubelow,"cm**-2 in log10")
     fits_creation(map_ratio.T,"ratio.fits",cubelow,"")
     fits_creation(map_eTrot.T,"eTrot.fits",cubelow,"K")
     fits_creation(map_elogN.T,"elogN.fits",cubelow,"cm**-2 in log10")
     fits_creation(map_eratio.T,"eratio.fits",cubelow,"")
-    """
 
 #############
 # derive_Nu #
