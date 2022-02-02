@@ -137,7 +137,8 @@ def rotation_13co21_13co10(
             e1 = perr[1]
             e3 = abs(perr[3])
 
-            if pr>0 and pr<=ratio_max and p2!=guess_b and p3!=40 and p0<max_low and p0>0 and p1<max_high and p1>0:
+            #if pr>0 and pr<=ratio_max and p2!=guess_b and p3!=40 and p0<max_low and p0>0 and p1<max_high and p1>0:
+            if p0>0 and p1>0  and p2!=guess_b and p3!=40:
                 # rotation diagram fitting
                 this_mom0_low    = p0 * p3 * np.sqrt(2*np.pi)
                 this_mom0_high   = p1 * p3 * np.sqrt(2*np.pi)
