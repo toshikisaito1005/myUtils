@@ -212,6 +212,7 @@ def rotation_13co21_13co10(
 
     # fits
     fits_creation(map_mom0_low.T,"mom0_low.fits",cubelow,"K.km/s")
+    """
     fits_creation(map_mom0_high.T,"mom0_high.fits",cubelow,"K.km/s")
     fits_creation(map_Trot.T,"Trot.fits",cubelow,"K")
     fits_creation(map_logN.T,"logN.fits",cubelow,"cm**-2 in log10")
@@ -227,6 +228,7 @@ def rotation_13co21_13co10(
     fits_creation(map_eratio.T,"eratio.fits",cubelow,"")
     fits_creation(map_emom1.T,"emom1.fits",cubelow,"km/s")
     fits_creation(map_emom2.T,"emom2.fits",cubelow,"km/s")
+    """
 
 #############
 # derive_Nu #
