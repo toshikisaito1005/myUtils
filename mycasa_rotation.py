@@ -166,7 +166,7 @@ def rotation_13co21_13co10(
             e2 = perr[2]
             e3 = abs(perr[3])
 
-            if p0>0 and p0<max_low and p1>0 and p1<max_high and pr>0 and pr<=ratio_max and p2!=guess_b and p3!=40:
+            if p0>0 and p0<max_low and p1>0 and p1<max_high and pr>0 and pr<=ratio_max and p2!=guess_b and p3!=40 and p0/e0>snr and p1/e1>snr:
                 # derive parameters
                 this_mom0_low   = p0 * p3 * np.sqrt(2*np.pi)
                 this_mom0_high  = p1 * p3 * np.sqrt(2*np.pi)
@@ -224,12 +224,10 @@ def rotation_13co21_13co10(
                     map_elogN[this_x,this_y]  = elogNmol
 
     # low-J mom0 to fits
-    print(np.nanmax(map_mom0_low.T))
     fits_creation(map_mom0_low.T,"mom0_low.fits",template,"K.km/s")
     fits_creation(map_emom0_low.T,"emom0_low.fits",cubelow,"K.km/s")
 
     # high-J mom0 to fits
-    print(np.nanmax(map_mom0_high.T))
     fits_creation(map_mom0_high.T,"mom0_high.fits",template,"K.km/s")
     fits_creation(map_emom0_high.T,"emom0_high.fits",cubelow,"K.km/s")
 
