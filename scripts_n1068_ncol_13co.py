@@ -215,7 +215,7 @@ class ToolsNcol():
                 levels_cont1=[0.025, 0.05, 0.1, 0.2, 0.4, 0.8, 0.96],
                 width_cont1=[1.0],
                 set_title="$T_{rot}$ at " + this_beam.replace("pc"," pc"),
-                colorlog=True,
+                colorlog=False,
                 scalebar=scalebar,
                 label_scalebar=label_scalebar,
                 set_cbar=True,
