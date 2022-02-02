@@ -418,7 +418,7 @@ class ToolsOutflow():
 
         # summarize
         if do_imagemagick==True:
-            self.immagick_figures(do_all=immagick_all,delin=True)
+            self.immagick_figures(do_all=immagick_all,delin=False)
 
         # supplement (not published)
         if do_compare_7m==True:
