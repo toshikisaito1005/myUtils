@@ -81,8 +81,6 @@ def rotation_13co21_13co10(
     y   = range(np.shape(data_low)[1])
     xy  = itertools.product(x, y)
 
-    array_zeros = np.zeros((np.shape(data_low)[0],np.shape(data_low)[1]))
-
     map_Trot            = np.zeros((np.shape(data_low)[0],np.shape(data_low)[1]))
     map_logN            = np.zeros((np.shape(data_low)[0],np.shape(data_low)[1]))
     map_mom0_low        = np.zeros((np.shape(data_low)[0],np.shape(data_low)[1]))
@@ -170,16 +168,6 @@ def rotation_13co21_13co10(
 
             if popt0>0 and popt0<max_low and popt1>0 and popt1<max_high and poptr>0 and poptr<=ratio_max and popt2!=guess_b and popt3!=40:
                 # derive parameters
-                this_mom0_low   = popt0 * popt3 * np.sqrt(2*np.pi)
-                this_mom0_high  = popt1 * popt3 * np.sqrt(2*np.pi)
-
-                # write
-                map_mom0_low[this_x,this_y]   = popt0 * popt3 * np.sqrt(2*np.pi)
-                map_mom0_high[this_x,this_y]  = popt1 * popt3 * np.sqrt(2*np.pi)
-
-            """
-            if p0>0 and p0<max_low and p1>0 and p1<max_high and pr>0 and pr<=ratio_max and p2!=guess_b and p3!=40:
-                # derive parameters
                 this_mom0_low   = p0 * p3 * np.sqrt(2*np.pi)
                 this_mom0_high  = p1 * p3 * np.sqrt(2*np.pi)
                 this_mom1       = p2
@@ -199,10 +187,9 @@ def rotation_13co21_13co10(
                 map_emom0_high[this_x,this_y] = this_emom0_high
                 map_emom1[this_x,this_y]      = this_emom1
                 map_emom2[this_x,this_y]      = this_emom2
-            """
 
             """
-            if pr>0 and pr<=ratio_max and p2!=guess_b and p3!=40 and p0<max_low and p0>0 and p1<max_high and p1>0:
+            if popt0>0 and popt0<max_low and popt1>0 and popt1<max_high and poptr>0 and poptr<=ratio_max and popt2!=guess_b and popt3!=40:
                 # rotation diagram fitting
                 log10_Nugu_low   = np.log10(derive_Nu(this_mom0_low, restfreq_low, Aul_low) / gu_low)
                 log10_Nugu_high  = np.log10(derive_Nu(this_mom0_high, restfreq_high, Aul_high) / gu_high)
