@@ -201,12 +201,10 @@ def rotation_13co21_13co10(
                 map_emom1[this_x,this_y]      = perr[2]
                 map_emom2[this_x,this_y]      = abs(perr[3])
                 map_eratio[this_x,this_y]     = popt[1]/popt[0] * np.sqrt(perr[0]**2/popt[0]**2 + perr[1]**2/popt[1]**2)
-
-                if Trot>2.7:
-                    map_Trot[this_x,this_y]   = Trot
-                    map_logN[this_x,this_y]   = logNmol
-                    map_eTrot[this_x,this_y]  = eTrot
-                    map_elogN[this_x,this_y]  = elogNmol
+                map_Trot[this_x,this_y]   = Trot
+                map_logN[this_x,this_y]   = logNmol
+                map_eTrot[this_x,this_y]  = eTrot
+                map_elogN[this_x,this_y]  = elogNmol
 
     # fits
     fits_creation(map_Trot.T,"Trot.fits",cubelow,"K")
