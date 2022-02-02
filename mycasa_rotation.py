@@ -167,6 +167,7 @@ def rotation_13co21_13co10(
                 elogNmol = perr2[1] + np.log10(Z)
 
                 # add pixel
+                print(this_mom0_low)
                 map_mom0_low[this_x,this_y]   = this_mom0_low
                 map_mom0_high[this_x,this_y]  = this_mom0_high
                 map_mom1[this_x,this_y]       = popt[2]
