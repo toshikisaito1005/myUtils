@@ -38,12 +38,17 @@ outmaps_ratio       ,,,n1068_ratio_???.fits
 outmaps_13co_trot   ,,,n1068_13co_trot_???.fits
 outmaps_13co_ncol   ,,,n1068_13co_log_ncol_???.fits
 
+###################
+# input paramters #
+###################
+imsize_as           ,,,40
+
 ######################
 # output png and txt #
 ######################
 # text files
 # png files
-outpng_pca_mom0     ,,,fig_hexmap_pca_mom0_150pc.png
+outpng_13cotrot     ,,,fig_map_trot_???.png
 # box for imagemajick
 box_map             ,,,2870x2750+350+150
 

@@ -133,28 +133,30 @@ class ToolsNcol():
         """
         """
 
-        self.imsize = 40
-        self.beams  = ["60pc","70pc","80pc","90pc","100pc","110pc","120pc","130pc","140pc","150pc"]
+        self.imsize      = float(self._read_key("imsize_as"))
+        self.beams       = ["60pc","70pc","80pc","90pc","100pc","110pc","120pc","130pc","140pc","150pc"]
 
         # ngc1068 properties
-        self.ra_agn    = float(self._read_key("ra_agn", "gal").split("deg")[0])
-        self.dec_agn   = float(self._read_key("dec_agn", "gal").split("deg")[0])
-        self.scale_pc  = float(self._read_key("scale", "gal"))
-        self.scale_kpc = self.scale_pc / 1000.
+        self.ra_agn      = float(self._read_key("ra_agn", "gal").split("deg")[0])
+        self.dec_agn     = float(self._read_key("dec_agn", "gal").split("deg")[0])
+        self.ra_agn_str  = self._read_key("ra_agn", "gal")
+        self.dec_agn_str = self._read_key("dec_agn", "gal")
+        self.scale_pc    = float(self._read_key("scale", "gal"))
+        self.scale_kpc   = self.scale_pc / 1000.
 
-        self.beam      = 2.14859173174056 # 150pc in arcsec
-        self.snr_mom   = 4.0
-        self.r_cnd     = 3.0 * self.scale_pc / 1000. # kpc
-        self.r_cnd_as  = 3.0
-        self.r_sbr     = 10.0 * self.scale_pc / 1000. # kpc
-        self.r_sbr_as  = 10.0
+        self.beam        = 2.14859173174056 # 150pc in arcsec
+        self.snr_mom     = 4.0
+        self.r_cnd       = 3.0 * self.scale_pc / 1000. # kpc
+        self.r_cnd_as    = 3.0
+        self.r_sbr       = 10.0 * self.scale_pc / 1000. # kpc
+        self.r_sbr_as    = 10.0
 
     def _set_output_txt_png(self):
         """
         """
 
         # output txt and png
-        #self.table_hex_obs = self.dir_products + self._read_key("table_hex_obs")
+        self.outpng_13co_trot = self.dir_products + self._read_key("outpng_13co_trot")
 
     ####################
     # run_ngc1068_ncol #
@@ -163,9 +165,10 @@ class ToolsNcol():
     def run_ngc1068_ncol(
         self,
         # analysis
-        do_prepare = False,
-        do_fitting = False,
+        do_prepare    = False,
+        do_fitting    = False,
         # plot figures in paper
+        plot_showcase = False,
         # supplement
         ):
         """
@@ -179,6 +182,50 @@ class ToolsNcol():
         if do_fitting==True:
             self.multi_fitting()
 
+        # plot figures in paper
+        if plot_showcase==True:
+            self.showcase()
+
+    ############
+    # showcase #
+    ############
+
+    def showcase(
+        self,
+        ):
+        """
+        """
+
+        taskname = self.modname + sys._getframe().f_code.co_name
+        check_first(self.outmaps_13co_trot.replace("???","60pc"),taskname)
+
+        scalebar = 100. / self.scale_pc
+        label_scalebar = "100 pc"
+
+        for this_beam in self.beams:
+            print("# myfig_fits2png at " + this_beam)
+
+            myfig_fits2png(
+                imcolor=self.outmaps_13co_trot.replace("???",this_beam),
+                outfile=self.outpng_13co_trot.replace("???",this_beam),
+                imcontour1=self.outmaps_mom0_13co10.replace("???",this_beam),
+                imsize_as=self.imsize,
+                ra_cnt=self.ra_agn_str,
+                dec_cnt=self.dec_agn_str,
+                levels_cont1=[0.025, 0.05, 0.1, 0.2, 0.4, 0.8, 0.96],
+                width_cont1=[1.0],
+                set_title="$T_{rot}$ at " + this_beam.replace("pc"," pc"),
+                colorlog=True,
+                scalebar=scalebar,
+                label_scalebar=label_scalebar,
+                set_cbar=True,
+                label_cbar="(K)",
+                #numann=1,
+                #textann=True,
+                #colorbarticks=[10**1.5,10**2,10**2.5],
+                #colorbarticktexts=["10$^{1.5}$","10$^{2.0}$","10$^{2.5}$"]
+                )
+
     #################
     # multi_fitting #
     #################
@@ -186,8 +233,12 @@ class ToolsNcol():
     def multi_fitting(self):
         """
         """
+
+        taskname = self.modname + sys._getframe().f_code.co_name
+        check_first(self.outfits_map_co10,taskname)
+
         for this_beam in self.beams:
-            print("# align_maps for cubes at " + this_beam)
+            print("# multi_fitting for cubes at " + this_beam)
 
             # input
             cube_13co10  = self.outcubes_13co10.replace("???",this_beam)
@@ -205,7 +256,7 @@ class ToolsNcol():
                 dec_cnt=self.dec_agn,
                 snr=4.0,
                 )
-            
+
             os.system("mv mom0_low.fits " + self.outmaps_mom0_13co10.replace("???",this_beam))
             os.system("mv mom0_high.fits " + self.outmaps_mom0_13co21.replace("???",this_beam))
             os.system("mv mom1.fits " + self.outmaps_mom1.replace("???",this_beam))
