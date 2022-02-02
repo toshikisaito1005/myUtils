@@ -266,7 +266,7 @@ class ToolsNcol():
                 scalebar=scalebar,
                 label_scalebar=label_scalebar,
                 set_cbar=True,
-                clim=[1116-250,1116+250],
+                clim=[1116-200,1116+200],
                 label_cbar="(km s$^{-1}$)",
                 )
 
