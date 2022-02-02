@@ -161,7 +161,8 @@ def rotation_13co21_13co10(
             e2 = perr[2]
             e3 = abs(perr[3])
 
-            if p0>0 and p0<max_low and p1>0 and p1<max_high and pr>0 and pr<=ratio_max and p2!=guess_b and p3!=40:
+            if p0>0 and p0<max_low and p1>0 and p1<max_high and p2!=guess_b and p3!=40:
+            #if p0>0 and p0<max_low and p1>0 and p1<max_high and pr>0 and pr<=ratio_max and p2!=guess_b and p3!=40:
                 # derive parameters
                 this_mom0_low   = p0 * p3 * np.sqrt(2*np.pi)
                 this_mom0_high  = p1 * p3 * np.sqrt(2*np.pi)
@@ -174,7 +175,7 @@ def rotation_13co21_13co10(
                 this_emom2      = e3
 
                 map_mom0_low[this_x,this_y]   = this_mom0_low
-                map_mom0_high[this_x,this_y]  = p0 * p3 * np.sqrt(2*np.pi) # this_mom0_high
+                map_mom0_high[this_x,this_y]  = this_mom0_high
                 map_mom1[this_x,this_y]       = this_mom1
                 map_mom2[this_x,this_y]       = this_mom2
 
