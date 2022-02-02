@@ -231,7 +231,7 @@ class ToolsNcol():
                 )
 
             # 13co21 mom0
-            maxval = imstat(self.outmaps_mom0_13co10.replace("???",this_beam))["max"]
+            maxval = imstat(self.outmaps_mom0_13co21.replace("???",this_beam))["max"]
             myfig_fits2png(
                 imcolor=self.outmaps_mom0_13co21.replace("???",this_beam),
                 outfile=self.outpng_mom0_13co21.replace("???",this_beam),
