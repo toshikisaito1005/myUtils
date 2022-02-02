@@ -135,10 +135,7 @@ def rotation_13co21_13co10(
             err_mom0_13co21 = perr[1]
             err_mom2        = abs(perr[3])
 
-            snr_13co10  = mom0_13co10/perr[0]
-            snr_13co21  = mom0_13co21/perr[1]
-
-            if popt_ratio>0 and popt_ratio<=ratio_max and mom1!=guess_b and mom2!=40 and mom0_13co10<max_low and mom0_13co21<max_high and snr_13co10>=snr and snr_13co21>=snr:
+            if popt_ratio>0 and popt_ratio<=ratio_max and mom1!=guess_b and mom2!=40 and mom0_13co10<max_low and mom0_13co21<max_high:
                 # rotation diagram fitting
                 this_mom0_low    = mom0_13co10 * mom2 * np.sqrt(2*np.pi)
                 this_mom0_high   = mom0_13co21 * mom2 * np.sqrt(2*np.pi)
@@ -172,13 +169,15 @@ def rotation_13co21_13co10(
                 map_mom1[this_x,this_y]       = popt[2]
                 map_mom2[this_x,this_y]       = abs(popt[3])
                 map_ratio[this_x,this_y]      = popt[1]/popt[0]
-                map_Trot[this_x,this_y]       = Trot
-                map_logN[this_x,this_y]       = logNmol
                 map_emom0_low[this_x,this_y]  = this_emom0_low
                 map_emom0_high[this_x,this_y] = this_emom0_high
                 map_emom1[this_x,this_y]      = perr[2]
                 map_emom2[this_x,this_y]      = abs(perr[3])
                 map_eratio[this_x,this_y]     = popt[1]/popt[0] * np.sqrt(perr[0]**2/popt[0]**2 + perr[1]**2/popt[1]**2)
+
+                if 
+                map_Trot[this_x,this_y]       = Trot
+                map_logN[this_x,this_y]       = logNmol
                 map_eTrot[this_x,this_y]      = eTrot
                 map_elogN[this_x,this_y]      = elogNmol
 
