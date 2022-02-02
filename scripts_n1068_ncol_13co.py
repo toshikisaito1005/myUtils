@@ -156,8 +156,10 @@ class ToolsNcol():
         """
 
         # output txt and png
-        self.outpng_13co_trot = self.dir_products + self._read_key("outpng_13co_trot")
-        self.outpng_13co_ncol = self.dir_products + self._read_key("outpng_13co_ncol")
+        self.outpng_mom0_13co10 = self.dir_products + self._read_key("outpng_mom0_13co10")
+        self.outpng_mom0_13co21 = self.dir_products + self._read_key("outpng_mom0_13co21")
+        self.outpng_13co_trot   = self.dir_products + self._read_key("outpng_13co_trot")
+        self.outpng_13co_ncol   = self.dir_products + self._read_key("outpng_13co_ncol")
 
     ####################
     # run_ngc1068_ncol #
@@ -206,6 +208,45 @@ class ToolsNcol():
         for this_beam in self.beams:
             print("# myfig_fits2png at " + this_beam)
 
+            # 13co10 mom0
+            myfig_fits2png(
+                imcolor=self.outmaps_mom0_13co10.replace("???",this_beam),
+                outfile=self.outpng_mom0_13co10.replace("???",this_beam),
+                imcontour1=self.outmaps_mom0_13co21.replace("???",this_beam),
+                imsize_as=self.imsize,
+                ra_cnt=self.ra_agn_str,
+                dec_cnt=self.dec_agn_str,
+                levels_cont1=[0.025, 0.05, 0.1, 0.2, 0.4, 0.8, 0.96],
+                width_cont1=[1.0],
+                set_title="$^{\mathrm{13}}$CO(1-0) integrated intensity at " + this_beam.replace("pc"," pc"),
+                colorlog=False,
+                scalebar=scalebar,
+                label_scalebar=label_scalebar,
+                set_cbar=True,
+                label_cbar="(K km s$^{-1}$)",
+                set_bg_color=cm.rainbow(0),
+                )
+
+            # 13co21 mom0
+            myfig_fits2png(
+                imcolor=self.outmaps_mom0_13co21.replace("???",this_beam),
+                outfile=self.outpng_mom0_13co21.replace("???",this_beam),
+                imcontour1=self.outmaps_mom0_13co21.replace("???",this_beam),
+                imsize_as=self.imsize,
+                ra_cnt=self.ra_agn_str,
+                dec_cnt=self.dec_agn_str,
+                levels_cont1=[0.025, 0.05, 0.1, 0.2, 0.4, 0.8, 0.96],
+                width_cont1=[1.0],
+                set_title="$^{\mathrm{13}}$CO(2-1) integrated intensity at " + this_beam.replace("pc"," pc"),
+                colorlog=False,
+                scalebar=scalebar,
+                label_scalebar=label_scalebar,
+                set_cbar=True,
+                label_cbar="(K km s$^{-1}$)",
+                set_bg_color=cm.rainbow(0),
+                )
+
+            # Trot
             myfig_fits2png(
                 imcolor=self.outmaps_13co_trot.replace("???",this_beam),
                 outfile=self.outpng_13co_trot.replace("???",this_beam),
@@ -225,6 +266,7 @@ class ToolsNcol():
                 set_bg_color=cm.rainbow(0),
                 )
 
+            # log N13co
             myfig_fits2png(
                 imcolor=self.outmaps_13co_ncol.replace("???",this_beam),
                 outfile=self.outpng_13co_ncol.replace("???",this_beam),
