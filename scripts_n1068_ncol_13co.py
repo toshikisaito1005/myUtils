@@ -171,13 +171,13 @@ class ToolsNcol():
         self.outpng_13co_trot   = self.dir_products + self._read_key("outpng_13co_trot")
         self.outpng_13co_ncol   = self.dir_products + self._read_key("outpng_13co_ncol")
 
-        self.outpng_emom0_13co10 = self.dir_products + self._read_key("outpng_mom0_13co10")
-        self.outpng_emom0_13co21 = self.dir_products + self._read_key("outpng_mom0_13co21")
-        self.outpng_emom1        = self.dir_products + self._read_key("outpng_mom1")
-        self.outpng_emom2        = self.dir_products + self._read_key("outpng_mom2")
-        self.outpng_eratio       = self.dir_products + self._read_key("outpng_ratio")
-        self.outpng_e13co_trot   = self.dir_products + self._read_key("outpng_13co_trot")
-        self.outpng_e13co_ncol   = self.dir_products + self._read_key("outpng_13co_ncol")
+        self.outpng_emom0_13co10 = self.dir_products + self._read_key("outpng_emom0_13co10")
+        self.outpng_emom0_13co21 = self.dir_products + self._read_key("outpng_emom0_13co21")
+        self.outpng_emom1        = self.dir_products + self._read_key("outpng_emom1")
+        self.outpng_emom2        = self.dir_products + self._read_key("outpng_emom2")
+        self.outpng_eratio       = self.dir_products + self._read_key("outpng_eratio")
+        self.outpng_e13co_trot   = self.dir_products + self._read_key("outpng_e13co_trot")
+        self.outpng_e13co_ncol   = self.dir_products + self._read_key("outpng_e13co_ncol")
 
         # finals
         self.final_13co10_mom0   = self.dir_final + self._read_key("final_13co10_mom0")
@@ -248,7 +248,9 @@ class ToolsNcol():
         do_final_trot         = False,
         do_final_ncol         = False,
         #
-        do_final_e13co10_mom0 = True,
+        do_final_e13co10_mom0 = False,
+        do_final_e13co21_mom0 = True,
+        do_final_eratio       = True,
         ):
         """
         """
@@ -336,13 +338,13 @@ class ToolsNcol():
                 axis="column",
                 )
 
-        if do_final_e13co10_mom0==True:
-            print("#############################")
-            print("# create final_e13co10_mom0 #")
-            print("#############################")
+        if do_final_13co21_mom0==True:
+            print("############################")
+            print("# create final_13co21_mom0 #")
+            print("############################")
 
-            this_prename = self.outpng_emom0_13co10
-            this_final   = self.final_e13co10_mom0
+            this_prename = self.outpng_mom0_13co21
+            this_final   = self.final_13co21_mom0
 
             combine_two_png(
                 this_prename.replace("???","60pc"),
@@ -407,13 +409,13 @@ class ToolsNcol():
                 axis="column",
                 )
 
-        if do_final_13co21_mom0==True:
-            print("############################")
-            print("# create final_13co21_mom0 #")
-            print("############################")
+        if do_final_ratio==True:
+            print("#########################")
+            print("# create do_final_ratio #")
+            print("#########################")
 
-            this_prename = self.outpng_mom0_13co21
-            this_final   = self.final_13co21_mom0
+            this_prename = self.outpng_ratio
+            this_final   = self.final_ratio
 
             combine_two_png(
                 this_prename.replace("???","60pc"),
@@ -620,77 +622,6 @@ class ToolsNcol():
                 axis="column",
                 )
 
-        if do_final_ratio==True:
-            print("#########################")
-            print("# create do_final_ratio #")
-            print("#########################")
-
-            this_prename = self.outpng_ratio
-            this_final   = self.final_ratio
-
-            combine_two_png(
-                this_prename.replace("???","60pc"),
-                this_prename.replace("???","70pc"),
-                this_final+"_tmp1.png",
-                self.box_map,
-                self.box_map,
-                delin=delin,
-                )
-            combine_three_png(
-                this_prename.replace("???","80pc"),
-                this_prename.replace("???","90pc"),
-                this_prename.replace("???","100pc"),
-                this_final+"_tmp2.png",
-                self.box_map,
-                self.box_map,
-                self.box_map,
-                delin=delin,
-                )
-            combine_two_png(
-                this_prename.replace("???","110pc"),
-                this_prename.replace("???","120pc"),
-                this_final+"_tmp3.png",
-                self.box_map,
-                self.box_map,
-                delin=delin,
-                )
-            combine_three_png(
-                this_prename.replace("???","130pc"),
-                this_prename.replace("???","140pc"),
-                this_prename.replace("???","150pc"),
-                this_final+"_tmp4.png",
-                self.box_map,
-                self.box_map,
-                self.box_map,
-                delin=delin,
-                )
-
-            combine_two_png(
-                this_final+"_tmp1.png",
-                this_final+"_tmp2.png",
-                this_final+"_tmp12.png",
-                "100000x100000+0+0",
-                "100000x100000+0+0",
-                delin=True,
-                )
-            combine_two_png(
-                this_final+"_tmp3.png",
-                this_final+"_tmp4.png",
-                this_final+"_tmp34.png",
-                "100000x100000+0+0",
-                "100000x100000+0+0",
-                delin=True,
-                )
-            combine_two_png(
-                this_final+"_tmp12.png",
-                this_final+"_tmp34.png",
-                this_final,
-                "100000x100000+0+0",
-                "100000x100000+0+0",
-                delin=True,
-                axis="column",
-                )
-
         if do_final_trot==True:
             print("########################")
             print("# create do_final_trot #")
@@ -833,6 +764,290 @@ class ToolsNcol():
                 axis="column",
                 )
 
+        if do_final_e13co10_mom0==True:
+            print("#############################")
+            print("# create final_e13co10_mom0 #")
+            print("#############################")
+
+            this_prename = self.outpng_emom0_13co10
+            this_final   = self.final_e13co10_mom0
+
+            combine_two_png(
+                this_prename.replace("???","60pc"),
+                this_prename.replace("???","70pc"),
+                this_final+"_tmp1.png",
+                self.box_map,
+                self.box_map,
+                delin=delin,
+                )
+            combine_three_png(
+                this_prename.replace("???","80pc"),
+                this_prename.replace("???","90pc"),
+                this_prename.replace("???","100pc"),
+                this_final+"_tmp2.png",
+                self.box_map,
+                self.box_map,
+                self.box_map,
+                delin=delin,
+                )
+            combine_two_png(
+                this_prename.replace("???","110pc"),
+                this_prename.replace("???","120pc"),
+                this_final+"_tmp3.png",
+                self.box_map,
+                self.box_map,
+                delin=delin,
+                )
+            combine_three_png(
+                this_prename.replace("???","130pc"),
+                this_prename.replace("???","140pc"),
+                this_prename.replace("???","150pc"),
+                this_final+"_tmp4.png",
+                self.box_map,
+                self.box_map,
+                self.box_map,
+                delin=delin,
+                )
+
+            combine_two_png(
+                this_final+"_tmp1.png",
+                this_final+"_tmp2.png",
+                this_final+"_tmp12.png",
+                "100000x100000+0+0",
+                "100000x100000+0+0",
+                delin=True,
+                )
+            combine_two_png(
+                this_final+"_tmp3.png",
+                this_final+"_tmp4.png",
+                this_final+"_tmp34.png",
+                "100000x100000+0+0",
+                "100000x100000+0+0",
+                delin=True,
+                )
+            combine_two_png(
+                this_final+"_tmp12.png",
+                this_final+"_tmp34.png",
+                this_final,
+                "100000x100000+0+0",
+                "100000x100000+0+0",
+                delin=True,
+                axis="column",
+                )
+
+        if do_final_e13co21_mom0==True:
+            print("#############################")
+            print("# create final_e13co21_mom0 #")
+            print("#############################")
+
+            this_prename = self.outpng_emom0_13co21
+            this_final   = self.final_e13co21_mom0
+
+            combine_two_png(
+                this_prename.replace("???","60pc"),
+                this_prename.replace("???","70pc"),
+                this_final+"_tmp1.png",
+                self.box_map,
+                self.box_map,
+                delin=delin,
+                )
+            combine_three_png(
+                this_prename.replace("???","80pc"),
+                this_prename.replace("???","90pc"),
+                this_prename.replace("???","100pc"),
+                this_final+"_tmp2.png",
+                self.box_map,
+                self.box_map,
+                self.box_map,
+                delin=delin,
+                )
+            combine_two_png(
+                this_prename.replace("???","110pc"),
+                this_prename.replace("???","120pc"),
+                this_final+"_tmp3.png",
+                self.box_map,
+                self.box_map,
+                delin=delin,
+                )
+            combine_three_png(
+                this_prename.replace("???","130pc"),
+                this_prename.replace("???","140pc"),
+                this_prename.replace("???","150pc"),
+                this_final+"_tmp4.png",
+                self.box_map,
+                self.box_map,
+                self.box_map,
+                delin=delin,
+                )
+
+            combine_two_png(
+                this_final+"_tmp1.png",
+                this_final+"_tmp2.png",
+                this_final+"_tmp12.png",
+                "100000x100000+0+0",
+                "100000x100000+0+0",
+                delin=True,
+                )
+            combine_two_png(
+                this_final+"_tmp3.png",
+                this_final+"_tmp4.png",
+                this_final+"_tmp34.png",
+                "100000x100000+0+0",
+                "100000x100000+0+0",
+                delin=True,
+                )
+            combine_two_png(
+                this_final+"_tmp12.png",
+                this_final+"_tmp34.png",
+                this_final,
+                "100000x100000+0+0",
+                "100000x100000+0+0",
+                delin=True,
+                axis="column",
+                )
+
+        if do_final_eratio==True:
+            print("#######################$##")
+            print("# create do_final_eratio #")
+            print("#######################$##")
+
+            this_prename = self.outpng_eratio
+            this_final   = self.final_eratio
+
+            combine_two_png(
+                this_prename.replace("???","60pc"),
+                this_prename.replace("???","70pc"),
+                this_final+"_tmp1.png",
+                self.box_map,
+                self.box_map,
+                delin=delin,
+                )
+            combine_three_png(
+                this_prename.replace("???","80pc"),
+                this_prename.replace("???","90pc"),
+                this_prename.replace("???","100pc"),
+                this_final+"_tmp2.png",
+                self.box_map,
+                self.box_map,
+                self.box_map,
+                delin=delin,
+                )
+            combine_two_png(
+                this_prename.replace("???","110pc"),
+                this_prename.replace("???","120pc"),
+                this_final+"_tmp3.png",
+                self.box_map,
+                self.box_map,
+                delin=delin,
+                )
+            combine_three_png(
+                this_prename.replace("???","130pc"),
+                this_prename.replace("???","140pc"),
+                this_prename.replace("???","150pc"),
+                this_final+"_tmp4.png",
+                self.box_map,
+                self.box_map,
+                self.box_map,
+                delin=delin,
+                )
+
+            combine_two_png(
+                this_final+"_tmp1.png",
+                this_final+"_tmp2.png",
+                this_final+"_tmp12.png",
+                "100000x100000+0+0",
+                "100000x100000+0+0",
+                delin=True,
+                )
+            combine_two_png(
+                this_final+"_tmp3.png",
+                this_final+"_tmp4.png",
+                this_final+"_tmp34.png",
+                "100000x100000+0+0",
+                "100000x100000+0+0",
+                delin=True,
+                )
+            combine_two_png(
+                this_final+"_tmp12.png",
+                this_final+"_tmp34.png",
+                this_final,
+                "100000x100000+0+0",
+                "100000x100000+0+0",
+                delin=True,
+                axis="column",
+                )
+
+        if do_final_mom1==True:
+            print("########################")
+            print("# create do_final_mom1 #")
+            print("########################")
+
+            this_prename = self.outpng_mom1
+            this_final   = self.final_mom1
+
+            combine_two_png(
+                this_prename.replace("???","60pc"),
+                this_prename.replace("???","70pc"),
+                this_final+"_tmp1.png",
+                self.box_map,
+                self.box_map,
+                delin=delin,
+                )
+            combine_three_png(
+                this_prename.replace("???","80pc"),
+                this_prename.replace("???","90pc"),
+                this_prename.replace("???","100pc"),
+                this_final+"_tmp2.png",
+                self.box_map,
+                self.box_map,
+                self.box_map,
+                delin=delin,
+                )
+            combine_two_png(
+                this_prename.replace("???","110pc"),
+                this_prename.replace("???","120pc"),
+                this_final+"_tmp3.png",
+                self.box_map,
+                self.box_map,
+                delin=delin,
+                )
+            combine_three_png(
+                this_prename.replace("???","130pc"),
+                this_prename.replace("???","140pc"),
+                this_prename.replace("???","150pc"),
+                this_final+"_tmp4.png",
+                self.box_map,
+                self.box_map,
+                self.box_map,
+                delin=delin,
+                )
+
+            combine_two_png(
+                this_final+"_tmp1.png",
+                this_final+"_tmp2.png",
+                this_final+"_tmp12.png",
+                "100000x100000+0+0",
+                "100000x100000+0+0",
+                delin=True,
+                )
+            combine_two_png(
+                this_final+"_tmp3.png",
+                this_final+"_tmp4.png",
+                this_final+"_tmp34.png",
+                "100000x100000+0+0",
+                "100000x100000+0+0",
+                delin=True,
+                )
+            combine_two_png(
+                this_final+"_tmp12.png",
+                this_final+"_tmp34.png",
+                this_final,
+                "100000x100000+0+0",
+                "100000x100000+0+0",
+                delin=True,
+                axis="column",
+                )
+
     ############
     # showcase #
     ############
@@ -884,7 +1099,7 @@ class ToolsNcol():
                 dec_cnt=self.dec_agn_str,
                 levels_cont1=[0.05, 0.1, 0.2, 0.4, 0.8, 0.96],
                 width_cont1=[1.0],
-                set_title="error of $^{\mathrm{13}}$CO(1-0) intensity at " + this_beam.replace("pc"," pc"),
+                set_title="Error of $^{\mathrm{13}}$CO(1-0) intensity at " + this_beam.replace("pc"," pc"),
                 colorlog=False,
                 scalebar=scalebar,
                 label_scalebar=label_scalebar,
@@ -926,7 +1141,7 @@ class ToolsNcol():
                 dec_cnt=self.dec_agn_str,
                 levels_cont1=[0.05, 0.1, 0.2, 0.4, 0.8, 0.96],
                 width_cont1=[1.0],
-                set_title="error of $^{\mathrm{13}}$CO(2-1) intensity at " + this_beam.replace("pc"," pc"),
+                set_title="Error of $^{\mathrm{13}}$CO(2-1) intensity at " + this_beam.replace("pc"," pc"),
                 colorlog=False,
                 scalebar=scalebar,
                 label_scalebar=label_scalebar,
@@ -957,6 +1172,27 @@ class ToolsNcol():
                 set_bg_color=cm.rainbow(0),
                 )
 
+            # ratio error
+            maxval = imstat(self.outmaps_eratio.replace("???",this_beam))["max"]
+            myfig_fits2png(
+                imcolor=self.outmaps_eratio.replace("???",this_beam),
+                outfile=self.outpng_eratio.replace("???",this_beam),
+                imcontour1=self.outmaps_mom0_13co21.replace("???",this_beam),
+                imsize_as=self.imsize,
+                ra_cnt=self.ra_agn_str,
+                dec_cnt=self.dec_agn_str,
+                levels_cont1=[0.05, 0.1, 0.2, 0.4, 0.8, 0.96],
+                width_cont1=[1.0],
+                set_title="Error of $^{\mathrm{13}}$CO intensity ratio at " + this_beam.replace("pc"," pc"),
+                colorlog=False,
+                scalebar=scalebar,
+                label_scalebar=label_scalebar,
+                set_cbar=True,
+                label_cbar="Ratio",
+                clim=[0,maxval],
+                set_bg_color=cm.rainbow(0),
+                )
+
             # mom1
             myfig_fits2png(
                 imcolor=self.outmaps_mom1.replace("???",this_beam),
@@ -973,6 +1209,25 @@ class ToolsNcol():
                 label_scalebar=label_scalebar,
                 set_cbar=True,
                 clim=[1116-200,1116+200],
+                label_cbar="(km s$^{-1}$)",
+                )
+
+            # mom1 error
+            myfig_fits2png(
+                imcolor=self.outmaps_emom1.replace("???",this_beam),
+                outfile=self.outpng_emom1.replace("???",this_beam),
+                imcontour1=self.outmaps_mom0_13co21.replace("???",this_beam),
+                imsize_as=self.imsize,
+                ra_cnt=self.ra_agn_str,
+                dec_cnt=self.dec_agn_str,
+                levels_cont1=[0.05, 0.1, 0.2, 0.4, 0.8, 0.96],
+                width_cont1=[1.0],
+                set_title="Error of velocity field at " + this_beam.replace("pc"," pc"),
+                colorlog=False,
+                scalebar=scalebar,
+                label_scalebar=label_scalebar,
+                set_cbar=True,
+                #clim=[1116-200,1116+200],
                 label_cbar="(km s$^{-1}$)",
                 )
 
