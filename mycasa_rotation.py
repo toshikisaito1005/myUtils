@@ -189,6 +189,7 @@ def rotation_13co21_13co10(
 
     # fits
     map_mom0_low[np.isnan(map_mom0_low)] = 0
+    map_mom0_low[np.isinf(map_mom0_low)] = 0
     print(map_mom0_low[map_mom0_low!=0])
 
     fits_creation(map_Trot.T,"Trot.fits",cubelow,"K")
