@@ -266,24 +266,24 @@ class ToolsNcol():
                 self.final_13co10_mom0+"_tmp1.png",
                 self.final_13co10_mom0+"_tmp2.png",
                 self.final_13co10_mom0+"_tmp12.png",
-                "10000x100000+0+0",
-                "10000x100000+0+0",
+                "100000x100000+0+0",
+                "100000x100000+0+0",
                 delin=True,
                 )
             combine_two_png(
                 self.final_13co10_mom0+"_tmp3.png",
                 self.final_13co10_mom0+"_tmp4.png",
                 self.final_13co10_mom0+"_tmp34.png",
-                "10000x100000+0+0",
-                "10000x100000+0+0",
+                "100000x100000+0+0",
+                "100000x100000+0+0",
                 delin=True,
                 )
             combine_two_png(
                 self.final_13co10_mom0+"_tmp12.png",
                 self.final_13co10_mom0+"_tmp34.png",
                 self.final_13co10_mom0,
-                "10000x100000+0+0",
-                "10000x100000+0+0",
+                "100000x100000+0+0",
+                "100000x100000+0+0",
                 delin=True,
                 axis="column",
                 )
