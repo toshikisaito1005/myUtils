@@ -55,7 +55,8 @@ def rotation_13co21_13co10(
     template = "template.fits"
     os.system("rm -rf " + template+".image")
     imsubimage(cubelow,template+".image",chans="1")
-    run_exportfits(template+".image",template)
+    exportfits(template+".image",template)
+    os.system("rm -rf " + template+".image")
 
     # constants
     if restfreq_low==None:
