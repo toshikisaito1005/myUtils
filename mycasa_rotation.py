@@ -74,16 +74,31 @@ def rotation_13co21_13co10(
     y   = range(np.shape(data_low)[1])
     xy  = itertools.product(x, y)
 
-    array_nan      = np.zeros((np.shape(data_low)[0],np.shape(data_low)[1]))
-    array_nan[:,:] = np.nan
+    array_zeros = np.zeros((np.shape(data_low)[0],np.shape(data_low)[1]))
 
-    map_Trot, map_eTrot           = array_nan, array_nan
-    map_logN, map_elogN           = array_nan, array_nan
-    map_mom0_low, map_emom0_low   = array_nan, array_nan
-    map_mom0_high, map_emom0_high = array_nan, array_nan
-    map_mom1, map_emom1           = array_nan, array_nan
-    map_mom2, map_emom2           = array_nan, array_nan
-    map_ratio, map_eratio         = array_nan, array_nan
+    map_Trot, map_eTrot           = array_zeros, array_zeros
+    map_logN, map_elogN           = array_zeros, array_zeros
+    map_mom0_low, map_emom0_low   = array_zeros, array_zeros
+    map_mom0_high, map_emom0_high = array_zeros, array_zeros
+    map_mom1, map_emom1           = array_zeros, array_zeros
+    map_mom2, map_emom2           = array_zeros, array_zeros
+    map_ratio, map_eratio         = array_zeros, array_zeros
+
+    map_Trot[:,:]      = np.nan
+    map_logN[:,:]      = np.nan
+    map_mom0_low[:,:]  = np.nan
+    map_mom0_high[:,:] = np.nan
+    map_mom1[:,:]      = np.nan
+    map_mom2[:,:]      = np.nan
+    map_ratio[:,:]     = np.nan
+
+    map_eTrot[:,:]      = np.nan
+    map_elogN[:,:]      = np.nan
+    map_emom0_low[:,:]  = np.nan
+    map_emom0_high[:,:] = np.nan
+    map_emom1[:,:]      = np.nan
+    map_emom2[:,:]      = np.nan
+    map_eratio[:,:]     = np.nan
 
     for i in xy:
         # get data of this sightline
@@ -138,7 +153,7 @@ def rotation_13co21_13co10(
             e3 = abs(perr[3])
 
             #if pr>0 and pr<=ratio_max and p2!=guess_b and p3!=40 and p0<max_low and p0>0 and p1<max_high and p1>0:
-            if p0>0 and p1>0  and p2!=guess_b and p3!=40:
+            if p0>0 and p1>0 and p2!=guess_b and p3!=40:
                 # rotation diagram fitting
                 this_mom0_low    = p0 * p3 * np.sqrt(2*np.pi)
                 this_mom0_high   = p1 * p3 * np.sqrt(2*np.pi)
