@@ -134,6 +134,7 @@ class ToolsNcol():
         """
 
         self.imsize = 40
+        self.beams  = ["60pc","70pc","80pc","90pc","100pc","110pc","120pc","130pc","140pc","150pc"]
 
         # ngc1068 properties
         self.ra_agn    = float(self._read_key("ra_agn", "gal").split("deg")[0])
@@ -242,29 +243,17 @@ class ToolsNcol():
         """
         """
 
-        beam = "60pc"
-        self._align_maps_at_a_res(
-            self.cube_13co10.replace("???",beam),
-            self.cube_13co21.replace("???",beam),
-            self.outcubes_13co10.replace("???",beam),
-            self.outcubes_13co21.replace("???",beam),
-            self.ecube_13co10.replace("???",beam),
-            self.ecube_13co21.replace("???",beam),
-            self.outecubes_13co10.replace("???",beam),
-            self.outecubes_13co21.replace("???",beam),
-            )
-
-        beam = "150pc"
-        self._align_maps_at_a_res(
-            self.cube_13co10.replace("???",beam),
-            self.cube_13co21.replace("???",beam),
-            self.outcubes_13co10.replace("???",beam),
-            self.outcubes_13co21.replace("???",beam),
-            self.ecube_13co10.replace("???",beam),
-            self.ecube_13co21.replace("???",beam),
-            self.outecubes_13co10.replace("???",beam),
-            self.outecubes_13co21.replace("???",beam),
-            )
+        for this_beam in self.beams:
+            self._align_maps_at_a_res(
+                self.cube_13co10.replace("???",this_beam),
+                self.cube_13co21.replace("???",this_beam),
+                self.outcubes_13co10.replace("???",this_beam),
+                self.outcubes_13co21.replace("???",this_beam),
+                self.ecube_13co10.replace("???",this_beam),
+                self.ecube_13co21.replace("???",this_beam),
+                self.outecubes_13co10.replace("???",this_beam),
+                self.outecubes_13co21.replace("???",this_beam),
+                )
 
     ########################
     # _align_maps_at_a_res #
