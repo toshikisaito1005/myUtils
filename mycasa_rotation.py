@@ -124,6 +124,7 @@ def rotation_13co21_13co10(
                 maxfev = 100000,
                 )
             perr = np.sqrt(np.diag(pcov))
+            print(popt)
 
             mom0_13co10 = popt[0]
             mom0_13co21 = popt[1]
