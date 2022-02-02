@@ -911,7 +911,7 @@ class ToolsNcol():
         """
 
         taskname = self.modname + sys._getframe().f_code.co_name
-        check_first(self.outfits_map_co10,taskname)
+        check_first(self.outcubes_13co10,taskname)
 
         for this_beam in self.beams:
             print("# multi_fitting for cubes at " + this_beam)
