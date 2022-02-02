@@ -160,6 +160,9 @@ def rotation_13co21_13co10(
             e1 = perr[1]
             e3 = abs(perr[3])
 
+            map_mom0_low[this_x,this_y]   = this_mom0_low
+
+            """
             #if pr>0 and pr<=ratio_max and p2!=guess_b and p3!=40 and p0<max_low and p0>0 and p1<max_high and p1>0:
             if p0>0 and p1>0 and p2!=guess_b and p3!=40:
                 # rotation diagram fitting
@@ -205,21 +208,22 @@ def rotation_13co21_13co10(
                 map_logN[this_x,this_y]   = logNmol
                 map_eTrot[this_x,this_y]  = eTrot
                 map_elogN[this_x,this_y]  = elogNmol
+            """
 
     # fits
-    fits_creation(map_Trot.T,"Trot.fits",cubelow,"K")
-    fits_creation(map_logN.T,"logN.fits",cubelow,"cm**-2 in log10")
     fits_creation(map_mom0_low.T,"mom0_low.fits",cubelow,"K.km/s")
     fits_creation(map_mom0_high.T,"mom0_high.fits",cubelow,"K.km/s")
+    fits_creation(map_Trot.T,"Trot.fits",cubelow,"K")
+    fits_creation(map_logN.T,"logN.fits",cubelow,"cm**-2 in log10")
     fits_creation(map_ratio.T,"ratio.fits",cubelow,"")
     fits_creation(map_mom1.T,"mom1.fits",cubelow,"km/s")
     fits_creation(map_mom2.T,"mom2.fits",cubelow,"km/s")
 
     # efits
-    fits_creation(map_eTrot.T,"eTrot.fits",cubelow,"K")
-    fits_creation(map_elogN.T,"elogN.fits",cubelow,"cm**-2 in log10")
     fits_creation(map_emom0_low.T,"emom0_low.fits",cubelow,"K.km/s")
     fits_creation(map_emom0_high.T,"emom0_high.fits",cubelow,"K.km/s")
+    fits_creation(map_eTrot.T,"eTrot.fits",cubelow,"K")
+    fits_creation(map_elogN.T,"elogN.fits",cubelow,"cm**-2 in log10")
     fits_creation(map_eratio.T,"eratio.fits",cubelow,"")
     fits_creation(map_emom1.T,"emom1.fits",cubelow,"km/s")
     fits_creation(map_emom2.T,"emom2.fits",cubelow,"km/s")
