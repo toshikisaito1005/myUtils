@@ -157,7 +157,7 @@ def rotation_13co21_13co10(
 
             p0 = popt[0] # 1-0
             p1 = popt[1] # 2-1
-            pr = popt1/popt0 # 2-1/1-0
+            pr = p1/p0 # 2-1/1-0
             p2 = popt[2]
             p3 = abs(popt[3])
 
@@ -233,20 +233,25 @@ def rotation_13co21_13co10(
     fits_creation(map_mom0_high.T,"mom0_high.fits",template,"K.km/s")
     fits_creation(map_emom0_high.T,"emom0_high.fits",cubelow,"K.km/s")
 
-    # mom1
+    # mom1 to fits
     fits_creation(map_mom1.T,"mom1.fits",cubelow,"km/s")
     fits_creation(map_emom1.T,"emom1.fits",cubelow,"km/s")
 
-    # mom2
+    # mom2 to fits
     fits_creation(map_mom2.T,"mom2.fits",cubelow,"km/s")
     fits_creation(map_emom2.T,"emom2.fits",cubelow,"km/s")
 
-    fits_creation(map_Trot.T,"Trot.fits",cubelow,"K")
-    fits_creation(map_logN.T,"logN.fits",cubelow,"cm**-2 in log10")
+    # ratio to fits
     fits_creation(map_ratio.T,"ratio.fits",cubelow,"")
-    fits_creation(map_eTrot.T,"eTrot.fits",cubelow,"K")
-    fits_creation(map_elogN.T,"elogN.fits",cubelow,"cm**-2 in log10")
     fits_creation(map_eratio.T,"eratio.fits",cubelow,"")
+
+    # Trot to fits
+    fits_creation(map_Trot.T,"Trot.fits",cubelow,"K")
+    fits_creation(map_eTrot.T,"eTrot.fits",cubelow,"K")
+
+    # Ncol in log to fits
+    fits_creation(map_logN.T,"logN.fits",cubelow,"cm**-2 in log10")
+    fits_creation(map_elogN.T,"elogN.fits",cubelow,"cm**-2 in log10")
 
 #############
 # derive_Nu #
@@ -309,7 +314,7 @@ def fits_creation(
 
     obj = pyfits.open(output_map)
     obj[0].data = input_array
-    #obj[0].header.append(("BUNIT", bunit))
+    obj[0].header.append(("BUNIT", bunit))
     obj.writeto(output_map, clobber=True)
 
     #hdu = pyfits.PrimaryHDU(input_array)
