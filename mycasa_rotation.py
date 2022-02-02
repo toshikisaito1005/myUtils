@@ -51,6 +51,11 @@ def rotation_13co21_13co10(
     taskname = sys._getframe().f_code.co_name
     mytask.check_first(cubelow, taskname)
 
+    # template
+    template = "template.image"
+    os.system("rm -rf " + template)
+    imsubimage(cubelow,template,chans="1")
+
     # constants
     if restfreq_low==None:
         header_low    = imhead(cubelow,mode="list")
@@ -229,12 +234,12 @@ def rotation_13co21_13co10(
 
     # low-J mom0 to fits
     print(np.nanmax(map_mom0_low.T))
-    fits_creation(map_mom0_low.T,"mom0_low.fits",cubelow,"K.km/s")
+    fits_creation(map_mom0_low.T,"mom0_low.fits",template,"K.km/s")
     #fits_creation(map_emom0_low.T,"emom0_low.fits",cubelow,"K.km/s")
 
     # high-J mom0 to fits
     print(np.nanmax(map_mom0_high.T))
-    fits_creation(map_mom0_high.T,"mom0_high.fits",cubelow,"K.km/s")
+    fits_creation(map_mom0_high.T,"mom0_high.fits",template,"K.km/s")
     #fits_creation(map_emom0_high.T,"emom0_high.fits",cubelow,"K.km/s")
 
     # mom1
