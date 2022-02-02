@@ -50,6 +50,7 @@ imsize_as           ,,,39
 # png files
 outpng_mom0_13co10  ,,,fig_map_mom0_13co10_???.png
 outpng_mom0_13co21  ,,,fig_map_mom0_13co21_???.png
+outpng_mom1         ,,,fig_map_mom1_???.png
 outpng_13co_trot    ,,,fig_map_trot_???.png
 outpng_13co_ncol    ,,,fig_map_ncol_???.png
 # box for imagemajick
