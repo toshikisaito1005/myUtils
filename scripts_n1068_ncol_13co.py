@@ -165,6 +165,9 @@ class ToolsNcol():
         # finals
         self.final_13co10_mom0  = self.dir_final + self._read_key("final_13co10_mom0")
         self.final_13co21_mom0  = self.dir_final + self._read_key("final_13co21_mom0")
+        self.final_mom1         = self.dir_final + self._read_key("final_mom1")
+        self.final_trot         = self.dir_final + self._read_key("final_trot")
+        self.final_ncol         = self.dir_final + self._read_key("final_ncol")
 
         # box
         self.box_map            = self._read_key("box_map")
@@ -209,8 +212,11 @@ class ToolsNcol():
         self,
         delin                = False,
         do_all               = False,
-        do_final_13co10_mom0 = True,
-        do_final_13co21_mom0 = True,
+        do_final_13co10_mom0 = False,
+        do_final_13co21_mom0 = False,
+        do_final_mom1        = True,
+        do_final_trot        = True,
+        do_final_ncol        = True,
         ):
         """
         """
@@ -299,6 +305,219 @@ class ToolsNcol():
 
             this_prename = self.outpng_mom0_13co21
             this_final   = self.final_13co21_mom0
+
+            combine_two_png(
+                this_prename.replace("???","60pc"),
+                this_prename.replace("???","70pc"),
+                this_final+"_tmp1.png",
+                self.box_map,
+                self.box_map,
+                delin=delin,
+                )
+            combine_three_png(
+                this_prename.replace("???","80pc"),
+                this_prename.replace("???","90pc"),
+                this_prename.replace("???","100pc"),
+                this_final+"_tmp2.png",
+                self.box_map,
+                self.box_map,
+                self.box_map,
+                delin=delin,
+                )
+            combine_two_png(
+                this_prename.replace("???","110pc"),
+                this_prename.replace("???","120pc"),
+                this_final+"_tmp3.png",
+                self.box_map,
+                self.box_map,
+                delin=delin,
+                )
+            combine_three_png(
+                this_prename.replace("???","130pc"),
+                this_prename.replace("???","140pc"),
+                this_prename.replace("???","150pc"),
+                this_final+"_tmp4.png",
+                self.box_map,
+                self.box_map,
+                self.box_map,
+                delin=delin,
+                )
+
+            combine_two_png(
+                this_final+"_tmp1.png",
+                this_final+"_tmp2.png",
+                this_final+"_tmp12.png",
+                "100000x100000+0+0",
+                "100000x100000+0+0",
+                delin=True,
+                )
+            combine_two_png(
+                this_final+"_tmp3.png",
+                this_final+"_tmp4.png",
+                this_final+"_tmp34.png",
+                "100000x100000+0+0",
+                "100000x100000+0+0",
+                delin=True,
+                )
+            combine_two_png(
+                this_final+"_tmp12.png",
+                this_final+"_tmp34.png",
+                this_final,
+                "100000x100000+0+0",
+                "100000x100000+0+0",
+                delin=True,
+                axis="column",
+                )
+
+        if do_final_mom1==True:
+            print("########################")
+            print("# create do_final_mom1 #")
+            print("########################")
+
+            this_prename = self.outpng_mom1
+            this_final   = self.final_mom1
+
+            combine_two_png(
+                this_prename.replace("???","60pc"),
+                this_prename.replace("???","70pc"),
+                this_final+"_tmp1.png",
+                self.box_map,
+                self.box_map,
+                delin=delin,
+                )
+            combine_three_png(
+                this_prename.replace("???","80pc"),
+                this_prename.replace("???","90pc"),
+                this_prename.replace("???","100pc"),
+                this_final+"_tmp2.png",
+                self.box_map,
+                self.box_map,
+                self.box_map,
+                delin=delin,
+                )
+            combine_two_png(
+                this_prename.replace("???","110pc"),
+                this_prename.replace("???","120pc"),
+                this_final+"_tmp3.png",
+                self.box_map,
+                self.box_map,
+                delin=delin,
+                )
+            combine_three_png(
+                this_prename.replace("???","130pc"),
+                this_prename.replace("???","140pc"),
+                this_prename.replace("???","150pc"),
+                this_final+"_tmp4.png",
+                self.box_map,
+                self.box_map,
+                self.box_map,
+                delin=delin,
+                )
+
+            combine_two_png(
+                this_final+"_tmp1.png",
+                this_final+"_tmp2.png",
+                this_final+"_tmp12.png",
+                "100000x100000+0+0",
+                "100000x100000+0+0",
+                delin=True,
+                )
+            combine_two_png(
+                this_final+"_tmp3.png",
+                this_final+"_tmp4.png",
+                this_final+"_tmp34.png",
+                "100000x100000+0+0",
+                "100000x100000+0+0",
+                delin=True,
+                )
+            combine_two_png(
+                this_final+"_tmp12.png",
+                this_final+"_tmp34.png",
+                this_final,
+                "100000x100000+0+0",
+                "100000x100000+0+0",
+                delin=True,
+                axis="column",
+                )
+
+        if do_final_trot==True:
+            print("########################")
+            print("# create do_final_trot #")
+            print("########################")
+
+            this_prename = self.outmaps_13co_trot
+            this_final   = self.final_trot
+
+            combine_two_png(
+                this_prename.replace("???","60pc"),
+                this_prename.replace("???","70pc"),
+                this_final+"_tmp1.png",
+                self.box_map,
+                self.box_map,
+                delin=delin,
+                )
+            combine_three_png(
+                this_prename.replace("???","80pc"),
+                this_prename.replace("???","90pc"),
+                this_prename.replace("???","100pc"),
+                this_final+"_tmp2.png",
+                self.box_map,
+                self.box_map,
+                self.box_map,
+                delin=delin,
+                )
+            combine_two_png(
+                this_prename.replace("???","110pc"),
+                this_prename.replace("???","120pc"),
+                this_final+"_tmp3.png",
+                self.box_map,
+                self.box_map,
+                delin=delin,
+                )
+            combine_three_png(
+                this_prename.replace("???","130pc"),
+                this_prename.replace("???","140pc"),
+                this_prename.replace("???","150pc"),
+                this_final+"_tmp4.png",
+                self.box_map,
+                self.box_map,
+                self.box_map,
+                delin=delin,
+                )
+
+            combine_two_png(
+                this_final+"_tmp1.png",
+                this_final+"_tmp2.png",
+                this_final+"_tmp12.png",
+                "100000x100000+0+0",
+                "100000x100000+0+0",
+                delin=True,
+                )
+            combine_two_png(
+                this_final+"_tmp3.png",
+                this_final+"_tmp4.png",
+                this_final+"_tmp34.png",
+                "100000x100000+0+0",
+                "100000x100000+0+0",
+                delin=True,
+                )
+            combine_two_png(
+                this_final+"_tmp12.png",
+                this_final+"_tmp34.png",
+                this_final,
+                "100000x100000+0+0",
+                "100000x100000+0+0",
+                delin=True,
+                axis="column",
+                )
+
+        if do_final_ncol==True:
+            print("########################")
+            print("# create do_final_ncol #")
+            print("########################")
+
+            this_prename = self.outmaps_13co_ncol
+            this_final   = self.final_ncol
 
             combine_two_png(
                 this_prename.replace("???","60pc"),
