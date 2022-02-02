@@ -175,6 +175,8 @@ class ToolsNcol():
         self.final_13co10_mom0  = self.dir_final + self._read_key("final_13co10_mom0")
         self.final_13co21_mom0  = self.dir_final + self._read_key("final_13co21_mom0")
         self.final_mom1         = self.dir_final + self._read_key("final_mom1")
+        self.final_mom2         = self.dir_final + self._read_key("final_mom2")
+        self.final_ratio        = self.dir_final + self._read_key("final_ratio")
         self.final_trot         = self.dir_final + self._read_key("final_trot")
         self.final_ncol         = self.dir_final + self._read_key("final_ncol")
 
@@ -931,6 +933,7 @@ class ToolsNcol():
                 snr=4.0,
                 )
 
+            #
             os.system("mv mom0_low.fits " + self.outmaps_mom0_13co10.replace("???",this_beam))
             os.system("mv mom0_high.fits " + self.outmaps_mom0_13co21.replace("???",this_beam))
             os.system("mv mom1.fits " + self.outmaps_mom1.replace("???",this_beam))
@@ -938,6 +941,15 @@ class ToolsNcol():
             os.system("mv ratio.fits " + self.outmaps_ratio.replace("???",this_beam))
             os.system("mv Trot.fits " + self.outmaps_13co_trot.replace("???",this_beam))
             os.system("mv logN.fits " + self.outmaps_13co_ncol.replace("???",this_beam))
+
+            #
+            os.system("mv emom0_low.fits " + self.outemaps_mom0_13co10.replace("???",this_beam))
+            os.system("mv emom0_high.fits " + self.outemaps_mom0_13co21.replace("???",this_beam))
+            os.system("mv emom1.fits " + self.outemaps_mom1.replace("???",this_beam))
+            os.system("mv emom2.fits " + self.outemaps_mom2.replace("???",this_beam))
+            os.system("mv eratio.fits " + self.outemaps_ratio.replace("???",this_beam))
+            os.system("mv eTrot.fits " + self.outemaps_13co_trot.replace("???",this_beam))
+            os.system("mv elogN.fits " + self.outemaps_13co_ncol.replace("???",this_beam))
 
     ##############
     # align_maps #
