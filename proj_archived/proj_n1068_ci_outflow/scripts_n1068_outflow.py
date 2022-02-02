@@ -63,8 +63,8 @@ Date         Filename                To
 2021-11-05   draft_v1p5_211125.zip   all co-authors
 2021-12-17   draft_v2_211217.zip     ApJL
 2022-01-19   draft_v3_220119.zip     all co-authors
-2022-02-03   draft_v4                ApJL
-2022-02-03   reply_v2                ApJL
+2022-02-03   draft_v4_220202.zip     ApJL
+2022-02-03   reply_v2_220202.pdf     ApJL
 
 history:
 2021-04-22   start project, write README
