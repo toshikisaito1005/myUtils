@@ -75,13 +75,13 @@ def rotation_13co21_13co10(
     array_nan      = np.zeros((np.shape(data_low)[0],np.shape(data_low)[1]))
     array_nan[:,:] = np.nan
 
-    map_Trot, emap_Trot   = array_zeros, array_zeros
-    map_logN, emap_logN   = array_zeros, array_zeros
-    mom0_low, emom0_low   = array_zeros, array_zeros
-    mom0_high, emom0_high = array_zeros, array_zeros
-    mom1, emom1           = array_zeros, array_zeros
-    mom2, emom2           = array_zeros, array_zeros
-    ratio, eratio         = array_zeros, array_zeros
+    map_Trot, emap_Trot   = array_nan, array_nan
+    map_logN, emap_logN   = array_nan, array_nan
+    mom0_low, emom0_low   = array_nan, array_nan
+    mom0_high, emom0_high = array_nan, array_nan
+    mom1, emom1           = array_nan, array_nan
+    mom2, emom2           = array_nan, array_nan
+    ratio, eratio         = array_nan, array_nan
 
     for i in xy:
         # get data of this sightline
