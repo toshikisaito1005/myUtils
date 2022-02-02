@@ -53,7 +53,7 @@ def rotation_13co21_13co10(
 
     # template
     template = "template.fits"
-    os.system("rm -rf " + template+".image")
+    os.system("rm -rf template.fits " + template+".image")
     imsubimage(cubelow,template+".image",chans="1")
     exportfits(template+".image",template)
     os.system("rm -rf " + template+".image")
