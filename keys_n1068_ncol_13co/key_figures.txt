@@ -13,6 +13,7 @@ dir_final           ,,,images/
 ##################
 # paper
 final_13co10_mom0   ,,,fig_map_13co10_mom0.png
+final_13co21_mom0   ,,,fig_map_13co21_mom0.png
 
 ############
 # raw maps #
