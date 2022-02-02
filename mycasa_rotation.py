@@ -143,6 +143,7 @@ def rotation_13co21_13co10(
                 # rotation diagram fitting
                 this_mom0_low    = mom0_13co10 * mom2 * np.sqrt(2*np.pi)
                 this_mom0_high   = mom0_13co21 * mom2 * np.sqrt(2*np.pi)
+                print(mom0_13co10, mom2, this_mom0_low)
 
                 this_emom0_low   = np.sqrt(2*np.pi) * np.sqrt(mom0_13co10**2*err_mom2**2 + mom2**2*err_mom0_13co10**2)
                 this_emom0_high  = np.sqrt(2*np.pi) * np.sqrt(mom0_13co21**2*err_mom2**2 + mom2**2*err_mom0_13co21**2)
@@ -180,10 +181,10 @@ def rotation_13co21_13co10(
                 map_eratio[this_x,this_y]     = popt[1]/popt[0] * np.sqrt(perr[0]**2/popt[0]**2 + perr[1]**2/popt[1]**2)
 
                 if Trot>2.7:
-                    map_Trot[this_x,this_y]       = Trot
-                    map_logN[this_x,this_y]       = logNmol
-                    map_eTrot[this_x,this_y]      = eTrot
-                    map_elogN[this_x,this_y]      = elogNmol
+                    map_Trot[this_x,this_y]   = Trot
+                    map_logN[this_x,this_y]   = logNmol
+                    map_eTrot[this_x,this_y]  = eTrot
+                    map_elogN[this_x,this_y]  = elogNmol
 
     # fits
     fits_creation(map_Trot.T,"Trot.fits",cubelow,"K")
