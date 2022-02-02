@@ -435,7 +435,7 @@ class ToolsOutflow():
         self,
         delin                   = False,
         do_all                  = False,
-        do_final_showcase       = False,
+        do_final_showcase       = True,
         do_final_channel        = False,
         do_final_chan_models    = False,
         do_final_showcase_multi = False,
