@@ -167,8 +167,8 @@ def rotation_13co21_13co10(
                 this_mom0_high  = popt1 * popt3 * np.sqrt(2*np.pi)
 
                 # write
-                map_mom0_low[this_x,this_y]   = this_mom0_low
-                map_mom0_high[this_x,this_y]  = this_mom0_high
+                map_mom0_low[this_x,this_y]   = popt0 * popt3 * np.sqrt(2*np.pi)
+                map_mom0_high[this_x,this_y]  = popt1 * popt3 * np.sqrt(2*np.pi)
 
             """
             if p0>0 and p0<max_low and p1>0 and p1<max_high and pr>0 and pr<=ratio_max and p2!=guess_b and p3!=40:
