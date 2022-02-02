@@ -40,8 +40,9 @@ ecube_13co21        ,,,ngc1068_b6_12m_13co21_???_noise.fits
 # output maps #
 ###############
 outcubes_13co10     ,,,n1068_13co10_???.cube.fits
-outecubes_13co10    ,,,n1068_13co10_???.ecube.fits
 outcubes_13co21     ,,,n1068_13co21_???.cube.fits
+#
+outecubes_13co10    ,,,n1068_13co10_???.ecube.fits
 outecubes_13co21    ,,,n1068_13co21_???.ecube.fits
 #
 outmaps_13co10      ,,,n1068_mom0_13co10_???.fits
@@ -71,7 +72,6 @@ r_sbr_as            ,,,10.0
 ######################
 # output png and txt #
 ######################
-# text files
 # png files
 outpng_mom0_13co10  ,,,fig_map_mom0_13co10_???.png
 outpng_mom0_13co21  ,,,fig_map_mom0_13co21_???.png

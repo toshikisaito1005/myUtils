@@ -1,11 +1,18 @@
 """
-Python class for the NGC 1068 Ncol project
+Python class for the NGC 1068 13CO-based Ncol project
 
 requirements:
 CASA Version 5.4.0-70, ananlysisUtils, astropy
 
 data:
-ALMA main Band 3 data 
+ALMA main Band 3 data 2011.0.00061.S
+                      2012.1.00657.S
+                      2013.1.00060.S
+                      2018.1.01506.S
+                      2018.1.01684.S
+                      2019.1.00130.S
+ALMA main Band 6 data 2013.1.00221.S
+                      2019.2.00129.S (TP and 7m not used)
 imaging script        all processed by phangs pipeline v2
                       Leroy et al. 2021, ApJS, 255, 19 (https://ui.adsabs.harvard.edu/abs/2021ApJS..255...19L)
 
@@ -37,12 +44,12 @@ Toshiki Saito@Nichidai/NAOJ
 import os, sys, glob
 import numpy as np
 
+from mycasa_rotation import *
 from mycasa_sampling import *
 from mycasa_lowess import *
 from mycasa_tasks import *
 from mycasa_plots import *
 from mycasa_pca import *
-from mycasa_rotation import *
 
 ############
 # ToolsPCA #
@@ -242,16 +249,19 @@ class ToolsNcol():
         #
         do_final_13co10_mom0  = False,
         do_final_13co21_mom0  = False,
+        do_final_ratio        = False,
         do_final_mom1         = False,
         do_final_mom2         = False,
-        do_final_ratio        = False,
         do_final_trot         = False,
         do_final_ncol         = False,
         #
         do_final_e13co10_mom0 = False,
         do_final_e13co21_mom0 = False,
         do_final_eratio       = False,
-        do_final_emom1        = True,
+        do_final_emom1        = False,
+        do_final_emom2        = True,
+        do_final_etrot        = True,
+        do_final_encol        = True,
         ):
         """
         """
@@ -262,7 +272,9 @@ class ToolsNcol():
         if do_all==True:
             do_final_13co10_mom0  = True
             do_final_13co21_mom0  = True
+            do_final_ratio        = True
             do_final_mom1         = True
+            do_final_mom2         = True
             do_final_trot         = True
             do_final_ncol         = True
             #
@@ -270,6 +282,9 @@ class ToolsNcol():
             do_final_e13co21_mom0 = True
             do_final_eratio       = True
             do_final_emom1        = True
+            do_final_emom2        = True
+            do_final_etrot        = True
+            do_final_encol        = True
 
         if do_final_13co10_mom0==True:
             print("############################")
@@ -1052,6 +1067,219 @@ class ToolsNcol():
                 axis="column",
                 )
 
+        if do_final_emom2==True:
+            print("#########################")
+            print("# create do_final_emom2 #")
+            print("#########################")
+
+            this_prename = self.outpng_emom2
+            this_final   = self.final_emom2
+
+            combine_two_png(
+                this_prename.replace("???","60pc"),
+                this_prename.replace("???","70pc"),
+                this_final+"_tmp1.png",
+                self.box_map,
+                self.box_map,
+                delin=delin,
+                )
+            combine_three_png(
+                this_prename.replace("???","80pc"),
+                this_prename.replace("???","90pc"),
+                this_prename.replace("???","100pc"),
+                this_final+"_tmp2.png",
+                self.box_map,
+                self.box_map,
+                self.box_map,
+                delin=delin,
+                )
+            combine_two_png(
+                this_prename.replace("???","110pc"),
+                this_prename.replace("???","120pc"),
+                this_final+"_tmp3.png",
+                self.box_map,
+                self.box_map,
+                delin=delin,
+                )
+            combine_three_png(
+                this_prename.replace("???","130pc"),
+                this_prename.replace("???","140pc"),
+                this_prename.replace("???","150pc"),
+                this_final+"_tmp4.png",
+                self.box_map,
+                self.box_map,
+                self.box_map,
+                delin=delin,
+                )
+
+            combine_two_png(
+                this_final+"_tmp1.png",
+                this_final+"_tmp2.png",
+                this_final+"_tmp12.png",
+                "100000x100000+0+0",
+                "100000x100000+0+0",
+                delin=True,
+                )
+            combine_two_png(
+                this_final+"_tmp3.png",
+                this_final+"_tmp4.png",
+                this_final+"_tmp34.png",
+                "100000x100000+0+0",
+                "100000x100000+0+0",
+                delin=True,
+                )
+            combine_two_png(
+                this_final+"_tmp12.png",
+                this_final+"_tmp34.png",
+                this_final,
+                "100000x100000+0+0",
+                "100000x100000+0+0",
+                delin=True,
+                axis="column",
+                )
+
+        if do_final_etrot==True:
+            print("#########################")
+            print("# create do_final_etrot #")
+            print("#########################")
+
+            this_prename = self.outpng_e13co_trot
+            this_final   = self.final_etrot
+
+            combine_two_png(
+                this_prename.replace("???","60pc"),
+                this_prename.replace("???","70pc"),
+                this_final+"_tmp1.png",
+                self.box_map,
+                self.box_map,
+                delin=delin,
+                )
+            combine_three_png(
+                this_prename.replace("???","80pc"),
+                this_prename.replace("???","90pc"),
+                this_prename.replace("???","100pc"),
+                this_final+"_tmp2.png",
+                self.box_map,
+                self.box_map,
+                self.box_map,
+                delin=delin,
+                )
+            combine_two_png(
+                this_prename.replace("???","110pc"),
+                this_prename.replace("???","120pc"),
+                this_final+"_tmp3.png",
+                self.box_map,
+                self.box_map,
+                delin=delin,
+                )
+            combine_three_png(
+                this_prename.replace("???","130pc"),
+                this_prename.replace("???","140pc"),
+                this_prename.replace("???","150pc"),
+                this_final+"_tmp4.png",
+                self.box_map,
+                self.box_map,
+                self.box_map,
+                delin=delin,
+                )
+
+            combine_two_png(
+                this_final+"_tmp1.png",
+                this_final+"_tmp2.png",
+                this_final+"_tmp12.png",
+                "100000x100000+0+0",
+                "100000x100000+0+0",
+                delin=True,
+                )
+            combine_two_png(
+                this_final+"_tmp3.png",
+                this_final+"_tmp4.png",
+                this_final+"_tmp34.png",
+                "100000x100000+0+0",
+                "100000x100000+0+0",
+                delin=True,
+                )
+            combine_two_png(
+                this_final+"_tmp12.png",
+                this_final+"_tmp34.png",
+                this_final,
+                "100000x100000+0+0",
+                "100000x100000+0+0",
+                delin=True,
+                axis="column",
+                )
+
+        if do_final_encol==True:
+            print("#########################")
+            print("# create do_final_encol #")
+            print("#########################")
+
+            this_prename = self.outpng_e13co_ncol
+            this_final   = self.final_encol
+
+            combine_two_png(
+                this_prename.replace("???","60pc"),
+                this_prename.replace("???","70pc"),
+                this_final+"_tmp1.png",
+                self.box_map,
+                self.box_map,
+                delin=delin,
+                )
+            combine_three_png(
+                this_prename.replace("???","80pc"),
+                this_prename.replace("???","90pc"),
+                this_prename.replace("???","100pc"),
+                this_final+"_tmp2.png",
+                self.box_map,
+                self.box_map,
+                self.box_map,
+                delin=delin,
+                )
+            combine_two_png(
+                this_prename.replace("???","110pc"),
+                this_prename.replace("???","120pc"),
+                this_final+"_tmp3.png",
+                self.box_map,
+                self.box_map,
+                delin=delin,
+                )
+            combine_three_png(
+                this_prename.replace("???","130pc"),
+                this_prename.replace("???","140pc"),
+                this_prename.replace("???","150pc"),
+                this_final+"_tmp4.png",
+                self.box_map,
+                self.box_map,
+                self.box_map,
+                delin=delin,
+                )
+
+            combine_two_png(
+                this_final+"_tmp1.png",
+                this_final+"_tmp2.png",
+                this_final+"_tmp12.png",
+                "100000x100000+0+0",
+                "100000x100000+0+0",
+                delin=True,
+                )
+            combine_two_png(
+                this_final+"_tmp3.png",
+                this_final+"_tmp4.png",
+                this_final+"_tmp34.png",
+                "100000x100000+0+0",
+                "100000x100000+0+0",
+                delin=True,
+                )
+            combine_two_png(
+                this_final+"_tmp12.png",
+                this_final+"_tmp34.png",
+                this_final,
+                "100000x100000+0+0",
+                "100000x100000+0+0",
+                delin=True,
+                axis="column",
+                )
+
     ############
     # showcase #
     ############
@@ -1070,18 +1298,21 @@ class ToolsNcol():
 
         for this_beam in self.beams:
             print("# myfig_fits2png at " + this_beam)
+            imcontour1   = self.outmaps_mom0_13co21.replace("???",this_beam)
+            levels_cont1 = [0.05, 0.1, 0.2, 0.4, 0.8, 0.96]
+            width_cont1  = [1.0],
 
             # 13co10 mom0
             maxval = imstat(self.outmaps_mom0_13co10.replace("???",this_beam))["max"]
             myfig_fits2png(
                 imcolor=self.outmaps_mom0_13co10.replace("???",this_beam),
                 outfile=self.outpng_mom0_13co10.replace("???",this_beam),
-                imcontour1=self.outmaps_mom0_13co21.replace("???",this_beam),
+                imcontour1=imcontour1,
                 imsize_as=self.imsize,
                 ra_cnt=self.ra_agn_str,
                 dec_cnt=self.dec_agn_str,
-                levels_cont1=[0.05, 0.1, 0.2, 0.4, 0.8, 0.96],
-                width_cont1=[1.0],
+                levels_cont1=levels_cont1,
+                width_cont1=width_cont1,
                 set_title="$^{\mathrm{13}}$CO(1-0) integrated intensity at " + this_beam.replace("pc"," pc"),
                 colorlog=False,
                 scalebar=scalebar,
@@ -1097,12 +1328,12 @@ class ToolsNcol():
             myfig_fits2png(
                 imcolor=self.outemaps_mom0_13co10.replace("???",this_beam),
                 outfile=self.outpng_emom0_13co10.replace("???",this_beam),
-                imcontour1=self.outmaps_mom0_13co21.replace("???",this_beam),
+                imcontour1=imcontour1,
                 imsize_as=self.imsize,
                 ra_cnt=self.ra_agn_str,
                 dec_cnt=self.dec_agn_str,
-                levels_cont1=[0.05, 0.1, 0.2, 0.4, 0.8, 0.96],
-                width_cont1=[1.0],
+                levels_cont1=levels_cont1,
+                width_cont1=width_cont1,
                 set_title="Error of $^{\mathrm{13}}$CO(1-0) intensity at " + this_beam.replace("pc"," pc"),
                 colorlog=False,
                 scalebar=scalebar,
@@ -1118,12 +1349,12 @@ class ToolsNcol():
             myfig_fits2png(
                 imcolor=self.outmaps_mom0_13co21.replace("???",this_beam),
                 outfile=self.outpng_mom0_13co21.replace("???",this_beam),
-                imcontour1=self.outmaps_mom0_13co21.replace("???",this_beam),
+                imcontour1=imcontour1,
                 imsize_as=self.imsize,
                 ra_cnt=self.ra_agn_str,
                 dec_cnt=self.dec_agn_str,
-                levels_cont1=[0.05, 0.1, 0.2, 0.4, 0.8, 0.96],
-                width_cont1=[1.0],
+                levels_cont1=levels_cont1,
+                width_cont1=width_cont1,
                 set_title="$^{\mathrm{13}}$CO(2-1) integrated intensity at " + this_beam.replace("pc"," pc"),
                 colorlog=False,
                 scalebar=scalebar,
@@ -1139,12 +1370,12 @@ class ToolsNcol():
             myfig_fits2png(
                 imcolor=self.outemaps_mom0_13co21.replace("???",this_beam),
                 outfile=self.outpng_emom0_13co21.replace("???",this_beam),
-                imcontour1=self.outmaps_mom0_13co21.replace("???",this_beam),
+                imcontour1=imcontour1,
                 imsize_as=self.imsize,
                 ra_cnt=self.ra_agn_str,
                 dec_cnt=self.dec_agn_str,
-                levels_cont1=[0.05, 0.1, 0.2, 0.4, 0.8, 0.96],
-                width_cont1=[1.0],
+                levels_cont1=levels_cont1,
+                width_cont1=width_cont1,
                 set_title="Error of $^{\mathrm{13}}$CO(2-1) intensity at " + this_beam.replace("pc"," pc"),
                 colorlog=False,
                 scalebar=scalebar,
@@ -1160,12 +1391,12 @@ class ToolsNcol():
             myfig_fits2png(
                 imcolor=self.outmaps_ratio.replace("???",this_beam),
                 outfile=self.outpng_ratio.replace("???",this_beam),
-                imcontour1=self.outmaps_mom0_13co21.replace("???",this_beam),
+                imcontour1=imcontour1,
                 imsize_as=self.imsize,
                 ra_cnt=self.ra_agn_str,
                 dec_cnt=self.dec_agn_str,
-                levels_cont1=[0.05, 0.1, 0.2, 0.4, 0.8, 0.96],
-                width_cont1=[1.0],
+                levels_cont1=levels_cont1,
+                width_cont1=width_cont1,
                 set_title="$^{\mathrm{13}}$CO intensity ratio at " + this_beam.replace("pc"," pc"),
                 colorlog=False,
                 scalebar=scalebar,
@@ -1181,12 +1412,12 @@ class ToolsNcol():
             myfig_fits2png(
                 imcolor=self.outemaps_ratio.replace("???",this_beam),
                 outfile=self.outpng_eratio.replace("???",this_beam),
-                imcontour1=self.outmaps_mom0_13co21.replace("???",this_beam),
+                imcontour1=imcontour1,
                 imsize_as=self.imsize,
                 ra_cnt=self.ra_agn_str,
                 dec_cnt=self.dec_agn_str,
-                levels_cont1=[0.05, 0.1, 0.2, 0.4, 0.8, 0.96],
-                width_cont1=[1.0],
+                levels_cont1=levels_cont1,
+                width_cont1=width_cont1,
                 set_title="Error of $^{\mathrm{13}}$CO intensity ratio at " + this_beam.replace("pc"," pc"),
                 colorlog=False,
                 scalebar=scalebar,
@@ -1201,12 +1432,12 @@ class ToolsNcol():
             myfig_fits2png(
                 imcolor=self.outmaps_mom1.replace("???",this_beam),
                 outfile=self.outpng_mom1.replace("???",this_beam),
-                imcontour1=self.outmaps_mom0_13co21.replace("???",this_beam),
+                imcontour1=imcontour1,
                 imsize_as=self.imsize,
                 ra_cnt=self.ra_agn_str,
                 dec_cnt=self.dec_agn_str,
-                levels_cont1=[0.05, 0.1, 0.2, 0.4, 0.8, 0.96],
-                width_cont1=[1.0],
+                levels_cont1=levels_cont1,
+                width_cont1=width_cont1,
                 set_title="Velocity field at " + this_beam.replace("pc"," pc"),
                 colorlog=False,
                 scalebar=scalebar,
@@ -1220,12 +1451,12 @@ class ToolsNcol():
             myfig_fits2png(
                 imcolor=self.outemaps_mom1.replace("???",this_beam),
                 outfile=self.outpng_emom1.replace("???",this_beam),
-                imcontour1=self.outmaps_mom0_13co21.replace("???",this_beam),
+                imcontour1=imcontour1,
                 imsize_as=self.imsize,
                 ra_cnt=self.ra_agn_str,
                 dec_cnt=self.dec_agn_str,
-                levels_cont1=[0.05, 0.1, 0.2, 0.4, 0.8, 0.96],
-                width_cont1=[1.0],
+                levels_cont1=levels_cont1,
+                width_cont1=width_cont1,
                 set_title="Error of velocity field at " + this_beam.replace("pc"," pc"),
                 colorlog=False,
                 scalebar=scalebar,
@@ -1240,13 +1471,33 @@ class ToolsNcol():
             myfig_fits2png(
                 imcolor=self.outmaps_mom2.replace("???",this_beam),
                 outfile=self.outpng_mom2.replace("???",this_beam),
-                imcontour1=self.outmaps_mom0_13co21.replace("???",this_beam),
+                imcontour1=imcontour1,
                 imsize_as=self.imsize,
                 ra_cnt=self.ra_agn_str,
                 dec_cnt=self.dec_agn_str,
-                levels_cont1=[0.05, 0.1, 0.2, 0.4, 0.8, 0.96],
-                width_cont1=[1.0],
+                levels_cont1=levels_cont1,
+                width_cont1=width_cont1,
                 set_title="Velocity dispersion at " + this_beam.replace("pc"," pc"),
+                colorlog=False,
+                scalebar=scalebar,
+                label_scalebar=label_scalebar,
+                set_cbar=True,
+                clim=[0,maxval],
+                label_cbar="(km s$^{-1}$)",
+                )
+
+            # mom2 error
+            maxval = imstat(self.outemaps_mom2.replace("???",this_beam))["max"]
+            myfig_fits2png(
+                imcolor=self.outemaps_mom2.replace("???",this_beam),
+                outfile=self.outpng_emom2.replace("???",this_beam),
+                imcontour1=imcontour1,
+                imsize_as=self.imsize,
+                ra_cnt=self.ra_agn_str,
+                dec_cnt=self.dec_agn_str,
+                levels_cont1=levels_cont1,
+                width_cont1=width_cont1,
+                set_title="Error of velocity dispersion at " + this_beam.replace("pc"," pc"),
                 colorlog=False,
                 scalebar=scalebar,
                 label_scalebar=label_scalebar,
@@ -1259,12 +1510,12 @@ class ToolsNcol():
             myfig_fits2png(
                 imcolor=self.outmaps_13co_trot.replace("???",this_beam),
                 outfile=self.outpng_13co_trot.replace("???",this_beam),
-                imcontour1=self.outmaps_mom0_13co21.replace("???",this_beam),
+                imcontour1=imcontour1,
                 imsize_as=self.imsize,
                 ra_cnt=self.ra_agn_str,
                 dec_cnt=self.dec_agn_str,
-                levels_cont1=[0.05, 0.1, 0.2, 0.4, 0.8, 0.96],
-                width_cont1=[1.0],
+                levels_cont1=levels_cont1,
+                width_cont1=width_cont1,
                 set_title="$T_{\mathrm{rot,"+this_beam.replace("pc"," pc")+"}}$",
                 colorlog=False,
                 scalebar=scalebar,
@@ -1275,17 +1526,58 @@ class ToolsNcol():
                 set_bg_color=cm.rainbow(0),
                 )
 
+            # Trot error
+            maxval = imstat(self.outemaps_13co_trot.replace("???",this_beam))["max"]
+            myfig_fits2png(
+                imcolor=self.outemaps_13co_trot.replace("???",this_beam),
+                outfile=self.outpng_e13co_trot.replace("???",this_beam),
+                imcontour1=imcontour1,
+                imsize_as=self.imsize,
+                ra_cnt=self.ra_agn_str,
+                dec_cnt=self.dec_agn_str,
+                levels_cont1=levels_cont1,
+                width_cont1=width_cont1,
+                set_title="$Error of T_{\mathrm{rot,"+this_beam.replace("pc"," pc")+"}}$",
+                colorlog=False,
+                scalebar=scalebar,
+                label_scalebar=label_scalebar,
+                set_cbar=True,
+                label_cbar="(K)",
+                clim=[0,maxval],
+                set_bg_color=cm.rainbow(0),
+                )
+
             # log N13co
             myfig_fits2png(
                 imcolor=self.outmaps_13co_ncol.replace("???",this_beam),
                 outfile=self.outpng_13co_ncol.replace("???",this_beam),
-                imcontour1=self.outmaps_mom0_13co21.replace("???",this_beam),
+                imcontour1=imcontour1,
                 imsize_as=self.imsize,
                 ra_cnt=self.ra_agn_str,
                 dec_cnt=self.dec_agn_str,
-                levels_cont1=[0.05, 0.1, 0.2, 0.4, 0.8, 0.96],
-                width_cont1=[1.0],
+                levels_cont1=levels_cont1,
+                width_cont1=width_cont1,
                 set_title="log$_{\mathrm{10}}$ $N_{\mathrm{^{13}CO,"+this_beam.replace("pc"," pc")+"}}$",
+                colorlog=False,
+                scalebar=scalebar,
+                label_scalebar=label_scalebar,
+                set_cbar=True,
+                label_cbar="(cm$^{-2}$ in log$_{\mathrm{10}}$)",
+                #clim=[0,8],
+                set_bg_color=cm.rainbow(0),
+                )
+
+            # log N13co error
+            myfig_fits2png(
+                imcolor=self.outemaps_13co_ncol.replace("???",this_beam),
+                outfile=self.outpng_e13co_ncol.replace("???",this_beam),
+                imcontour1=imcontour1,
+                imsize_as=self.imsize,
+                ra_cnt=self.ra_agn_str,
+                dec_cnt=self.dec_agn_str,
+                levels_cont1=levels_cont1,
+                width_cont1=width_cont1,
+                set_title="Error of log$_{\mathrm{10}}$ $N_{\mathrm{^{13}CO,"+this_beam.replace("pc"," pc")+"}}$",
                 colorlog=False,
                 scalebar=scalebar,
                 label_scalebar=label_scalebar,

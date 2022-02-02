@@ -30,18 +30,19 @@ def rotation_13co21_13co10(
     cubehigh,
     ecubelow,
     ecubehigh,
-    restfreq_low=None,
-    restfreq_high=None,
     ra_cnt=40.669625, # deg
     dec_cnt=-0.01331667, # deg
-    snr=10.0,
+    snr=5.0,
     ratio_max=2.0,
+    restfreq_low=None,
+    restfreq_high=None,
     Aul_low=10**-7.198,
     Aul_high=10**-6.216,
     gu_low=3,
     gu_high=5,
     Eu_low=5.28880,
     Eu_high=15.86618,
+    p0_rotation=[8.0,16.5], # initial guess for rotation diagram, Trot and log10 Ncol
     ):
     """
     """
@@ -63,63 +64,39 @@ def rotation_13co21_13co10(
     data_low,err_low,freq_low,ra_deg,dec_deg = _get_data(cubelow,ecubelow,ra_cnt,dec_cnt)
     data_high,err_high,freq_high,_,_         = _get_data(cubehigh,ecubehigh,ra_cnt,dec_cnt)
 
-    ra  = ra_deg[:,:,0] * 3600
-    dec = dec_deg[:,:,0] * 3600
-
-    max_low  = np.nanmax(data_low)
-    max_high = np.nanmax(data_high)
+    ra       = ra_deg[:,:,0] * 3600
+    dec      = dec_deg[:,:,0] * 3600
+    max_low  = np.nanmax(data_low) * 1.5
+    max_high = np.nanmax(data_high) * 1.5
 
     # fitting spectra
-    #bw  = smooth
-    lim = np.max([np.max(abs(ra)), np.max(abs(dec))])
-    x   = range(np.shape(data_low)[0])
-    y   = range(np.shape(data_low)[1])
-    xy  = itertools.product(x, y)
+    xy  = itertools.product(range(np.shape(data_low)[0]), range(np.shape(data_low)[1]))
 
-    map_Trot   = np.zeros((np.shape(data_low)[0],np.shape(data_low)[1]))
-    map_logN   = np.zeros((np.shape(data_low)[0],np.shape(data_low)[1]))
-    mom0_low   = np.zeros((np.shape(data_low)[0],np.shape(data_low)[1]))
-    mom0_high  = np.zeros((np.shape(data_low)[0],np.shape(data_low)[1]))
-    mom1       = np.zeros((np.shape(data_low)[0],np.shape(data_low)[1]))
-    mom2       = np.zeros((np.shape(data_low)[0],np.shape(data_low)[1]))
-    ratio      = np.zeros((np.shape(data_low)[0],np.shape(data_low)[1]))
+    array_nan      = np.zeros((np.shape(data_low)[0],np.shape(data_low)[1]))
+    array_nan[:,:] = np.nan
 
-    emap_Trot  = np.zeros((np.shape(data_low)[0],np.shape(data_low)[1]))
-    emap_logN  = np.zeros((np.shape(data_low)[0],np.shape(data_low)[1]))
-    emom0_low  = np.zeros((np.shape(data_low)[0],np.shape(data_low)[1]))
-    emom0_high = np.zeros((np.shape(data_low)[0],np.shape(data_low)[1]))
-    emom1      = np.zeros((np.shape(data_low)[0],np.shape(data_low)[1]))
-    emom2      = np.zeros((np.shape(data_low)[0],np.shape(data_low)[1]))
-    eratio     = np.zeros((np.shape(data_low)[0],np.shape(data_low)[1]))
-
-    map_Trot[:,:]  = np.nan
-    map_logN[:,:]  = np.nan
-    mom0_low[:,:]  = np.nan
-    mom0_high[:,:] = np.nan
-    mom1[:,:]      = np.nan
-    mom2[:,:]      = np.nan
-    ratio[:,:]     = np.nan
-
-    emap_Trot[:,:]  = np.nan
-    emap_logN[:,:]  = np.nan
-    emom0_low[:,:]  = np.nan
-    emom0_high[:,:] = np.nan
-    emom1[:,:]      = np.nan
-    emom2[:,:]      = np.nan
-    eratio[:,:]     = np.nan
+    map_Trot, emap_Trot   = array_zeros, array_zeros
+    map_logN, emap_logN   = array_zeros, array_zeros
+    mom0_low, emom0_low   = array_zeros, array_zeros
+    mom0_high, emom0_high = array_zeros, array_zeros
+    mom1, emom1           = array_zeros, array_zeros
+    mom2, emom2           = array_zeros, array_zeros
+    ratio, eratio         = array_zeros, array_zeros
 
     for i in xy:
         # get data of this sightline
         this_x,this_y  = i[0],i[1]
 
         this_freq_low  = freq_low[this_x, this_y]
-        this_freq_high = freq_high[this_x, this_y]
-
         this_data_low  = data_low[this_x, this_y]
-        this_data_high = data_high[this_x, this_y]
-
         this_err_low   = err_low[this_x, this_y]
+
+        this_freq_high = freq_high[this_x, this_y]
+        this_data_high = data_high[this_x, this_y]
         this_err_high  = err_high[this_x, this_y]
+
+        max_snr_low    = np.max(this_data_low/this_err_low)
+        max_snr_high   = np.max(this_data_high/this_err_high)
 
         # avareging neibors
         #this_data_low  = np.mean(data_low[max(0,this_x-bw):this_x+1+bw, max(0,this_y-bw):this_y+1+bw],axis=(0,1)) # data_low[this_x, this_y]
@@ -132,22 +109,42 @@ def rotation_13co21_13co10(
 
         # p0 guess
         guess_b = (restfreq_low - this_freq_low[np.nanargmax(this_data_low)]) / restfreq_low * 299792.458
-        p0 = [np.max(this_data)/2.0,np.max(this_data),guess_b,40.]
+        p0 = [np.max(this_data)/2.0, np.max(this_data), guess_b, 40.]
 
         # fit
-        if np.max(this_data_low/this_err_low)>=snr and np.max(this_data_high/this_err_high)>=snr:
+        if max_snr_low>=snr and max_snr_high>=snr:
             # fitting
             this_f_two = lambda x, a1, a2, b, c: _f_two(x, a1, a2, b, c, restfreq_low, restfreq_high)
-            popt,pcov  = curve_fit(this_f_two,this_freq,this_data,sigma=this_err,p0=p0,maxfev=100000)
-            perr       = np.sqrt(np.diag(pcov))
+            popt,pcov  = curve_fit(
+                this_f_two,
+                this_freq,
+                this_data,
+                sigma  = this_err,
+                p0     = p0,
+                maxfev = 100000,
+                )
+            perr = np.sqrt(np.diag(pcov))
 
-            if popt[1]/popt[0]>0 and popt[1]/popt[0]<=ratio_max and popt[2]!=guess_b and popt[3]!=40 and popt[0]<max_low*2 and popt[1]<max_low*2 and perr[0]<popt[0] and perr[1]<popt[1]:
+            mom0_13co10 = popt[0]
+            mom0_13co21 = popt[1]
+            popt_ratio  = mom0_13co21/mom0_13co10
+            mom1        = popt[2]
+            mom2        = abs(popt[3])
+
+            err_mom0_13co10 = perr[0]
+            err_mom0_13co21 = perr[1]
+            err_mom2        = abs(perr[3])
+
+            snr_13co10  = mom0_13co10/perr[0]
+            snr_13co21  = mom0_13co21/perr[1]
+
+            if popt_ratio>0 and popt_ratio<=ratio_max and mom1!=guess_b and mom2!=40 and mom0_13co10<max_low and mom0_13co21<max_high and snr_13co10>=snr and snr_13co21>=snr:
                 # rotation diagram fitting
-                this_mom0_low    = popt[0] * abs(popt[3]) * np.sqrt(2*np.pi)
-                this_mom0_high   = popt[1] * abs(popt[3]) * np.sqrt(2*np.pi)
+                this_mom0_low    = mom0_13co10 * mom2 * np.sqrt(2*np.pi)
+                this_mom0_high   = mom0_13co21 * mom2 * np.sqrt(2*np.pi)
 
-                this_emom0_low   = np.sqrt(2*np.pi) * np.sqrt(popt[0]**2*perr[3]**2 + popt[3]**2*perr[0]**2)
-                this_emom0_high  = np.sqrt(2*np.pi) * np.sqrt(popt[1]**2*perr[3]**2 + popt[3]**2*perr[1]**2)
+                this_emom0_low   = np.sqrt(2*np.pi) * np.sqrt(mom0_13co10**2*err_mom2**2 + mom2**2*err_mom0_13co10**2)
+                this_emom0_high  = np.sqrt(2*np.pi) * np.sqrt(mom0_13co21**2*err_mom2**2 + mom2**2*err_mom0_13co21**2)
 
                 log10_Nugu_low   = np.log10(derive_Nu(this_mom0_low, restfreq_low, Aul_low) / gu_low)
                 log10_Nugu_high  = np.log10(derive_Nu(this_mom0_high, restfreq_high, Aul_high) / gu_high)
@@ -158,7 +155,7 @@ def rotation_13co21_13co10(
                 x_data       = np.array([Eu_low, Eu_high])
                 y_data       = np.array([log10_Nugu_low, log10_Nugu_high])
                 y_err        = np.array([elog10_Nugu_low, elog10_Nugu_high])
-                popt2, pcov2 = curve_fit(_f_linear,x_data,y_data,sigma=y_err,p0=[8.0,16.5])
+                popt2, pcov2 = curve_fit(_f_linear,x_data,y_data,sigma=y_err,p0=p0_rotation)
                 perr2        = np.sqrt(np.diag(pcov2))
 
                 Trot  = popt2[0]
