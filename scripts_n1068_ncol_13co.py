@@ -186,54 +186,33 @@ class ToolsNcol():
     def multi_fitting(self):
         """
         """
+        for this_beam in self.beams:
+            print("# align_maps for cubes at " + this_beam)
 
-        beam = "60pc"
-        # input
-        cube_13co10  = self.outcubes_13co10.replace("???",beam)
-        cube_13co21  = self.outcubes_13co21.replace("???",beam)
-        ecube_13co10 = self.outecubes_13co10.replace("???",beam)
-        ecube_13co21 = self.outecubes_13co21.replace("???",beam)
-        # output
-        rotation_13co21_13co10(
-            cube_13co10,
-            cube_13co21,
-            ecube_13co10,
-            ecube_13co21,
-            ra_cnt=self.ra_agn,
-            dec_cnt=self.dec_agn,
-            snr=4.0,
-            )
-        os.system("mv mom0_low.fits " + self.outmaps_mom0_13co10.replace("???",beam))
-        os.system("mv mom0_high.fits " + self.outmaps_mom0_13co21.replace("???",beam))
-        os.system("mv mom1.fits " + self.outmaps_mom1.replace("???",beam))
-        os.system("mv mom2.fits " + self.outmaps_mom2.replace("???",beam))
-        os.system("mv ratio.fits " + self.outmaps_ratio.replace("???",beam))
-        os.system("mv Trot.fits " + self.outmaps_13co_trot.replace("???",beam))
-        os.system("mv logN.fits " + self.outmaps_13co_ncol.replace("???",beam))
+            # input
+            cube_13co10  = self.outcubes_13co10.replace("???",this_beam)
+            cube_13co21  = self.outcubes_13co21.replace("???",this_beam)
+            ecube_13co10 = self.outecubes_13co10.replace("???",this_beam)
+            ecube_13co21 = self.outecubes_13co21.replace("???",this_beam)
 
-        beam = "150pc"
-        # input
-        cube_13co10  = self.outcubes_13co10.replace("???",beam)
-        cube_13co21  = self.outcubes_13co21.replace("???",beam)
-        ecube_13co10 = self.outecubes_13co10.replace("???",beam)
-        ecube_13co21 = self.outecubes_13co21.replace("???",beam)
-        # output
-        rotation_13co21_13co10(
-            cube_13co10,
-            cube_13co21,
-            ecube_13co10,
-            ecube_13co21,
-            ra_cnt=self.ra_agn,
-            dec_cnt=self.dec_agn,
-            snr=4.0,
-            )
-        os.system("mv mom0_low.fits " + self.outmaps_mom0_13co10.replace("???",beam))
-        os.system("mv mom0_high.fits " + self.outmaps_mom0_13co21.replace("???",beam))
-        os.system("mv mom1.fits " + self.outmaps_mom1.replace("???",beam))
-        os.system("mv mom2.fits " + self.outmaps_mom2.replace("???",beam))
-        os.system("mv ratio.fits " + self.outmaps_ratio.replace("???",beam))
-        os.system("mv Trot.fits " + self.outmaps_13co_trot.replace("???",beam))
-        os.system("mv logN.fits " + self.outmaps_13co_ncol.replace("???",beam))
+            # output
+            rotation_13co21_13co10(
+                cube_13co10,
+                cube_13co21,
+                ecube_13co10,
+                ecube_13co21,
+                ra_cnt=self.ra_agn,
+                dec_cnt=self.dec_agn,
+                snr=4.0,
+                )
+            
+            os.system("mv mom0_low.fits " + self.outmaps_mom0_13co10.replace("???",this_beam))
+            os.system("mv mom0_high.fits " + self.outmaps_mom0_13co21.replace("???",this_beam))
+            os.system("mv mom1.fits " + self.outmaps_mom1.replace("???",this_beam))
+            os.system("mv mom2.fits " + self.outmaps_mom2.replace("???",this_beam))
+            os.system("mv ratio.fits " + self.outmaps_ratio.replace("???",this_beam))
+            os.system("mv Trot.fits " + self.outmaps_13co_trot.replace("???",this_beam))
+            os.system("mv logN.fits " + self.outmaps_13co_ncol.replace("???",this_beam))
 
     ##############
     # align_maps #
@@ -244,6 +223,7 @@ class ToolsNcol():
         """
 
         for this_beam in self.beams:
+            print("# align_maps for cubes at " + this_beam)
             self._align_maps_at_a_res(
                 self.cube_13co10.replace("???",this_beam),
                 self.cube_13co21.replace("???",this_beam),
