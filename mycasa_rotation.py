@@ -174,7 +174,7 @@ def rotation_13co21_13co10(
                 this_emom2      = e3
 
                 map_mom0_low[this_x,this_y]   = this_mom0_low
-                map_mom0_high[this_x,this_y]  = this_mom0_high
+                map_mom0_high[this_x,this_y]  = p0 * p3 * np.sqrt(2*np.pi) # this_mom0_high
                 map_mom1[this_x,this_y]       = this_mom1
                 map_mom2[this_x,this_y]       = this_mom2
 
@@ -219,13 +219,17 @@ def rotation_13co21_13co10(
     # low-J mom0 to fits
     fits_creation(map_mom0_low.T,"mom0_low.fits",cubelow,"K.km/s")
     fits_creation(map_emom0_low.T,"emom0_low.fits",cubelow,"K.km/s")
-    fits_creation(map_mom1.T,"mom1.fits",cubelow,"km/s")
-    fits_creation(map_mom2.T,"mom2.fits",cubelow,"km/s")
 
     # high-J mom0 to fits
     fits_creation(map_mom0_high.T,"mom0_high.fits",cubelow,"K.km/s")
     fits_creation(map_emom0_high.T,"emom0_high.fits",cubelow,"K.km/s")
+
+    # mom1
+    fits_creation(map_mom1.T,"mom1.fits",cubelow,"km/s")
     fits_creation(map_emom1.T,"emom1.fits",cubelow,"km/s")
+
+    # mom2
+    fits_creation(map_mom2.T,"mom2.fits",cubelow,"km/s")
     fits_creation(map_emom2.T,"emom2.fits",cubelow,"km/s")
 
     """
