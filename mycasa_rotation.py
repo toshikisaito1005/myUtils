@@ -76,21 +76,29 @@ def rotation_13co21_13co10(
 
     array_zeros = np.zeros((np.shape(data_low)[0],np.shape(data_low)[1]))
 
-    map_Trot, map_eTrot           = array_zeros, array_zeros
-    map_logN, map_elogN           = array_zeros, array_zeros
-    map_mom0_low, map_emom0_low   = array_zeros, array_zeros
-    map_mom0_high, map_emom0_high = array_zeros, array_zeros
-    map_mom1, map_emom1           = array_zeros, array_zeros
-    map_mom2, map_emom2           = array_zeros, array_zeros
-    map_ratio, map_eratio         = array_zeros, array_zeros
+    map_Trot            = array_zeros
+    map_logN            = array_zeros
+    map_mom0_low        = array_zeros
+    map_mom0_high       = array_zeros
+    map_mom1            = array_zeros
+    map_mom2            = array_zeros
+    map_ratio           = array_zeros
 
-    map_Trot[:,:]      = np.nan
-    map_logN[:,:]      = np.nan
-    map_mom0_low[:,:]  = np.nan
-    map_mom0_high[:,:] = np.nan
-    map_mom1[:,:]      = np.nan
-    map_mom2[:,:]      = np.nan
-    map_ratio[:,:]     = np.nan
+    map_eTrot           = array_zeros
+    map_elogN           = array_zeros
+    map_emom0_low       = array_zeros
+    map_emom0_high      = array_zeros
+    map_emom1           = array_zeros
+    map_emom2           = array_zeros
+    map_eratio          = array_zeros
+
+    map_Trot[:,:]       = np.nan
+    map_logN[:,:]       = np.nan
+    map_mom0_low[:,:]   = np.nan
+    map_mom0_high[:,:]  = np.nan
+    map_mom1[:,:]       = np.nan
+    map_mom2[:,:]       = np.nan
+    map_ratio[:,:]      = np.nan
 
     map_eTrot[:,:]      = np.nan
     map_elogN[:,:]      = np.nan
