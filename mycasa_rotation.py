@@ -70,7 +70,9 @@ def rotation_13co21_13co10(
     max_high = np.nanmax(data_high) * 1.5
 
     # fitting spectra
-    xy  = itertools.product(range(np.shape(data_low)[0]), range(np.shape(data_low)[1]))
+    x   = range(np.shape(data_low)[0])
+    y   = range(np.shape(data_low)[1])
+    xy  = itertools.product(x, y)
 
     array_nan      = np.zeros((np.shape(data_low)[0],np.shape(data_low)[1]))
     array_nan[:,:] = np.nan
@@ -188,6 +190,7 @@ def rotation_13co21_13co10(
     # fits
     map_mom0_low[np.isnan(map_mom0_low)] = 0
     print(map_mom0_low[map_mom0_low!=0])
+
     fits_creation(map_Trot.T,"Trot.fits",cubelow,"K")
     fits_creation(map_logN.T,"logN.fits",cubelow,"cm**-2 in log10")
     fits_creation(map_mom0_low.T,"mom0_low.fits",cubelow,"K.km/s")
