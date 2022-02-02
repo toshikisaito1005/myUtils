@@ -167,7 +167,6 @@ class ToolsNcol():
 
         # box
         self.box_map            = self._read_key("box_map")
-        self.box_map_noxylabel  = self._read_key("box_map_noxylabel")
 
     ####################
     # run_ngc1068_ncol #
