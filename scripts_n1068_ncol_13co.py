@@ -176,10 +176,11 @@ class ToolsNcol():
     def run_ngc1068_ncol(
         self,
         # analysis
-        do_prepare    = False,
-        do_fitting    = False,
+        do_prepare     = False,
+        do_fitting     = False,
         # plot figures in paper
-        plot_showcase = False,
+        plot_showcase  = False,
+        do_imagemagick = False,
         # supplement
         ):
         """
@@ -197,6 +198,9 @@ class ToolsNcol():
         if plot_showcase==True:
             self.showcase()
 
+        if do_imagemagick==True:
+            self.immagick_figures()
+
     ####################
     # immagick_figures #
     ####################
@@ -205,7 +209,7 @@ class ToolsNcol():
         self,
         delin                = False,
         do_all               = False,
-        do_final_13co10_mom0 = False,
+        do_final_13co10_mom0 = True,
         ):
         """
         """
