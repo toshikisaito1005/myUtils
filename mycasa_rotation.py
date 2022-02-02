@@ -165,12 +165,10 @@ def rotation_13co21_13co10(
                 # derive parameters
                 this_mom0_low   = p0 * p3 * np.sqrt(2*np.pi)
                 this_mom0_high  = p1 * p3 * np.sqrt(2*np.pi)
-                print(this_mom0_low,this_mom0_high)
 
                 # write
                 map_mom0_low[this_x,this_y]   = this_mom0_low
                 map_mom0_high[this_x,this_y]  = this_mom0_high
-                print(this_mom0_low,this_mom0_high)
 
             #if p0>0 and p0<max_low and p1>0 and p1<max_high and pr>0 and pr<=ratio_max and p2!=guess_b and p3!=40:
                 # derive parameters
@@ -230,27 +228,27 @@ def rotation_13co21_13co10(
             """
 
     # low-J mom0 to fits
+    print(np.nanmax(map_mom0_low.T))
     fits_creation(map_mom0_low.T,"mom0_low.fits",cubelow,"K.km/s")
-    fits_creation(map_emom0_low.T,"emom0_low.fits",cubelow,"K.km/s")
+    #fits_creation(map_emom0_low.T,"emom0_low.fits",cubelow,"K.km/s")
 
     # high-J mom0 to fits
+    print(np.nanmax(map_mom0_high.T))
     fits_creation(map_mom0_high.T,"mom0_high.fits",cubelow,"K.km/s")
-    fits_creation(map_emom0_high.T,"emom0_high.fits",cubelow,"K.km/s")
+    #fits_creation(map_emom0_high.T,"emom0_high.fits",cubelow,"K.km/s")
 
     # mom1
-    fits_creation(map_mom1.T,"mom1.fits",cubelow,"km/s")
-    fits_creation(map_emom1.T,"emom1.fits",cubelow,"km/s")
+    #fits_creation(map_mom1.T,"mom1.fits",cubelow,"km/s")
+    #fits_creation(map_emom1.T,"emom1.fits",cubelow,"km/s")
 
     # mom2
-    fits_creation(map_mom2.T,"mom2.fits",cubelow,"km/s")
-    fits_creation(map_emom2.T,"emom2.fits",cubelow,"km/s")
+    #fits_creation(map_mom2.T,"mom2.fits",cubelow,"km/s")
+    #fits_creation(map_emom2.T,"emom2.fits",cubelow,"km/s")
 
     """
     fits_creation(map_Trot.T,"Trot.fits",cubelow,"K")
     fits_creation(map_logN.T,"logN.fits",cubelow,"cm**-2 in log10")
     fits_creation(map_ratio.T,"ratio.fits",cubelow,"")
-
-    # efits
     fits_creation(map_eTrot.T,"eTrot.fits",cubelow,"K")
     fits_creation(map_elogN.T,"elogN.fits",cubelow,"cm**-2 in log10")
     fits_creation(map_eratio.T,"eratio.fits",cubelow,"")
