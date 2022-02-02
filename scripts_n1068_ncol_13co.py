@@ -226,6 +226,10 @@ class ToolsNcol():
 
         if do_all==True:
             do_final_13co10_mom0 = True
+            do_final_13co21_mom0 = True
+            do_final_mom1        = True
+            do_final_trot        = True
+            do_final_ncol        = True
 
         if do_final_13co10_mom0==True:
             print("############################")
@@ -445,7 +449,7 @@ class ToolsNcol():
             print("# create do_final_trot #")
             print("########################")
 
-            this_prename = self.outmaps_13co_trot
+            this_prename = self.outpng_13co_trot
             this_final   = self.final_trot
 
             combine_two_png(
@@ -516,7 +520,7 @@ class ToolsNcol():
             print("# create do_final_ncol #")
             print("########################")
 
-            this_prename = self.outmaps_13co_ncol
+            this_prename = self.outpng_13co_ncol
             this_final   = self.final_ncol
 
             combine_two_png(
