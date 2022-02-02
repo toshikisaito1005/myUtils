@@ -48,7 +48,7 @@ imsize_as           ,,,40
 ######################
 # text files
 # png files
-outpng_13cotrot     ,,,fig_map_trot_???.png
+outpng_13co_trot    ,,,fig_map_trot_???.png
 # box for imagemajick
 box_map             ,,,2870x2750+350+150
 
