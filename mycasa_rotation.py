@@ -127,11 +127,12 @@ def rotation_13co21_13co10(
                 )
             perr = np.sqrt(np.diag(pcov))
 
-            p0 = popt[0]
-            p1 = popt[1]
-            pr = p0/p1
+            p0 = popt[0] # 1-0
+            p1 = popt[1] # 2-1
+            pr = p1/p0 # 2-1/1-0
             p2 = popt[2]
             p3 = abs(popt[3])
+            print(pr)
 
             e0 = perr[0]
             e1 = perr[1]
@@ -166,7 +167,6 @@ def rotation_13co21_13co10(
                 elogNmol = perr2[1] + np.log10(Z)
 
                 # add pixel
-                print(map_mom0_low[np.where((map_mom0_low!=np.nan)&(map_mom0_low!=np.inf))])
                 map_mom0_low[this_x,this_y]   = this_mom0_low
                 map_mom0_high[this_x,this_y]  = this_mom0_high
                 map_mom1[this_x,this_y]       = popt[2]
