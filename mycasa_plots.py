@@ -23,7 +23,7 @@ history:
 2021-07-28   new functions added
 2021-08-16   refactored myfig_fits2png
 2021-09-03   bug fix in _get_extent
-2021-12-20   mycasa_plot.py accidentally erased? curl from https://github.com/toshikisaito1005/myUtils/blob/7328a0b0943e547490b1e050a21759686d930e80/mycasa_plots.py
+2021-12-20   mycasa_plot.py accidentally deleted. curl from https://github.com/toshikisaito1005/myUtils/blob/7328a0b0943e547490b1e050a21759686d930e80/mycasa_plots.py
 Toshiki Saito@Nichidai/NAOJ
 """
 
@@ -163,7 +163,7 @@ def _myax_cbar(
         cb.set_clim(clim)
 
     cb.outline.set_linewidth(2.5)
-    cb.lines[0].set_linewidth(2.5)
+    cb.ax.tick_params(width=2.5)
 
 #################
 # myfig_hex_map #

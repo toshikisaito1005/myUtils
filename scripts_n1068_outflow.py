@@ -90,9 +90,9 @@ from mycasa_sampling import *
 from mycasa_tasks import *
 from mycasa_plots import *
 
-##############
-# ToolsDense #
-##############
+################
+# ToolsOutflow #
+################
 class ToolsOutflow():
     """
     Class for the NGC 1068 CI outflow project.
@@ -2625,6 +2625,6 @@ class ToolsOutflow():
 
         return value
 
-#####################
-# end of ToolsDense #
-#####################
+#######################
+# end of ToolsOutflow #
+#######################
