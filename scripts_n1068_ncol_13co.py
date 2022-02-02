@@ -205,6 +205,7 @@ class ToolsNcol():
         for this_beam in self.beams:
             print("# myfig_fits2png at " + this_beam)
 
+            maxval = imstat(self.outmaps_13co_trot.replace("???",this_beam))["max"]
             myfig_fits2png(
                 imcolor=self.outmaps_13co_trot.replace("???",this_beam),
                 outfile=self.outpng_13co_trot.replace("???",this_beam),
@@ -220,7 +221,7 @@ class ToolsNcol():
                 label_scalebar=label_scalebar,
                 set_cbar=True,
                 label_cbar="(K)",
-                clim=[0,10],
+                clim=[0,maxval],
                 set_bg_color=cm.rainbow(0),
                 #numann=1,
                 #textann=True,
