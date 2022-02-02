@@ -129,6 +129,14 @@ class ToolsNcol():
         self.outmaps_13co_trot   = self.dir_ready + self._read_key("outmaps_13co_trot")
         self.outmaps_13co_ncol   = self.dir_ready + self._read_key("outmaps_13co_ncol")
 
+        self.outemaps_mom0_13co10 = self.dir_ready + self._read_key("outemaps_13co10")
+        self.outemaps_mom0_13co21 = self.dir_ready + self._read_key("outemaps_13co21")
+        self.outemaps_mom1        = self.dir_ready + self._read_key("outemaps_mom1")
+        self.outemaps_mom2        = self.dir_ready + self._read_key("outemaps_mom2")
+        self.outemaps_ratio       = self.dir_ready + self._read_key("outemaps_ratio")
+        self.outemaps_13co_trot   = self.dir_ready + self._read_key("outemaps_13co_trot")
+        self.outemaps_13co_ncol   = self.dir_ready + self._read_key("outemaps_13co_ncol")
+
     def _set_input_param(self):
         """
         """
