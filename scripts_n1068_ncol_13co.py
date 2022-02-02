@@ -1173,9 +1173,9 @@ class ToolsNcol():
                 )
 
             # ratio error
-            maxval = imstat(self.outmaps_eratio.replace("???",this_beam))["max"]
+            maxval = imstat(self.outemaps_ratio.replace("???",this_beam))["max"]
             myfig_fits2png(
-                imcolor=self.outmaps_eratio.replace("???",this_beam),
+                imcolor=self.outemaps_ratio.replace("???",this_beam),
                 outfile=self.outpng_eratio.replace("???",this_beam),
                 imcontour1=self.outmaps_mom0_13co21.replace("???",this_beam),
                 imsize_as=self.imsize,
