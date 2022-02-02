@@ -161,17 +161,22 @@ def rotation_13co21_13co10(
             e3 = abs(perr[3])
 
             if p0>0 and p0<max_low and p1>0 and p1<max_high and pr>0 and pr<=ratio_max and p2!=guess_b and p3!=40:
-                map_mom0_low[this_x,this_y]   = p0 * p3 * np.sqrt(2*np.pi)
+                # derive parameters
+                this_mom0_low   = p0 * p3 * np.sqrt(2*np.pi)
+                this_mom0_high  = p1 * p3 * np.sqrt(2*np.pi)
+                this_emom0_low  = np.sqrt(2*np.pi) * np.sqrt(p0**2*e3**2 + p3**2*e0**2)
+                this_emom0_high = np.sqrt(2*np.pi) * np.sqrt(p1**2*e3**2 + p3**2*e1**2)
+
+                map_mom0_low[this_x,this_y]   = this_mom0_low
+                map_mom0_high[this_x,this_y]  = this_mom0_high
+                map_emom0_low[this_x,this_y]  = this_emom0_low
+                map_emom0_high[this_x,this_y] = this_emom0_high
 
             """
             #if pr>0 and pr<=ratio_max and p2!=guess_b and p3!=40 and p0<max_low and p0>0 and p1<max_high and p1>0:
             if p0>0 and p1>0 and p2!=guess_b and p3!=40:
                 # rotation diagram fitting
-                this_mom0_low    = p0 * p3 * np.sqrt(2*np.pi)
-                this_mom0_high   = p1 * p3 * np.sqrt(2*np.pi)
 
-                this_emom0_low   = np.sqrt(2*np.pi) * np.sqrt(p0**2*e3**2 + p3**2*e0**2)
-                this_emom0_high  = np.sqrt(2*np.pi) * np.sqrt(p1**2*e3**2 + p3**2*e1**2)
 
                 log10_Nugu_low   = np.log10(derive_Nu(this_mom0_low, restfreq_low, Aul_low) / gu_low)
                 log10_Nugu_high  = np.log10(derive_Nu(this_mom0_high, restfreq_high, Aul_high) / gu_high)
