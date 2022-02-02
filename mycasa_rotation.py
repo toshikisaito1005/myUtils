@@ -2,7 +2,7 @@
 Standalone routines that are used for rotation diagram using CASA.
 
 contents:
-    hf_cn10
+    rotation_13co21_13co10
 
 history:
 2021-12-18   created
@@ -128,23 +128,23 @@ def rotation_13co21_13co10(
             perr = np.sqrt(np.diag(pcov))
             print(popt)
 
-            mom0_13co10 = popt[0]
-            mom0_13co21 = popt[1]
-            popt_ratio  = mom0_13co21/mom0_13co10
-            mom1        = popt[2]
-            mom2        = abs(popt[3])
+            p0 = popt[0]
+            p1 = popt[1]
+            pr = p1/p0
+            p2 = popt[2]
+            p3 = abs(popt[3])
 
-            err_mom0_13co10 = perr[0]
-            err_mom0_13co21 = perr[1]
-            err_mom2        = abs(perr[3])
+            e0 = perr[0]
+            e1 = perr[1]
+            e3 = abs(perr[3])
 
-            if popt_ratio>0 and popt_ratio<=ratio_max and mom1!=guess_b and mom2!=40 and mom0_13co10<max_low and mom0_13co10>0 and mom0_13co21<max_high and mom0_13co21>0:
+            if pr>0 and pr<=ratio_max and p2!=guess_b and p3!=40 and p0<max_low and p0>0 and p1<max_high and p1>0:
                 # rotation diagram fitting
-                this_mom0_low    = mom0_13co10 * mom2 * np.sqrt(2*np.pi)
-                this_mom0_high   = mom0_13co21 * mom2 * np.sqrt(2*np.pi)
+                this_mom0_low    = p0 * p3 * np.sqrt(2*np.pi)
+                this_mom0_high   = p1 * p3 * np.sqrt(2*np.pi)
 
-                this_emom0_low   = np.sqrt(2*np.pi) * np.sqrt(mom0_13co10**2*err_mom2**2 + mom2**2*err_mom0_13co10**2)
-                this_emom0_high  = np.sqrt(2*np.pi) * np.sqrt(mom0_13co21**2*err_mom2**2 + mom2**2*err_mom0_13co21**2)
+                this_emom0_low   = np.sqrt(2*np.pi) * np.sqrt(p0**2*e3**2 + p3**2*e0**2)
+                this_emom0_high  = np.sqrt(2*np.pi) * np.sqrt(p1**2*e3**2 + p3**2*e1**2)
 
                 log10_Nugu_low   = np.log10(derive_Nu(this_mom0_low, restfreq_low, Aul_low) / gu_low)
                 log10_Nugu_high  = np.log10(derive_Nu(this_mom0_high, restfreq_high, Aul_high) / gu_high)
@@ -167,7 +167,7 @@ def rotation_13co21_13co10(
                 elogNmol = perr2[1] + np.log10(Z)
 
                 # add pixel
-                print(this_mom0_low)
+                print(map_mom0_low[np.where((map_mom0_low!=np.nan)&(map_mom0_low!=np.inf))])
                 map_mom0_low[this_x,this_y]   = this_mom0_low
                 map_mom0_high[this_x,this_y]  = this_mom0_high
                 map_mom1[this_x,this_y]       = popt[2]
@@ -186,10 +186,6 @@ def rotation_13co21_13co10(
                     map_elogN[this_x,this_y]  = elogNmol
 
     # fits
-    map_mom0_low[np.isnan(map_mom0_low)] = 0
-    map_mom0_low[np.isinf(map_mom0_low)] = 0
-    print(map_mom0_low[map_mom0_low!=0])
-
     fits_creation(map_Trot.T,"Trot.fits",cubelow,"K")
     fits_creation(map_logN.T,"logN.fits",cubelow,"cm**-2 in log10")
     fits_creation(map_mom0_low.T,"mom0_low.fits",cubelow,"K.km/s")
