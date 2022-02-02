@@ -144,12 +144,11 @@ class ToolsNcol():
         self.scale_pc    = float(self._read_key("scale", "gal"))
         self.scale_kpc   = self.scale_pc / 1000.
 
-        self.beam        = 2.14859173174056 # 150pc in arcsec
-        self.snr_mom     = 4.0
-        self.r_cnd       = 3.0 * self.scale_pc / 1000. # kpc
-        self.r_cnd_as    = 3.0
-        self.r_sbr       = 10.0 * self.scale_pc / 1000. # kpc
-        self.r_sbr_as    = 10.0
+        self.snr_mom     = float(self._read_key("snr_mom"))
+        self.r_cnd       = float(self._read_key("r_cnd_as")) * self.scale_pc / 1000. # kpc
+        self.r_cnd_as    = float(self._read_key("r_cnd_as"))
+        self.r_sbr       = float(self._read_key("r_sbr_as")) * self.scale_pc / 1000. # kpc
+        self.r_sbr_as    = float(self._read_key("r_sbr_as"))
 
     def _set_output_txt_png(self):
         """
@@ -211,11 +210,11 @@ class ToolsNcol():
     def immagick_figures(
         self,
         delin                = False,
-        do_all               = True,
+        do_all               = False,
         do_final_13co10_mom0 = False,
         do_final_13co21_mom0 = False,
         do_final_mom1        = False,
-        do_final_trot        = False,
+        do_final_trot        = True,
         do_final_ncol        = False,
         ):
         """
