@@ -208,7 +208,7 @@ class ToolsNcol():
             myfig_fits2png(
                 imcolor=self.outmaps_13co_trot.replace("???",this_beam),
                 outfile=self.outpng_13co_trot.replace("???",this_beam),
-                imcontour1=self.outmaps_mom0_13co10.replace("???",this_beam),
+                imcontour1=self.outmaps_mom0_13co21.replace("???",this_beam),
                 imsize_as=self.imsize,
                 ra_cnt=self.ra_agn_str,
                 dec_cnt=self.dec_agn_str,
