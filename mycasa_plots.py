@@ -163,6 +163,7 @@ def _myax_cbar(
         cb.set_clim(clim)
 
     cb.outline.set_linewidth(2.5)
+    cb.lines[0].set_linewidth(2.5)
 
 #################
 # myfig_hex_map #

@@ -67,7 +67,7 @@ Date         Filename                To
 
 history:
 2021-04-22   start project, write README
-2021-05-17   start to create paper-ready figures
+2021-05-17   start to create figures
 2021-05-26   start drafting
 2021-06-04   circulate v0 draft to the paper team
 2021-06-25   move to ADC due to issues with new laptop
@@ -77,7 +77,7 @@ history:
 2021-10-29   done all refactoring before v1 circular
 2021-11-05   v1 circular
 2021-11-24   start revision of draft and refactoring
-2021-12-17   v2 submitted!
+2021-12-17   submitted v2 draft!
 2021-12-24   received the 1st referee report
 2022-01-19   v3 circular
 Toshiki Saito@Nichidai/NAOJ
