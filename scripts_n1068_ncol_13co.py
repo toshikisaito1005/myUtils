@@ -1214,7 +1214,7 @@ class ToolsNcol():
 
             # mom1 error
             myfig_fits2png(
-                imcolor=self.outmaps_emom1.replace("???",this_beam),
+                imcolor=self.outemaps_mom1.replace("???",this_beam),
                 outfile=self.outpng_emom1.replace("???",this_beam),
                 imcontour1=self.outmaps_mom0_13co21.replace("???",this_beam),
                 imsize_as=self.imsize,
