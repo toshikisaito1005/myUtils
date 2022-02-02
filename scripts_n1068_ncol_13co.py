@@ -249,8 +249,9 @@ class ToolsNcol():
         do_final_ncol         = False,
         #
         do_final_e13co10_mom0 = False,
-        do_final_e13co21_mom0 = True,
-        do_final_eratio       = True,
+        do_final_e13co21_mom0 = False,
+        do_final_eratio       = False,
+        do_final_emom1        = True,
         ):
         """
         """
@@ -266,6 +267,9 @@ class ToolsNcol():
             do_final_ncol         = True
             #
             do_final_e13co10_mom0 = True
+            do_final_e13co21_mom0 = True
+            do_final_eratio       = True
+            do_final_emom1        = True
 
         if do_final_13co10_mom0==True:
             print("############################")
@@ -977,13 +981,13 @@ class ToolsNcol():
                 axis="column",
                 )
 
-        if do_final_mom1==True:
-            print("########################")
-            print("# create do_final_mom1 #")
-            print("########################")
+        if do_final_emom1==True:
+            print("#########################")
+            print("# create do_final_emom1 #")
+            print("#########################")
 
-            this_prename = self.outpng_mom1
-            this_final   = self.final_mom1
+            this_prename = self.outpng_emom1
+            this_final   = self.final_emom1
 
             combine_two_png(
                 this_prename.replace("???","60pc"),
