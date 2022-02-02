@@ -41,7 +41,7 @@ outmaps_13co_ncol   ,,,n1068_13co_log_ncol_???.fits
 ###################
 # input paramters #
 ###################
-imsize_as           ,,,40
+imsize_as           ,,,39
 
 ######################
 # output png and txt #
