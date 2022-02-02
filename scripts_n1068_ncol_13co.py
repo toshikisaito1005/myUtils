@@ -220,6 +220,7 @@ class ToolsNcol():
                 label_scalebar=label_scalebar,
                 set_cbar=True,
                 label_cbar="(K)",
+                clim=[0,10],
                 #numann=1,
                 #textann=True,
                 #colorbarticks=[10**1.5,10**2,10**2.5],
