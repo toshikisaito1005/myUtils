@@ -54,7 +54,7 @@ outpng_mom1         ,,,fig_map_mom1_???.png
 outpng_13co_trot    ,,,fig_map_trot_???.png
 outpng_13co_ncol    ,,,fig_map_ncol_???.png
 # box for imagemajick
-box_map             ,,,2670x2750+350+50
+box_map             ,,,2500x2750+350+70
 #box_map             ,,,2870x2750+350+150
 #box_map_noxlabel    ,,,2550x2750+670+150
 #box_map_noylabel    ,,,2870x2560+350+150
