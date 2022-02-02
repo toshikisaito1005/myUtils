@@ -185,7 +185,8 @@ def rotation_13co21_13co10(
                     map_elogN[this_x,this_y]  = elogNmol
 
     # fits
-    print(map_mom0_low.T)
+    map_mom0_low[np.isnan(map_mom0_low)] = 0
+    print(map_mom0_low[map_mom0_low!=0])
     fits_creation(map_Trot.T,"Trot.fits",cubelow,"K")
     fits_creation(map_logN.T,"logN.fits",cubelow,"cm**-2 in log10")
     fits_creation(map_mom0_low.T,"mom0_low.fits",cubelow,"K.km/s")
