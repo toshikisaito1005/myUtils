@@ -45,6 +45,8 @@ def rotation_13co21_13co10(
     p0_rotation=[np.log10(np.e)/8.0,16.5], # initial guess for rotation diagram, Trot and log10 Ncol
     ):
     """
+    References:
+    https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.curve_fit.html
     """
 
     # preamble
@@ -217,7 +219,7 @@ def rotation_13co21_13co10(
                 logNmol  = popt2[1] + np.log10(Z)
                 elogNmol = perr2[1] + np.log10(Z)
 
-                if Trot>eTrot*2.0:
+                if Trot>eTrot*3.0:
                     # add pixel
                     map_Trot[this_x,this_y]   = Trot
                     map_logN[this_x,this_y]   = logNmol
