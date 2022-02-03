@@ -1397,168 +1397,85 @@ class ToolsNcol():
 
             # 13co21 mom0
             maxval = imstat(self.outmaps_mom0_13co21.replace("???",this_beam))["max"]
-            myfig_fits2png(
-                imcolor=self.outmaps_mom0_13co21.replace("???",this_beam),
-                outfile=self.outpng_mom0_13co21.replace("???",this_beam),
-                imcontour1=imcontour1,
-                imsize_as=self.imsize,
-                ra_cnt=self.ra_agn_str,
-                dec_cnt=self.dec_agn_str,
-                levels_cont1=levels_cont1,
-                width_cont1=width_cont1,
-                set_title="$^{\mathrm{13}}$CO(2-1) integrated intensity at " + this_beam.replace("pc"," pc"),
-                colorlog=False,
-                scalebar=scalebar,
-                label_scalebar=label_scalebar,
-                set_cbar=True,
-                label_cbar="(K km s$^{-1}$)",
-                clim=[0,maxval],
-                set_bg_color=set_bg_color,
+            self._showcase_one(
+                self.outmaps_mom0_13co21.replace("???",this_beam),
+                imcontour1,
+                self.outpng_mom0_13co21.replace("???",this_beam),
+                "$I_{\mathrm{^{13}CO(2-1)}}$ at " + this_beam.replace("pc"," pc"),
+                "(K km s$^{-1}$)",
+                [0,maxval],
                 )
 
             # 13co21 mom0 err
             maxval = imstat(self.outemaps_mom0_13co21.replace("???",this_beam))["max"]
-            myfig_fits2png(
-                imcolor=self.outemaps_mom0_13co21.replace("???",this_beam),
-                outfile=self.outpng_emom0_13co21.replace("???",this_beam),
-                imcontour1=imcontour1,
-                imsize_as=self.imsize,
-                ra_cnt=self.ra_agn_str,
-                dec_cnt=self.dec_agn_str,
-                levels_cont1=levels_cont1,
-                width_cont1=width_cont1,
-                set_title="Error of $^{\mathrm{13}}$CO(2-1) intensity at " + this_beam.replace("pc"," pc"),
-                colorlog=False,
-                scalebar=scalebar,
-                label_scalebar=label_scalebar,
-                set_cbar=True,
-                label_cbar="(K km s$^{-1}$)",
-                clim=[0,maxval],
-                set_bg_color=set_bg_color,
+            self._showcase_one(
+                self.outemaps_mom0_13co21.replace("???",this_beam),
+                imcontour1,
+                self.outpng_emom0_13co21.replace("???",this_beam),
+                "$\sigma_{\mathrm{err}}$($I_{\mathrm{^{13}CO(2-1)}}$) at " + this_beam.replace("pc"," pc"),
+                "(K km s$^{-1}$)",
+                [0,maxval],
                 )
 
             # ratio
             maxval = imstat(self.outmaps_ratio.replace("???",this_beam))["max"]
-            myfig_fits2png(
-                imcolor=self.outmaps_ratio.replace("???",this_beam),
-                outfile=self.outpng_ratio.replace("???",this_beam),
-                imcontour1=imcontour1,
-                imsize_as=self.imsize,
-                ra_cnt=self.ra_agn_str,
-                dec_cnt=self.dec_agn_str,
-                levels_cont1=levels_cont1,
-                width_cont1=width_cont1,
-                set_title="$^{\mathrm{13}}$CO intensity ratio at " + this_beam.replace("pc"," pc"),
-                colorlog=False,
-                scalebar=scalebar,
-                label_scalebar=label_scalebar,
-                set_cbar=True,
-                label_cbar="Ratio",
-                clim=[0,maxval],
-                set_bg_color=set_bg_color,
+            self._showcase_one(
+                self.outmaps_ratio.replace("???",this_beam),
+                imcontour1,
+                self.outpng_ratio.replace("???",this_beam),
+                "Ratio at " + this_beam.replace("pc"," pc"),
+                "Ratio",
+                [0,maxval],
                 )
 
             # ratio error
             maxval = imstat(self.outemaps_ratio.replace("???",this_beam))["max"]
-            myfig_fits2png(
-                imcolor=self.outemaps_ratio.replace("???",this_beam),
-                outfile=self.outpng_eratio.replace("???",this_beam),
-                imcontour1=imcontour1,
-                imsize_as=self.imsize,
-                ra_cnt=self.ra_agn_str,
-                dec_cnt=self.dec_agn_str,
-                levels_cont1=levels_cont1,
-                width_cont1=width_cont1,
-                set_title="Error of $^{\mathrm{13}}$CO intensity ratio at " + this_beam.replace("pc"," pc"),
-                colorlog=False,
-                scalebar=scalebar,
-                label_scalebar=label_scalebar,
-                set_cbar=True,
-                label_cbar="Ratio",
-                clim=[0,maxval],
-                set_bg_color=set_bg_color,
+            self._showcase_one(
+                self.outemaps_ratio.replace("???",this_beam),
+                imcontour1,
+                self.outpng_eratio.replace("???",this_beam),
+                "$\sigma_{\mathrm{err}}$(Ratio) at " + this_beam.replace("pc"," pc"),
+                "(K km s$^{-1}$)",
+                [0,maxval],
                 )
 
             # mom1
-            myfig_fits2png(
-                imcolor=self.outmaps_mom1.replace("???",this_beam),
-                outfile=self.outpng_mom1.replace("???",this_beam),
-                imcontour1=imcontour1,
-                imsize_as=self.imsize,
-                ra_cnt=self.ra_agn_str,
-                dec_cnt=self.dec_agn_str,
-                levels_cont1=levels_cont1,
-                width_cont1=width_cont1,
-                set_title="Velocity field at " + this_beam.replace("pc"," pc"),
-                colorlog=False,
-                scalebar=scalebar,
-                label_scalebar=label_scalebar,
-                set_cbar=True,
-                clim=[1116-200,1116+200],
-                label_cbar="(km s$^{-1}$)",
-                set_bg_color=set_bg_color,
+            self._showcase_one(
+                self.outmaps_mom1.replace("???",this_beam),
+                imcontour1,
+                self.outpng_mom1.replace("???",this_beam),
+                "$V_{\mathrm{LOS}}$ at " + this_beam.replace("pc"," pc"),
+                "(km s$^{-1}$)",
                 )
 
             # mom1 error
-            myfig_fits2png(
-                imcolor=self.outemaps_mom1.replace("???",this_beam),
-                outfile=self.outpng_emom1.replace("???",this_beam),
-                imcontour1=imcontour1,
-                imsize_as=self.imsize,
-                ra_cnt=self.ra_agn_str,
-                dec_cnt=self.dec_agn_str,
-                levels_cont1=levels_cont1,
-                width_cont1=width_cont1,
-                set_title="Error of velocity field at " + this_beam.replace("pc"," pc"),
-                colorlog=False,
-                scalebar=scalebar,
-                label_scalebar=label_scalebar,
-                set_cbar=True,
-                #clim=[1116-200,1116+200],
-                label_cbar="(km s$^{-1}$)",
-                set_bg_color=set_bg_color,
+            self._showcase_one(
+                self.outemaps_mom1.replace("???",this_beam),
+                imcontour1,
+                self.outpng_emom1.replace("???",this_beam),
+                "$\sigma_{\mathrm{err}}$($V_{\mathrm{LOS}}$) at " + this_beam.replace("pc"," pc"),
+                "(km s$^{-1}$)",
                 )
 
             # mom2
             maxval = imstat(self.outmaps_mom2.replace("???",this_beam))["max"]
-            myfig_fits2png(
-                imcolor=self.outmaps_mom2.replace("???",this_beam),
-                outfile=self.outpng_mom2.replace("???",this_beam),
-                imcontour1=imcontour1,
-                imsize_as=self.imsize,
-                ra_cnt=self.ra_agn_str,
-                dec_cnt=self.dec_agn_str,
-                levels_cont1=levels_cont1,
-                width_cont1=width_cont1,
-                set_title="Velocity dispersion at " + this_beam.replace("pc"," pc"),
-                colorlog=False,
-                scalebar=scalebar,
-                label_scalebar=label_scalebar,
-                set_cbar=True,
-                clim=[0,maxval],
-                label_cbar="(km s$^{-1}$)",
-                set_bg_color=set_bg_color,
+            self._showcase_one(
+                self.outmaps_mom2.replace("???",this_beam),
+                imcontour1,
+                self.outpng_mom2.replace("???",this_beam),
+                "$\sigma_{V}$ at " + this_beam.replace("pc"," pc"),
+                "(km s$^{-1}$)",
+                [0,maxval],
                 )
 
             # mom2 error
             maxval = imstat(self.outemaps_mom2.replace("???",this_beam))["max"]
-            myfig_fits2png(
-                imcolor=self.outemaps_mom2.replace("???",this_beam),
-                outfile=self.outpng_emom2.replace("???",this_beam),
-                imcontour1=imcontour1,
-                imsize_as=self.imsize,
-                ra_cnt=self.ra_agn_str,
-                dec_cnt=self.dec_agn_str,
-                levels_cont1=levels_cont1,
-                width_cont1=width_cont1,
-                set_title="Error of velocity dispersion at " + this_beam.replace("pc"," pc"),
-                colorlog=False,
-                scalebar=scalebar,
-                label_scalebar=label_scalebar,
-                set_cbar=True,
-                clim=[0,maxval],
-                label_cbar="(km s$^{-1}$)",
-                set_bg_color=set_bg_color,
+            self._showcase_one(
+                self.outemaps_mom2.replace("???",this_beam),
+                imcontour1,
+                self.outpng_emom2.replace("???",this_beam),
+                "$\sigma_{\mathrm{err}}$($\sigma_{V}$) at " + this_beam.replace("pc"," pc"),
+                "(km s$^{-1}$)",
                 )
 
             # Trot
