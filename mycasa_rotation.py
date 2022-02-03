@@ -231,7 +231,7 @@ def rotation_13co21_13co10(
     max_ratio_detected = np.nanmax(map_ratio)
     max_trot_detected  = np.nanmax(map_Trot)
 
-    print("do again")
+    xy  = itertools.product(x, y)
     for i in xy:
         print(i[0],i[1])
         # get data of this sightline
