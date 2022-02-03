@@ -143,7 +143,7 @@ def rotation_13co21_13co10(
         guess_b = (restfreq_low - this_freq_low[np.nanargmax(this_data_low)]) / restfreq_low * 299792.458
         p0 = [np.max(this_data)/2.0, np.max(this_data), guess_b, 40.]
 
-        # fit
+        # fit when both 2-1 and 1-0 detected
         if max_snr_low>=snr and max_snr_high>=snr:
             # fitting
             this_f_two = lambda x, a1, a2, b, c: _f_two(x, a1, a2, b, c, restfreq_low, restfreq_high)
@@ -226,6 +226,7 @@ def rotation_13co21_13co10(
                     map_eTrot[this_x,this_y]  = eTrot
                     map_elogN[this_x,this_y]  = elogNmol
 
+        # fit when only 1-0 detected
         elif max_snr_low>=snr and max_snr_high<snr:
             # fitting
             this_f_two = lambda x, a1, a2, b, c: _f_one(x, a1, b, c, restfreq_low)
@@ -233,7 +234,7 @@ def rotation_13co21_13co10(
                 this_f_two,
                 this_freq_low,
                 this_data_low,
-                sigma          = this_err,
+                sigma          = this_err_low,
                 p0             = p0,
                 maxfev         = 100000,
                 absolute_sigma = True,
