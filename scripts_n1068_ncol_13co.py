@@ -1335,7 +1335,7 @@ class ToolsNcol():
         run_immath_one(
             self.outmodelcube_13co10,
             self.outmodelcube_13co21 + "_tmp1",
-            "IM0*IM0*IM0/"+maxval+"/"+maxval,
+            "IM0*IM0/"+maxval,
             )
 
         run_exportfits(
