@@ -264,7 +264,7 @@ class ToolsNcol():
         delin                 = False,
         do_all                = False,
         #
-        do_final_60pc         = True,
+        do_final_60pc_obs     = True,
         #
         do_final_13co10_mom0  = False,
         do_final_13co21_mom0  = False,
@@ -305,16 +305,18 @@ class ToolsNcol():
             do_final_etrot        = True
             do_final_encol        = True
 
-        if do_final_60pc==True:
-            print("########################")
-            print("# create do_final_60pc #")
-            print("########################")
+        if do_final_60pc_obs==True:
+            print("############################")
+            print("# create do_final_60pc_obs #")
+            print("############################")
 
             #
-            combine_two_png(
+            combine_three_png(
                 self.outpng_mom0_13co10.replace("???","60pc"),
                 self.outpng_mom0_13co21.replace("???","60pc"),
+                self.outpng_ratio.replace("???","60pc"),
                 self.final_60pc+"_tmp1.png",
+                self.box_map,
                 self.box_map,
                 self.box_map,
                 delin=delin,
@@ -327,39 +329,12 @@ class ToolsNcol():
                 self.box_map,
                 delin=delin,
                 )
-            combine_two_png(
-                self.final_60pc+"_tmp1.png",
-                self.final_60pc+"_tmp2.png",
-                self.final_60pc+"_tmp12.png",
-                "1000000x10000000+0+0",
-                "1000000x10000000+0+0",
-                delin=True,
-                )
             combine_three_png(
-                self.outpng_ratio.replace("???","60pc"),
-                self.outpng_13co_trot.replace("???","60pc"),
-                self.outpng_13co_ncol.replace("???","60pc"),
-                self.final_60pc+"_tmp3.png",
-                self.box_map,
-                self.box_map,
-                self.box_map,
-                delin=delin,
-                )
-            combine_two_png(
-                self.final_60pc+"_tmp12.png",
-                self.final_60pc+"_tmp3.png",
-                self.final_60pc+"_tmp123.png",
-                "1000000x10000000+0+0",
-                "1000000x10000000+0+0",
-                axis="column",
-                delin=True,
-                )
-
-            #
-            combine_two_png(
                 self.outpng_emom0_13co10.replace("???","60pc"),
                 self.outpng_emom0_13co21.replace("???","60pc"),
-                self.final_60pc+"_tmp4.png",
+                self.outpng_eratio.replace("???","60pc"),
+                self.final_60pc+"_tmp3.png",
+                self.box_map,
                 self.box_map,
                 self.box_map,
                 delin=delin,
@@ -367,43 +342,34 @@ class ToolsNcol():
             combine_two_png(
                 self.outpng_emom1.replace("???","60pc"),
                 self.outpng_emom2.replace("???","60pc"),
-                self.final_60pc+"_tmp5.png",
-                self.box_map,
-                self.box_map,
-                delin=delin,
-                )
-            combine_two_png(
                 self.final_60pc+"_tmp4.png",
-                self.final_60pc+"_tmp5.png",
-                self.final_60pc+"_tmp45.png",
-                "1000000x10000000+0+0",
-                "1000000x10000000+0+0",
-                delin=True,
-                )
-            combine_three_png(
-                self.outpng_eratio.replace("???","60pc"),
-                self.outpng_e13co_trot.replace("???","60pc"),
-                self.outpng_e13co_ncol.replace("???","60pc"),
-                self.final_60pc+"_tmp6.png",
-                self.box_map,
                 self.box_map,
                 self.box_map,
                 delin=delin,
                 )
+
+            #
             combine_two_png(
-                self.final_60pc+"_tmp45.png",
-                self.final_60pc+"_tmp6.png",
-                self.final_60pc+"_tmp456.png",
+                self.final_60pc+"_tmp1.png",
+                self.final_60pc+"_tmp2.png",
+                self.final_60pc+"_tmp12.png",
                 "1000000x10000000+0+0",
                 "1000000x10000000+0+0",
                 axis="column",
                 delin=True,
                 )
-
-            #
             combine_two_png(
-                self.final_60pc+"_tmp123.png",
-                self.final_60pc+"_tmp456.png",
+                self.final_60pc+"_tmp3.png",
+                self.final_60pc+"_tmp4.png",
+                self.final_60pc+"_tmp34.png",
+                "1000000x10000000+0+0",
+                "1000000x10000000+0+0",
+                axis="column",
+                delin=True,
+                )
+            combine_two_png(
+                self.final_60pc+"_tmp12.png",
+                self.final_60pc+"_tmp34.png",
                 self.final_60pc,
                 "1000000x10000000+0+0",
                 "1000000x10000000+0+0",
