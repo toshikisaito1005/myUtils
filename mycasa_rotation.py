@@ -228,8 +228,28 @@ def rotation_13co21_13co10(
                     map_eTrot[this_x,this_y]  = eTrot
                     map_elogN[this_x,this_y]  = elogNmol
 
+    max_ratio_detected = np.nanmax(map_ratio)
+
+    for i in xy:
+        # get data of this sightline
+        this_x,this_y  = i[0],i[1]
+
+        this_freq_low  = freq_low[this_x, this_y]
+        this_data_low  = data_low[this_x, this_y]
+        this_err_low   = err_low[this_x, this_y]
+
+        this_freq_high = freq_high[this_x, this_y]
+        this_data_high = data_high[this_x, this_y]
+        this_err_high  = err_high[this_x, this_y]
+
+        max_snr_low    = np.max(this_data_low/this_err_low)
+        max_snr_high   = np.max(this_data_high/this_err_high)
+
+        # vsys guess
+        guess_b = (restfreq_low - this_freq_low[np.nanargmax(this_data_low)]) / restfreq_low * 299792.458
+
         # fit when only 1-0 detected
-        elif max_snr_low>=snr and max_snr_high<snr:
+        if max_snr_low>=snr and max_snr_high<snr:
             # guess
             p0 = [np.max(this_data_low), guess_b, 40.]
 
@@ -321,7 +341,7 @@ def rotation_13co21_13co10(
 
             rms_low = np.sqrt(np.square(this_data_low).mean())
 
-            p0 = rms_low * snr # 2-1 tpeak upper limit
+            p0 = rms_low * snr # 1-0 tpeak upper limit
             p1 = popt[0] # 2-1
             pr = p1/p0   # 2-1/1-0
             p2 = popt[1]
@@ -331,7 +351,7 @@ def rotation_13co21_13co10(
             e2 = perr[1]
             e3 = abs(perr[2])
 
-            if p1>0 and p1<max_high and pr>0 and p2!=guess_b and p3!=40 and p1/e1>snr:
+            if p1>0 and p1<max_high and pr>0 and pr<max_ratio_detected and p2!=guess_b and p3!=40 and p1/e1>snr and p3/e3>snr:
                 # derive parameters
                 this_mom0_low   = p0 * p3 * np.sqrt(2*np.pi)
                 this_mom0_high  = p1 * p3 * np.sqrt(2*np.pi) # upper limit
