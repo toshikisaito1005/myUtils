@@ -199,8 +199,8 @@ def rotation_13co21_13co10(
                 log10_Nugu_low   = np.log10(derive_Nu(this_mom0_low, restfreq_low, Aul_low) / gu_low)
                 log10_Nugu_high  = np.log10(derive_Nu(this_mom0_high, restfreq_high, Aul_high) / gu_high)
 
-                elog10_Nugu_low  = derive_Nu(this_emom0_low, restfreq_low, Aul_low) / abs(derive_Nu(this_mom0_low, restfreq_low, Aul_low)) / np.log(10)
-                elog10_Nugu_high = derive_Nu(this_emom0_high, restfreq_high, Aul_high) / abs(derive_Nu(this_mom0_high, restfreq_high, Aul_high)) / np.log(10)
+                elog10_Nugu_low  = derive_Nu(this_emom0_low, restfreq_low, Aul_low) / abs(derive_Nu(this_mom0_low, restfreq_low, Aul_low))
+                elog10_Nugu_high = derive_Nu(this_emom0_high, restfreq_high, Aul_high) / abs(derive_Nu(this_mom0_high, restfreq_high, Aul_high))
 
                 x_data       = np.array([Eu_low, Eu_high])
                 y_data       = np.array([log10_Nugu_low, log10_Nugu_high])
