@@ -1321,7 +1321,7 @@ class ToolsNcol():
             self.outcubes_13co21.replace("???","60pc"),
             self.outecubes_13co21.replace("???","60pc"),
             self.outmodelcube_13co21 + "_tmp1",
-            "iif(IM1/IM0>3,IM0,0)",
+            "iif(IM0/IM1>3,IM0,0)",
             )
 
 
