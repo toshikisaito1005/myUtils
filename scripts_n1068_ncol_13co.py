@@ -199,6 +199,7 @@ class ToolsNcol():
 
         # finals
         self.final_60pc_obs      = self.dir_final + self._read_key("final_60pc_obs")
+        self.final_60pc_rot      = self.dir_final + self._read_key("final_60pc_rot")
         #
         self.final_13co10_mom0   = self.dir_final + self._read_key("final_13co10_mom0")
         self.final_13co21_mom0   = self.dir_final + self._read_key("final_13co21_mom0")
@@ -267,7 +268,8 @@ class ToolsNcol():
         delin                 = False,
         do_all                = False,
         #
-        do_final_60pc_obs     = True,
+        do_final_60pc_obs     = False,
+        do_final_60pc_rot     = True,
         #
         do_final_13co10_mom0  = False,
         do_final_13co21_mom0  = False,
@@ -292,7 +294,8 @@ class ToolsNcol():
 
         if do_all==True:
             #
-            do_final_60pc         = True
+            do_final_60pc_obs     = True
+            do_final_60pc_rot     = True
             do_final_13co10_mom0  = True
             do_final_13co21_mom0  = True
             do_final_ratio        = True
@@ -374,6 +377,39 @@ class ToolsNcol():
                 self.final_60pc_obs+"_tmp12.png",
                 self.final_60pc_obs+"_tmp34.png",
                 self.final_60pc_obs,
+                "1000000x10000000+0+0",
+                "1000000x10000000+0+0",
+                axis="column",
+                delin=True,
+                )
+
+        if do_final_60pc_rot==True:
+            print("############################")
+            print("# create do_final_60pc_rot #")
+            print("############################")
+
+            combine_two_png(
+                self.outpng_13co_trot.replace("???","60pc"),
+                self.outpng_13co_ncol.replace("???","60pc"),
+                self.final_60pc_rot+"_tmp1.png",
+                self.box_map_nox,
+                self.box_map_noxy,
+                delin=delin,
+                )
+            combine_two_png(
+                self.outpng_e13co_trot.replace("???","60pc"),
+                self.outpng_e13co_ncol.replace("???","60pc"),
+                self.final_60pc_rot+"_tmp2.png",
+                self.box_map,
+                self.box_map_noy,
+                delin=delin,
+                )
+
+            #
+            combine_two_png(
+                self.final_60pc_rot+"_tmp1.png",
+                self.final_60pc_rot+"_tmp2.png",
+                self.final_60pc_rot,
                 "1000000x10000000+0+0",
                 "1000000x10000000+0+0",
                 axis="column",
