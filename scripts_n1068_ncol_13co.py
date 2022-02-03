@@ -1302,6 +1302,7 @@ class ToolsNcol():
 
     def create_model_cubes(
         self,
+        snr_cut=5.0,
         ):
         """
         """
@@ -1314,14 +1315,14 @@ class ToolsNcol():
             self.outcubes_13co10.replace("???","60pc"),
             self.outecubes_13co10.replace("???","60pc"),
             self.outmodelcube_13co10 + "_tmp1",
-            "iif(IM0/IM1>3,IM0,0)",
+            "iif(IM0/IM1>"+str(snr_cut)+",IM0,0)",
             )
 
         run_immath_two(
             self.outcubes_13co21.replace("???","60pc"),
             self.outecubes_13co21.replace("???","60pc"),
             self.outmodelcube_13co21 + "_tmp1",
-            "iif(IM0/IM1>3,IM0,0)",
+            "iif(IM0/IM1>"+str(snr_cut)+",IM0,0)",
             )
 
 
