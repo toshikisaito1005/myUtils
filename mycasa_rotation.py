@@ -233,7 +233,6 @@ def rotation_13co21_13co10(
 
     xy  = itertools.product(x, y)
     for i in xy:
-        print(i[0],i[1])
         # get data of this sightline
         this_x,this_y  = i[0],i[1]
 
@@ -325,7 +324,6 @@ def rotation_13co21_13co10(
                 map_Trot[this_x,this_y]   = Trot
                 map_logN[this_x,this_y]   = logNmol
 
-        """
         # fit when only 2-1 detected
         elif max_snr_low<snr and max_snr_high>=snr:
             # guess
@@ -403,7 +401,6 @@ def rotation_13co21_13co10(
                 # add pixel
                 map_Trot[this_x,this_y]   = Trot
                 map_logN[this_x,this_y]   = logNmol
-        """
 
     # low-J mom0 to fits
     fits_creation(map_mom0_low.T,"mom0_low.fits",template,"K.km/s")
