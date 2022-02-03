@@ -152,6 +152,7 @@ def rotation_13co21_13co10(
                 sigma  = this_err,
                 p0     = p0,
                 maxfev = 100000,
+                absolute_sigma=True,
                 )
             perr = np.sqrt(np.diag(pcov))
 
