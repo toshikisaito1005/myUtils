@@ -231,7 +231,9 @@ def rotation_13co21_13co10(
     max_ratio_detected = np.nanmax(map_ratio)
     max_trot_detected  = np.nanmax(map_Trot)
 
+    print("do again")
     for i in xy:
+        print(i[0],i[1])
         # get data of this sightline
         this_x,this_y  = i[0],i[1]
 
@@ -281,7 +283,6 @@ def rotation_13co21_13co10(
             print(p0>0,p0<max_low,pr>0,pr<=1.0,p2!=guess_b,p3!=40,p0/e0>snr)
 
             if p0>0 and p0<max_low and pr>0 and pr<=1.0 and p2!=guess_b and p3!=40 and p0/e0>snr:
-                print("# fit 1-0 only")
                 # derive parameters
                 this_mom0_low   = p0 * p3 * np.sqrt(2*np.pi)
                 this_mom0_high  = p1 * p3 * np.sqrt(2*np.pi) # upper limit
