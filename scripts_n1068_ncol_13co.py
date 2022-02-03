@@ -1330,7 +1330,7 @@ class ToolsNcol():
             velocity=False,
             )
 
-        # create 13co21 model cube
+        # create 13co21 model cube based on the 13co10 model
         maxval = str(imstat(self.outmodelcube_13co10)["max"][0])
         run_immath_one(
             self.outmodelcube_13co10,
@@ -1369,7 +1369,7 @@ class ToolsNcol():
             self._showcase_one(
                 self.outmaps_mom0_13co10.replace("???",this_beam),
                 self.outpng_mom0_13co10.replace("???",this_beam),
-                "$^{\mathrm{13}}$CO(1-0) integrated intensity at " + this_beam.replace("pc"," pc"),
+                "$I^{\mathrm{13}}$CO(1-0) at " + this_beam.replace("pc"," pc"),
                 "(K km s$^{-1}$)",
                 [0,maxval],
                 )
@@ -1379,7 +1379,7 @@ class ToolsNcol():
             self._showcase_one(
                 self.outemaps_mom0_13co10.replace("???",this_beam),
                 self.outpng_emom0_13co10.replace("???",this_beam),
-                "Error of $^{\mathrm{13}}$CO(1-0) intensity at " + this_beam.replace("pc"," pc"),
+                "$\sigma_{\mathrm{err}}$($I^{\mathrm{13}}$CO(1-0)) at " + this_beam.replace("pc"," pc"),
                 "(K km s$^{-1}$)",
                 [0,maxval],
                 )
