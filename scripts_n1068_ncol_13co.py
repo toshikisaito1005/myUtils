@@ -198,7 +198,7 @@ class ToolsNcol():
         self.outpng_e13co_ncol   = self.dir_products + self._read_key("outpng_e13co_ncol")
 
         # finals
-        self.final_60pc          = self.dir_final + self._read_key("final_60pc")
+        self.final_60pc_obs      = self.dir_final + self._read_key("final_60pc_obs")
         #
         self.final_13co10_mom0   = self.dir_final + self._read_key("final_13co10_mom0")
         self.final_13co21_mom0   = self.dir_final + self._read_key("final_13co21_mom0")
@@ -315,7 +315,7 @@ class ToolsNcol():
                 self.outpng_mom0_13co10.replace("???","60pc"),
                 self.outpng_mom0_13co21.replace("???","60pc"),
                 self.outpng_ratio.replace("???","60pc"),
-                self.final_60pc+"_tmp1.png",
+                self.final_60pc_obs+"_tmp1.png",
                 self.box_map,
                 self.box_map,
                 self.box_map,
@@ -324,7 +324,7 @@ class ToolsNcol():
             combine_two_png(
                 self.outpng_mom1.replace("???","60pc"),
                 self.outpng_mom2.replace("???","60pc"),
-                self.final_60pc+"_tmp2.png",
+                self.final_60pc_obs+"_tmp2.png",
                 self.box_map,
                 self.box_map,
                 delin=delin,
@@ -333,7 +333,7 @@ class ToolsNcol():
                 self.outpng_emom0_13co10.replace("???","60pc"),
                 self.outpng_emom0_13co21.replace("???","60pc"),
                 self.outpng_eratio.replace("???","60pc"),
-                self.final_60pc+"_tmp3.png",
+                self.final_60pc_obs+"_tmp3.png",
                 self.box_map,
                 self.box_map,
                 self.box_map,
@@ -342,7 +342,7 @@ class ToolsNcol():
             combine_two_png(
                 self.outpng_emom1.replace("???","60pc"),
                 self.outpng_emom2.replace("???","60pc"),
-                self.final_60pc+"_tmp4.png",
+                self.final_60pc_obs+"_tmp4.png",
                 self.box_map,
                 self.box_map,
                 delin=delin,
@@ -350,27 +350,27 @@ class ToolsNcol():
 
             #
             combine_two_png(
-                self.final_60pc+"_tmp1.png",
-                self.final_60pc+"_tmp2.png",
-                self.final_60pc+"_tmp12.png",
+                self.final_60pc_obs+"_tmp1.png",
+                self.final_60pc_obs+"_tmp2.png",
+                self.final_60pc_obs+"_tmp12.png",
                 "1000000x10000000+0+0",
                 "1000000x10000000+0+0",
                 axis="column",
                 delin=True,
                 )
             combine_two_png(
-                self.final_60pc+"_tmp3.png",
-                self.final_60pc+"_tmp4.png",
-                self.final_60pc+"_tmp34.png",
+                self.final_60pc_obs+"_tmp3.png",
+                self.final_60pc_obs+"_tmp4.png",
+                self.final_60pc_obs+"_tmp34.png",
                 "1000000x10000000+0+0",
                 "1000000x10000000+0+0",
                 axis="column",
                 delin=True,
                 )
             combine_two_png(
-                self.final_60pc+"_tmp12.png",
-                self.final_60pc+"_tmp34.png",
-                self.final_60pc,
+                self.final_60pc_obs+"_tmp12.png",
+                self.final_60pc_obs+"_tmp34.png",
+                self.final_60pc_obs,
                 "1000000x10000000+0+0",
                 "1000000x10000000+0+0",
                 axis="column",
