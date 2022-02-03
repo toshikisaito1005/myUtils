@@ -327,7 +327,6 @@ def fits_creation(
 #####################
 
 def _f_linear(x, a, b):
-    #func = b - x * ( np.log10(np.e)/Trot )
     func = b - a * x
 
     return func

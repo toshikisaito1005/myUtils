@@ -254,7 +254,7 @@ class ToolsNcol():
     def immagick_figures(
         self,
         delin                 = False,
-        do_all                = False,
+        do_all                = True,
         #
         do_final_13co10_mom0  = False,
         do_final_13co21_mom0  = False,
@@ -268,9 +268,9 @@ class ToolsNcol():
         do_final_e13co21_mom0 = False,
         do_final_eratio       = False,
         do_final_emom1        = False,
-        do_final_emom2        = True,
-        do_final_etrot        = True,
-        do_final_encol        = True,
+        do_final_emom2        = False,
+        do_final_etrot        = False,
+        do_final_encol        = False,
         ):
         """
         """
