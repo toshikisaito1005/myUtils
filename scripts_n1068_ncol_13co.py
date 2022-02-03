@@ -1440,8 +1440,8 @@ class ToolsNcol():
         label_scalebar = "100 pc"
 
         for this_beam in self.beams:
-            #if this_beam!="60pc":
-            #    continue
+            if this_beam!="60pc":
+                continue
 
             print("# myfig_fits2png at " + this_beam)
             imcontour1 = self.outmaps_mom0_13co21.replace("???",this_beam)
@@ -1452,7 +1452,7 @@ class ToolsNcol():
                 self.outmaps_mom0_13co10.replace("???",this_beam),
                 imcontour1,
                 self.outpng_mom0_13co10.replace("???",this_beam),
-                "$I_{\mathrm{^{13}CO(1-0)}}$ at " + this_beam.replace("pc"," pc"),
+                "$\boldsymbol{I_{\mathrm{^{13}CO(1-0)}}}$ at " + this_beam.replace("pc"," pc"),
                 "(K km s$^{-1}$)",
                 [0,maxval],
                 )
