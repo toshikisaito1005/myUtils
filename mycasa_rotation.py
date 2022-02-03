@@ -208,8 +208,8 @@ def rotation_13co21_13co10(
                 popt2, pcov2 = curve_fit(_f_linear,x_data,y_data,sigma=y_err,p0=p0_rotation,maxfev=100000)
                 perr2        = np.sqrt(np.diag(pcov2))
 
-                Trot  = popt2[0]
-                eTrot = perr2[0]
+                Trot  = np.log10(np.e) / popt2[0]
+                eTrot = np.log10(np.e) / popt2[0]**2 * perr2[0]
 
                 Z = derive_Z_13co(Trot)
 
@@ -323,8 +323,9 @@ def fits_creation(
 # fitting functions #
 #####################
 
-def _f_linear(x, Trot, b):
-    func = b - x * ( np.log10(np.e)/Trot )
+def _f_linear(x, a, b):
+    #func = b - x * ( np.log10(np.e)/Trot )
+    func = b - x * a
 
     return func
 
