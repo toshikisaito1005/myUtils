@@ -205,12 +205,13 @@ def rotation_13co21_13co10(
                 x_data       = np.array([Eu_low, Eu_high])
                 y_data       = np.array([log10_Nugu_low, log10_Nugu_high])
                 y_err        = np.array([elog10_Nugu_low, elog10_Nugu_high])
-                popt2, pcov2 = curve_fit(_f_linear,x_data,y_data,sigma=y_err,p0=p0_rotation,maxfev=100000)
+                popt2, pcov2 = np.polyfit(x_data, y_data, w=1.0/y_err, deg=0, cov=True)
+                #popt2, pcov2 = curve_fit(_f_linear,x_data,y_data,sigma=y_err,p0=p0_rotation,maxfev=100000)
                 perr2        = np.sqrt(np.diag(pcov2))
 
                 Trot  = np.log10(np.e) / popt2[0]
                 eTrot = np.log10(np.e) / popt2[0]**2 * perr2[0]
-                print(np.c_[x_data,popt2,perr2])
+                print(np.c_[popt2,perr2])
 
                 Z = derive_Z_13co(Trot)
 
