@@ -1476,26 +1476,17 @@ class ToolsNcol():
                 self.outpng_emom2.replace("???",this_beam),
                 "$\sigma_{\mathrm{err}}$($\sigma_{V}$) at " + this_beam.replace("pc"," pc"),
                 "(km s$^{-1}$)",
+                [0,maxval],
                 )
 
             # Trot
-            myfig_fits2png(
-                imcolor=self.outmaps_13co_trot.replace("???",this_beam),
-                outfile=self.outpng_13co_trot.replace("???",this_beam),
-                imcontour1=imcontour1,
-                imsize_as=self.imsize,
-                ra_cnt=self.ra_agn_str,
-                dec_cnt=self.dec_agn_str,
-                levels_cont1=levels_cont1,
-                width_cont1=width_cont1,
-                set_title="$T_{\mathrm{rot,"+this_beam.replace("pc"," pc")+"}}$",
-                colorlog=False,
-                scalebar=scalebar,
-                label_scalebar=label_scalebar,
-                set_cbar=True,
-                label_cbar="(K)",
+            self._showcase_one(
+                self.outmaps_13co_trot.replace("???",this_beam),
+                imcontour1,
+                self.outpng_13co_trot.replace("???",this_beam),
+                "$T_{\mathrm{rot}}$ at " + this_beam.replace("pc"," pc"),
+                "(K)",
                 clim=[2.73,8],
-                set_bg_color=set_bg_color,
                 )
 
             # Trot error
@@ -1662,7 +1653,7 @@ class ToolsNcol():
         outfile,
         set_title,
         label_cbar,
-        clim,
+        clim=None,
         ):
         """
         """
