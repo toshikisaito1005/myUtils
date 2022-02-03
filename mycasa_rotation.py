@@ -226,6 +226,20 @@ def rotation_13co21_13co10(
                     map_eTrot[this_x,this_y]  = eTrot
                     map_elogN[this_x,this_y]  = elogNmol
 
+        elif max_snr_low>=snr and max_snr_high<snr:
+            # fitting
+            this_f_two = lambda x, a1, a2, b, c: _f_two(x, a1, a2, b, c, restfreq_low, restfreq_high)
+            popt,pcov  = curve_fit(
+                this_f_two,
+                this_freq,
+                this_data,
+                sigma          = this_err,
+                p0             = p0,
+                maxfev         = 100000,
+                absolute_sigma = True,
+                )
+            perr = np.sqrt(np.diag(pcov))
+
     # low-J mom0 to fits
     fits_creation(map_mom0_low.T,"mom0_low.fits",template,"K.km/s")
     fits_creation(map_emom0_low.T,"emom0_low.fits",cubelow,"K.km/s")
@@ -342,6 +356,16 @@ def _f_two(x, a1, a2, b, c, freq1, freq2):
     func = \
         a1 * np.exp( -(x-freq1+offset1)**2/(2*width1**2) ) + \
         a2 * np.exp( -(x-freq2+offset2)**2/(2*width2**2) )
+
+    return func
+
+def _f_one(x, a1, b, c, freq1):
+
+    offset1 = b /299792.458 * freq1 # km/s
+
+    width1 = c /299792.458 * freq1 # km/s
+
+    func = a1 * np.exp( -(x-freq1+offset1)**2/(2*width1**2) )
 
     return func
 

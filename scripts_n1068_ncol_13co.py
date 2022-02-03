@@ -1310,7 +1310,7 @@ class ToolsNcol():
             imcontour1   = self.outmaps_mom0_13co21.replace("???",this_beam)
             levels_cont1 = [0.05, 0.1, 0.2, 0.4, 0.8, 0.96]
             width_cont1  = [1.0]
-            set_bg_color = None # cm.rainbow(0)
+            set_bg_color = "white" # cm.rainbow(0)
 
             # 13co10 mom0
             maxval = imstat(self.outmaps_mom0_13co10.replace("???",this_beam))["max"]
@@ -1455,6 +1455,7 @@ class ToolsNcol():
                 set_cbar=True,
                 clim=[1116-200,1116+200],
                 label_cbar="(km s$^{-1}$)",
+                set_bg_color=set_bg_color,
                 )
 
             # mom1 error
@@ -1474,6 +1475,7 @@ class ToolsNcol():
                 set_cbar=True,
                 #clim=[1116-200,1116+200],
                 label_cbar="(km s$^{-1}$)",
+                set_bg_color=set_bg_color,
                 )
 
             # mom2
@@ -1494,6 +1496,7 @@ class ToolsNcol():
                 set_cbar=True,
                 clim=[0,maxval],
                 label_cbar="(km s$^{-1}$)",
+                set_bg_color=set_bg_color,
                 )
 
             # mom2 error
@@ -1514,6 +1517,7 @@ class ToolsNcol():
                 set_cbar=True,
                 clim=[0,maxval],
                 label_cbar="(km s$^{-1}$)",
+                set_bg_color=set_bg_color,
                 )
 
             # Trot
