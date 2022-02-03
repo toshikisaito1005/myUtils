@@ -1535,6 +1535,7 @@ class ToolsNcol():
                 set_bg_color=cm.rainbow(0),
                 )
 
+            """
             # Trot error
             maxval = imstat(self.outemaps_13co_trot.replace("???",this_beam))["max"]
             myfig_fits2png(
@@ -1555,6 +1556,7 @@ class ToolsNcol():
                 clim=[0,maxval],
                 set_bg_color=cm.rainbow(0),
                 )
+            """
 
             # log N13co
             myfig_fits2png(
@@ -1576,6 +1578,7 @@ class ToolsNcol():
                 set_bg_color=cm.rainbow(0),
                 )
 
+            """
             # log N13co error
             myfig_fits2png(
                 imcolor=self.outemaps_13co_ncol.replace("???",this_beam),
@@ -1595,6 +1598,7 @@ class ToolsNcol():
                 #clim=[0,8],
                 set_bg_color=cm.rainbow(0),
                 )
+            """
 
     #################
     # multi_fitting #
