@@ -1331,7 +1331,7 @@ class ToolsNcol():
             )
 
         # create 13co21 model cube
-        maxval = str(imstat(self.outmodelcube_13co10)["max"][0]**2)
+        maxval = str(imstat(self.outmodelcube_13co10)["max"][0])
         run_immath_one(
             self.outmodelcube_13co10,
             self.outmodelcube_13co21 + "_tmp1",
