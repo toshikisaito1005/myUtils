@@ -1361,6 +1361,11 @@ class ToolsNcol():
         scalebar = 100. / self.scale_pc
         label_scalebar = "100 pc"
 
+        # will be deleted
+        levels_cont1 = [0.05, 0.1, 0.2, 0.4, 0.8, 0.96]
+        width_cont1  = [1.0]
+        set_bg_color = "white" # cm.rainbow(0)
+
         for this_beam in self.beams:
             if this_beam!="60pc":
                 continue
