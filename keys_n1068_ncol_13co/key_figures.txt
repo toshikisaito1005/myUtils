@@ -12,6 +12,8 @@ dir_final           ,,,images/
 # final products #
 ##################
 # paper
+final_60pc          ,,,fig_gallery_60pc.pngs
+#
 final_13co10_mom0   ,,,fig_map_13co10_mom0.png
 final_13co21_mom0   ,,,fig_map_13co21_mom0.png
 final_mom1          ,,,fig_map_mom1.png
@@ -19,7 +21,6 @@ final_mom2          ,,,fig_map_mom2.png
 final_ratio         ,,,fig_map_ratio.png
 final_trot          ,,,fig_map_trot.png
 final_ncol          ,,,fig_map_ncol.png
-#
 final_e13co10_mom0  ,,,fig_map_e13co10_mom0.png
 final_e13co21_mom0  ,,,fig_map_e13co21_mom0.png
 final_emom1         ,,,fig_map_emom1.png

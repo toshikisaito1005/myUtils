@@ -198,6 +198,8 @@ class ToolsNcol():
         self.outpng_e13co_ncol   = self.dir_products + self._read_key("outpng_e13co_ncol")
 
         # finals
+        self.final_60pc          = self.dir_final + self._read_key("final_60pc")
+        #
         self.final_13co10_mom0   = self.dir_final + self._read_key("final_13co10_mom0")
         self.final_13co21_mom0   = self.dir_final + self._read_key("final_13co21_mom0")
         self.final_mom1          = self.dir_final + self._read_key("final_mom1")
@@ -205,7 +207,6 @@ class ToolsNcol():
         self.final_ratio         = self.dir_final + self._read_key("final_ratio")
         self.final_trot          = self.dir_final + self._read_key("final_trot")
         self.final_ncol          = self.dir_final + self._read_key("final_ncol")
-        #
         self.final_e13co10_mom0  = self.dir_final + self._read_key("final_e13co10_mom0")
         self.final_e13co21_mom0  = self.dir_final + self._read_key("final_e13co21_mom0")
         self.final_emom1         = self.dir_final + self._read_key("final_emom1")
@@ -263,6 +264,8 @@ class ToolsNcol():
         delin                 = False,
         do_all                = False,
         #
+        do_final_60pc         = True,
+        #
         do_final_13co10_mom0  = False,
         do_final_13co21_mom0  = False,
         do_final_ratio        = False,
@@ -270,7 +273,6 @@ class ToolsNcol():
         do_final_mom2         = False,
         do_final_trot         = False,
         do_final_ncol         = False,
-        #
         do_final_e13co10_mom0 = False,
         do_final_e13co21_mom0 = False,
         do_final_eratio       = False,
@@ -286,6 +288,8 @@ class ToolsNcol():
         check_first(self.outpng_mom0_13co10.replace("???","60pc"),taskname)
 
         if do_all==True:
+            #
+            do_final_60pc         = True
             do_final_13co10_mom0  = True
             do_final_13co21_mom0  = True
             do_final_ratio        = True
@@ -293,7 +297,6 @@ class ToolsNcol():
             do_final_mom2         = True
             do_final_trot         = True
             do_final_ncol         = True
-            #
             do_final_e13co10_mom0 = True
             do_final_e13co21_mom0 = True
             do_final_eratio       = True
@@ -301,6 +304,112 @@ class ToolsNcol():
             do_final_emom2        = True
             do_final_etrot        = True
             do_final_encol        = True
+
+        if do_final_60pc==True:
+            print("########################")
+            print("# create do_final_60pc #")
+            print("########################")
+
+            #
+            combine_two_png(
+                self.outpng_mom0_13co10.replace("???","60pc"),
+                self.outpng_mom0_13co21.replace("???","60pc"),
+                self.final_60pc+"_tmp1.png",
+                self.box_map,
+                self.box_map,
+                delin=delin,
+                )
+            combine_two_png(
+                self.outpng_mom1.replace("???","60pc"),
+                self.outpng_mom2.replace("???","60pc"),
+                self.final_60pc+"_tmp2.png",
+                self.box_map,
+                self.box_map,
+                delin=delin,
+                )
+            combine_two_png(
+                self.final_60pc+"_tmp1.png",
+                self.final_60pc+"_tmp2.png",
+                self.final_60pc+"_tmp12.png",
+                "1000000x10000000+0+0",
+                "1000000x10000000+0+0",
+                delin=True,
+                )
+            combine_three_png(
+                self.outpng_ratio.replace("???","60pc"),
+                self.outpng_13co_trot.replace("???","60pc"),
+                self.outpng_13co_ncol.replace("???","60pc"),
+                self.final_60pc+"_tmp3.png",
+                self.box_map,
+                self.box_map,
+                self.box_map,
+                delin=delin,
+                )
+            combine_two_png(
+                self.final_60pc+"_tmp12.png",
+                self.final_60pc+"_tmp3.png",
+                self.final_60pc+"_tmp123.png",
+                "1000000x10000000+0+0",
+                "1000000x10000000+0+0",
+                axis="column",
+                delin=True,
+                )
+
+            #
+            combine_two_png(
+                self.outpng_emom0_13co10.replace("???","60pc"),
+                self.outpng_emom0_13co21.replace("???","60pc"),
+                self.final_60pc+"_tmp4.png",
+                self.box_map,
+                self.box_map,
+                delin=delin,
+                )
+            combine_two_png(
+                self.outpng_emom1.replace("???","60pc"),
+                self.outpng_emom2.replace("???","60pc"),
+                self.final_60pc+"_tmp5.png",
+                self.box_map,
+                self.box_map,
+                delin=delin,
+                )
+            combine_two_png(
+                self.final_60pc+"_tmp4.png",
+                self.final_60pc+"_tmp5.png",
+                self.final_60pc+"_tmp45.png",
+                "1000000x10000000+0+0",
+                "1000000x10000000+0+0",
+                delin=True,
+                )
+            combine_three_png(
+                self.outpng_eratio.replace("???","60pc"),
+                self.outpng_e13co_trot.replace("???","60pc"),
+                self.outpng_e13co_ncol.replace("???","60pc"),
+                self.final_60pc+"_tmp6.png",
+                self.box_map,
+                self.box_map,
+                self.box_map,
+                delin=delin,
+                )
+            combine_two_png(
+                self.final_60pc+"_tmp45.png",
+                self.final_60pc+"_tmp6.png",
+                self.final_60pc+"_tmp456.png",
+                "1000000x10000000+0+0",
+                "1000000x10000000+0+0",
+                axis="column",
+                delin=True,
+                )
+
+            #
+            combine_two_png(
+                self.final_60pc+"_tmp123.png",
+                self.final_60pc+"_tmp456.png",
+                self.final_60pc,
+                "1000000x10000000+0+0",
+                "1000000x10000000+0+0",
+                axis="column",
+                delin=True,
+                )
 
         if do_final_13co10_mom0==True:
             print("############################")
@@ -1360,11 +1469,6 @@ class ToolsNcol():
 
         scalebar = 100. / self.scale_pc
         label_scalebar = "100 pc"
-
-        # will be deleted
-        levels_cont1 = [0.05, 0.1, 0.2, 0.4, 0.8, 0.96]
-        width_cont1  = [1.0]
-        set_bg_color = "white" # cm.rainbow(0)
 
         for this_beam in self.beams:
             if this_beam!="60pc":
