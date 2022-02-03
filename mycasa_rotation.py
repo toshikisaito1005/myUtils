@@ -228,17 +228,73 @@ def rotation_13co21_13co10(
 
         elif max_snr_low>=snr and max_snr_high<snr:
             # fitting
-            this_f_two = lambda x, a1, a2, b, c: _f_two(x, a1, a2, b, c, restfreq_low, restfreq_high)
+            this_f_two = lambda x, a1, a2, b, c: _f_one(x, a1, b, c, restfreq_low)
             popt,pcov  = curve_fit(
                 this_f_two,
-                this_freq,
-                this_data,
+                this_freq_low,
+                this_data_low,
                 sigma          = this_err,
                 p0             = p0,
                 maxfev         = 100000,
                 absolute_sigma = True,
                 )
             perr = np.sqrt(np.diag(pcov))
+
+            rms_high = np.sqrt(np.square(this_data_high).mean())
+
+            p0 = popt[0] # 1-0
+            p2 = popt[1]
+            p3 = abs(popt[2])
+
+            p1 = rms_high * snr # 2-1 tpeak upper limit
+            pr = p1/p0   # 2-1/1-0
+
+            e0 = perr[0]
+            e2 = perr[1]
+            e3 = abs(perr[2])
+
+            if p0>0 and p0<max_low and pr>0 and pr<=ratio_max and p2!=guess_b and p3!=40 and p0/e0>snr:
+                # derive parameters
+                this_mom0_low   = p0 * p3 * np.sqrt(2*np.pi)
+                this_mom0_high  = p1 * p3 * np.sqrt(2*np.pi) # upper limit
+                this_mom1       = p2
+                this_mom2       = p3
+                this_ratio      = this_mom0_high / this_mom0_low # upper limit
+
+                # writing them
+                map_mom0_low[this_x,this_y]   = this_mom0_low
+                map_mom0_high[this_x,this_y]  = this_mom0_high
+                map_mom1[this_x,this_y]       = this_mom1
+                map_mom2[this_x,this_y]       = this_mom2
+                map_ratio[this_x,this_y]      = this_ratio
+
+                # derive error parameters
+                this_emom0_low  = np.sqrt(2*np.pi) * np.sqrt(p0**2*e3**2 + p3**2*e0**2)
+                this_emom1      = e2
+                this_emom2      = e3
+
+                # writing them
+                map_emom0_low[this_x,this_y]  = this_emom0_low
+                map_emom1[this_x,this_y]      = this_emom1
+                map_emom2[this_x,this_y]      = this_emom2
+
+                # rotation diagram fitting
+                log10_Nugu_low   = np.log10(derive_Nu(this_mom0_low, restfreq_low, Aul_low) / gu_low)
+                log10_Nugu_high  = np.log10(derive_Nu(this_mom0_high, restfreq_high, Aul_high) / gu_high)
+
+                x_data       = np.array([Eu_low, Eu_high])
+                y_data       = np.array([log10_Nugu_low, log10_Nugu_high])
+                popt2, pcov2 = curve_fit(_f_linear,x_data,y_data,p0=p0_rotation,maxfev=100000)
+
+                Trot  = np.log10(np.e) / popt2[0]
+
+                Z = derive_Z_13co(Trot)
+
+                logNmol  = popt2[1] + np.log10(Z)
+
+                # add pixel
+                map_Trot[this_x,this_y]   = Trot
+                map_logN[this_x,this_y]   = logNmol
 
     # low-J mom0 to fits
     fits_creation(map_mom0_low.T,"mom0_low.fits",template,"K.km/s")
