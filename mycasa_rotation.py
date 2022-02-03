@@ -194,7 +194,7 @@ def rotation_13co21_13co10(
                 map_emom0_high[this_x,this_y] = this_emom0_high
                 map_emom1[this_x,this_y]      = this_emom1
                 map_emom2[this_x,this_y]      = this_emom2
-                map_eratio[this_x,this_y]     = this_ratio
+                map_eratio[this_x,this_y]     = this_eratio
 
                 # rotation diagram fitting
                 log10_Nugu_low   = np.log10(derive_Nu(this_mom0_low, restfreq_low, Aul_low) / gu_low)
@@ -211,14 +211,13 @@ def rotation_13co21_13co10(
 
                 Trot  = np.log10(np.e) / popt2[0]
                 eTrot = np.log10(np.e) / popt2[0]**2 * perr2[0]
-                print(np.c_[popt2,perr2])
 
                 Z = derive_Z_13co(Trot)
 
                 logNmol  = popt2[1] + np.log10(Z)
                 elogNmol = perr2[1] + np.log10(Z)
 
-                if Trot>2.73:
+                if Trot>eTrot*2.0:
                     # add pixel
                     map_Trot[this_x,this_y]   = Trot
                     map_logN[this_x,this_y]   = logNmol
