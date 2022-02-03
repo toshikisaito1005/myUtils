@@ -382,7 +382,7 @@ def rotation_13co21_13co10(
             e2 = perr[1]
             e3 = abs(perr[2])
 
-            if p1>0 and p1<max_high and pr>0 and p2!=guess_b and p3!=40 and p1/e1>snr and p3/e3>snr_limit:
+            if p1>0 and p1<max_high and pr>0 and p2!=guess_b and p3!=40 and p1/e1>snr_limit and p3/e3>snr_limit:
                 # derive parameters
                 this_mom0_low   = p0 * p3 * np.sqrt(2*np.pi)
                 this_mom0_high  = p1 * p3 * np.sqrt(2*np.pi) # upper limit
