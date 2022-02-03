@@ -1379,7 +1379,7 @@ class ToolsNcol():
                 self.outmaps_mom0_13co10.replace("???",this_beam),
                 imcontour1,
                 self.outpng_mom0_13co10.replace("???",this_beam),
-                "$I^{\mathrm{13}}$CO(1-0) at " + this_beam.replace("pc"," pc"),
+                "$I_{^{\mathrm{13}}$CO(1-0)} at " + this_beam.replace("pc"," pc"),
                 "(K km s$^{-1}$)",
                 [0,maxval],
                 )
@@ -1390,7 +1390,7 @@ class ToolsNcol():
                 self.outemaps_mom0_13co10.replace("???",this_beam),
                 imcontour1,
                 self.outpng_emom0_13co10.replace("???",this_beam),
-                "$\sigma_{\mathrm{err}}$($I^{\mathrm{13}}$CO(1-0)) at " + this_beam.replace("pc"," pc"),
+                "$\sigma_{\mathrm{err}}$($I_{^{\mathrm{13}}$CO(1-0)}) at " + this_beam.replace("pc"," pc"),
                 "(K km s$^{-1}$)",
                 [0,maxval],
                 )
