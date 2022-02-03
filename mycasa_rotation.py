@@ -229,6 +229,7 @@ def rotation_13co21_13co10(
                     map_elogN[this_x,this_y]  = elogNmol
 
     max_ratio_detected = np.nanmax(map_ratio)
+    max_trot_detected  = np.nanmax(map_Trot)
 
     for i in xy:
         # get data of this sightline
@@ -351,13 +352,16 @@ def rotation_13co21_13co10(
             e2 = perr[1]
             e3 = abs(perr[2])
 
-            if p1>0 and p1<max_high and pr>0 and pr<max_ratio_detected and p2!=guess_b and p3!=40 and p1/e1>snr and p3/e3>snr:
+            if p1>0 and p1<max_high and pr>0 and p2!=guess_b and p3!=40 and p1/e1>snr and p3/e3>snr:
                 # derive parameters
                 this_mom0_low   = p0 * p3 * np.sqrt(2*np.pi)
                 this_mom0_high  = p1 * p3 * np.sqrt(2*np.pi) # upper limit
                 this_mom1       = p2
                 this_mom2       = p3
-                this_ratio      = this_mom0_high / this_mom0_low # upper limit
+                if pr<max_ratio_detected:
+                    this_ratio = pr # lower limit
+                else:
+                    this_ratio = max_ratio_detected # lower limit
 
                 # writing them
                 map_mom0_low[this_x,this_y]   = this_mom0_low
@@ -385,6 +389,8 @@ def rotation_13co21_13co10(
                 popt2, pcov2 = curve_fit(_f_linear,x_data,y_data,p0=p0_rotation,maxfev=100000)
 
                 Trot  = np.log10(np.e) / popt2[0]
+                if Trot>max_trot_detected:
+                    Trot = max_trot_detected
 
                 Z = derive_Z_13co(Trot)
 
