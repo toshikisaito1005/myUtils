@@ -42,7 +42,7 @@ def rotation_13co21_13co10(
     gu_high=5,
     Eu_low=5.28880,
     Eu_high=15.86618,
-    p0_rotation=[8.0,16.5], # initial guess for rotation diagram, Trot and log10 Ncol
+    p0_rotation=[np.log10(np.e)/8.0,16.5], # initial guess for rotation diagram, Trot and log10 Ncol
     ):
     """
     """
