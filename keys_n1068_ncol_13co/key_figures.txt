@@ -94,6 +94,7 @@ outpng_e13co_ncol   ,,,fig_map_encol_???.png
 # box for imagemajick
 box_map             ,,,2225x1870+335+80
 box_map_nox         ,,,2225x1730+335+80
+box_map_noy         ,,,2225x1870+550+80
 box_map_noxy        ,,,2225x1730+550+80
 
 #######

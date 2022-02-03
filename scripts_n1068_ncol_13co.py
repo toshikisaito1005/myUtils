@@ -218,6 +218,7 @@ class ToolsNcol():
         # box
         self.box_map            = self._read_key("box_map")
         self.box_map_nox        = self._read_key("box_map_nox")
+        self.box_map_noy        = self._read_key("box_map_noy")
         self.box_map_noxy       = self._read_key("box_map_noxy")
 
     ####################
@@ -346,7 +347,7 @@ class ToolsNcol():
                 self.outpng_emom2.replace("???","60pc"),
                 self.final_60pc_obs+"_tmp4.png",
                 self.box_map,
-                self.box_map,
+                self.box_map_noy,
                 delin=delin,
                 )
 
