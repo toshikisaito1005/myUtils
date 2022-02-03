@@ -1612,9 +1612,7 @@ class ToolsNcol():
         check_first(self.outcubes_13co10,taskname)
 
         for this_beam in self.beams:
-            if this_beam!="150pc":
-                continue
-            
+
             print("# multi_fitting for cubes at " + this_beam)
 
             # input
