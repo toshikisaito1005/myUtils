@@ -1320,7 +1320,7 @@ class ToolsNcol():
         run_roundsmooth(
             self.outmodelcube_13co10 + "_tmp1",
             self.outmodelcube_13co10 + "_tmp2",
-            "1.666arcsec", # float, arcsec unit
+            1.666,
             delin=True,
             )
         run_exportfits(
@@ -1339,7 +1339,7 @@ class ToolsNcol():
         run_roundsmooth(
             self.outmodelcube_13co21 + "_tmp1",
             self.outmodelcube_13co21 + "_tmp2",
-            "1.666arcsec", # float, arcsec unit
+            1.666,
             delin=True,
             )
         run_exportfits(
