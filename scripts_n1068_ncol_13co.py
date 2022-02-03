@@ -217,6 +217,7 @@ class ToolsNcol():
 
         # box
         self.box_map            = self._read_key("box_map")
+        self.box_map_nox        = self._read_key("box_map_nox")
 
     ####################
     # run_ngc1068_ncol #
@@ -316,7 +317,7 @@ class ToolsNcol():
                 self.outpng_mom0_13co21.replace("???","60pc"),
                 self.outpng_ratio.replace("???","60pc"),
                 self.final_60pc_obs+"_tmp1.png",
-                self.box_map,
+                self.box_map_nox,
                 self.box_map,
                 self.box_map,
                 delin=delin,
@@ -325,7 +326,7 @@ class ToolsNcol():
                 self.outpng_mom1.replace("???","60pc"),
                 self.outpng_mom2.replace("???","60pc"),
                 self.final_60pc_obs+"_tmp2.png",
-                self.box_map,
+                self.box_map_nox,
                 self.box_map,
                 delin=delin,
                 )
@@ -334,7 +335,7 @@ class ToolsNcol():
                 self.outpng_emom0_13co21.replace("???","60pc"),
                 self.outpng_eratio.replace("???","60pc"),
                 self.final_60pc_obs+"_tmp3.png",
-                self.box_map,
+                self.box_map_nox,
                 self.box_map,
                 self.box_map,
                 delin=delin,
@@ -343,7 +344,7 @@ class ToolsNcol():
                 self.outpng_emom1.replace("???","60pc"),
                 self.outpng_emom2.replace("???","60pc"),
                 self.final_60pc_obs+"_tmp4.png",
-                self.box_map,
+                self.box_map_nox,
                 self.box_map,
                 delin=delin,
                 )
@@ -1437,8 +1438,8 @@ class ToolsNcol():
         label_scalebar = "100 pc"
 
         for this_beam in self.beams:
-            if this_beam!="60pc":
-                continue
+            #if this_beam!="60pc":
+            #    continue
 
             print("# myfig_fits2png at " + this_beam)
             imcontour1 = self.outmaps_mom0_13co21.replace("???",this_beam)
