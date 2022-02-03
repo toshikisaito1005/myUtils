@@ -254,7 +254,7 @@ class ToolsNcol():
     def immagick_figures(
         self,
         delin                 = False,
-        do_all                = True,
+        do_all                = False,
         #
         do_final_13co10_mom0  = False,
         do_final_13co21_mom0  = False,
@@ -1310,6 +1310,7 @@ class ToolsNcol():
             imcontour1   = self.outmaps_mom0_13co21.replace("???",this_beam)
             levels_cont1 = [0.05, 0.1, 0.2, 0.4, 0.8, 0.96]
             width_cont1  = [1.0]
+            set_bg_color = None # cm.rainbow(0)
 
             # 13co10 mom0
             maxval = imstat(self.outmaps_mom0_13co10.replace("???",this_beam))["max"]
@@ -1329,7 +1330,7 @@ class ToolsNcol():
                 set_cbar=True,
                 label_cbar="(K km s$^{-1}$)",
                 clim=[0,maxval],
-                set_bg_color=cm.rainbow(0),
+                set_bg_color=set_bg_color,
                 )
 
             # 13co10 mom0 err
@@ -1350,7 +1351,7 @@ class ToolsNcol():
                 set_cbar=True,
                 label_cbar="(K km s$^{-1}$)",
                 clim=[0,maxval],
-                set_bg_color=cm.rainbow(0),
+                set_bg_color=set_bg_color,
                 )
 
             # 13co21 mom0
@@ -1371,7 +1372,7 @@ class ToolsNcol():
                 set_cbar=True,
                 label_cbar="(K km s$^{-1}$)",
                 clim=[0,maxval],
-                set_bg_color=cm.rainbow(0),
+                set_bg_color=set_bg_color,
                 )
 
             # 13co21 mom0 err
@@ -1392,7 +1393,7 @@ class ToolsNcol():
                 set_cbar=True,
                 label_cbar="(K km s$^{-1}$)",
                 clim=[0,maxval],
-                set_bg_color=cm.rainbow(0),
+                set_bg_color=set_bg_color,
                 )
 
             # ratio
@@ -1413,7 +1414,7 @@ class ToolsNcol():
                 set_cbar=True,
                 label_cbar="Ratio",
                 clim=[0,maxval],
-                set_bg_color=cm.rainbow(0),
+                set_bg_color=set_bg_color,
                 )
 
             # ratio error
@@ -1434,7 +1435,7 @@ class ToolsNcol():
                 set_cbar=True,
                 label_cbar="Ratio",
                 clim=[0,maxval],
-                set_bg_color=cm.rainbow(0),
+                set_bg_color=set_bg_color,
                 )
 
             # mom1
@@ -1532,7 +1533,7 @@ class ToolsNcol():
                 set_cbar=True,
                 label_cbar="(K)",
                 clim=[2.73,8],
-                set_bg_color=cm.rainbow(0),
+                set_bg_color=set_bg_color,
                 )
 
             # Trot error
@@ -1553,7 +1554,7 @@ class ToolsNcol():
                 set_cbar=True,
                 label_cbar="(K)",
                 clim=[0,maxval],
-                set_bg_color=cm.rainbow(0),
+                set_bg_color=set_bg_color,
                 )
 
             # log N13co
@@ -1573,7 +1574,7 @@ class ToolsNcol():
                 set_cbar=True,
                 label_cbar="(cm$^{-2}$ in log$_{\mathrm{10}}$)",
                 #clim=[0,8],
-                set_bg_color=cm.rainbow(0),
+                set_bg_color=set_bg_color,
                 )
 
             # log N13co error
@@ -1593,7 +1594,7 @@ class ToolsNcol():
                 set_cbar=True,
                 label_cbar="(cm$^{-2}$ in log$_{\mathrm{10}}$)",
                 #clim=[0,8],
-                set_bg_color=cm.rainbow(0),
+                set_bg_color=set_bg_color,
                 )
 
     #################

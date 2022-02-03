@@ -151,16 +151,16 @@ def rotation_13co21_13co10(
                 this_f_two,
                 this_freq,
                 this_data,
-                sigma  = this_err,
-                p0     = p0,
-                maxfev = 100000,
-                absolute_sigma=True,
+                sigma          = this_err,
+                p0             = p0,
+                maxfev         = 100000,
+                absolute_sigma = True,
                 )
             perr = np.sqrt(np.diag(pcov))
 
             p0 = popt[0] # 1-0
             p1 = popt[1] # 2-1
-            pr = p1/p0 # 2-1/1-0
+            pr = p1/p0   # 2-1/1-0
             p2 = popt[2]
             p3 = abs(popt[3])
 
