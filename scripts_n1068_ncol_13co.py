@@ -218,6 +218,7 @@ class ToolsNcol():
         # box
         self.box_map            = self._read_key("box_map")
         self.box_map_nox        = self._read_key("box_map_nox")
+        self.box_map_noxy       = self._read_key("box_map_noxy")
 
     ####################
     # run_ngc1068_ncol #
@@ -318,8 +319,8 @@ class ToolsNcol():
                 self.outpng_ratio.replace("???","60pc"),
                 self.final_60pc_obs+"_tmp1.png",
                 self.box_map_nox,
-                self.box_map,
-                self.box_map,
+                self.box_map_noxy,
+                self.box_map_noxy,
                 delin=delin,
                 )
             combine_two_png(
@@ -327,7 +328,7 @@ class ToolsNcol():
                 self.outpng_mom2.replace("???","60pc"),
                 self.final_60pc_obs+"_tmp2.png",
                 self.box_map_nox,
-                self.box_map,
+                self.box_map_noxy,
                 delin=delin,
                 )
             combine_three_png(
@@ -336,15 +337,15 @@ class ToolsNcol():
                 self.outpng_eratio.replace("???","60pc"),
                 self.final_60pc_obs+"_tmp3.png",
                 self.box_map_nox,
-                self.box_map,
-                self.box_map,
+                self.box_map_noxy,
+                self.box_map_noxy,
                 delin=delin,
                 )
             combine_two_png(
                 self.outpng_emom1.replace("???","60pc"),
                 self.outpng_emom2.replace("???","60pc"),
                 self.final_60pc_obs+"_tmp4.png",
-                self.box_map_nox,
+                self.box_map,
                 self.box_map,
                 delin=delin,
                 )
