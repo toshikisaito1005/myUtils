@@ -280,6 +280,7 @@ def rotation_13co21_13co10(
             e3 = abs(perr[2])
 
             if p0>0 and p0<max_low and pr>0 and pr<=1.0 and p2!=guess_b and p3!=40 and p0/e0>snr:
+                print("# fit 1-0 only")
                 # derive parameters
                 this_mom0_low   = p0 * p3 * np.sqrt(2*np.pi)
                 this_mom0_high  = p1 * p3 * np.sqrt(2*np.pi) # upper limit
@@ -322,6 +323,7 @@ def rotation_13co21_13co10(
                 map_Trot[this_x,this_y]   = Trot
                 map_logN[this_x,this_y]   = logNmol
 
+        """
         # fit when only 2-1 detected
         elif max_snr_low<snr and max_snr_high>=snr:
             # guess
@@ -399,6 +401,7 @@ def rotation_13co21_13co10(
                 # add pixel
                 map_Trot[this_x,this_y]   = Trot
                 map_logN[this_x,this_y]   = logNmol
+        """
 
     # low-J mom0 to fits
     fits_creation(map_mom0_low.T,"mom0_low.fits",template,"K.km/s")
