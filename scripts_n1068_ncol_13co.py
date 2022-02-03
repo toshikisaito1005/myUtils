@@ -1311,6 +1311,7 @@ class ToolsNcol():
         check_first(self.outcubes_13co10.replace("???","60pc"),taskname)
         check_first(self.outcubes_13co21.replace("???","60pc"))
 
+        # create 13co10 model cube
         run_immath_two(
             self.outcubes_13co10.replace("???","60pc"),
             self.outecubes_13co10.replace("???","60pc"),
@@ -1330,20 +1331,16 @@ class ToolsNcol():
             velocity=False,
             )
 
-        run_immath_two(
-            self.outcubes_13co21.replace("???","60pc"),
-            self.outecubes_13co21.replace("???","60pc"),
+        # create 13co21 model cube
+        maxval = imstat(self.outmodelcube_13co10)["max"]
+        run_immath_one(
+            self.outmodelcube_13co10,
             self.outmodelcube_13co21 + "_tmp1",
-            "iif(IM0/IM1>"+str(snr_cut)+",IM0,0)",
+            "IM0*IM0*IM0/maxval/maxval",
             )
-        run_roundsmooth(
-            self.outmodelcube_13co21 + "_tmp1",
-            self.outmodelcube_13co21 + "_tmp2",
-            1.666,
-            delin=True,
-            )
+
         run_exportfits(
-            self.outmodelcube_13co21 + "_tmp2",
+            self.outmodelcube_13co21 + "_tmp1",
             self.outmodelcube_13co21,
             delin=True,
             velocity=False,
