@@ -1317,6 +1317,18 @@ class ToolsNcol():
             self.outmodelcube_13co10 + "_tmp1",
             "iif(IM0/IM1>"+str(snr_cut)+",IM0,0)",
             )
+        run_roundsmooth(
+            self.outmodelcube_13co10 + "_tmp1",
+            self.outmodelcube_13co10 + "_tmp2",
+            "1.666arcsec", # float, arcsec unit
+            delin=True,
+            )
+        run_exportfits(
+            self.outmodelcube_13co10 + "_tmp2",
+            self.outmodelcube_13co10,
+            delin=True,
+            velocity=False,
+            )
 
         run_immath_two(
             self.outcubes_13co21.replace("???","60pc"),
@@ -1324,7 +1336,18 @@ class ToolsNcol():
             self.outmodelcube_13co21 + "_tmp1",
             "iif(IM0/IM1>"+str(snr_cut)+",IM0,0)",
             )
-
+        run_roundsmooth(
+            self.outmodelcube_13co21 + "_tmp1",
+            self.outmodelcube_13co21 + "_tmp2",
+            "1.666arcsec", # float, arcsec unit
+            delin=True,
+            )
+        run_exportfits(
+            self.outmodelcube_13co21 + "_tmp2",
+            self.outmodelcube_13co21,
+            delin=True,
+            velocity=False,
+            )
 
     ############
     # showcase #
