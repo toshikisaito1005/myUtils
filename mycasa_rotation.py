@@ -278,6 +278,7 @@ def rotation_13co21_13co10(
             e0 = perr[0]
             e2 = perr[1]
             e3 = abs(perr[2])
+            print(p0>0,p0<max_low,pr>0,pr<=1.0,p2!=guess_b,p3!=40,p0/e0>snr)
 
             if p0>0 and p0<max_low and pr>0 and pr<=1.0 and p2!=guess_b and p3!=40 and p0/e0>snr:
                 print("# fit 1-0 only")
