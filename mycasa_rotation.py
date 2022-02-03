@@ -139,7 +139,7 @@ def rotation_13co21_13co10(
         this_data = np.r_[this_data_low, this_data_high]
         this_err  = np.r_[this_err_low, this_err_high]
 
-        # p0 guess
+        # vsys guess
         guess_b = (restfreq_low - this_freq_low[np.nanargmax(this_data_low)]) / restfreq_low * 299792.458
 
         # fit when both 2-1 and 1-0 detected
@@ -234,7 +234,7 @@ def rotation_13co21_13co10(
             p0 = [np.max(this_data_low), guess_b, 40.]
 
             # fitting
-            this_f_two = lambda x, a1, a2, b, c: _f_one(x, a1, b, c, restfreq_low)
+            this_f_two = lambda x, a1, b, c: _f_one(x, a1, b, c, restfreq_low)
             popt,pcov  = curve_fit(
                 this_f_two,
                 this_freq_low,
