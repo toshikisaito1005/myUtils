@@ -1654,6 +1654,24 @@ class ToolsNcol():
             os.system("mv eTrot.fits " + self.outemaps_13co_trot.replace("???",this_beam))
             os.system("mv elogN.fits " + self.outemaps_13co_ncol.replace("???",this_beam))
 
+            #
+            os.system("mv mom0_low_all.fits " + self.outmaps_mom0_13co10.replace("???","all_"+this_beam))
+            os.system("mv mom0_high_all.fits " + self.outmaps_mom0_13co21.replace("???","all_"+this_beam))
+            os.system("mv mom1_all.fits " + self.outmaps_mom1.replace("???","all_"+this_beam))
+            os.system("mv mom2_all.fits " + self.outmaps_mom2.replace("???","all_"+this_beam))
+            os.system("mv ratio_all.fits " + self.outmaps_ratio.replace("???","all_"+this_beam))
+            os.system("mv Trot_all.fits " + self.outmaps_13co_trot.replace("???","all_"+this_beam))
+            os.system("mv logN_all.fits " + self.outmaps_13co_ncol.replace("???","all_"+this_beam))
+
+            #
+            os.system("mv emom0_low_all.fits " + self.outemaps_mom0_13co10.replace("???","all_"+this_beam))
+            os.system("mv emom0_high_all.fits " + self.outemaps_mom0_13co21.replace("???","all_"+this_beam))
+            os.system("mv emom1_all.fits " + self.outemaps_mom1.replace("???","all_"+this_beam))
+            os.system("mv emom2_all.fits " + self.outemaps_mom2.replace("???","all_"+this_beam))
+            os.system("mv eratio_all.fits " + self.outemaps_ratio.replace("???","all_"+this_beam))
+            os.system("mv eTrot_all.fits " + self.outemaps_13co_trot.replace("???","all_"+this_beam))
+            os.system("mv elogN_all.fits " + self.outemaps_13co_ncol.replace("???","all_"+this_beam))
+
     ##############
     # align_maps #
     ##############

@@ -229,6 +229,34 @@ def rotation_13co21_13co10(
                     map_eTrot[this_x,this_y]  = eTrot
                     map_elogN[this_x,this_y]  = elogNmol
 
+    # low-J mom0 to fits
+    fits_creation(map_mom0_low.T,"mom0_low.fits",template,"K.km/s")
+    fits_creation(map_emom0_low.T,"emom0_low.fits",cubelow,"K.km/s")
+
+    # high-J mom0 to fits
+    fits_creation(map_mom0_high.T,"mom0_high.fits",template,"K.km/s")
+    fits_creation(map_emom0_high.T,"emom0_high.fits",cubelow,"K.km/s")
+
+    # mom1 to fits
+    fits_creation(map_mom1.T,"mom1.fits",cubelow,"km/s")
+    fits_creation(map_emom1.T,"emom1.fits",cubelow,"km/s")
+
+    # mom2 to fits
+    fits_creation(map_mom2.T,"mom2.fits",cubelow,"km/s")
+    fits_creation(map_emom2.T,"emom2.fits",cubelow,"km/s")
+
+    # ratio to fits
+    fits_creation(map_ratio.T,"ratio.fits",cubelow,"")
+    fits_creation(map_eratio.T,"eratio.fits",cubelow,"")
+
+    # Trot to fits
+    fits_creation(map_Trot.T,"Trot.fits",cubelow,"K")
+    fits_creation(map_eTrot.T,"eTrot.fits",cubelow,"K")
+
+    # Ncol in log to fits
+    fits_creation(map_logN.T,"logN.fits",cubelow,"cm**-2 in log10")
+    fits_creation(map_elogN.T,"elogN.fits",cubelow,"cm**-2 in log10")
+
     max_ratio_detected = np.nanmax(map_ratio)
     max_trot_detected  = np.nanmax(map_Trot)
 
@@ -280,7 +308,6 @@ def rotation_13co21_13co10(
             e0 = perr[0]
             e2 = perr[1]
             e3 = abs(perr[2])
-            print(p0>0,p0<max_low,pr>0,pr<=1.0,p2!=guess_b,p3!=40,p0/e0>snr_limit)
 
             if p0>0 and p0<max_low and pr>0 and pr<=1.0 and p2!=guess_b and p3!=40 and p0/e0>snr_limit:
                 # derive parameters
@@ -404,32 +431,32 @@ def rotation_13co21_13co10(
                 map_logN[this_x,this_y]   = logNmol
 
     # low-J mom0 to fits
-    fits_creation(map_mom0_low.T,"mom0_low.fits",template,"K.km/s")
-    fits_creation(map_emom0_low.T,"emom0_low.fits",cubelow,"K.km/s")
+    fits_creation(map_mom0_low.T,"mom0_low_all.fits",template,"K.km/s")
+    fits_creation(map_emom0_low.T,"emom0_low_all.fits",cubelow,"K.km/s")
 
     # high-J mom0 to fits
-    fits_creation(map_mom0_high.T,"mom0_high.fits",template,"K.km/s")
-    fits_creation(map_emom0_high.T,"emom0_high.fits",cubelow,"K.km/s")
+    fits_creation(map_mom0_high.T,"mom0_high_all.fits",template,"K.km/s")
+    fits_creation(map_emom0_high.T,"emom0_high_all.fits",cubelow,"K.km/s")
 
     # mom1 to fits
-    fits_creation(map_mom1.T,"mom1.fits",cubelow,"km/s")
-    fits_creation(map_emom1.T,"emom1.fits",cubelow,"km/s")
+    fits_creation(map_mom1.T,"mom1_all.fits",cubelow,"km/s")
+    fits_creation(map_emom1.T,"emom1_all.fits",cubelow,"km/s")
 
     # mom2 to fits
-    fits_creation(map_mom2.T,"mom2.fits",cubelow,"km/s")
-    fits_creation(map_emom2.T,"emom2.fits",cubelow,"km/s")
+    fits_creation(map_mom2.T,"mom2_all.fits",cubelow,"km/s")
+    fits_creation(map_emom2.T,"emom2_all.fits",cubelow,"km/s")
 
     # ratio to fits
-    fits_creation(map_ratio.T,"ratio.fits",cubelow,"")
-    fits_creation(map_eratio.T,"eratio.fits",cubelow,"")
+    fits_creation(map_ratio.T,"ratio_all.fits",cubelow,"")
+    fits_creation(map_eratio.T,"eratio_all.fits",cubelow,"")
 
     # Trot to fits
-    fits_creation(map_Trot.T,"Trot.fits",cubelow,"K")
-    fits_creation(map_eTrot.T,"eTrot.fits",cubelow,"K")
+    fits_creation(map_Trot.T,"Trot_all.fits",cubelow,"K")
+    fits_creation(map_eTrot.T,"eTrot_all.fits",cubelow,"K")
 
     # Ncol in log to fits
-    fits_creation(map_logN.T,"logN.fits",cubelow,"cm**-2 in log10")
-    fits_creation(map_elogN.T,"elogN.fits",cubelow,"cm**-2 in log10")
+    fits_creation(map_logN.T,"logN_all.fits",cubelow,"cm**-2 in log10")
+    fits_creation(map_elogN.T,"elogN_all.fits",cubelow,"cm**-2 in log10")
 
 #############
 # derive_Nu #
