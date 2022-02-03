@@ -152,6 +152,9 @@ class ToolsNcol():
         self.outemaps_13co_trot   = self.dir_ready + self._read_key("outemaps_13co_trot")
         self.outemaps_13co_ncol   = self.dir_ready + self._read_key("outemaps_13co_ncol")
 
+        self.outmodelcube_13co10  = self.dir_ready + self._read_key("outmodelcube_13co10")
+        self.outmodelcube_13co21  = self.dir_ready + self._read_key("outmodelcube_13co21")
+
     def _set_input_param(self):
         """
         """
@@ -221,12 +224,13 @@ class ToolsNcol():
     def run_ngc1068_ncol(
         self,
         # analysis
-        do_prepare     = False,
-        do_fitting     = False,
+        do_prepare       = False,
+        do_fitting       = False, # after do_prepare
+        do_create_models = False, # after do_prepare
         # plot figures in paper
-        plot_showcase  = False,
-        do_imagemagick = False,
-        immagick_all   = False,
+        plot_showcase    = False,
+        do_imagemagick   = False,
+        immagick_all     = False,
         # supplement
         ):
         """
@@ -239,6 +243,9 @@ class ToolsNcol():
 
         if do_fitting==True:
             self.multi_fitting()
+
+        if do_create_models==True:
+            self.create_model_cubes()
 
         # plot figures in paper
         if plot_showcase==True:
@@ -1289,6 +1296,35 @@ class ToolsNcol():
                 axis="column",
                 )
 
+    ######################
+    # create_model_cubes #
+    ######################
+
+    def create_model_cubes(
+        self,
+        ):
+        """
+        """
+
+        taskname = self.modname + sys._getframe().f_code.co_name
+        check_first(self.outcubes_13co10.replace("???","60pc"),taskname)
+        check_first(self.outcubes_13co21.replace("???","60pc"))
+
+        run_immath_two(
+            self.outcubes_13co10.replace("???","60pc"),
+            self.outecubes_13co10.replace("???","60pc"),
+            self.outmodelcube_13co10 + "_tmp1",
+            "iif(IM1/IM0>3,IM0,0)",
+            )
+
+        run_immath_two(
+            self.outcubes_13co21.replace("???","60pc"),
+            self.outecubes_13co21.replace("???","60pc"),
+            self.outmodelcube_13co21 + "_tmp1",
+            "iif(IM1/IM0>3,IM0,0)",
+            )
+
+
     ############
     # showcase #
     ############
@@ -1307,51 +1343,25 @@ class ToolsNcol():
 
         for this_beam in self.beams:
             print("# myfig_fits2png at " + this_beam)
-            imcontour1   = self.outmaps_mom0_13co21.replace("???",this_beam)
-            levels_cont1 = [0.05, 0.1, 0.2, 0.4, 0.8, 0.96]
-            width_cont1  = [1.0]
-            set_bg_color = "white" # cm.rainbow(0)
 
             # 13co10 mom0
             maxval = imstat(self.outmaps_mom0_13co10.replace("???",this_beam))["max"]
-            myfig_fits2png(
-                imcolor=self.outmaps_mom0_13co10.replace("???",this_beam),
-                outfile=self.outpng_mom0_13co10.replace("???",this_beam),
-                imcontour1=imcontour1,
-                imsize_as=self.imsize,
-                ra_cnt=self.ra_agn_str,
-                dec_cnt=self.dec_agn_str,
-                levels_cont1=levels_cont1,
-                width_cont1=width_cont1,
-                set_title="$^{\mathrm{13}}$CO(1-0) integrated intensity at " + this_beam.replace("pc"," pc"),
-                colorlog=False,
-                scalebar=scalebar,
-                label_scalebar=label_scalebar,
-                set_cbar=True,
-                label_cbar="(K km s$^{-1}$)",
-                clim=[0,maxval],
-                set_bg_color=set_bg_color,
+            self._showcase_one(
+                self.outmaps_mom0_13co10.replace("???",this_beam),
+                self.outpng_mom0_13co10.replace("???",this_beam),
+                "$^{\mathrm{13}}$CO(1-0) integrated intensity at " + this_beam.replace("pc"," pc"),
+                "(K km s$^{-1}$)",
+                [0,maxval],
                 )
 
             # 13co10 mom0 err
             maxval = imstat(self.outemaps_mom0_13co10.replace("???",this_beam))["max"]
-            myfig_fits2png(
-                imcolor=self.outemaps_mom0_13co10.replace("???",this_beam),
-                outfile=self.outpng_emom0_13co10.replace("???",this_beam),
-                imcontour1=imcontour1,
-                imsize_as=self.imsize,
-                ra_cnt=self.ra_agn_str,
-                dec_cnt=self.dec_agn_str,
-                levels_cont1=levels_cont1,
-                width_cont1=width_cont1,
-                set_title="Error of $^{\mathrm{13}}$CO(1-0) intensity at " + this_beam.replace("pc"," pc"),
-                colorlog=False,
-                scalebar=scalebar,
-                label_scalebar=label_scalebar,
-                set_cbar=True,
-                label_cbar="(K km s$^{-1}$)",
-                clim=[0,maxval],
-                set_bg_color=set_bg_color,
+            self._showcase_one(
+                self.outemaps_mom0_13co10.replace("???",this_beam),
+                self.outpng_emom0_13co10.replace("???",this_beam),
+                "Error of $^{\mathrm{13}}$CO(1-0) intensity at " + this_beam.replace("pc"," pc"),
+                "(K km s$^{-1}$)",
+                [0,maxval],
                 )
 
             # 13co21 mom0
@@ -1610,7 +1620,7 @@ class ToolsNcol():
         """
 
         taskname = self.modname + sys._getframe().f_code.co_name
-        check_first(self.outcubes_13co10,taskname)
+        check_first(self.outcubes_13co10.replace("???","60pc"),taskname)
 
         for this_beam in self.beams:
             #if this_beam!="60pc":
@@ -1692,6 +1702,49 @@ class ToolsNcol():
                 self.outecubes_13co10.replace("???",this_beam),
                 self.outecubes_13co21.replace("???",this_beam),
                 )
+
+    #################
+    # _showcase_one #
+    #################
+
+    def _showcase_one(
+        self,
+        imcolor,
+        outfile,
+        set_title,
+        label_cbar,
+        clim,
+        ):
+        """
+        """
+
+        scalebar = 100. / self.scale_pc
+        label_scalebar = "100 pc"
+
+        imcontour1   = self.outmaps_mom0_13co21.replace("???",this_beam)
+        levels_cont1 = [0.05, 0.1, 0.2, 0.4, 0.8, 0.96]
+        width_cont1  = [1.0]
+        set_bg_color = "white" # cm.rainbow(0)
+
+        # plot
+        myfig_fits2png(
+            imcolor=imcolor,
+            outfile=outfile,
+            imcontour1=imcontour1,
+            imsize_as=self.imsize,
+            ra_cnt=self.ra_agn_str,
+            dec_cnt=self.dec_agn_str,
+            levels_cont1=levels_cont1,
+            width_cont1=width_cont1,
+            set_title=set_title,
+            colorlog=False,
+            scalebar=scalebar,
+            label_scalebar=label_scalebar,
+            set_cbar=True,
+            label_cbar=label_cbar,
+            clim=clim,
+            set_bg_color=set_bg_color,
+            )
 
     ########################
     # _align_maps_at_a_res #

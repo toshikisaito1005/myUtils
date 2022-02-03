@@ -60,6 +60,9 @@ outemaps_mom2       ,,,n1068_emom2_???.fits
 outemaps_ratio      ,,,n1068_eratio_???.fits
 outemaps_13co_trot  ,,,n1068_e13co_trot_???.fits
 outemaps_13co_ncol  ,,,n1068_e13co_log_ncol_???.fits
+#
+outmodelcube_13co10 ,,,model_13co10_cube.fits
+outmodelcube_13co21 ,,,model_13co21_cube.fits
 
 ###################
 # input paramters #
