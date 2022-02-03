@@ -141,10 +141,12 @@ def rotation_13co21_13co10(
 
         # p0 guess
         guess_b = (restfreq_low - this_freq_low[np.nanargmax(this_data_low)]) / restfreq_low * 299792.458
-        p0 = [np.max(this_data)/2.0, np.max(this_data), guess_b, 40.]
 
         # fit when both 2-1 and 1-0 detected
         if max_snr_low>=snr and max_snr_high>=snr:
+            # guess
+            p0 = [np.max(this_data)/2.0, np.max(this_data), guess_b, 40.]
+
             # fitting
             this_f_two = lambda x, a1, a2, b, c: _f_two(x, a1, a2, b, c, restfreq_low, restfreq_high)
             popt,pcov  = curve_fit(
@@ -228,6 +230,9 @@ def rotation_13co21_13co10(
 
         # fit when only 1-0 detected
         elif max_snr_low>=snr and max_snr_high<snr:
+            # guess
+            p0 = [np.max(this_data_low), guess_b, 40.]
+
             # fitting
             this_f_two = lambda x, a1, a2, b, c: _f_one(x, a1, b, c, restfreq_low)
             popt,pcov  = curve_fit(
@@ -244,11 +249,10 @@ def rotation_13co21_13co10(
             rms_high = np.sqrt(np.square(this_data_high).mean())
 
             p0 = popt[0] # 1-0
-            p2 = popt[1]
-            p3 = abs(popt[2])
-
             p1 = rms_high * snr # 2-1 tpeak upper limit
             pr = p1/p0   # 2-1/1-0
+            p2 = popt[1]
+            p3 = abs(popt[2])
 
             e0 = perr[0]
             e2 = perr[1]
