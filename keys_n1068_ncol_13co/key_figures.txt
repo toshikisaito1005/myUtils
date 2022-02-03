@@ -93,7 +93,7 @@ outpng_e13co_trot   ,,,fig_map_etrot_???.png
 outpng_e13co_ncol   ,,,fig_map_encol_???.png
 # box for imagemajick
 box_map             ,,,2225x1870+335+80
-box_map_nox         ,,,2225x1700+335+80
+box_map_nox         ,,,2225x1770+335+80
 
 #######
 # end #
