@@ -228,6 +228,7 @@ def rotation_13co21_13co10(
 
         # fit when only 1-0 detected
         elif max_snr_low>=snr and max_snr_high<snr:
+            print("# fit only 1-0")
             # fitting
             this_f_two = lambda x, a1, a2, b, c: _f_one(x, a1, b, c, restfreq_low)
             popt,pcov  = curve_fit(
