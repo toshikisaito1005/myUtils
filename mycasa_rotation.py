@@ -304,10 +304,10 @@ def rotation_13co21_13co10(
         # fit when only 2-1 detected
         elif max_snr_low<snr and max_snr_high>=snr:
             # guess
-            p0 = [np.max(this_data_low), guess_b, 40.]
+            p0 = [np.max(this_data_high), guess_b, 40.]
 
             # fitting
-            this_f_two = lambda x, a1, b, c: _f_one(x, a1, b, c, restfreq_low)
+            this_f_two = lambda x, a1, b, c: _f_one(x, a1, b, c, restfreq_high)
             popt,pcov  = curve_fit(
                 this_f_two,
                 this_freq_high,
