@@ -1309,7 +1309,6 @@ class ToolsNcol():
 
         taskname = self.modname + sys._getframe().f_code.co_name
         check_first(self.outcubes_13co10.replace("???","60pc"),taskname)
-        check_first(self.outcubes_13co21.replace("???","60pc"))
 
         # create 13co10 model cube
         run_immath_two(
@@ -1332,11 +1331,11 @@ class ToolsNcol():
             )
 
         # create 13co21 model cube
-        maxval = imstat(self.outmodelcube_13co10)["max"]
+        maxval = str(imstat(self.outmodelcube_13co10)["max"])
         run_immath_one(
             self.outmodelcube_13co10,
             self.outmodelcube_13co21 + "_tmp1",
-            "IM0*IM0*IM0/maxval/maxval",
+            "IM0*IM0*IM0/"+str(maxval)+"/"+str(maxval),
             )
 
         run_exportfits(
