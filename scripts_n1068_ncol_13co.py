@@ -1362,6 +1362,8 @@ class ToolsNcol():
         label_scalebar = "100 pc"
 
         for this_beam in self.beams:
+            if this_beam!="60pc":
+                continue
             print("# myfig_fits2png at " + this_beam)
 
             # 13co10 mom0
