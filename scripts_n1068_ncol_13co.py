@@ -1444,7 +1444,7 @@ class ToolsNcol():
                 self.outmaps_mom1.replace("???",this_beam),
                 imcontour1,
                 self.outpng_mom1.replace("???",this_beam),
-                "$V_{\mathrm{LOS}}$ at " + this_beam.replace("pc"," pc"),
+                "$v_{\mathrm{los}}$ at " + this_beam.replace("pc"," pc"),
                 "(km s$^{-1}$)",
                 )
 
@@ -1453,7 +1453,7 @@ class ToolsNcol():
                 self.outemaps_mom1.replace("???",this_beam),
                 imcontour1,
                 self.outpng_emom1.replace("???",this_beam),
-                "$\sigma_{\mathrm{err}}$($V_{\mathrm{LOS}}$) at " + this_beam.replace("pc"," pc"),
+                "$\sigma_{\mathrm{err}}$($v_{\mathrm{los}}$) at " + this_beam.replace("pc"," pc"),
                 "(km s$^{-1}$)",
                 )
 
@@ -1463,7 +1463,7 @@ class ToolsNcol():
                 self.outmaps_mom2.replace("???",this_beam),
                 imcontour1,
                 self.outpng_mom2.replace("???",this_beam),
-                "$\sigma_{V}$ at " + this_beam.replace("pc"," pc"),
+                "$\sigma_{v}$ at " + this_beam.replace("pc"," pc"),
                 "(km s$^{-1}$)",
                 [0,maxval],
                 )
@@ -1474,7 +1474,7 @@ class ToolsNcol():
                 self.outemaps_mom2.replace("???",this_beam),
                 imcontour1,
                 self.outpng_emom2.replace("???",this_beam),
-                "$\sigma_{\mathrm{err}}$($\sigma_{V}$) at " + this_beam.replace("pc"," pc"),
+                "$\sigma_{\mathrm{err}}$($\sigma_{v}$) at " + this_beam.replace("pc"," pc"),
                 "(km s$^{-1}$)",
                 [0,maxval],
                 )
@@ -1491,63 +1491,31 @@ class ToolsNcol():
 
             # Trot error
             maxval = imstat(self.outemaps_13co_trot.replace("???",this_beam))["max"]
-            myfig_fits2png(
-                imcolor=self.outemaps_13co_trot.replace("???",this_beam),
-                outfile=self.outpng_e13co_trot.replace("???",this_beam),
-                imcontour1=imcontour1,
-                imsize_as=self.imsize,
-                ra_cnt=self.ra_agn_str,
-                dec_cnt=self.dec_agn_str,
-                levels_cont1=levels_cont1,
-                width_cont1=width_cont1,
-                set_title="$Error of T_{\mathrm{rot,"+this_beam.replace("pc"," pc")+"}}$",
-                colorlog=False,
-                scalebar=scalebar,
-                label_scalebar=label_scalebar,
-                set_cbar=True,
-                label_cbar="(K)",
-                clim=[0,maxval],
-                set_bg_color=set_bg_color,
+            self._showcase_one(
+                self.outemaps_13co_trot.replace("???",this_beam),
+                imcontour1,
+                self.outpng_e13co_trot.replace("???",this_beam),
+                "$\sigma_{\mathrm{err}}$($T_{\mathrm{rot}}$) at " + this_beam.replace("pc"," pc"),
+                "(K)",
+                [0,maxval],
                 )
 
             # log N13co
-            myfig_fits2png(
-                imcolor=self.outmaps_13co_ncol.replace("???",this_beam),
-                outfile=self.outpng_13co_ncol.replace("???",this_beam),
-                imcontour1=imcontour1,
-                imsize_as=self.imsize,
-                ra_cnt=self.ra_agn_str,
-                dec_cnt=self.dec_agn_str,
-                levels_cont1=levels_cont1,
-                width_cont1=width_cont1,
-                set_title="log$_{\mathrm{10}}$ $N_{\mathrm{^{13}CO,"+this_beam.replace("pc"," pc")+"}}$",
-                colorlog=False,
-                scalebar=scalebar,
-                label_scalebar=label_scalebar,
-                set_cbar=True,
-                label_cbar="(cm$^{-2}$ in log$_{\mathrm{10}}$)",
-                #clim=[0,8],
-                set_bg_color=set_bg_color,
+            self._showcase_one(
+                self.outmaps_13co_ncol.replace("???",this_beam),
+                imcontour1,
+                self.outpng_13co_ncol.replace("???",this_beam),
+                "log$_{\mathrm{10}}$ $N_{\mathrm{^{13}CO}}$ at " + this_beam.replace("pc"," pc"),
+                "(cm$^{-2}$ in log$_{\mathrm{10}}$)",
                 )
 
             # log N13co error
-            myfig_fits2png(
-                imcolor=self.outemaps_13co_ncol.replace("???",this_beam),
-                outfile=self.outpng_e13co_ncol.replace("???",this_beam),
-                imcontour1=imcontour1,
-                imsize_as=self.imsize,
-                ra_cnt=self.ra_agn_str,
-                dec_cnt=self.dec_agn_str,
-                levels_cont1=levels_cont1,
-                width_cont1=width_cont1,
-                set_title="Error of log$_{\mathrm{10}}$ $N_{\mathrm{^{13}CO,"+this_beam.replace("pc"," pc")+"}}$",
-                colorlog=False,
-                scalebar=scalebar,
-                label_scalebar=label_scalebar,
-                set_cbar=True,
-                label_cbar="(cm$^{-2}$ in log$_{\mathrm{10}}$)",
-                #clim=[0,8],
-                set_bg_color=set_bg_color,
+            self._showcase_one(
+                self.outemaps_13co_ncol.replace("???",this_beam),
+                imcontour1,
+                self.outpng_e13co_ncol.replace("???",this_beam),
+                "$\sigma_{\mathrm{err}}$(log$_{\mathrm{10}}$ $N_{\mathrm{^{13}CO}}$) at " + this_beam.replace("pc"," pc"),
+                "(cm$^{-2}$ in log$_{\mathrm{10}}$)",
                 )
 
     #################
