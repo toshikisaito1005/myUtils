@@ -12,7 +12,7 @@ dir_final           ,,,images/
 # final products #
 ##################
 # paper
-final_60pc_obs      ,,,fig_gallery_obs_60pc.pngs
+final_60pc_obs      ,,,fig_gallery_obs_60pc.png
 #
 final_13co10_mom0   ,,,fig_map_13co10_mom0.png
 final_13co21_mom0   ,,,fig_map_13co21_mom0.png
