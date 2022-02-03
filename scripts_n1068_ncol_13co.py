@@ -1364,12 +1364,15 @@ class ToolsNcol():
         for this_beam in self.beams:
             if this_beam!="60pc":
                 continue
+
             print("# myfig_fits2png at " + this_beam)
+            imcontour = self.outmaps_mom0_13co21.replace("???",this_beam)
 
             # 13co10 mom0
             maxval = imstat(self.outmaps_mom0_13co10.replace("???",this_beam))["max"]
             self._showcase_one(
                 self.outmaps_mom0_13co10.replace("???",this_beam),
+                imcontour,
                 self.outpng_mom0_13co10.replace("???",this_beam),
                 "$I^{\mathrm{13}}$CO(1-0) at " + this_beam.replace("pc"," pc"),
                 "(K km s$^{-1}$)",
@@ -1380,6 +1383,7 @@ class ToolsNcol():
             maxval = imstat(self.outemaps_mom0_13co10.replace("???",this_beam))["max"]
             self._showcase_one(
                 self.outemaps_mom0_13co10.replace("???",this_beam),
+                imcontour,
                 self.outpng_emom0_13co10.replace("???",this_beam),
                 "$\sigma_{\mathrm{err}}$($I^{\mathrm{13}}$CO(1-0)) at " + this_beam.replace("pc"," pc"),
                 "(K km s$^{-1}$)",
@@ -1732,6 +1736,7 @@ class ToolsNcol():
     def _showcase_one(
         self,
         imcolor,
+        imcontour1,
         outfile,
         set_title,
         label_cbar,
@@ -1743,7 +1748,6 @@ class ToolsNcol():
         scalebar = 100. / self.scale_pc
         label_scalebar = "100 pc"
 
-        imcontour1   = self.outmaps_mom0_13co21.replace("???",this_beam)
         levels_cont1 = [0.05, 0.1, 0.2, 0.4, 0.8, 0.96]
         width_cont1  = [1.0]
         set_bg_color = "white" # cm.rainbow(0)
