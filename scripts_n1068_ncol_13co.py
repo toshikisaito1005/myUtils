@@ -1633,7 +1633,7 @@ class ToolsNcol():
                 ra_cnt=self.ra_agn,
                 dec_cnt=self.dec_agn,
                 snr=3.0,
-                snr_limit=5.0,
+                snr_limit=3.0,
                 )
 
             #
