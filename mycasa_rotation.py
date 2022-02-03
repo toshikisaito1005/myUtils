@@ -210,7 +210,7 @@ def rotation_13co21_13co10(
 
                 Trot  = np.log10(np.e) / popt2[0]
                 eTrot = np.log10(np.e) / popt2[0]**2 * perr2[0]
-                print(np.c_[x_data,y_data,y_err])
+                print(np.c_[x_data,popt2,perr2])
 
                 Z = derive_Z_13co(Trot)
 
