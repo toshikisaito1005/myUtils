@@ -1632,7 +1632,8 @@ class ToolsNcol():
                 ecube_13co21,
                 ra_cnt=self.ra_agn,
                 dec_cnt=self.dec_agn,
-                snr=4.0,
+                snr=3.0,
+                snr_limit=5.0,
                 )
 
             #

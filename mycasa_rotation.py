@@ -33,6 +33,7 @@ def rotation_13co21_13co10(
     ra_cnt=40.669625, # deg
     dec_cnt=-0.01331667, # deg
     snr=5.0,
+    snr_limit=7.0,
     ratio_max=2.0,
     restfreq_low=None,
     restfreq_high=None,
@@ -271,7 +272,7 @@ def rotation_13co21_13co10(
             rms_high = np.sqrt(np.square(this_data_high).mean())
 
             p0 = popt[0] # 1-0
-            p1 = rms_high * snr # 2-1 tpeak upper limit
+            p1 = rms_high * snr_limit # 2-1 tpeak upper limit
             pr = p1/p0   # 2-1/1-0
             p2 = popt[1]
             p3 = abs(popt[2])
@@ -279,9 +280,9 @@ def rotation_13co21_13co10(
             e0 = perr[0]
             e2 = perr[1]
             e3 = abs(perr[2])
-            print(p0>0,p0<max_low,pr>0,pr<=1.0,p2!=guess_b,p3!=40,p0/e0>snr)
+            print(p0>0,p0<max_low,pr>0,pr<=1.0,p2!=guess_b,p3!=40,p0/e0>snr_limit)
 
-            if p0>0 and p0<max_low and pr>0 and pr<=1.0 and p2!=guess_b and p3!=40 and p0/e0>snr:
+            if p0>0 and p0<max_low and pr>0 and pr<=1.0 and p2!=guess_b and p3!=40 and p0/e0>snr_limit:
                 # derive parameters
                 this_mom0_low   = p0 * p3 * np.sqrt(2*np.pi)
                 this_mom0_high  = p1 * p3 * np.sqrt(2*np.pi) # upper limit
@@ -325,7 +326,7 @@ def rotation_13co21_13co10(
                 map_logN[this_x,this_y]   = logNmol
 
         # fit when only 2-1 detected
-        elif max_snr_low<snr and max_snr_high>=snr:
+        elif max_snr_low<snr_limit and max_snr_high>=snr_limit:
             # guess
             p0 = [np.max(this_data_high), guess_b, 40.]
 
@@ -344,7 +345,7 @@ def rotation_13co21_13co10(
 
             rms_low = np.sqrt(np.square(this_data_low).mean())
 
-            p0 = rms_low * snr # 1-0 tpeak upper limit
+            p0 = rms_low * snr_limit # 1-0 tpeak upper limit
             p1 = popt[0] # 2-1
             pr = p1/p0   # 2-1/1-0
             p2 = popt[1]
@@ -354,7 +355,7 @@ def rotation_13co21_13co10(
             e2 = perr[1]
             e3 = abs(perr[2])
 
-            if p1>0 and p1<max_high and pr>0 and p2!=guess_b and p3!=40 and p1/e1>snr and p3/e3>snr:
+            if p1>0 and p1<max_high and pr>0 and p2!=guess_b and p3!=40 and p1/e1>snr and p3/e3>snr_limit:
                 # derive parameters
                 this_mom0_low   = p0 * p3 * np.sqrt(2*np.pi)
                 this_mom0_high  = p1 * p3 * np.sqrt(2*np.pi) # upper limit
