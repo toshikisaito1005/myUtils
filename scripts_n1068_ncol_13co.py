@@ -1366,13 +1366,13 @@ class ToolsNcol():
                 continue
 
             print("# myfig_fits2png at " + this_beam)
-            imcontour = self.outmaps_mom0_13co21.replace("???",this_beam)
+            imcontour1 = self.outmaps_mom0_13co21.replace("???",this_beam)
 
             # 13co10 mom0
             maxval = imstat(self.outmaps_mom0_13co10.replace("???",this_beam))["max"]
             self._showcase_one(
                 self.outmaps_mom0_13co10.replace("???",this_beam),
-                imcontour,
+                imcontour1,
                 self.outpng_mom0_13co10.replace("???",this_beam),
                 "$I^{\mathrm{13}}$CO(1-0) at " + this_beam.replace("pc"," pc"),
                 "(K km s$^{-1}$)",
@@ -1383,7 +1383,7 @@ class ToolsNcol():
             maxval = imstat(self.outemaps_mom0_13co10.replace("???",this_beam))["max"]
             self._showcase_one(
                 self.outemaps_mom0_13co10.replace("???",this_beam),
-                imcontour,
+                imcontour1,
                 self.outpng_emom0_13co10.replace("???",this_beam),
                 "$\sigma_{\mathrm{err}}$($I^{\mathrm{13}}$CO(1-0)) at " + this_beam.replace("pc"," pc"),
                 "(K km s$^{-1}$)",
