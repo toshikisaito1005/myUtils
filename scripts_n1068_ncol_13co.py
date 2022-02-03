@@ -1309,7 +1309,7 @@ class ToolsNcol():
             print("# myfig_fits2png at " + this_beam)
             imcontour1   = self.outmaps_mom0_13co21.replace("???",this_beam)
             levels_cont1 = [0.05, 0.1, 0.2, 0.4, 0.8, 0.96]
-            width_cont1  = [1.0],
+            width_cont1  = [1.0]
 
             # 13co10 mom0
             maxval = imstat(self.outmaps_mom0_13co10.replace("???",this_beam))["max"]
