@@ -201,6 +201,11 @@ class ToolsNcol():
         self.outpng_e13co_trot   = self.dir_products + self._read_key("outpng_e13co_trot")
         self.outpng_e13co_ncol   = self.dir_products + self._read_key("outpng_e13co_ncol")
 
+        self.outpng_modelmom0_13co10 = self.dir_products + self._read_key("outpng_modelmom0_13co10")
+        self.outpng_modelmom0_13co21 = self.dir_products + self._read_key("outpng_modelmom0_13co21")
+        self.outpng_simumom0_13co10  = self.dir_products + self._read_key("outpng_simumom0_13co10")
+        self.outpng_simumom0_13co21  = self.dir_products + self._read_key("outpng_simumom0_13co21")
+
         # finals
         self.final_60pc_obs      = self.dir_final + self._read_key("final_60pc_obs")
         self.final_60pc_rot      = self.dir_final + self._read_key("final_60pc_rot")
@@ -239,7 +244,8 @@ class ToolsNcol():
         do_create_models = False, # after do_prepare
         do_simulate_mom  = False, # after do_create_models
         # plot figures in paper
-        plot_showcase    = False,
+        plot_showcase    = False, # after do_fitting
+        plot_showsim     = False, # after do_simulate_mom
         do_imagemagick   = False,
         immagick_all     = False,
         # supplement
@@ -265,6 +271,9 @@ class ToolsNcol():
         # plot figures in paper
         if plot_showcase==True:
             self.showcase()
+
+        if plot_showsim==True:
+            self.showsim()
 
         if do_imagemagick==True:
             self.immagick_figures(do_all=immagick_all,delin=False)
@@ -1605,6 +1614,58 @@ class ToolsNcol():
             self.outmodelcube_13co21,
             delin=True,
             velocity=False,
+            )
+
+    ###########
+    # showsim #
+    ###########
+
+    def showsim(
+        self,
+        ):
+        """
+        """
+
+        taskname = self.modname + sys._getframe().f_code.co_name
+        check_first(self.outsimumom0_13co10.replace(".fits","_just_snr10.fits"),taskname)
+
+        # prepare
+        imcontour1 = self.outsimumom0_13co10.replace(".fits","_just.fits")
+
+        self._showcase_one(
+            self.outsimumom0_13co10.replace(".fits","_just.fits"),
+            imcontour1,
+            self.outpng_modelmom0_13co10,
+            "Input model mom0",
+            "(K km s$^{-1}$)",
+            [0,100],
+            )
+
+        self._showcase_one(
+            self.outsimumom0_13co10.replace(".fits","_just_snr10.fits"),
+            imcontour1,
+            self.outpng_simumom0_13co10.replace(".png","_just_snr10.png"),
+            "SNR=10 mom0 (no clip)",
+            "(K km s$^{-1}$)",
+            [0,100],
+            )
+
+        self._showcase_one(
+            self.outsimumom0_13co10.replace(".fits","_just_snr25.fits"),
+            imcontour1,
+            self.outpng_simumom0_13co10.replace(".png","_just_snr25.png"),
+            "SNR=25 mom0 (no clip)",
+            "(K km s$^{-1}$)",
+            [0,250],
+            )
+
+        self._showcase_one(
+            self.outsimumom0_13co10.replace(".fits","_just_snr50.fits"),
+            imcontour1,
+            self.outpng_simumom0_13co10.replace(".png","_just_snr50.png"),
+            "SNR=50 mom0 (no clip)",
+            "(K km s$^{-1}$)",
+            [0,500],
             )
 
     ############

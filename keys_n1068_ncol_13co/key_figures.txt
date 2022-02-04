@@ -82,20 +82,24 @@ r_sbr_as            ,,,10.0
 # output png and txt #
 ######################
 # png files
-outpng_mom0_13co10  ,,,fig_map_mom0_13co10_???.png
-outpng_mom0_13co21  ,,,fig_map_mom0_13co21_???.png
-outpng_mom1         ,,,fig_map_mom1_???.png
-outpng_mom2         ,,,fig_map_mom2_???.png
-outpng_ratio        ,,,fig_map_ratio_???.png
-outpng_13co_trot    ,,,fig_map_trot_???.png
-outpng_13co_ncol    ,,,fig_map_ncol_???.png
-outpng_emom0_13co10 ,,,fig_map_emom0_13co10_???.png
-outpng_emom0_13co21 ,,,fig_map_emom0_13co21_???.png
-outpng_emom1        ,,,fig_map_emom1_???.png
-outpng_emom2        ,,,fig_map_emom2_???.png
-outpng_eratio       ,,,fig_map_eratio_???.png
-outpng_e13co_trot   ,,,fig_map_etrot_???.png
-outpng_e13co_ncol   ,,,fig_map_encol_???.png
+outpng_mom0_13co10     ,,,fig_map_mom0_13co10_???.png
+outpng_mom0_13co21     ,,,fig_map_mom0_13co21_???.png
+outpng_mom1            ,,,fig_map_mom1_???.png
+outpng_mom2            ,,,fig_map_mom2_???.png
+outpng_ratio           ,,,fig_map_ratio_???.png
+outpng_13co_trot       ,,,fig_map_trot_???.png
+outpng_13co_ncol       ,,,fig_map_ncol_???.png
+outpng_emom0_13co10    ,,,fig_map_emom0_13co10_???.png
+outpng_emom0_13co21    ,,,fig_map_emom0_13co21_???.png
+outpng_emom1           ,,,fig_map_emom1_???.png
+outpng_emom2           ,,,fig_map_emom2_???.png
+outpng_eratio          ,,,fig_map_eratio_???.png
+outpng_e13co_trot      ,,,fig_map_etrot_???.png
+outpng_e13co_ncol      ,,,fig_map_encol_???.png
+outpng_modelmom0_13co10 ,,,fig_map_modelmom0_13co10.png
+outpng_modelmom0_13co21 ,,,fig_map_modelmom0_13co21.png
+outpng_simumom0_13co10  ,,,fig_map_simumom0_13co10.png
+outpng_simumom0_13co21  ,,,fig_map_simumom0_13co21.png
 # box for imagemajick
 box_map             ,,,2225x1870+335+80
 box_map_nox         ,,,2225x1730+335+80
