@@ -1563,7 +1563,7 @@ class ToolsNcol():
         l = l["data"] * l["mask"]
         sim_mom0 = np.array(l.flatten())
 
-        l = self.outsimumom0_13co10.replace(".fits","_noclip_snr10.fits").replace("mom0","emom0")
+        l = self.outsimumom0_13co10.replace(".fits","_clip_snr0.fits").replace("mom0","emom0")
         l,_ = imval_all(l)
         l = l["data"] * l["mask"]
         sim_emom0 = np.array(l.flatten())
@@ -1572,6 +1572,22 @@ class ToolsNcol():
         x2 = np.log10(model_mom0[cut])
         y2 = np.log10(sim_mom0[cut])
         e2 = sim_emom0[cut]/abs(sim_mom0[cut])
+
+        # clip3
+        l = self.outsimumom0_13co10.replace(".fits","_clip3_snr10.fits")
+        l,_  = imval_all(l)
+        l = l["data"] * l["mask"]
+        sim_mom0 = np.array(l.flatten())
+
+        l = self.outsimumom0_13co10.replace(".fits","_clip3_snr10.fits").replace("mom0","emom0")
+        l,_ = imval_all(l)
+        l = l["data"] * l["mask"]
+        sim_emom0 = np.array(l.flatten())
+
+        cut = np.where(sim_mom0>=sim_emom0*snr)
+        x3 = np.log10(model_mom0[cut])
+        y3 = np.log10(sim_mom0[cut])
+        e3 = sim_emom0[cut]/abs(sim_mom0[cut])
 
         ########
         # plot #
@@ -1594,8 +1610,11 @@ class ToolsNcol():
         #adjust=[0.1,0.963,0.25,0.93],
         )
 
-        ax.errorbar(x1, y1, yerr=e1, marker="o", markeredgewidth=0, color="grey", lw=0.5, capsize=0, ls="None", alpha=0.2)
-        ax.errorbar(x2, y2, yerr=e2, marker="o", markeredgewidth=0, color="deepskyblue", lw=0.5, capsize=0, ls="None", alpha=0.2)
+        #ax.errorbar(x1, y1, yerr=e1, marker="o", markeredgewidth=0, color="grey", lw=0.5, capsize=0, ls="None", alpha=0.2)
+        #ax.errorbar(x2, y2, yerr=e2, marker="o", markeredgewidth=0, color="deepskyblue", lw=0.5, capsize=0, ls="None", alpha=0.2)
+        ax.scatter(x1, y1, marker="o", markeredgewidth=0, color="grey", lw=0.5, capsize=0, alpha=0.2)
+        ax.scatter(x2, y2, marker="o", markeredgewidth=0, color="deepskyblue", lw=0.5, capsize=0, alpha=0.2)
+        ax.scatter(x2, y2, marker="o", markeredgewidth=0, color="tomato", lw=0.5, capsize=0, alpha=0.2)
 
         # save
         os.system("rm -rf " + "test.png")
