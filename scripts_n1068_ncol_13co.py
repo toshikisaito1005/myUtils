@@ -476,7 +476,7 @@ class ToolsNcol():
                 self.outpng_simumom0_13co10.replace(".png","_noclip_masked_snr10.png"),
                 self.outpng_simumom0_13co10.replace(".png","_clip0_masked_snr10.png"),
                 self.outpng_simumom0_13co10.replace(".png","_clip3_masked_snr10.png"),
-                self.final_sim_mom0+"_tmp2s.png",
+                self.final_sim_mom0+"_tmp2.png",
                 self.box_map,
                 self.box_map,
                 self.box_map,
@@ -484,7 +484,7 @@ class ToolsNcol():
                 )
             combine_two_png(
                 self.final_sim_mom0+"_tmp1.png",
-                self.final_sim_mom0+"_tmp1.png",
+                self.final_sim_mom0+"_tmp2.png",
                 self.final_sim_mom0,
                 "100000x100000+0+0",
                 "100000x100000+0+0",
@@ -511,7 +511,7 @@ class ToolsNcol():
                 self.outpng_simumom0_13co10.replace(".png","_noclip_masked_snr10.png").replace("mom0","emom0"),
                 self.outpng_simumom0_13co10.replace(".png","_clip0_masked_snr10.png").replace("mom0","emom0"),
                 self.outpng_simumom0_13co10.replace(".png","_clip3_masked_snr10.png").replace("mom0","emom0"),
-                self.final_sim_emom0+"_tmp2s.png",
+                self.final_sim_emom0+"_tmp2.png",
                 self.box_map,
                 self.box_map,
                 self.box_map,
@@ -519,7 +519,7 @@ class ToolsNcol():
                 )
             combine_two_png(
                 self.final_sim_emom0+"_tmp1.png",
-                self.final_sim_emom0+"_tmp1.png",
+                self.final_sim_emom0+"_tmp2.png",
                 self.final_sim_emom0,
                 "100000x100000+0+0",
                 "100000x100000+0+0",
