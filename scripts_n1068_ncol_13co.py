@@ -1664,7 +1664,7 @@ class ToolsNcol():
             self.outsimumom0_13co10.replace(".fits","_just_snr10.fits"),
             imcontour1,
             self.outpng_simumom0_13co10.replace(".png","_just_snr10.png"),
-            "SNR=10 mom0 (no clip)",
+            "no-clip: SNR=10 mom0",
             "(K km s$^{-1}$)",
             [0,100],
             )
@@ -1673,7 +1673,7 @@ class ToolsNcol():
             self.outsimumom0_13co10.replace(".fits","_just_snr25.fits"),
             imcontour1,
             self.outpng_simumom0_13co10.replace(".png","_just_snr25.png"),
-            "SNR=25 mom0 (no clip)",
+            "no-clip: SNR=25 mom0",
             "(K km s$^{-1}$)",
             [0,250],
             )
@@ -1682,7 +1682,7 @@ class ToolsNcol():
             self.outsimumom0_13co10.replace(".fits","_just_snr50.fits"),
             imcontour1,
             self.outpng_simumom0_13co10.replace(".png","_just_snr50.png"),
-            "SNR=50 mom0 (no clip)",
+            "no-clip: SNR=50 mom0",
             "(K km s$^{-1}$)",
             [0,500],
             )
