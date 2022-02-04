@@ -1429,10 +1429,10 @@ class ToolsNcol():
         im0   = im[0]
         size  = im0.data.shape
         immax = np.nanmax(im0.data)
+        snr   = 5.0
         scale = snr / immax
 
         # snr = 5
-        snr = 5.0
         model_snr5 = self.outmodelcube_13co10.replace(".fits","_snr5.fits")
         os.system("cp " + self.outmodelcube_13co10 + " " + model_snr5)
 
