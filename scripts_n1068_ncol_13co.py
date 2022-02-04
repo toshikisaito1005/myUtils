@@ -1456,16 +1456,31 @@ class ToolsNcol():
         im0   = im[0]
         noise = im0.data * scale / np.nanstd(im0.data)
         #pyfits.writeto("noise_correlated.fits",data=newdata,header=im0.header,clobber=True)
-        os.system("rm -rf noise.fits")
+        os.system("rm -rf noise.fits noise_correlated.fits")
 
         # snr = 5
-        model_snr5 = self.outmodelcube_13co10.replace(".fits","_snr5.fits")
-
+        model_snr = self.outmodelcube_13co10.replace(".fits","_snr5.fits")
         im      = pyfits.open(self.outmodelcube_13co10)
         im0     = im[0]
         newdata = im0.data + noise
-        os.system("rm -rf " + model_snr5)
-        pyfits.writeto(model_snr5,data=newdata,header=im0.header)
+        os.system("rm -rf " + model_snr)
+        pyfits.writeto(model_snr,data=newdata,header=im0.header)
+
+        # snr = 50
+        model_snr = self.outmodelcube_13co10.replace(".fits","_snr50.fits")
+        im      = pyfits.open(self.outmodelcube_13co10)
+        im0     = im[0]
+        newdata = im0.data * 10.0 + noise
+        os.system("rm -rf " + model_snr)
+        pyfits.writeto(model_snr,data=newdata,header=im0.header)
+
+        # snr = 500
+        model_snr = self.outmodelcube_13co10.replace(".fits","_snr50.fits")
+        im      = pyfits.open(self.outmodelcube_13co10)
+        im0     = im[0]
+        newdata = im0.data * 100.0 + noise
+        os.system("rm -rf " + model_snr)
+        pyfits.writeto(model_snr,data=newdata,header=im0.header)
 
     ######################
     # create_model_cubes #
