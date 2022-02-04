@@ -1528,6 +1528,7 @@ class ToolsNcol():
 
     def eval_sim(
         self,
+        snr=3.0,
         ):
         """
         """
@@ -1540,9 +1541,7 @@ class ToolsNcol():
         model_mom0 = l["data"] * l["mask"]
         model_mom0 = model_mom0.flatten()
 
-        ########
-        # plot #
-        ########
+        # noclip
         mom0_snr10 = self.outsimumom0_13co10.replace(".fits","_noclip_snr10.fits")
         l,_  = imval_all(mom0_snr10)
         sim_mom0 = l["data"] * l["mask"]
@@ -1552,6 +1551,15 @@ class ToolsNcol():
         l,_ = imval_all(emom0_snr10)
         sim_emom0 = l["data"] * l["mask"]
         sim_emom0 = sim_emom0.flatten()
+
+        cut = np.where(mom0_snr10>=emom0_snr10*snr)
+        x1 = np.log10(model_mom0[cut])
+        y1 = np.log10(sim_mom0[cut])
+        e1 = sim_emom0[cut]/abs(sim_mom0[cut])
+
+        ########
+        # plot #
+        ########
 
         # set plt, ax
         fig  = plt.figure(figsize=(10,10))
@@ -1570,7 +1578,7 @@ class ToolsNcol():
         adjust=[0.1,0.963,0.25,0.93],
         )
 
-        ax.errorbar(np.log10(model_mom0), np.log10(sim_mom0), yerr=sim_emom0/abs(sim_mom0), marker="o")
+        ax.errorbar(x1, y1, yerr=e1, marker="o")
 
         # save
         os.system("rm -rf " + "test.png")
