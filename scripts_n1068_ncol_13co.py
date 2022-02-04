@@ -1434,12 +1434,15 @@ class ToolsNcol():
 
         # snr = 5
         model_snr5 = self.outmodelcube_13co10.replace(".fits","_snr5.fits")
-        os.system("cp " + self.outmodelcube_13co10 + " " + model_snr5)
 
-        im       = pyfits.open(model_snr5)
-        im0      = im[0]
-        newdata  = im0.data + np.random.normal(loc=0, scale=scale, size=size)
-        pyfits.writeto(model_snr5, data=newdata, header=im0.header)
+        im      = pyfits.open(self.outmodelcube_13co10)
+        im0     = im[0]
+        newdata = im0.data + np.random.normal(loc=0, scale=scale, size=size)
+        pyfits.writeto(
+            self.outmodelcube_13co10.replace(".fits","_snr5.fits"),
+            data   = newdata,
+            header = im0.header,
+            )
 
     ######################
     # create_model_cubes #
