@@ -1450,6 +1450,7 @@ class ToolsNcol():
         # do_noclip #
         #############
         if do_noclip==True:
+            print("TBE.")
 
     ################
     # simulate_mom #
