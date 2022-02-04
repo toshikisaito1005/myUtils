@@ -2111,7 +2111,7 @@ class ToolsNcol():
                 "(K km s$^{-1}$)",
                 [0,250],
                 )
-            maxval = imstat(self.outsimumom0_13co10.replace(".fits","_noclip_snr10.fits").replace("mom0","emom0"))["max"]
+            maxval = imstat(self.outsimumom0_13co10.replace(".fits","_noclip_snr25.fits").replace("mom0","emom0"))["max"]
             self._showcase_one(
                 self.outsimumom0_13co10.replace(".fits","_noclip_snr25.fits").replace("mom0","emom0"),
                 imcontour1,
@@ -2129,7 +2129,7 @@ class ToolsNcol():
                 "(K km s$^{-1}$)",
                 [0,500],
                 )
-            maxval = imstat(self.outsimumom0_13co10.replace(".fits","_noclip_snr10.fits").replace("mom0","emom0"))["max"]
+            maxval = imstat(self.outsimumom0_13co10.replace(".fits","_noclip_snr50.fits").replace("mom0","emom0"))["max"]
             self._showcase_one(
                 self.outsimumom0_13co10.replace(".fits","_noclip_snr50.fits").replace("mom0","emom0"),
                 imcontour1,
@@ -2151,7 +2151,7 @@ class ToolsNcol():
                 "(K km s$^{-1}$)",
                 [0,100],
                 )
-            maxval = imstat(self.outsimumom0_13co10.replace(".fits","_noclip_snr10.fits").replace("mom0","emom0"))["max"]
+            maxval = imstat(self.outsimumom0_13co10.replace(".fits","_clip0_snr10.fits").replace("mom0","emom0"))["max"]
             self._showcase_one(
                 self.outsimumom0_13co10.replace(".fits","_clip0_snr10.fits").replace("mom0","emom0"),
                 imcontour1,
@@ -2169,7 +2169,7 @@ class ToolsNcol():
                 "(K km s$^{-1}$)",
                 [0,250],
                 )
-            maxval = imstat(self.outsimumom0_13co10.replace(".fits","_noclip_snr10.fits").replace("mom0","emom0"))["max"]
+            maxval = imstat(self.outsimumom0_13co10.replace(".fits","_clip0_snr25.fits").replace("mom0","emom0"))["max"]
             self._showcase_one(
                 self.outsimumom0_13co10.replace(".fits","_clip0_snr25.fits").replace("mom0","emom0"),
                 imcontour1,
@@ -2187,7 +2187,7 @@ class ToolsNcol():
                 "(K km s$^{-1}$)",
                 [0,500],
                 )
-            maxval = imstat(self.outsimumom0_13co10.replace(".fits","_noclip_snr10.fits").replace("mom0","emom0"))["max"]
+            maxval = imstat(self.outsimumom0_13co10.replace(".fits","_clip0_snr50.fits").replace("mom0","emom0"))["max"]
             self._showcase_one(
                 self.outsimumom0_13co10.replace(".fits","_clip0_snr50.fits").replace("mom0","emom0"),
                 imcontour1,
@@ -2209,7 +2209,7 @@ class ToolsNcol():
                 "(K km s$^{-1}$)",
                 [0,100],
                 )
-            maxval = imstat(self.outsimumom0_13co10.replace(".fits","_noclip_snr10.fits").replace("mom0","emom0"))["max"]
+            maxval = imstat(self.outsimumom0_13co10.replace(".fits","_clip3_snr10.fits").replace("mom0","emom0"))["max"]
             self._showcase_one(
                 self.outsimumom0_13co10.replace(".fits","_clip3_snr10.fits").replace("mom0","emom0"),
                 imcontour1,
@@ -2227,7 +2227,7 @@ class ToolsNcol():
                 "(K km s$^{-1}$)",
                 [0,250],
                 )
-            maxval = imstat(self.outsimumom0_13co10.replace(".fits","_noclip_snr10.fits").replace("mom0","emom0"))["max"]
+            maxval = imstat(self.outsimumom0_13co10.replace(".fits","_clip3_snr25.fits").replace("mom0","emom0"))["max"]
             self._showcase_one(
                 self.outsimumom0_13co10.replace(".fits","_clip3_snr25.fits").replace("mom0","emom0"),
                 imcontour1,
@@ -2245,7 +2245,7 @@ class ToolsNcol():
                 "(K km s$^{-1}$)",
                 [0,500],
                 )
-            maxval = imstat(self.outsimumom0_13co10.replace(".fits","_noclip_snr10.fits").replace("mom0","emom0"))["max"]
+            maxval = imstat(self.outsimumom0_13co10.replace(".fits","_clip3_snr50.fits").replace("mom0","emom0"))["max"]
             self._showcase_one(
                 self.outsimumom0_13co10.replace(".fits","_clip3_snr50.fits").replace("mom0","emom0"),
                 imcontour1,
@@ -2267,7 +2267,7 @@ class ToolsNcol():
                 "(K km s$^{-1}$)",
                 [0,100],
                 )
-            maxval = imstat(self.outsimumom0_13co10.replace(".fits","_noclip_snr10.fits").replace("mom0","emom0"))["max"]
+            maxval = imstat(self.outsimumom0_13co10.replace(".fits","_noclip_masked_snr10.fits").replace("mom0","emom0"))["max"]
             self._showcase_one(
                 self.outsimumom0_13co10.replace(".fits","_noclip_masked_snr10.fits").replace("mom0","emom0"),
                 imcontour1,
@@ -2285,7 +2285,7 @@ class ToolsNcol():
                 "(K km s$^{-1}$)",
                 [0,250],
                 )
-            maxval = imstat(self.outsimumom0_13co10.replace(".fits","_noclip_snr10.fits").replace("mom0","emom0"))["max"]
+            maxval = imstat(self.outsimumom0_13co10.replace(".fits","_noclip_masked_snr25.fits").replace("mom0","emom0"))["max"]
             self._showcase_one(
                 self.outsimumom0_13co10.replace(".fits","_noclip_masked_snr25.fits").replace("mom0","emom0"),
                 imcontour1,
@@ -2303,7 +2303,7 @@ class ToolsNcol():
                 "(K km s$^{-1}$)",
                 [0,500],
                 )
-            maxval = imstat(self.outsimumom0_13co10.replace(".fits","_noclip_snr10.fits").replace("mom0","emom0"))["max"]
+            maxval = imstat(self.outsimumom0_13co10.replace(".fits","_noclip_masked_snr50.fits").replace("mom0","emom0"))["max"]
             self._showcase_one(
                 self.outsimumom0_13co10.replace(".fits","_noclip_masked_snr50.fits").replace("mom0","emom0"),
                 imcontour1,
@@ -2325,7 +2325,7 @@ class ToolsNcol():
                 "(K km s$^{-1}$)",
                 [0,100],
                 )
-            maxval = imstat(self.outsimumom0_13co10.replace(".fits","_noclip_snr10.fits").replace("mom0","emom0"))["max"]
+            maxval = imstat(self.outsimumom0_13co10.replace(".fits","_clip0_masked_snr10.fits").replace("mom0","emom0"))["max"]
             self._showcase_one(
                 self.outsimumom0_13co10.replace(".fits","_clip0_masked_snr10.fits").replace("mom0","emom0"),
                 imcontour1,
@@ -2343,7 +2343,7 @@ class ToolsNcol():
                 "(K km s$^{-1}$)",
                 [0,250],
                 )
-            maxval = imstat(self.outsimumom0_13co10.replace(".fits","_noclip_snr10.fits").replace("mom0","emom0"))["max"]
+            maxval = imstat(self.outsimumom0_13co10.replace(".fits","_clip0_masked_snr25.fits").replace("mom0","emom0"))["max"]
             self._showcase_one(
                 self.outsimumom0_13co10.replace(".fits","_clip0_masked_snr25.fits").replace("mom0","emom0"),
                 imcontour1,
@@ -2361,7 +2361,7 @@ class ToolsNcol():
                 "(K km s$^{-1}$)",
                 [0,500],
                 )
-            maxval = imstat(self.outsimumom0_13co10.replace(".fits","_noclip_snr10.fits").replace("mom0","emom0"))["max"]
+            maxval = imstat(self.outsimumom0_13co10.replace(".fits","_clip0_masked_snr50.fits").replace("mom0","emom0"))["max"]
             self._showcase_one(
                 self.outsimumom0_13co10.replace(".fits","_clip0_masked_snr50.fits").replace("mom0","emom0"),
                 imcontour1,
@@ -2383,7 +2383,7 @@ class ToolsNcol():
                 "(K km s$^{-1}$)",
                 [0,100],
                 )
-            maxval = imstat(self.outsimumom0_13co10.replace(".fits","_noclip_snr10.fits").replace("mom0","emom0"))["max"]
+            maxval = imstat(self.outsimumom0_13co10.replace(".fits","_clip3_masked_snr10.fits").replace("mom0","emom0"))["max"]
             self._showcase_one(
                 self.outsimumom0_13co10.replace(".fits","_clip3_masked_snr10.fits").replace("mom0","emom0"),
                 imcontour1,
@@ -2401,7 +2401,7 @@ class ToolsNcol():
                 "(K km s$^{-1}$)",
                 [0,250],
                 )
-            maxval = imstat(self.outsimumom0_13co10.replace(".fits","_noclip_snr10.fits").replace("mom0","emom0"))["max"]
+            maxval = imstat(self.outsimumom0_13co10.replace(".fits","_clip3_masked_snr25.fits").replace("mom0","emom0"))["max"]
             self._showcase_one(
                 self.outsimumom0_13co10.replace(".fits","_clip3_masked_snr25.fits").replace("mom0","emom0"),
                 imcontour1,
@@ -2419,7 +2419,7 @@ class ToolsNcol():
                 "(K km s$^{-1}$)",
                 [0,500],
                 )
-            maxval = imstat(self.outsimumom0_13co10.replace(".fits","_noclip_snr10.fits").replace("mom0","emom0"))["max"]
+            maxval = imstat(self.outsimumom0_13co10.replace(".fits","_clip3_masked_snr50.fits").replace("mom0","emom0"))["max"]
             self._showcase_one(
                 self.outsimumom0_13co10.replace(".fits","_clip3_masked_snr50.fits").replace("mom0","emom0"),
                 imcontour1,
