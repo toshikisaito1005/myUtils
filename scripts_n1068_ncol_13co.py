@@ -1555,7 +1555,8 @@ class ToolsNcol():
         cut = np.where(sim_mom0>=sim_emom0*snr)
         x1 = np.log10(model_mom0[cut])
         y1 = np.log10(sim_mom0[cut])
-        e1 = sim_emom0[cut]/abs(sim_mom0[cut])
+        e1 = np.log10(sim_emom0[cut])
+        e1 = sim_emom0[cut]/abs(e1)
 
         ########
         # plot #
