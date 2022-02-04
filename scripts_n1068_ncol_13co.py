@@ -1713,7 +1713,7 @@ class ToolsNcol():
                 self.outsimumom0_13co10.replace(".fits","_clip0_snr10.fits"),
                 imcontour1,
                 self.outpng_simumom0_13co10.replace(".png","_clip0_snr10.png"),
-                "no-clip: SNR=10 mom0",
+                "clip0$\sigma$: SNR=10 mom0",
                 "(K km s$^{-1}$)",
                 [0,100],
                 )
@@ -1722,7 +1722,7 @@ class ToolsNcol():
                 self.outsimumom0_13co10.replace(".fits","_clip0_snr25.fits"),
                 imcontour1,
                 self.outpng_simumom0_13co10.replace(".png","_clip0_snr25.png"),
-                "no-clip: SNR=25 mom0",
+                "clip0$\sigma$: SNR=25 mom0",
                 "(K km s$^{-1}$)",
                 [0,250],
                 )
@@ -1731,7 +1731,7 @@ class ToolsNcol():
                 self.outsimumom0_13co10.replace(".fits","_clip0_snr50.fits"),
                 imcontour1,
                 self.outpng_simumom0_13co10.replace(".png","_clip0_snr50.png"),
-                "no-clip: SNR=50 mom0",
+                "clip0$\sigma$: SNR=50 mom0",
                 "(K km s$^{-1}$)",
                 [0,500],
                 )
@@ -1744,7 +1744,7 @@ class ToolsNcol():
                 self.outsimumom0_13co10.replace(".fits","_clip3_snr10.fits"),
                 imcontour1,
                 self.outpng_simumom0_13co10.replace(".png","_clip3_snr10.png"),
-                "no-clip: SNR=10 mom0",
+                "clip3$\sigma$: SNR=10 mom0",
                 "(K km s$^{-1}$)",
                 [0,100],
                 )
@@ -1753,7 +1753,7 @@ class ToolsNcol():
                 self.outsimumom0_13co10.replace(".fits","_clip3_snr25.fits"),
                 imcontour1,
                 self.outpng_simumom0_13co10.replace(".png","_clip3_snr25.png"),
-                "no-clip: SNR=25 mom0",
+                "clip3$\sigma$: SNR=25 mom0",
                 "(K km s$^{-1}$)",
                 [0,250],
                 )
@@ -1762,7 +1762,7 @@ class ToolsNcol():
                 self.outsimumom0_13co10.replace(".fits","_clip3_snr50.fits"),
                 imcontour1,
                 self.outpng_simumom0_13co10.replace(".png","_clip3_snr50.png"),
-                "no-clip: SNR=50 mom0",
+                "clip3$\sigma$: SNR=50 mom0",
                 "(K km s$^{-1}$)",
                 [0,500],
                 )
