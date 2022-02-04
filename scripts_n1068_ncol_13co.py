@@ -237,6 +237,7 @@ class ToolsNcol():
 
     def run_ngc1068_ncol(
         self,
+        do_all           = False,
         # analysis
         do_prepare       = False,
         do_fitting       = False, # after do_prepare
@@ -253,6 +254,16 @@ class ToolsNcol():
         """
         This method runs all the methods which will create figures in the paper.
         """
+
+        if do_all==True:
+            do_prepare       = True
+            do_fitting       = True
+            do_create_models = True
+            do_simulate_mom  = True
+            plot_showcase    = True
+            plot_showsim     = True
+            do_imagemagick   = True
+            immagick_all     = True
 
         # analysis
         if do_prepare==True:
@@ -1807,8 +1818,8 @@ class ToolsNcol():
         label_scalebar = "100 pc"
 
         for this_beam in self.beams:
-            if this_beam!="60pc":
-                continue
+            #if this_beam!="60pc":
+            #    continue
 
             print("# myfig_fits2png at " + this_beam)
             imcontour1 = self.outmaps_mom0_13co21.replace("???",this_beam)
