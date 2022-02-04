@@ -1417,7 +1417,6 @@ class ToolsNcol():
 
     def create_model_cubes(
         self,
-        snr_cut=5.0,
         ):
         """
         """
@@ -1430,15 +1429,17 @@ class ToolsNcol():
         im0   = im[0]
         size  = im0.data.shape
         immax = np.nanmax(im0.data)
+        scale = snr / immax
 
         # snr = 5
+        snr = 5.0
         model_snr5 = self.outmodelcube_13co10.replace(".fits","_snr5.fits")
         os.system("cp " + self.outmodelcube_13co10 + " " + model_snr5)
 
-        im      = pyfits.open(model_snr5)
-        im0     = im[0]
-        newdata = np.where(im0.data!=np.nan,im0.data,0)
-
+        im       = pyfits.open(model_snr5)
+        im0      = im[0]
+        newdata  = im0.data + np.random.normal(loc=0, scale=scale, size=size)
+        pyfits.writeto(model_snr5, data=newdata, header=im0.header)
 
     ######################
     # create_model_cubes #
