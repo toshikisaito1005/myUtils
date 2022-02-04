@@ -2099,7 +2099,7 @@ class ToolsNcol():
                 self.outpng_simumom0_13co10.replace(".png","_noclip_snr10.png").replace("mom0","emom0"),
                 "noclip: $\sigma_{\mathrm{err}}$(mom0$_{\mathrm{SNR=10}}$)",
                 "(K km s$^{-1}$)",
-                [0,100],
+                [0,10],
                 )
 
             self._showcase_one(
@@ -2116,7 +2116,7 @@ class ToolsNcol():
                 self.outpng_simumom0_13co10.replace(".png","_noclip_snr25.png").replace("mom0","emom0"),
                 "noclip: $\sigma_{\mathrm{err}}$(mom0$_{\mathrm{SNR=25}}$)",
                 "(K km s$^{-1}$)",
-                [0,250],
+                [0,25],
                 )
 
             self._showcase_one(
@@ -2133,7 +2133,7 @@ class ToolsNcol():
                 self.outpng_simumom0_13co10.replace(".png","_noclip_snr50.png").replace("mom0","emom0"),
                 "noclip: $\sigma_{\mathrm{err}}$(mom0$_{\mathrm{SNR=50}}$)",
                 "(K km s$^{-1}$)",
-                [0,500],
+                [0,50],
                 )
 
         ###############
@@ -2154,7 +2154,7 @@ class ToolsNcol():
                 self.outpng_simumom0_13co10.replace(".png","_clip0_snr10.png").replace("mom0","emom0"),
                 "clip0$\sigma$: $\sigma_{\mathrm{err}}$(mom0$_{\mathrm{SNR=10}}$)",
                 "(K km s$^{-1}$)",
-                [0,100],
+                [0,10],
                 )
 
             self._showcase_one(
@@ -2171,7 +2171,7 @@ class ToolsNcol():
                 self.outpng_simumom0_13co10.replace(".png","_clip0_snr25.png").replace("mom0","emom0"),
                 "clip0$\sigma$: $\sigma_{\mathrm{err}}$(mom0$_{\mathrm{SNR=25}}$)",
                 "(K km s$^{-1}$)",
-                [0,250],
+                [0,25],
                 )
 
             self._showcase_one(
@@ -2188,7 +2188,7 @@ class ToolsNcol():
                 self.outpng_simumom0_13co10.replace(".png","_clip0_snr50.png").replace("mom0","emom0"),
                 "clip0$\sigma$: $\sigma_{\mathrm{err}}$(mom0$_{\mathrm{SNR=50}}$)",
                 "(K km s$^{-1}$)",
-                [0,500],
+                [0,50],
                 )
 
         ###########
@@ -2209,7 +2209,7 @@ class ToolsNcol():
                 self.outpng_simumom0_13co10.replace(".png","_clip3_snr10.png").replace("mom0","emom0"),
                 "clip3$\sigma$: $\sigma_{\mathrm{err}}$(mom0$_{\mathrm{SNR=10}}$)",
                 "(K km s$^{-1}$)",
-                [0,100],
+                [0,10],
                 )
 
             self._showcase_one(
@@ -2226,7 +2226,7 @@ class ToolsNcol():
                 self.outpng_simumom0_13co10.replace(".png","_clip3_snr25.png").replace("mom0","emom0"),
                 "clip3$\sigma$: $\sigma_{\mathrm{err}}$(mom0$_{\mathrm{SNR=25}}$)",
                 "(K km s$^{-1}$)",
-                [0,250],
+                [0,25],
                 )
 
             self._showcase_one(
@@ -2243,7 +2243,7 @@ class ToolsNcol():
                 self.outpng_simumom0_13co10.replace(".png","_clip3_snr50.png").replace("mom0","emom0"),
                 "clip3$\sigma$: $\sigma_{\mathrm{err}}$(mom0$_{\mathrm{SNR=50}}$)",
                 "(K km s$^{-1}$)",
-                [0,500],
+                [0,50],
                 )
 
         ##################
@@ -2256,7 +2256,7 @@ class ToolsNcol():
                 self.outpng_simumom0_13co10.replace(".png","_noclip_masked_snr10.png"),
                 "noclip+masking: mom0$_{\mathrm{SNR=10}}$",
                 "(K km s$^{-1}$)",
-                [0,100],
+                [0,10],
                 )
             self._showcase_one(
                 self.outsimumom0_13co10.replace(".fits","_noclip_masked_snr10.fits").replace("mom0","emom0"),
@@ -2264,7 +2264,7 @@ class ToolsNcol():
                 self.outpng_simumom0_13co10.replace(".png","_noclip_masked_snr10.png").replace("mom0","emom0"),
                 "noclip+masking: $\sigma_{\mathrm{err}}$(mom0$_{\mathrm{SNR=10}}$)",
                 "(K km s$^{-1}$)",
-                [0,100],
+                [0,10],
                 )
 
             self._showcase_one(
@@ -2273,7 +2273,7 @@ class ToolsNcol():
                 self.outpng_simumom0_13co10.replace(".png","_noclip_masked_snr25.png"),
                 "noclip+masking: mom0$_{\mathrm{SNR=25}}$",
                 "(K km s$^{-1}$)",
-                [0,250],
+                [0,25],
                 )
             self._showcase_one(
                 self.outsimumom0_13co10.replace(".fits","_noclip_masked_snr25.fits").replace("mom0","emom0"),
@@ -2281,7 +2281,7 @@ class ToolsNcol():
                 self.outpng_simumom0_13co10.replace(".png","_noclip_masked_snr25.png").replace("mom0","emom0"),
                 "noclip+masking: $\sigma_{\mathrm{err}}$(mom0$_{\mathrm{SNR=25}}$)",
                 "(K km s$^{-1}$)",
-                [0,250],
+                [0,25],
                 )
 
             self._showcase_one(
@@ -2298,7 +2298,7 @@ class ToolsNcol():
                 self.outpng_simumom0_13co10.replace(".png","_noclip_masked_snr50.png").replace("mom0","emom0"),
                 "noclip+masking: $\sigma_{\mathrm{err}}$(mom0$_{\mathrm{SNR=50}}$)",
                 "(K km s$^{-1}$)",
-                [0,500],
+                [0,50],
                 )
 
         ####################
@@ -2319,7 +2319,7 @@ class ToolsNcol():
                 self.outpng_simumom0_13co10.replace(".png","_clip0_masked_snr10.png").replace("mom0","emom0"),
                 "clip0$\sigma$+masking: $\sigma_{\mathrm{err}}$(mom0$_{\mathrm{SNR=10}}$)",
                 "(K km s$^{-1}$)",
-                [0,100],
+                [0,10],
                 )
 
             self._showcase_one(
@@ -2336,7 +2336,7 @@ class ToolsNcol():
                 self.outpng_simumom0_13co10.replace(".png","_clip0_masked_snr25.png").replace("mom0","emom0"),
                 "clip0$\sigma$+masking: $\sigma_{\mathrm{err}}$(mom0$_{\mathrm{SNR=25}}$)",
                 "(K km s$^{-1}$)",
-                [0,250],
+                [0,25],
                 )
 
             self._showcase_one(
@@ -2353,7 +2353,7 @@ class ToolsNcol():
                 self.outpng_simumom0_13co10.replace(".png","_clip0_masked_snr50.png").replace("mom0","emom0"),
                 "clip0$\sigma$+masking: $\sigma_{\mathrm{err}}$(mom0$_{\mathrm{SNR=50}}$)",
                 "(K km s$^{-1}$)",
-                [0,500],
+                [0,50],
                 )
 
         ################
@@ -2372,9 +2372,9 @@ class ToolsNcol():
                 self.outsimumom0_13co10.replace(".fits","_clip3_masked_snr10.fits").replace("mom0","emom0"),
                 imcontour1,
                 self.outpng_simumom0_13co10.replace(".png","_clip3_masked_snr10.png").replace("mom0","emom0"),
-                "clip3$\sigma$+masking: $\sigma_{\mathrm{err}}$(mom0$_{\mathrm{SNR=10}})",
+                "clip3$\sigma$+masking: $\sigma_{\mathrm{err}}$(mom0$_{\mathrm{SNR=10}}$)",
                 "(K km s$^{-1}$)",
-                [0,100],
+                [0,10],
                 )
 
             self._showcase_one(
@@ -2389,9 +2389,9 @@ class ToolsNcol():
                 self.outsimumom0_13co10.replace(".fits","_clip3_masked_snr25.fits").replace("mom0","emom0"),
                 imcontour1,
                 self.outpng_simumom0_13co10.replace(".png","_clip3_masked_snr25.png").replace("mom0","emom0"),
-                "clip3$\sigma$+masking: $\sigma_{\mathrm{err}}$(mom0$_{\mathrm{SNR=25}})",
+                "clip3$\sigma$+masking: $\sigma_{\mathrm{err}}$(mom0$_{\mathrm{SNR=25}}$)",
                 "(K km s$^{-1}$)",
-                [0,250],
+                [0,25],
                 )
 
             self._showcase_one(
@@ -2406,9 +2406,9 @@ class ToolsNcol():
                 self.outsimumom0_13co10.replace(".fits","_clip3_masked_snr50.fits").replace("mom0","emom0"),
                 imcontour1,
                 self.outpng_simumom0_13co10.replace(".png","_clip3_masked_snr50.png").replace("mom0","emom0"),
-                "clip3$\sigma$+masking: $\sigma_{\mathrm{err}}$(mom0$_{\mathrm{SNR=50}})",
+                "clip3$\sigma$+masking: $\sigma_{\mathrm{err}}$(mom0$_{\mathrm{SNR=50}}$)",
                 "(K km s$^{-1}$)",
-                [0,500],
+                [0,50],
                 )
 
     ############
