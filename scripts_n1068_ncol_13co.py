@@ -1443,7 +1443,7 @@ class ToolsNcol():
         im0     = im[0]
         im0.header["BMAJ"] = pix
         im0.header["BMIN"] = pix
-        pyfits.writeto("noise.fits",clobber=True)
+        pyfits.writeto("noise.fits",data=im0.data,header=im0.header,clobber=True)
         run_roundsmooth(
             "noise.fits",
             "noise_correlated_tmp.fits",
