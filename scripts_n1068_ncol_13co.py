@@ -1541,7 +1541,7 @@ class ToolsNcol():
 
         # input model, i.e., answer
         input_mom0 = imval_all(self.outmodelmom0_13co10)
-        input_mom0 = input_mom0["data"]
+        input_mom0 = input_mom0["data"] * input_mom0["mask"]
 
         #############
         # do_noclip #
@@ -1549,52 +1549,32 @@ class ToolsNcol():
         if do_noclip==True:
             mom0_snr10  = self.outsimumom0_13co10.replace(".fits","_noclip_snr10.fits")
             sim_mom0    = imval_all(mom0_snr10)
-            sim_mom0    = sim_mom0["data"]
+            sim_mom0    = sim_mom0["data"] * sim_mom0["mask"]
 
             emom0_snr10 = self.outsimumom0_13co10.replace(".fits","_noclip_snr10.fits").replace("mom0","emom0")
             sim_emom0   = imval_all(emom0_snr10)
-            sim_emom0   = sim_emom0["data"]
+            sim_emom0   = sim_emom0["data"] * sim_emom0["mask"]
 
-            """
             # set plt, ax
-            fig  = plt.figure(figsize=(13,7))
+            fig  = plt.figure(figsize=(10,10))
             plt.rcParams["font.size"] = 16
             gs   = gridspec.GridSpec(nrows=11, ncols=11)
-            ax   = plt.subplot(gs[0:10,0:9])
-            ax2  = plt.subplot(gs[0:10,9:10])
-            ax2b = ax2.twinx()
+            ax   = plt.subplot(gs[0:10,0:10])
 
             # set ax parameter
             myax_set(
             ax,
             grid=None,
-            xlim=[-0.5,15.5],
-            ylim=ylim,
-            xlabel=None,
-            ylabel="log Ratio relative to $^{12}$CO(1-0)",
+            xlim=None,
+            ylim=None,
+            xlabel="log input model",
+            ylabel="log output model",
             adjust=[0.1,0.963,0.25,0.93],
             )
-            myax_set(
-            ax2,
-            grid=None,
-            xlim=[15.5,16.5],
-            ylim=ylim,
-            xlabel=None,
-            ylabel=None,
-            adjust=[0.1,0.963,0.25,0.93],
-            )
-            myax_set(
-            ax2b,
-            grid=None,
-            xlim=[15.5,16.5],
-            ylim=ylim,
-            xlabel=None,
-            ylabel="log [SIII]/[SII] ratio",
-            adjust=[0.1,0.963,0.25,0.93],
-            )
-            ax2.tick_params(labelleft=False,labelright=True)
-            ax2b.tick_params(labelleft=False,labelright=True)
 
+            ax.scatter(np.log(input_mom0), np.log10(sim_mom0))
+
+            """
             markersize = 15
             ax.plot(range(len(x)),y_disk,c="grey",lw=2,marker="s",markersize=markersize,markeredgewidth=0)
             ax.plot(range(len(x)),y_cnd,c="tomato",lw=2,marker="s",markersize=markersize,markeredgewidth=0)
