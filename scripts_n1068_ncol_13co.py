@@ -1571,8 +1571,8 @@ class ToolsNcol():
         myax_set(
         ax,
         grid=None,
-        xlim=["0.2,2.3"],
-        ylim=["0.2,2.3"],
+        xlim=[0.2,2.3],
+        ylim=[0.2,2.3],
         xlabel="log input model",
         ylabel="log output model",
         adjust=[0.1,0.963,0.25,0.93],
