@@ -1571,6 +1571,9 @@ class ToolsNcol():
             os.system("rm -rf " + outfile + ".image")
             immoments(imagename=infile,outfile=outfile+".image",includepix=includepix)
             run_exportfits(outfile+".image",outfile,delin=True,dropdeg=True,dropstokes=True)
+            # error
+            run_immath_two(outfile,outerr+".image",map_nchan,"IM0*0+"+str(rms)+"*"+str(chanwidth_kms)+"*sqrt(IM1)")
+            run_exportfits(outerr+".image",outerr,delin=True,dropdeg=True,dropstokes=True)
 
             # snr = 25
             infile  = self.outmodelcube_13co10.replace(".fits","_snr25.fits")
@@ -1579,6 +1582,9 @@ class ToolsNcol():
             os.system("rm -rf " + outfile + ".image")
             immoments(imagename=infile,outfile=outfile+".image",includepix=includepix)
             run_exportfits(outfile+".image",outfile,delin=True,dropdeg=True,dropstokes=True)
+            # error
+            run_immath_two(outfile,outerr+".image",map_nchan,"IM0*0+"+str(rms)+"*"+str(chanwidth_kms)+"*sqrt(IM1)")
+            run_exportfits(outerr+".image",outerr,delin=True,dropdeg=True,dropstokes=True)
 
             # snr = 50
             infile  = self.outmodelcube_13co10.replace(".fits","_snr50.fits")
@@ -1587,6 +1593,9 @@ class ToolsNcol():
             os.system("rm -rf " + outfile + ".image")
             immoments(imagename=infile,outfile=outfile+".image",includepix=includepix)
             run_exportfits(outfile+".image",outfile,delin=True,dropdeg=True,dropstokes=True)
+            # error
+            run_immath_two(outfile,outerr+".image",map_nchan,"IM0*0+"+str(rms)+"*"+str(chanwidth_kms)+"*sqrt(IM1)")
+            run_exportfits(outerr+".image",outerr,delin=True,dropdeg=True,dropstokes=True)
 
         ###########
         # do_clip # 
