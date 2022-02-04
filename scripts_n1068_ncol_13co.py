@@ -1430,19 +1430,23 @@ class ToolsNcol():
         size  = im0.data.shape
         immax = np.nanmax(im0.data)
         snr   = 5.0
-        scale = snr / immax
+        scale = immax / snr
+
+        # create noise
+        dist = np.sqrt(size[0]**2 + size[1]**2)
+        correlation_scale = 4.53
+        filter_kernel = np.exp(-dist**2/(2*correlation_scale))
+        noise = np.random.normal(loc=0, scale=scale, size=size)
+        noise = scipy.signal.fftconvolve(noise, filter_kernel, mode='same')
 
         # snr = 5
         model_snr5 = self.outmodelcube_13co10.replace(".fits","_snr5.fits")
 
         im      = pyfits.open(self.outmodelcube_13co10)
         im0     = im[0]
-        newdata = im0.data + np.random.normal(loc=0, scale=scale, size=size)
-        pyfits.writeto(
-            self.outmodelcube_13co10.replace(".fits","_snr5.fits"),
-            data   = newdata,
-            header = im0.header,
-            )
+        newdata = im0.data + noise
+        os.system("rm -rf " + model_snr5)
+        pyfits.writeto(model_snr5,data=newdata,header=im0.header)
 
     ######################
     # create_model_cubes #
