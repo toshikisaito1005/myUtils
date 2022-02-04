@@ -127,6 +127,7 @@ def imrebin2(
     imsize,
     direction_ra,
     direction_dec,
+    oversamplingfactor=4.0,
     ):
     """
     input : imagename, imsize, direction_ra, direction_dec
@@ -149,7 +150,7 @@ def imrebin2(
     blc_dec     = blc_dec_tmp.replace(".","d",1).replace(".","m",1)+"s"
 
     beamsize    = round(imhead(imagename,"list")["beamminor"]["value"], 2)
-    pix_size    = round(beamsize/4.53, 2)
+    pix_size    = round(beamsize/oversamplingfactor, 2)
     size_x      = int(imsize / pix_size)
     size_y      = size_x
 
