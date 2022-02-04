@@ -1915,27 +1915,27 @@ class ToolsNcol():
         ##################
         if do_noclip_mask==True:
             self._showcase_one(
-                self.outsimumom0_13co10.replace(".fits","_noclip_mask_snr10.fits"),
+                self.outsimumom0_13co10.replace(".fits","_noclip_masked_snr10.fits"),
                 imcontour1,
-                self.outpng_simumom0_13co10.replace(".png","_noclip_mask_snr10.png"),
+                self.outpng_simumom0_13co10.replace(".png","_noclip_masked_snr10.png"),
                 "no-clip: mom0$_{\mathrm{SNR=10}}$",
                 "(K km s$^{-1}$)",
                 [0,100],
                 )
 
             self._showcase_one(
-                self.outsimumom0_13co10.replace(".fits","_noclip_mask_snr25.fits"),
+                self.outsimumom0_13co10.replace(".fits","_noclip_masked_snr25.fits"),
                 imcontour1,
-                self.outpng_simumom0_13co10.replace(".png","_noclip_mask_snr25.png"),
+                self.outpng_simumom0_13co10.replace(".png","_noclip_masked_snr25.png"),
                 "no-clip: mom0$_{\mathrm{SNR=25}}$",
                 "(K km s$^{-1}$)",
                 [0,250],
                 )
 
             self._showcase_one(
-                self.outsimumom0_13co10.replace(".fits","_noclip_mask_snr50.fits"),
+                self.outsimumom0_13co10.replace(".fits","_noclip_masked_snr50.fits"),
                 imcontour1,
-                self.outpng_simumom0_13co10.replace(".png","_noclip_mask_snr50.png"),
+                self.outpng_simumom0_13co10.replace(".png","_noclip_masked_snr50.png"),
                 "no-clip: mom0$_{\mathrm{SNR=50}}$",
                 "(K km s$^{-1}$)",
                 [0,500],
@@ -1946,27 +1946,27 @@ class ToolsNcol():
         ####################
         if do_zeroclip_mask==True:
             self._showcase_one(
-                self.outsimumom0_13co10.replace(".fits","_clip0_mask_snr10.fits"),
+                self.outsimumom0_13co10.replace(".fits","_clip0_masked_snr10.fits"),
                 imcontour1,
-                self.outpng_simumom0_13co10.replace(".png","_clip0_mask_snr10.png"),
+                self.outpng_simumom0_13co10.replace(".png","_clip0_masked_snr10.png"),
                 "clip0$\sigma$: mom0$_{\mathrm{SNR=10}}$",
                 "(K km s$^{-1}$)",
                 [0,100],
                 )
 
             self._showcase_one(
-                self.outsimumom0_13co10.replace(".fits","_clip0_mask_snr25.fits"),
+                self.outsimumom0_13co10.replace(".fits","_clip0_masked_snr25.fits"),
                 imcontour1,
-                self.outpng_simumom0_13co10.replace(".png","_clip0_mask_snr25.png"),
+                self.outpng_simumom0_13co10.replace(".png","_clip0_masked_snr25.png"),
                 "clip0$\sigma$: mom0$_{\mathrm{SNR=25}}$",
                 "(K km s$^{-1}$)",
                 [0,250],
                 )
 
             self._showcase_one(
-                self.outsimumom0_13co10.replace(".fits","_clip0_mask_snr50.fits"),
+                self.outsimumom0_13co10.replace(".fits","_clip0_masked_snr50.fits"),
                 imcontour1,
-                self.outpng_simumom0_13co10.replace(".png","_clip0_mask_snr50.png"),
+                self.outpng_simumom0_13co10.replace(".png","_clip0_masked_snr50.png"),
                 "clip0$\sigma$: mom0$_{\mathrm{SNR=50}}$",
                 "(K km s$^{-1}$)",
                 [0,500],
@@ -1977,27 +1977,27 @@ class ToolsNcol():
         ################
         if do_clip_mask==True:
             self._showcase_one(
-                self.outsimumom0_13co10.replace(".fits","_clip3_mask_snr10.fits"),
+                self.outsimumom0_13co10.replace(".fits","_clip3_masked_snr10.fits"),
                 imcontour1,
-                self.outpng_simumom0_13co10.replace(".png","_clip3_mask_snr10.png"),
+                self.outpng_simumom0_13co10.replace(".png","_clip3_masked_snr10.png"),
                 "clip3$\sigma$: mom0$_{\mathrm{SNR=10}}$",
                 "(K km s$^{-1}$)",
                 [0,100],
                 )
 
             self._showcase_one(
-                self.outsimumom0_13co10.replace(".fits","_clip3_mask_snr25.fits"),
+                self.outsimumom0_13co10.replace(".fits","_clip3_masked_snr25.fits"),
                 imcontour1,
-                self.outpng_simumom0_13co10.replace(".png","_clip3_mask_snr25.png"),
+                self.outpng_simumom0_13co10.replace(".png","_clip3_masked_snr25.png"),
                 "clip3$\sigma$: mom0$_{\mathrm{SNR=25}}$",
                 "(K km s$^{-1}$)",
                 [0,250],
                 )
 
             self._showcase_one(
-                self.outsimumom0_13co10.replace(".fits","_clip3_mask_snr50.fits"),
+                self.outsimumom0_13co10.replace(".fits","_clip3_masked_snr50.fits"),
                 imcontour1,
-                self.outpng_simumom0_13co10.replace(".png","_clip3_mask_snr50.png"),
+                self.outpng_simumom0_13co10.replace(".png","_clip3_masked_snr50.png"),
                 "clip3$\sigma$: mom0$_{\mathrm{SNR=50}}$",
                 "(K km s$^{-1}$)",
                 [0,500],
