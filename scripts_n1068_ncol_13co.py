@@ -1431,7 +1431,7 @@ class ToolsNcol():
         immax = np.nanmax(im0.data)
         snr   = 5.0
         scale = immax / snr
-        pix   = abs(imhead("../data_ready/n1068_13co21_60pc.cube.fits",mode="list")["cdelt1"]) * 3600 * 180 / np.pi
+        pix   = abs(imhead(self.outmodelcube_13co10,mode="list")["cdelt1"]) * 3600 * 180 / np.pi
         beam  = imhead(self.outmodelcube_13co10,mode="list")["cdelt1"]["beammajor"]["value"]
 
         # create noise
