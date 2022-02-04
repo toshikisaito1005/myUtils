@@ -1539,18 +1539,18 @@ class ToolsNcol():
         # input model, i.e., answer
         l,_ = imval_all(self.outmodelmom0_13co10)
         model_mom0 = l["data"] * l["mask"]
-        model_mom0 = model_mom0.flatten()
+        model_mom0 = np.array(model_mom0.flatten())
 
         # noclip
         mom0_snr10 = self.outsimumom0_13co10.replace(".fits","_noclip_snr10.fits")
         l,_  = imval_all(mom0_snr10)
         sim_mom0 = l["data"] * l["mask"]
-        sim_mom0 = sim_mom0.flatten()
+        sim_mom0 = np.array(sim_mom0.flatten())
 
         emom0_snr10 = self.outsimumom0_13co10.replace(".fits","_noclip_snr10.fits").replace("mom0","emom0")
         l,_ = imval_all(emom0_snr10)
         sim_emom0 = l["data"] * l["mask"]
-        sim_emom0 = sim_emom0.flatten()
+        sim_emom0 = np.array(sim_emom0.flatten())
 
         cut = np.where(mom0_snr10>=emom0_snr10*snr)
         x1 = np.log10(model_mom0[cut])
