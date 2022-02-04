@@ -1563,7 +1563,7 @@ class ToolsNcol():
         l = l["data"] * l["mask"]
         sim_mom0 = np.array(l.flatten())
 
-        l = self.outsimumom0_13co10.replace(".fits","_clip_snr0.fits").replace("mom0","emom0")
+        l = self.outsimumom0_13co10.replace(".fits","_clip0_snr0.fits").replace("mom0","emom0")
         l,_ = imval_all(l)
         l = l["data"] * l["mask"]
         sim_emom0 = np.array(l.flatten())
