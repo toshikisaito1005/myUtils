@@ -1475,7 +1475,7 @@ class ToolsNcol():
         pyfits.writeto(model_snr,data=newdata,header=im0.header)
 
         # snr = 500
-        model_snr = self.outmodelcube_13co10.replace(".fits","_snr50.fits")
+        model_snr = self.outmodelcube_13co10.replace(".fits","_snr500.fits")
         im      = pyfits.open(self.outmodelcube_13co10)
         im0     = im[0]
         newdata = im0.data * 100.0 + noise
