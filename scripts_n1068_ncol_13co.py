@@ -46,6 +46,7 @@ Date         Filename                To
 
 history:
 2022-01-30   created
+2022-02-04   add simualtion and evaluation on the methods for moment map creation
 Toshiki Saito@Nichidai/NAOJ
 """
 
@@ -1472,6 +1473,8 @@ class ToolsNcol():
         do_noclip=True,
         do_zeroclip=True,
         do_clip=True,
+        do_noclip_mask=True,
+        rms=0.227283716202,
         snr=3,
         ):
         """
@@ -1488,6 +1491,18 @@ class ToolsNcol():
         os.system("rm -rf " + outfile + ".image")
         immoments(imagename=infile,outfile=outfile+".image")
         run_exportfits(outfile+".image",outfile,delin=True,dropdeg=True,dropstokes=True)
+
+        ###############
+        # create mask #
+        ###############
+        infile = self.outmodelcube_13co10
+        mask   = self.outmodelcube_13co10.replace(".fits","_mask.fits")
+        maxval = imstat(infile)["max"]
+        clip   = str(maxval / 125.0)
+        os.system("rm -rf " + mask + ".image")
+        expr = "iif(IM0>=" + clip + ",1,0)"
+        run_immath_one(infile,mask+".image",expr)
+        run_exportfits(mask+".image",mask,delin=True,dropdeg=True,dropstokes=True)
 
         #############
         # do_noclip #
@@ -1513,7 +1528,7 @@ class ToolsNcol():
             run_exportfits(outfile+".image",outfile,delin=True,dropdeg=True,dropstokes=True)
 
         ###############
-        # do_zeroclip # 0.227283716202
+        # do_zeroclip #
         ###############
         includepix = [0.0,1000000.]
         if do_noclip==True:
@@ -1537,9 +1552,9 @@ class ToolsNcol():
             run_exportfits(outfile+".image",outfile,delin=True,dropdeg=True,dropstokes=True)
 
         ###########
-        # do_clip #
+        # do_clip # 
         ###########
-        includepix = [0.227283716202*snr,1000000.]
+        includepix = [rms*snr,1000000.]
         if do_clip==True:
             # snr = 5
             infile  = self.outmodelcube_13co10.replace(".fits","_snr10.fits")
@@ -1558,6 +1573,47 @@ class ToolsNcol():
             outfile = self.outsimumom0_13co10.replace(".fits","_clip"+str(snr)+"_snr50.fits")
             os.system("rm -rf " + outfile + ".image")
             immoments(imagename=infile,outfile=outfile+".image",includepix=includepix)
+            run_exportfits(outfile+".image",outfile,delin=True,dropdeg=True,dropstokes=True)
+
+        ##################
+        # do_noclip_mask #
+        ##################
+        if do_noclip_mask==True:
+            # snr = 5
+            infile  = self.outmodelcube_13co10.replace(".fits","_snr10.fits")
+            outfile = self.outsimumom0_13co10.replace(".fits","_noclip_snr10.fits")
+            os.system("rm -rf " + outfile + ".image")
+            immoments(imagename=infile,outfile=outfile+".image")
+            run_exportfits(outfile+".image",outfile,delin=True,dropdeg=True,dropstokes=True)
+            # snr = 25
+            infile  = self.outmodelcube_13co10.replace(".fits","_snr25.fits")
+            outfile = self.outsimumom0_13co10.replace(".fits","_noclip_snr25.fits")
+            os.system("rm -rf " + outfile + ".image")
+            immoments(imagename=infile,outfile=outfile+".image")
+            run_exportfits(outfile+".image",outfile,delin=True,dropdeg=True,dropstokes=True)
+            # snr = 125
+            infile  = self.outmodelcube_13co10.replace(".fits","_snr50.fits")
+            outfile = self.outsimumom0_13co10.replace(".fits","_noclip_snr50.fits")
+            os.system("rm -rf " + outfile + ".image")
+            immoments(imagename=infile,outfile=outfile+".image")
+            run_exportfits(outfile+".image",outfile,delin=True,dropdeg=True,dropstokes=True)
+            # snr = 5
+            infile  = self.outmodelcube_13co10.replace(".fits","_snr10.fits")
+            outfile = self.outsimumom0_13co10.replace(".fits","_noclip_snr10.fits")
+            os.system("rm -rf " + outfile + ".image")
+            immoments(imagename=infile,outfile=outfile+".image")
+            run_exportfits(outfile+".image",outfile,delin=True,dropdeg=True,dropstokes=True)
+            # snr = 25
+            infile  = self.outmodelcube_13co10.replace(".fits","_snr25.fits")
+            outfile = self.outsimumom0_13co10.replace(".fits","_noclip_snr25.fits")
+            os.system("rm -rf " + outfile + ".image")
+            immoments(imagename=infile,outfile=outfile+".image")
+            run_exportfits(outfile+".image",outfile,delin=True,dropdeg=True,dropstokes=True)
+            # snr = 125
+            infile  = self.outmodelcube_13co10.replace(".fits","_snr50.fits")
+            outfile = self.outsimumom0_13co10.replace(".fits","_noclip_snr50.fits")
+            os.system("rm -rf " + outfile + ".image")
+            immoments(imagename=infile,outfile=outfile+".image")
             run_exportfits(outfile+".image",outfile,delin=True,dropdeg=True,dropstokes=True)
 
     #######################
