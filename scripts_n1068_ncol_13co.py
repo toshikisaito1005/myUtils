@@ -1454,6 +1454,7 @@ class ToolsNcol():
         im      = pyfits.open("noise_correlated.fits")
         im0     = im[0]
         newdata = im0.data * scale / np.nanstd(im0.data)
+        pyfits.writeto("noise_correlated.fits",data=newdata,clobber=True)
 
         """
         # snr = 5
