@@ -1431,18 +1431,19 @@ class ToolsNcol():
         immax = np.nanmax(im0.data)
         snr   = 5.0
         scale = immax / snr
-        pix   = abs(imhead(self.outmodelcube_13co10,mode="list")["cdelt1"]) * 3600 * 180 / np.pi
+        pix   = abs(imhead(self.outmodelcube_13co10,mode="list")["cdelt1"])
         beam  = imhead(self.outmodelcube_13co10,mode="list")["beammajor"]["value"]
 
         # create correlated noise
         os.system("rm -rf noise.fits")
         noise   = np.random.normal(loc=0, scale=scale, size=size)
         pyfits.writeto("noise.fits",data=noise,header=im0.header)
-        print(im0.header)
-        imhead("noise.fits",mode="del",hdkey="bmaj")
-        imhead("noise.fits",mode="del",hdkey="bmin")
-        imhead("noise.fits",mode="add",hdkey="bmaj",hdvalue=str(pix)+"arcsec")
-        imhead("noise.fits",mode="add",hdkey="bmin",hdvalue=str(pix)+"arcsec")
+        #print(im0.header)
+        im      = pyfits.open(self.outmodelcube_13co10)
+        im0     = im[0]
+        im0.header["BMAJ"]=pix
+        im0.header["BMIN"]=pix
+        pyfits.writeto("noise.fits",overwrite=True)
         run_roundsmooth(
             "noise.fits",
             "noise_correlated_tmp.fits",
