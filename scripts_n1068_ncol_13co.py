@@ -1431,14 +1431,17 @@ class ToolsNcol():
         immax = np.nanmax(im0.data)
         snr   = 5.0
         scale = immax / snr
+        pix   = abs(imhead("../data_ready/n1068_13co21_60pc.cube.fits",mode="list")["cdelt1"]) * 3600 * 180 / np.pi
 
         # create noise
         noise   = np.random.normal(loc=0, scale=scale, size=size)
         pyfits.writeto("noise.fits",data=noise,header=im0.header)
+        imhead("noise.fits",mode="put",hdkey="bmaj",hdvalue=str(pix)+"arcsec")
+        imhead("noise.fits",mode="put",hdkey="bmin",hdvalue=str(pix)+"arcsec")
         run_roundsmooth(
             "noise.fits",
             "noise_correlated_tmp.fits",
-            1.66, # float, arcsec unit
+            pix, # float, arcsec unit
             inputbeam=0.2,
             )
 
