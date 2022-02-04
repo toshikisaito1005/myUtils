@@ -1433,7 +1433,7 @@ class ToolsNcol():
         scale = immax / snr
 
         # create noise
-        dist = np.sqrt(size[0]**2 + size[1]**2)
+        dist = np.sqrt(size[0]**2 + size[1]**2 + size[2]**2)
         correlation_scale = 4.53
         filter_kernel = np.exp(-dist**2/(2*correlation_scale))
         noise = np.random.normal(loc=0, scale=scale, size=size)
