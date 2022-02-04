@@ -1486,19 +1486,81 @@ class ToolsNcol():
         taskname = self.modname + sys._getframe().f_code.co_name
         check_first(self.outmodelcube_13co10,taskname)
 
-        # get input fits info
-        im    = pyfits.open(self.outmodelcube_13co10)
+        # create correlated noise
+        noise1 = self._create_correlated_noise_cube(self.outmodelcube_13co10)
+        noise2 = self._create_correlated_noise_cube(self.outmodelcube_13co10)
+        noise3 = self._create_correlated_noise_cube(self.outmodelcube_13co10)
+        noise4 = self._create_correlated_noise_cube(self.outmodelcube_13co10)
+        noise5 = self._create_correlated_noise_cube(self.outmodelcube_13co10)
+        noise6 = self._create_correlated_noise_cube(self.outmodelcube_13co10)
+
+        # snr = 10
+        model_snr = self.outmodelcube_13co10.replace(".fits","_snr10.fits")
+        im      = pyfits.open(self.outmodelcube_13co10)
+        im0     = im[0]
+        newdata = im0.data + noise1
+        os.system("rm -rf " + model_snr)
+        pyfits.writeto(model_snr,data=newdata,header=im0.header)
+
+        model_snr = self.outmodelcube_13co21.replace(".fits","_snr10.fits")
+        im      = pyfits.open(self.outmodelcube_13co21)
+        im0     = im[0]
+        newdata = im0.data + noise2
+        os.system("rm -rf " + model_snr)
+        pyfits.writeto(model_snr,data=newdata,header=im0.header)
+
+        # snr = 25
+        model_snr = self.outmodelcube_13co10.replace(".fits","_snr25.fits")
+        im      = pyfits.open(self.outmodelcube_13co10)
+        im0     = im[0]
+        newdata = im0.data * 2.5 + noise3
+        os.system("rm -rf " + model_snr)
+        pyfits.writeto(model_snr,data=newdata,header=im0.header)
+
+        model_snr = self.outmodelcube_13co21.replace(".fits","_snr25.fits")
+        im      = pyfits.open(self.outmodelcube_13co21)
+        im0     = im[0]
+        newdata = im0.data * 2.5 + noise4
+        os.system("rm -rf " + model_snr)
+        pyfits.writeto(model_snr,data=newdata,header=im0.header)
+
+        # snr = 50
+        model_snr = self.outmodelcube_13co10.replace(".fits","_snr50.fits")
+        im      = pyfits.open(self.outmodelcube_13co10)
+        im0     = im[0]
+        newdata = im0.data * 5.0 + noise5
+        os.system("rm -rf " + model_snr)
+        pyfits.writeto(model_snr,data=newdata,header=im0.header)
+
+        model_snr = self.outmodelcube_13co21.replace(".fits","_snr50.fits")
+        im      = pyfits.open(self.outmodelcube_13co21)
+        im0     = im[0]
+        newdata = im0.data * 5.0 + noise6
+        os.system("rm -rf " + model_snr)
+        pyfits.writeto(model_snr,data=newdata,header=im0.header)
+
+    ################################
+    # _create_correlated_noise_cube #
+    ################################
+
+    def _create_correlated_noise_cube(
+        self,
+        template, # self.outmodelcube_13co10
+        snr=10.0,
+        ):
+        """
+        """
+
+        im    = pyfits.open(template)
         im0   = im[0]
         size  = im0.data.shape
         immax = np.nanmax(im0.data)
-        snr   = 10.0
         scale = immax / snr
-        pix   = abs(imhead(self.outmodelcube_13co10,mode="list")["cdelt1"])
-        beam  = imhead(self.outmodelcube_13co10,mode="list")["beammajor"]["value"]
+        pix   = abs(imhead(template,mode="list")["cdelt1"])
+        beam  = imhead(template,mode="list")["beammajor"]["value"]
 
-        # create correlated noise
         noise   = np.random.normal(loc=0, scale=scale, size=size)
-        im      = pyfits.open(self.outmodelcube_13co10)
+        im      = pyfits.open(template)
         im0     = im[0]
         im0.header["BMAJ"] = pix
         im0.header["BMIN"] = pix
@@ -1520,50 +1582,7 @@ class ToolsNcol():
         #pyfits.writeto("noise_correlated.fits",data=newdata,header=im0.header,clobber=True)
         os.system("rm -rf noise.fits noise_correlated.fits")
 
-        # snr = 10
-        model_snr = self.outmodelcube_13co10.replace(".fits","_snr10.fits")
-        im      = pyfits.open(self.outmodelcube_13co10)
-        im0     = im[0]
-        newdata = im0.data + noise
-        os.system("rm -rf " + model_snr)
-        pyfits.writeto(model_snr,data=newdata,header=im0.header)
-
-        model_snr = self.outmodelcube_13co21.replace(".fits","_snr10.fits")
-        im      = pyfits.open(self.outmodelcube_13co21)
-        im0     = im[0]
-        newdata = im0.data + noise
-        os.system("rm -rf " + model_snr)
-        pyfits.writeto(model_snr,data=newdata,header=im0.header)
-
-        # snr = 25
-        model_snr = self.outmodelcube_13co10.replace(".fits","_snr25.fits")
-        im      = pyfits.open(self.outmodelcube_13co10)
-        im0     = im[0]
-        newdata = im0.data * 2.5 + noise
-        os.system("rm -rf " + model_snr)
-        pyfits.writeto(model_snr,data=newdata,header=im0.header)
-
-        model_snr = self.outmodelcube_13co21.replace(".fits","_snr25.fits")
-        im      = pyfits.open(self.outmodelcube_13co21)
-        im0     = im[0]
-        newdata = im0.data * 2.5 + noise
-        os.system("rm -rf " + model_snr)
-        pyfits.writeto(model_snr,data=newdata,header=im0.header)
-
-        # snr = 50
-        model_snr = self.outmodelcube_13co10.replace(".fits","_snr50.fits")
-        im      = pyfits.open(self.outmodelcube_13co10)
-        im0     = im[0]
-        newdata = im0.data * 5.0 + noise
-        os.system("rm -rf " + model_snr)
-        pyfits.writeto(model_snr,data=newdata,header=im0.header)
-
-        model_snr = self.outmodelcube_13co21.replace(".fits","_snr50.fits")
-        im      = pyfits.open(self.outmodelcube_13co21)
-        im0     = im[0]
-        newdata = im0.data * 5.0 + noise
-        os.system("rm -rf " + model_snr)
-        pyfits.writeto(model_snr,data=newdata,header=im0.header)
+        return noise
 
     ######################
     # create_model_cubes #
