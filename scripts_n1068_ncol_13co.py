@@ -1433,11 +1433,19 @@ class ToolsNcol():
         scale = immax / snr
 
         # create noise
-        dist = np.sqrt(size[0]**2 + size[1]**2 + size[2]**2)
-        correlation_scale = 4.53
-        filter_kernel = np.exp(-dist**2/(2*correlation_scale))
-        noise = np.random.normal(loc=0, scale=scale, size=size)
-        noise = scipy.signal.fftconvolve(noise, filter_kernel, mode='same')
+        noise   = np.random.normal(loc=0, scale=scale, size=size)
+        pyfits.writeto("noise.fits",data=newdata,header=im0.header)
+        run_roundsmooth(
+            "noise.fits",
+            "noise_correlated_tmp.fits",
+            1.66, # float, arcsec unit
+            inputbeam=0.2,
+            )
+
+        """
+        im      = pyfits.open("noise.fits")
+        im0     = im[0]
+        newdata = im0.data * scale / 
 
         # snr = 5
         model_snr5 = self.outmodelcube_13co10.replace(".fits","_snr5.fits")
@@ -1447,6 +1455,7 @@ class ToolsNcol():
         newdata = im0.data + noise
         os.system("rm -rf " + model_snr5)
         pyfits.writeto(model_snr5,data=newdata,header=im0.header)
+        """
 
     ######################
     # create_model_cubes #
