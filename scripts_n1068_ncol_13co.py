@@ -1441,9 +1441,9 @@ class ToolsNcol():
         #print(im0.header)
         im      = pyfits.open(self.outmodelcube_13co10)
         im0     = im[0]
-        im0.header["BMAJ"]=pix
-        im0.header["BMIN"]=pix
-        pyfits.writeto("noise.fits",overwrite=True)
+        im0.header["BMAJ"] = pix
+        im0.header["BMIN"] = pix
+        pyfits.writeto("noise.fits",clobber=True)
         run_roundsmooth(
             "noise.fits",
             "noise_correlated_tmp.fits",
