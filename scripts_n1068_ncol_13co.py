@@ -1466,19 +1466,40 @@ class ToolsNcol():
         os.system("rm -rf " + model_snr)
         pyfits.writeto(model_snr,data=newdata,header=im0.header)
 
-        # snr = 50
-        model_snr = self.outmodelcube_13co10.replace(".fits","_snr50.fits")
-        im      = pyfits.open(self.outmodelcube_13co10)
+        model_snr = self.outmodelcube_13co21.replace(".fits","_snr5.fits")
+        im      = pyfits.open(self.outmodelcube_13co21)
         im0     = im[0]
-        newdata = im0.data * 10.0 + noise
+        newdata = im0.data + noise
         os.system("rm -rf " + model_snr)
         pyfits.writeto(model_snr,data=newdata,header=im0.header)
 
-        # snr = 500
-        model_snr = self.outmodelcube_13co10.replace(".fits","_snr500.fits")
+        # snr = 25
+        model_snr = self.outmodelcube_13co10.replace(".fits","_snr25.fits")
         im      = pyfits.open(self.outmodelcube_13co10)
         im0     = im[0]
-        newdata = im0.data * 100.0 + noise
+        newdata = im0.data * 5.0 + noise
+        os.system("rm -rf " + model_snr)
+        pyfits.writeto(model_snr,data=newdata,header=im0.header)
+
+        model_snr = self.outmodelcube_13co21.replace(".fits","_snr25.fits")
+        im      = pyfits.open(self.outmodelcube_13co21)
+        im0     = im[0]
+        newdata = im0.data * 5.0 + noise
+        os.system("rm -rf " + model_snr)
+        pyfits.writeto(model_snr,data=newdata,header=im0.header)
+
+        # snr = 125
+        model_snr = self.outmodelcube_13co10.replace(".fits","_snr125.fits")
+        im      = pyfits.open(self.outmodelcube_13co10)
+        im0     = im[0]
+        newdata = im0.data * 25.0 + noise
+        os.system("rm -rf " + model_snr)
+        pyfits.writeto(model_snr,data=newdata,header=im0.header)
+
+        model_snr = self.outmodelcube_13co21.replace(".fits","_snr125.fits")
+        im      = pyfits.open(self.outmodelcube_13co21)
+        im0     = im[0]
+        newdata = im0.data * 25.0 + noise
         os.system("rm -rf " + model_snr)
         pyfits.writeto(model_snr,data=newdata,header=im0.header)
 
