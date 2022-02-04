@@ -1446,7 +1446,7 @@ class ToolsNcol():
         # model input mom0 #
         ####################
         infile  = self.outmodelcube_13co10
-        outfile = self.outmodelmom0_13co10.replace(".fits","_just.fits")
+        outfile = self.outmodelmom0_13co10
         os.system("rm -rf " + outfile + ".image")
         immoments(imagename=infile,outfile=outfile+".image")
         run_exportfits(outfile+".image",outfile,delin=True)
@@ -1630,10 +1630,10 @@ class ToolsNcol():
         check_first(self.outsimumom0_13co10.replace(".fits","_just_snr10.fits"),taskname)
 
         # prepare
-        imcontour1 = self.outsimumom0_13co10.replace(".fits","_just.fits")
+        imcontour1 = self.outmodelmom0_13co10
 
         self._showcase_one(
-            self.outsimumom0_13co10.replace(".fits","_just.fits"),
+            self.outmodelmom0_13co10,
             imcontour1,
             self.outpng_modelmom0_13co10,
             "Input model mom0",
