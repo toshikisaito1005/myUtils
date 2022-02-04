@@ -1438,8 +1438,10 @@ class ToolsNcol():
         os.system("rm -rf noise.fits")
         noise   = np.random.normal(loc=0, scale=scale, size=size)
         pyfits.writeto("noise.fits",data=noise,header=im0.header)
-        imhead("noise.fits",mode="put",hdkey="bmaj",hdvalue=str(pix)+"arcsec")
-        imhead("noise.fits",mode="put",hdkey="bmin",hdvalue=str(pix)+"arcsec")
+        imhead("noise.fits",mode="del",hdkey="bmaj")
+        imhead("noise.fits",mode="del",hdkey="bmin")
+        imhead("noise.fits",mode="add",hdkey="bmaj",hdvalue=str(pix)+"arcsec")
+        imhead("noise.fits",mode="add",hdkey="bmin",hdvalue=str(pix)+"arcsec")
         run_roundsmooth(
             "noise.fits",
             "noise_correlated_tmp.fits",
