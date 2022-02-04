@@ -211,6 +211,9 @@ class ToolsNcol():
         self.final_60pc_obs      = self.dir_final + self._read_key("final_60pc_obs")
         self.final_60pc_rot      = self.dir_final + self._read_key("final_60pc_rot")
         #
+        self.final_sim_mom0      = self.dir_final + self._read_key("final_sim_mom0")
+        self.final_sim_emom0     = self.dir_final + self._read_key("final_sim_emom0")
+        #
         self.final_13co10_mom0   = self.dir_final + self._read_key("final_13co10_mom0")
         self.final_13co21_mom0   = self.dir_final + self._read_key("final_13co21_mom0")
         self.final_mom1          = self.dir_final + self._read_key("final_mom1")
@@ -301,6 +304,9 @@ class ToolsNcol():
         #
         do_final_60pc_obs     = False,
         do_final_60pc_rot     = False,
+        # appendix
+        do_final_sim_mom0     = True,
+        do_final_sim_emom0    = True,
         #
         do_final_13co10_mom0  = False,
         do_final_13co21_mom0  = False,
@@ -327,6 +333,10 @@ class ToolsNcol():
             #
             do_final_60pc_obs     = True
             do_final_60pc_rot     = True
+            # appendix
+            do_final_sim_mom0     = True
+            do_final_sim_emom0    = True
+            #
             do_final_13co10_mom0  = True
             do_final_13co21_mom0  = True
             do_final_ratio        = True
@@ -445,6 +455,76 @@ class ToolsNcol():
                 "1000000x10000000+0+0",
                 axis="column",
                 delin=True,
+                )
+
+        if do_final_sim_mom0==True:
+            print("############################")
+            print("# create do_final_sim_mom0 #")
+            print("############################")
+
+            combine_three_png(
+                self.outpng_simumom0_13co10.replace(".png","_noclip_snr10.png"),
+                self.outpng_simumom0_13co10.replace(".png","_clip0_snr10.png"),
+                self.outpng_simumom0_13co10.replace(".png","_clip3_snr10.png"),
+                self.final_sim_mom0+"_tmp1.png",
+                self.box_map,
+                self.box_map,
+                self.box_map,
+                delin=delin,
+                )
+            combine_three_png(
+                self.outpng_simumom0_13co10.replace(".png","_noclip_masked_snr10.png"),
+                self.outpng_simumom0_13co10.replace(".png","_clip0_masked_snr10.png"),
+                self.outpng_simumom0_13co10.replace(".png","_clip3_masked_snr10.png"),
+                self.final_sim_mom0+"_tmp2s.png",
+                self.box_map,
+                self.box_map,
+                self.box_map,
+                delin=delin,
+                )
+            combine_two_png(
+                self.final_sim_mom0+"_tmp1.png",
+                self.final_sim_mom0+"_tmp1.png",
+                self.final_sim_mom0,
+                "100000x100000+0+0",
+                "100000x100000+0+0",
+                delin=True,
+                axis="column",
+                )
+
+        if do_final_sim_emom0==True:
+            print("#############################")
+            print("# create do_final_sim_emom0 #")
+            print("#############################")
+
+            combine_three_png(
+                self.outpng_simumom0_13co10.replace(".png","_noclip_snr10.png").replace("mom0","emom0"),
+                self.outpng_simumom0_13co10.replace(".png","_clip0_snr10.png").replace("mom0","emom0"),
+                self.outpng_simumom0_13co10.replace(".png","_clip3_snr10.png").replace("mom0","emom0"),
+                self.final_sim_emom0+"_tmp1.png",
+                self.box_map,
+                self.box_map,
+                self.box_map,
+                delin=delin,
+                )
+            combine_three_png(
+                self.outpng_simumom0_13co10.replace(".png","_noclip_masked_snr10.png").replace("mom0","emom0"),
+                self.outpng_simumom0_13co10.replace(".png","_clip0_masked_snr10.png").replace("mom0","emom0"),
+                self.outpng_simumom0_13co10.replace(".png","_clip3_masked_snr10.png").replace("mom0","emom0"),
+                self.final_sim_emom0+"_tmp2s.png",
+                self.box_map,
+                self.box_map,
+                self.box_map,
+                delin=delin,
+                )
+            combine_two_png(
+                self.final_sim_emom0+"_tmp1.png",
+                self.final_sim_emom0+"_tmp1.png",
+                self.final_sim_emom0,
+                "100000x100000+0+0",
+                "100000x100000+0+0",
+                delin=True,
+                axis="column",
                 )
 
         if do_final_13co10_mom0==True:
