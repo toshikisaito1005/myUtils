@@ -1415,7 +1415,7 @@ class ToolsNcol():
     # add_noise_to_models #
     #######################
 
-    def create_model_cubes(
+    def add_noise_to_models(
         self,
         ):
         """
