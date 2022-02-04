@@ -1572,7 +1572,7 @@ class ToolsNcol():
             adjust=[0.1,0.963,0.25,0.93],
             )
 
-            ax.scatter(np.log(model_mom0), np.log10(sim_mom0), yerr=sim_emom0/abs(sim_mom0), marker="o")
+            ax.errorbar(np.log(model_mom0), np.log10(sim_mom0), yerr=sim_emom0/abs(sim_mom0), marker="o")
 
             # save
             os.system("rm -rf " + "test.png")
