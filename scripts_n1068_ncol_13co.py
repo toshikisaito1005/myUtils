@@ -1825,7 +1825,7 @@ class ToolsNcol():
                 self.outsimumom0_13co10.replace(".fits","_noclip_snr10.fits"),
                 imcontour1,
                 self.outpng_simumom0_13co10.replace(".png","_noclip_snr10.png"),
-                "no-clip: mom0$_{\mathrm{SNR=10}}$",
+                "noclip: mom0$_{\mathrm{SNR=10}}$",
                 "(K km s$^{-1}$)",
                 [0,100],
                 )
@@ -1834,7 +1834,7 @@ class ToolsNcol():
                 self.outsimumom0_13co10.replace(".fits","_noclip_snr25.fits"),
                 imcontour1,
                 self.outpng_simumom0_13co10.replace(".png","_noclip_snr25.png"),
-                "no-clip: mom0$_{\mathrm{SNR=25}}$",
+                "noclip: mom0$_{\mathrm{SNR=25}}$",
                 "(K km s$^{-1}$)",
                 [0,250],
                 )
@@ -1843,7 +1843,7 @@ class ToolsNcol():
                 self.outsimumom0_13co10.replace(".fits","_noclip_snr50.fits"),
                 imcontour1,
                 self.outpng_simumom0_13co10.replace(".png","_noclip_snr50.png"),
-                "no-clip: mom0$_{\mathrm{SNR=50}}$",
+                "noclip: mom0$_{\mathrm{SNR=50}}$",
                 "(K km s$^{-1}$)",
                 [0,500],
                 )
@@ -1918,7 +1918,7 @@ class ToolsNcol():
                 self.outsimumom0_13co10.replace(".fits","_noclip_masked_snr10.fits"),
                 imcontour1,
                 self.outpng_simumom0_13co10.replace(".png","_noclip_masked_snr10.png"),
-                "no-clip: mom0$_{\mathrm{SNR=10}}$",
+                "noclip+masking: mom0$_{\mathrm{SNR=10}}$",
                 "(K km s$^{-1}$)",
                 [0,100],
                 )
@@ -1927,7 +1927,7 @@ class ToolsNcol():
                 self.outsimumom0_13co10.replace(".fits","_noclip_masked_snr25.fits"),
                 imcontour1,
                 self.outpng_simumom0_13co10.replace(".png","_noclip_masked_snr25.png"),
-                "no-clip: mom0$_{\mathrm{SNR=25}}$",
+                "noclip+masking: mom0$_{\mathrm{SNR=25}}$",
                 "(K km s$^{-1}$)",
                 [0,250],
                 )
@@ -1936,7 +1936,7 @@ class ToolsNcol():
                 self.outsimumom0_13co10.replace(".fits","_noclip_masked_snr50.fits"),
                 imcontour1,
                 self.outpng_simumom0_13co10.replace(".png","_noclip_masked_snr50.png"),
-                "no-clip: mom0$_{\mathrm{SNR=50}}$",
+                "noclip+masking: mom0$_{\mathrm{SNR=50}}$",
                 "(K km s$^{-1}$)",
                 [0,500],
                 )
@@ -1949,7 +1949,7 @@ class ToolsNcol():
                 self.outsimumom0_13co10.replace(".fits","_clip0_masked_snr10.fits"),
                 imcontour1,
                 self.outpng_simumom0_13co10.replace(".png","_clip0_masked_snr10.png"),
-                "clip0$\sigma$: mom0$_{\mathrm{SNR=10}}$",
+                "clip0$\sigma$+masking: mom0$_{\mathrm{SNR=10}}$",
                 "(K km s$^{-1}$)",
                 [0,100],
                 )
@@ -1958,7 +1958,7 @@ class ToolsNcol():
                 self.outsimumom0_13co10.replace(".fits","_clip0_masked_snr25.fits"),
                 imcontour1,
                 self.outpng_simumom0_13co10.replace(".png","_clip0_masked_snr25.png"),
-                "clip0$\sigma$: mom0$_{\mathrm{SNR=25}}$",
+                "clip0$\sigma$+masking: mom0$_{\mathrm{SNR=25}}$",
                 "(K km s$^{-1}$)",
                 [0,250],
                 )
@@ -1967,7 +1967,7 @@ class ToolsNcol():
                 self.outsimumom0_13co10.replace(".fits","_clip0_masked_snr50.fits"),
                 imcontour1,
                 self.outpng_simumom0_13co10.replace(".png","_clip0_masked_snr50.png"),
-                "clip0$\sigma$: mom0$_{\mathrm{SNR=50}}$",
+                "clip0$\sigma$+masking: mom0$_{\mathrm{SNR=50}}$",
                 "(K km s$^{-1}$)",
                 [0,500],
                 )
@@ -1980,7 +1980,7 @@ class ToolsNcol():
                 self.outsimumom0_13co10.replace(".fits","_clip3_masked_snr10.fits"),
                 imcontour1,
                 self.outpng_simumom0_13co10.replace(".png","_clip3_masked_snr10.png"),
-                "clip3$\sigma$: mom0$_{\mathrm{SNR=10}}$",
+                "clip3$\sigma$+masking: mom0$_{\mathrm{SNR=10}}$",
                 "(K km s$^{-1}$)",
                 [0,100],
                 )
@@ -1989,7 +1989,7 @@ class ToolsNcol():
                 self.outsimumom0_13co10.replace(".fits","_clip3_masked_snr25.fits"),
                 imcontour1,
                 self.outpng_simumom0_13co10.replace(".png","_clip3_masked_snr25.png"),
-                "clip3$\sigma$: mom0$_{\mathrm{SNR=25}}$",
+                "clip3$\sigma$+masking: mom0$_{\mathrm{SNR=25}}$",
                 "(K km s$^{-1}$)",
                 [0,250],
                 )
@@ -1998,7 +1998,7 @@ class ToolsNcol():
                 self.outsimumom0_13co10.replace(".fits","_clip3_masked_snr50.fits"),
                 imcontour1,
                 self.outpng_simumom0_13co10.replace(".png","_clip3_masked_snr50.png"),
-                "clip3$\sigma$: mom0$_{\mathrm{SNR=50}}$",
+                "clip3$\sigma$+masking: mom0$_{\mathrm{SNR=50}}$",
                 "(K km s$^{-1}$)",
                 [0,500],
                 )
