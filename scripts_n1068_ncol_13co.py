@@ -1619,7 +1619,7 @@ class ToolsNcol():
             run_exportfits(outerr+".image",outerr,delin=True,dropdeg=True,dropstokes=True)
 
         ###########
-        # do_clip # 
+        # do_clip # emom0 done
         ###########
         includepix = [rms*snr,1000000.]
         if do_clip==True:
@@ -1786,7 +1786,7 @@ class ToolsNcol():
             run_exportfits(outerr+".image",outerr,delin=True,dropdeg=True,dropstokes=True)
 
         ################
-        # do_clip_mask #
+        # do_clip_mask # emom0 done
         ################
         includepix = [rms*snr,1000000.]
         if do_clip_mask==True:
@@ -2013,6 +2013,14 @@ class ToolsNcol():
                 "(K km s$^{-1}$)",
                 [0,100],
                 )
+            self._showcase_one(
+                self.outsimumom0_13co10.replace(".fits","_noclip_snr10.fits").replace("mom0","emom0"),
+                imcontour1,
+                self.outpng_simumom0_13co10.replace(".png","_noclip_snr10.png"),
+                "noclip: $\sigma_{\mathrm{err}}$(mom0$_{\mathrm{SNR=10}}$)",
+                "(K km s$^{-1}$)",
+                [0,100],
+                )
 
             self._showcase_one(
                 self.outsimumom0_13co10.replace(".fits","_noclip_snr25.fits"),
@@ -2022,12 +2030,28 @@ class ToolsNcol():
                 "(K km s$^{-1}$)",
                 [0,250],
                 )
+            self._showcase_one(
+                self.outsimumom0_13co10.replace(".fits","_noclip_snr25.fits").replace("mom0","emom0"),
+                imcontour1,
+                self.outpng_simumom0_13co10.replace(".png","_noclip_snr25.png"),
+                "noclip: $\sigma_{\mathrm{err}}$(mom0$_{\mathrm{SNR=25}}$)",
+                "(K km s$^{-1}$)",
+                [0,250],
+                )
 
             self._showcase_one(
                 self.outsimumom0_13co10.replace(".fits","_noclip_snr50.fits"),
                 imcontour1,
                 self.outpng_simumom0_13co10.replace(".png","_noclip_snr50.png"),
                 "noclip: mom0$_{\mathrm{SNR=50}}$",
+                "(K km s$^{-1}$)",
+                [0,500],
+                )
+            self._showcase_one(
+                self.outsimumom0_13co10.replace(".fits","_noclip_snr50.fits").replace("mom0","emom0"),
+                imcontour1,
+                self.outpng_simumom0_13co10.replace(".png","_noclip_snr50.png"),
+                "noclip: $\sigma_{\mathrm{err}}$(mom0$_{\mathrm{SNR=50}}$)",
                 "(K km s$^{-1}$)",
                 [0,500],
                 )
@@ -2044,6 +2068,14 @@ class ToolsNcol():
                 "(K km s$^{-1}$)",
                 [0,100],
                 )
+            self._showcase_one(
+                self.outsimumom0_13co10.replace(".fits","_clip0_snr10.fits").replace("mom0","emom0"),
+                imcontour1,
+                self.outpng_simumom0_13co10.replace(".png","_clip0_snr10.png"),
+                "clip0$\sigma$: $\sigma_{\mathrm{err}}$(mom0$_{\mathrm{SNR=10}})",
+                "(K km s$^{-1}$)",
+                [0,100],
+                )
 
             self._showcase_one(
                 self.outsimumom0_13co10.replace(".fits","_clip0_snr25.fits"),
@@ -2053,12 +2085,28 @@ class ToolsNcol():
                 "(K km s$^{-1}$)",
                 [0,250],
                 )
+            self._showcase_one(
+                self.outsimumom0_13co10.replace(".fits","_clip0_snr25.fits").replace("mom0","emom0"),
+                imcontour1,
+                self.outpng_simumom0_13co10.replace(".png","_clip0_snr25.png"),
+                "clip0$\sigma$: $\sigma_{\mathrm{err}}$(mom0$_{\mathrm{SNR=25}})",
+                "(K km s$^{-1}$)",
+                [0,250],
+                )
 
             self._showcase_one(
                 self.outsimumom0_13co10.replace(".fits","_clip0_snr50.fits"),
                 imcontour1,
                 self.outpng_simumom0_13co10.replace(".png","_clip0_snr50.png"),
                 "clip0$\sigma$: mom0$_{\mathrm{SNR=50}}$",
+                "(K km s$^{-1}$)",
+                [0,500],
+                )
+            self._showcase_one(
+                self.outsimumom0_13co10.replace(".fits","_clip0_snr50.fits").replace("mom0","emom0"),
+                imcontour1,
+                self.outpng_simumom0_13co10.replace(".png","_clip0_snr50.png"),
+                "clip0$\sigma$: $\sigma_{\mathrm{err}}$(mom0$_{\mathrm{SNR=50}})",
                 "(K km s$^{-1}$)",
                 [0,500],
                 )
@@ -2075,6 +2123,14 @@ class ToolsNcol():
                 "(K km s$^{-1}$)",
                 [0,100],
                 )
+            self._showcase_one(
+                self.outsimumom0_13co10.replace(".fits","_clip3_snr10.fits").replace("mom0","emom0"),
+                imcontour1,
+                self.outpng_simumom0_13co10.replace(".png","_clip3_snr10.png"),
+                "clip3$\sigma$: $\sigma_{\mathrm{err}}$(mom0$_{\mathrm{SNR=10}})",
+                "(K km s$^{-1}$)",
+                [0,100],
+                )
 
             self._showcase_one(
                 self.outsimumom0_13co10.replace(".fits","_clip3_snr25.fits"),
@@ -2084,12 +2140,28 @@ class ToolsNcol():
                 "(K km s$^{-1}$)",
                 [0,250],
                 )
+            self._showcase_one(
+                self.outsimumom0_13co10.replace(".fits","_clip3_snr25.fits").replace("mom0","emom0"),
+                imcontour1,
+                self.outpng_simumom0_13co10.replace(".png","_clip3_snr25.png"),
+                "clip3$\sigma$: $\sigma_{\mathrm{err}}$(mom0$_{\mathrm{SNR=25}})",
+                "(K km s$^{-1}$)",
+                [0,250],
+                )
 
             self._showcase_one(
                 self.outsimumom0_13co10.replace(".fits","_clip3_snr50.fits"),
                 imcontour1,
                 self.outpng_simumom0_13co10.replace(".png","_clip3_snr50.png"),
                 "clip3$\sigma$: mom0$_{\mathrm{SNR=50}}$",
+                "(K km s$^{-1}$)",
+                [0,500],
+                )
+            self._showcase_one(
+                self.outsimumom0_13co10.replace(".fits","_clip3_snr50.fits").replace("mom0","emom0"),
+                imcontour1,
+                self.outpng_simumom0_13co10.replace(".png","_clip3_snr50.png"),
+                "clip3$\sigma$: $\sigma_{\mathrm{err}}$(mom0$_{\mathrm{SNR=50}})",
                 "(K km s$^{-1}$)",
                 [0,500],
                 )
@@ -2106,6 +2178,14 @@ class ToolsNcol():
                 "(K km s$^{-1}$)",
                 [0,100],
                 )
+            self._showcase_one(
+                self.outsimumom0_13co10.replace(".fits","_noclip_masked_snr10.fits").replace("mom0","emom0"),
+                imcontour1,
+                self.outpng_simumom0_13co10.replace(".png","_noclip_masked_snr10.png"),
+                "noclip+masking: $\sigma_{\mathrm{err}}$(mom0$_{\mathrm{SNR=10}})",
+                "(K km s$^{-1}$)",
+                [0,100],
+                )
 
             self._showcase_one(
                 self.outsimumom0_13co10.replace(".fits","_noclip_masked_snr25.fits"),
@@ -2115,12 +2195,28 @@ class ToolsNcol():
                 "(K km s$^{-1}$)",
                 [0,250],
                 )
+            self._showcase_one(
+                self.outsimumom0_13co10.replace(".fits","_noclip_masked_snr25.fits").replace("mom0","emom0"),
+                imcontour1,
+                self.outpng_simumom0_13co10.replace(".png","_noclip_masked_snr25.png"),
+                "noclip+masking: $\sigma_{\mathrm{err}}$(mom0$_{\mathrm{SNR=25}})",
+                "(K km s$^{-1}$)",
+                [0,250],
+                )
 
             self._showcase_one(
                 self.outsimumom0_13co10.replace(".fits","_noclip_masked_snr50.fits"),
                 imcontour1,
                 self.outpng_simumom0_13co10.replace(".png","_noclip_masked_snr50.png"),
                 "noclip+masking: mom0$_{\mathrm{SNR=50}}$",
+                "(K km s$^{-1}$)",
+                [0,500],
+                )
+            self._showcase_one(
+                self.outsimumom0_13co10.replace(".fits","_noclip_masked_snr50.fits").replace("mom0","emom0"),
+                imcontour1,
+                self.outpng_simumom0_13co10.replace(".png","_noclip_masked_snr50.png"),
+                "noclip+masking: $\sigma_{\mathrm{err}}$(mom0$_{\mathrm{SNR=50}})",
                 "(K km s$^{-1}$)",
                 [0,500],
                 )
@@ -2137,6 +2233,14 @@ class ToolsNcol():
                 "(K km s$^{-1}$)",
                 [0,100],
                 )
+            self._showcase_one(
+                self.outsimumom0_13co10.replace(".fits","_clip0_masked_snr10.fits").replace("mom0","emom0"),
+                imcontour1,
+                self.outpng_simumom0_13co10.replace(".png","_clip0_masked_snr10.png"),
+                "clip0$\sigma$+masking: $\sigma_{\mathrm{err}}$(mom0$_{\mathrm{SNR=10}})",
+                "(K km s$^{-1}$)",
+                [0,100],
+                )
 
             self._showcase_one(
                 self.outsimumom0_13co10.replace(".fits","_clip0_masked_snr25.fits"),
@@ -2146,12 +2250,28 @@ class ToolsNcol():
                 "(K km s$^{-1}$)",
                 [0,250],
                 )
+            self._showcase_one(
+                self.outsimumom0_13co10.replace(".fits","_clip0_masked_snr25.fits").replace("mom0","emom0"),
+                imcontour1,
+                self.outpng_simumom0_13co10.replace(".png","_clip0_masked_snr25.png"),
+                "clip0$\sigma$+masking: $\sigma_{\mathrm{err}}$(mom0$_{\mathrm{SNR=25}})",
+                "(K km s$^{-1}$)",
+                [0,250],
+                )
 
             self._showcase_one(
                 self.outsimumom0_13co10.replace(".fits","_clip0_masked_snr50.fits"),
                 imcontour1,
                 self.outpng_simumom0_13co10.replace(".png","_clip0_masked_snr50.png"),
                 "clip0$\sigma$+masking: mom0$_{\mathrm{SNR=50}}$",
+                "(K km s$^{-1}$)",
+                [0,500],
+                )
+            self._showcase_one(
+                self.outsimumom0_13co10.replace(".fits","_clip0_masked_snr50.fits").replace("mom0","emom0"),
+                imcontour1,
+                self.outpng_simumom0_13co10.replace(".png","_clip0_masked_snr50.png"),
+                "clip0$\sigma$+masking: $\sigma_{\mathrm{err}}$(mom0$_{\mathrm{SNR=50}})",
                 "(K km s$^{-1}$)",
                 [0,500],
                 )
@@ -2168,6 +2288,14 @@ class ToolsNcol():
                 "(K km s$^{-1}$)",
                 [0,100],
                 )
+            self._showcase_one(
+                self.outsimumom0_13co10.replace(".fits","_clip3_masked_snr10.fits").replace("mom0","emom0"),
+                imcontour1,
+                self.outpng_simumom0_13co10.replace(".png","_clip3_masked_snr10.png"),
+                "clip3$\sigma$+masking: $\sigma_{\mathrm{err}}$(mom0$_{\mathrm{SNR=10}})",
+                "(K km s$^{-1}$)",
+                [0,100],
+                )
 
             self._showcase_one(
                 self.outsimumom0_13co10.replace(".fits","_clip3_masked_snr25.fits"),
@@ -2177,12 +2305,28 @@ class ToolsNcol():
                 "(K km s$^{-1}$)",
                 [0,250],
                 )
+            self._showcase_one(
+                self.outsimumom0_13co10.replace(".fits","_clip3_masked_snr25.fits").replace("mom0","emom0"),
+                imcontour1,
+                self.outpng_simumom0_13co10.replace(".png","_clip3_masked_snr25.png"),
+                "clip3$\sigma$+masking: $\sigma_{\mathrm{err}}$(mom0$_{\mathrm{SNR=25}})",
+                "(K km s$^{-1}$)",
+                [0,250],
+                )
 
             self._showcase_one(
                 self.outsimumom0_13co10.replace(".fits","_clip3_masked_snr50.fits"),
                 imcontour1,
                 self.outpng_simumom0_13co10.replace(".png","_clip3_masked_snr50.png"),
                 "clip3$\sigma$+masking: mom0$_{\mathrm{SNR=50}}$",
+                "(K km s$^{-1}$)",
+                [0,500],
+                )
+            self._showcase_one(
+                self.outsimumom0_13co10.replace(".fits","_clip3_masked_snr50.fits").replace("mom0","emom0"),
+                imcontour1,
+                self.outpng_simumom0_13co10.replace(".png","_clip3_masked_snr50.png"),
+                "clip3$\sigma$+masking: $\sigma_{\mathrm{err}}$(mom0$_{\mathrm{SNR=50}})",
                 "(K km s$^{-1}$)",
                 [0,500],
                 )
