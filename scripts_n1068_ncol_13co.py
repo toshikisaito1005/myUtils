@@ -282,6 +282,7 @@ class ToolsNcol():
 
         if do_simulate_mom==True:
             self.simulate_mom()
+            self.eval_sim()
 
         # plot figures in paper
         if plot_showcase==True:
@@ -1521,11 +1522,11 @@ class ToolsNcol():
                 axis="column",
                 )
 
-    ###############
-    # analyze_sim #
-    ###############
+    ############
+    # eval_sim #
+    ############
 
-    def analyze_sim(
+    def eval_sim(
         self,
         do_noclip=True,
         do_zeroclip=True,
@@ -1538,11 +1539,20 @@ class ToolsNcol():
         taskname = self.modname + sys._getframe().f_code.co_name
         check_first(self.outmodelcube_13co10.replace(".fits","_snr10.fits"),taskname)
 
+        # input model, i.e., answer
+        input_mom0 = imval_all(self.outmodelmom0_13co10)
+        input_mom0 = input_model["data"]
+
         #############
         # do_noclip #
         #############
         if do_noclip==True:
-            print("TBE.")
+            mom0_snr10  = self.outsimumom0_13co10.replace(".fits","_noclip_snr10.fits")
+            emom0_snr10 = self.outsimumom0_13co10.replace(".fits","_noclip_snr10.fits").replace("mom0","emom0")
+            sim_mom0  = imval_all(mom0_snr10)
+            sim_mom0  = sim_mom0["data"]
+            sim_emom0 = imval_all(emom0_snr10)
+            sim_emom0 = sim_emom0["data"]
 
     ################
     # simulate_mom #
