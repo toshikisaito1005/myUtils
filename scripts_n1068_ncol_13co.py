@@ -1540,9 +1540,8 @@ class ToolsNcol():
         check_first(self.outmodelcube_13co10.replace(".fits","_snr10.fits"),taskname)
 
         # input model, i.e., answer
-        input_mom0 = imval_all(self.outmodelmom0_13co10)
-        print(input_mom0["data"], input_mom0["mask"])
-        input_mom0 = input_mom0["data"] * input_mom0["mask"]
+        l,_ = imval_all(self.outmodelmom0_13co10)
+        model_mom0 = l["data"] * l["mask"]
 
         #############
         # do_noclip #
@@ -1573,7 +1572,7 @@ class ToolsNcol():
             adjust=[0.1,0.963,0.25,0.93],
             )
 
-            ax.scatter(np.log(input_mom0), np.log10(sim_mom0), yerr=sim_emom0/abs(sim_mom0), fmt="o")
+            ax.scatter(np.log(model_mom0), np.log10(sim_mom0), yerr=sim_emom0/abs(sim_mom0), fmt="o")
 
             # save
             os.system("rm -rf " + "test.png")
