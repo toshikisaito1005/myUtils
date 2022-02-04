@@ -1556,7 +1556,7 @@ class ToolsNcol():
         x1 = np.log10(model_mom0[cut])
         y1 = np.log10(sim_mom0[cut])
         e1 = np.log10(sim_emom0[cut])
-        e1 = sim_emom0[cut]/abs(e1)
+        e1 = e1/abs(y1)
 
         ########
         # plot #
