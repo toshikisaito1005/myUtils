@@ -1438,6 +1438,7 @@ class ToolsNcol():
         os.system("rm -rf noise.fits")
         noise   = np.random.normal(loc=0, scale=scale, size=size)
         pyfits.writeto("noise.fits",data=noise,header=im0.header)
+        print(im0.header)
         imhead("noise.fits",mode="del",hdkey="bmaj")
         imhead("noise.fits",mode="del",hdkey="bmin")
         imhead("noise.fits",mode="add",hdkey="bmaj",hdvalue=str(pix)+"arcsec")
