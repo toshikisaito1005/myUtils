@@ -235,6 +235,7 @@ class ToolsNcol():
         # analysis
         do_prepare       = False,
         do_fitting       = False, # after do_prepare
+        # mom0 creation simulation
         do_create_models = False, # after do_prepare
         do_simulate_mom  = False, # after do_create_models
         # plot figures in paper
@@ -1430,7 +1431,7 @@ class ToolsNcol():
         """
 
         taskname = self.modname + sys._getframe().f_code.co_name
-        check_first(self.outmodelcube_13co10.replace(".fits","_snr5.fits"),taskname)
+        check_first(self.outmodelcube_13co10.replace(".fits","_snr10.fits"),taskname)
 
         ####################
         # model input mom0 #
@@ -1445,8 +1446,8 @@ class ToolsNcol():
         # just collapse #
         #################
         # snr = 5
-        infile  = self.outmodelcube_13co10.replace(".fits","_snr5.fits")
-        outfile = self.outsimumom0_13co10.replace(".fits","_just_snr5.fits")
+        infile  = self.outmodelcube_13co10.replace(".fits","_snr10.fits")
+        outfile = self.outsimumom0_13co10.replace(".fits","_just_snr10.fits")
         os.system("rm -rf " + outfile + ".image")
         immoments(imagename=infile,outfile=outfile+".image")
         run_exportfits(outfile+".image",outfile,delin=True)
@@ -1457,8 +1458,8 @@ class ToolsNcol():
         immoments(imagename=infile,outfile=outfile+".image")
         run_exportfits(outfile+".image",outfile,delin=True)
         # snr = 125
-        infile  = self.outmodelcube_13co10.replace(".fits","_snr125.fits")
-        outfile = self.outsimumom0_13co10.replace(".fits","_just_snr125.fits")
+        infile  = self.outmodelcube_13co10.replace(".fits","_snr50.fits")
+        outfile = self.outsimumom0_13co10.replace(".fits","_just_snr50.fits")
         os.system("rm -rf " + outfile + ".image")
         immoments(imagename=infile,outfile=outfile+".image")
         run_exportfits(outfile+".image",outfile,delin=True)
@@ -1481,7 +1482,7 @@ class ToolsNcol():
         im0   = im[0]
         size  = im0.data.shape
         immax = np.nanmax(im0.data)
-        snr   = 5.0
+        snr   = 10.0
         scale = immax / snr
         pix   = abs(imhead(self.outmodelcube_13co10,mode="list")["cdelt1"])
         beam  = imhead(self.outmodelcube_13co10,mode="list")["beammajor"]["value"]
@@ -1510,15 +1511,15 @@ class ToolsNcol():
         #pyfits.writeto("noise_correlated.fits",data=newdata,header=im0.header,clobber=True)
         os.system("rm -rf noise.fits noise_correlated.fits")
 
-        # snr = 5
-        model_snr = self.outmodelcube_13co10.replace(".fits","_snr5.fits")
+        # snr = 10
+        model_snr = self.outmodelcube_13co10.replace(".fits","_snr10.fits")
         im      = pyfits.open(self.outmodelcube_13co10)
         im0     = im[0]
         newdata = im0.data + noise
         os.system("rm -rf " + model_snr)
         pyfits.writeto(model_snr,data=newdata,header=im0.header)
 
-        model_snr = self.outmodelcube_13co21.replace(".fits","_snr5.fits")
+        model_snr = self.outmodelcube_13co21.replace(".fits","_snr10.fits")
         im      = pyfits.open(self.outmodelcube_13co21)
         im0     = im[0]
         newdata = im0.data + noise
@@ -1529,29 +1530,29 @@ class ToolsNcol():
         model_snr = self.outmodelcube_13co10.replace(".fits","_snr25.fits")
         im      = pyfits.open(self.outmodelcube_13co10)
         im0     = im[0]
-        newdata = im0.data * 5.0 + noise
+        newdata = im0.data * 2.5 + noise
         os.system("rm -rf " + model_snr)
         pyfits.writeto(model_snr,data=newdata,header=im0.header)
 
         model_snr = self.outmodelcube_13co21.replace(".fits","_snr25.fits")
         im      = pyfits.open(self.outmodelcube_13co21)
         im0     = im[0]
+        newdata = im0.data * 2.5 + noise
+        os.system("rm -rf " + model_snr)
+        pyfits.writeto(model_snr,data=newdata,header=im0.header)
+
+        # snr = 50
+        model_snr = self.outmodelcube_13co10.replace(".fits","_snr50.fits")
+        im      = pyfits.open(self.outmodelcube_13co10)
+        im0     = im[0]
         newdata = im0.data * 5.0 + noise
         os.system("rm -rf " + model_snr)
         pyfits.writeto(model_snr,data=newdata,header=im0.header)
 
-        # snr = 125
-        model_snr = self.outmodelcube_13co10.replace(".fits","_snr125.fits")
-        im      = pyfits.open(self.outmodelcube_13co10)
-        im0     = im[0]
-        newdata = im0.data * 25.0 + noise
-        os.system("rm -rf " + model_snr)
-        pyfits.writeto(model_snr,data=newdata,header=im0.header)
-
-        model_snr = self.outmodelcube_13co21.replace(".fits","_snr125.fits")
+        model_snr = self.outmodelcube_13co21.replace(".fits","_snr50.fits")
         im      = pyfits.open(self.outmodelcube_13co21)
         im0     = im[0]
-        newdata = im0.data * 25.0 + noise
+        newdata = im0.data * 5.0 + noise
         os.system("rm -rf " + model_snr)
         pyfits.writeto(model_snr,data=newdata,header=im0.header)
 
