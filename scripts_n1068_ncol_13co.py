@@ -1578,7 +1578,7 @@ class ToolsNcol():
         adjust=[0.1,0.963,0.25,0.93],
         )
 
-        ax.errorbar(x1, y1, yerr=e1, marker="o")
+        ax.errorbar(x1, y1, yerr=e1, marker="o", markeredgewidth=0, color="grey")
 
         # save
         os.system("rm -rf " + "test.png")
