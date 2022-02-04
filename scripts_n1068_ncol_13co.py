@@ -1437,6 +1437,7 @@ class ToolsNcol():
         self,
         do_noclip=True,
         do_zeroclip=True,
+        do_clip=True,
         snr=3,
         ):
         """
@@ -1484,19 +1485,19 @@ class ToolsNcol():
         if do_noclip==True:
             # snr = 5
             infile  = self.outmodelcube_13co10.replace(".fits","_snr10.fits")
-            outfile = self.outsimumom0_13co10.replace(".fits","_zeroclip_snr10.fits")
+            outfile = self.outsimumom0_13co10.replace(".fits","_clip0_snr10.fits")
             os.system("rm -rf " + outfile + ".image")
             immoments(imagename=infile,outfile=outfile+".image",includepix=includepix)
             run_exportfits(outfile+".image",outfile,delin=True,dropdeg=True,dropstokes=True)
             # snr = 25
             infile  = self.outmodelcube_13co10.replace(".fits","_snr25.fits")
-            outfile = self.outsimumom0_13co10.replace(".fits","_zeroclip_snr25.fits")
+            outfile = self.outsimumom0_13co10.replace(".fits","_clip0_snr25.fits")
             os.system("rm -rf " + outfile + ".image")
             immoments(imagename=infile,outfile=outfile+".image",includepix=includepix)
             run_exportfits(outfile+".image",outfile,delin=True,dropdeg=True,dropstokes=True)
             # snr = 125
             infile  = self.outmodelcube_13co10.replace(".fits","_snr50.fits")
-            outfile = self.outsimumom0_13co10.replace(".fits","_zeroclip_snr50.fits")
+            outfile = self.outsimumom0_13co10.replace(".fits","_clip0_snr50.fits")
             os.system("rm -rf " + outfile + ".image")
             immoments(imagename=infile,outfile=outfile+".image",includepix=includepix)
             run_exportfits(outfile+".image",outfile,delin=True,dropdeg=True,dropstokes=True)
@@ -1505,7 +1506,7 @@ class ToolsNcol():
         # do_clip #
         ###########
         includepix = [0.227283716202*snr,1000000.]
-        if do_noclip==True:
+        if do_clip==True:
             # snr = 5
             infile  = self.outmodelcube_13co10.replace(".fits","_snr10.fits")
             outfile = self.outsimumom0_13co10.replace(".fits","_clip"+str(snr)+"_snr10.fits")
@@ -1648,6 +1649,9 @@ class ToolsNcol():
 
     def showsim(
         self,
+        do_noclip=True,
+        do_zeroclip=True,
+        do_clip=True,
         ):
         """
         """
@@ -1658,6 +1662,9 @@ class ToolsNcol():
         # prepare
         imcontour1 = self.outmodelmom0_13co10
 
+        ####################
+        # model input mom0 #
+        ####################
         self._showcase_one(
             self.outmodelmom0_13co10,
             imcontour1,
@@ -1667,32 +1674,98 @@ class ToolsNcol():
             [0,100],
             )
 
-        self._showcase_one(
-            self.outsimumom0_13co10.replace(".fits","_noclip_snr10.fits"),
-            imcontour1,
-            self.outpng_simumom0_13co10.replace(".png","_noclip_snr10.png"),
-            "no-clip: SNR=10 mom0",
-            "(K km s$^{-1}$)",
-            [0,100],
-            )
+        #############
+        # do_noclip #
+        #############
+        if do_noclip==True:
+            self._showcase_one(
+                self.outsimumom0_13co10.replace(".fits","_noclip_snr10.fits"),
+                imcontour1,
+                self.outpng_simumom0_13co10.replace(".png","_noclip_snr10.png"),
+                "no-clip: SNR=10 mom0",
+                "(K km s$^{-1}$)",
+                [0,100],
+                )
 
-        self._showcase_one(
-            self.outsimumom0_13co10.replace(".fits","_noclip_snr25.fits"),
-            imcontour1,
-            self.outpng_simumom0_13co10.replace(".png","_noclip_snr25.png"),
-            "no-clip: SNR=25 mom0",
-            "(K km s$^{-1}$)",
-            [0,250],
-            )
+            self._showcase_one(
+                self.outsimumom0_13co10.replace(".fits","_noclip_snr25.fits"),
+                imcontour1,
+                self.outpng_simumom0_13co10.replace(".png","_noclip_snr25.png"),
+                "no-clip: SNR=25 mom0",
+                "(K km s$^{-1}$)",
+                [0,250],
+                )
 
-        self._showcase_one(
-            self.outsimumom0_13co10.replace(".fits","_noclip_snr50.fits"),
-            imcontour1,
-            self.outpng_simumom0_13co10.replace(".png","_noclip_snr50.png"),
-            "no-clip: SNR=50 mom0",
-            "(K km s$^{-1}$)",
-            [0,500],
-            )
+            self._showcase_one(
+                self.outsimumom0_13co10.replace(".fits","_noclip_snr50.fits"),
+                imcontour1,
+                self.outpng_simumom0_13co10.replace(".png","_noclip_snr50.png"),
+                "no-clip: SNR=50 mom0",
+                "(K km s$^{-1}$)",
+                [0,500],
+                )
+
+        ###############
+        # do_zeroclip #
+        ###############
+        if do_zeroclip==True:
+            self._showcase_one(
+                self.outsimumom0_13co10.replace(".fits","_clip0_snr10.fits"),
+                imcontour1,
+                self.outpng_simumom0_13co10.replace(".png","_clip0_snr10.png"),
+                "no-clip: SNR=10 mom0",
+                "(K km s$^{-1}$)",
+                [0,100],
+                )
+
+            self._showcase_one(
+                self.outsimumom0_13co10.replace(".fits","_clip0_snr25.fits"),
+                imcontour1,
+                self.outpng_simumom0_13co10.replace(".png","_clip0_snr25.png"),
+                "no-clip: SNR=25 mom0",
+                "(K km s$^{-1}$)",
+                [0,250],
+                )
+
+            self._showcase_one(
+                self.outsimumom0_13co10.replace(".fits","_clip0_snr50.fits"),
+                imcontour1,
+                self.outpng_simumom0_13co10.replace(".png","_clip0_snr50.png"),
+                "no-clip: SNR=50 mom0",
+                "(K km s$^{-1}$)",
+                [0,500],
+                )
+
+        ###########
+        # do_clip #
+        ###########
+        if do_clip==True:
+            self._showcase_one(
+                self.outsimumom0_13co10.replace(".fits","_clip3_snr10.fits"),
+                imcontour1,
+                self.outpng_simumom0_13co10.replace(".png","_clip3_snr10.png"),
+                "no-clip: SNR=10 mom0",
+                "(K km s$^{-1}$)",
+                [0,100],
+                )
+
+            self._showcase_one(
+                self.outsimumom0_13co10.replace(".fits","_clip3_snr25.fits"),
+                imcontour1,
+                self.outpng_simumom0_13co10.replace(".png","_clip3_snr25.png"),
+                "no-clip: SNR=25 mom0",
+                "(K km s$^{-1}$)",
+                [0,250],
+                )
+
+            self._showcase_one(
+                self.outsimumom0_13co10.replace(".fits","_clip3_snr50.fits"),
+                imcontour1,
+                self.outpng_simumom0_13co10.replace(".png","_clip3_snr50.png"),
+                "no-clip: SNR=50 mom0",
+                "(K km s$^{-1}$)",
+                [0,500],
+                )
 
     ############
     # showcase #
