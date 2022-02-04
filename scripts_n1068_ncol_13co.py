@@ -1572,14 +1572,14 @@ class ToolsNcol():
             immoments(imagename=infile,outfile=outfile+".image",includepix=includepix)
             run_exportfits(outfile+".image",outfile,delin=True,dropdeg=True,dropstokes=True)
             # error
-            map_nchan = "this_mask.fits"
-            os.system("rm -rf " + map_nchan + ".image?")
-            run_immath_one(infile,map_nchan+".image1","iif(IM0>0,1,0)")
-            immoments(map_nchan+".image1",outfile=map_nchan+".image2")
-            run_immath_one(map_nchan+".image2",map_nchan+".image3","IM0/"+str(chanwidth_kms))
-            run_exportfits(map_nchan+".image3",map_nchan,delin=True,dropdeg=True,dropstokes=True)
-            os.system("rm -rf " + map_nchan + ".image?")
-            run_immath_two(outfile,map_nchan,outerr+".image","IM0*0+"+str(rms)+"*"+str(chanwidth_kms)+"*sqrt(IM1)")
+            this_mask = "this_mask.fits"
+            os.system("rm -rf " + this_mask + ".image?")
+            run_immath_one(infile,this_mask+".image1","iif(IM0>0,1,0)")
+            immoments(this_mask+".image1",outfile=this_mask+".image2")
+            run_immath_one(this_mask+".image2",this_mask+".image3","IM0/"+str(chanwidth_kms))
+            run_exportfits(this_mask+".image3",this_mask,delin=True,dropdeg=True,dropstokes=True)
+            os.system("rm -rf " + this_mask + ".image?")
+            run_immath_two(outfile,this_mask,outerr+".image","IM0*0+"+str(rms)+"*"+str(chanwidth_kms)+"*sqrt(IM1)")
             run_exportfits(outerr+".image",outerr,delin=True,dropdeg=True,dropstokes=True)
 
             # snr = 25
@@ -1590,14 +1590,14 @@ class ToolsNcol():
             immoments(imagename=infile,outfile=outfile+".image",includepix=includepix)
             run_exportfits(outfile+".image",outfile,delin=True,dropdeg=True,dropstokes=True)
             # error
-            map_nchan = "this_mask.fits"
-            os.system("rm -rf " + map_nchan + ".image?")
-            run_immath_one(infile,map_nchan+".image1","iif(IM0>0,1,0)")
-            immoments(map_nchan+".image1",outfile=map_nchan+".image2")
-            run_immath_one(map_nchan+".image2",map_nchan+".image3","IM0/"+str(chanwidth_kms))
-            run_exportfits(map_nchan+".image3",map_nchan,delin=True,dropdeg=True,dropstokes=True)
-            os.system("rm -rf " + map_nchan + ".image?")
-            run_immath_two(outfile,map_nchan,outerr+".image","IM0*0+"+str(rms)+"*"+str(chanwidth_kms)+"*sqrt(IM1)")
+            this_mask = "this_mask.fits"
+            os.system("rm -rf " + this_mask + ".image?")
+            run_immath_one(infile,this_mask+".image1","iif(IM0>0,1,0)")
+            immoments(this_mask+".image1",outfile=this_mask+".image2")
+            run_immath_one(this_mask+".image2",this_mask+".image3","IM0/"+str(chanwidth_kms))
+            run_exportfits(this_mask+".image3",this_mask,delin=True,dropdeg=True,dropstokes=True)
+            os.system("rm -rf " + this_mask + ".image?")
+            run_immath_two(outfile,this_mask,outerr+".image","IM0*0+"+str(rms)+"*"+str(chanwidth_kms)+"*sqrt(IM1)")
             run_exportfits(outerr+".image",outerr,delin=True,dropdeg=True,dropstokes=True)
 
             # snr = 50
@@ -1608,14 +1608,14 @@ class ToolsNcol():
             immoments(imagename=infile,outfile=outfile+".image",includepix=includepix)
             run_exportfits(outfile+".image",outfile,delin=True,dropdeg=True,dropstokes=True)
             # error
-            map_nchan = "this_mask.fits"
-            os.system("rm -rf " + map_nchan + ".image?")
-            run_immath_one(infile,map_nchan+".image1","iif(IM0>0,1,0)")
-            immoments(map_nchan+".image1",outfile=map_nchan+".image2")
-            run_immath_one(map_nchan+".image2",map_nchan+".image3","IM0/"+str(chanwidth_kms))
-            run_exportfits(map_nchan+".image3",map_nchan,delin=True,dropdeg=True,dropstokes=True)
-            os.system("rm -rf " + map_nchan + ".image?")
-            run_immath_two(outfile,map_nchan,outerr+".image","IM0*0+"+str(rms)+"*"+str(chanwidth_kms)+"*sqrt(IM1)")
+            this_mask = "this_mask.fits"
+            os.system("rm -rf " + this_mask + ".image?")
+            run_immath_one(infile,this_mask+".image1","iif(IM0>0,1,0)")
+            immoments(this_mask+".image1",outfile=this_mask+".image2")
+            run_immath_one(this_mask+".image2",this_mask+".image3","IM0/"+str(chanwidth_kms))
+            run_exportfits(this_mask+".image3",this_mask,delin=True,dropdeg=True,dropstokes=True)
+            os.system("rm -rf " + this_mask + ".image?")
+            run_immath_two(outfile,this_mask,outerr+".image","IM0*0+"+str(rms)+"*"+str(chanwidth_kms)+"*sqrt(IM1)")
             run_exportfits(outerr+".image",outerr,delin=True,dropdeg=True,dropstokes=True)
 
         ###########
