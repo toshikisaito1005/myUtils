@@ -1623,24 +1623,59 @@ class ToolsNcol():
         ###########
         includepix = [rms*snr,1000000.]
         if do_clip==True:
-            # snr = 5
+            # snr = 10
             infile  = self.outmodelcube_13co10.replace(".fits","_snr10.fits")
             outfile = self.outsimumom0_13co10.replace(".fits","_clip"+str(snr)+"_snr10.fits")
+            outerr  = self.outsimumom0_13co10.replace(".fits","_clip"+str(snr)+"_snr10.fits").replace("mom0","emom0")
             os.system("rm -rf " + outfile + ".image")
             immoments(imagename=infile,outfile=outfile+".image",includepix=includepix)
             run_exportfits(outfile+".image",outfile,delin=True,dropdeg=True,dropstokes=True)
+            # error
+            this_mask = "this_mask.fits"
+            os.system("rm -rf " + this_mask + ".image?")
+            run_immath_one(infile,this_mask+".image1","iif(IM0>"+str(rms*snr)+",1,0)")
+            immoments(this_mask+".image1",outfile=this_mask+".image2")
+            run_immath_one(this_mask+".image2",this_mask+".image3","IM0/"+str(chanwidth_kms))
+            run_exportfits(this_mask+".image3",this_mask,delin=True,dropdeg=True,dropstokes=True)
+            os.system("rm -rf " + this_mask + ".image?")
+            run_immath_two(outfile,this_mask,outerr+".image","IM0*0+"+str(rms)+"*"+str(chanwidth_kms)+"*sqrt(IM1)")
+            run_exportfits(outerr+".image",outerr,delin=True,dropdeg=True,dropstokes=True)
+
             # snr = 25
             infile  = self.outmodelcube_13co10.replace(".fits","_snr25.fits")
             outfile = self.outsimumom0_13co10.replace(".fits","_clip"+str(snr)+"_snr25.fits")
+            outerr  = self.outsimumom0_13co10.replace(".fits","_clip"+str(snr)+"_snr25.fits").replace("mom0","emom0")
             os.system("rm -rf " + outfile + ".image")
             immoments(imagename=infile,outfile=outfile+".image",includepix=includepix)
             run_exportfits(outfile+".image",outfile,delin=True,dropdeg=True,dropstokes=True)
-            # snr = 125
+            # error
+            this_mask = "this_mask.fits"
+            os.system("rm -rf " + this_mask + ".image?")
+            run_immath_one(infile,this_mask+".image1","iif(IM0>"+str(rms*snr)+",1,0)")
+            immoments(this_mask+".image1",outfile=this_mask+".image2")
+            run_immath_one(this_mask+".image2",this_mask+".image3","IM0/"+str(chanwidth_kms))
+            run_exportfits(this_mask+".image3",this_mask,delin=True,dropdeg=True,dropstokes=True)
+            os.system("rm -rf " + this_mask + ".image?")
+            run_immath_two(outfile,this_mask,outerr+".image","IM0*0+"+str(rms)+"*"+str(chanwidth_kms)+"*sqrt(IM1)")
+            run_exportfits(outerr+".image",outerr,delin=True,dropdeg=True,dropstokes=True)
+
+            # snr = 50
             infile  = self.outmodelcube_13co10.replace(".fits","_snr50.fits")
             outfile = self.outsimumom0_13co10.replace(".fits","_clip"+str(snr)+"_snr50.fits")
+            outerr  = self.outsimumom0_13co10.replace(".fits","_clip"+str(snr)+"_snr50.fits").replace("mom0","emom0")
             os.system("rm -rf " + outfile + ".image")
             immoments(imagename=infile,outfile=outfile+".image",includepix=includepix)
             run_exportfits(outfile+".image",outfile,delin=True,dropdeg=True,dropstokes=True)
+            # error
+            this_mask = "this_mask.fits"
+            os.system("rm -rf " + this_mask + ".image?")
+            run_immath_one(infile,this_mask+".image1","iif(IM0>"+str(rms*snr)+",1,0)")
+            immoments(this_mask+".image1",outfile=this_mask+".image2")
+            run_immath_one(this_mask+".image2",this_mask+".image3","IM0/"+str(chanwidth_kms))
+            run_exportfits(this_mask+".image3",this_mask,delin=True,dropdeg=True,dropstokes=True)
+            os.system("rm -rf " + this_mask + ".image?")
+            run_immath_two(outfile,this_mask,outerr+".image","IM0*0+"+str(rms)+"*"+str(chanwidth_kms)+"*sqrt(IM1)")
+            run_exportfits(outerr+".image",outerr,delin=True,dropdeg=True,dropstokes=True)
 
         ##################
         # do_noclip_mask # emom0 done
@@ -1686,7 +1721,7 @@ class ToolsNcol():
             run_exportfits(outerr+".image",outerr,delin=True,dropdeg=True,dropstokes=True)
 
         ####################
-        # do_zeroclip_mask #
+        # do_zeroclip_mask # emom0 done
         ####################
         includepix = [0.0,1000000.]
         if do_zeroclip_mask==True:
@@ -1757,28 +1792,63 @@ class ToolsNcol():
         if do_clip_mask==True:
             # snr = 10
             infile  = self.outmodelcube_13co10.replace(".fits","_snr10.fits")
-            outfile = self.outsimumom0_13co10.replace(".fits","_clip3_masked_snr10.fits")
+            outfile = self.outsimumom0_13co10.replace(".fits","_clip"+str(snr)+"_masked_snr10.fits")
+            outerr  = self.outsimumom0_13co10.replace(".fits","_clip"+str(snr)+"_masked_snr10.fits").replace("mom0","emom0")
             os.system("rm -rf " + outfile + ".image?")
             run_immath_two(infile,mask,outfile+".image1","IM0*IM1")
             immoments(imagename=outfile+".image1",outfile=outfile+".image2",includepix=includepix)
             run_exportfits(outfile+".image2",outfile,delin=True,dropdeg=True,dropstokes=True)
             os.system("rm -rf " + outfile + ".image?")
+            # error
+            this_mask = "this_mask.fits"
+            os.system("rm -rf " + this_mask + ".image?")
+            run_immath_two(infile,mask,this_mask+".image1","iif(IM0*IM1>"+str(rms*snr)+",1,0)")
+            immoments(this_mask+".image1",outfile=this_mask+".image2")
+            run_immath_one(this_mask+".image2",this_mask+".image3","IM0/"+str(chanwidth_kms))
+            run_exportfits(this_mask+".image3",this_mask,delin=True,dropdeg=True,dropstokes=True)
+            os.system("rm -rf " + this_mask + ".image?")
+            run_immath_two(outfile,this_mask,outerr+".image","IM0*0+"+str(rms)+"*"+str(chanwidth_kms)+"*sqrt(IM1)")
+            run_exportfits(outerr+".image",outerr,delin=True,dropdeg=True,dropstokes=True)
+
             # snr = 25
             infile  = self.outmodelcube_13co10.replace(".fits","_snr25.fits")
-            outfile = self.outsimumom0_13co10.replace(".fits","_clip3_masked_snr25.fits")
+            outfile = self.outsimumom0_13co10.replace(".fits","_clip"+str(snr)+"_masked_snr25.fits")
+            outerr  = self.outsimumom0_13co10.replace(".fits","_clip"+str(snr)+"_masked_snr25.fits").replace("mom0","emom0")
             os.system("rm -rf " + outfile + ".image?")
             run_immath_two(infile,mask,outfile+".image1","IM0*IM1")
             immoments(imagename=outfile+".image1",outfile=outfile+".image2",includepix=includepix)
             run_exportfits(outfile+".image2",outfile,delin=True,dropdeg=True,dropstokes=True)
             os.system("rm -rf " + outfile + ".image?")
+            # error
+            this_mask = "this_mask.fits"
+            os.system("rm -rf " + this_mask + ".image?")
+            run_immath_two(infile,mask,this_mask+".image1","iif(IM0*IM1>"+str(rms*snr)+",1,0)")
+            immoments(this_mask+".image1",outfile=this_mask+".image2")
+            run_immath_one(this_mask+".image2",this_mask+".image3","IM0/"+str(chanwidth_kms))
+            run_exportfits(this_mask+".image3",this_mask,delin=True,dropdeg=True,dropstokes=True)
+            os.system("rm -rf " + this_mask + ".image?")
+            run_immath_two(outfile,this_mask,outerr+".image","IM0*0+"+str(rms)+"*"+str(chanwidth_kms)+"*sqrt(IM1)")
+            run_exportfits(outerr+".image",outerr,delin=True,dropdeg=True,dropstokes=True)
+
             # snr = 50
             infile  = self.outmodelcube_13co10.replace(".fits","_snr50.fits")
-            outfile = self.outsimumom0_13co10.replace(".fits","_clip3_masked_snr50.fits")
+            outfile = self.outsimumom0_13co10.replace(".fits","_clip"+str(snr)+"_masked_snr50.fits")
+            outerr  = self.outsimumom0_13co10.replace(".fits","_clip"+str(snr)+"_masked_snr50.fits").replace("mom0","emom0")
             os.system("rm -rf " + outfile + ".image?")
             run_immath_two(infile,mask,outfile+".image1","IM0*IM1")
             immoments(imagename=outfile+".image1",outfile=outfile+".image2",includepix=includepix)
             run_exportfits(outfile+".image2",outfile,delin=True,dropdeg=True,dropstokes=True)
             os.system("rm -rf " + outfile + ".image?")
+            # error
+            this_mask = "this_mask.fits"
+            os.system("rm -rf " + this_mask + ".image?")
+            run_immath_two(infile,mask,this_mask+".image1","iif(IM0*IM1>"+str(rms*snr)+",1,0)")
+            immoments(this_mask+".image1",outfile=this_mask+".image2")
+            run_immath_one(this_mask+".image2",this_mask+".image3","IM0/"+str(chanwidth_kms))
+            run_exportfits(this_mask+".image3",this_mask,delin=True,dropdeg=True,dropstokes=True)
+            os.system("rm -rf " + this_mask + ".image?")
+            run_immath_two(outfile,this_mask,outerr+".image","IM0*0+"+str(rms)+"*"+str(chanwidth_kms)+"*sqrt(IM1)")
+            run_exportfits(outerr+".image",outerr,delin=True,dropdeg=True,dropstokes=True)
 
     #######################
     # add_noise_to_models #
