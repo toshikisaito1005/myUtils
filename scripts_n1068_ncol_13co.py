@@ -154,6 +154,10 @@ class ToolsNcol():
 
         self.outmodelcube_13co10  = self.dir_ready + self._read_key("outmodelcube_13co10")
         self.outmodelcube_13co21  = self.dir_ready + self._read_key("outmodelcube_13co21")
+        self.outmodelmom0_13co10  = self.dir_ready + self._read_key("outmodelmom0_13co10")
+        self.outmodelmom0_13co21  = self.dir_ready + self._read_key("outmodelmom0_13co21")
+        self.outsimumom0_13co10   = self.dir_ready + self._read_key("outsimumom0_13co10")
+        self.outsimumom0_13co21   = self.dir_ready + self._read_key("outsimumom0_13co21")
 
     def _set_input_param(self):
         """
@@ -232,6 +236,7 @@ class ToolsNcol():
         do_prepare       = False,
         do_fitting       = False, # after do_prepare
         do_create_models = False, # after do_prepare
+        do_simulate_mom  = False, # after do_create_models
         # plot figures in paper
         plot_showcase    = False,
         do_imagemagick   = False,
@@ -252,6 +257,9 @@ class ToolsNcol():
         if do_create_models==True:
             self.create_model_cubes()
             self.add_noise_to_models()
+
+        if do_simulate_mom==True:
+            self.simualte_mom()
 
         # plot figures in paper
         if plot_showcase==True:
@@ -1410,6 +1418,50 @@ class ToolsNcol():
                 delin=True,
                 axis="column",
                 )
+
+    ################
+    # simualte_mom #
+    ################
+
+    def simualte_mom(
+        self,
+        ):
+        """
+        """
+
+        taskname = self.modname + sys._getframe().f_code.co_name
+        check_first(self.outmodelcube_13co10.replace(".fits","_snr5.fits"),taskname)
+
+        ####################
+        # model input mom0 #
+        ####################
+        infile  = self.outmodelcube_13co10
+        outfile = self.outmodelmom0_13co10.replace(".fits","_just.fits")
+        os.system("rm -rf " + outfile + ".image")
+        immoments(imagename=infile,outfile=outfile+".image")
+        run_exportfits(outfile+".image",outfile,delin=True)
+
+        #################
+        # just collapse #
+        #################
+        # snr = 5
+        infile  = self.outmodelcube_13co10.replace(".fits","_snr5.fits")
+        outfile = self.outsimumom0_13co10.replace(".fits","_just_snr5.fits")
+        os.system("rm -rf " + outfile + ".image")
+        immoments(imagename=infile,outfile=outfile+".image")
+        run_exportfits(outfile+".image",outfile,delin=True)
+        # snr = 25
+        infile  = self.outmodelcube_13co10.replace(".fits","_snr25.fits")
+        outfile = self.outsimumom0_13co10.replace(".fits","_just_snr25.fits")
+        os.system("rm -rf " + outfile + ".image")
+        immoments(imagename=infile,outfile=outfile+".image")
+        run_exportfits(outfile+".image",outfile,delin=True)
+        # snr = 125
+        infile  = self.outmodelcube_13co10.replace(".fits","_snr125.fits")
+        outfile = self.outsimumom0_13co10.replace(".fits","_just_snr125.fits")
+        os.system("rm -rf " + outfile + ".image")
+        immoments(imagename=infile,outfile=outfile+".image")
+        run_exportfits(outfile+".image",outfile,delin=True)
 
     #######################
     # add_noise_to_models #

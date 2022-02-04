@@ -65,6 +65,10 @@ outemaps_13co_ncol  ,,,n1068_e13co_log_ncol_???.fits
 #
 outmodelcube_13co10 ,,,model_13co10_cube.fits
 outmodelcube_13co21 ,,,model_13co21_cube.fits
+outmodelmom0_13co10 ,,,model_13co10_mom0.fits
+outmodelmom0_13co21 ,,,model_13co21_mom0.fits
+outsimumom0_13co10  ,,,simulated_13co10_mom0.fits
+outsimumom0_13co21  ,,,simulated_13co21_mom0.fits
 
 ###################
 # input paramters #
