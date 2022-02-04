@@ -1435,6 +1435,8 @@ class ToolsNcol():
 
     def simualte_mom(
         self,
+        do_noclip=True,
+        do_zeroclip=True,
         ):
         """
         """
@@ -1451,27 +1453,52 @@ class ToolsNcol():
         immoments(imagename=infile,outfile=outfile+".image")
         run_exportfits(outfile+".image",outfile,delin=True,dropdeg=True,dropstokes=True)
 
-        #################
-        # just collapse #
-        #################
-        # snr = 5
-        infile  = self.outmodelcube_13co10.replace(".fits","_snr10.fits")
-        outfile = self.outsimumom0_13co10.replace(".fits","_just_snr10.fits")
-        os.system("rm -rf " + outfile + ".image")
-        immoments(imagename=infile,outfile=outfile+".image")
-        run_exportfits(outfile+".image",outfile,delin=True,dropdeg=True,dropstokes=True)
-        # snr = 25
-        infile  = self.outmodelcube_13co10.replace(".fits","_snr25.fits")
-        outfile = self.outsimumom0_13co10.replace(".fits","_just_snr25.fits")
-        os.system("rm -rf " + outfile + ".image")
-        immoments(imagename=infile,outfile=outfile+".image")
-        run_exportfits(outfile+".image",outfile,delin=True,dropdeg=True,dropstokes=True)
-        # snr = 125
-        infile  = self.outmodelcube_13co10.replace(".fits","_snr50.fits")
-        outfile = self.outsimumom0_13co10.replace(".fits","_just_snr50.fits")
-        os.system("rm -rf " + outfile + ".image")
-        immoments(imagename=infile,outfile=outfile+".image")
-        run_exportfits(outfile+".image",outfile,delin=True,dropdeg=True,dropstokes=True)
+        #############
+        # do_noclip #
+        #############
+        if do_noclip==True:
+            # snr = 5
+            infile  = self.outmodelcube_13co10.replace(".fits","_snr10.fits")
+            outfile = self.outsimumom0_13co10.replace(".fits","_noclip_snr10.fits")
+            os.system("rm -rf " + outfile + ".image")
+            immoments(imagename=infile,outfile=outfile+".image")
+            run_exportfits(outfile+".image",outfile,delin=True,dropdeg=True,dropstokes=True)
+            # snr = 25
+            infile  = self.outmodelcube_13co10.replace(".fits","_snr25.fits")
+            outfile = self.outsimumom0_13co10.replace(".fits","_noclip_snr25.fits")
+            os.system("rm -rf " + outfile + ".image")
+            immoments(imagename=infile,outfile=outfile+".image")
+            run_exportfits(outfile+".image",outfile,delin=True,dropdeg=True,dropstokes=True)
+            # snr = 125
+            infile  = self.outmodelcube_13co10.replace(".fits","_snr50.fits")
+            outfile = self.outsimumom0_13co10.replace(".fits","_noclip_snr50.fits")
+            os.system("rm -rf " + outfile + ".image")
+            immoments(imagename=infile,outfile=outfile+".image")
+            run_exportfits(outfile+".image",outfile,delin=True,dropdeg=True,dropstokes=True)
+
+        ###############
+        # do_zeroclip #
+        ###############
+        includepix = [0.0,1000000.]
+        if do_noclip==True:
+            # snr = 5
+            infile  = self.outmodelcube_13co10.replace(".fits","_snr10.fits")
+            outfile = self.outsimumom0_13co10.replace(".fits","_zeroclip_snr10.fits")
+            os.system("rm -rf " + outfile + ".image")
+            immoments(imagename=infile,outfile=outfile+".image",includepix=includepix)
+            run_exportfits(outfile+".image",outfile,delin=True,dropdeg=True,dropstokes=True)
+            # snr = 25
+            infile  = self.outmodelcube_13co10.replace(".fits","_snr25.fits")
+            outfile = self.outsimumom0_13co10.replace(".fits","_zeroclip_snr25.fits")
+            os.system("rm -rf " + outfile + ".image")
+            immoments(imagename=infile,outfile=outfile+".image",includepix=includepix)
+            run_exportfits(outfile+".image",outfile,delin=True,dropdeg=True,dropstokes=True)
+            # snr = 125
+            infile  = self.outmodelcube_13co10.replace(".fits","_snr50.fits")
+            outfile = self.outsimumom0_13co10.replace(".fits","_zeroclip_snr50.fits")
+            os.system("rm -rf " + outfile + ".image")
+            immoments(imagename=infile,outfile=outfile+".image",includepix=includepix)
+            run_exportfits(outfile+".image",outfile,delin=True,dropdeg=True,dropstokes=True)
 
     #######################
     # add_noise_to_models #
@@ -1538,51 +1565,6 @@ class ToolsNcol():
         newdata = im0.data * 5.0 + noise6
         os.system("rm -rf " + model_snr)
         pyfits.writeto(model_snr,data=newdata,header=im0.header)
-
-    ################################
-    # _create_correlated_noise_cube #
-    ################################
-
-    def _create_correlated_noise_cube(
-        self,
-        template, # self.outmodelcube_13co10
-        snr=10.0,
-        ):
-        """
-        """
-
-        im    = pyfits.open(template)
-        im0   = im[0]
-        size  = im0.data.shape
-        immax = np.nanmax(im0.data)
-        scale = immax / snr
-        pix   = abs(imhead(template,mode="list")["cdelt1"])
-        beam  = imhead(template,mode="list")["beammajor"]["value"]
-
-        noise   = np.random.normal(loc=0, scale=scale, size=size)
-        im      = pyfits.open(template)
-        im0     = im[0]
-        im0.header["BMAJ"] = pix
-        im0.header["BMIN"] = pix
-
-        os.system("rm -rf noise.fits")
-        pyfits.writeto("noise.fits",data=noise,header=im0.header,clobber=True)
-        run_roundsmooth(
-            "noise.fits",
-            "noise_correlated.image",
-            beam, # float, arcsec unit
-            inputbeam=0.2,
-            delin=True,
-            )
-        run_exportfits("noise_correlated.image","noise_correlated.fits",delin=True)
-
-        im    = pyfits.open("noise_correlated.fits")
-        im0   = im[0]
-        noise = im0.data * scale / np.nanstd(im0.data)
-        #pyfits.writeto("noise_correlated.fits",data=newdata,header=im0.header,clobber=True)
-        os.system("rm -rf noise.fits noise_correlated.fits")
-
-        return noise
 
     ######################
     # create_model_cubes #
@@ -1661,27 +1643,27 @@ class ToolsNcol():
             )
 
         self._showcase_one(
-            self.outsimumom0_13co10.replace(".fits","_just_snr10.fits"),
+            self.outsimumom0_13co10.replace(".fits","_noclip_snr10.fits"),
             imcontour1,
-            self.outpng_simumom0_13co10.replace(".png","_just_snr10.png"),
+            self.outpng_simumom0_13co10.replace(".png","_noclip_snr10.png"),
             "no-clip: SNR=10 mom0",
             "(K km s$^{-1}$)",
             [0,100],
             )
 
         self._showcase_one(
-            self.outsimumom0_13co10.replace(".fits","_just_snr25.fits"),
+            self.outsimumom0_13co10.replace(".fits","_noclip_snr25.fits"),
             imcontour1,
-            self.outpng_simumom0_13co10.replace(".png","_just_snr25.png"),
+            self.outpng_simumom0_13co10.replace(".png","_noclip_snr25.png"),
             "no-clip: SNR=25 mom0",
             "(K km s$^{-1}$)",
             [0,250],
             )
 
         self._showcase_one(
-            self.outsimumom0_13co10.replace(".fits","_just_snr50.fits"),
+            self.outsimumom0_13co10.replace(".fits","_noclip_snr50.fits"),
             imcontour1,
-            self.outpng_simumom0_13co10.replace(".png","_just_snr50.png"),
+            self.outpng_simumom0_13co10.replace(".png","_noclip_snr50.png"),
             "no-clip: SNR=50 mom0",
             "(K km s$^{-1}$)",
             [0,500],
@@ -1946,6 +1928,52 @@ class ToolsNcol():
                 self.outecubes_13co10.replace("???",this_beam),
                 self.outecubes_13co21.replace("???",this_beam),
                 )
+
+    #################################
+    # _create_correlated_noise_cube #
+    #################################
+
+    def _create_correlated_noise_cube(
+        self,
+        template, # self.outmodelcube_13co10
+        snr=10.0,
+        ):
+        """
+        """
+
+        im    = pyfits.open(template)
+        im0   = im[0]
+        size  = im0.data.shape
+        immax = np.nanmax(im0.data)
+        scale = immax / snr
+        pix   = abs(imhead(template,mode="list")["cdelt1"])
+        beam  = imhead(template,mode="list")["beammajor"]["value"]
+        print("# aimed noise rms = " + str(scale))
+
+        noise   = np.random.normal(loc=0, scale=scale, size=size)
+        im      = pyfits.open(template)
+        im0     = im[0]
+        im0.header["BMAJ"] = pix
+        im0.header["BMIN"] = pix
+
+        os.system("rm -rf noise.fits")
+        pyfits.writeto("noise.fits",data=noise,header=im0.header,clobber=True)
+        run_roundsmooth(
+            "noise.fits",
+            "noise_correlated.image",
+            beam, # float, arcsec unit
+            inputbeam=0.2,
+            delin=True,
+            )
+        run_exportfits("noise_correlated.image","noise_correlated.fits",delin=True)
+
+        im    = pyfits.open("noise_correlated.fits")
+        im0   = im[0]
+        noise = im0.data * scale / np.nanstd(im0.data)
+        #pyfits.writeto("noise_correlated.fits",data=newdata,header=im0.header,clobber=True)
+        os.system("rm -rf noise.fits noise_correlated.fits")
+
+        return noise
 
     #################
     # _showcase_one #
