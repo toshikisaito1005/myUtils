@@ -1437,13 +1437,11 @@ class ToolsNcol():
         # create correlated noise
         os.system("rm -rf noise.fits")
         noise   = np.random.normal(loc=0, scale=scale, size=size)
-        pyfits.writeto("noise.fits",data=noise,header=im0.header)
-        #print(im0.header)
         im      = pyfits.open(self.outmodelcube_13co10)
         im0     = im[0]
         im0.header["BMAJ"] = pix
         im0.header["BMIN"] = pix
-        pyfits.writeto("noise.fits",data=im0.data,header=im0.header,clobber=True)
+        pyfits.writeto("noise.fits",data=noise,header=im0.header,clobber=True)
         run_roundsmooth(
             "noise.fits",
             "noise_correlated_tmp.fits",
