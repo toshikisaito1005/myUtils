@@ -1449,7 +1449,7 @@ class ToolsNcol():
         outfile = self.outmodelmom0_13co10
         os.system("rm -rf " + outfile + ".image")
         immoments(imagename=infile,outfile=outfile+".image")
-        run_exportfits(outfile+".image",outfile,delin=True)
+        run_exportfits(outfile+".image",outfile,delin=True,dropdeg=True,dropstokes=True)
 
         #################
         # just collapse #
@@ -1459,19 +1459,19 @@ class ToolsNcol():
         outfile = self.outsimumom0_13co10.replace(".fits","_just_snr10.fits")
         os.system("rm -rf " + outfile + ".image")
         immoments(imagename=infile,outfile=outfile+".image")
-        run_exportfits(outfile+".image",outfile,delin=True)
+        run_exportfits(outfile+".image",outfile,delin=True,dropdeg=True,dropstokes=True)
         # snr = 25
         infile  = self.outmodelcube_13co10.replace(".fits","_snr25.fits")
         outfile = self.outsimumom0_13co10.replace(".fits","_just_snr25.fits")
         os.system("rm -rf " + outfile + ".image")
         immoments(imagename=infile,outfile=outfile+".image")
-        run_exportfits(outfile+".image",outfile,delin=True)
+        run_exportfits(outfile+".image",outfile,delin=True,dropdeg=True,dropstokes=True)
         # snr = 125
         infile  = self.outmodelcube_13co10.replace(".fits","_snr50.fits")
         outfile = self.outsimumom0_13co10.replace(".fits","_just_snr50.fits")
         os.system("rm -rf " + outfile + ".image")
         immoments(imagename=infile,outfile=outfile+".image")
-        run_exportfits(outfile+".image",outfile,delin=True)
+        run_exportfits(outfile+".image",outfile,delin=True,dropdeg=True,dropstokes=True)
 
     #######################
     # add_noise_to_models #
