@@ -1575,10 +1575,10 @@ class ToolsNcol():
         ylim=[0.2,2.3],
         xlabel="log input model",
         ylabel="log output model",
-        adjust=[0.1,0.963,0.25,0.93],
+        #adjust=[0.1,0.963,0.25,0.93],
         )
 
-        ax.errorbar(x1, y1, yerr=e1, marker="o", markeredgewidth=0, color="grey", line=0)
+        ax.errorbar(x1, y1, yerr=e1, marker="o", markeredgewidth=0, color="grey", lw=0)
 
         # save
         os.system("rm -rf " + "test.png")
