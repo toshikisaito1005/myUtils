@@ -1541,7 +1541,7 @@ class ToolsNcol():
 
         # input model, i.e., answer
         input_mom0 = imval_all(self.outmodelmom0_13co10)
-        print(input_mom0)
+        print(input_mom0["data"], input_mom0["mask"])
         input_mom0 = input_mom0["data"] * input_mom0["mask"]
 
         #############
