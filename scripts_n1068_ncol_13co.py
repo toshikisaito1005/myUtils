@@ -1461,7 +1461,7 @@ class ToolsNcol():
             self.outecubes_13co10.replace("???","60pc"),
             self.outmodelcube_13co10 + "_tmp1",
             "iif(IM0/IM1>"+str(snr_cut)+",IM0,0)",
-            chans="1~" + str(nchan-1),
+            chans="1~" + str(nchan-2),
             )
         run_roundsmooth(
             self.outmodelcube_13co10 + "_tmp1",
