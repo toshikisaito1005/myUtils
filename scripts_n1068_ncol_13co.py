@@ -1528,10 +1528,6 @@ class ToolsNcol():
 
     def eval_sim(
         self,
-        do_noclip=True,
-        do_zeroclip=True,
-        do_clip=True,
-        snr=3,
         ):
         """
         """
@@ -1544,72 +1540,71 @@ class ToolsNcol():
         model_mom0 = l["data"] * l["mask"]
         model_mom0 = model_mom0.flatten()
 
-        #############
-        # do_noclip #
-        #############
-        if do_noclip==True:
-            mom0_snr10 = self.outsimumom0_13co10.replace(".fits","_noclip_snr10.fits")
-            l,_  = imval_all(mom0_snr10)
-            sim_mom0 = l["data"] * l["mask"]
-            sim_mom0 = sim_mom0.flatten()
+        ########
+        # plot #
+        ########
+        mom0_snr10 = self.outsimumom0_13co10.replace(".fits","_noclip_snr10.fits")
+        l,_  = imval_all(mom0_snr10)
+        sim_mom0 = l["data"] * l["mask"]
+        sim_mom0 = sim_mom0.flatten()
 
-            emom0_snr10 = self.outsimumom0_13co10.replace(".fits","_noclip_snr10.fits").replace("mom0","emom0")
-            l,_ = imval_all(emom0_snr10)
-            sim_emom0 = l["data"] * l["mask"]
-            sim_emom0 = sim_emom0.flatten()
+        emom0_snr10 = self.outsimumom0_13co10.replace(".fits","_noclip_snr10.fits").replace("mom0","emom0")
+        l,_ = imval_all(emom0_snr10)
+        sim_emom0 = l["data"] * l["mask"]
+        sim_emom0 = sim_emom0.flatten()
 
-            # set plt, ax
-            fig  = plt.figure(figsize=(10,10))
-            plt.rcParams["font.size"] = 16
-            gs   = gridspec.GridSpec(nrows=11, ncols=11)
-            ax   = plt.subplot(gs[0:10,0:10])
+        # set plt, ax
+        fig  = plt.figure(figsize=(10,10))
+        plt.rcParams["font.size"] = 16
+        gs   = gridspec.GridSpec(nrows=11, ncols=11)
+        ax   = plt.subplot(gs[0:10,0:10])
 
-            # set ax parameter
-            myax_set(
-            ax,
-            grid=None,
-            xlim=None,
-            ylim=None,
-            xlabel="log input model",
-            ylabel="log output model",
-            adjust=[0.1,0.963,0.25,0.93],
-            )
+        # set ax parameter
+        myax_set(
+        ax,
+        grid=None,
+        xlim=None,
+        ylim=None,
+        xlabel="log input model",
+        ylabel="log output model",
+        adjust=[0.1,0.963,0.25,0.93],
+        )
 
-            ax.errorbar(np.log(model_mom0), np.log10(sim_mom0), yerr=sim_emom0/abs(sim_mom0), marker="o")
+        ax.errorbar(np.log10(model_mom0), np.log10(sim_mom0), yerr=sim_emom0/abs(sim_mom0), marker="o")
 
-            # save
-            os.system("rm -rf " + "test.png")
-            plt.savefig("test.png", dpi=300)
+        # save
+        os.system("rm -rf " + "test.png")
+        plt.savefig("test.png", dpi=300)
 
-            """
-            markersize = 15
-            ax.plot(range(len(x)),y_disk,c="grey",lw=2,marker="s",markersize=markersize,markeredgewidth=0)
-            ax.plot(range(len(x)),y_cnd,c="tomato",lw=2,marker="s",markersize=markersize,markeredgewidth=0)
-            ax.plot(range(len(x)),y_out,c="deepskyblue",lw=2,marker="s",markersize=markersize,markeredgewidth=0)
-            ax2b.plot(len(x),np.log10(float(siiisii_ratio[3])),c="grey",lw=2,marker="o",markersize=markersize,markeredgewidth=0)
-            ax2b.plot(len(x),np.log10(float(siiisii_ratio[1])),c="tomato",lw=2,marker="o",markersize=markersize,markeredgewidth=0)
-            ax2b.plot(len(x),np.log10(float(siiisii_ratio[2])),c="deepskyblue",lw=2,marker="o",markersize=markersize,markeredgewidth=0)
+        """
+        markersize = 15
+        ax.plot(range(len(x)),y_disk,c="grey",lw=2,marker="s",markersize=markersize,markeredgewidth=0)
+        ax.plot(range(len(x)),y_cnd,c="tomato",lw=2,marker="s",markersize=markersize,markeredgewidth=0)
+        ax.plot(range(len(x)),y_out,c="deepskyblue",lw=2,marker="s",markersize=markersize,markeredgewidth=0)
+        ax2b.plot(len(x),np.log10(float(siiisii_ratio[3])),c="grey",lw=2,marker="o",markersize=markersize,markeredgewidth=0)
+        ax2b.plot(len(x),np.log10(float(siiisii_ratio[1])),c="tomato",lw=2,marker="o",markersize=markersize,markeredgewidth=0)
+        ax2b.plot(len(x),np.log10(float(siiisii_ratio[2])),c="deepskyblue",lw=2,marker="o",markersize=markersize,markeredgewidth=0)
 
-            # x axis
-            ax.set_xticks(range(len(x)))
-            ax.set_xticklabels(x, rotation = 60, ha="right")
-            ax2.set_xticks([16.0])
-            ax2.set_xticklabels(["[SIII]/[SII] ratio"], rotation = 60, ha="right")
+        # x axis
+        ax.set_xticks(range(len(x)))
+        ax.set_xticklabels(x, rotation = 60, ha="right")
+        ax2.set_xticks([16.0])
+        ax2.set_xticklabels(["[SIII]/[SII] ratio"], rotation = 60, ha="right")
 
-            # text
-            ax.text(0.015, 0.91, "Outflow", color="deepskyblue", transform=ax.transAxes, weight="bold", fontsize=22)
-            ax.text(0.015, 0.85, "CND", color="tomato", transform=ax.transAxes, weight="bold", fontsize=22)
-            ax.text(0.015, 0.79, "Non-outflow", color="grey", transform=ax.transAxes, weight="bold", fontsize=22)
+        # text
+        ax.text(0.015, 0.91, "Outflow", color="deepskyblue", transform=ax.transAxes, weight="bold", fontsize=22)
+        ax.text(0.015, 0.85, "CND", color="tomato", transform=ax.transAxes, weight="bold", fontsize=22)
+        ax.text(0.015, 0.79, "Non-outflow", color="grey", transform=ax.transAxes, weight="bold", fontsize=22)
 
-            # ann
-            ax.plot([8.5,8.5],[-2.4,2.4],"--",c="black",lw=2)
-            ax.text(12.0, -1.5, "Lines enhanced", color="black", fontsize=18, ha="center", style="italic")
-            ax.text(12.0, -1.69, "in the outflow", color="black", fontsize=18, ha="center", style="italic")
+        # ann
+        ax.plot([8.5,8.5],[-2.4,2.4],"--",c="black",lw=2)
+        ax.text(12.0, -1.5, "Lines enhanced", color="black", fontsize=18, ha="center", style="italic")
+        ax.text(12.0, -1.69, "in the outflow", color="black", fontsize=18, ha="center", style="italic")
 
-            ax.plot([3.5,3.5],[-2.4,2.4],"--",c="black",lw=2)
-            ax.text(1.5, 0.05, "Lines suppressed", color="black", fontsize=18, ha="center", style="italic")
-            ax.text(1.5, -0.14, "in the outflow", color="black", fontsize=18, ha="center", style="italic")
-            """
+        ax.plot([3.5,3.5],[-2.4,2.4],"--",c="black",lw=2)
+        ax.text(1.5, 0.05, "Lines suppressed", color="black", fontsize=18, ha="center", style="italic")
+        ax.text(1.5, -0.14, "in the outflow", color="black", fontsize=18, ha="center", style="italic")
+        """
 
     ################
     # simulate_mom #
