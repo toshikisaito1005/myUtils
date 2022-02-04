@@ -1434,6 +1434,7 @@ class ToolsNcol():
         pix   = abs(imhead("../data_ready/n1068_13co21_60pc.cube.fits",mode="list")["cdelt1"]) * 3600 * 180 / np.pi
 
         # create noise
+        os.system("rm -rf noise.fits")
         noise   = np.random.normal(loc=0, scale=scale, size=size)
         pyfits.writeto("noise.fits",data=noise,header=im0.header)
         imhead("noise.fits",mode="put",hdkey="bmaj",hdvalue=str(pix)+"arcsec")
