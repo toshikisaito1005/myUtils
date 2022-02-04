@@ -266,7 +266,7 @@ class ToolsNcol():
             self.add_noise_to_models()
 
         if do_simulate_mom==True:
-            self.simualte_mom()
+            self.simulate_mom()
 
         # plot figures in paper
         if plot_showcase==True:
@@ -1429,11 +1429,33 @@ class ToolsNcol():
                 axis="column",
                 )
 
+    ###############
+    # analyze_sim #
+    ###############
+
+    def analyze_sim(
+        self,
+        do_noclip=True,
+        do_zeroclip=True,
+        do_clip=True,
+        snr=3,
+        ):
+        """
+        """
+
+        taskname = self.modname + sys._getframe().f_code.co_name
+        check_first(self.outmodelcube_13co10.replace(".fits","_snr10.fits"),taskname)
+
+        #############
+        # do_noclip #
+        #############
+        if do_noclip==True:
+
     ################
-    # simualte_mom #
+    # simulate_mom #
     ################
 
-    def simualte_mom(
+    def simulate_mom(
         self,
         do_noclip=True,
         do_zeroclip=True,
@@ -1669,7 +1691,7 @@ class ToolsNcol():
             self.outmodelmom0_13co10,
             imcontour1,
             self.outpng_modelmom0_13co10,
-            "Input model mom0",
+            "Input noise-free model mom0",
             "(K km s$^{-1}$)",
             [0,100],
             )
@@ -1682,7 +1704,7 @@ class ToolsNcol():
                 self.outsimumom0_13co10.replace(".fits","_noclip_snr10.fits"),
                 imcontour1,
                 self.outpng_simumom0_13co10.replace(".png","_noclip_snr10.png"),
-                "no-clip: SNR=10 mom0",
+                "no-clip: mom0$_{\mathrm{SNR=10}}$",
                 "(K km s$^{-1}$)",
                 [0,100],
                 )
@@ -1691,7 +1713,7 @@ class ToolsNcol():
                 self.outsimumom0_13co10.replace(".fits","_noclip_snr25.fits"),
                 imcontour1,
                 self.outpng_simumom0_13co10.replace(".png","_noclip_snr25.png"),
-                "no-clip: SNR=25 mom0",
+                "no-clip: mom0$_{\mathrm{SNR=25}}$",
                 "(K km s$^{-1}$)",
                 [0,250],
                 )
@@ -1700,7 +1722,7 @@ class ToolsNcol():
                 self.outsimumom0_13co10.replace(".fits","_noclip_snr50.fits"),
                 imcontour1,
                 self.outpng_simumom0_13co10.replace(".png","_noclip_snr50.png"),
-                "no-clip: SNR=50 mom0",
+                "no-clip: mom0$_{\mathrm{SNR=50}}$",
                 "(K km s$^{-1}$)",
                 [0,500],
                 )
@@ -1713,7 +1735,7 @@ class ToolsNcol():
                 self.outsimumom0_13co10.replace(".fits","_clip0_snr10.fits"),
                 imcontour1,
                 self.outpng_simumom0_13co10.replace(".png","_clip0_snr10.png"),
-                "clip0$\sigma$: SNR=10 mom0",
+                "clip0$\sigma$: mom0$_{\mathrm{SNR=10}}$",
                 "(K km s$^{-1}$)",
                 [0,100],
                 )
@@ -1722,7 +1744,7 @@ class ToolsNcol():
                 self.outsimumom0_13co10.replace(".fits","_clip0_snr25.fits"),
                 imcontour1,
                 self.outpng_simumom0_13co10.replace(".png","_clip0_snr25.png"),
-                "clip0$\sigma$: SNR=25 mom0",
+                "clip0$\sigma$: mom0$_{\mathrm{SNR=25}}$",
                 "(K km s$^{-1}$)",
                 [0,250],
                 )
@@ -1731,7 +1753,7 @@ class ToolsNcol():
                 self.outsimumom0_13co10.replace(".fits","_clip0_snr50.fits"),
                 imcontour1,
                 self.outpng_simumom0_13co10.replace(".png","_clip0_snr50.png"),
-                "clip0$\sigma$: SNR=50 mom0",
+                "clip0$\sigma$: mom0$_{\mathrm{SNR=50}}$",
                 "(K km s$^{-1}$)",
                 [0,500],
                 )
@@ -1744,7 +1766,7 @@ class ToolsNcol():
                 self.outsimumom0_13co10.replace(".fits","_clip3_snr10.fits"),
                 imcontour1,
                 self.outpng_simumom0_13co10.replace(".png","_clip3_snr10.png"),
-                "clip3$\sigma$: SNR=10 mom0",
+                "clip3$\sigma$: mom0$_{\mathrm{SNR=10}}$",
                 "(K km s$^{-1}$)",
                 [0,100],
                 )
@@ -1753,7 +1775,7 @@ class ToolsNcol():
                 self.outsimumom0_13co10.replace(".fits","_clip3_snr25.fits"),
                 imcontour1,
                 self.outpng_simumom0_13co10.replace(".png","_clip3_snr25.png"),
-                "clip3$\sigma$: SNR=25 mom0",
+                "clip3$\sigma$: mom0$_{\mathrm{SNR=25}}$",
                 "(K km s$^{-1}$)",
                 [0,250],
                 )
@@ -1762,7 +1784,7 @@ class ToolsNcol():
                 self.outsimumom0_13co10.replace(".fits","_clip3_snr50.fits"),
                 imcontour1,
                 self.outpng_simumom0_13co10.replace(".png","_clip3_snr50.png"),
-                "clip3$\sigma$: SNR=50 mom0",
+                "clip3$\sigma$: mom0$_{\mathrm{SNR=50}}$",
                 "(K km s$^{-1}$)",
                 [0,500],
                 )
