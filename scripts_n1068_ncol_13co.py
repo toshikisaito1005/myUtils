@@ -1548,11 +1548,11 @@ class ToolsNcol():
         #############
         if do_noclip==True:
             mom0_snr10  = self.outsimumom0_13co10.replace(".fits","_noclip_snr10.fits")
-            sim_mom0    = imval_all(mom0_snr10)
+            sim_mom0,_  = imval_all(mom0_snr10)
             sim_mom0    = sim_mom0["data"] * sim_mom0["mask"]
 
             emom0_snr10 = self.outsimumom0_13co10.replace(".fits","_noclip_snr10.fits").replace("mom0","emom0")
-            sim_emom0   = imval_all(emom0_snr10)
+            sim_emom0,_ = imval_all(emom0_snr10)
             sim_emom0   = sim_emom0["data"] * sim_emom0["mask"]
 
             # set plt, ax
