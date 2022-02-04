@@ -1542,20 +1542,36 @@ class ToolsNcol():
         model_mom0 = np.array(model_mom0.flatten())
 
         # noclip
-        mom0_snr10 = self.outsimumom0_13co10.replace(".fits","_noclip_snr10.fits")
-        l,_  = imval_all(mom0_snr10)
-        sim_mom0 = l["data"] * l["mask"]
-        sim_mom0 = np.array(sim_mom0.flatten())
+        l = self.outsimumom0_13co10.replace(".fits","_noclip_snr10.fits")
+        l,_  = imval_all(l)
+        l = l["data"] * l["mask"]
+        sim_mom0 = np.array(l.flatten())
 
-        emom0_snr10 = self.outsimumom0_13co10.replace(".fits","_noclip_snr10.fits").replace("mom0","emom0")
-        l,_ = imval_all(emom0_snr10)
-        sim_emom0 = l["data"] * l["mask"]
-        sim_emom0 = np.array(sim_emom0.flatten())
+        l = self.outsimumom0_13co10.replace(".fits","_noclip_snr10.fits").replace("mom0","emom0")
+        l,_ = imval_all(l)
+        l = l["data"] * l["mask"]
+        sim_emom0 = np.array(l.flatten())
 
         cut = np.where(sim_mom0>=sim_emom0*snr)
         x1 = np.log10(model_mom0[cut])
         y1 = np.log10(sim_mom0[cut])
         e1 = sim_emom0[cut]/abs(sim_mom0[cut])
+
+        # clip0
+        l = self.outsimumom0_13co10.replace(".fits","_clip0_snr10.fits")
+        l,_  = imval_all(l)
+        l = l["data"] * l["mask"]
+        sim_mom0 = np.array(l.flatten())
+
+        l = self.outsimumom0_13co10.replace(".fits","_noclip_snr10.fits").replace("mom0","emom0")
+        l,_ = imval_all(l)
+        l = l["data"] * l["mask"]
+        sim_emom0 = np.array(l.flatten())
+
+        cut = np.where(sim_mom0>=sim_emom0*snr)
+        x2 = np.log10(model_mom0[cut])
+        y2 = np.log10(sim_mom0[cut])
+        e2 = sim_emom0[cut]/abs(sim_mom0[cut])
 
         ########
         # plot #
@@ -1578,7 +1594,8 @@ class ToolsNcol():
         #adjust=[0.1,0.963,0.25,0.93],
         )
 
-        ax.errorbar(x1, y1, yerr=e1, marker="o", markeredgewidth=0, color="grey", lw=1, capsize=0, ls="None")
+        ax.errorbar(x1, y1, yerr=e1, marker="o", markeredgewidth=0, color="grey", lw=0.5, capsize=0, ls="None", alpha=0.2)
+        ax.errorbar(x2, y2, yerr=e2, marker="o", markeredgewidth=0, color="deepskyblue", lw=0.5, capsize=0, ls="None", alpha=0.2)
 
         # save
         os.system("rm -rf " + "test.png")
