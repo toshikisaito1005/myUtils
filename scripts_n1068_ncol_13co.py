@@ -1485,6 +1485,12 @@ class ToolsNcol():
         taskname = self.modname + sys._getframe().f_code.co_name
         check_first(self.outmodelcube_13co10.replace(".fits","_snr10.fits"),taskname)
 
+        #
+        nchan         = imhead(self.outmodelcube_13co10,mode="list")["shape"][2]
+        chanwidth_Hz  = abs(imhead(self.outmodelcube_13co10,mode="list")["cdelt3"])
+        restfreq_Hz   = imhead(self.outmodelcube_13co10,mode="list")["restfreq"][0]
+        chanwidth_kms = chanwidth_Hz / restfreq_Hz * 300000 # km/s
+
         ####################
         # model input mom0 #
         ####################
@@ -1506,49 +1512,78 @@ class ToolsNcol():
         run_immath_one(infile,mask+".image",expr)
         run_exportfits(mask+".image",mask,delin=True,dropdeg=True,dropstokes=True)
 
+        #################
+        # nchan in mask #
+        #################
+        map_nchan = "map_nchan_in_mask.fits"
+        os.system("rm -rf " + map_nchan + ".image?")
+        immoments(mask,outfile=map_nchan+".image1")
+        run_immath_one(map_nchan+".image1",map_nchan+".image2","IM0/"+str(chanwidth_kms))
+        run_exportfits(map_nchan+".image2",map_nchan,delin=True,dropdeg=True,dropstokes=True)
+        os.system("rm -rf " + map_nchan + ".image?")
+
         #############
         # do_noclip #
         #############
         if do_noclip==True:
-            # snr = 5
+            # snr = 10
             infile  = self.outmodelcube_13co10.replace(".fits","_snr10.fits")
             outfile = self.outsimumom0_13co10.replace(".fits","_noclip_snr10.fits")
+            outerr  = self.outsimumom0_13co10.replace(".fits","_noclip_snr10.fits").replace("mom0","emom0")
             os.system("rm -rf " + outfile + ".image")
             immoments(imagename=infile,outfile=outfile+".image")
             run_exportfits(outfile+".image",outfile,delin=True,dropdeg=True,dropstokes=True)
+            # error
+            run_immath_one(outfile,outerr+".image","IM0*0+"+str(rms)+"*"+str(chanwidth_kms)+"*sqrt("+str(nchan)+")")
+            run_exportfits(outerr+".image",outerr,delin=True,dropdeg=True,dropstokes=True)
+
             # snr = 25
             infile  = self.outmodelcube_13co10.replace(".fits","_snr25.fits")
             outfile = self.outsimumom0_13co10.replace(".fits","_noclip_snr25.fits")
+            outerr  = self.outsimumom0_13co10.replace(".fits","_noclip_snr25.fits").replace("mom0","emom0")
             os.system("rm -rf " + outfile + ".image")
             immoments(imagename=infile,outfile=outfile+".image")
             run_exportfits(outfile+".image",outfile,delin=True,dropdeg=True,dropstokes=True)
-            # snr = 125
+            # error
+            run_immath_one(outfile,outerr+".image","IM0*0+"+str(rms)+"*"+str(chanwidth_kms)+"*sqrt("+str(nchan)+")")
+            run_exportfits(outerr+".image",outerr,delin=True,dropdeg=True,dropstokes=True)
+
+            # snr = 50
             infile  = self.outmodelcube_13co10.replace(".fits","_snr50.fits")
             outfile = self.outsimumom0_13co10.replace(".fits","_noclip_snr50.fits")
+            outerr  = self.outsimumom0_13co10.replace(".fits","_noclip_snr50.fits").replace("mom0","emom0")
             os.system("rm -rf " + outfile + ".image")
             immoments(imagename=infile,outfile=outfile+".image")
             run_exportfits(outfile+".image",outfile,delin=True,dropdeg=True,dropstokes=True)
+            # error
+            run_immath_one(outfile,outerr+".image","IM0*0+"+str(rms)+"*"+str(chanwidth_kms)+"*sqrt("+str(nchan)+")")
+            run_exportfits(outerr+".image",outerr,delin=True,dropdeg=True,dropstokes=True)
 
         ###############
         # do_zeroclip #
         ###############
         includepix = [0.0,1000000.]
         if do_zeroclip==True:
-            # snr = 5
+            # snr = 10
             infile  = self.outmodelcube_13co10.replace(".fits","_snr10.fits")
             outfile = self.outsimumom0_13co10.replace(".fits","_clip0_snr10.fits")
+            outerr  = self.outsimumom0_13co10.replace(".fits","_clip0_snr10.fits").replace("mom0","emom0")
             os.system("rm -rf " + outfile + ".image")
             immoments(imagename=infile,outfile=outfile+".image",includepix=includepix)
             run_exportfits(outfile+".image",outfile,delin=True,dropdeg=True,dropstokes=True)
+
             # snr = 25
             infile  = self.outmodelcube_13co10.replace(".fits","_snr25.fits")
             outfile = self.outsimumom0_13co10.replace(".fits","_clip0_snr25.fits")
+            outerr  = self.outsimumom0_13co10.replace(".fits","_clip0_snr25.fits").replace("mom0","emom0")
             os.system("rm -rf " + outfile + ".image")
             immoments(imagename=infile,outfile=outfile+".image",includepix=includepix)
             run_exportfits(outfile+".image",outfile,delin=True,dropdeg=True,dropstokes=True)
-            # snr = 125
+
+            # snr = 50
             infile  = self.outmodelcube_13co10.replace(".fits","_snr50.fits")
             outfile = self.outsimumom0_13co10.replace(".fits","_clip0_snr50.fits")
+            outerr  = self.outsimumom0_13co10.replace(".fits","_clip0_snr50.fits").replace("mom0","emom0")
             os.system("rm -rf " + outfile + ".image")
             immoments(imagename=infile,outfile=outfile+".image",includepix=includepix)
             run_exportfits(outfile+".image",outfile,delin=True,dropdeg=True,dropstokes=True)
