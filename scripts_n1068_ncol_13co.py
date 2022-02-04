@@ -1541,6 +1541,7 @@ class ToolsNcol():
 
         # input model, i.e., answer
         input_mom0 = imval_all(self.outmodelmom0_13co10)
+        print(input_mom0)
         input_mom0 = input_mom0["data"] * input_mom0["mask"]
 
         #############
@@ -1572,7 +1573,11 @@ class ToolsNcol():
             adjust=[0.1,0.963,0.25,0.93],
             )
 
-            ax.scatter(np.log(input_mom0), np.log10(sim_mom0))
+            ax.scatter(np.log(input_mom0), np.log10(sim_mom0), yerr=sim_emom0/abs(sim_mom0), fmt="o")
+
+            # save
+            os.system("rm -rf " + "test.png")
+            plt.savefig("test.png", dpi=300)
 
             """
             markersize = 15
@@ -1602,10 +1607,6 @@ class ToolsNcol():
             ax.plot([3.5,3.5],[-2.4,2.4],"--",c="black",lw=2)
             ax.text(1.5, 0.05, "Lines suppressed", color="black", fontsize=18, ha="center", style="italic")
             ax.text(1.5, -0.14, "in the outflow", color="black", fontsize=18, ha="center", style="italic")
-
-            # save
-            os.system("rm -rf " + self.outpng_line_graph.replace(".png","_"+denom+".png"))
-            plt.savefig(self.outpng_line_graph.replace(".png","_"+denom+".png"), dpi=300)
             """
 
     ################
