@@ -1489,7 +1489,7 @@ class ToolsNcol():
         nchan         = imhead(self.outmodelcube_13co10,mode="list")["shape"][2]
         chanwidth_Hz  = abs(imhead(self.outmodelcube_13co10,mode="list")["cdelt3"])
         restfreq_Hz   = imhead(self.outmodelcube_13co10,mode="list")["restfreq"][0]
-        chanwidth_kms = chanwidth_Hz / restfreq_Hz * 300000 # km/s
+        chanwidth_kms = chanwidth_Hz / restfreq_Hz * 299792.458 # km/s
 
         ####################
         # model input mom0 #
