@@ -1497,7 +1497,7 @@ class ToolsNcol():
         ###############
         infile = self.outmodelcube_13co10
         mask   = self.outmodelcube_13co10.replace(".fits","_mask.fits")
-        maxval = imstat(infile)["max"]
+        maxval = imstat(infile)["max"][0]
         clip   = str(maxval / 125.0)
         os.system("rm -rf " + mask + ".image")
         expr = "iif(IM0>=" + clip + ",1,0)"
