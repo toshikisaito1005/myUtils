@@ -1434,7 +1434,7 @@ class ToolsNcol():
 
         # create noise
         noise   = np.random.normal(loc=0, scale=scale, size=size)
-        pyfits.writeto("noise.fits",data=newdata,header=im0.header)
+        pyfits.writeto("noise.fits",data=noise,header=im0.header)
         run_roundsmooth(
             "noise.fits",
             "noise_correlated_tmp.fits",
