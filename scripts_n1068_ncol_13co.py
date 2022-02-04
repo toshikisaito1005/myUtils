@@ -251,6 +251,7 @@ class ToolsNcol():
 
         if do_create_models==True:
             self.create_model_cubes()
+            self.add_noise_to_models()
 
         # plot figures in paper
         if plot_showcase==True:
@@ -269,7 +270,7 @@ class ToolsNcol():
         do_all                = False,
         #
         do_final_60pc_obs     = False,
-        do_final_60pc_rot     = True,
+        do_final_60pc_rot     = False,
         #
         do_final_13co10_mom0  = False,
         do_final_13co21_mom0  = False,
@@ -1410,6 +1411,35 @@ class ToolsNcol():
                 axis="column",
                 )
 
+    #######################
+    # add_noise_to_models #
+    #######################
+
+    def create_model_cubes(
+        self,
+        snr_cut=5.0,
+        ):
+        """
+        """
+
+        taskname = self.modname + sys._getframe().f_code.co_name
+        check_first(self.outmodelcube_13co10,taskname)
+
+        # get fits
+        im    = pyfits.open(self.outmodelcube_13co10)
+        im0   = im[0]
+        size  = im0.data.shape
+        immax = np.nanmax(im0.data)
+
+        # snr = 5
+        model_snr5 = self.outmodelcube_13co10.replace(".fits","_snr5.fits")
+        os.system("cp " + self.outmodelcube_13co10 + " " + model_snr5)
+
+        im      = pyfits.open(model_snr5)
+        im0     = im[0]
+        newdata = np.where(im0.data!=np.nan,im0.data,0)
+
+
     ######################
     # create_model_cubes #
     ######################
@@ -1425,11 +1455,13 @@ class ToolsNcol():
         check_first(self.outcubes_13co10.replace("???","60pc"),taskname)
 
         # create 13co10 model cube
+        nchan = imhead(self.outcubes_13co10.replace("???","60pc"),mode="list")["shape"][2]
         run_immath_two(
             self.outcubes_13co10.replace("???","60pc"),
             self.outecubes_13co10.replace("???","60pc"),
             self.outmodelcube_13co10 + "_tmp1",
             "iif(IM0/IM1>"+str(snr_cut)+",IM0,0)",
+            chans="1~" + str(nchan-1),
             )
         run_roundsmooth(
             self.outmodelcube_13co10 + "_tmp1",
