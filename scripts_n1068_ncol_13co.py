@@ -1437,6 +1437,7 @@ class ToolsNcol():
         self,
         do_noclip=True,
         do_zeroclip=True,
+        snr=3,
         ):
         """
         """
@@ -1477,7 +1478,7 @@ class ToolsNcol():
             run_exportfits(outfile+".image",outfile,delin=True,dropdeg=True,dropstokes=True)
 
         ###############
-        # do_zeroclip #
+        # do_zeroclip # 0.227283716202
         ###############
         includepix = [0.0,1000000.]
         if do_noclip==True:
@@ -1496,6 +1497,30 @@ class ToolsNcol():
             # snr = 125
             infile  = self.outmodelcube_13co10.replace(".fits","_snr50.fits")
             outfile = self.outsimumom0_13co10.replace(".fits","_zeroclip_snr50.fits")
+            os.system("rm -rf " + outfile + ".image")
+            immoments(imagename=infile,outfile=outfile+".image",includepix=includepix)
+            run_exportfits(outfile+".image",outfile,delin=True,dropdeg=True,dropstokes=True)
+
+        ###########
+        # do_clip #
+        ###########
+        includepix = [0.227283716202*snr,1000000.]
+        if do_noclip==True:
+            # snr = 5
+            infile  = self.outmodelcube_13co10.replace(".fits","_snr10.fits")
+            outfile = self.outsimumom0_13co10.replace(".fits","_clip"+str(snr)+"_snr10.fits")
+            os.system("rm -rf " + outfile + ".image")
+            immoments(imagename=infile,outfile=outfile+".image",includepix=includepix)
+            run_exportfits(outfile+".image",outfile,delin=True,dropdeg=True,dropstokes=True)
+            # snr = 25
+            infile  = self.outmodelcube_13co10.replace(".fits","_snr25.fits")
+            outfile = self.outsimumom0_13co10.replace(".fits","_clip"+str(snr)+"_snr25.fits")
+            os.system("rm -rf " + outfile + ".image")
+            immoments(imagename=infile,outfile=outfile+".image",includepix=includepix)
+            run_exportfits(outfile+".image",outfile,delin=True,dropdeg=True,dropstokes=True)
+            # snr = 125
+            infile  = self.outmodelcube_13co10.replace(".fits","_snr50.fits")
+            outfile = self.outsimumom0_13co10.replace(".fits","_clip"+str(snr)+"_snr50.fits")
             os.system("rm -rf " + outfile + ".image")
             immoments(imagename=infile,outfile=outfile+".image",includepix=includepix)
             run_exportfits(outfile+".image",outfile,delin=True,dropdeg=True,dropstokes=True)
