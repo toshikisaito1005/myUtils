@@ -1435,25 +1435,27 @@ class ToolsNcol():
         beam  = imhead(self.outmodelcube_13co10,mode="list")["beammajor"]["value"]
 
         # create correlated noise
-        os.system("rm -rf noise.fits")
         noise   = np.random.normal(loc=0, scale=scale, size=size)
         im      = pyfits.open(self.outmodelcube_13co10)
         im0     = im[0]
         im0.header["BMAJ"] = pix
         im0.header["BMIN"] = pix
+
+        os.system("rm -rf noise.fits")
         pyfits.writeto("noise.fits",data=noise,header=im0.header,clobber=True)
         run_roundsmooth(
             "noise.fits",
-            "noise_correlated_tmp.fits",
+            "noise_correlated.image",
             beam, # float, arcsec unit
             inputbeam=0.2,
             )
+        run_exportfits("noise_correlated.image","noise_correlated.fits",delin=True)
+
+        im      = pyfits.open("noise_correlated.fits")
+        im0     = im[0]
+        newdata = im0.data * scale / np.nanstd(im0.data)
 
         """
-        im      = pyfits.open("noise.fits")
-        im0     = im[0]
-        newdata = im0.data * scale / 
-
         # snr = 5
         model_snr5 = self.outmodelcube_13co10.replace(".fits","_snr5.fits")
 
