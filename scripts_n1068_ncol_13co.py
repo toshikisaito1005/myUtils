@@ -1537,11 +1537,10 @@ class ToolsNcol():
         taskname = self.modname + sys._getframe().f_code.co_name
         check_first(self.outmodelcube_13co10.replace(".fits","_snr10.fits"),taskname)
 
-        lim = [0.75,2.2]
-
         #################
         # import 13co10 #
         #################
+        lim = [0.75,2.2]
         # noclip
         x1,y1,binx1,biny1,bine1 = self._get_sim_data(
             self.outsimumom0_13co10.replace(".fits","_noclip_snr10.fits"),
@@ -1590,55 +1589,74 @@ class ToolsNcol():
             lim,
             )
 
-        #################
-        # import 13co21 #
-        #################
+        ################
+        # import ratio #
+        ################
+        lim2 = [-2,2]
         # noclip
         a1,b1,bina1,binb1,binc1 = self._get_sim_data(
+            self.outsimumom0_13co10.replace(".fits","_noclip_snr10.fits"),
+            self.outsimumom0_13co10.replace(".fits","_noclip_snr10.fits").replace("mom0","emom0"),
+            self.outmodelmom0_13co10,
             self.outsimumom0_13co21.replace(".fits","_noclip_snr10.fits"),
             self.outsimumom0_13co21.replace(".fits","_noclip_snr10.fits").replace("mom0","emom0"),
             self.outmodelmom0_13co21,
-            lim,
+            lim2,
             )
 
         # clip0
         a2,b2,bina2,binb2,binc2 = self._get_sim_data(
+            self.outsimumom0_13co10.replace(".fits","_clip0_snr10.fits"),
+            self.outsimumom0_13co10.replace(".fits","_clip0_snr10.fits").replace("mom0","emom0"),
+            self.outmodelmom0_13co10,
             self.outsimumom0_13co21.replace(".fits","_clip0_snr10.fits"),
             self.outsimumom0_13co21.replace(".fits","_clip0_snr10.fits").replace("mom0","emom0"),
             self.outmodelmom0_13co21,
-            lim,
+            lim2,
             )
 
         # clip3
         a3,b3,bina3,binb3,binc3 = self._get_sim_data(
+            self.outsimumom0_13co10.replace(".fits","_clip3_snr10.fits"),
+            self.outsimumom0_13co10.replace(".fits","_clip3_snr10.fits").replace("mom0","emom0"),
+            self.outmodelmom0_13co10,
             self.outsimumom0_13co21.replace(".fits","_clip3_snr10.fits"),
             self.outsimumom0_13co21.replace(".fits","_clip3_snr10.fits").replace("mom0","emom0"),
             self.outmodelmom0_13co21,
-            lim,
+            lim2,
             )
 
         # noclip+mask
         a4,b4,bina4,binb4,binc4 = self._get_sim_data(
+            self.outsimumom0_13co10.replace(".fits","_noclip_masked_snr10.fits"),
+            self.outsimumom0_13co10.replace(".fits","_noclip_masked_snr10.fits").replace("mom0","emom0"),
+            self.outmodelmom0_13co10,
             self.outsimumom0_13co21.replace(".fits","_noclip_masked_snr10.fits"),
             self.outsimumom0_13co21.replace(".fits","_noclip_masked_snr10.fits").replace("mom0","emom0"),
             self.outmodelmom0_13co21,
-            lim,
+            lim2,
             )
 
         # clip0+mask
         a5,b5,bina5,binb5,binc5 = self._get_sim_data(
+            self.outsimumom0_13co10.replace(".fits","_clip0_masked_snr10.fits"),
+            self.outsimumom0_13co10.replace(".fits","_clip0_masked_snr10.fits").replace("mom0","emom0"),
+            self.outmodelmom0_13co10,
             self.outsimumom0_13co21.replace(".fits","_clip0_masked_snr10.fits"),
             self.outsimumom0_13co21.replace(".fits","_clip0_masked_snr10.fits").replace("mom0","emom0"),
             self.outmodelmom0_13co21,
-            lim,
+            lim2,
             )
 
         # clip3+mask
         a6,b6,bina6,binb6,binc6 = self._get_sim_data(
+            self.outsimumom0_13co10.replace(".fits","_clip3_masked_snr10.fits"),
+            self.outsimumom0_13co10.replace(".fits","_clip3_masked_snr10.fits").replace("mom0","emom0"),
+            self.outmodelmom0_13co10,
             self.outsimumom0_13co21.replace(".fits","_clip3_masked_snr10.fits"),
             self.outsimumom0_13co21.replace(".fits","_clip3_masked_snr10.fits").replace("mom0","emom0"),
             self.outmodelmom0_13co21,
-            lim,
+            lim2,
             )
 
         ########
@@ -1725,8 +1743,8 @@ class ToolsNcol():
         myax_set(
         ax,
         grid=None,
-        xlim=lim,
-        ylim=lim,
+        xlim=lim2,
+        ylim=lim2,
         xlabel="log input model",
         ylabel="log output model",
         adjust=[0.215,0.83,0.10,0.90],
@@ -1741,7 +1759,7 @@ class ToolsNcol():
         ax.errorbar(bina3, binb3, yerr=bine1, color="red", capsize=0, lw=2.0)
 
         # ann
-        ax.plot(lim,lim,"--",color="black",lw=1)
+        ax.plot(lim2,lim2,"--",color="black",lw=1)
 
         # save
         os.system("rm -rf " + "test3.png")
@@ -1761,8 +1779,8 @@ class ToolsNcol():
         myax_set(
         ax,
         grid=None,
-        xlim=lim,
-        ylim=lim,
+        xlim=lim2,
+        ylim=lim2,
         xlabel="log input model",
         ylabel="log output model",
         adjust=[0.215,0.83,0.10,0.90],
@@ -1777,7 +1795,7 @@ class ToolsNcol():
         ax.errorbar(bina6, binb6, yerr=bine1, color="red", capsize=0, lw=2.0)
 
         # ann
-        ax.plot(lim,lim,"--",color="black",lw=1)
+        ax.plot(lim2,lim2,"--",color="black",lw=1)
 
         # save
         os.system("rm -rf " + "test4.png")
@@ -1811,6 +1829,64 @@ class ToolsNcol():
         ax.text(1.5, 0.05, "Lines suppressed", color="black", fontsize=18, ha="center", style="italic")
         ax.text(1.5, -0.14, "in the outflow", color="black", fontsize=18, ha="center", style="italic")
         """
+
+    ##################
+    # _get_sim_ratio #
+    ##################
+
+    def _get_sim_ratio(
+        self,
+        mom0_13co10,
+        emom0_13co10,
+        input_mom0_13co10,
+        mom0_13co21,
+        emom0_13co21,
+        input_mom0_13co21,
+        lim,
+        snr=3,
+        nbins=10,
+        ):
+        """
+        """
+
+        # input
+        l,_ = imval_all(input_mom0_13co10)
+        model_mom0_13co10 = l["data"] * l["mask"]
+        model_mom0_13co10 = np.array(model_mom0_13co10.flatten())
+
+        l,_ = imval_all(input_mom0_13co21)
+        model_mom0_13co21 = l["data"] * l["mask"]
+        model_mom0_13co21 = np.array(model_mom0_13co21.flatten())
+
+        #
+        l,_  = imval_all(mom0_13co10)
+        l = l["data"] * l["mask"]
+        sim_mom0_13co10 = np.array(l.flatten())
+
+        l,_  = imval_all(mom0_13co21)
+        l = l["data"] * l["mask"]
+        sim_mom0_13co21 = np.array(l.flatten())
+
+        l,_ = imval_all(emom0_13co10)
+        l = l["data"] * l["mask"]
+        sim_emom0_13co10 = np.array(l.flatten())
+
+        l,_ = imval_all(emom0_13co21)
+        l = l["data"] * l["mask"]
+        sim_emom0_13co21 = np.array(l.flatten())
+
+        cut = np.where((sim_mom0_13co10>=sim_emom0_13co10*snr)&(~np.isnan(np.log10(model_mom0_13co10)))&(~np.isnan(np.log10(sim_mom0_13co10)))&(sim_mom0_13co21>=sim_emom0_13co21*snr)&(~np.isnan(np.log10(model_mom0_13co21)))&(~np.isnan(np.log10(sim_mom0_13co21))))
+        x = np.log10(model_mom0_13co21[cut]/model_mom0_13co10[cut])
+        y = np.log10(sim_mom0_13co21[cut]/sim_mom0_13co10[cut])
+
+        # binning
+        n,_ = np.histogram(x, bins=nbins, range=lim)
+        sy,_ = np.histogram(x, bins=nbins, range=lim, weights=y)
+        sy2,_ = np.histogram(x, bins=nbins, range=lim, weights=y*y)
+        mean = sy / n
+        std = np.sqrt(sy2/n - mean*mean)
+
+        return x, y, (_[1:]+_[:-1])/2, mean, std
 
     #################
     # _get_sim_data #
