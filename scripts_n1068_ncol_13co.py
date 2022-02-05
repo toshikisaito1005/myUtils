@@ -1536,18 +1536,50 @@ class ToolsNcol():
         taskname = self.modname + sys._getframe().f_code.co_name
         check_first(self.outmodelcube_13co10.replace(".fits","_snr10.fits"),taskname)
 
-        nbins = 10
         lim   = [0.75,2.25] # 13co10 range
-        lim2  = [-1.0,0.2]  # ratio range
         this_snr = "snr10"
         outpng_mom0_nomask  = "test1_"+this_snr+".png"
         outpng_mom0_mask    = "test2_"+this_snr+".png"
         outpng_ratio_nomask = "test3_"+this_snr+".png"
         outpng_ratio_mask   = "test4_"+this_snr+".png"
         self._eval_a_sim(
-            nbins,
+            10,
             lim,
-            lim2,
+            [-1.0,0.2], # ratio range
+            this_snr,
+            outpng_mom0_nomask,
+            outpng_mom0_mask,
+            outpng_ratio_nomask,
+            outpng_ratio_mask,
+            )
+
+        lim   = [0.75,np.log(10**2.25*2.5)] # 13co10 range
+        this_snr = "snr25"
+        outpng_mom0_nomask  = "test1_"+this_snr+".png"
+        outpng_mom0_mask    = "test2_"+this_snr+".png"
+        outpng_ratio_nomask = "test3_"+this_snr+".png"
+        outpng_ratio_mask   = "test4_"+this_snr+".png"
+        self._eval_a_sim(
+            10,
+            lim,
+            [-1.0,0.2], # ratio range
+            this_snr,
+            outpng_mom0_nomask,
+            outpng_mom0_mask,
+            outpng_ratio_nomask,
+            outpng_ratio_mask,
+            )
+
+        lim   = [0.75,np.log(10**2.25*5.0)] # 13co10 range
+        this_snr = "snr50"
+        outpng_mom0_nomask  = "test1_"+this_snr+".png"
+        outpng_mom0_mask    = "test2_"+this_snr+".png"
+        outpng_ratio_nomask = "test3_"+this_snr+".png"
+        outpng_ratio_mask   = "test4_"+this_snr+".png"
+        self._eval_a_sim(
+            10,
+            lim,
+            [-1.0,0.2], # ratio range
             this_snr,
             outpng_mom0_nomask,
             outpng_mom0_mask,
@@ -1603,12 +1635,9 @@ class ToolsNcol():
         #################
         # import 13co10 #
         #################
-        print(simumom0a_1)
-        print(simumom0a_2)
-        print(modelmom0a)
-        x1,y1,binx1,biny1,bine1 = self._get_sim_data(simumom0a_1,simumom0a_2,modelmom0a,lim) # noclip
-        x2,y2,binx2,biny2,bine2 = self._get_sim_data(simumom0a_3,simumom0a_4,modelmom0a,lim) # clip0
-        x3,y3,binx3,biny3,bine3 = self._get_sim_data(simumom0a_5,simumom0a_6,modelmom0a,lim) # clip3
+        x1,y1,binx1,biny1,bine1 = self._get_sim_data(simumom0a_1,simumom0a_2,modelmom0a,lim)   # noclip
+        x2,y2,binx2,biny2,bine2 = self._get_sim_data(simumom0a_3,simumom0a_4,modelmom0a,lim)   # clip0
+        x3,y3,binx3,biny3,bine3 = self._get_sim_data(simumom0a_5,simumom0a_6,modelmom0a,lim)   # clip3
         x4,y4,binx4,biny4,bine4 = self._get_sim_data(simumom0a_1m,simumom0a_2m,modelmom0a,lim) # noclip+mask
         x5,y5,binx5,biny5,bine5 = self._get_sim_data(simumom0a_3m,simumom0a_4m,modelmom0a,lim) # clip0+mask
         x6,y6,binx6,biny6,bine6 = self._get_sim_data(simumom0a_5m,simumom0a_6m,modelmom0a,lim) # clip3+mask
@@ -1635,9 +1664,9 @@ class ToolsNcol():
         binb0 = mean
         binc0 = std
 
-        a1,b1,bina1,binb1,binc1 = self._get_sim_ratio(simumom0a_1,simumom0a_2,modelmom0a,simumom0b_1,simumom0b_2,modelmom0b,lim) # noclip
-        a2,b2,bina2,binb2,binc2 = self._get_sim_ratio(simumom0a_3,simumom0a_4,modelmom0a,simumom0b_3,simumom0b_4,modelmom0b,lim) # clip0
-        a3,b3,bina3,binb3,binc3 = self._get_sim_ratio(simumom0a_5,simumom0a_6,modelmom0a,simumom0b_5,simumom0b_6,modelmom0b,lim) # clip3
+        a1,b1,bina1,binb1,binc1 = self._get_sim_ratio(simumom0a_1,simumom0a_2,modelmom0a,simumom0b_1,simumom0b_2,modelmom0b,lim)     # noclip
+        a2,b2,bina2,binb2,binc2 = self._get_sim_ratio(simumom0a_3,simumom0a_4,modelmom0a,simumom0b_3,simumom0b_4,modelmom0b,lim)     # clip0
+        a3,b3,bina3,binb3,binc3 = self._get_sim_ratio(simumom0a_5,simumom0a_6,modelmom0a,simumom0b_5,simumom0b_6,modelmom0b,lim)     # clip3
         a4,b4,bina4,binb4,binc4 = self._get_sim_ratio(simumom0a_1m,simumom0a_2m,modelmom0a,simumom0b_1m,simumom0b_2m,modelmom0b,lim) # noclip+mask
         a5,b5,bina5,binb5,binc5 = self._get_sim_ratio(simumom0a_3m,simumom0a_4m,modelmom0a,simumom0b_3m,simumom0b_4m,modelmom0b,lim) # clip0+mask
         a6,b6,bina6,binb6,binc6 = self._get_sim_ratio(simumom0a_5m,simumom0a_6m,modelmom0a,simumom0b_5m,simumom0b_6m,modelmom0b,lim) # clip3+mask
