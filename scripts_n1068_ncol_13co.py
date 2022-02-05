@@ -1582,7 +1582,7 @@ class ToolsNcol():
         ########
         # plot #
         ########
-        lim = [0.2,2.3]
+        lim = [0.75,2.2]
 
         # set plt, ax
         fig  = plt.figure(figsize=(13,10))
@@ -1615,7 +1615,6 @@ class ToolsNcol():
         ########
         # plot #
         ########
-        lim = [0.2,2.3]
 
         # set plt, ax
         fig  = plt.figure(figsize=(13,10))
