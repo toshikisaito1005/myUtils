@@ -1602,7 +1602,7 @@ class ToolsNcol():
             self.outsimumom0_13co21.replace(".fits","_noclip_snr10.fits"),
             self.outsimumom0_13co21.replace(".fits","_noclip_snr10.fits").replace("mom0","emom0"),
             self.outmodelmom0_13co21,
-            lim2,
+            lim,
             )
 
         # clip0
@@ -1613,7 +1613,7 @@ class ToolsNcol():
             self.outsimumom0_13co21.replace(".fits","_clip0_snr10.fits"),
             self.outsimumom0_13co21.replace(".fits","_clip0_snr10.fits").replace("mom0","emom0"),
             self.outmodelmom0_13co21,
-            lim2,
+            lim,
             )
 
         # clip3
@@ -1624,7 +1624,7 @@ class ToolsNcol():
             self.outsimumom0_13co21.replace(".fits","_clip3_snr10.fits"),
             self.outsimumom0_13co21.replace(".fits","_clip3_snr10.fits").replace("mom0","emom0"),
             self.outmodelmom0_13co21,
-            lim2,
+            lim,
             )
 
         # noclip+mask
@@ -1635,7 +1635,7 @@ class ToolsNcol():
             self.outsimumom0_13co21.replace(".fits","_noclip_masked_snr10.fits"),
             self.outsimumom0_13co21.replace(".fits","_noclip_masked_snr10.fits").replace("mom0","emom0"),
             self.outmodelmom0_13co21,
-            lim2,
+            lim,
             )
 
         # clip0+mask
@@ -1646,7 +1646,7 @@ class ToolsNcol():
             self.outsimumom0_13co21.replace(".fits","_clip0_masked_snr10.fits"),
             self.outsimumom0_13co21.replace(".fits","_clip0_masked_snr10.fits").replace("mom0","emom0"),
             self.outmodelmom0_13co21,
-            lim2,
+            lim,
             )
 
         # clip3+mask
@@ -1657,7 +1657,7 @@ class ToolsNcol():
             self.outsimumom0_13co21.replace(".fits","_clip3_masked_snr10.fits"),
             self.outsimumom0_13co21.replace(".fits","_clip3_masked_snr10.fits").replace("mom0","emom0"),
             self.outmodelmom0_13co21,
-            lim2,
+            lim,
             )
 
         ########
@@ -1744,7 +1744,7 @@ class ToolsNcol():
         myax_set(
         ax,
         grid=None,
-        xlim=lim2,
+        xlim=lim,
         ylim=lim2,
         xlabel="log input model",
         ylabel="log output model",
@@ -1760,7 +1760,7 @@ class ToolsNcol():
         ax.errorbar(bina3, binb3, yerr=bine1, color="red", capsize=0, lw=2.0)
 
         # ann
-        ax.plot(lim2,lim2,"--",color="black",lw=1)
+        ax.plot(lim,lim2,"--",color="black",lw=1)
 
         # save
         os.system("rm -rf " + "test3.png")
@@ -1780,7 +1780,7 @@ class ToolsNcol():
         myax_set(
         ax,
         grid=None,
-        xlim=lim2,
+        xlim=lim,
         ylim=lim2,
         xlabel="log input model",
         ylabel="log output model",
@@ -1796,7 +1796,7 @@ class ToolsNcol():
         ax.errorbar(bina6, binb6, yerr=bine1, color="red", capsize=0, lw=2.0)
 
         # ann
-        ax.plot(lim2,lim2,"--",color="black",lw=1)
+        ax.plot(lim,lim2,"--",color="black",lw=1)
 
         # save
         os.system("rm -rf " + "test4.png")
@@ -1878,7 +1878,7 @@ class ToolsNcol():
         sim_emom0_13co21 = np.array(l.flatten())
 
         cut = np.where((sim_mom0_13co10>=sim_emom0_13co10*snr)&(~np.isnan(np.log10(model_mom0_13co10)))&(~np.isnan(np.log10(sim_mom0_13co10)))&(sim_mom0_13co21>=sim_emom0_13co21*snr)&(~np.isnan(np.log10(model_mom0_13co21)))&(~np.isnan(np.log10(sim_mom0_13co21))))
-        x = np.log10(model_mom0_13co21[cut]/model_mom0_13co10[cut])
+        x = np.log10(model_mom0_13co10[cut])
         y = np.log10(sim_mom0_13co21[cut]/sim_mom0_13co10[cut])
 
         # binning
