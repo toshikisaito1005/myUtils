@@ -1538,7 +1538,7 @@ class ToolsNcol():
         check_first(self.outmodelcube_13co10.replace(".fits","_snr10.fits"),taskname)
 
         lim  = [0.75,2.25] # 13co10 range
-        lim2 = [-1.0,0.0]  # ratio range
+        lim2 = [-1.0,0.5]  # ratio range
 
         #################
         # import 13co10 #
@@ -1594,6 +1594,16 @@ class ToolsNcol():
         ################
         # import ratio #
         ################
+        # model
+        a1   = self.outmodelmom0_13co10
+        b1   = self.outmodelmom0_13co21 / self.outmodelmom0_13co10
+        n,_   = np.histogram(a1, bins=nbins, range=lim)
+        sy,_  = np.histogram(a1, bins=nbins, range=lim, weights=b1)
+        sy2,_ = np.histogram(a1, bins=nbins, range=lim, weights=b1*b1)
+        bina0 = (_[1:]+_[:-1])/2
+        binb0 = sy / n
+        binc0 = np.sqrt(sy2/n - mean*mean)
+
         # noclip
         a1,b1,bina1,binb1,binc1 = self._get_sim_ratio(
             self.outsimumom0_13co10.replace(".fits","_noclip_snr10.fits"),
@@ -1675,16 +1685,16 @@ class ToolsNcol():
         grid=None,
         xlim=lim,
         ylim=lim,
-        xlabel="log input model",
-        ylabel="log output model",
+        xlabel="log$_{\mathrm{10}}$ $I_{\mathrm{^{13}CO(1-0),model}}$",
+        ylabel="log$_{\mathrm{10}}$ $I_{\mathrm{^{13}CO(1-0),reconstructed}}$",
         adjust=[0.215,0.83,0.10,0.90],
         )
 
-        ax.scatter(x1, y1, marker=".", color="grey", lw=0.5, alpha=0.2)
+        ax.scatter(x1, y1, marker=".", color="green", lw=0.5, alpha=0.2)
         ax.scatter(x2, y2, marker=".", color="deepskyblue", lw=0.5, alpha=0.2)
         ax.scatter(x3, y3, marker=".", color="tomato", lw=0.5, alpha=0.2)
 
-        ax.errorbar(binx1, biny1, yerr=bine1, color="black", capsize=0, lw=2.0)
+        ax.errorbar(binx1, biny1, yerr=bine1, color="green", capsize=0, lw=2.0)
         ax.errorbar(binx2, biny2, yerr=bine1, color="blue", capsize=0, lw=2.0)
         ax.errorbar(binx3, biny3, yerr=bine1, color="red", capsize=0, lw=2.0)
 
@@ -1698,7 +1708,6 @@ class ToolsNcol():
         ########
         # plot #
         ########
-
         # set plt, ax
         fig  = plt.figure(figsize=(13,10))
         plt.rcParams["font.size"] = 16
@@ -1711,16 +1720,16 @@ class ToolsNcol():
         grid=None,
         xlim=lim,
         ylim=lim,
-        xlabel="log input model",
-        ylabel="log output model",
+        xlabel="log$_{\mathrm{10}}$ $I_{\mathrm{^{13}CO(1-0),model}}$",
+        ylabel="log$_{\mathrm{10}}$ $I_{\mathrm{^{13}CO(1-0),reconstructed}}$",
         adjust=[0.215,0.83,0.10,0.90],
         )
 
-        ax.scatter(x4, y4, marker=".", color="grey", lw=0.5, alpha=0.2)
+        ax.scatter(x4, y4, marker=".", color="green", lw=0.5, alpha=0.2)
         ax.scatter(x5, y5, marker=".", color="deepskyblue", lw=0.5, alpha=0.2)
         ax.scatter(x6, y6, marker=".", color="tomato", lw=0.5, alpha=0.2)
 
-        ax.errorbar(binx4, biny4, yerr=bine1, color="black", capsize=0, lw=2.0)
+        ax.errorbar(binx4, biny4, yerr=bine1, color="green", capsize=0, lw=2.0)
         ax.errorbar(binx5, biny5, yerr=bine1, color="blue", capsize=0, lw=2.0)
         ax.errorbar(binx6, biny6, yerr=bine1, color="red", capsize=0, lw=2.0)
 
@@ -1746,26 +1755,26 @@ class ToolsNcol():
         grid=None,
         xlim=lim,
         ylim=lim2,
-        xlabel="log input model",
-        ylabel="log output model",
+        xlabel="log$_{\mathrm{10}}$ $I_{\mathrm{^{13}CO(1-0),model}}$",
+        ylabel="log$_{\mathrm{10}}$ Ratio$_{\mathrm{reconstructed}}$",
         adjust=[0.215,0.83,0.10,0.90],
         )
 
-        ax.scatter(a1, b1, marker=".", color="grey", lw=0.5, alpha=0.2)
+        ax.scatter(a0, b0, marker=".", color="grey", lw=0.5, alpha=0.2)
+        ax.scatter(a1, b1, marker=".", color="green", lw=0.5, alpha=0.2)
         ax.scatter(a2, b2, marker=".", color="deepskyblue", lw=0.5, alpha=0.2)
         ax.scatter(a3, b3, marker=".", color="tomato", lw=0.5, alpha=0.2)
 
-        ax.errorbar(bina1, binb1, yerr=bine1, color="black", capsize=0, lw=2.0)
+        ax.errorbar(bina0, binb0, yerr=bine0, color="black", capsize=0, lw=2.0)
+        ax.errorbar(bina1, binb1, yerr=bine1, color="green", capsize=0, lw=2.0)
         ax.errorbar(bina2, binb2, yerr=bine1, color="blue", capsize=0, lw=2.0)
         ax.errorbar(bina3, binb3, yerr=bine1, color="red", capsize=0, lw=2.0)
 
         # ann
-        ax.plot(lim,lim2,"--",color="black",lw=1)
 
         # save
         os.system("rm -rf " + "test3.png")
         plt.savefig("test3.png", dpi=300)
-
 
         ########
         # plot #
@@ -1782,21 +1791,22 @@ class ToolsNcol():
         grid=None,
         xlim=lim,
         ylim=lim2,
-        xlabel="log input model",
-        ylabel="log output model",
+        xlabel="log$_{\mathrm{10}}$ $I_{\mathrm{^{13}CO(1-0),model}}$",
+        ylabel="log$_{\mathrm{10}}$ Ratio$_{\mathrm{reconstructed}}$",
         adjust=[0.215,0.83,0.10,0.90],
         )
 
-        ax.scatter(a4, b4, marker=".", color="grey", lw=0.5, alpha=0.2)
+        ax.scatter(a0, b0, marker=".", color="grey", lw=0.5, alpha=0.2)
+        ax.scatter(a4, b4, marker=".", color="green", lw=0.5, alpha=0.2)
         ax.scatter(a5, b5, marker=".", color="deepskyblue", lw=0.5, alpha=0.2)
         ax.scatter(a6, b6, marker=".", color="tomato", lw=0.5, alpha=0.2)
 
-        ax.errorbar(bina4, binb4, yerr=bine1, color="black", capsize=0, lw=2.0)
+        ax.errorbar(bina0, binb0, yerr=bine0, color="black", capsize=0, lw=2.0)
+        ax.errorbar(bina4, binb4, yerr=bine1, color="green", capsize=0, lw=2.0)
         ax.errorbar(bina5, binb5, yerr=bine1, color="blue", capsize=0, lw=2.0)
         ax.errorbar(bina6, binb6, yerr=bine1, color="red", capsize=0, lw=2.0)
 
         # ann
-        ax.plot(lim,lim2,"--",color="black",lw=1)
 
         # save
         os.system("rm -rf " + "test4.png")
