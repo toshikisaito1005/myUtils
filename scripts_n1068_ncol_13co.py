@@ -1603,13 +1603,13 @@ class ToolsNcol():
         a0b = l["data"] * l["mask"]
         a0b = np.array(a0b.flatten())
         b0   = a0 / a0b
-        
-        n,_   = np.histogram(a0, bins=nbins, range=lim)
-        sy,_  = np.histogram(a0, bins=nbins, range=lim, weights=b0)
-        sy2,_ = np.histogram(a0, bins=nbins, range=lim, weights=b0*b0)
+
+        n,_   = np.histogram(a0, bins=10, range=lim)
+        sy,_  = np.histogram(a0, bins=10, range=lim, weights=b0)
+        sy2,_ = np.histogram(a0, bins=10, range=lim, weights=b0*b0)
         bina0 = (_[1:]+_[:-1])/2
         binb0 = sy / n
-        binc0 = np.sqrt(sy2/n - mean*mean)
+        binc0 = np.sqrt(sy2/n - binb0*binb0)
 
         # noclip
         a1,b1,bina1,binb1,binc1 = self._get_sim_ratio(
