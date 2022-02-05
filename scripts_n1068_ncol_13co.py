@@ -1536,7 +1536,8 @@ class ToolsNcol():
         taskname = self.modname + sys._getframe().f_code.co_name
         check_first(self.outmodelcube_13co10.replace(".fits","_snr10.fits"),taskname)
 
-        lim   = [0.75,2.25] # 13co10 range
+        lim      = [0.75,2.25] # 13co10 range
+        lim2     = [-1.0,0.2], # ratio range
         this_snr = "snr10"
         outpng_mom0_nomask  = "test1_"+this_snr+".png"
         outpng_mom0_mask    = "test2_"+this_snr+".png"
@@ -1545,7 +1546,7 @@ class ToolsNcol():
         self._eval_a_sim(
             10,
             lim,
-            [-1.0,0.2], # ratio range
+            lim2,
             this_snr,
             outpng_mom0_nomask,
             outpng_mom0_mask,
@@ -1553,7 +1554,8 @@ class ToolsNcol():
             outpng_ratio_mask,
             )
 
-        lim   = [0.75,np.log10(10**2.25*2.5)] # 13co10 range
+        lim      = [0.75,np.log10(10**2.25*2.5)] # 13co10 range
+        lim2     = [np.log10(10**-1.0/2.5),0.2], # ratio range
         this_snr = "snr25"
         outpng_mom0_nomask  = "test1_"+this_snr+".png"
         outpng_mom0_mask    = "test2_"+this_snr+".png"
@@ -1562,7 +1564,7 @@ class ToolsNcol():
         self._eval_a_sim(
             10,
             lim,
-            [-1.0,0.2], # ratio range
+            lim2
             this_snr,
             outpng_mom0_nomask,
             outpng_mom0_mask,
@@ -1570,7 +1572,8 @@ class ToolsNcol():
             outpng_ratio_mask,
             )
 
-        lim   = [0.75,np.log10(10**2.25*5.0)] # 13co10 range
+        lim      = [0.75,np.log10(10**2.25*5.0)] # 13co10 range
+        lim2     = [np.log10(10**-1.0/2.5),0.2], # ratio range
         this_snr = "snr50"
         outpng_mom0_nomask  = "test1_"+this_snr+".png"
         outpng_mom0_mask    = "test2_"+this_snr+".png"
@@ -1579,7 +1582,7 @@ class ToolsNcol():
         self._eval_a_sim(
             10,
             lim,
-            [-1.0,0.2], # ratio range
+            lim2m
             this_snr,
             outpng_mom0_nomask,
             outpng_mom0_mask,
