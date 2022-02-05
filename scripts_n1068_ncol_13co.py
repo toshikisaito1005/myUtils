@@ -1536,65 +1536,35 @@ class ToolsNcol():
         taskname = self.modname + sys._getframe().f_code.co_name
         check_first(self.outmodelcube_13co10.replace(".fits","_snr10.fits"),taskname)
 
-        # input model, i.e., answer
-        l,_ = imval_all(self.outmodelmom0_13co10)
-        model_mom0 = l["data"] * l["mask"]
-        model_mom0 = np.array(model_mom0.flatten())
 
         # noclip
-        l = self.outsimumom0_13co10.replace(".fits","_noclip_snr10.fits")
-        l,_  = imval_all(l)
-        l = l["data"] * l["mask"]
-        sim_mom0 = np.array(l.flatten())
-
-        l = self.outsimumom0_13co10.replace(".fits","_noclip_snr10.fits").replace("mom0","emom0")
-        l,_ = imval_all(l)
-        l = l["data"] * l["mask"]
-        sim_emom0 = np.array(l.flatten())
-
-        cut = np.where(sim_mom0>=sim_emom0*snr)
-        x1 = np.log10(model_mom0[cut])
-        y1 = np.log10(sim_mom0[cut])
-        e1 = sim_emom0[cut]/abs(sim_mom0[cut])
+        x1,y1 = self.get_sim_data(
+            self.outsimumom0_13co10.replace(".fits","_noclip_snr10.fits"),
+            self.outsimumom0_13co10.replace(".fits","_noclip_snr10.fits").replace("mom0","emom0"),
+            self.outmodelmom0_13co10,
+            )
 
         # clip0
-        l = self.outsimumom0_13co10.replace(".fits","_clip0_snr10.fits")
-        l,_  = imval_all(l)
-        l = l["data"] * l["mask"]
-        sim_mom0 = np.array(l.flatten())
-
-        l = self.outsimumom0_13co10.replace(".fits","_clip0_snr10.fits").replace("mom0","emom0")
-        l,_ = imval_all(l)
-        l = l["data"] * l["mask"]
-        sim_emom0 = np.array(l.flatten())
-
-        cut = np.where(sim_mom0>=sim_emom0*snr)
-        x2 = np.log10(model_mom0[cut])
-        y2 = np.log10(sim_mom0[cut])
-        e2 = sim_emom0[cut]/abs(sim_mom0[cut])
+        x2,y2 = self.get_sim_data(
+            self.outsimumom0_13co10.replace(".fits","_clip0_snr10.fits"),
+            self.outsimumom0_13co10.replace(".fits","_clip0_snr10.fits").replace("mom0","emom0"),
+            self.outmodelmom0_13co10,
+            )
 
         # clip3
-        l = self.outsimumom0_13co10.replace(".fits","_clip3_snr10.fits")
-        l,_  = imval_all(l)
-        l = l["data"] * l["mask"]
-        sim_mom0 = np.array(l.flatten())
-
-        l = self.outsimumom0_13co10.replace(".fits","_clip3_snr10.fits").replace("mom0","emom0")
-        l,_ = imval_all(l)
-        l = l["data"] * l["mask"]
-        sim_emom0 = np.array(l.flatten())
-
-        cut = np.where(sim_mom0>=sim_emom0*snr)
-        x3 = np.log10(model_mom0[cut])
-        y3 = np.log10(sim_mom0[cut])
-        e3 = sim_emom0[cut]/abs(sim_mom0[cut])
+        x3,y3 = self.get_sim_data(
+            self.outsimumom0_13co10.replace(".fits","_clip3_snr10.fits"),
+            self.outsimumom0_13co10.replace(".fits","_clip3_snr10.fits").replace("mom0","emom0"),
+            self.outmodelmom0_13co10,
+            )
 
         ########
         # plot #
         ########
+        lim = [0.2,2.3]
 
         # set plt, ax
-        fig  = plt.figure(figsize=(10,10))
+        fig  = plt.figure(figsize=(13,10))
         plt.rcParams["font.size"] = 16
         gs   = gridspec.GridSpec(nrows=11, ncols=11)
         ax   = plt.subplot(gs[0:10,0:10])
@@ -1603,18 +1573,19 @@ class ToolsNcol():
         myax_set(
         ax,
         grid=None,
-        xlim=[0.2,2.3],
-        ylim=[0.2,2.3],
+        xlim=lim,
+        ylim=lim,
         xlabel="log input model",
         ylabel="log output model",
-        #adjust=[0.1,0.963,0.25,0.93],
+        adjust=[0.19,0.99,0.10,0.90],
         )
 
-        #ax.errorbar(x1, y1, yerr=e1, marker="o", markeredgewidth=0, color="grey", lw=0.5, capsize=0, ls="None", alpha=0.2)
-        #ax.errorbar(x2, y2, yerr=e2, marker="o", markeredgewidth=0, color="deepskyblue", lw=0.5, capsize=0, ls="None", alpha=0.2)
         ax.scatter(x1, y1, marker="o", color="grey", lw=0.5, alpha=0.2)
         ax.scatter(x2, y2, marker="o", color="deepskyblue", lw=0.5, alpha=0.2)
         ax.scatter(x3, y3, marker="o", color="tomato", lw=0.5, alpha=0.2)
+
+        # ann
+        ax.plot([lim[0],lim[0]],[lim[1],lim[1]],"--",color="black",lw=1)
 
         # save
         os.system("rm -rf " + "test.png")
@@ -1649,6 +1620,41 @@ class ToolsNcol():
         ax.text(1.5, 0.05, "Lines suppressed", color="black", fontsize=18, ha="center", style="italic")
         ax.text(1.5, -0.14, "in the outflow", color="black", fontsize=18, ha="center", style="italic")
         """
+
+    ################
+    # get_sim_data #
+    ################
+
+    def get_sim_data(
+        self,
+        mom0,
+        emom0,
+        input_mom0,
+        snr=3,
+        ):
+        """
+        """
+
+        # input
+        l,_ = imval_all(input_mom0)
+        model_mom0 = l["data"] * l["mask"]
+        model_mom0 = np.array(model_mom0.flatten())
+
+        # noclip
+        l,_  = imval_all(mom0)
+        l = l["data"] * l["mask"]
+        sim_mom0 = np.array(l.flatten())
+
+        l,_ = imval_all(emom0)
+        l = l["data"] * l["mask"]
+        sim_emom0 = np.array(l.flatten())
+
+        cut = np.where(sim_mom0>=sim_emom0*snr)
+        x = np.log10(model_mom0[cut])
+        y = np.log10(sim_mom0[cut])
+        #e = sim_emom0[cut]/abs(sim_mom0[cut])
+
+        return x,y
 
     ################
     # simulate_mom #
