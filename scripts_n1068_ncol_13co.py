@@ -1710,6 +1710,11 @@ class ToolsNcol():
         # ann
         ax.plot(lim,lim,"--",color="black",lw=1)
 
+        # text
+        ax.text(0.80., 0.25, "noclip", color="green", transform=ax.transAxes, weight="bold", fontsize=22)
+        ax.text(0.80., 0.15, "clip0$\sigma$", color="deepskyblue", transform=ax.transAxes, weight="bold", fontsize=22)
+        ax.text(0.80., 0.05, "clip3$\sigma$", color="tomato", transform=ax.transAxes, weight="bold", fontsize=22)
+
         # save
         os.system("rm -rf " + "test1.png")
         plt.savefig("test1.png", dpi=300)
@@ -1745,6 +1750,11 @@ class ToolsNcol():
         # ann
         ax.plot(lim,lim,"--",color="black",lw=1)
 
+        # text
+        ax.text(0.80., 0.25, "noclip+masking", color="green", transform=ax.transAxes, weight="bold", fontsize=22)
+        ax.text(0.80., 0.15, "clip0$\sigma$+masking", color="deepskyblue", transform=ax.transAxes, weight="bold", fontsize=22)
+        ax.text(0.80., 0.05, "clip3$\sigma$+masking", color="tomato", transform=ax.transAxes, weight="bold", fontsize=22)
+
         # save
         os.system("rm -rf " + "test2.png")
         plt.savefig("test2.png", dpi=300)
@@ -1779,7 +1789,11 @@ class ToolsNcol():
         ax.errorbar(bina2, binb2, yerr=binc1, color="blue", capsize=0, lw=2.0)
         ax.errorbar(bina3, binb3, yerr=binc1, color="red", capsize=0, lw=2.0)
 
-        # ann
+        # text
+        ax.text(0.80., 0.25, "model", color="grey", transform=ax.transAxes, weight="bold", fontsize=22)
+        ax.text(0.80., 0.25, "noclip", color="green", transform=ax.transAxes, weight="bold", fontsize=22)
+        ax.text(0.80., 0.15, "clip0$\sigma$", color="deepskyblue", transform=ax.transAxes, weight="bold", fontsize=22)
+        ax.text(0.80., 0.05, "clip3$\sigma$", color="tomato", transform=ax.transAxes, weight="bold", fontsize=22)
 
         # save
         os.system("rm -rf " + "test3.png")
@@ -1815,7 +1829,11 @@ class ToolsNcol():
         ax.errorbar(bina5, binb5, yerr=binc1, color="blue", capsize=0, lw=2.0)
         ax.errorbar(bina6, binb6, yerr=binc1, color="red", capsize=0, lw=2.0)
 
-        # ann
+        # text
+        ax.text(0.80., 0.25, "model", color="grey", transform=ax.transAxes, weight="bold", fontsize=22)
+        ax.text(0.80., 0.25, "noclip+masking", color="green", transform=ax.transAxes, weight="bold", fontsize=22)
+        ax.text(0.80., 0.15, "clip0$\sigma$+masking", color="deepskyblue", transform=ax.transAxes, weight="bold", fontsize=22)
+        ax.text(0.80., 0.05, "clip3$\sigma$+masking", color="tomato", transform=ax.transAxes, weight="bold", fontsize=22)
 
         # save
         os.system("rm -rf " + "test4.png")
