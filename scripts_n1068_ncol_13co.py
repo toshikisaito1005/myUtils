@@ -1594,7 +1594,7 @@ class ToolsNcol():
         ################
         lim2 = [-2,2]
         # noclip
-        a1,b1,bina1,binb1,binc1 = self._get_sim_data(
+        a1,b1,bina1,binb1,binc1 = self._get_sim_ratio(
             self.outsimumom0_13co10.replace(".fits","_noclip_snr10.fits"),
             self.outsimumom0_13co10.replace(".fits","_noclip_snr10.fits").replace("mom0","emom0"),
             self.outmodelmom0_13co10,
@@ -1605,7 +1605,7 @@ class ToolsNcol():
             )
 
         # clip0
-        a2,b2,bina2,binb2,binc2 = self._get_sim_data(
+        a2,b2,bina2,binb2,binc2 = self._get_sim_ratio(
             self.outsimumom0_13co10.replace(".fits","_clip0_snr10.fits"),
             self.outsimumom0_13co10.replace(".fits","_clip0_snr10.fits").replace("mom0","emom0"),
             self.outmodelmom0_13co10,
@@ -1616,7 +1616,7 @@ class ToolsNcol():
             )
 
         # clip3
-        a3,b3,bina3,binb3,binc3 = self._get_sim_data(
+        a3,b3,bina3,binb3,binc3 = self._get_sim_ratio(
             self.outsimumom0_13co10.replace(".fits","_clip3_snr10.fits"),
             self.outsimumom0_13co10.replace(".fits","_clip3_snr10.fits").replace("mom0","emom0"),
             self.outmodelmom0_13co10,
@@ -1627,7 +1627,7 @@ class ToolsNcol():
             )
 
         # noclip+mask
-        a4,b4,bina4,binb4,binc4 = self._get_sim_data(
+        a4,b4,bina4,binb4,binc4 = self._get_sim_ratio(
             self.outsimumom0_13co10.replace(".fits","_noclip_masked_snr10.fits"),
             self.outsimumom0_13co10.replace(".fits","_noclip_masked_snr10.fits").replace("mom0","emom0"),
             self.outmodelmom0_13co10,
@@ -1638,7 +1638,7 @@ class ToolsNcol():
             )
 
         # clip0+mask
-        a5,b5,bina5,binb5,binc5 = self._get_sim_data(
+        a5,b5,bina5,binb5,binc5 = self._get_sim_ratio(
             self.outsimumom0_13co10.replace(".fits","_clip0_masked_snr10.fits"),
             self.outsimumom0_13co10.replace(".fits","_clip0_masked_snr10.fits").replace("mom0","emom0"),
             self.outmodelmom0_13co10,
@@ -1649,7 +1649,7 @@ class ToolsNcol():
             )
 
         # clip3+mask
-        a6,b6,bina6,binb6,binc6 = self._get_sim_data(
+        a6,b6,bina6,binb6,binc6 = self._get_sim_ratio(
             self.outsimumom0_13co10.replace(".fits","_clip3_masked_snr10.fits"),
             self.outsimumom0_13co10.replace(".fits","_clip3_masked_snr10.fits").replace("mom0","emom0"),
             self.outmodelmom0_13co10,
