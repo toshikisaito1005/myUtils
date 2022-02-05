@@ -1558,6 +1558,27 @@ class ToolsNcol():
             self.outmodelmom0_13co10,
             )
 
+        # noclip+mask
+        x4,y4 = self.get_sim_data(
+            self.outsimumom0_13co10.replace(".fits","_noclip_masked_snr10.fits"),
+            self.outsimumom0_13co10.replace(".fits","_noclip_masked_snr10.fits").replace("mom0","emom0"),
+            self.outmodelmom0_13co10,
+            )
+
+        # clip0+mask
+        x5,y5 = self.get_sim_data(
+            self.outsimumom0_13co10.replace(".fits","_clip0_masked_snr10.fits"),
+            self.outsimumom0_13co10.replace(".fits","_clip0_masked_snr10.fits").replace("mom0","emom0"),
+            self.outmodelmom0_13co10,
+            )
+
+        # clip3+mask
+        x6,y6 = self.get_sim_data(
+            self.outsimumom0_13co10.replace(".fits","_clip3_masked_snr10.fits"),
+            self.outsimumom0_13co10.replace(".fits","_clip3_masked_snr10.fits").replace("mom0","emom0"),
+            self.outmodelmom0_13co10,
+            )
+
         ########
         # plot #
         ########
@@ -1588,8 +1609,41 @@ class ToolsNcol():
         ax.plot(lim,lim,"--",color="black",lw=1)
 
         # save
-        os.system("rm -rf " + "test.png")
-        plt.savefig("test.png", dpi=300)
+        os.system("rm -rf " + "test1.png")
+        plt.savefig("test1.png", dpi=300)
+
+        ########
+        # plot #
+        ########
+        lim = [0.2,2.3]
+
+        # set plt, ax
+        fig  = plt.figure(figsize=(13,10))
+        plt.rcParams["font.size"] = 16
+        gs   = gridspec.GridSpec(nrows=11, ncols=11)
+        ax   = plt.subplot(gs[0:10,0:10])
+
+        # set ax parameter
+        myax_set(
+        ax,
+        grid=None,
+        xlim=lim,
+        ylim=lim,
+        xlabel="log input model",
+        ylabel="log output model",
+        adjust=[0.215,0.83,0.10,0.90],
+        )
+
+        ax.scatter(x4, y4, marker=".", color="grey", lw=0.5, alpha=0.2)
+        ax.scatter(x5, y5, marker=".", color="deepskyblue", lw=0.5, alpha=0.2)
+        ax.scatter(x6, y6, marker=".", color="tomato", lw=0.5, alpha=0.2)
+
+        # ann
+        ax.plot(lim,lim,"--",color="black",lw=1)
+
+        # save
+        os.system("rm -rf " + "test2.png")
+        plt.savefig("test2.png", dpi=300)
 
         """
         markersize = 15
