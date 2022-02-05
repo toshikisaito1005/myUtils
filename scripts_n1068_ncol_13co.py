@@ -1711,7 +1711,7 @@ class ToolsNcol():
         l = l["data"] * l["mask"]
         sim_emom0 = np.array(l.flatten())
 
-        cut = np.where(sim_mom0>=sim_emom0*snr)
+        cut = np.where((sim_mom0>=sim_emom0*snr)&(np.log10(model_mom0)!=np.nan)&(np.log10(sim_mom0)!=np.nan))
         x = np.log10(model_mom0[cut])
         y = np.log10(sim_mom0[cut])
         #e = sim_emom0[cut]/abs(sim_mom0[cut])
