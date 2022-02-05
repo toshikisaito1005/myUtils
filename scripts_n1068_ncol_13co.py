@@ -1536,11 +1536,14 @@ class ToolsNcol():
         taskname = self.modname + sys._getframe().f_code.co_name
         check_first(self.outmodelcube_13co10.replace(".fits","_snr10.fits"),taskname)
 
+        lim = [0.75,2.2]
+
         # noclip
         x1,y1,binx1,biny1,bine1 = self._get_sim_data(
             self.outsimumom0_13co10.replace(".fits","_noclip_snr10.fits"),
             self.outsimumom0_13co10.replace(".fits","_noclip_snr10.fits").replace("mom0","emom0"),
             self.outmodelmom0_13co10,
+            lim,
             )
 
         # clip0
@@ -1548,6 +1551,7 @@ class ToolsNcol():
             self.outsimumom0_13co10.replace(".fits","_clip0_snr10.fits"),
             self.outsimumom0_13co10.replace(".fits","_clip0_snr10.fits").replace("mom0","emom0"),
             self.outmodelmom0_13co10,
+            lim,
             )
 
         # clip3
@@ -1555,6 +1559,7 @@ class ToolsNcol():
             self.outsimumom0_13co10.replace(".fits","_clip3_snr10.fits"),
             self.outsimumom0_13co10.replace(".fits","_clip3_snr10.fits").replace("mom0","emom0"),
             self.outmodelmom0_13co10,
+            lim,
             )
 
         # noclip+mask
@@ -1562,6 +1567,7 @@ class ToolsNcol():
             self.outsimumom0_13co10.replace(".fits","_noclip_masked_snr10.fits"),
             self.outsimumom0_13co10.replace(".fits","_noclip_masked_snr10.fits").replace("mom0","emom0"),
             self.outmodelmom0_13co10,
+            lim,
             )
 
         # clip0+mask
@@ -1569,6 +1575,7 @@ class ToolsNcol():
             self.outsimumom0_13co10.replace(".fits","_clip0_masked_snr10.fits"),
             self.outsimumom0_13co10.replace(".fits","_clip0_masked_snr10.fits").replace("mom0","emom0"),
             self.outmodelmom0_13co10,
+            lim,
             )
 
         # clip3+mask
@@ -1576,13 +1583,12 @@ class ToolsNcol():
             self.outsimumom0_13co10.replace(".fits","_clip3_masked_snr10.fits"),
             self.outsimumom0_13co10.replace(".fits","_clip3_masked_snr10.fits").replace("mom0","emom0"),
             self.outmodelmom0_13co10,
+            lim,
             )
 
         ########
         # plot #
         ########
-        lim = [0.75,2.2]
-
         # set plt, ax
         fig  = plt.figure(figsize=(13,10))
         plt.rcParams["font.size"] = 16
@@ -1690,6 +1696,7 @@ class ToolsNcol():
         mom0,
         emom0,
         input_mom0,
+        lim,
         snr=3,
         nbins=10,
         ):
