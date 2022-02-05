@@ -1553,7 +1553,7 @@ class ToolsNcol():
             outpng_ratio_mask,
             )
 
-        lim   = [0.75,np.log(10**2.25*2.5)] # 13co10 range
+        lim   = [0.75,np.log10(10**2.25*2.5)] # 13co10 range
         this_snr = "snr25"
         outpng_mom0_nomask  = "test1_"+this_snr+".png"
         outpng_mom0_mask    = "test2_"+this_snr+".png"
@@ -1570,7 +1570,7 @@ class ToolsNcol():
             outpng_ratio_mask,
             )
 
-        lim   = [0.75,np.log(10**2.25*5.0)] # 13co10 range
+        lim   = [0.75,np.log10(10**2.25*5.0)] # 13co10 range
         this_snr = "snr50"
         outpng_mom0_nomask  = "test1_"+this_snr+".png"
         outpng_mom0_mask    = "test2_"+this_snr+".png"
@@ -1602,6 +1602,9 @@ class ToolsNcol():
         outpng_ratio_nomask,
         outpng_ratio_mask,
         ):
+
+        snrtext = this_snr.replace("snr","")
+        snrfloat = float(this_snr.replace("snr",""))
 
         # hereafter
         simumom0a_1  = self.outsimumom0_13co10.replace(".fits","_noclip_"+this_snr+".fits")
@@ -1691,19 +1694,19 @@ class ToolsNcol():
         adjust=[0.215,0.83,0.10,0.90],
         )
 
-        ax.scatter(x1, y1, marker=".", color="green", lw=0.5, alpha=0.2)
-        ax.scatter(x2, y2, marker=".", color="deepskyblue", lw=0.5, alpha=0.2)
-        ax.scatter(x3, y3, marker=".", color="tomato", lw=0.5, alpha=0.2)
+        ax.scatter(x1*snrfloat/10.0, y1, marker=".", color="green", lw=0.5, alpha=0.2)
+        ax.scatter(x2*snrfloat/10.0, y2, marker=".", color="deepskyblue", lw=0.5, alpha=0.2)
+        ax.scatter(x3*snrfloat/10.0, y3, marker=".", color="tomato", lw=0.5, alpha=0.2)
 
-        ax.errorbar(binx1, biny1, yerr=bine1, color="green", capsize=0, lw=2.0)
-        ax.errorbar(binx2, biny2, yerr=bine1, color="blue", capsize=0, lw=2.0)
-        ax.errorbar(binx3, biny3, yerr=bine1, color="red", capsize=0, lw=2.0)
+        ax.errorbar(binx1*snrfloat/10.0, biny1, yerr=bine1, color="green", capsize=0, lw=2.0)
+        ax.errorbar(binx2*snrfloat/10.0, biny2, yerr=bine1, color="blue", capsize=0, lw=2.0)
+        ax.errorbar(binx3*snrfloat/10.0, biny3, yerr=bine1, color="red", capsize=0, lw=2.0)
 
         # ann
         ax.plot(lim,lim,"--",color="black",lw=1)
 
         # text
-        ax.text(0.05,0.90, "mom0$_{\mathrm{SNR=10}}$", transform=ax.transAxes, weight="bold", fontsize=26, ha="left")
+        ax.text(0.05,0.90, "mom0$_{\mathrm{SNR="+snrtext+"}}$", transform=ax.transAxes, weight="bold", fontsize=26, ha="left")
         ax.text(0.95, 0.15, "noclip", color="green", transform=ax.transAxes, weight="bold", fontsize=22, ha="right")
         ax.text(0.95, 0.10, "clip0$\sigma$", color="deepskyblue", transform=ax.transAxes, weight="bold", fontsize=22, ha="right")
         ax.text(0.95, 0.05, "clip3$\sigma$", color="tomato", transform=ax.transAxes, weight="bold", fontsize=22, ha="right")
@@ -1732,19 +1735,19 @@ class ToolsNcol():
         adjust=[0.215,0.83,0.10,0.90],
         )
 
-        ax.scatter(x4, y4, marker=".", color="green", lw=0.5, alpha=0.2)
-        ax.scatter(x5, y5, marker=".", color="deepskyblue", lw=0.5, alpha=0.2)
-        ax.scatter(x6, y6, marker=".", color="tomato", lw=0.5, alpha=0.2)
+        ax.scatter(x4*snrfloat/10.0, y4, marker=".", color="green", lw=0.5, alpha=0.2)
+        ax.scatter(x5*snrfloat/10.0, y5, marker=".", color="deepskyblue", lw=0.5, alpha=0.2)
+        ax.scatter(x6*snrfloat/10.0, y6, marker=".", color="tomato", lw=0.5, alpha=0.2)
 
-        ax.errorbar(binx4, biny4, yerr=bine1, color="green", capsize=0, lw=2.0)
-        ax.errorbar(binx5, biny5, yerr=bine1, color="blue", capsize=0, lw=2.0)
-        ax.errorbar(binx6, biny6, yerr=bine1, color="red", capsize=0, lw=2.0)
+        ax.errorbar(binx4*snrfloat/10.0, biny4, yerr=bine1, color="green", capsize=0, lw=2.0)
+        ax.errorbar(binx5*snrfloat/10.0, biny5, yerr=bine1, color="blue", capsize=0, lw=2.0)
+        ax.errorbar(binx6*snrfloat/10.0, biny6, yerr=bine1, color="red", capsize=0, lw=2.0)
 
         # ann
         ax.plot(lim,lim,"--",color="black",lw=1)
 
         # text
-        ax.text(0.05,0.90, "mom0$_{\mathrm{SNR=10}}$", transform=ax.transAxes, weight="bold", fontsize=26, ha="left")
+        ax.text(0.05,0.90, "mom0$_{\mathrm{SNR="+snrtext+"}}$", transform=ax.transAxes, weight="bold", fontsize=26, ha="left")
         ax.text(0.95, 0.15, "noclip+masking", color="green", transform=ax.transAxes, weight="bold", fontsize=22, ha="right")
         ax.text(0.95, 0.10, "clip0$\sigma$+masking", color="deepskyblue", transform=ax.transAxes, weight="bold", fontsize=22, ha="right")
         ax.text(0.95, 0.05, "clip3$\sigma$+masking", color="tomato", transform=ax.transAxes, weight="bold", fontsize=22, ha="right")
@@ -1773,18 +1776,18 @@ class ToolsNcol():
         adjust=[0.215,0.83,0.10,0.90],
         )
 
-        ax.scatter(a0, b0, marker=".", color="grey", lw=0.5, alpha=0.2)
-        ax.scatter(a1, b1, marker=".", color="green", lw=0.5, alpha=0.2)
-        ax.scatter(a2, b2, marker=".", color="deepskyblue", lw=0.5, alpha=0.2)
-        ax.scatter(a3, b3, marker=".", color="tomato", lw=0.5, alpha=0.2)
+        ax.scatter(a0*snrfloat/10.0, b0, marker=".", color="grey", lw=0.5, alpha=0.2)
+        ax.scatter(a1*snrfloat/10.0, b1, marker=".", color="green", lw=0.5, alpha=0.2)
+        ax.scatter(a2*snrfloat/10.0, b2, marker=".", color="deepskyblue", lw=0.5, alpha=0.2)
+        ax.scatter(a3*snrfloat/10.0, b3, marker=".", color="tomato", lw=0.5, alpha=0.2)
 
-        ax.errorbar(bina0, binb0, yerr=binc0, color="black", capsize=0, lw=2.0)
-        ax.errorbar(bina1, binb1, yerr=binc1, color="green", capsize=0, lw=2.0)
-        ax.errorbar(bina2, binb2, yerr=binc1, color="blue", capsize=0, lw=2.0)
-        ax.errorbar(bina3, binb3, yerr=binc1, color="red", capsize=0, lw=2.0)
+        ax.errorbar(bina0*snrfloat/10.0, binb0, yerr=binc0, color="black", capsize=0, lw=2.0)
+        ax.errorbar(bina1*snrfloat/10.0, binb1, yerr=binc1, color="green", capsize=0, lw=2.0)
+        ax.errorbar(bina2*snrfloat/10.0, binb2, yerr=binc1, color="blue", capsize=0, lw=2.0)
+        ax.errorbar(bina3*snrfloat/10.0, binb3, yerr=binc1, color="red", capsize=0, lw=2.0)
 
         # text
-        ax.text(0.05,0.90, "mom0$_{\mathrm{SNR=10}}$", transform=ax.transAxes, weight="bold", fontsize=26, ha="left")
+        ax.text(0.05,0.90, "mom0$_{\mathrm{SNR="+snrtext+"}}$", transform=ax.transAxes, weight="bold", fontsize=26, ha="left")
         ax.text(0.95, 0.20, "model", color="grey", transform=ax.transAxes, weight="bold", fontsize=22, ha="right")
         ax.text(0.95, 0.15, "noclip", color="green", transform=ax.transAxes, weight="bold", fontsize=22, ha="right")
         ax.text(0.95, 0.10, "clip0$\sigma$", color="deepskyblue", transform=ax.transAxes, weight="bold", fontsize=22, ha="right")
@@ -1814,18 +1817,18 @@ class ToolsNcol():
         adjust=[0.215,0.83,0.10,0.90],
         )
 
-        ax.scatter(a0, b0, marker=".", color="grey", lw=0.5, alpha=0.2)
-        ax.scatter(a4, b4, marker=".", color="green", lw=0.5, alpha=0.2)
-        ax.scatter(a5, b5, marker=".", color="deepskyblue", lw=0.5, alpha=0.2)
-        ax.scatter(a6, b6, marker=".", color="tomato", lw=0.5, alpha=0.2)
+        ax.scatter(a0*snrfloat/10.0, b0, marker=".", color="grey", lw=0.5, alpha=0.2)
+        ax.scatter(a4*snrfloat/10.0, b4, marker=".", color="green", lw=0.5, alpha=0.2)
+        ax.scatter(a5*snrfloat/10.0, b5, marker=".", color="deepskyblue", lw=0.5, alpha=0.2)
+        ax.scatter(a6*snrfloat/10.0, b6, marker=".", color="tomato", lw=0.5, alpha=0.2)
 
-        ax.errorbar(bina0, binb0, yerr=binc0, color="black", capsize=0, lw=2.0)
-        ax.errorbar(bina4, binb4, yerr=binc1, color="green", capsize=0, lw=2.0)
-        ax.errorbar(bina5, binb5, yerr=binc1, color="blue", capsize=0, lw=2.0)
-        ax.errorbar(bina6, binb6, yerr=binc1, color="red", capsize=0, lw=2.0)
+        ax.errorbar(bina0*snrfloat/10.0, binb0, yerr=binc0, color="black", capsize=0, lw=2.0)
+        ax.errorbar(bina4*snrfloat/10.0, binb4, yerr=binc1, color="green", capsize=0, lw=2.0)
+        ax.errorbar(bina5*snrfloat/10.0, binb5, yerr=binc1, color="blue", capsize=0, lw=2.0)
+        ax.errorbar(bina6*snrfloat/10.0, binb6, yerr=binc1, color="red", capsize=0, lw=2.0)
 
         # text
-        ax.text(0.05,0.90, "mom0$_{\mathrm{SNR=10}}$", transform=ax.transAxes, weight="bold", fontsize=26, ha="left")
+        ax.text(0.05,0.90, "mom0$_{\mathrm{SNR="+snrtext+"}}$", transform=ax.transAxes, weight="bold", fontsize=26, ha="left")
         ax.text(0.95, 0.20, "model", color="grey", transform=ax.transAxes, weight="bold", fontsize=22, ha="right")
         ax.text(0.95, 0.15, "noclip+masking", color="green", transform=ax.transAxes, weight="bold", fontsize=22, ha="right")
         ax.text(0.95, 0.10, "clip0$\sigma$+masking", color="deepskyblue", transform=ax.transAxes, weight="bold", fontsize=22, ha="right")
