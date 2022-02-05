@@ -1573,7 +1573,7 @@ class ToolsNcol():
 
         # hereafter
         simumom0a_1  = self.outsimumom0_13co10.replace(".fits","_noclip_"+this_snr+".fits")
-        simumom0a_2  = self.outsimumom0_13co10.replace(".fits","_noclip_"+this_snr+"fits").replace("mom0","emom0")
+        simumom0a_2  = self.outsimumom0_13co10.replace(".fits","_noclip_"+this_snr+".fits").replace("mom0","emom0")
         simumom0a_3  = self.outsimumom0_13co10.replace(".fits","_clip0_"+this_snr+".fits")
         simumom0a_4  = self.outsimumom0_13co10.replace(".fits","_clip0_"+this_snr+".fits").replace("mom0","emom0")
         simumom0a_5  = self.outsimumom0_13co10.replace(".fits","_clip3_"+this_snr+".fits")
@@ -1605,6 +1605,7 @@ class ToolsNcol():
         #################
         print(simumom0a_1)
         print(simumom0a_2)
+        print(modelmom0a)
         x1,y1,binx1,biny1,bine1 = self._get_sim_data(simumom0a_1,simumom0a_2,modelmom0a,lim) # noclip
         x2,y2,binx2,biny2,bine2 = self._get_sim_data(simumom0a_3,simumom0a_4,modelmom0a,lim) # clip0
         x3,y3,binx3,biny3,bine3 = self._get_sim_data(simumom0a_5,simumom0a_6,modelmom0a,lim) # clip3
