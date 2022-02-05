@@ -1603,6 +1603,8 @@ class ToolsNcol():
         #################
         # import 13co10 #
         #################
+        print(simumom0a_1)
+        print(simumom0a_2)
         x1,y1,binx1,biny1,bine1 = self._get_sim_data(simumom0a_1,simumom0a_2,modelmom0a,lim) # noclip
         x2,y2,binx2,biny2,bine2 = self._get_sim_data(simumom0a_3,simumom0a_4,modelmom0a,lim) # clip0
         x3,y3,binx3,biny3,bine3 = self._get_sim_data(simumom0a_5,simumom0a_6,modelmom0a,lim) # clip3
