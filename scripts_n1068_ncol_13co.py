@@ -1540,10 +1540,10 @@ class ToolsNcol():
         lim   = [0.75,2.25] # 13co10 range
         lim2  = [-1.0,0.2]  # ratio range
         this_snr = "snr10"
-        outpng_mom0_nomask  = "test1_snr10.png"
-        outpng_mom0_mask    = "test2_snr10.png"
-        outpng_ratio_nomask = "test3_snr10.png"
-        outpng_ratio_mask   = "test4_snr10.png"
+        outpng_mom0_nomask  = "test1_"+this_snr+".png"
+        outpng_mom0_mask    = "test2_"+this_snr+".png"
+        outpng_ratio_nomask = "test3_"+this_snr+".png"
+        outpng_ratio_mask   = "test4_"+this_snr+".png"
         self._eval_a_sim(
             nbins,
             lim,
@@ -1573,7 +1573,7 @@ class ToolsNcol():
 
         # hereafter
         simumom0a_1  = self.outsimumom0_13co10.replace(".fits","_noclip_"+this_snr+".fits")
-        simumom0a_2  = self.outsimumom0_13co10.replace(".fits","_noclip_s"+this_snr+"fits").replace("mom0","emom0")
+        simumom0a_2  = self.outsimumom0_13co10.replace(".fits","_noclip_"+this_snr+"fits").replace("mom0","emom0")
         simumom0a_3  = self.outsimumom0_13co10.replace(".fits","_clip0_"+this_snr+".fits")
         simumom0a_4  = self.outsimumom0_13co10.replace(".fits","_clip0_"+this_snr+".fits").replace("mom0","emom0")
         simumom0a_5  = self.outsimumom0_13co10.replace(".fits","_clip3_"+this_snr+".fits")
