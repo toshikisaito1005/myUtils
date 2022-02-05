@@ -1536,44 +1536,43 @@ class ToolsNcol():
         taskname = self.modname + sys._getframe().f_code.co_name
         check_first(self.outmodelcube_13co10.replace(".fits","_snr10.fits"),taskname)
 
-
         # noclip
-        x1,y1,binx1,biny1,bine1 = self.get_sim_data(
+        x1,y1,binx1,biny1,bine1 = self._get_sim_data(
             self.outsimumom0_13co10.replace(".fits","_noclip_snr10.fits"),
             self.outsimumom0_13co10.replace(".fits","_noclip_snr10.fits").replace("mom0","emom0"),
             self.outmodelmom0_13co10,
             )
 
         # clip0
-        x2,y2,binx2,biny2,bine2 = self.get_sim_data(
+        x2,y2,binx2,biny2,bine2 = self._get_sim_data(
             self.outsimumom0_13co10.replace(".fits","_clip0_snr10.fits"),
             self.outsimumom0_13co10.replace(".fits","_clip0_snr10.fits").replace("mom0","emom0"),
             self.outmodelmom0_13co10,
             )
 
         # clip3
-        x3,y3,binx3,biny3,bine3 = self.get_sim_data(
+        x3,y3,binx3,biny3,bine3 = self._get_sim_data(
             self.outsimumom0_13co10.replace(".fits","_clip3_snr10.fits"),
             self.outsimumom0_13co10.replace(".fits","_clip3_snr10.fits").replace("mom0","emom0"),
             self.outmodelmom0_13co10,
             )
 
         # noclip+mask
-        x4,y4,binx4,biny4,bine4 = self.get_sim_data(
+        x4,y4,binx4,biny4,bine4 = self._get_sim_data(
             self.outsimumom0_13co10.replace(".fits","_noclip_masked_snr10.fits"),
             self.outsimumom0_13co10.replace(".fits","_noclip_masked_snr10.fits").replace("mom0","emom0"),
             self.outmodelmom0_13co10,
             )
 
         # clip0+mask
-        x5,y5,binx5,biny5,bine5 = self.get_sim_data(
+        x5,y5,binx5,biny5,bine5 = self._get_sim_data(
             self.outsimumom0_13co10.replace(".fits","_clip0_masked_snr10.fits"),
             self.outsimumom0_13co10.replace(".fits","_clip0_masked_snr10.fits").replace("mom0","emom0"),
             self.outmodelmom0_13co10,
             )
 
         # clip3+mask
-        x6,y6,binx6,biny6,bine6 = self.get_sim_data(
+        x6,y6,binx6,biny6,bine6 = self._get_sim_data(
             self.outsimumom0_13co10.replace(".fits","_clip3_masked_snr10.fits"),
             self.outsimumom0_13co10.replace(".fits","_clip3_masked_snr10.fits").replace("mom0","emom0"),
             self.outmodelmom0_13co10,
@@ -1682,11 +1681,11 @@ class ToolsNcol():
         ax.text(1.5, -0.14, "in the outflow", color="black", fontsize=18, ha="center", style="italic")
         """
 
-    ################
-    # get_sim_data #
-    ################
+    #################
+    # _get_sim_data #
+    #################
 
-    def get_sim_data(
+    def _get_sim_data(
         self,
         mom0,
         emom0,
@@ -1711,7 +1710,7 @@ class ToolsNcol():
         l = l["data"] * l["mask"]
         sim_emom0 = np.array(l.flatten())
 
-        cut = np.where((sim_mom0>=sim_emom0*snr)&(np.log10(model_mom0)!=np.nan)&(np.log10(sim_mom0)!=np.nan))
+        cut = np.where((sim_mom0>=sim_emom0*snr)&(~np.isnan(np.log10(model_mom0)))&(~np.isnan(np.log10(sim_mom0))))
         x = np.log10(model_mom0[cut])
         y = np.log10(sim_mom0[cut])
         #e = sim_emom0[cut]/abs(sim_mom0[cut])
