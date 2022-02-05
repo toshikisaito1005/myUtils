@@ -1537,10 +1537,12 @@ class ToolsNcol():
         taskname = self.modname + sys._getframe().f_code.co_name
         check_first(self.outmodelcube_13co10.replace(".fits","_snr10.fits"),taskname)
 
+        lim  = [0.75,2.25] # 13co10 range
+        lim2 = [-1.0,0.0]  # ratio range
+
         #################
         # import 13co10 #
         #################
-        lim = [0.75,2.25]
         # noclip
         x1,y1,binx1,biny1,bine1 = self._get_sim_data(
             self.outsimumom0_13co10.replace(".fits","_noclip_snr10.fits"),
@@ -1592,7 +1594,6 @@ class ToolsNcol():
         ################
         # import ratio #
         ################
-        lim2 = [-1.5,0.1]
         # noclip
         a1,b1,bina1,binb1,binc1 = self._get_sim_ratio(
             self.outsimumom0_13co10.replace(".fits","_noclip_snr10.fits"),
@@ -1800,6 +1801,7 @@ class ToolsNcol():
         # save
         os.system("rm -rf " + "test4.png")
         plt.savefig("test4.png", dpi=300)
+
         """
         markersize = 15
         ax.plot(range(len(x)),y_disk,c="grey",lw=2,marker="s",markersize=markersize,markeredgewidth=0)
