@@ -1529,7 +1529,6 @@ class ToolsNcol():
 
     def eval_sim(
         self,
-        snr=3.0,
         ):
         """
         """
@@ -1537,35 +1536,68 @@ class ToolsNcol():
         taskname = self.modname + sys._getframe().f_code.co_name
         check_first(self.outmodelcube_13co10.replace(".fits","_snr10.fits"),taskname)
 
-        lim  = [0.75,2.25] # 13co10 range
-        lim2 = [-1.0,0.2]  # ratio range
+        nbins = 10
+        lim   = [0.75,2.25] # 13co10 range
+        lim2  = [-1.0,0.2]  # ratio range
+        this_snr = "snr10"
+        outpng_mom0_nomask  = "test1_snr10.png"
+        outpng_mom0_mask    = "test2_snr10.png"
+        outpng_ratio_nomask = "test3_snr10.png"
+        outpng_ratio_mask   = "test4_snr10.png"
+        self._eval_a_sim(
+            nbins,
+            lim,
+            lim2,
+            this_snr,
+            outpng_mom0_nomask,
+            outpng_mom0_mask,
+            outpng_ratio_nomask,
+            outpng_ratio_mask,
+            )
 
-        simumom0a_1  = self.outsimumom0_13co10.replace(".fits","_noclip_snr10.fits")
-        simumom0a_2  = self.outsimumom0_13co10.replace(".fits","_noclip_snr10.fits").replace("mom0","emom0")
-        simumom0a_3  = self.outsimumom0_13co10.replace(".fits","_clip0_snr10.fits")
-        simumom0a_4  = self.outsimumom0_13co10.replace(".fits","_clip0_snr10.fits").replace("mom0","emom0")
-        simumom0a_5  = self.outsimumom0_13co10.replace(".fits","_clip3_snr10.fits")
-        simumom0a_6  = self.outsimumom0_13co10.replace(".fits","_clip3_snr10.fits").replace("mom0","emom0")
-        simumom0a_1m = self.outsimumom0_13co10.replace(".fits","_noclip_masked_snr10.fits")
-        simumom0a_2m = self.outsimumom0_13co10.replace(".fits","_noclip_masked_snr10.fits").replace("mom0","emom0")
-        simumom0a_3m = self.outsimumom0_13co10.replace(".fits","_clip0_masked_snr10.fits")
-        simumom0a_4m = self.outsimumom0_13co10.replace(".fits","_clip0_masked_snr10.fits").replace("mom0","emom0")
-        simumom0a_5m = self.outsimumom0_13co10.replace(".fits","_clip3_masked_snr10.fits")
-        simumom0a_6m = self.outsimumom0_13co10.replace(".fits","_clip3_masked_snr10.fits").replace("mom0","emom0")
+    ###############
+    # _eval_a_sim #
+    ###############
+
+    def _eval_a_sim(
+        self,
+        nbins,
+        lim,
+        lim2,
+        this_snr,
+        outpng_mom0_nomask,
+        outpng_mom0_mask,
+        outpng_ratio_nomask,
+        outpng_ratio_mask,
+        ):
+
+        # hereafter
+        simumom0a_1  = self.outsimumom0_13co10.replace(".fits","_noclip_"+this_snr+".fits")
+        simumom0a_2  = self.outsimumom0_13co10.replace(".fits","_noclip_s"+this_snr+"fits").replace("mom0","emom0")
+        simumom0a_3  = self.outsimumom0_13co10.replace(".fits","_clip0_"+this_snr+".fits")
+        simumom0a_4  = self.outsimumom0_13co10.replace(".fits","_clip0_"+this_snr+".fits").replace("mom0","emom0")
+        simumom0a_5  = self.outsimumom0_13co10.replace(".fits","_clip3_"+this_snr+".fits")
+        simumom0a_6  = self.outsimumom0_13co10.replace(".fits","_clip3_"+this_snr+".fits").replace("mom0","emom0")
+        simumom0a_1m = self.outsimumom0_13co10.replace(".fits","_noclip_masked_"+this_snr+".fits")
+        simumom0a_2m = self.outsimumom0_13co10.replace(".fits","_noclip_masked_"+this_snr+".fits").replace("mom0","emom0")
+        simumom0a_3m = self.outsimumom0_13co10.replace(".fits","_clip0_masked_"+this_snr+".fits")
+        simumom0a_4m = self.outsimumom0_13co10.replace(".fits","_clip0_masked_"+this_snr+".fits").replace("mom0","emom0")
+        simumom0a_5m = self.outsimumom0_13co10.replace(".fits","_clip3_masked_"+this_snr+".fits")
+        simumom0a_6m = self.outsimumom0_13co10.replace(".fits","_clip3_masked_"+this_snr+".fits").replace("mom0","emom0")
         modelmom0a   = self.outmodelmom0_13co10
 
-        simumom0b_1  = self.outsimumom0_13co21.replace(".fits","_noclip_snr10.fits")
-        simumom0b_2  = self.outsimumom0_13co21.replace(".fits","_noclip_snr10.fits").replace("mom0","emom0")
-        simumom0b_3  = self.outsimumom0_13co21.replace(".fits","_clip0_snr10.fits")
-        simumom0b_4  = self.outsimumom0_13co21.replace(".fits","_clip0_snr10.fits").replace("mom0","emom0")
-        simumom0b_5  = self.outsimumom0_13co21.replace(".fits","_clip3_snr10.fits")
-        simumom0b_6  = self.outsimumom0_13co21.replace(".fits","_clip3_snr10.fits").replace("mom0","emom0")
-        simumom0b_1m = self.outsimumom0_13co21.replace(".fits","_noclip_masked_snr10.fits")
-        simumom0b_2m = self.outsimumom0_13co21.replace(".fits","_noclip_masked_snr10.fits").replace("mom0","emom0")
-        simumom0b_3m = self.outsimumom0_13co21.replace(".fits","_clip0_masked_snr10.fits")
-        simumom0b_4m = self.outsimumom0_13co21.replace(".fits","_clip0_masked_snr10.fits").replace("mom0","emom0")
-        simumom0b_5m = self.outsimumom0_13co21.replace(".fits","_clip3_masked_snr10.fits")
-        simumom0b_6m = self.outsimumom0_13co21.replace(".fits","_clip3_masked_snr10.fits").replace("mom0","emom0")
+        simumom0b_1  = self.outsimumom0_13co21.replace(".fits","_noclip_"+this_snr+".fits")
+        simumom0b_2  = self.outsimumom0_13co21.replace(".fits","_noclip_"+this_snr+".fits").replace("mom0","emom0")
+        simumom0b_3  = self.outsimumom0_13co21.replace(".fits","_clip0_"+this_snr+".fits")
+        simumom0b_4  = self.outsimumom0_13co21.replace(".fits","_clip0_"+this_snr+".fits").replace("mom0","emom0")
+        simumom0b_5  = self.outsimumom0_13co21.replace(".fits","_clip3_"+this_snr+".fits")
+        simumom0b_6  = self.outsimumom0_13co21.replace(".fits","_clip3_"+this_snr+".fits").replace("mom0","emom0")
+        simumom0b_1m = self.outsimumom0_13co21.replace(".fits","_noclip_masked_"+this_snr+".fits")
+        simumom0b_2m = self.outsimumom0_13co21.replace(".fits","_noclip_masked_"+this_snr+".fits").replace("mom0","emom0")
+        simumom0b_3m = self.outsimumom0_13co21.replace(".fits","_clip0_masked_"+this_snr+".fits")
+        simumom0b_4m = self.outsimumom0_13co21.replace(".fits","_clip0_masked_"+this_snr+".fits").replace("mom0","emom0")
+        simumom0b_5m = self.outsimumom0_13co21.replace(".fits","_clip3_masked_"+this_snr+".fits")
+        simumom0b_6m = self.outsimumom0_13co21.replace(".fits","_clip3_masked_"+this_snr+".fits").replace("mom0","emom0")
         modelmom0b   = self.outmodelmom0_13co21
 
         #################
@@ -1591,9 +1623,9 @@ class ToolsNcol():
         a0b = np.array(a0b.flatten())
         b0   = np.log10(a0b / 10**a0)
 
-        n,_   = np.histogram(a0, bins=10, range=lim)
-        sy,_  = np.histogram(a0, bins=10, range=lim, weights=b0)
-        sy2,_ = np.histogram(a0, bins=10, range=lim, weights=b0*b0)
+        n,_   = np.histogram(a0, bins=nbins, range=lim)
+        sy,_  = np.histogram(a0, bins=nbins, range=lim, weights=b0)
+        sy2,_ = np.histogram(a0, bins=nbins, range=lim, weights=b0*b0)
         mean  = sy / n
         std   = np.sqrt(sy2/n - mean*mean)
         bina0 = (_[1:]+_[:-1])/2
@@ -1645,8 +1677,8 @@ class ToolsNcol():
         ax.text(0.95, 0.05, "clip3$\sigma$", color="tomato", transform=ax.transAxes, weight="bold", fontsize=22, ha="right")
 
         # save
-        os.system("rm -rf " + "test1.png")
-        plt.savefig("test1.png", dpi=300)
+        os.system("rm -rf " + outpng_mom0_nomask)
+        plt.savefig(outpng_mom0_nomask, dpi=300)
 
         ########
         # plot #
@@ -1686,8 +1718,8 @@ class ToolsNcol():
         ax.text(0.95, 0.05, "clip3$\sigma$+masking", color="tomato", transform=ax.transAxes, weight="bold", fontsize=22, ha="right")
 
         # save
-        os.system("rm -rf " + "test2.png")
-        plt.savefig("test2.png", dpi=300)
+        os.system("rm -rf " + outpng_mom0_mask)
+        plt.savefig(outpng_mom0_mask, dpi=300)
 
         ########
         # plot #
@@ -1727,8 +1759,8 @@ class ToolsNcol():
         ax.text(0.95, 0.05, "clip3$\sigma$", color="tomato", transform=ax.transAxes, weight="bold", fontsize=22, ha="right")
 
         # save
-        os.system("rm -rf " + "test3.png")
-        plt.savefig("test3.png", dpi=300)
+        os.system("rm -rf " + outpng_ratio_nomask)
+        plt.savefig(outpng_ratio_nomask, dpi=300)
 
         ########
         # plot #
@@ -1768,38 +1800,8 @@ class ToolsNcol():
         ax.text(0.95, 0.05, "clip3$\sigma$+masking", color="tomato", transform=ax.transAxes, weight="bold", fontsize=22, ha="right")
 
         # save
-        os.system("rm -rf " + "test4.png")
-        plt.savefig("test4.png", dpi=300)
-
-        """
-        markersize = 15
-        ax.plot(range(len(x)),y_disk,c="grey",lw=2,marker="s",markersize=markersize,markeredgewidth=0)
-        ax.plot(range(len(x)),y_cnd,c="tomato",lw=2,marker="s",markersize=markersize,markeredgewidth=0)
-        ax.plot(range(len(x)),y_out,c="deepskyblue",lw=2,marker="s",markersize=markersize,markeredgewidth=0)
-        ax2b.plot(len(x),np.log10(float(siiisii_ratio[3])),c="grey",lw=2,marker="o",markersize=markersize,markeredgewidth=0)
-        ax2b.plot(len(x),np.log10(float(siiisii_ratio[1])),c="tomato",lw=2,marker="o",markersize=markersize,markeredgewidth=0)
-        ax2b.plot(len(x),np.log10(float(siiisii_ratio[2])),c="deepskyblue",lw=2,marker="o",markersize=markersize,markeredgewidth=0)
-
-        # x axis
-        ax.set_xticks(range(len(x)))
-        ax.set_xticklabels(x, rotation = 60, ha="right")
-        ax2.set_xticks([16.0])
-        ax2.set_xticklabels(["[SIII]/[SII] ratio"], rotation = 60, ha="right")
-
-        # text
-        ax.text(0.015, 0.91, "Outflow", color="deepskyblue", transform=ax.transAxes, weight="bold", fontsize=22)
-        ax.text(0.015, 0.85, "CND", color="tomato", transform=ax.transAxes, weight="bold", fontsize=22)
-        ax.text(0.015, 0.79, "Non-outflow", color="grey", transform=ax.transAxes, weight="bold", fontsize=22)
-
-        # ann
-        ax.plot([8.5,8.5],[-2.4,2.4],"--",c="black",lw=2)
-        ax.text(12.0, -1.5, "Lines enhanced", color="black", fontsize=18, ha="center", style="italic")
-        ax.text(12.0, -1.69, "in the outflow", color="black", fontsize=18, ha="center", style="italic")
-
-        ax.plot([3.5,3.5],[-2.4,2.4],"--",c="black",lw=2)
-        ax.text(1.5, 0.05, "Lines suppressed", color="black", fontsize=18, ha="center", style="italic")
-        ax.text(1.5, -0.14, "in the outflow", color="black", fontsize=18, ha="center", style="italic")
-        """
+        os.system("rm -rf " + outpng_ratio_mask)
+        plt.savefig(outpng_ratio_mask, dpi=300)
 
     ##################
     # _get_sim_ratio #
