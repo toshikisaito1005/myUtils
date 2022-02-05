@@ -1580,9 +1580,9 @@ class ToolsNcol():
         adjust=[0.215,0.83,0.10,0.90],
         )
 
-        ax.scatter(x1, y1, marker="o", color="grey", lw=0.5, alpha=0.2)
-        ax.scatter(x2, y2, marker="o", color="deepskyblue", lw=0.5, alpha=0.2)
-        ax.scatter(x3, y3, marker="o", color="tomato", lw=0.5, alpha=0.2)
+        ax.scatter(x1, y1, marker=".", color="grey", lw=0.5, alpha=0.2)
+        ax.scatter(x2, y2, marker=".", color="deepskyblue", lw=0.5, alpha=0.2)
+        ax.scatter(x3, y3, marker=".", color="tomato", lw=0.5, alpha=0.2)
 
         # ann
         ax.plot(lim,lim,"--",color="black",lw=1)
