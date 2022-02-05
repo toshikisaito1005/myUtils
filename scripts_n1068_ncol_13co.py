@@ -1592,7 +1592,7 @@ class ToolsNcol():
         ################
         # import ratio #
         ################
-        lim2 = [-2,2]
+        lim2 = [-1,0]
         # noclip
         a1,b1,bina1,binb1,binc1 = self._get_sim_ratio(
             self.outsimumom0_13co10.replace(".fits","_noclip_snr10.fits"),
