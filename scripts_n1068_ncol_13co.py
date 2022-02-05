@@ -1577,7 +1577,7 @@ class ToolsNcol():
         ylim=lim,
         xlabel="log input model",
         ylabel="log output model",
-        adjust=[0.19,0.99,0.10,0.90],
+        adjust=[0.215,0.83,0.10,0.90],
         )
 
         ax.scatter(x1, y1, marker="o", color="grey", lw=0.5, alpha=0.2)
