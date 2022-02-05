@@ -1538,42 +1538,42 @@ class ToolsNcol():
 
 
         # noclip
-        x1,y1 = self.get_sim_data(
+        x1,y1,binx1,biny1,bine1 = self.get_sim_data(
             self.outsimumom0_13co10.replace(".fits","_noclip_snr10.fits"),
             self.outsimumom0_13co10.replace(".fits","_noclip_snr10.fits").replace("mom0","emom0"),
             self.outmodelmom0_13co10,
             )
 
         # clip0
-        x2,y2 = self.get_sim_data(
+        x2,y2,binx2,biny2,bine2 = self.get_sim_data(
             self.outsimumom0_13co10.replace(".fits","_clip0_snr10.fits"),
             self.outsimumom0_13co10.replace(".fits","_clip0_snr10.fits").replace("mom0","emom0"),
             self.outmodelmom0_13co10,
             )
 
         # clip3
-        x3,y3 = self.get_sim_data(
+        x3,y3,binx3,biny3,bine3 = self.get_sim_data(
             self.outsimumom0_13co10.replace(".fits","_clip3_snr10.fits"),
             self.outsimumom0_13co10.replace(".fits","_clip3_snr10.fits").replace("mom0","emom0"),
             self.outmodelmom0_13co10,
             )
 
         # noclip+mask
-        x4,y4 = self.get_sim_data(
+        x4,y4,binx4,biny4,bine4 = self.get_sim_data(
             self.outsimumom0_13co10.replace(".fits","_noclip_masked_snr10.fits"),
             self.outsimumom0_13co10.replace(".fits","_noclip_masked_snr10.fits").replace("mom0","emom0"),
             self.outmodelmom0_13co10,
             )
 
         # clip0+mask
-        x5,y5 = self.get_sim_data(
+        x5,y5,binx5,biny5,bine5 = self.get_sim_data(
             self.outsimumom0_13co10.replace(".fits","_clip0_masked_snr10.fits"),
             self.outsimumom0_13co10.replace(".fits","_clip0_masked_snr10.fits").replace("mom0","emom0"),
             self.outmodelmom0_13co10,
             )
 
         # clip3+mask
-        x6,y6 = self.get_sim_data(
+        x6,y6,binx6,biny6,bine6 = self.get_sim_data(
             self.outsimumom0_13co10.replace(".fits","_clip3_masked_snr10.fits"),
             self.outsimumom0_13co10.replace(".fits","_clip3_masked_snr10.fits").replace("mom0","emom0"),
             self.outmodelmom0_13co10,
@@ -1604,6 +1604,10 @@ class ToolsNcol():
         ax.scatter(x1, y1, marker=".", color="grey", lw=0.5, alpha=0.2)
         ax.scatter(x2, y2, marker=".", color="deepskyblue", lw=0.5, alpha=0.2)
         ax.scatter(x3, y3, marker=".", color="tomato", lw=0.5, alpha=0.2)
+
+        ax.errorbar(binx1, biny1, yerr=bine1, color="grey", capsize=0, lw=2.0)
+        ax.errorbar(binx2, biny2, yerr=bine1, color="deepskyblue", capsize=0, lw=2.0)
+        ax.errorbar(binx3, biny3, yerr=bine1, color="tomato", capsize=0, lw=2.0)
 
         # ann
         ax.plot(lim,lim,"--",color="black",lw=1)
@@ -1636,6 +1640,10 @@ class ToolsNcol():
         ax.scatter(x4, y4, marker=".", color="grey", lw=0.5, alpha=0.2)
         ax.scatter(x5, y5, marker=".", color="deepskyblue", lw=0.5, alpha=0.2)
         ax.scatter(x6, y6, marker=".", color="tomato", lw=0.5, alpha=0.2)
+
+        ax.errorbar(binx4, biny4, yerr=bine1, color="grey", capsize=0, lw=2.0)
+        ax.errorbar(binx5, biny5, yerr=bine1, color="deepskyblue", capsize=0, lw=2.0)
+        ax.errorbar(binx6, biny6, yerr=bine1, color="tomato", capsize=0, lw=2.0)
 
         # ann
         ax.plot(lim,lim,"--",color="black",lw=1)
@@ -1684,6 +1692,7 @@ class ToolsNcol():
         emom0,
         input_mom0,
         snr=3,
+        nbins=10,
         ):
         """
         """
@@ -1707,7 +1716,14 @@ class ToolsNcol():
         y = np.log10(sim_mom0[cut])
         #e = sim_emom0[cut]/abs(sim_mom0[cut])
 
-        return x,y
+        # binning
+        n,_ = np.histogram(x, bins=nbins)
+        sy,_ = np.histogram(x, bins=nbins, weights=y)
+        sy2,_ = np.histogram(x, bins=nbins, weights=y*y)
+        mean = sy / n
+        std = np.sqrt(sy2/n - mean*mean)
+
+        return x, y, (_[1:]+_[:-1])/2, mean, std
 
     ################
     # simulate_mom #
