@@ -1585,7 +1585,7 @@ class ToolsNcol():
         ax.scatter(x3, y3, marker="o", color="tomato", lw=0.5, alpha=0.2)
 
         # ann
-        ax.plot([lim[0],lim[0]],[lim[1],lim[1]],"--",color="black",lw=1)
+        ax.plot(lim,lim,"--",color="black",lw=1)
 
         # save
         os.system("rm -rf " + "test.png")
