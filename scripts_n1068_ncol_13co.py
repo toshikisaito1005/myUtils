@@ -1723,9 +1723,9 @@ class ToolsNcol():
         #e = sim_emom0[cut]/abs(sim_mom0[cut])
 
         # binning
-        n,_ = np.histogram(x, bins=nbins)
-        sy,_ = np.histogram(x, bins=nbins, weights=y)
-        sy2,_ = np.histogram(x, bins=nbins, weights=y*y)
+        n,_ = np.histogram(x, bins=nbins, range=lim)
+        sy,_ = np.histogram(x, bins=nbins, range=lim, weights=y)
+        sy2,_ = np.histogram(x, bins=nbins, range=lim, weights=y*y)
         mean = sy / n
         std = np.sqrt(sy2/n - mean*mean)
 
