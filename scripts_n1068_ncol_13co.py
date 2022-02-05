@@ -1772,10 +1772,10 @@ class ToolsNcol():
         ax.scatter(a2, b2, marker=".", color="deepskyblue", lw=0.5, alpha=0.2)
         ax.scatter(a3, b3, marker=".", color="tomato", lw=0.5, alpha=0.2)
 
-        ax.errorbar(bina0, binb0, yerr=bine0, color="black", capsize=0, lw=2.0)
-        ax.errorbar(bina1, binb1, yerr=bine1, color="green", capsize=0, lw=2.0)
-        ax.errorbar(bina2, binb2, yerr=bine1, color="blue", capsize=0, lw=2.0)
-        ax.errorbar(bina3, binb3, yerr=bine1, color="red", capsize=0, lw=2.0)
+        ax.errorbar(bina0, binb0, yerr=binc0, color="black", capsize=0, lw=2.0)
+        ax.errorbar(bina1, binb1, yerr=binc1, color="green", capsize=0, lw=2.0)
+        ax.errorbar(bina2, binb2, yerr=binc1, color="blue", capsize=0, lw=2.0)
+        ax.errorbar(bina3, binb3, yerr=binc1, color="red", capsize=0, lw=2.0)
 
         # ann
 
@@ -1808,10 +1808,10 @@ class ToolsNcol():
         ax.scatter(a5, b5, marker=".", color="deepskyblue", lw=0.5, alpha=0.2)
         ax.scatter(a6, b6, marker=".", color="tomato", lw=0.5, alpha=0.2)
 
-        ax.errorbar(bina0, binb0, yerr=bine0, color="black", capsize=0, lw=2.0)
-        ax.errorbar(bina4, binb4, yerr=bine1, color="green", capsize=0, lw=2.0)
-        ax.errorbar(bina5, binb5, yerr=bine1, color="blue", capsize=0, lw=2.0)
-        ax.errorbar(bina6, binb6, yerr=bine1, color="red", capsize=0, lw=2.0)
+        ax.errorbar(bina0, binb0, yerr=binc0, color="black", capsize=0, lw=2.0)
+        ax.errorbar(bina4, binb4, yerr=binc1, color="green", capsize=0, lw=2.0)
+        ax.errorbar(bina5, binb5, yerr=binc1, color="blue", capsize=0, lw=2.0)
+        ax.errorbar(bina6, binb6, yerr=binc1, color="red", capsize=0, lw=2.0)
 
         # ann
 
