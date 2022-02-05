@@ -1711,6 +1711,7 @@ class ToolsNcol():
         ax.plot(lim,lim,"--",color="black",lw=1)
 
         # text
+        ax.text(0.05,0.95, "mom0$_{\mathrm{SNR=10}}$", transform=ax.transAxes, weight="bold", fontsize=26, ha="left")
         ax.text(0.95, 0.15, "noclip", color="green", transform=ax.transAxes, weight="bold", fontsize=22, ha="right")
         ax.text(0.95, 0.10, "clip0$\sigma$", color="deepskyblue", transform=ax.transAxes, weight="bold", fontsize=22, ha="right")
         ax.text(0.95, 0.05, "clip3$\sigma$", color="tomato", transform=ax.transAxes, weight="bold", fontsize=22, ha="right")
@@ -1751,6 +1752,7 @@ class ToolsNcol():
         ax.plot(lim,lim,"--",color="black",lw=1)
 
         # text
+        ax.text(0.05,0.95, "mom0$_{\mathrm{SNR=10}}$", transform=ax.transAxes, weight="bold", fontsize=26, ha="left")
         ax.text(0.95, 0.15, "noclip+masking", color="green", transform=ax.transAxes, weight="bold", fontsize=22, ha="right")
         ax.text(0.95, 0.10, "clip0$\sigma$+masking", color="deepskyblue", transform=ax.transAxes, weight="bold", fontsize=22, ha="right")
         ax.text(0.95, 0.05, "clip3$\sigma$+masking", color="tomato", transform=ax.transAxes, weight="bold", fontsize=22, ha="right")
@@ -1790,6 +1792,7 @@ class ToolsNcol():
         ax.errorbar(bina3, binb3, yerr=binc1, color="red", capsize=0, lw=2.0)
 
         # text
+        ax.text(0.05,0.95, "mom0$_{\mathrm{SNR=10}}$", transform=ax.transAxes, weight="bold", fontsize=26, ha="left")
         ax.text(0.95, 0.20, "model", color="grey", transform=ax.transAxes, weight="bold", fontsize=22, ha="right")
         ax.text(0.95, 0.15, "noclip", color="green", transform=ax.transAxes, weight="bold", fontsize=22, ha="right")
         ax.text(0.95, 0.10, "clip0$\sigma$", color="deepskyblue", transform=ax.transAxes, weight="bold", fontsize=22, ha="right")
@@ -1830,6 +1833,7 @@ class ToolsNcol():
         ax.errorbar(bina6, binb6, yerr=binc1, color="red", capsize=0, lw=2.0)
 
         # text
+        ax.text(0.05,0.95, "mom0$_{\mathrm{SNR=10}}$", transform=ax.transAxes, weight="bold", fontsize=26, ha="left")
         ax.text(0.95, 0.20, "model", color="grey", transform=ax.transAxes, weight="bold", fontsize=22, ha="right")
         ax.text(0.95, 0.15, "noclip+masking", color="green", transform=ax.transAxes, weight="bold", fontsize=22, ha="right")
         ax.text(0.95, 0.10, "clip0$\sigma$+masking", color="deepskyblue", transform=ax.transAxes, weight="bold", fontsize=22, ha="right")
