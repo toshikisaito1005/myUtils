@@ -1540,66 +1540,53 @@ class ToolsNcol():
         lim  = [0.75,2.25] # 13co10 range
         lim2 = [-1.0,0.2]  # ratio range
 
+        simumom0a_1  = self.outsimumom0_13co10.replace(".fits","_noclip_snr10.fits")
+        simumom0a_2  = self.outsimumom0_13co10.replace(".fits","_noclip_snr10.fits").replace("mom0","emom0")
+        simumom0a_3  = self.outsimumom0_13co10.replace(".fits","_clip0_snr10.fits")
+        simumom0a_4  = self.outsimumom0_13co10.replace(".fits","_clip0_snr10.fits").replace("mom0","emom0")
+        simumom0a_5  = self.outsimumom0_13co10.replace(".fits","_clip3_snr10.fits")
+        simumom0a_6  = self.outsimumom0_13co10.replace(".fits","_clip3_snr10.fits").replace("mom0","emom0")
+        simumom0a_1m = self.outsimumom0_13co10.replace(".fits","_noclip_masked_snr10.fits")
+        simumom0a_2m = self.outsimumom0_13co10.replace(".fits","_noclip_masked_snr10.fits").replace("mom0","emom0")
+        simumom0a_3m = self.outsimumom0_13co10.replace(".fits","_clip0_masked_snr10.fits")
+        simumom0a_4m = self.outsimumom0_13co10.replace(".fits","_clip0_masked_snr10.fits").replace("mom0","emom0")
+        simumom0a_5m = self.outsimumom0_13co10.replace(".fits","_clip3_masked_snr10.fits")
+        simumom0a_6m = self.outsimumom0_13co10.replace(".fits","_clip3_masked_snr10.fits").replace("mom0","emom0")
+        modelmom0a   = self.outmodelmom0_13co10
+
+        simumom0b_1  = self.outsimumom0_13co21.replace(".fits","_noclip_snr10.fits")
+        simumom0b_2  = self.outsimumom0_13co21.replace(".fits","_noclip_snr10.fits").replace("mom0","emom0")
+        simumom0b_3  = self.outsimumom0_13co21.replace(".fits","_clip0_snr10.fits")
+        simumom0b_4  = self.outsimumom0_13co21.replace(".fits","_clip0_snr10.fits").replace("mom0","emom0")
+        simumom0b_5  = self.outsimumom0_13co21.replace(".fits","_clip3_snr10.fits")
+        simumom0b_6  = self.outsimumom0_13co21.replace(".fits","_clip3_snr10.fits").replace("mom0","emom0")
+        simumom0b_1m = self.outsimumom0_13co21.replace(".fits","_noclip_masked_snr10.fits")
+        simumom0b_2m = self.outsimumom0_13co21.replace(".fits","_noclip_masked_snr10.fits").replace("mom0","emom0")
+        simumom0b_3m = self.outsimumom0_13co21.replace(".fits","_clip0_masked_snr10.fits")
+        simumom0b_4m = self.outsimumom0_13co21.replace(".fits","_clip0_masked_snr10.fits").replace("mom0","emom0")
+        simumom0b_5m = self.outsimumom0_13co21.replace(".fits","_clip3_masked_snr10.fits")
+        simumom0b_6m = self.outsimumom0_13co21.replace(".fits","_clip3_masked_snr10.fits").replace("mom0","emom0")
+        modelmom0b   = self.outmodelmom0_13co21
+
         #################
         # import 13co10 #
         #################
-        # noclip
-        x1,y1,binx1,biny1,bine1 = self._get_sim_data(
-            self.outsimumom0_13co10.replace(".fits","_noclip_snr10.fits"),
-            self.outsimumom0_13co10.replace(".fits","_noclip_snr10.fits").replace("mom0","emom0"),
-            self.outmodelmom0_13co10,
-            lim,
-            )
-
-        # clip0
-        x2,y2,binx2,biny2,bine2 = self._get_sim_data(
-            self.outsimumom0_13co10.replace(".fits","_clip0_snr10.fits"),
-            self.outsimumom0_13co10.replace(".fits","_clip0_snr10.fits").replace("mom0","emom0"),
-            self.outmodelmom0_13co10,
-            lim,
-            )
-
-        # clip3
-        x3,y3,binx3,biny3,bine3 = self._get_sim_data(
-            self.outsimumom0_13co10.replace(".fits","_clip3_snr10.fits"),
-            self.outsimumom0_13co10.replace(".fits","_clip3_snr10.fits").replace("mom0","emom0"),
-            self.outmodelmom0_13co10,
-            lim,
-            )
-
-        # noclip+mask
-        x4,y4,binx4,biny4,bine4 = self._get_sim_data(
-            self.outsimumom0_13co10.replace(".fits","_noclip_masked_snr10.fits"),
-            self.outsimumom0_13co10.replace(".fits","_noclip_masked_snr10.fits").replace("mom0","emom0"),
-            self.outmodelmom0_13co10,
-            lim,
-            )
-
-        # clip0+mask
-        x5,y5,binx5,biny5,bine5 = self._get_sim_data(
-            self.outsimumom0_13co10.replace(".fits","_clip0_masked_snr10.fits"),
-            self.outsimumom0_13co10.replace(".fits","_clip0_masked_snr10.fits").replace("mom0","emom0"),
-            self.outmodelmom0_13co10,
-            lim,
-            )
-
-        # clip3+mask
-        x6,y6,binx6,biny6,bine6 = self._get_sim_data(
-            self.outsimumom0_13co10.replace(".fits","_clip3_masked_snr10.fits"),
-            self.outsimumom0_13co10.replace(".fits","_clip3_masked_snr10.fits").replace("mom0","emom0"),
-            self.outmodelmom0_13co10,
-            lim,
-            )
+        x1,y1,binx1,biny1,bine1 = self._get_sim_data(simumom0a_1,simumom0a_2,modelmom0a,lim) # noclip
+        x2,y2,binx2,biny2,bine2 = self._get_sim_data(simumom0a_3,simumom0a_4,modelmom0a,lim) # clip0
+        x3,y3,binx3,biny3,bine3 = self._get_sim_data(simumom0a_5,simumom0a_6,modelmom0a,lim) # clip3
+        x4,y4,binx4,biny4,bine4 = self._get_sim_data(simumom0a_1m,simumom0a_2m,modelmom0a,lim) # noclip+mask
+        x5,y5,binx5,biny5,bine5 = self._get_sim_data(simumom0a_3m,simumom0a_4m,modelmom0a,lim) # clip0+mask
+        x6,y6,binx6,biny6,bine6 = self._get_sim_data(simumom0a_5m,simumom0a_6m,modelmom0a,lim) # clip3+mask
 
         ################
         # import ratio #
         ################
         # model
-        l,_ = imval_all(self.outmodelmom0_13co10)
+        l,_ = imval_all(modelmom0a)
         a0 = l["data"] * l["mask"]
         a0 = np.log10(np.array(a0.flatten()))
 
-        l,_ = imval_all(self.outmodelmom0_13co21)
+        l,_ = imval_all(modelmom0b)
         a0b = l["data"] * l["mask"]
         a0b = np.array(a0b.flatten())
         b0   = np.log10(a0b / 10**a0)
@@ -1613,71 +1600,12 @@ class ToolsNcol():
         binb0 = mean
         binc0 = std
 
-        # noclip
-        a1,b1,bina1,binb1,binc1 = self._get_sim_ratio(
-            self.outsimumom0_13co10.replace(".fits","_noclip_snr10.fits"),
-            self.outsimumom0_13co10.replace(".fits","_noclip_snr10.fits").replace("mom0","emom0"),
-            self.outmodelmom0_13co10,
-            self.outsimumom0_13co21.replace(".fits","_noclip_snr10.fits"),
-            self.outsimumom0_13co21.replace(".fits","_noclip_snr10.fits").replace("mom0","emom0"),
-            self.outmodelmom0_13co21,
-            lim,
-            )
-
-        # clip0
-        a2,b2,bina2,binb2,binc2 = self._get_sim_ratio(
-            self.outsimumom0_13co10.replace(".fits","_clip0_snr10.fits"),
-            self.outsimumom0_13co10.replace(".fits","_clip0_snr10.fits").replace("mom0","emom0"),
-            self.outmodelmom0_13co10,
-            self.outsimumom0_13co21.replace(".fits","_clip0_snr10.fits"),
-            self.outsimumom0_13co21.replace(".fits","_clip0_snr10.fits").replace("mom0","emom0"),
-            self.outmodelmom0_13co21,
-            lim,
-            )
-
-        # clip3
-        a3,b3,bina3,binb3,binc3 = self._get_sim_ratio(
-            self.outsimumom0_13co10.replace(".fits","_clip3_snr10.fits"),
-            self.outsimumom0_13co10.replace(".fits","_clip3_snr10.fits").replace("mom0","emom0"),
-            self.outmodelmom0_13co10,
-            self.outsimumom0_13co21.replace(".fits","_clip3_snr10.fits"),
-            self.outsimumom0_13co21.replace(".fits","_clip3_snr10.fits").replace("mom0","emom0"),
-            self.outmodelmom0_13co21,
-            lim,
-            )
-
-        # noclip+mask
-        a4,b4,bina4,binb4,binc4 = self._get_sim_ratio(
-            self.outsimumom0_13co10.replace(".fits","_noclip_masked_snr10.fits"),
-            self.outsimumom0_13co10.replace(".fits","_noclip_masked_snr10.fits").replace("mom0","emom0"),
-            self.outmodelmom0_13co10,
-            self.outsimumom0_13co21.replace(".fits","_noclip_masked_snr10.fits"),
-            self.outsimumom0_13co21.replace(".fits","_noclip_masked_snr10.fits").replace("mom0","emom0"),
-            self.outmodelmom0_13co21,
-            lim,
-            )
-
-        # clip0+mask
-        a5,b5,bina5,binb5,binc5 = self._get_sim_ratio(
-            self.outsimumom0_13co10.replace(".fits","_clip0_masked_snr10.fits"),
-            self.outsimumom0_13co10.replace(".fits","_clip0_masked_snr10.fits").replace("mom0","emom0"),
-            self.outmodelmom0_13co10,
-            self.outsimumom0_13co21.replace(".fits","_clip0_masked_snr10.fits"),
-            self.outsimumom0_13co21.replace(".fits","_clip0_masked_snr10.fits").replace("mom0","emom0"),
-            self.outmodelmom0_13co21,
-            lim,
-            )
-
-        # clip3+mask
-        a6,b6,bina6,binb6,binc6 = self._get_sim_ratio(
-            self.outsimumom0_13co10.replace(".fits","_clip3_masked_snr10.fits"),
-            self.outsimumom0_13co10.replace(".fits","_clip3_masked_snr10.fits").replace("mom0","emom0"),
-            self.outmodelmom0_13co10,
-            self.outsimumom0_13co21.replace(".fits","_clip3_masked_snr10.fits"),
-            self.outsimumom0_13co21.replace(".fits","_clip3_masked_snr10.fits").replace("mom0","emom0"),
-            self.outmodelmom0_13co21,
-            lim,
-            )
+        a1,b1,bina1,binb1,binc1 = self._get_sim_ratio(simumom0a_1,simumom0a_2,modelmom0a,simumom0b_1,simumom0b_2,modelmom0b,lim) # noclip
+        a2,b2,bina2,binb2,binc2 = self._get_sim_ratio(simumom0a_3,simumom0a_4,modelmom0a,simumom0b_3,simumom0b_4,modelmom0b,lim) # clip0
+        a3,b3,bina3,binb3,binc3 = self._get_sim_ratio(simumom0a_5,simumom0a_6,modelmom0a,simumom0b_5,simumom0b_6,modelmom0b,lim) # clip3
+        a4,b4,bina4,binb4,binc4 = self._get_sim_ratio(simumom0a_1m,simumom0a_2m,modelmom0a,simumom0b_1m,simumom0b_2m,modelmom0b,lim) # noclip+mask
+        a5,b5,bina5,binb5,binc5 = self._get_sim_ratio(simumom0a_3m,simumom0a_4m,modelmom0a,simumom0b_3m,simumom0b_4m,modelmom0b,lim) # clip0+mask
+        a6,b6,bina6,binb6,binc6 = self._get_sim_ratio(simumom0a_5m,simumom0a_6m,modelmom0a,simumom0b_5m,simumom0b_6m,modelmom0b,lim) # clip3+mask
 
         ########
         # plot #
