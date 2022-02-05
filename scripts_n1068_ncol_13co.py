@@ -1538,7 +1538,7 @@ class ToolsNcol():
         check_first(self.outmodelcube_13co10.replace(".fits","_snr10.fits"),taskname)
 
         lim  = [0.75,2.25] # 13co10 range
-        lim2 = [-1.0,0.5]  # ratio range
+        lim2 = [-1.0,0.2]  # ratio range
 
         #################
         # import 13co10 #
