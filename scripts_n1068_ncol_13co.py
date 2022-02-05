@@ -1614,7 +1614,7 @@ class ToolsNcol():
         #ax.errorbar(x2, y2, yerr=e2, marker="o", markeredgewidth=0, color="deepskyblue", lw=0.5, capsize=0, ls="None", alpha=0.2)
         ax.scatter(x1, y1, marker="o", color="grey", lw=0.5, alpha=0.2)
         ax.scatter(x2, y2, marker="o", color="deepskyblue", lw=0.5, alpha=0.2)
-        ax.scatter(x2, y2, marker="o", color="tomato", lw=0.5, alpha=0.2)
+        ax.scatter(x3, y3, marker="o", color="tomato", lw=0.5, alpha=0.2)
 
         # save
         os.system("rm -rf " + "test.png")
