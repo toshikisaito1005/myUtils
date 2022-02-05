@@ -1691,7 +1691,7 @@ class ToolsNcol():
         # set ax parameter
         myax_set(
         ax,
-        grid=None,
+        grid="both",
         xlim=lim,
         ylim=lim,
         xlabel="log$_{\mathrm{10}}$ $I_{\mathrm{^{13}CO(1-0),model}}$",
@@ -1726,7 +1726,7 @@ class ToolsNcol():
         # set ax parameter
         myax_set(
         ax,
-        grid=None,
+        grid="both",
         xlim=lim,
         ylim=lim,
         xlabel="log$_{\mathrm{10}}$ $I_{\mathrm{^{13}CO(1-0),model}}$",
@@ -1761,7 +1761,7 @@ class ToolsNcol():
         # set ax parameter
         myax_set(
         ax,
-        grid=None,
+        grid="both",
         xlim=lim,
         ylim=lim2,
         xlabel="log$_{\mathrm{10}}$ $I_{\mathrm{^{13}CO(1-0),model}}$",
@@ -1797,7 +1797,7 @@ class ToolsNcol():
         # set ax parameter
         myax_set(
         ax,
-        grid=None,
+        grid="both",
         xlim=lim,
         ylim=lim2,
         xlabel="log$_{\mathrm{10}}$ $I_{\mathrm{^{13}CO(1-0),model}}$",
