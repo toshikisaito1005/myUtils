@@ -1595,18 +1595,18 @@ class ToolsNcol():
         # import ratio #
         ################
         # model
-        l,_ = imval_all(self.outmodelmom0_13co10)
-        a0 = l["data"] * l["mask"]
-        a0 = np.array(a0.flatten())
-
         l,_ = imval_all(self.outmodelmom0_13co21)
+        a0 = l["data"] * l["mask"]
+        a0 = np.log10(np.array(a0.flatten()))
+
+        l,_ = imval_all(self.outmodelmom0_13co10)
         a0b = l["data"] * l["mask"]
         a0b = np.array(a0b.flatten())
-        b0   = a0 / a0b
+        b0   = np.log10(10**a0 / a0b)
 
-        n,_   = np.histogram(a0, bins=10, range=lim)
-        sy,_  = np.histogram(a0, bins=10, range=lim, weights=b0)
-        sy2,_ = np.histogram(a0, bins=10, range=lim, weights=b0*b0)
+        n,_   = np.histogram(a0b, bins=10, range=lim)
+        sy,_  = np.histogram(a0b, bins=10, range=lim, weights=b0)
+        sy2,_ = np.histogram(a0b, bins=10, range=lim, weights=b0*b0)
         bina0 = (_[1:]+_[:-1])/2
         binb0 = sy / n
         binc0 = np.sqrt(sy2/n - binb0*binb0)
