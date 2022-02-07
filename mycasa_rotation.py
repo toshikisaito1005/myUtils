@@ -458,6 +458,354 @@ def rotation_13co21_13co10(
     fits_creation(map_logN.T,"logN_all.fits",cubelow,"cm**-2 in log10")
     fits_creation(map_elogN.T,"elogN_all.fits",cubelow,"cm**-2 in log10")
 
+#################
+# fit_two_lines #
+#################
+
+def fit_two_lines(
+    cubelow,
+    cubehigh,
+    ecubelow,
+    ecubehigh,
+    ra_cnt=40.669625, # deg
+    dec_cnt=-0.01331667, # deg
+    snr=5.0,
+    snr_limit=7.0,
+    ratio_max=2.0,
+    restfreq_low=None,
+    restfreq_high=None,
+    ):
+    """
+    References:
+    https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.curve_fit.html
+    """
+
+    # preamble
+    taskname = sys._getframe().f_code.co_name
+    mytask.check_first(cubelow, taskname)
+
+    # template
+    template = "template.fits"
+    os.system("rm -rf template.fits " + template+".image")
+    imsubimage(cubelow,template+".image",chans="1")
+    exportfits(template+".image",template)
+    os.system("rm -rf " + template+".image")
+
+    # constants
+    if restfreq_low==None:
+        header_low    = imhead(cubelow,mode="list")
+        restfreq_low  = header_low["restfreq"][0] / 1e9
+
+    if restfreq_high==None:
+        header_high   = imhead(cubehigh,mode="list")
+        restfreq_high = header_high["restfreq"][0] / 1e9
+
+    # read cube
+    data_low,err_low,freq_low,ra_deg,dec_deg = _get_data(cubelow,ecubelow,ra_cnt,dec_cnt)
+    data_high,err_high,freq_high,_,_         = _get_data(cubehigh,ecubehigh,ra_cnt,dec_cnt)
+
+    ra       = ra_deg[:,:,0] * 3600
+    dec      = dec_deg[:,:,0] * 3600
+    max_low  = np.nanmax(data_low) * 1.5
+    max_high = np.nanmax(data_high) * 1.5
+
+    # fitting spectra
+    x   = range(np.shape(data_low)[0])
+    y   = range(np.shape(data_low)[1])
+    xy  = itertools.product(x, y)
+
+    map_Trot            = np.zeros((np.shape(data_low)[0],np.shape(data_low)[1]))
+    map_logN            = np.zeros((np.shape(data_low)[0],np.shape(data_low)[1]))
+    map_mom0_low        = np.zeros((np.shape(data_low)[0],np.shape(data_low)[1]))
+    map_mom0_high       = np.zeros((np.shape(data_low)[0],np.shape(data_low)[1]))
+    map_mom1            = np.zeros((np.shape(data_low)[0],np.shape(data_low)[1]))
+    map_mom2            = np.zeros((np.shape(data_low)[0],np.shape(data_low)[1]))
+    map_ratio           = np.zeros((np.shape(data_low)[0],np.shape(data_low)[1]))
+
+    map_eTrot           = np.zeros((np.shape(data_low)[0],np.shape(data_low)[1]))
+    map_elogN           = np.zeros((np.shape(data_low)[0],np.shape(data_low)[1]))
+    map_emom0_low       = np.zeros((np.shape(data_low)[0],np.shape(data_low)[1]))
+    map_emom0_high      = np.zeros((np.shape(data_low)[0],np.shape(data_low)[1]))
+    map_emom1           = np.zeros((np.shape(data_low)[0],np.shape(data_low)[1]))
+    map_emom2           = np.zeros((np.shape(data_low)[0],np.shape(data_low)[1]))
+    map_eratio          = np.zeros((np.shape(data_low)[0],np.shape(data_low)[1]))
+
+    map_Trot[:,:]       = np.nan
+    map_logN[:,:]       = np.nan
+    map_mom0_low[:,:]   = np.nan
+    map_mom0_high[:,:]  = np.nan
+    map_mom1[:,:]       = np.nan
+    map_mom2[:,:]       = np.nan
+    map_ratio[:,:]      = np.nan
+
+    map_eTrot[:,:]      = np.nan
+    map_elogN[:,:]      = np.nan
+    map_emom0_low[:,:]  = np.nan
+    map_emom0_high[:,:] = np.nan
+    map_emom1[:,:]      = np.nan
+    map_emom2[:,:]      = np.nan
+    map_eratio[:,:]     = np.nan
+
+    for i in xy:
+        # get data of this sightline
+        this_x,this_y  = i[0],i[1]
+
+        this_freq_low  = freq_low[this_x, this_y]
+        this_data_low  = data_low[this_x, this_y]
+        this_err_low   = err_low[this_x, this_y]
+
+        this_freq_high = freq_high[this_x, this_y]
+        this_data_high = data_high[this_x, this_y]
+        this_err_high  = err_high[this_x, this_y]
+
+        max_snr_low    = np.max(this_data_low/this_err_low)
+        max_snr_high   = np.max(this_data_high/this_err_high)
+
+        # avareging neibors
+        #this_data_low  = np.mean(data_low[max(0,this_x-bw):this_x+1+bw, max(0,this_y-bw):this_y+1+bw],axis=(0,1)) # data_low[this_x, this_y]
+        #this_data_high = np.mean(data_high[max(0,this_x-bw):this_x+1+bw, max(0,this_y-bw):this_y+1+bw],axis=(0,1)) # data_high[this_x, this_y]
+
+        # combine two data
+        this_freq = np.r_[this_freq_low, this_freq_high]
+        this_data = np.r_[this_data_low, this_data_high]
+        this_err  = np.r_[this_err_low, this_err_high]
+
+        # vsys guess
+        guess_b = (restfreq_low - this_freq_low[np.nanargmax(this_data_low)]) / restfreq_low * 299792.458
+
+        # fit when both 2-1 and 1-0 detected
+        if max_snr_low>=snr and max_snr_high>=snr:
+            # guess
+            p0 = [np.max(this_data)/2.0, np.max(this_data), guess_b, 40.]
+
+            # fitting
+            this_f_two = lambda x, a1, a2, b, c: _f_two(x, a1, a2, b, c, restfreq_low, restfreq_high)
+            popt,pcov  = curve_fit(
+                this_f_two,
+                this_freq,
+                this_data,
+                sigma          = this_err,
+                p0             = p0,
+                maxfev         = 100000,
+                absolute_sigma = True,
+                )
+            perr = np.sqrt(np.diag(pcov))
+
+            p0 = popt[0] # 1-0
+            p1 = popt[1] # 2-1
+            pr = p1/p0   # 2-1/1-0
+            p2 = popt[2]
+            p3 = abs(popt[3])
+
+            e0 = perr[0]
+            e1 = perr[1]
+            e2 = perr[2]
+            e3 = abs(perr[3])
+
+            if p0>0 and p0<max_low and p1>0 and p1<max_high and pr>0 and pr<=ratio_max and p2!=guess_b and p3!=40 and p0/e0>snr and p1/e1>snr:
+                # derive parameters
+                this_mom0_low   = p0 * p3 * np.sqrt(2*np.pi)
+                this_mom0_high  = p1 * p3 * np.sqrt(2*np.pi)
+                this_mom1       = p2
+                this_mom2       = p3
+                this_ratio      = this_mom0_high / this_mom0_low
+
+                # writing them
+                map_mom0_low[this_x,this_y]   = this_mom0_low
+                map_mom0_high[this_x,this_y]  = this_mom0_high
+                map_mom1[this_x,this_y]       = this_mom1
+                map_mom2[this_x,this_y]       = this_mom2
+                map_ratio[this_x,this_y]      = this_ratio
+
+                # derive error parameters
+                this_emom0_low  = np.sqrt(2*np.pi) * np.sqrt(p0**2*e3**2 + p3**2*e0**2)
+                this_emom0_high = np.sqrt(2*np.pi) * np.sqrt(p1**2*e3**2 + p3**2*e1**2)
+                this_emom1      = e2
+                this_emom2      = e3
+                this_eratio     = p1/p0 * np.sqrt(e0**2/p0**2 + e1**2/p1**2)
+
+                # writing them
+                map_emom0_low[this_x,this_y]  = this_emom0_low
+                map_emom0_high[this_x,this_y] = this_emom0_high
+                map_emom1[this_x,this_y]      = this_emom1
+                map_emom2[this_x,this_y]      = this_emom2
+                map_eratio[this_x,this_y]     = this_eratio
+
+    # low-J mom0 to fits
+    fits_creation(map_mom0_low.T,"mom0_low.fits",template,"K.km/s")
+    fits_creation(map_emom0_low.T,"emom0_low.fits",cubelow,"K.km/s")
+
+    # high-J mom0 to fits
+    fits_creation(map_mom0_high.T,"mom0_high.fits",template,"K.km/s")
+    fits_creation(map_emom0_high.T,"emom0_high.fits",cubelow,"K.km/s")
+
+    # mom1 to fits
+    fits_creation(map_mom1.T,"mom1.fits",cubelow,"km/s")
+    fits_creation(map_emom1.T,"emom1.fits",cubelow,"km/s")
+
+    # mom2 to fits
+    fits_creation(map_mom2.T,"mom2.fits",cubelow,"km/s")
+    fits_creation(map_emom2.T,"emom2.fits",cubelow,"km/s")
+
+    # ratio to fits
+    fits_creation(map_ratio.T,"ratio.fits",cubelow,"")
+    fits_creation(map_eratio.T,"eratio.fits",cubelow,"")
+
+    max_ratio_detected = np.nanmax(map_ratio)
+    max_trot_detected  = np.nanmax(map_Trot)
+
+    xy  = itertools.product(x, y)
+    for i in xy:
+        # get data of this sightline
+        this_x,this_y  = i[0],i[1]
+
+        this_freq_low  = freq_low[this_x, this_y]
+        this_data_low  = data_low[this_x, this_y]
+        this_err_low   = err_low[this_x, this_y]
+
+        this_freq_high = freq_high[this_x, this_y]
+        this_data_high = data_high[this_x, this_y]
+        this_err_high  = err_high[this_x, this_y]
+
+        max_snr_low    = np.max(this_data_low/this_err_low)
+        max_snr_high   = np.max(this_data_high/this_err_high)
+
+        # vsys guess
+        guess_b = (restfreq_low - this_freq_low[np.nanargmax(this_data_low)]) / restfreq_low * 299792.458
+
+        # fit when only 1-0 detected
+        if max_snr_low>=snr and max_snr_high<snr:
+            # guess
+            p0 = [np.max(this_data_low), guess_b, 40.]
+
+            # fitting
+            this_f_two = lambda x, a1, b, c: _f_one(x, a1, b, c, restfreq_low)
+            popt,pcov  = curve_fit(
+                this_f_two,
+                this_freq_low,
+                this_data_low,
+                sigma          = this_err_low,
+                p0             = p0,
+                maxfev         = 100000,
+                absolute_sigma = True,
+                )
+            perr = np.sqrt(np.diag(pcov))
+
+            rms_high = np.sqrt(np.square(this_data_high).mean())
+
+            p0 = popt[0] # 1-0
+            p1 = rms_high * snr_limit # 2-1 tpeak upper limit
+            pr = p1/p0   # 2-1/1-0
+            p2 = popt[1]
+            p3 = abs(popt[2])
+
+            e0 = perr[0]
+            e2 = perr[1]
+            e3 = abs(perr[2])
+
+            if p0>0 and p0<max_low and pr>0 and pr<=1.0 and p2!=guess_b and p3!=40 and p0/e0>snr_limit:
+                # derive parameters
+                this_mom0_low   = p0 * p3 * np.sqrt(2*np.pi)
+                this_mom0_high  = p1 * p3 * np.sqrt(2*np.pi) # upper limit
+                this_mom1       = p2
+                this_mom2       = p3
+                this_ratio      = this_mom0_high / this_mom0_low # upper limit
+
+                # writing them
+                map_mom0_low[this_x,this_y]   = this_mom0_low
+                map_mom0_high[this_x,this_y]  = this_mom0_high
+                map_mom1[this_x,this_y]       = this_mom1
+                map_mom2[this_x,this_y]       = this_mom2
+                map_ratio[this_x,this_y]      = this_ratio
+
+                # derive error parameters
+                this_emom0_low  = np.sqrt(2*np.pi) * np.sqrt(p0**2*e3**2 + p3**2*e0**2)
+                this_emom1      = e2
+                this_emom2      = e3
+
+                # writing them
+                map_emom0_low[this_x,this_y]  = this_emom0_low
+                map_emom1[this_x,this_y]      = this_emom1
+                map_emom2[this_x,this_y]      = this_emom2
+
+        # fit when only 2-1 detected
+        elif max_snr_low<snr_limit and max_snr_high>=snr_limit:
+            # guess
+            p0 = [np.max(this_data_high), guess_b, 40.]
+
+            # fitting
+            this_f_two = lambda x, a1, b, c: _f_one(x, a1, b, c, restfreq_high)
+            popt,pcov  = curve_fit(
+                this_f_two,
+                this_freq_high,
+                this_data_high,
+                sigma          = this_err_high,
+                p0             = p0,
+                maxfev         = 100000,
+                absolute_sigma = True,
+                )
+            perr = np.sqrt(np.diag(pcov))
+
+            rms_low = np.sqrt(np.square(this_data_low).mean())
+
+            p0 = rms_low * snr_limit # 1-0 tpeak upper limit
+            p1 = popt[0] # 2-1
+            pr = p1/p0   # 2-1/1-0
+            p2 = popt[1]
+            p3 = abs(popt[2])
+
+            e1 = perr[0]
+            e2 = perr[1]
+            e3 = abs(perr[2])
+
+            if p1>0 and p1<max_high and pr>0 and p2!=guess_b and p3!=40 and p1/e1>snr_limit and p3/e3>snr_limit:
+                # derive parameters
+                this_mom0_low   = p0 * p3 * np.sqrt(2*np.pi)
+                this_mom0_high  = p1 * p3 * np.sqrt(2*np.pi) # upper limit
+                this_mom1       = p2
+                this_mom2       = p3
+                if pr<max_ratio_detected:
+                    this_ratio = pr # lower limit
+                else:
+                    this_ratio = max_ratio_detected # lower limit
+
+                # writing them
+                map_mom0_low[this_x,this_y]   = this_mom0_low
+                map_mom0_high[this_x,this_y]  = this_mom0_high
+                map_mom1[this_x,this_y]       = this_mom1
+                map_mom2[this_x,this_y]       = this_mom2
+                map_ratio[this_x,this_y]      = this_ratio
+
+                # derive error parameters
+                this_emom0_high = np.sqrt(2*np.pi) * np.sqrt(p1**2*e3**2 + p3**2*e1**2)
+                this_emom1      = e2
+                this_emom2      = e3
+
+                # writing them
+                map_emom0_high[this_x,this_y]  = this_emom0_high
+                map_emom1[this_x,this_y]      = this_emom1
+                map_emom2[this_x,this_y]      = this_emom2
+
+    # low-J mom0 to fits
+    fits_creation(map_mom0_low.T,"mom0_low_all.fits",template,"K.km/s")
+    fits_creation(map_emom0_low.T,"emom0_low_all.fits",cubelow,"K.km/s")
+
+    # high-J mom0 to fits
+    fits_creation(map_mom0_high.T,"mom0_high_all.fits",template,"K.km/s")
+    fits_creation(map_emom0_high.T,"emom0_high_all.fits",cubelow,"K.km/s")
+
+    # mom1 to fits
+    fits_creation(map_mom1.T,"mom1_all.fits",cubelow,"km/s")
+    fits_creation(map_emom1.T,"emom1_all.fits",cubelow,"km/s")
+
+    # mom2 to fits
+    fits_creation(map_mom2.T,"mom2_all.fits",cubelow,"km/s")
+    fits_creation(map_emom2.T,"emom2_all.fits",cubelow,"km/s")
+
+    # ratio to fits
+    fits_creation(map_ratio.T,"ratio_all.fits",cubelow,"")
+    fits_creation(map_eratio.T,"eratio_all.fits",cubelow,"")
+
 #############
 # derive_Nu #
 #############
