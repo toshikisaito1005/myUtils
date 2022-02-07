@@ -239,6 +239,7 @@ class ToolsNcol():
         self.outpng_13co10_vs_13co21_t = self.dir_products + self._read_key("outpng_13co10_vs_13co21_t")
         self.outpng_13co10_vs_13co21_n = self.dir_products + self._read_key("outpng_13co10_vs_13co21_n")
         self.outpng_trot_vs_int        = self.dir_products + self._read_key("outpng_trot_vs_int")
+        self.outpng_ncol_vs_int        = self.dir_products + self._read_key("outpng_ncol_vs_int")
 
         # finals
         self.final_60pc_obs      = self.dir_final + self._read_key("final_60pc_obs")
@@ -1638,7 +1639,7 @@ class ToolsNcol():
             this_beam  = "60pc"
             xlim       = [-0.4,2.3]
             ylim       = [2,13]
-            title      = None
+            title      = "log$_{\mathrm{10}}$ $I_{\mathrm{^{13}CO}}$ vs. $T_{\mathrm{rot}}$"
             xlabel     = "log$_{\mathrm{10}}$ $I_{\mathrm{^{13}CO}}$ (K km s$^{-1}$)"
             ylabel     = "$T_{\mathrm{rot}}$ (K)"
             x1image    = self.outmaps_mom0_13co10.replace("???",this_beam)
@@ -1648,6 +1649,21 @@ class ToolsNcol():
             yimage     = self.outmaps_13co_trot.replace("???",this_beam)
             yerrimage  = self.outemaps_13co_trot.replace("???",this_beam)
             outpng     = self.outpng_trot_vs_int
+            self._plot_scatter2(x1image,x1errimage,x2image,x2errimage,yimage,yerrimage,outpng,xlim,ylim,title,xlabel,ylabel)
+
+            this_beam  = "60pc"
+            xlim       = [-0.4,2.3]
+            ylim       = [15.0,17.0]
+            title      = "log$_{\mathrm{10}}$ $I_{\mathrm{^{13}CO}}$ vs. log$_{\mathrm{10}}$ $N_{\mathrm{^{13}CO}}$"
+            xlabel     = "log$_{\mathrm{10}}$ $I_{\mathrm{^{13}CO}}$ (K km s$^{-1}$)"
+            ylabel     = "log$_{\mathrm{10}}$ $N_{\mathrm{^{13}CO}}$ (cm$^{-2}$)"
+            x1image    = self.outmaps_mom0_13co10.replace("???",this_beam)
+            x1errimage = self.outemaps_mom0_13co10.replace("???",this_beam)
+            x2image    = self.outmaps_mom0_13co21.replace("???",this_beam)
+            x2errimage = self.outemaps_mom0_13co21.replace("???",this_beam)
+            yimage     = self.outmaps_13co_ncol.replace("???",this_beam)
+            yerrimage  = self.outemaps_13co_ncol.replace("???",this_beam)
+            outpng     = self.outpng_ncol_vs_int
             self._plot_scatter2(x1image,x1errimage,x2image,x2errimage,yimage,yerrimage,outpng,xlim,ylim,title,xlabel,ylabel)
 
     ##################
