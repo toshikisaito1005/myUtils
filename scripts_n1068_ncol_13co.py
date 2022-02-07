@@ -1584,8 +1584,9 @@ class ToolsNcol():
         snr=3.0,
         ):
         """
-        Reference:
+        References:
         https://stackoverflow.com/questions/10208814/colormap-for-errorbars-in-x-y-scatter-plot-using-matplotlib
+        https://sabopy.com/py/matplotlib-79/
         """
 
         taskname = self.modname + sys._getframe().f_code.co_name
@@ -1626,6 +1627,7 @@ class ToolsNcol():
         dec_deg     = data_coords[:,:,1] * 180/np.pi
         dec_deg     = dec_deg.flatten()
         dist_pc,_   = get_reldist_pc(ra_deg, dec_deg, self.ra_agn, self.dec_agn, self.scale_pc, 0, 0)
+        dist_kpc    = dist_pc / 1000.0
 
         # prepare
         cut  = np.where((data_13co10>abs(err_13co10)*snr)&(data_13co21>abs(err_13co21)*snr))
@@ -1633,7 +1635,7 @@ class ToolsNcol():
         xerr = err_13co10[cut] / abs(data_13co10[cut])
         y    = np.log10(data_13co21[cut])
         yerr = err_13co21[cut] / abs(data_13co21[cut])
-        r    = np.array(dist_pc)[cut]
+        r    = np.array(dist_kpc)[cut]
 
         # plot
         fig = plt.figure(figsize=(13,10))
@@ -1642,8 +1644,14 @@ class ToolsNcol():
         ad  = [0.215,0.83,0.10,0.90]
         myax_set(ax1, "both", lim, lim, title, xlabel, ylabel, adjust=ad)
 
-        sc = ax1.scatter(x, y, c=r, cmap="rainbow_r", lw=0, s=20, zorder=1e9)
+        cs = ax1.scatter(x, y, c=r, cmap="rainbow_r", lw=0, s=20, zorder=1e9)
         plt.errorbar(x, y, xerr, yerr, lw=1, capsize=0, color="grey", linestyle="None")
+
+        # colorbar
+        cax = fig.add_axes([0.05, 0.85, 0.4, 0.1])
+        cbar = plt.colorbar(cs, cax=cax, orientation="horizontal")
+        cbar.set_label("Distance (pc)")
+        cbar.set_ticks([2,4,6,8,10])
 
         """ cmap for errorbar
         clb   = plt.colorbar(sc)
