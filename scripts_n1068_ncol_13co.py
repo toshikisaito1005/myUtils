@@ -1610,7 +1610,7 @@ class ToolsNcol():
 
         # cmap = Trot
         cblabel   = "$T_{\mathrm{rot}}$ (K)"
-        cimage    = None
+        cimage    = self.outmaps_13co_trot.replace("???",this_beam)
         outpng    = self.outpng_13co10_vs_13co21_t
         self._plot_a_scatter(ximage,xerrimage,yimage,yerrimage,cimage,outpng,lim,title,xlabel,ylabel,cblabel)
 
