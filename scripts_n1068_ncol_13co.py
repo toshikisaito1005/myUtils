@@ -1640,7 +1640,7 @@ class ToolsNcol():
             ylim       = [0,12]
             title      = None
             xlabel     = "log$_{\mathrm{10}}$ $I$"
-            ylabel     = "log$_{\mathrm{10}}$ $I$"
+            ylabel     = "$T_{\mathrm{rot}}$ (K)"
             x1image    = self.outmaps_mom0_13co10.replace("???",this_beam)
             x1errimage = self.outemaps_mom0_13co10.replace("???",this_beam)
             x2image    = self.outmaps_mom0_13co21.replace("???",this_beam)
@@ -1720,10 +1720,10 @@ class ToolsNcol():
         myax_set(ax1, "both", xlim, ylim, title, xlabel, ylabel, adjust=ad)
 
         ax1.scatter(x1, y, c="deepskyblue", lw=0, s=20, zorder=1e9)
-        ax1.errorbar(x1, y, x1err, yerr, lw=1, capsize=0, color="deepskyblue", linestyle="None")
+        ax1.errorbar(x1, y, xerr=x1err, yerr=yerr, lw=1, capsize=0, color="deepskyblue", linestyle="None")
 
         ax1.scatter(x2, y, c="tomato", lw=0, s=20, zorder=1e9)
-        ax1.errorbar(x2, y, x1err, yerr, lw=1, capsize=0, color="tomato", linestyle="None")
+        ax1.errorbar(x2, y, xerr=x2err, yerr=yerr, lw=1, capsize=0, color="tomato", linestyle="None")
 
         # save
         os.system("rm -rf " + outpng)
