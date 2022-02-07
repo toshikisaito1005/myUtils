@@ -1619,11 +1619,11 @@ class ToolsNcol():
             self._plot_scatter1(ximage,xerrimage,yimage,yerrimage,cimage,cerrimage,outpng,lim,title,xlabel,ylabel,cblabel)
 
             # cmap = Trot
-            cblabel   = "log$_{\mathrm{10}}$ $T_{\mathrm{rot}}$ (K)"
+            cblabel   = "$T_{\mathrm{rot}}$ (K)"
             cimage    = self.outmaps_13co_trot.replace("???",this_beam)
             cerrimage = self.outemaps_13co_trot.replace("???",this_beam)
             outpng    = self.outpng_13co10_vs_13co21_t
-            self._plot_scatter1(ximage,xerrimage,yimage,yerrimage,cimage,cerrimage,outpng,lim,title,xlabel,ylabel,cblabel,cmap="rainbow",colorlog=True)
+            self._plot_scatter1(ximage,xerrimage,yimage,yerrimage,cimage,cerrimage,outpng,lim,title,xlabel,ylabel,cblabel,cmap="rainbow")
 
             # cmap = log Ncol
             cblabel   = "log$_{\mathrm{10}}$ $N_{\mathrm{^{13}CO}}$ (cm$^{-2}$)"
@@ -1801,7 +1801,6 @@ class ToolsNcol():
         cblabel,
         snr=3.0,
         cmap="rainbow_r",
-        colorlog=True,
         ):
 
         # 13co10
@@ -1861,9 +1860,6 @@ class ToolsNcol():
             y    = np.log10(data_13co21[cut])
             yerr = err_13co21[cut] / abs(data_13co21[cut])
             c    = np.array(c)[cut]
-
-        if colorlog==True:
-            c = np.log10(c)
 
         # plot
         fig = plt.figure(figsize=(13,10))
