@@ -15,6 +15,9 @@ dir_final           ,,,images/
 final_60pc_obs      ,,,fig_gallery_obs_60pc.png
 final_60pc_rot      ,,,fig_gallery_rot_60pc.png
 #
+final_60pc_obs_err  ,,,fig_gallery_obs_err_60pc.png
+final_60pc_rot_err  ,,,fig_gallery_rot_err_60pc.png
+#
 final_sim_mom0      ,,,fig_sim_mom0.png
 final_sim_emom0     ,,,fig_sim_emom0.png
 #

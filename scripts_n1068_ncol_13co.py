@@ -234,6 +234,9 @@ class ToolsNcol():
         self.final_60pc_obs      = self.dir_final + self._read_key("final_60pc_obs")
         self.final_60pc_rot      = self.dir_final + self._read_key("final_60pc_rot")
         #
+        self.final_60pc_obs_err  = self.dir_final + self._read_key("final_60pc_obs_err")
+        self.final_60pc_rot_err  = self.dir_final + self._read_key("final_60pc_rot_err")
+        #
         self.final_sim_mom0      = self.dir_final + self._read_key("final_sim_mom0")
         self.final_sim_emom0     = self.dir_final + self._read_key("final_sim_emom0")
         #
@@ -329,9 +332,11 @@ class ToolsNcol():
         #
         do_final_60pc_obs     = False,
         do_final_60pc_rot     = False,
-        # appendix
-        do_final_sim_mom0     = True,
-        do_final_sim_emom0    = True,
+        # appendix_err
+        do_final_60pc_obs_err = True,
+        do_final_60pc_rot_err = True,
+        do_final_sim_mom0     = False,
+        do_final_sim_emom0    = False,
         #
         do_final_13co10_mom0  = False,
         do_final_13co21_mom0  = False,
@@ -359,6 +364,8 @@ class ToolsNcol():
             do_final_60pc_obs     = True
             do_final_60pc_rot     = True
             # appendix
+            do_final_60pc_obs_err = True
+            do_final_60pc_rot_err = True
             do_final_sim_mom0     = True
             do_final_sim_emom0    = True
             #
@@ -401,47 +408,9 @@ class ToolsNcol():
                 self.box_map_noxy,
                 delin=delin,
                 )
-            combine_three_png(
-                self.outpng_emom0_13co10.replace("???","60pc"),
-                self.outpng_emom0_13co21.replace("???","60pc"),
-                self.outpng_eratio.replace("???","60pc"),
-                self.final_60pc_obs+"_tmp3.png",
-                self.box_map_nox,
-                self.box_map_noxy,
-                self.box_map_noxy,
-                delin=delin,
-                )
-            combine_two_png(
-                self.outpng_emom1.replace("???","60pc"),
-                self.outpng_emom2.replace("???","60pc"),
-                self.final_60pc_obs+"_tmp4.png",
-                self.box_map,
-                self.box_map_noy,
-                delin=delin,
-                )
-
-            #
             combine_two_png(
                 self.final_60pc_obs+"_tmp1.png",
                 self.final_60pc_obs+"_tmp2.png",
-                self.final_60pc_obs+"_tmp12.png",
-                "1000000x10000000+0+0",
-                "1000000x10000000+0+0",
-                axis="column",
-                delin=True,
-                )
-            combine_two_png(
-                self.final_60pc_obs+"_tmp3.png",
-                self.final_60pc_obs+"_tmp4.png",
-                self.final_60pc_obs+"_tmp34.png",
-                "1000000x10000000+0+0",
-                "1000000x10000000+0+0",
-                axis="column",
-                delin=True,
-                )
-            combine_two_png(
-                self.final_60pc_obs+"_tmp12.png",
-                self.final_60pc_obs+"_tmp34.png",
                 self.final_60pc_obs,
                 "1000000x10000000+0+0",
                 "1000000x10000000+0+0",
@@ -457,29 +426,58 @@ class ToolsNcol():
             combine_two_png(
                 self.outpng_13co_trot.replace("???","60pc"),
                 self.outpng_13co_ncol.replace("???","60pc"),
-                self.final_60pc_rot+"_tmp1.png",
+                self.final_60pc_rot,
+                self.box_map_nox,
+                self.box_map_noxy,
+                delin=delin,
+                )
+
+        if do_final_60pc_obs_err==True:
+            print("################################")
+            print("# create do_final_60pc_obs_err #")
+            print("################################")
+
+            #
+            combine_three_png(
+                self.outpng_emom0_13co10.replace("???","60pc"),
+                self.outpng_emom0_13co21.replace("???","60pc"),
+                self.outpng_eratio.replace("???","60pc"),
+                self.final_60pc_obs_err+"_tmp1.png",
+                self.box_map_nox,
+                self.box_map_noxy,
+                self.box_map_noxy,
+                delin=delin,
+                )
+            combine_two_png(
+                self.outpng_emom1.replace("???","60pc"),
+                self.outpng_emom2.replace("???","60pc"),
+                self.final_60pc_obs_err+"_tmp2.png",
                 self.box_map_nox,
                 self.box_map_noxy,
                 delin=delin,
                 )
             combine_two_png(
-                self.outpng_e13co_trot.replace("???","60pc"),
-                self.outpng_e13co_ncol.replace("???","60pc"),
-                self.final_60pc_rot+"_tmp2.png",
-                self.box_map,
-                self.box_map_noy,
-                delin=delin,
-                )
-
-            #
-            combine_two_png(
-                self.final_60pc_rot+"_tmp1.png",
-                self.final_60pc_rot+"_tmp2.png",
-                self.final_60pc_rot,
+                self.final_60pc_obs_err+"_tmp1.png",
+                self.final_60pc_obs_err+"_tmp2.png",
+                self.final_60pc_obs_err,
                 "1000000x10000000+0+0",
                 "1000000x10000000+0+0",
                 axis="column",
                 delin=True,
+                )
+
+        if do_final_60pc_rot_err==True:
+            print("################################")
+            print("# create do_final_60pc_rot_err #")
+            print("################################")
+
+            combine_two_png(
+                self.outpng_e13co_trot.replace("???","60pc"),
+                self.outpng_e13co_ncol.replace("???","60pc"),
+                self.final_60pc_rot_err,
+                self.box_map_nox,
+                self.box_map_noxy,
+                delin=delin,
                 )
 
         if do_final_sim_mom0==True:
@@ -3424,57 +3422,6 @@ class ToolsNcol():
         taskname = self.modname + sys._getframe().f_code.co_name
         check_first(self.outcubes_13co10.replace("???","60pc"),taskname)
 
-        for this_beam in ["60pc"]:
-            print("# multi_fitting for cubes at " + this_beam)
-
-            # input
-            cube_hcn10   = self.outcubes_hcn10.replace("???",this_beam)
-            cube_hcop10  = self.outcubes_hcop10.replace("???",this_beam)
-            ecube_hcn10  = self.outecubes_hcn10.replace("???",this_beam)
-            ecube_hcop10 = self.outecubes_hcop10.replace("???",this_beam)
-
-            # output
-            fit_two_lines(
-                cube_hcop10,
-                cube_hcn10,
-                ecube_hcop10,
-                ecube_hcn10,
-                ra_cnt=self.ra_agn,
-                dec_cnt=self.dec_agn,
-                snr=4.0,
-                snr_limit=4.0,
-                ratio_max=4.0,
-                )
-
-            #
-            os.system("mv mom0_low.fits " + self.outmaps_mom0_hcop10.replace("???",this_beam))
-            os.system("mv mom0_high.fits " + self.outmaps_mom0_hcn10.replace("???",this_beam))
-            os.system("mv mom1.fits " + self.outmaps_hcn10_mom1.replace("???",this_beam))
-            os.system("mv mom2.fits " + self.outmaps_hcn10_mom2.replace("???",this_beam))
-            os.system("mv ratio.fits " + self.outmaps_hcn10_ratio.replace("???",this_beam))
-
-            #
-            os.system("mv emom0_low.fits " + self.outemaps_mom0_hcop10.replace("???",this_beam))
-            os.system("mv emom0_high.fits " + self.outemaps_mom0_hcn10.replace("???",this_beam))
-            os.system("mv emom1.fits " + self.outemaps_hcn10_mom1.replace("???",this_beam))
-            os.system("mv emom2.fits " + self.outemaps_hcn10_mom2.replace("???",this_beam))
-            os.system("mv eratio.fits " + self.outemaps_hcn10_ratio.replace("???",this_beam))
-
-            #
-            os.system("mv mom0_low_all.fits " + self.outmaps_mom0_hcop10.replace("???","all_"+this_beam))
-            os.system("mv mom0_high_all.fits " + self.outmaps_mom0_hcn10.replace("???","all_"+this_beam))
-            os.system("mv mom1_all.fits " + self.outmaps_hcn10_mom1.replace("???","all_"+this_beam))
-            os.system("mv mom2_all.fits " + self.outmaps_hcn10_mom2.replace("???","all_"+this_beam))
-            os.system("mv ratio_all.fits " + self.outmaps_hcn10_ratio.replace("???","all_"+this_beam))
-
-            #
-            os.system("mv emom0_low_all.fits " + self.outemaps_mom0_hcop10.replace("???","all_"+this_beam))
-            os.system("mv emom0_high_all.fits " + self.outemaps_mom0_hcn10.replace("???","all_"+this_beam))
-            os.system("mv emom1_all.fits " + self.outemaps_hcn10_mom1.replace("???","all_"+this_beam))
-            os.system("mv emom2_all.fits " + self.outemaps_hcn10_mom2.replace("???","all_"+this_beam))
-            os.system("mv eratio_all.fits " + self.outemaps_hcn10_ratio.replace("???","all_"+this_beam))
-
-        """
         for this_beam in self.beams:
             #if this_beam!="60pc":
             #    continue
@@ -3534,6 +3481,57 @@ class ToolsNcol():
             os.system("mv eratio_all.fits " + self.outemaps_ratio.replace("???","all_"+this_beam))
             os.system("mv eTrot_all.fits " + self.outemaps_13co_trot.replace("???","all_"+this_beam))
             os.system("mv elogN_all.fits " + self.outemaps_13co_ncol.replace("???","all_"+this_beam))
+
+        """
+        for this_beam in ["60pc"]:
+            print("# multi_fitting for cubes at " + this_beam)
+
+            # input
+            cube_hcn10   = self.outcubes_hcn10.replace("???",this_beam)
+            cube_hcop10  = self.outcubes_hcop10.replace("???",this_beam)
+            ecube_hcn10  = self.outecubes_hcn10.replace("???",this_beam)
+            ecube_hcop10 = self.outecubes_hcop10.replace("???",this_beam)
+
+            # output
+            fit_two_lines(
+                cube_hcop10,
+                cube_hcn10,
+                ecube_hcop10,
+                ecube_hcn10,
+                ra_cnt=self.ra_agn,
+                dec_cnt=self.dec_agn,
+                snr=4.0,
+                snr_limit=4.0,
+                ratio_max=4.0,
+                )
+
+            #
+            os.system("mv mom0_low.fits " + self.outmaps_mom0_hcop10.replace("???",this_beam))
+            os.system("mv mom0_high.fits " + self.outmaps_mom0_hcn10.replace("???",this_beam))
+            os.system("mv mom1.fits " + self.outmaps_hcn10_mom1.replace("???",this_beam))
+            os.system("mv mom2.fits " + self.outmaps_hcn10_mom2.replace("???",this_beam))
+            os.system("mv ratio.fits " + self.outmaps_hcn10_ratio.replace("???",this_beam))
+
+            #
+            os.system("mv emom0_low.fits " + self.outemaps_mom0_hcop10.replace("???",this_beam))
+            os.system("mv emom0_high.fits " + self.outemaps_mom0_hcn10.replace("???",this_beam))
+            os.system("mv emom1.fits " + self.outemaps_hcn10_mom1.replace("???",this_beam))
+            os.system("mv emom2.fits " + self.outemaps_hcn10_mom2.replace("???",this_beam))
+            os.system("mv eratio.fits " + self.outemaps_hcn10_ratio.replace("???",this_beam))
+
+            #
+            os.system("mv mom0_low_all.fits " + self.outmaps_mom0_hcop10.replace("???","all_"+this_beam))
+            os.system("mv mom0_high_all.fits " + self.outmaps_mom0_hcn10.replace("???","all_"+this_beam))
+            os.system("mv mom1_all.fits " + self.outmaps_hcn10_mom1.replace("???","all_"+this_beam))
+            os.system("mv mom2_all.fits " + self.outmaps_hcn10_mom2.replace("???","all_"+this_beam))
+            os.system("mv ratio_all.fits " + self.outmaps_hcn10_ratio.replace("???","all_"+this_beam))
+
+            #
+            os.system("mv emom0_low_all.fits " + self.outemaps_mom0_hcop10.replace("???","all_"+this_beam))
+            os.system("mv emom0_high_all.fits " + self.outemaps_mom0_hcn10.replace("???","all_"+this_beam))
+            os.system("mv emom1_all.fits " + self.outemaps_hcn10_mom1.replace("???","all_"+this_beam))
+            os.system("mv emom2_all.fits " + self.outemaps_hcn10_mom2.replace("???","all_"+this_beam))
+            os.system("mv eratio_all.fits " + self.outemaps_hcn10_ratio.replace("???","all_"+this_beam))
         """
 
     ##############
@@ -3544,7 +3542,6 @@ class ToolsNcol():
         """
         """
 
-        """
         for this_beam in self.beams:
             print("# align_maps for cubes at " + this_beam)
             self._align_maps_at_a_res(
@@ -3557,8 +3554,8 @@ class ToolsNcol():
                 self.outecubes_13co10.replace("???",this_beam),
                 self.outecubes_13co21.replace("???",this_beam),
                 )
-        """
  
+        """
         # hcn10 hcop10 case
         for this_beam in ["60pc"]:
             print("# align_maps for cubes at " + this_beam)
@@ -3572,6 +3569,7 @@ class ToolsNcol():
                 self.outecubes_hcn10.replace("???",this_beam),
                 self.outecubes_hcop10.replace("???",this_beam),
                 )
+        """
 
     #################################
     # _create_correlated_noise_cube #
