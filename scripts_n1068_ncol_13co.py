@@ -1717,7 +1717,7 @@ class ToolsNcol():
         gs  = gridspec.GridSpec(nrows=10, ncols=10)
         ax1 = plt.subplot(gs[0:10,0:10])
         ad  = [0.215,0.83,0.10,0.90]
-        myax_set(ax1, "both", lim, lim, title, xlabel, ylabel, adjust=ad)
+        myax_set(ax1, "both", xlim, ylim, title, xlabel, ylabel, adjust=ad)
 
         ax1.scatter(x1, y, c="deepskyblue", lw=0, s=20, zorder=1e9)
         ax1.errorbar(x1, y, x1err, yerr, lw=1, capsize=0, color="deepskyblue", linestyle="None")
