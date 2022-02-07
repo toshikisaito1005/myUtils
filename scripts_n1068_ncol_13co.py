@@ -1754,13 +1754,24 @@ class ToolsNcol():
         ad  = [0.215,0.83,0.10,0.90]
         myax_set(ax1, "both", xlim, ylim, title, xlabel, ylabel, adjust=ad)
 
-        ax1.errorbar(x1, y, xerr=x1err, yerr=yerr, lw=1, capsize=0, color="grey", linestyle="None", zorder=-1e9)
-        ax1.errorbar(x2, y, xerr=x2err, yerr=yerr, lw=1, capsize=0, color="grey", linestyle="None", zorder=-1e9)
-        ax1.scatter(x1, y, c="deepskyblue", lw=0, s=40)
-        ax1.scatter(x2, y, c="tomato", lw=0, s=40)
+        ax1.errorbar(x1, y, xerr=x1err, yerr=yerr, lw=1, capsize=0, color="grey", linestyle="None")
+        ax1.errorbar(x2, y, xerr=x2err, yerr=yerr, lw=1, capsize=0, color="grey", linestyle="None")
+        ax1.scatter(x1, y, c="deepskyblue", lw=0, s=40, zorder=1e9)
+        ax1.scatter(x2, y, c="tomato", lw=0, s=40, zorder=1e9)
 
-        ax1.errorbar(binx1, biny1, yerr=binyerr1, color="blue", capsize=0, lw=2.0)
-        ax1.errorbar(binx2, biny2, yerr=binyerr2, color="red", capsize=0, lw=2.0)
+        ax.plot(this_binx1, this_biny1, color="blue", lw=2.0, zorder=1e11)
+        for i in range(len(binx1)):
+            this_binx1    = binx1[i]
+            this_biny1    = biny1[i]
+            this_binyerr1 = binyerr1[i]
+            ax1.plot([this_binx1,this_binx1],[this_biny1-this_binyerr1,this_biny1+this_binyerr1], color="blue", lw=2.0, zorder=1e11)
+
+        ax.plot(this_binx2, this_biny2, color="red", lw=2.0, zorder=1e11)
+        for i in range(len(binx2)):
+            this_binx2    = binx2[i]
+            this_biny2    = biny2[i]
+            this_binyerr2 = binyerr2[i]
+            ax1.plot([this_binx2,this_binx2],[this_biny2-this_binyerr2,this_biny2+this_binyerr2], color="red", lw=2.0, zorder=1e11)
 
         # text
         ax1.text(0.05,0.93, "J = 1-0", color="deepskyblue", transform=ax1.transAxes, weight="bold", fontsize=26, ha="left")
