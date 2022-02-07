@@ -1584,7 +1584,7 @@ class ToolsNcol():
 
     def plot_scatter(
         self,
-        plot_I_vs_I=False,
+        plot_I_vs_I=True,
         plot_T_vs_I=True,
         ):
         """
@@ -1603,8 +1603,8 @@ class ToolsNcol():
             this_beam = "60pc"
             lim       = [-0.4,2.3]
             title     = "log$_{\mathrm{10}}$ $I_{\mathrm{^{13}CO(1-0)}}$ vs. log$_{\mathrm{10}}$ $I_{\mathrm{^{13}CO(2-1)}}$ at " + this_beam.replace("pc"," pc")
-            xlabel    = "log$_{\mathrm{10}}$ $I_{\mathrm{^{13}CO(1-0)}}$"
-            ylabel    = "log$_{\mathrm{10}}$ $I_{\mathrm{^{13}CO(2-1)}}$"
+            xlabel    = "log$_{\mathrm{10}}$ $I_{\mathrm{^{13}CO(1-0)}}$ (K km s$^{-1}$)"
+            ylabel    = "log$_{\mathrm{10}}$ $I_{\mathrm{^{13}CO(2-1)}}$ (K km s$^{-1}$)"
             ximage    = self.outmaps_mom0_13co10.replace("???",this_beam)
             xerrimage = self.outemaps_mom0_13co10.replace("???",this_beam)
             yimage    = self.outmaps_mom0_13co21.replace("???",this_beam)
@@ -1637,9 +1637,9 @@ class ToolsNcol():
         if plot_T_vs_I==True:
             this_beam  = "60pc"
             xlim       = [-0.4,2.3]
-            ylim       = [0,12]
+            ylim       = [2,13]
             title      = None
-            xlabel     = "log$_{\mathrm{10}}$ $I$"
+            xlabel     = "log$_{\mathrm{10}}$ $I_{\mathrm{^{13}CO}}$ (K km s$^{-1}$)"
             ylabel     = "$T_{\mathrm{rot}}$ (K)"
             x1image    = self.outmaps_mom0_13co10.replace("???",this_beam)
             x1errimage = self.outemaps_mom0_13co10.replace("???",this_beam)
