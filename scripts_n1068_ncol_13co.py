@@ -1728,6 +1728,25 @@ class ToolsNcol():
         y     = data_y[cut]
         yerr  = err_y[cut]
 
+        # binned
+        n,_   = np.histogram(x1, bins=10, range=xlim)
+        sy,_  = np.histogram(x1, bins=10, range=xlim, weights=y)
+        sy2,_ = np.histogram(x1, bins=10, range=xlim, weights=y*y)
+        mean  = sy / n
+        std   = np.sqrt(sy2/n - mean*mean)
+        binx1 = (_[1:]+_[:-1])/2
+        biny1 = mean
+        binyerr1 = std
+
+        n,_   = np.histogram(x2, bins=10, range=xlim)
+        sy,_  = np.histogram(x2, bins=10, range=xlim, weights=y)
+        sy2,_ = np.histogram(x2, bins=10, range=xlim, weights=y*y)
+        mean  = sy / n
+        std   = np.sqrt(sy2/n - mean*mean)
+        binx2 = (_[1:]+_[:-1])/2
+        biny2 = mean
+        binyerr2 = std
+
         # plot
         fig = plt.figure(figsize=(13,10))
         gs  = gridspec.GridSpec(nrows=10, ncols=10)
@@ -1740,6 +1759,9 @@ class ToolsNcol():
 
         ax1.scatter(x2, y, c="tomato", lw=0, s=40, zorder=1e9)
         ax1.errorbar(x2, y, xerr=x2err, yerr=yerr, lw=1, capsize=0, color="grey", linestyle="None")
+
+        ax1.errorbar(binx1, biny1, yerr=binyerr1, color="blue", capsize=0, lw=2.0)
+        ax1.errorbar(binx2, biny2, yerr=binyerr2, color="red", capsize=0, lw=2.0)
 
         # text
         ax1.text(0.05,0.93, "J = 1-0", color="deepskyblue", transform=ax1.transAxes, weight="bold", fontsize=26, ha="left")
