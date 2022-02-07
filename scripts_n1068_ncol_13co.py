@@ -1637,8 +1637,10 @@ class ToolsNcol():
         ad = [0.215,0.83,0.10,0.90]
         myax_set(ax1, "both", lim, lim, None, "13co10", "13co21", adjust=ad)
 
-        ax1.scatter(x, y, c=r, cmap="rainbow_r", lw=0, s=20)
-        ax1.errorbar(x, y, xerr=xerr, yerr=yerr, capsize=0, c=r, cmap="rainbow_r")
+        color = np.array([(mapper.to_rgba(v)) for v in y])
+        for this_x, this_y, this_xerr, this_yerr, this_c in zip(x, y, xerr, yerr, color):
+            plt.plot(this_x, this_y, 'o', color=color, lw=0, s=20)
+            plt.errorbar(this_x, this_y, this_xerr, this_yerr, lw=1, capsize=0, color=this_c)
 
         # ann
         ax1.plot(lim, lim, "--", color="black", lw=1)
