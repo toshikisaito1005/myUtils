@@ -1759,14 +1759,14 @@ class ToolsNcol():
         ax1.scatter(x1, y, c="deepskyblue", lw=0, s=40, zorder=1e9)
         ax1.scatter(x2, y, c="tomato", lw=0, s=40, zorder=1e9)
 
-        ax.plot(this_binx1, this_biny1, color="blue", lw=2.0, zorder=1e11)
+        ax1.plot(this_binx1, this_biny1, color="blue", lw=2.0, zorder=1e11)
         for i in range(len(binx1)):
             this_binx1    = binx1[i]
             this_biny1    = biny1[i]
             this_binyerr1 = binyerr1[i]
             ax1.plot([this_binx1,this_binx1],[this_biny1-this_binyerr1,this_biny1+this_binyerr1], color="blue", lw=2.0, zorder=1e11)
 
-        ax.plot(this_binx2, this_biny2, color="red", lw=2.0, zorder=1e11)
+        ax1.plot(this_binx2, this_biny2, color="red", lw=2.0, zorder=1e11)
         for i in range(len(binx2)):
             this_binx2    = binx2[i]
             this_biny2    = biny2[i]
