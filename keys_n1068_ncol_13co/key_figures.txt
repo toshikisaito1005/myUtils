@@ -1,19 +1,19 @@
 ###############
 # directories #
 ###############
-dir_proj            ,,,/lfs13/saitots/proj_n1068_ncol/
-dir_raw             ,,,data_raw/
-dir_ready           ,,,data_ready/
-dir_other           ,,,data_other/
-dir_products        ,,,products_png/
-dir_final           ,,,images/
+dir_proj                  ,,,/lfs13/saitots/proj_n1068_ncol/
+dir_raw                   ,,,data_raw/
+dir_ready                 ,,,data_ready/
+dir_other                 ,,,data_other/
+dir_products              ,,,products_png/
+dir_final                 ,,,images/
 
 ##################
 # final products #
 ##################
 # paper
-final_60pc_obs      ,,,fig_gallery_obs_60pc.png
-final_60pc_rot      ,,,fig_gallery_rot_60pc.png
+final_60pc_obs            ,,,fig_gallery_obs_60pc.png
+final_60pc_rot            ,,,fig_gallery_rot_60pc.png
 # appendix
 final_60pc_err            ,,,fig_gallery_err_60pc.png
 final_sim_input           ,,,fig_sim_input.png
