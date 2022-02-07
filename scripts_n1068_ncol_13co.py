@@ -1678,7 +1678,7 @@ class ToolsNcol():
         xerr = err_13co10[cut] / abs(data_13co10[cut])
         y    = np.log10(data_13co21[cut])
         yerr = err_13co21[cut] / abs(data_13co21[cut])
-        c    = np.array(dist_kpc)[cut]
+        c    = np.array(c)[cut]
 
         # plot
         fig = plt.figure(figsize=(13,10))
