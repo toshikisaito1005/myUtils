@@ -1600,8 +1600,8 @@ class ToolsNcol():
         ###############
         # plot_I_vs_I #
         ###############
+        this_beam = "60pc"
         if plot_I_vs_I==True:
-            this_beam = "60pc"
             lim       = [-0.4,2.3]
             title     = "log$_{\mathrm{10}}$ $I_{\mathrm{^{13}CO(1-0)}}$ vs. log$_{\mathrm{10}}$ $I_{\mathrm{^{13}CO(2-1)}}$ at " + this_beam.replace("pc"," pc")
             xlabel    = "log$_{\mathrm{10}}$ $I_{\mathrm{^{13}CO(1-0)}}$ (K km s$^{-1}$)"
@@ -1635,8 +1635,8 @@ class ToolsNcol():
         ##################
         # plot_phys_vs_I #
         ##################
+        this_beam  = "60pc"
         if plot_phys_vs_I==True:
-            this_beam  = "60pc"
             xlim       = [-0.4,2.3]
             ylim       = [np.log10(2),np.log10(13)]
             title      = "log$_{\mathrm{10}}$ $I_{\mathrm{^{13}CO}}$ vs. log$_{\mathrm{10}}$ $T_{\mathrm{rot}}$"
@@ -1651,7 +1651,6 @@ class ToolsNcol():
             outpng     = self.outpng_trot_vs_int
             self._plot_scatter2(x1image,x1errimage,x2image,x2errimage,yimage,yerrimage,outpng,xlim,ylim,title,xlabel,ylabel,colorlog=True)
 
-            this_beam  = "60pc"
             xlim       = [-0.4,2.3]
             ylim       = [14.7,17.2]
             title      = "log$_{\mathrm{10}}$ $I_{\mathrm{^{13}CO}}$ vs. log$_{\mathrm{10}}$ $N_{\mathrm{^{13}CO}}$"
@@ -1731,7 +1730,7 @@ class ToolsNcol():
 
         if colorlog==True:
             y    = np.log10(y)
-            yerr = yerr / abs(y)
+            yerr = yerr / abs(10**y)
 
         # binned
         n,_   = np.histogram(x1, bins=10, range=[np.min(x1),np.max(x1)])
