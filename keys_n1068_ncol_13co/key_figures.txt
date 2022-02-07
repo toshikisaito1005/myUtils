@@ -100,12 +100,13 @@ outpng_emom2           ,,,fig_map_emom2_???.png
 outpng_eratio          ,,,fig_map_eratio_???.png
 outpng_e13co_trot      ,,,fig_map_etrot_???.png
 outpng_e13co_ncol      ,,,fig_map_encol_???.png
-outpng_modelmom0_13co10 ,,,fig_map_modelmom0_13co10.png
-outpng_modelmom0_13co21 ,,,fig_map_modelmom0_13co21.png
-outpng_simumom0_13co10  ,,,fig_map_simumom0_13co10.png
-outpng_simumom0_13co21  ,,,fig_map_simumom0_13co21.png
+outpng_modelmom0_13co10   ,,,fig_map_modelmom0_13co10.png
+outpng_modelmom0_13co21   ,,,fig_map_modelmom0_13co21.png
+outpng_simumom0_13co10    ,,,fig_map_simumom0_13co10.png
+outpng_simumom0_13co21    ,,,fig_map_simumom0_13co21.png
 # png files: plot
-outpng_13co10_vs_13co21 ,,,fig_scatter_13co10_vs_13co21.png
+outpng_13co10_vs_13co21_r ,,,fig_scatter_13co10_vs_13co21_c_dist.png
+outpng_13co10_vs_13co21_t ,,,fig_scatter_13co10_vs_13co21_c_trot.png
 # box for imagemajick
 box_map             ,,,2225x1870+335+80
 box_map_nox         ,,,2225x1730+335+80
