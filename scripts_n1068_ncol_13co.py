@@ -1754,11 +1754,11 @@ class ToolsNcol():
         ad  = [0.215,0.83,0.10,0.90]
         myax_set(ax1, "both", xlim, ylim, title, xlabel, ylabel, adjust=ad)
 
-        ax1.scatter(x1, y, c="deepskyblue", lw=0, s=40, zorder=-1e9)
-        ax1.errorbar(x1, y, xerr=x1err, yerr=yerr, lw=1, capsize=0, color="grey", linestyle="None", zorder=-1e11)
+        ax1.scatter(x1, y, c="deepskyblue", lw=0, s=40, zorder=-1e11)
+        ax1.errorbar(x1, y, xerr=x1err, yerr=yerr, lw=1, capsize=0, color="grey", linestyle="None", zorder=-1e9)
 
-        ax1.scatter(x2, y, c="tomato", lw=0, s=40, zorder=-1e9)
-        ax1.errorbar(x2, y, xerr=x2err, yerr=yerr, lw=1, capsize=0, color="grey", linestyle="None", zorder=-1e11)
+        ax1.scatter(x2, y, c="tomato", lw=0, s=40, zorder=-1e11)
+        ax1.errorbar(x2, y, xerr=x2err, yerr=yerr, lw=1, capsize=0, color="grey", linestyle="None", zorder=-1e9)
 
         ax1.errorbar(binx1, biny1, yerr=binyerr1, color="blue", capsize=0, lw=2.0)
         ax1.errorbar(binx2, biny2, yerr=binyerr2, color="red", capsize=0, lw=2.0)
