@@ -1719,10 +1719,10 @@ class ToolsNcol():
         ad  = [0.215,0.83,0.10,0.90]
         myax_set(ax1, "both", xlim, ylim, title, xlabel, ylabel, adjust=ad)
 
-        ax1.scatter(x1, y, c="deepskyblue", lw=0, s=20, zorder=1e9)
+        ax1.scatter(x1, y, c="deepskyblue", lw=0, s=40, zorder=1e9)
         ax1.errorbar(x1, y, xerr=x1err, yerr=yerr, lw=1, capsize=0, color="deepskyblue", linestyle="None")
 
-        ax1.scatter(x2, y, c="tomato", lw=0, s=20, zorder=1e9)
+        ax1.scatter(x2, y, c="tomato", lw=0, s=40, zorder=1e9)
         ax1.errorbar(x2, y, xerr=x2err, yerr=yerr, lw=1, capsize=0, color="tomato", linestyle="None")
 
         # save
@@ -1816,7 +1816,7 @@ class ToolsNcol():
         ad  = [0.215,0.83,0.10,0.90]
         myax_set(ax1, "both", lim, lim, title, xlabel, ylabel, adjust=ad)
 
-        cs = ax1.scatter(x, y, c=c, cmap=cmap, lw=0, s=20, zorder=1e9)
+        cs = ax1.scatter(x, y, c=c, cmap=cmap, lw=0, s=40, zorder=1e9)
         ax1.errorbar(x, y, xerr, yerr, lw=1, capsize=0, color="grey", linestyle="None")
 
         # colorbar
