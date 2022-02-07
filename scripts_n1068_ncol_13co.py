@@ -303,6 +303,7 @@ class ToolsNcol():
             do_simulate_mom  = True
             plot_showcase    = True
             plot_showsim     = True
+            plot_scatter     = True
             do_imagemagick   = True
             immagick_all     = True
 
@@ -1597,13 +1598,6 @@ class ToolsNcol():
         for i in range(len(self.beams)):
             this_beam  = self.beams[i]
             this_color = cm.rainbow( (i+1)/float(len(self.beams)) )
-            # coords
-            data_coords = imval(self.outmaps_mom0_13co10.replace("???",this_beam),box=box)["coords"]
-            ra_deg      = data_coords[:,:,0] * 180/np.pi
-            ra_deg      = ra_deg.flatten()
-            dec_deg     = data_coords[:,:,1] * 180/np.pi
-            dec_deg     = dec_deg.flatten()
-            dist_pc,_   = get_reldist_pc(ra_deg, dec_deg, self.ra_agn, self.dec_agn, self.scale_pc, 0, 0)
 
             # 13co10
             data_13co10,box = imval_all(self.outmaps_mom0_13co10.replace("???",this_beam))
@@ -1622,6 +1616,14 @@ class ToolsNcol():
             err_13co21,_ = imval_all(self.outmaps_emom0_13co21.replace("???",this_beam))
             err_13co21   = err_13co21["data"] * err_13co21["mask"]
             err_13co21[np.isnan(err_13co21)] = 0
+            
+            # coords
+            data_coords = imval(self.outmaps_mom0_13co10.replace("???",this_beam),box=box)["coords"]
+            ra_deg      = data_coords[:,:,0] * 180/np.pi
+            ra_deg      = ra_deg.flatten()
+            dec_deg     = data_coords[:,:,1] * 180/np.pi
+            dec_deg     = dec_deg.flatten()
+            dist_pc,_   = get_reldist_pc(ra_deg, dec_deg, self.ra_agn, self.dec_agn, self.scale_pc, 0, 0)
 
             # prepare
             cut  = np.where((data_13co10>abs(err_13co10)*snr)&(data_13co21>abs(err_13co21)*snr))
