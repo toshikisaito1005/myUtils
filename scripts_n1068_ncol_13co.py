@@ -1670,7 +1670,7 @@ class ToolsNcol():
         if plot_phys_vs_I==True:
             xlim       = [-0.4,2.3]
             ylim       = [2,13]
-            title      = "log$_{\mathrm{10}}$ $I_{\mathrm{^{13}CO}}$ vs. $T_{\mathrm{rot}}$"
+            title      = "log$_{\mathrm{10}}$ $I_{\mathrm{^{13}CO}}$ vs. $T_{\mathrm{rot}}$ at " + this_beam.replace("pc"," pc")
             xlabel     = "log$_{\mathrm{10}}$ $I_{\mathrm{^{13}CO}}$ (K km s$^{-1}$)"
             ylabel     = "$T_{\mathrm{rot}}$ (K)"
             x1image    = self.outmaps_mom0_13co10.replace("???",this_beam)
@@ -1684,7 +1684,7 @@ class ToolsNcol():
 
             xlim       = [-0.4,2.3]
             ylim       = [14.7,17.2]
-            title      = "log$_{\mathrm{10}}$ $I_{\mathrm{^{13}CO}}$ vs. log$_{\mathrm{10}}$ $N_{\mathrm{^{13}CO}}$"
+            title      = "log$_{\mathrm{10}}$ $I_{\mathrm{^{13}CO}}$ vs. log$_{\mathrm{10}}$ $N_{\mathrm{^{13}CO}}$ at " + this_beam.replace("pc"," pc")
             xlabel     = "log$_{\mathrm{10}}$ $I_{\mathrm{^{13}CO}}$ (K km s$^{-1}$)"
             ylabel     = "log$_{\mathrm{10}}$ $N_{\mathrm{^{13}CO}}$ (cm$^{-2}$)"
             x1image    = self.outmaps_mom0_13co10.replace("???",this_beam)
