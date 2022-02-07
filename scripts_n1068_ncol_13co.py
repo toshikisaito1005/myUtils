@@ -1585,8 +1585,8 @@ class ToolsNcol():
 
     def plot_scatter(
         self,
-        plot_I_vs_I=True,
-        plot_T_vs_I=True,
+        plot_I_vs_I=False,
+        plot_phys_vs_I=True,
         ):
         """
         References:
@@ -1632,10 +1632,10 @@ class ToolsNcol():
             outpng    = self.outpng_13co10_vs_13co21_n
             self._plot_scatter1(ximage,xerrimage,yimage,yerrimage,cimage,cerrimage,outpng,lim,title,xlabel,ylabel,cblabel,cmap="rainbow")
 
-        ###############
-        # plot_T_vs_I #
-        ###############
-        if plot_T_vs_I==True:
+        ##################
+        # plot_phys_vs_I #
+        ##################
+        if plot_phys_vs_I==True:
             this_beam  = "60pc"
             xlim       = [-0.4,2.3]
             ylim       = [2,13]
@@ -1653,7 +1653,7 @@ class ToolsNcol():
 
             this_beam  = "60pc"
             xlim       = [-0.4,2.3]
-            ylim       = [14.5,17.5]
+            ylim       = [14.7,17.2]
             title      = "log$_{\mathrm{10}}$ $I_{\mathrm{^{13}CO}}$ vs. log$_{\mathrm{10}}$ $N_{\mathrm{^{13}CO}}$"
             xlabel     = "log$_{\mathrm{10}}$ $I_{\mathrm{^{13}CO}}$ (K km s$^{-1}$)"
             ylabel     = "log$_{\mathrm{10}}$ $N_{\mathrm{^{13}CO}}$ (cm$^{-2}$)"
@@ -1742,8 +1742,8 @@ class ToolsNcol():
         ax1.errorbar(x2, y, xerr=x2err, yerr=yerr, lw=1, capsize=0, color="grey", linestyle="None")
 
         # text
-        ax1.text(0.05,0.90, "$J$ = 1-0", color="deepskyblue", transform=ax1.transAxes, weight="bold", fontsize=26, ha="left")
-        ax1.text(0.05,0.85, "$J$ = 2-1", color="tomato", transform=ax1.transAxes, weight="bold", fontsize=26, ha="left")
+        ax1.text(0.05,0.93, "J = 1-0", color="deepskyblue", transform=ax1.transAxes, weight="bold", fontsize=26, ha="left")
+        ax1.text(0.05,0.88, "J = 2-1", color="tomato", transform=ax1.transAxes, weight="bold", fontsize=26, ha="left")
 
         # save
         os.system("rm -rf " + outpng)
