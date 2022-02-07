@@ -1595,7 +1595,7 @@ class ToolsNcol():
         ad = [0.215,0.83,0.10,0.90]
         myax_set(ax1, "both", None, None, None, "13co10", "13co21", adjust=ad)
 
-        for i in range(len(self.beams)):
+        for i in range(len(["60pc"])): for i in range(len(self.beams)):
             this_beam  = self.beams[i]
             this_color = cm.rainbow( (i+1)/float(len(self.beams)) )
 
@@ -1631,9 +1631,10 @@ class ToolsNcol():
             xerr = err_13co10[cut] / abs(data_13co10[cut])
             y    = np.log10(data_13co21[cut])
             yerr = err_13co21[cut] / abs(data_13co21[cut])
+            r    = dist_pc[cut]
 
             # plot
-            ax1.scatter(x, y, lw=0, c=this_color, s=40, alpha=0.5)
+            ax1.scatter(x, y, c=r, cmap="rainbow_r", lw=0, s=40, alpha=0.5) # ax1.scatter(x, y, lw=0, c=this_color, s=40, alpha=0.5)
 
         os.system("rm -rf " + self.outpng_13co10_vs_13co21)
         plt.savefig(self.outpng_13co10_vs_13co21, dpi=self.fig_dpi)
