@@ -237,6 +237,7 @@ class ToolsNcol():
 
         self.outpng_13co10_vs_13co21_r = self.dir_products + self._read_key("outpng_13co10_vs_13co21_r")
         self.outpng_13co10_vs_13co21_t = self.dir_products + self._read_key("outpng_13co10_vs_13co21_t")
+        self.outpng_13co10_vs_13co21_n = self.dir_products + self._read_key("outpng_13co10_vs_13co21_n")
 
         # finals
         self.final_60pc_obs      = self.dir_final + self._read_key("final_60pc_obs")
@@ -1614,6 +1615,12 @@ class ToolsNcol():
         outpng    = self.outpng_13co10_vs_13co21_t
         self._plot_a_scatter(ximage,xerrimage,yimage,yerrimage,cimage,outpng,lim,title,xlabel,ylabel,cblabel)
 
+        # cmap = log Ncol
+        cblabel   = "log$_{\mathrm{10}}$ $N_{\mathrm{^{13}CO}}$ (cm$^{-2}$)"
+        cimage    = self.outmaps_13co_ncol.replace("???",this_beam)
+        outpng    = self.outpng_13co10_vs_13co21_n
+        self._plot_a_scatter(ximage,xerrimage,yimage,yerrimage,cimage,outpng,lim,title,xlabel,ylabel,cblabel)
+
     ################
     # plot_scatter #
     ################
@@ -1694,7 +1701,8 @@ class ToolsNcol():
         cax = fig.add_axes([0.25, 0.81, 0.33, 0.04])
         cbar = plt.colorbar(cs, cax=cax, orientation="horizontal")
         cbar.set_label(cblabel)
-        cbar.set_ticks([0,0.3,0.6,0.9,1.2])
+        if cimage==None:
+            cbar.set_ticks([0,0.3,0.6,0.9,1.2])
 
         """ cmap for errorbar
         clb   = plt.colorbar(sc)

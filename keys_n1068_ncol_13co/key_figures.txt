@@ -107,6 +107,7 @@ outpng_simumom0_13co21    ,,,fig_map_simumom0_13co21.png
 # png files: plot
 outpng_13co10_vs_13co21_r ,,,fig_scatter_13co10_vs_13co21_c_dist.png
 outpng_13co10_vs_13co21_t ,,,fig_scatter_13co10_vs_13co21_c_trot.png
+outpng_13co10_vs_13co21_n ,,,fig_scatter_13co10_vs_13co21_c_ncol.png
 # box for imagemajick
 box_map             ,,,2225x1870+335+80
 box_map_nox         ,,,2225x1730+335+80
