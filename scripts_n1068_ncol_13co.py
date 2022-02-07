@@ -341,7 +341,7 @@ class ToolsNcol():
         # appendix_err
         do_final_60pc_err     = False,
         do_final_sim_mom0     = True,
-        do_final_sim_emom0    = False,
+        do_final_sim_emom0    = True,
         # supplement
         do_final_13co10_mom0  = False,
         do_final_13co21_mom0  = False,
