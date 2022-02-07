@@ -1638,7 +1638,7 @@ class ToolsNcol():
         this_beam  = "60pc"
         if plot_phys_vs_I==True:
             xlim       = [-0.4,2.3]
-            ylim       = [np.log10(2),np.log10(13)]
+            ylim       = [2,13]
             title      = "log$_{\mathrm{10}}$ $I_{\mathrm{^{13}CO}}$ vs. $T_{\mathrm{rot}}$"
             xlabel     = "log$_{\mathrm{10}}$ $I_{\mathrm{^{13}CO}}$ (K km s$^{-1}$)"
             ylabel     = "$T_{\mathrm{rot}}$ (K)"
