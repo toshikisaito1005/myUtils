@@ -1613,7 +1613,7 @@ class ToolsNcol():
             data_13co21     = data_13co21["data"] * data_13co21["mask"]
             data_13co21[np.isnan(data_13co21)] = 0
 
-            err_13co21,_ = imval_all(self.outmaps_emom0_13co21.replace("???",this_beam))
+            err_13co21,_ = imval_all(self.outemaps_mom0_13co21.replace("???",this_beam))
             err_13co21   = err_13co21["data"] * err_13co21["mask"]
             err_13co21[np.isnan(err_13co21)] = 0
 
