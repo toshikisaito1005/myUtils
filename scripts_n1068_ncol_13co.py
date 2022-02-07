@@ -3492,7 +3492,7 @@ class ToolsNcol():
         """
         """
 
-        for this_beam in ["60pv"]:
+        for this_beam in ["60pc"]:
             print("# align_maps for cubes at " + this_beam)
             self._align_maps_at_a_res(
                 self.cube_hcn10.replace("???",this_beam),
