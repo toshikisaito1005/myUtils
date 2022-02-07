@@ -108,10 +108,11 @@ box_map             ,,,2225x1870+335+80
 box_map_nox         ,,,2225x1730+335+80
 box_map_noy         ,,,2225x1870+550+80
 box_map_noxy        ,,,2225x1730+550+80
-box_map_noc         ,,,2225x1870+335+80
-box_map_noxc        ,,,2125x1870+335+80
-box_map_noyc        ,,,2025x1870+335+80
-box_map_noxyc       ,,,1925x1870+335+80
+#
+box_map_noc         ,,,1925x1870+335+80
+box_map_noxc        ,,,1875x1870+335+80
+box_map_noyc        ,,,1825x1870+335+80
+box_map_noxyc       ,,,1775x1870+335+80
 
 #######
 # end #
