@@ -1592,7 +1592,7 @@ class ToolsNcol():
         check_first(self.outmodelcube_13co10.replace(".fits","_snr10.fits"),taskname)
 
         this_beam  = "60pc"
-        lim        = [-0.5,2.5]
+        lim        = [-0.4,2.3]
 
         # 13co10
         data_13co10,box = imval_all(self.outmaps_mom0_13co10.replace("???",this_beam))
