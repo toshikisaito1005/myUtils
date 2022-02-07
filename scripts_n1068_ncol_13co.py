@@ -1584,6 +1584,8 @@ class ToolsNcol():
         snr=3.0,
         ):
         """
+        Reference:
+        https://stackoverflow.com/questions/10208814/colormap-for-errorbars-in-x-y-scatter-plot-using-matplotlib
         """
 
         taskname = self.modname + sys._getframe().f_code.co_name
@@ -1632,17 +1634,18 @@ class ToolsNcol():
 
         # plot
         fig = plt.figure(figsize=(13,10))
-        gs = gridspec.GridSpec(nrows=10, ncols=10)
+        gs  = gridspec.GridSpec(nrows=10, ncols=10)
         ax1 = plt.subplot(gs[0:10,0:10])
-        ad = [0.215,0.83,0.10,0.90]
+        ad  = [0.215,0.83,0.10,0.90]
         myax_set(ax1, "both", lim, lim, None, "13co10", "13co21", adjust=ad)
 
-        sc = ax1.scatter(x, y, c=r, cmap="rainbow_r", lw=0, s=20)
+        sc = ax1.scatter(x, y, c=r, cmap="rainbow_r", lw=0, s=1)
 
         clb   = plt.colorbar(sc)
         color = clb.to_rgba(r)
         for this_x, this_y, this_xerr, this_yerr, this_c in zip(x, y, xerr, yerr, color):
             plt.errorbar(this_x, this_y, this_xerr, this_yerr, lw=1, capsize=0, color=this_c)
+            ax1.scatter(this_x, this_y, c=this_c, cmap="rainbow_r", lw=0, s=20)
 
         # ann
         ax1.plot(lim, lim, "--", color="black", lw=1)
