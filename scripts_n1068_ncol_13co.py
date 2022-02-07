@@ -244,6 +244,8 @@ class ToolsNcol():
         # finals
         self.final_60pc_obs      = self.dir_final + self._read_key("final_60pc_obs")
         self.final_60pc_rot      = self.dir_final + self._read_key("final_60pc_rot")
+        self.final_scatter_int   = self.dir_final + self._read_key("final_scatter_int")
+        self.final_scatter_rot   = self.dir_final + self._read_key("final_scatter_rot")
         # appendix
         self.final_60pc_err      = self.dir_final + self._read_key("final_60pc_err")
         self.final_sim_input     = self.dir_final + self._read_key("final_sim_input")
@@ -351,9 +353,11 @@ class ToolsNcol():
         #
         do_final_60pc_obs     = False,
         do_final_60pc_rot     = False,
+        do_final_scatter_int  = True,
+        do_final_scatter_rot  = True,
         # appendix_err
         do_final_60pc_err     = False,
-        do_final_sim_input    = True,
+        do_final_sim_input    = False,
         do_final_sim_mom0     = False,
         do_final_sim_emom0    = False,
         # supplement
@@ -382,6 +386,8 @@ class ToolsNcol():
             #
             do_final_60pc_obs     = True
             do_final_60pc_rot     = True
+            do_final_scatter_int  = True
+            do_final_scatter_rot  = True
             # appendix
             do_final_60pc_obs_err = True
             do_final_60pc_rot_err = True
@@ -448,6 +454,31 @@ class ToolsNcol():
                 self.final_60pc_rot,
                 self.box_map,
                 self.box_map_noy,
+                delin=delin,
+                )
+
+        if do_final_scatter_int==True:
+            print("###############################")
+            print("# create do_final_scatter_int #")
+            print("###############################")
+
+            immagick_crop(
+                self.outpng_13co10_vs_13co21_r,
+                self.final_scatter_int,
+                self.box_map,
+                )
+
+        if do_final_scatter_rot==True:
+            print("###############################")
+            print("# create do_final_scatter_rot #")
+            print("###############################")
+
+            combine_two_png(
+                self.outpng_trot_vs_int,
+                self.outpng_ncol_vs_int,
+                self.final_scatter_rot,
+                self.box_map,
+                self.box_map,
                 delin=delin,
                 )
 

@@ -14,6 +14,8 @@ dir_final                 ,,,images/
 # paper
 final_60pc_obs            ,,,fig_gallery_obs_60pc.png
 final_60pc_rot            ,,,fig_gallery_rot_60pc.png
+final_scatter_int         ,,,fig_scatter_int.png
+final_scatter_rot         ,,,fig_scatter_rot.png
 # appendix
 final_60pc_err            ,,,fig_gallery_err_60pc.png
 final_sim_input           ,,,fig_sim_input.png
@@ -119,7 +121,6 @@ box_map_noc               ,,,1825x1870+335+80
 box_map_noxc              ,,,1825x1730+335+80
 box_map_noyc              ,,,1625x1870+550+80
 box_map_noxyc             ,,,1625x1730+550+80
-
 #######
 # end #
 #######
