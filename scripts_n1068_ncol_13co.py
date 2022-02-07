@@ -1591,8 +1591,10 @@ class ToolsNcol():
         taskname = self.modname + sys._getframe().f_code.co_name
         check_first(self.outmodelcube_13co10.replace(".fits","_snr10.fits"),taskname)
 
-        this_beam  = "60pc"
-        lim        = [-0.4,2.3]
+        this_beam = "60pc"
+        lim       = [-0.4,2.3]
+        xlabel    = "log$_{\mathrm{10}}$ $I_{\mathrm{^{13}CO(1-0)}}$ at " + this_beam.replace("pc"," pc")
+        ylabel    = "log$_{\mathrm{10}}$ $I_{\mathrm{^{13}CO(2-1)}}$ at " + this_beam.replace("pc"," pc")
 
         # 13co10
         data_13co10,box = imval_all(self.outmaps_mom0_13co10.replace("???",this_beam))
@@ -1637,7 +1639,7 @@ class ToolsNcol():
         gs  = gridspec.GridSpec(nrows=10, ncols=10)
         ax1 = plt.subplot(gs[0:10,0:10])
         ad  = [0.215,0.83,0.10,0.90]
-        myax_set(ax1, "both", lim, lim, None, "13co10", "13co21", adjust=ad)
+        myax_set(ax1, "both", lim, lim, None, xlabel, ylabel, adjust=ad)
 
         sc = ax1.scatter(x, y, c=r, cmap="rainbow_r", lw=0, s=20, zorder=1e9)
         plt.errorbar(x, y, xerr, yerr, lw=1, capsize=0, color="grey", linestyle="None")
