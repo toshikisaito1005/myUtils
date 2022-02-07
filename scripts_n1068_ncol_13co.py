@@ -497,9 +497,9 @@ class ToolsNcol():
                 self.outpng_simumom0_13co10.replace(".png","_clip0_snr"+this_snr+".png"),
                 self.outpng_simumom0_13co10.replace(".png","_clip3_snr"+this_snr+".png"),
                 self.final_sim_mom0+"_tmp1.png",
-                self.box_map_noc,
                 self.box_map_noxc,
-                self.box_map_noyc,
+                self.box_map_noxyc,
+                self.box_map_noxyc,
                 delin=delin,
                 )
             combine_three_png(
@@ -507,9 +507,9 @@ class ToolsNcol():
                 self.outpng_simumom0_13co10.replace(".png","_clip0_masked_snr"+this_snr+".png"),
                 self.outpng_simumom0_13co10.replace(".png","_clip3_masked_snr"+this_snr+".png"),
                 self.final_sim_mom0+"_tmp2.png",
-                self.box_map_noxyc,
-                self.box_map,
-                self.box_map,
+                self.box_map_noc,
+                self.box_map_noyc,
+                self.box_map_noy,
                 delin=delin,
                 )
             combine_two_png(

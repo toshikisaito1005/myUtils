@@ -112,7 +112,7 @@ box_map_noxy        ,,,2225x1730+550+80
 box_map_noc         ,,,1825x1870+335+80
 box_map_noxc        ,,,1825x1730+335+80
 box_map_noyc        ,,,1625x1870+550+80
-box_map_noxyc       ,,,1525x1730+550+80
+box_map_noxyc       ,,,1625x1730+550+80
 
 #######
 # end #
