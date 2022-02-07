@@ -262,6 +262,10 @@ class ToolsNcol():
         self.box_map_nox        = self._read_key("box_map_nox")
         self.box_map_noy        = self._read_key("box_map_noy")
         self.box_map_noxy       = self._read_key("box_map_noxy")
+        self.box_map_noc        = self._read_key("box_map_noc")
+        self.box_map_noxc       = self._read_key("box_map_noxc")
+        self.box_map_noyc       = self._read_key("box_map_noyc")
+        self.box_map_noxyc      = self._read_key("box_map_noxyc")
 
     ####################
     # run_ngc1068_ncol #
@@ -337,7 +341,7 @@ class ToolsNcol():
         # appendix_err
         do_final_60pc_err     = False,
         do_final_sim_mom0     = True,
-        do_final_sim_emom0    = True,
+        do_final_sim_emom0    = False,
         # supplement
         do_final_13co10_mom0  = False,
         do_final_13co21_mom0  = False,
@@ -482,7 +486,7 @@ class ToolsNcol():
                 )
             os.system("rm -rf " + self.final_60pc_err+"_tmp12.png")
 
-        this_snr = "50"
+        this_snr = "10"
         if do_final_sim_mom0==True:
             print("############################")
             print("# create do_final_sim_mom0 #")
@@ -493,9 +497,9 @@ class ToolsNcol():
                 self.outpng_simumom0_13co10.replace(".png","_clip0_snr"+this_snr+".png"),
                 self.outpng_simumom0_13co10.replace(".png","_clip3_snr"+this_snr+".png"),
                 self.final_sim_mom0+"_tmp1.png",
-                self.box_map,
-                self.box_map,
-                self.box_map,
+                self.box_map_noc,
+                self.box_map_noxc,
+                self.box_map_noyc,
                 delin=delin,
                 )
             combine_three_png(
@@ -503,7 +507,7 @@ class ToolsNcol():
                 self.outpng_simumom0_13co10.replace(".png","_clip0_masked_snr"+this_snr+".png"),
                 self.outpng_simumom0_13co10.replace(".png","_clip3_masked_snr"+this_snr+".png"),
                 self.final_sim_mom0+"_tmp2.png",
-                self.box_map,
+                self.box_map_noxyc,
                 self.box_map,
                 self.box_map,
                 delin=delin,
