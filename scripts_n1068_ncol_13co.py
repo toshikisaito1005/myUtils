@@ -1601,8 +1601,8 @@ class ToolsNcol():
         err_13co10[np.isnan(err_13co10)] = 0
 
         # 13co21
-        data_13co21,box = imval_all(self.outmaps_mom0_13co21.replace("???",this_beam))
-        data_13co21     = data_13co21["data"] * data_13co21["mask"]
+        data_13co21,_ = imval_all(self.outmaps_mom0_13co21.replace("???",this_beam))
+        data_13co21   = data_13co21["data"] * data_13co21["mask"]
         data_13co21[np.isnan(data_13co21)] = 0
 
         err_13co21,_ = imval_all(self.outemaps_mom0_13co21.replace("???",this_beam))
@@ -1624,7 +1624,7 @@ class ToolsNcol():
         y    = np.log10(data_13co21[cut])
         yerr = err_13co21[cut] / abs(data_13co21[cut])
         print(len(cut), len(x), len(dist_pc))
-        r    = dist_pc[cut]
+        r    = np.array(dist_pc)[cut]
 
         # plot
         fig = plt.figure(figsize=(13,10))
