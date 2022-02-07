@@ -127,11 +127,13 @@ class ToolsNcol():
         self.ecube_13co10 = self.dir_raw + self._read_key("ecube_13co10")
         self.cube_13co21  = self.dir_raw + self._read_key("cube_13co21")
         self.ecube_13co21 = self.dir_raw + self._read_key("ecube_13co21")
-        #
+        
+        """
         self.cube_hcn10   = self.dir_raw + self._read_key("cube_hcn10")
         self.ecube_hcn10  = self.dir_raw + self._read_key("ecube_hcn10")
         self.cube_hcop10  = self.dir_raw + self._read_key("cube_hcop10")
         self.ecube_hcop10 = self.dir_raw + self._read_key("ecube_hcop10")
+        """
 
     def _set_output_fits(self):
         """
@@ -165,7 +167,7 @@ class ToolsNcol():
         self.outsimumom0_13co10   = self.dir_ready + self._read_key("outsimumom0_13co10")
         self.outsimumom0_13co21   = self.dir_ready + self._read_key("outsimumom0_13co21")
 
-        #
+        """
         self.outcubes_hcn10      = self.dir_ready + self._read_key("outcubes_hcn10")
         self.outecubes_hcn10     = self.dir_ready + self._read_key("outecubes_hcn10")
         self.outcubes_hcop10     = self.dir_ready + self._read_key("outcubes_hcop10")
@@ -182,6 +184,7 @@ class ToolsNcol():
         self.outemaps_hcn10_mom1  = self.dir_ready + self._read_key("outemaps_hcn10_mom1")
         self.outemaps_hcn10_mom2  = self.dir_ready + self._read_key("outemaps_hcn10_mom2")
         self.outemaps_hcn10_ratio = self.dir_ready + self._read_key("outemaps_hcn10_ratio")
+        """
 
     def _set_input_param(self):
         """
@@ -404,8 +407,8 @@ class ToolsNcol():
                 self.outpng_mom1.replace("???","60pc"),
                 self.outpng_mom2.replace("???","60pc"),
                 self.final_60pc_obs+"_tmp2.png",
-                self.box_map_nox,
-                self.box_map_noxy,
+                self.box_map,
+                self.box_map_noy,
                 delin=delin,
                 )
             combine_two_png(
@@ -427,8 +430,8 @@ class ToolsNcol():
                 self.outpng_13co_trot.replace("???","60pc"),
                 self.outpng_13co_ncol.replace("???","60pc"),
                 self.final_60pc_rot,
-                self.box_map_nox,
-                self.box_map_noxy,
+                self.box_map,
+                self.box_map_noy,
                 delin=delin,
                 )
 
@@ -452,8 +455,8 @@ class ToolsNcol():
                 self.outpng_emom1.replace("???","60pc"),
                 self.outpng_emom2.replace("???","60pc"),
                 self.final_60pc_obs_err+"_tmp2.png",
-                self.box_map_nox,
-                self.box_map_noxy,
+                self.box_map,
+                self.box_map_noy,
                 delin=delin,
                 )
             combine_two_png(
@@ -475,8 +478,8 @@ class ToolsNcol():
                 self.outpng_e13co_trot.replace("???","60pc"),
                 self.outpng_e13co_ncol.replace("???","60pc"),
                 self.final_60pc_rot_err,
-                self.box_map_nox,
-                self.box_map_noxy,
+                self.box_map,
+                self.box_map_noy,
                 delin=delin,
                 )
 
