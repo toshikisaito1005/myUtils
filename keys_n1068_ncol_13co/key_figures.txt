@@ -117,8 +117,8 @@ box_map_noxy        ,,,2225x1730+550+80
 #################
 cube_hcn10          ,,,ngc1068_b3_12m_hcn10_???.fits
 ecube_hcn10         ,,,ngc1068_b3_12m_hcn10_???_noise.fits
-cube_hcop10         ,,,ngc1068_b6_12m_hcop10_???.fits
-ecube_hcop10        ,,,ngc1068_b6_12m_hcop10_???_noise.fits
+cube_hcop10         ,,,ngc1068_b3_12m_hcop10_???.fits
+ecube_hcop10        ,,,ngc1068_b3_12m_hcop10_???_noise.fits
 #
 outcubes_hcn10       ,,,n1068_hcn10_???.cube.fits
 outcubes_hcop10      ,,,n1068_hcop10_???.cube.fits
