@@ -3435,10 +3435,10 @@ class ToolsNcol():
 
             # output
             fit_two_lines(
-                cube_hcn10,
                 cube_hcop10,
-                ecube_hcn10,
+                cube_hcn10,
                 ecube_hcop10,
+                ecube_hcn10,
                 ra_cnt=self.ra_agn,
                 dec_cnt=self.dec_agn,
                 snr=3.0,
@@ -3446,29 +3446,29 @@ class ToolsNcol():
                 )
 
             #
-            os.system("mv mom0_low.fits " + self.outmaps_mom0_hcn10.replace("???",this_beam))
-            os.system("mv mom0_high.fits " + self.outmaps_mom0_hcop10.replace("???",this_beam))
+            os.system("mv mom0_low.fits " + self.outmaps_mom0_hcop10.replace("???",this_beam))
+            os.system("mv mom0_high.fits " + self.outmaps_mom0_hcn10.replace("???",this_beam))
             os.system("mv mom1.fits " + self.outmaps_hcn10_mom1.replace("???",this_beam))
             os.system("mv mom2.fits " + self.outmaps_hcn10_mom2.replace("???",this_beam))
             os.system("mv ratio.fits " + self.outmaps_hcn10_ratio.replace("???",this_beam))
 
             #
-            os.system("mv emom0_low.fits " + self.outemaps_mom0_hcn10.replace("???",this_beam))
-            os.system("mv emom0_high.fits " + self.outemaps_mom0_hcop10.replace("???",this_beam))
+            os.system("mv emom0_low.fits " + self.outemaps_mom0_hcop10.replace("???",this_beam))
+            os.system("mv emom0_high.fits " + self.outemaps_mom0_hcn10.replace("???",this_beam))
             os.system("mv emom1.fits " + self.outemaps_hcn10_mom1.replace("???",this_beam))
             os.system("mv emom2.fits " + self.outemaps_hcn10_mom2.replace("???",this_beam))
             os.system("mv eratio.fits " + self.outemaps_hcn10_ratio.replace("???",this_beam))
 
             #
-            os.system("mv mom0_low_all.fits " + self.outmaps_mom0_hcn10.replace("???","all_"+this_beam))
-            os.system("mv mom0_high_all.fits " + self.outmaps_mom0_hcop10.replace("???","all_"+this_beam))
+            os.system("mv mom0_low_all.fits " + self.outmaps_mom0_hcop10.replace("???","all_"+this_beam))
+            os.system("mv mom0_high_all.fits " + self.outmaps_mom0_hcn10.replace("???","all_"+this_beam))
             os.system("mv mom1_all.fits " + self.outmaps_hcn10_mom1.replace("???","all_"+this_beam))
             os.system("mv mom2_all.fits " + self.outmaps_hcn10_mom2.replace("???","all_"+this_beam))
             os.system("mv ratio_all.fits " + self.outmaps_hcn10_ratio.replace("???","all_"+this_beam))
 
             #
-            os.system("mv emom0_low_all.fits " + self.outemaps_mom0_hcn10.replace("???","all_"+this_beam))
-            os.system("mv emom0_high_all.fits " + self.outemaps_mom0_hcop10.replace("???","all_"+this_beam))
+            os.system("mv emom0_low_all.fits " + self.outemaps_mom0_hcop10.replace("???","all_"+this_beam))
+            os.system("mv emom0_high_all.fits " + self.outemaps_mom0_hcn10.replace("???","all_"+this_beam))
             os.system("mv emom1_all.fits " + self.outemaps_hcn10_mom1.replace("???","all_"+this_beam))
             os.system("mv emom2_all.fits " + self.outemaps_hcn10_mom2.replace("???","all_"+this_beam))
             os.system("mv eratio_all.fits " + self.outemaps_hcn10_ratio.replace("???","all_"+this_beam))
