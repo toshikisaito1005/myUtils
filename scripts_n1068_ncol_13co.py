@@ -532,9 +532,9 @@ class ToolsNcol():
                 self.outpng_simumom0_13co10.replace(".png","_clip0_snr"+this_snr+".png").replace("mom0","emom0"),
                 self.outpng_simumom0_13co10.replace(".png","_clip3_snr"+this_snr+".png").replace("mom0","emom0"),
                 self.final_sim_emom0+"_tmp1.png",
-                self.box_map,
-                self.box_map,
-                self.box_map,
+                self.box_map_noxc,
+                self.box_map_noxyc,
+                self.box_map_noxyc,
                 delin=delin,
                 )
             combine_three_png(
@@ -542,9 +542,9 @@ class ToolsNcol():
                 self.outpng_simumom0_13co10.replace(".png","_clip0_masked_snr"+this_snr+".png").replace("mom0","emom0"),
                 self.outpng_simumom0_13co10.replace(".png","_clip3_masked_snr"+this_snr+".png").replace("mom0","emom0"),
                 self.final_sim_emom0+"_tmp2.png",
-                self.box_map,
-                self.box_map,
-                self.box_map,
+                self.box_map_noc,
+                self.box_map_noyc,
+                self.box_map_noy,
                 delin=delin,
                 )
             combine_two_png(
@@ -2905,6 +2905,7 @@ class ToolsNcol():
             [0,100],
             )
 
+        maxnoise = imstat(self.outsimumom0_13co10.replace(".fits","_noclip_snr10.fits").replace("mom0","emom0"))["max"]
         #############
         # do_noclip #
         #############
@@ -2917,14 +2918,13 @@ class ToolsNcol():
                 "(K km s$^{-1}$)",
                 [0,100],
                 )
-            maxval = imstat(self.outsimumom0_13co10.replace(".fits","_noclip_snr10.fits").replace("mom0","emom0"))["max"]
             self._showcase_one(
                 self.outsimumom0_13co10.replace(".fits","_noclip_snr10.fits").replace("mom0","emom0"),
                 imcontour1,
                 self.outpng_simumom0_13co10.replace(".png","_noclip_snr10.png").replace("mom0","emom0"),
                 "noclip: $\sigma_{\mathrm{err}}$(mom0$_{\mathrm{SNR=10}}$)",
                 "(K km s$^{-1}$)",
-                [0,maxval],
+                [0,maxnoise],
                 )
 
             self._showcase_one(
@@ -2935,14 +2935,13 @@ class ToolsNcol():
                 "(K km s$^{-1}$)",
                 [0,250],
                 )
-            maxval = imstat(self.outsimumom0_13co10.replace(".fits","_noclip_snr25.fits").replace("mom0","emom0"))["max"]
             self._showcase_one(
                 self.outsimumom0_13co10.replace(".fits","_noclip_snr25.fits").replace("mom0","emom0"),
                 imcontour1,
                 self.outpng_simumom0_13co10.replace(".png","_noclip_snr25.png").replace("mom0","emom0"),
                 "noclip: $\sigma_{\mathrm{err}}$(mom0$_{\mathrm{SNR=25}}$)",
                 "(K km s$^{-1}$)",
-                [0,maxval],
+                [0,maxnoise],
                 )
 
             self._showcase_one(
@@ -2953,14 +2952,13 @@ class ToolsNcol():
                 "(K km s$^{-1}$)",
                 [0,500],
                 )
-            maxval = imstat(self.outsimumom0_13co10.replace(".fits","_noclip_snr50.fits").replace("mom0","emom0"))["max"]
             self._showcase_one(
                 self.outsimumom0_13co10.replace(".fits","_noclip_snr50.fits").replace("mom0","emom0"),
                 imcontour1,
                 self.outpng_simumom0_13co10.replace(".png","_noclip_snr50.png").replace("mom0","emom0"),
                 "noclip: $\sigma_{\mathrm{err}}$(mom0$_{\mathrm{SNR=50}}$)",
                 "(K km s$^{-1}$)",
-                [0,maxval],
+                [0,maxnoise],
                 )
 
         ###############
@@ -2975,14 +2973,13 @@ class ToolsNcol():
                 "(K km s$^{-1}$)",
                 [0,100],
                 )
-            maxval = imstat(self.outsimumom0_13co10.replace(".fits","_clip0_snr10.fits").replace("mom0","emom0"))["max"]
             self._showcase_one(
                 self.outsimumom0_13co10.replace(".fits","_clip0_snr10.fits").replace("mom0","emom0"),
                 imcontour1,
                 self.outpng_simumom0_13co10.replace(".png","_clip0_snr10.png").replace("mom0","emom0"),
                 "clip0$\sigma$: $\sigma_{\mathrm{err}}$(mom0$_{\mathrm{SNR=10}}$)",
                 "(K km s$^{-1}$)",
-                [0,maxval],
+                [0,maxnoise],
                 )
 
             self._showcase_one(
@@ -2993,14 +2990,13 @@ class ToolsNcol():
                 "(K km s$^{-1}$)",
                 [0,250],
                 )
-            maxval = imstat(self.outsimumom0_13co10.replace(".fits","_clip0_snr25.fits").replace("mom0","emom0"))["max"]
             self._showcase_one(
                 self.outsimumom0_13co10.replace(".fits","_clip0_snr25.fits").replace("mom0","emom0"),
                 imcontour1,
                 self.outpng_simumom0_13co10.replace(".png","_clip0_snr25.png").replace("mom0","emom0"),
                 "clip0$\sigma$: $\sigma_{\mathrm{err}}$(mom0$_{\mathrm{SNR=25}}$)",
                 "(K km s$^{-1}$)",
-                [0,maxval],
+                [0,maxnoise],
                 )
 
             self._showcase_one(
@@ -3011,14 +3007,13 @@ class ToolsNcol():
                 "(K km s$^{-1}$)",
                 [0,500],
                 )
-            maxval = imstat(self.outsimumom0_13co10.replace(".fits","_clip0_snr50.fits").replace("mom0","emom0"))["max"]
             self._showcase_one(
                 self.outsimumom0_13co10.replace(".fits","_clip0_snr50.fits").replace("mom0","emom0"),
                 imcontour1,
                 self.outpng_simumom0_13co10.replace(".png","_clip0_snr50.png").replace("mom0","emom0"),
                 "clip0$\sigma$: $\sigma_{\mathrm{err}}$(mom0$_{\mathrm{SNR=50}}$)",
                 "(K km s$^{-1}$)",
-                [0,maxval],
+                [0,maxnoise],
                 )
 
         ###########
@@ -3033,14 +3028,13 @@ class ToolsNcol():
                 "(K km s$^{-1}$)",
                 [0,100],
                 )
-            maxval = imstat(self.outsimumom0_13co10.replace(".fits","_clip3_snr10.fits").replace("mom0","emom0"))["max"]
             self._showcase_one(
                 self.outsimumom0_13co10.replace(".fits","_clip3_snr10.fits").replace("mom0","emom0"),
                 imcontour1,
                 self.outpng_simumom0_13co10.replace(".png","_clip3_snr10.png").replace("mom0","emom0"),
                 "clip3$\sigma$: $\sigma_{\mathrm{err}}$(mom0$_{\mathrm{SNR=10}}$)",
                 "(K km s$^{-1}$)",
-                [0,maxval],
+                [0,maxnoise],
                 )
 
             self._showcase_one(
@@ -3051,14 +3045,13 @@ class ToolsNcol():
                 "(K km s$^{-1}$)",
                 [0,250],
                 )
-            maxval = imstat(self.outsimumom0_13co10.replace(".fits","_clip3_snr25.fits").replace("mom0","emom0"))["max"]
             self._showcase_one(
                 self.outsimumom0_13co10.replace(".fits","_clip3_snr25.fits").replace("mom0","emom0"),
                 imcontour1,
                 self.outpng_simumom0_13co10.replace(".png","_clip3_snr25.png").replace("mom0","emom0"),
                 "clip3$\sigma$: $\sigma_{\mathrm{err}}$(mom0$_{\mathrm{SNR=25}}$)",
                 "(K km s$^{-1}$)",
-                [0,maxval],
+                [0,maxnoise],
                 )
 
             self._showcase_one(
@@ -3069,14 +3062,13 @@ class ToolsNcol():
                 "(K km s$^{-1}$)",
                 [0,500],
                 )
-            maxval = imstat(self.outsimumom0_13co10.replace(".fits","_clip3_snr50.fits").replace("mom0","emom0"))["max"]
             self._showcase_one(
                 self.outsimumom0_13co10.replace(".fits","_clip3_snr50.fits").replace("mom0","emom0"),
                 imcontour1,
                 self.outpng_simumom0_13co10.replace(".png","_clip3_snr50.png").replace("mom0","emom0"),
                 "clip3$\sigma$: $\sigma_{\mathrm{err}}$(mom0$_{\mathrm{SNR=50}}$)",
                 "(K km s$^{-1}$)",
-                [0,maxval],
+                [0,maxnoise],
                 )
 
         ##################
@@ -3091,14 +3083,13 @@ class ToolsNcol():
                 "(K km s$^{-1}$)",
                 [0,100],
                 )
-            maxval = imstat(self.outsimumom0_13co10.replace(".fits","_noclip_masked_snr10.fits").replace("mom0","emom0"))["max"]
             self._showcase_one(
                 self.outsimumom0_13co10.replace(".fits","_noclip_masked_snr10.fits").replace("mom0","emom0"),
                 imcontour1,
                 self.outpng_simumom0_13co10.replace(".png","_noclip_masked_snr10.png").replace("mom0","emom0"),
                 "noclip+masking: $\sigma_{\mathrm{err}}$(mom0$_{\mathrm{SNR=10}}$)",
                 "(K km s$^{-1}$)",
-                [0,maxval],
+                [0,maxnoise],
                 )
 
             self._showcase_one(
@@ -3109,14 +3100,13 @@ class ToolsNcol():
                 "(K km s$^{-1}$)",
                 [0,250],
                 )
-            maxval = imstat(self.outsimumom0_13co10.replace(".fits","_noclip_masked_snr25.fits").replace("mom0","emom0"))["max"]
             self._showcase_one(
                 self.outsimumom0_13co10.replace(".fits","_noclip_masked_snr25.fits").replace("mom0","emom0"),
                 imcontour1,
                 self.outpng_simumom0_13co10.replace(".png","_noclip_masked_snr25.png").replace("mom0","emom0"),
                 "noclip+masking: $\sigma_{\mathrm{err}}$(mom0$_{\mathrm{SNR=25}}$)",
                 "(K km s$^{-1}$)",
-                [0,maxval],
+                [0,maxnoise],
                 )
 
             self._showcase_one(
@@ -3127,14 +3117,13 @@ class ToolsNcol():
                 "(K km s$^{-1}$)",
                 [0,500],
                 )
-            maxval = imstat(self.outsimumom0_13co10.replace(".fits","_noclip_masked_snr50.fits").replace("mom0","emom0"))["max"]
             self._showcase_one(
                 self.outsimumom0_13co10.replace(".fits","_noclip_masked_snr50.fits").replace("mom0","emom0"),
                 imcontour1,
                 self.outpng_simumom0_13co10.replace(".png","_noclip_masked_snr50.png").replace("mom0","emom0"),
                 "noclip+masking: $\sigma_{\mathrm{err}}$(mom0$_{\mathrm{SNR=50}}$)",
                 "(K km s$^{-1}$)",
-                [0,maxval],
+                [0,maxnoise],
                 )
 
         ####################
@@ -3149,14 +3138,13 @@ class ToolsNcol():
                 "(K km s$^{-1}$)",
                 [0,100],
                 )
-            maxval = imstat(self.outsimumom0_13co10.replace(".fits","_clip0_masked_snr10.fits").replace("mom0","emom0"))["max"]
             self._showcase_one(
                 self.outsimumom0_13co10.replace(".fits","_clip0_masked_snr10.fits").replace("mom0","emom0"),
                 imcontour1,
                 self.outpng_simumom0_13co10.replace(".png","_clip0_masked_snr10.png").replace("mom0","emom0"),
                 "clip0$\sigma$+masking: $\sigma_{\mathrm{err}}$(mom0$_{\mathrm{SNR=10}}$)",
                 "(K km s$^{-1}$)",
-                [0,maxval],
+                [0,maxnoise],
                 )
 
             self._showcase_one(
@@ -3167,14 +3155,13 @@ class ToolsNcol():
                 "(K km s$^{-1}$)",
                 [0,250],
                 )
-            maxval = imstat(self.outsimumom0_13co10.replace(".fits","_clip0_masked_snr25.fits").replace("mom0","emom0"))["max"]
             self._showcase_one(
                 self.outsimumom0_13co10.replace(".fits","_clip0_masked_snr25.fits").replace("mom0","emom0"),
                 imcontour1,
                 self.outpng_simumom0_13co10.replace(".png","_clip0_masked_snr25.png").replace("mom0","emom0"),
                 "clip0$\sigma$+masking: $\sigma_{\mathrm{err}}$(mom0$_{\mathrm{SNR=25}}$)",
                 "(K km s$^{-1}$)",
-                [0,maxval],
+                [0,maxnoise],
                 )
 
             self._showcase_one(
@@ -3185,14 +3172,13 @@ class ToolsNcol():
                 "(K km s$^{-1}$)",
                 [0,500],
                 )
-            maxval = imstat(self.outsimumom0_13co10.replace(".fits","_clip0_masked_snr50.fits").replace("mom0","emom0"))["max"]
             self._showcase_one(
                 self.outsimumom0_13co10.replace(".fits","_clip0_masked_snr50.fits").replace("mom0","emom0"),
                 imcontour1,
                 self.outpng_simumom0_13co10.replace(".png","_clip0_masked_snr50.png").replace("mom0","emom0"),
                 "clip0$\sigma$+masking: $\sigma_{\mathrm{err}}$(mom0$_{\mathrm{SNR=50}}$)",
                 "(K km s$^{-1}$)",
-                [0,maxval],
+                [0,maxnoise],
                 )
 
         ################
@@ -3207,14 +3193,13 @@ class ToolsNcol():
                 "(K km s$^{-1}$)",
                 [0,100],
                 )
-            maxval = imstat(self.outsimumom0_13co10.replace(".fits","_clip3_masked_snr10.fits").replace("mom0","emom0"))["max"]
             self._showcase_one(
                 self.outsimumom0_13co10.replace(".fits","_clip3_masked_snr10.fits").replace("mom0","emom0"),
                 imcontour1,
                 self.outpng_simumom0_13co10.replace(".png","_clip3_masked_snr10.png").replace("mom0","emom0"),
                 "clip3$\sigma$+masking: $\sigma_{\mathrm{err}}$(mom0$_{\mathrm{SNR=10}}$)",
                 "(K km s$^{-1}$)",
-                [0,maxval],
+                [0,maxnoise],
                 )
 
             self._showcase_one(
@@ -3225,14 +3210,13 @@ class ToolsNcol():
                 "(K km s$^{-1}$)",
                 [0,250],
                 )
-            maxval = imstat(self.outsimumom0_13co10.replace(".fits","_clip3_masked_snr25.fits").replace("mom0","emom0"))["max"]
             self._showcase_one(
                 self.outsimumom0_13co10.replace(".fits","_clip3_masked_snr25.fits").replace("mom0","emom0"),
                 imcontour1,
                 self.outpng_simumom0_13co10.replace(".png","_clip3_masked_snr25.png").replace("mom0","emom0"),
                 "clip3$\sigma$+masking: $\sigma_{\mathrm{err}}$(mom0$_{\mathrm{SNR=25}}$)",
                 "(K km s$^{-1}$)",
-                [0,maxval],
+                [0,maxnoise],
                 )
 
             self._showcase_one(
@@ -3243,14 +3227,13 @@ class ToolsNcol():
                 "(K km s$^{-1}$)",
                 [0,500],
                 )
-            maxval = imstat(self.outsimumom0_13co10.replace(".fits","_clip3_masked_snr50.fits").replace("mom0","emom0"))["max"]
             self._showcase_one(
                 self.outsimumom0_13co10.replace(".fits","_clip3_masked_snr50.fits").replace("mom0","emom0"),
                 imcontour1,
                 self.outpng_simumom0_13co10.replace(".png","_clip3_masked_snr50.png").replace("mom0","emom0"),
                 "clip3$\sigma$+masking: $\sigma_{\mathrm{err}}$(mom0$_{\mathrm{SNR=50}}$)",
                 "(K km s$^{-1}$)",
-                [0,maxval],
+                [0,maxnoise],
                 )
 
     ############
