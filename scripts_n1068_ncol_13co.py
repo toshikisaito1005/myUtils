@@ -238,6 +238,7 @@ class ToolsNcol():
         self.outpng_13co10_vs_13co21_r = self.dir_products + self._read_key("outpng_13co10_vs_13co21_r")
         self.outpng_13co10_vs_13co21_t = self.dir_products + self._read_key("outpng_13co10_vs_13co21_t")
         self.outpng_13co10_vs_13co21_n = self.dir_products + self._read_key("outpng_13co10_vs_13co21_n")
+        self.outpng_trot_vs_int        = self.dir_products + self._read_key("outpng_trot_vs_int")
 
         # finals
         self.final_60pc_obs      = self.dir_final + self._read_key("final_60pc_obs")
@@ -1583,6 +1584,8 @@ class ToolsNcol():
 
     def plot_scatter(
         self,
+        plot_I_vs_I=False,
+        plot_T_vs_I=True,
         ):
         """
         References:
@@ -1593,42 +1596,144 @@ class ToolsNcol():
         taskname = self.modname + sys._getframe().f_code.co_name
         check_first(self.outmodelcube_13co10.replace(".fits","_snr10.fits"),taskname)
 
-        this_beam = "60pc"
-        lim       = [-0.4,2.3]
-        title     = "log$_{\mathrm{10}}$ $I_{\mathrm{^{13}CO(1-0)}}$ vs. log$_{\mathrm{10}}$ $I_{\mathrm{^{13}CO(2-1)}}$ at " + this_beam.replace("pc"," pc")
-        xlabel    = "log$_{\mathrm{10}}$ $I_{\mathrm{^{13}CO(1-0)}}$"
-        ylabel    = "log$_{\mathrm{10}}$ $I_{\mathrm{^{13}CO(2-1)}}$"
-        ximage    = self.outmaps_mom0_13co10.replace("???",this_beam)
-        xerrimage = self.outemaps_mom0_13co10.replace("???",this_beam)
-        yimage    = self.outmaps_mom0_13co21.replace("???",this_beam)
-        yerrimage = self.outemaps_mom0_13co21.replace("???",this_beam)
+        ###############
+        # plot_I_vs_I #
+        ###############
+        if plot_I_vs_I==True:
+            this_beam = "60pc"
+            lim       = [-0.4,2.3]
+            title     = "log$_{\mathrm{10}}$ $I_{\mathrm{^{13}CO(1-0)}}$ vs. log$_{\mathrm{10}}$ $I_{\mathrm{^{13}CO(2-1)}}$ at " + this_beam.replace("pc"," pc")
+            xlabel    = "log$_{\mathrm{10}}$ $I_{\mathrm{^{13}CO(1-0)}}$"
+            ylabel    = "log$_{\mathrm{10}}$ $I_{\mathrm{^{13}CO(2-1)}}$"
+            ximage    = self.outmaps_mom0_13co10.replace("???",this_beam)
+            xerrimage = self.outemaps_mom0_13co10.replace("???",this_beam)
+            yimage    = self.outmaps_mom0_13co21.replace("???",this_beam)
+            yerrimage = self.outemaps_mom0_13co21.replace("???",this_beam)
 
-        # cmap = distance
-        cblabel   = "Distance (kpc)"
-        cimage    = None
-        cerrimage = None
-        outpng    = self.outpng_13co10_vs_13co21_r
-        self._plot_a_scatter(ximage,xerrimage,yimage,yerrimage,cimage,cerrimage,outpng,lim,title,xlabel,ylabel,cblabel)
+            # cmap = distance
+            cblabel   = "Distance (kpc)"
+            cimage    = None
+            cerrimage = None
+            outpng    = self.outpng_13co10_vs_13co21_r
+            self._plot_scatter1(ximage,xerrimage,yimage,yerrimage,cimage,cerrimage,outpng,lim,title,xlabel,ylabel,cblabel)
 
-        # cmap = Trot
-        cblabel   = "$T_{\mathrm{rot}}$ (K)"
-        cimage    = self.outmaps_13co_trot.replace("???",this_beam)
-        cerrimage = self.outemaps_13co_trot.replace("???",this_beam)
-        outpng    = self.outpng_13co10_vs_13co21_t
-        self._plot_a_scatter(ximage,xerrimage,yimage,yerrimage,cimage,cerrimage,outpng,lim,title,xlabel,ylabel,cblabel,cmap="rainbow")
+            # cmap = Trot
+            cblabel   = "$T_{\mathrm{rot}}$ (K)"
+            cimage    = self.outmaps_13co_trot.replace("???",this_beam)
+            cerrimage = self.outemaps_13co_trot.replace("???",this_beam)
+            outpng    = self.outpng_13co10_vs_13co21_t
+            self._plot_scatter1(ximage,xerrimage,yimage,yerrimage,cimage,cerrimage,outpng,lim,title,xlabel,ylabel,cblabel,cmap="rainbow")
 
-        # cmap = log Ncol
-        cblabel   = "log$_{\mathrm{10}}$ $N_{\mathrm{^{13}CO}}$ (cm$^{-2}$)"
-        cimage    = self.outmaps_13co_ncol.replace("???",this_beam)
-        cerrimage = self.outemaps_13co_ncol.replace("???",this_beam)
-        outpng    = self.outpng_13co10_vs_13co21_n
-        self._plot_a_scatter(ximage,xerrimage,yimage,yerrimage,cimage,cerrimage,outpng,lim,title,xlabel,ylabel,cblabel,cmap="rainbow")
+            # cmap = log Ncol
+            cblabel   = "log$_{\mathrm{10}}$ $N_{\mathrm{^{13}CO}}$ (cm$^{-2}$)"
+            cimage    = self.outmaps_13co_ncol.replace("???",this_beam)
+            cerrimage = self.outemaps_13co_ncol.replace("???",this_beam)
+            outpng    = self.outpng_13co10_vs_13co21_n
+            self._plot_scatter1(ximage,xerrimage,yimage,yerrimage,cimage,cerrimage,outpng,lim,title,xlabel,ylabel,cblabel,cmap="rainbow")
 
-    ################
-    # plot_scatter #
-    ################
+        ###############
+        # plot_T_vs_I #
+        ###############
+        if plot_T_vs_I==True:
+            this_beam  = "60pc"
+            xlim       = [-0.4,2.3]
+            ylim       = [0,12]
+            title      = None
+            xlabel     = "log$_{\mathrm{10}}$ $I$"
+            ylabel     = "log$_{\mathrm{10}}$ $I$"
+            x1image    = self.outmaps_mom0_13co10.replace("???",this_beam)
+            x1errimage = self.outemaps_mom0_13co10.replace("???",this_beam)
+            x2image    = self.outmaps_mom0_13co21.replace("???",this_beam)
+            x2errimage = self.outemaps_mom0_13co21.replace("???",this_beam)
+            yimage     = self.outmaps_13co_trot.replace("???",this_beam)
+            yerrimage  = self.outemaps_13co_trot.replace("???",this_beam)
+            outpng     = self.outpng_trot_vs_int
+            self._plot_scatter2(x1image,x1errimage,x2image,x2errimage,yimage,yerrimage,outpng,xlim,ylim,title,xlabel,ylabel)
 
-    def _plot_a_scatter(
+    ##################
+    # _plot_scatter2 #
+    ##################
+
+    def _plot_scatter2(
+        self,
+        x1image,
+        x1errimage,
+        x2image,
+        x2errimage,
+        timage,
+        terrimage,
+        outpng,
+        xlim,
+        ylim,
+        title,
+        xlabel,
+        ylabel,
+        snr=3.0,
+        ):
+        # x1
+        data_x1,_ = imval_all(x1image)
+        data_x1   = data_x1["data"] * data_x1["mask"]
+        data_x1   = data_x1.flatten()
+        data_x1[np.isnan(data_x1)] = 0
+
+        err_x1,_ = imval_all(x1errimage)
+        err_x1   = err_x1["data"] * err_x1["mask"]
+        err_x1   = err_x1.flatten()
+        err_x1[np.isnan(err_x1)] = 0
+
+        # x2
+        data_x2,_ = imval_all(x2image)
+        data_x2   = data_x2["data"] * data_x2["mask"]
+        data_x2   = data_x2.flatten()
+        data_x2[np.isnan(data_x2)] = 0
+
+        err_x2,_ = imval_all(x2errimage)
+        err_x2   = err_x2["data"] * err_x2["mask"]
+        err_x2   = err_x2.flatten()
+        err_x2[np.isnan(err_x2)] = 0
+
+        # y
+        data_y,_ = imval_all(yimage)
+        data_y   = data_y["data"] * data_y["mask"]
+        data_y   = data_y.flatten()
+        data_y[np.isnan(data_y)] = 0
+
+        err_y,_ = imval_all(yerrimage)
+        err_y   = err_y["data"] * err_y["mask"]
+        err_y   = err_y.flatten()
+        err_y[np.isnan(err_y)] = 0
+
+        # prepare
+        cut   = np.where((data_x1>abs(err_x1)*snr)&(data_x2>abs(err_x2)*snr)&(data_y>abs(err_y)*snr))
+        x1    = np.log10(data_x1[cut])
+        x1err = err_x1[cut] / abs(data_x1[cut])
+        x2    = np.log10(data_x2[cut])
+        x2err = err_x2[cut] / abs(data_x2[cut])
+        y     = data_y[cut]
+        yerr  = err_y[cut]
+
+        # plot
+        fig = plt.figure(figsize=(13,10))
+        gs  = gridspec.GridSpec(nrows=10, ncols=10)
+        ax1 = plt.subplot(gs[0:10,0:10])
+        ad  = [0.215,0.83,0.10,0.90]
+        myax_set(ax1, "both", lim, lim, title, xlabel, ylabel, adjust=ad)
+
+        ax1.scatter(x1, y, c="deepskyblue", lw=0, s=20, zorder=1e9)
+        ax1.errorbar(x1, y, x1err, yerr, lw=1, capsize=0, color="deepskyblue", linestyle="None")
+
+        ax1.scatter(x2, y, c="tomato", lw=0, s=20, zorder=1e9)
+        ax1.errorbar(x2, y, x1err, yerr, lw=1, capsize=0, color="tomato", linestyle="None")
+
+        # save
+        os.system("rm -rf " + outpng)
+        plt.savefig(outpng, dpi=self.fig_dpi)
+
+    ##################
+    # _plot_scatter1 #
+    ##################
+
+    def _plot_scatter1(
         self,
         ximage,
         xerrimage,
@@ -1712,7 +1817,7 @@ class ToolsNcol():
         myax_set(ax1, "both", lim, lim, title, xlabel, ylabel, adjust=ad)
 
         cs = ax1.scatter(x, y, c=c, cmap=cmap, lw=0, s=20, zorder=1e9)
-        plt.errorbar(x, y, xerr, yerr, lw=1, capsize=0, color="grey", linestyle="None")
+        ax1.errorbar(x, y, xerr, yerr, lw=1, capsize=0, color="grey", linestyle="None")
 
         # colorbar
         cax = fig.add_axes([0.25, 0.81, 0.33, 0.04])

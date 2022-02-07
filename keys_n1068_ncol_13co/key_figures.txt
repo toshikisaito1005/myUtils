@@ -86,20 +86,20 @@ r_sbr_as            ,,,10.0
 # output png and txt #
 ######################
 # png files
-outpng_mom0_13co10     ,,,fig_map_mom0_13co10_???.png
-outpng_mom0_13co21     ,,,fig_map_mom0_13co21_???.png
-outpng_mom1            ,,,fig_map_mom1_???.png
-outpng_mom2            ,,,fig_map_mom2_???.png
-outpng_ratio           ,,,fig_map_ratio_???.png
-outpng_13co_trot       ,,,fig_map_trot_???.png
-outpng_13co_ncol       ,,,fig_map_ncol_???.png
-outpng_emom0_13co10    ,,,fig_map_emom0_13co10_???.png
-outpng_emom0_13co21    ,,,fig_map_emom0_13co21_???.png
-outpng_emom1           ,,,fig_map_emom1_???.png
-outpng_emom2           ,,,fig_map_emom2_???.png
-outpng_eratio          ,,,fig_map_eratio_???.png
-outpng_e13co_trot      ,,,fig_map_etrot_???.png
-outpng_e13co_ncol      ,,,fig_map_encol_???.png
+outpng_mom0_13co10        ,,,fig_map_mom0_13co10_???.png
+outpng_mom0_13co21        ,,,fig_map_mom0_13co21_???.png
+outpng_mom1               ,,,fig_map_mom1_???.png
+outpng_mom2               ,,,fig_map_mom2_???.png
+outpng_ratio              ,,,fig_map_ratio_???.png
+outpng_13co_trot          ,,,fig_map_trot_???.png
+outpng_13co_ncol          ,,,fig_map_ncol_???.png
+outpng_emom0_13co10       ,,,fig_map_emom0_13co10_???.png
+outpng_emom0_13co21       ,,,fig_map_emom0_13co21_???.png
+outpng_emom1              ,,,fig_map_emom1_???.png
+outpng_emom2              ,,,fig_map_emom2_???.png
+outpng_eratio             ,,,fig_map_eratio_???.png
+outpng_e13co_trot         ,,,fig_map_etrot_???.png
+outpng_e13co_ncol         ,,,fig_map_encol_???.png
 outpng_modelmom0_13co10   ,,,fig_map_modelmom0_13co10.png
 outpng_modelmom0_13co21   ,,,fig_map_modelmom0_13co21.png
 outpng_simumom0_13co10    ,,,fig_map_simumom0_13co10.png
@@ -108,15 +108,16 @@ outpng_simumom0_13co21    ,,,fig_map_simumom0_13co21.png
 outpng_13co10_vs_13co21_r ,,,fig_scatter_13co10_vs_13co21_c_dist.png
 outpng_13co10_vs_13co21_t ,,,fig_scatter_13co10_vs_13co21_c_trot.png
 outpng_13co10_vs_13co21_n ,,,fig_scatter_13co10_vs_13co21_c_ncol.png
+outpng_trot_vs_int        ,,,fig_scatter_trot_vs_int.png
 # box for imagemajick
-box_map             ,,,2225x1870+335+80
-box_map_nox         ,,,2225x1730+335+80
-box_map_noy         ,,,2225x1870+550+80
-box_map_noxy        ,,,2225x1730+550+80
-box_map_noc         ,,,1825x1870+335+80
-box_map_noxc        ,,,1825x1730+335+80
-box_map_noyc        ,,,1625x1870+550+80
-box_map_noxyc       ,,,1625x1730+550+80
+box_map                   ,,,2225x1870+335+80
+box_map_nox               ,,,2225x1730+335+80
+box_map_noy               ,,,2225x1870+550+80
+box_map_noxy              ,,,2225x1730+550+80
+box_map_noc               ,,,1825x1870+335+80
+box_map_noxc              ,,,1825x1730+335+80
+box_map_noyc              ,,,1625x1870+550+80
+box_map_noxyc             ,,,1625x1730+550+80
 
 #######
 # end #
@@ -125,10 +126,10 @@ box_map_noxyc       ,,,1625x1730+550+80
 #################
 # hcn10 hcnop10 #
 #################
-cube_hcn10          ,,,ngc1068_b3_12m_hcn10_???.fits
-ecube_hcn10         ,,,ngc1068_b3_12m_hcn10_???_noise.fits
-cube_hcop10         ,,,ngc1068_b3_12m_hcop10_???.fits
-ecube_hcop10        ,,,ngc1068_b3_12m_hcop10_???_noise.fits
+cube_hcn10           ,,,ngc1068_b3_12m_hcn10_???.fits
+ecube_hcn10          ,,,ngc1068_b3_12m_hcn10_???_noise.fits
+cube_hcop10          ,,,ngc1068_b3_12m_hcop10_???.fits
+ecube_hcop10         ,,,ngc1068_b3_12m_hcop10_???_noise.fits
 #
 outcubes_hcn10       ,,,n1068_hcn10_???.cube.fits
 outcubes_hcop10      ,,,n1068_hcop10_???.cube.fits
