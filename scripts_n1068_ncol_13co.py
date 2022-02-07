@@ -1638,10 +1638,10 @@ class ToolsNcol():
         if plot_phys_vs_I==True:
             this_beam  = "60pc"
             xlim       = [-0.4,2.3]
-            ylim       = [2,13]
-            title      = "log$_{\mathrm{10}}$ $I_{\mathrm{^{13}CO}}$ vs. $T_{\mathrm{rot}}$"
+            ylim       = [np.log10(2),np.log10(13)]
+            title      = "log$_{\mathrm{10}}$ $I_{\mathrm{^{13}CO}}$ vs. log$_{\mathrm{10}}$ $T_{\mathrm{rot}}$"
             xlabel     = "log$_{\mathrm{10}}$ $I_{\mathrm{^{13}CO}}$ (K km s$^{-1}$)"
-            ylabel     = "$T_{\mathrm{rot}}$ (K)"
+            ylabel     = "log$_{\mathrm{10}}$ $T_{\mathrm{rot}}$ (K)"
             x1image    = self.outmaps_mom0_13co10.replace("???",this_beam)
             x1errimage = self.outemaps_mom0_13co10.replace("???",this_beam)
             x2image    = self.outmaps_mom0_13co21.replace("???",this_beam)
@@ -1649,7 +1649,7 @@ class ToolsNcol():
             yimage     = self.outmaps_13co_trot.replace("???",this_beam)
             yerrimage  = self.outemaps_13co_trot.replace("???",this_beam)
             outpng     = self.outpng_trot_vs_int
-            self._plot_scatter2(x1image,x1errimage,x2image,x2errimage,yimage,yerrimage,outpng,xlim,ylim,title,xlabel,ylabel)
+            self._plot_scatter2(x1image,x1errimage,x2image,x2errimage,yimage,yerrimage,outpng,xlim,ylim,title,xlabel,ylabel,colorlog=True)
 
             this_beam  = "60pc"
             xlim       = [-0.4,2.3]
@@ -1685,6 +1685,7 @@ class ToolsNcol():
         xlabel,
         ylabel,
         snr=3.0,
+        colorlog=False,
         ):
         # x1
         data_x1,_ = imval_all(x1image)
@@ -1727,6 +1728,10 @@ class ToolsNcol():
         x2err = err_x2[cut] / abs(data_x2[cut])
         y     = data_y[cut]
         yerr  = err_y[cut]
+
+        if colorlog==True:
+            y    = np.log10(y)
+            yerr = yerr / abs(y)
 
         # binned
         n,_   = np.histogram(x1, bins=10, range=[np.min(x1),np.max(x1)])
