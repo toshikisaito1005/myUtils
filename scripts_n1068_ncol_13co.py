@@ -1589,52 +1589,50 @@ class ToolsNcol():
         taskname = self.modname + sys._getframe().f_code.co_name
         check_first(self.outmodelcube_13co10.replace(".fits","_snr10.fits"),taskname)
 
+        this_beam  = "60pc"
+
+        # 13co10
+        data_13co10,box = imval_all(self.outmaps_mom0_13co10.replace("???",this_beam))
+        data_13co10     = data_13co10["data"] * data_13co10["mask"]
+        data_13co10[np.isnan(data_13co10)] = 0
+
+        err_13co10,_ = imval_all(self.outemaps_mom0_13co10.replace("???",this_beam))
+        err_13co10   = err_13co10["data"] * err_13co10["mask"]
+        err_13co10[np.isnan(err_13co10)] = 0
+
+        # 13co21
+        data_13co21,box = imval_all(self.outmaps_mom0_13co21.replace("???",this_beam))
+        data_13co21     = data_13co21["data"] * data_13co21["mask"]
+        data_13co21[np.isnan(data_13co21)] = 0
+
+        err_13co21,_ = imval_all(self.outemaps_mom0_13co21.replace("???",this_beam))
+        err_13co21   = err_13co21["data"] * err_13co21["mask"]
+        err_13co21[np.isnan(err_13co21)] = 0
+
+        # coords
+        data_coords = imval(self.outmaps_mom0_13co10.replace("???",this_beam),box=box)["coords"]
+        ra_deg      = data_coords[:,:,0] * 180/np.pi
+        ra_deg      = ra_deg.flatten()
+        dec_deg     = data_coords[:,:,1] * 180/np.pi
+        dec_deg     = dec_deg.flatten()
+        dist_pc,_   = get_reldist_pc(ra_deg, dec_deg, self.ra_agn, self.dec_agn, self.scale_pc, 0, 0)
+
+        # prepare
+        cut  = np.where((data_13co10>abs(err_13co10)*snr)&(data_13co21>abs(err_13co21)*snr))
+        x    = np.log10(data_13co10[cut])
+        xerr = err_13co10[cut] / abs(data_13co10[cut])
+        y    = np.log10(data_13co21[cut])
+        yerr = err_13co21[cut] / abs(data_13co21[cut])
+        r    = dist_pc[cut]
+
+        # plot
         fig = plt.figure(figsize=(13,10))
         gs = gridspec.GridSpec(nrows=10, ncols=10)
         ax1 = plt.subplot(gs[0:10,0:10])
         ad = [0.215,0.83,0.10,0.90]
         myax_set(ax1, "both", None, None, None, "13co10", "13co21", adjust=ad)
 
-        for i in range(len(["60pc"])): # for i in range(len(self.beams)):
-            this_beam  = self.beams[i]
-            this_color = cm.rainbow( (i+1)/float(len(self.beams)) )
-
-            # 13co10
-            data_13co10,box = imval_all(self.outmaps_mom0_13co10.replace("???",this_beam))
-            data_13co10     = data_13co10["data"] * data_13co10["mask"]
-            data_13co10[np.isnan(data_13co10)] = 0
-
-            err_13co10,_ = imval_all(self.outemaps_mom0_13co10.replace("???",this_beam))
-            err_13co10   = err_13co10["data"] * err_13co10["mask"]
-            err_13co10[np.isnan(err_13co10)] = 0
-
-            # 13co21
-            data_13co21,box = imval_all(self.outmaps_mom0_13co21.replace("???",this_beam))
-            data_13co21     = data_13co21["data"] * data_13co21["mask"]
-            data_13co21[np.isnan(data_13co21)] = 0
-
-            err_13co21,_ = imval_all(self.outemaps_mom0_13co21.replace("???",this_beam))
-            err_13co21   = err_13co21["data"] * err_13co21["mask"]
-            err_13co21[np.isnan(err_13co21)] = 0
-
-            # coords
-            data_coords = imval(self.outmaps_mom0_13co10.replace("???",this_beam),box=box)["coords"]
-            ra_deg      = data_coords[:,:,0] * 180/np.pi
-            ra_deg      = ra_deg.flatten()
-            dec_deg     = data_coords[:,:,1] * 180/np.pi
-            dec_deg     = dec_deg.flatten()
-            dist_pc,_   = get_reldist_pc(ra_deg, dec_deg, self.ra_agn, self.dec_agn, self.scale_pc, 0, 0)
-
-            # prepare
-            cut  = np.where((data_13co10>abs(err_13co10)*snr)&(data_13co21>abs(err_13co21)*snr))
-            x    = np.log10(data_13co10[cut])
-            xerr = err_13co10[cut] / abs(data_13co10[cut])
-            y    = np.log10(data_13co21[cut])
-            yerr = err_13co21[cut] / abs(data_13co21[cut])
-            r    = dist_pc[cut]
-
-            # plot
-            ax1.scatter(x, y, c=r, cmap="rainbow_r", lw=0, s=40, alpha=0.5) # ax1.scatter(x, y, lw=0, c=this_color, s=40, alpha=0.5)
+        ax1.scatter(x, y, c=r, cmap="rainbow_r", lw=0, s=40, alpha=0.5)
 
         os.system("rm -rf " + self.outpng_13co10_vs_13co21)
         plt.savefig(self.outpng_13co10_vs_13co21, dpi=self.fig_dpi)
