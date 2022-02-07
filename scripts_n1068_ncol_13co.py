@@ -1640,7 +1640,7 @@ class ToolsNcol():
         myax_set(ax1, "both", lim, lim, None, "13co10", "13co21", adjust=ad)
 
         sc = ax1.scatter(x, y, c=r, cmap="rainbow_r", lw=0, s=20, zorder=1e9)
-        plt.errorbar(x, y, xerr, yerr, lw=1, capsize=0, color="grey")
+        plt.errorbar(x, y, xerr, yerr, lw=1, capsize=0, color="grey", linestyle="None")
 
         """
         clb   = plt.colorbar(sc)
