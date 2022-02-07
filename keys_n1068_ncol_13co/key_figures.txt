@@ -124,9 +124,9 @@ box_map_noxyc             ,,,1625x1730+550+80
 # end #
 #######
 
-#################
-# hcn10 hcnop10 #
-#################
+##########################
+# hcn10 hcnop10 exercise #
+##########################
 cube_hcn10           ,,,ngc1068_b3_12m_hcn10_???.fits
 ecube_hcn10          ,,,ngc1068_b3_12m_hcn10_???_noise.fits
 cube_hcop10          ,,,ngc1068_b3_12m_hcop10_???.fits
