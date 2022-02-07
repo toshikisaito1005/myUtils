@@ -332,13 +332,13 @@ class ToolsNcol():
         delin                 = False,
         do_all                = False,
         #
-        do_final_60pc_obs     = True,
-        do_final_60pc_rot     = True,
+        do_final_60pc_obs     = False,
+        do_final_60pc_rot     = False,
         # appendix_err
-        do_final_60pc_err     = True,
-        do_final_sim_mom0     = False,
-        do_final_sim_emom0    = False,
-        #
+        do_final_60pc_err     = False,
+        do_final_sim_mom0     = True,
+        do_final_sim_emom0    = True,
+        # supplement
         do_final_13co10_mom0  = False,
         do_final_13co21_mom0  = False,
         do_final_ratio        = False,
@@ -433,6 +433,9 @@ class ToolsNcol():
                 delin=delin,
                 )
 
+        ############
+        # appendix #
+        ############
         if do_final_60pc_err==True:
             print("############################")
             print("# create do_final_60pc_err #")
@@ -479,15 +482,16 @@ class ToolsNcol():
                 )
             os.system("rm -rf " + self.final_60pc_err+"_tmp12.png")
 
+        this_snr = "50"
         if do_final_sim_mom0==True:
             print("############################")
             print("# create do_final_sim_mom0 #")
             print("############################")
 
             combine_three_png(
-                self.outpng_simumom0_13co10.replace(".png","_noclip_snr10.png"),
-                self.outpng_simumom0_13co10.replace(".png","_clip0_snr10.png"),
-                self.outpng_simumom0_13co10.replace(".png","_clip3_snr10.png"),
+                self.outpng_simumom0_13co10.replace(".png","_noclip_snr"+this_snr+".png"),
+                self.outpng_simumom0_13co10.replace(".png","_clip0_snr"+this_snr+".png"),
+                self.outpng_simumom0_13co10.replace(".png","_clip3_snr"+this_snr+".png"),
                 self.final_sim_mom0+"_tmp1.png",
                 self.box_map,
                 self.box_map,
@@ -495,9 +499,9 @@ class ToolsNcol():
                 delin=delin,
                 )
             combine_three_png(
-                self.outpng_simumom0_13co10.replace(".png","_noclip_masked_snr10.png"),
-                self.outpng_simumom0_13co10.replace(".png","_clip0_masked_snr10.png"),
-                self.outpng_simumom0_13co10.replace(".png","_clip3_masked_snr10.png"),
+                self.outpng_simumom0_13co10.replace(".png","_noclip_masked_snr"+this_snr+".png"),
+                self.outpng_simumom0_13co10.replace(".png","_clip0_masked_snr"+this_snr+".png"),
+                self.outpng_simumom0_13co10.replace(".png","_clip3_masked_snr"+this_snr+".png"),
                 self.final_sim_mom0+"_tmp2.png",
                 self.box_map,
                 self.box_map,
@@ -520,9 +524,9 @@ class ToolsNcol():
             print("#############################")
 
             combine_three_png(
-                self.outpng_simumom0_13co10.replace(".png","_noclip_snr10.png").replace("mom0","emom0"),
-                self.outpng_simumom0_13co10.replace(".png","_clip0_snr10.png").replace("mom0","emom0"),
-                self.outpng_simumom0_13co10.replace(".png","_clip3_snr10.png").replace("mom0","emom0"),
+                self.outpng_simumom0_13co10.replace(".png","_noclip_snr"+this_snr+".png").replace("mom0","emom0"),
+                self.outpng_simumom0_13co10.replace(".png","_clip0_snr"+this_snr+".png").replace("mom0","emom0"),
+                self.outpng_simumom0_13co10.replace(".png","_clip3_snr"+this_snr+".png").replace("mom0","emom0"),
                 self.final_sim_emom0+"_tmp1.png",
                 self.box_map,
                 self.box_map,
@@ -530,9 +534,9 @@ class ToolsNcol():
                 delin=delin,
                 )
             combine_three_png(
-                self.outpng_simumom0_13co10.replace(".png","_noclip_masked_snr10.png").replace("mom0","emom0"),
-                self.outpng_simumom0_13co10.replace(".png","_clip0_masked_snr10.png").replace("mom0","emom0"),
-                self.outpng_simumom0_13co10.replace(".png","_clip3_masked_snr10.png").replace("mom0","emom0"),
+                self.outpng_simumom0_13co10.replace(".png","_noclip_masked_snr"+this_snr+".png").replace("mom0","emom0"),
+                self.outpng_simumom0_13co10.replace(".png","_clip0_masked_snr"+this_snr+".png").replace("mom0","emom0"),
+                self.outpng_simumom0_13co10.replace(".png","_clip3_masked_snr"+this_snr+".png").replace("mom0","emom0"),
                 self.final_sim_emom0+"_tmp2.png",
                 self.box_map,
                 self.box_map,
@@ -549,6 +553,9 @@ class ToolsNcol():
                 axis="column",
                 )
 
+        ##############
+        # supplement #
+        ##############
         if do_final_13co10_mom0==True:
             print("############################")
             print("# create final_13co10_mom0 #")
