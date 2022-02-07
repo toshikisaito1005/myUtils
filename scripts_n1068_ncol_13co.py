@@ -1613,13 +1613,13 @@ class ToolsNcol():
         cblabel   = "$T_{\mathrm{rot}}$ (K)"
         cimage    = self.outmaps_13co_trot.replace("???",this_beam)
         outpng    = self.outpng_13co10_vs_13co21_t
-        self._plot_a_scatter(ximage,xerrimage,yimage,yerrimage,cimage,outpng,lim,title,xlabel,ylabel,cblabel)
+        self._plot_a_scatter(ximage,xerrimage,yimage,yerrimage,cimage,outpng,lim,title,xlabel,ylabel,cblabel,cmap="rainbow")
 
         # cmap = log Ncol
         cblabel   = "log$_{\mathrm{10}}$ $N_{\mathrm{^{13}CO}}$ (cm$^{-2}$)"
         cimage    = self.outmaps_13co_ncol.replace("???",this_beam)
         outpng    = self.outpng_13co10_vs_13co21_n
-        self._plot_a_scatter(ximage,xerrimage,yimage,yerrimage,cimage,outpng,lim,title,xlabel,ylabel,cblabel)
+        self._plot_a_scatter(ximage,xerrimage,yimage,yerrimage,cimage,outpng,lim,title,xlabel,ylabel,cblabel,cmap="rainbow")
 
     ################
     # plot_scatter #
@@ -1632,6 +1632,7 @@ class ToolsNcol():
         yimage,
         yerrimage,
         cimage,
+        cerrimage,
         outpng,
         lim,
         title,
@@ -1639,6 +1640,7 @@ class ToolsNcol():
         ylabel,
         cblabel,
         snr=3.0,
+        cmap="rainbow_r",
         ):
 
         # 13co10
@@ -1672,20 +1674,32 @@ class ToolsNcol():
             dec_deg     = dec_deg.flatten()
             dist_pc,_   = get_reldist_pc(ra_deg, dec_deg, self.ra_agn, self.dec_agn, self.scale_pc, 0, 0)
             c           = dist_pc / 1000.0
+            # prepare
+            cut  = np.where((data_13co10>abs(err_13co10)*snr)&(data_13co21>abs(err_13co21)*snr))
+            x    = np.log10(data_13co10[cut])
+            xerr = err_13co10[cut] / abs(data_13co10[cut])
+            y    = np.log10(data_13co21[cut])
+            yerr = err_13co21[cut] / abs(data_13co21[cut])
+            c    = np.array(c)[cut]
+
         else:
             data_c,_    = imval_all(cimage)
             data_c      = data_c["data"] * data_c["mask"]
             data_c      = data_c.flatten()
             data_c[np.isnan(data_c)] = 0
             c           = data_c
-
-        # prepare
-        cut  = np.where((data_13co10>abs(err_13co10)*snr)&(data_13co21>abs(err_13co21)*snr))
-        x    = np.log10(data_13co10[cut])
-        xerr = err_13co10[cut] / abs(data_13co10[cut])
-        y    = np.log10(data_13co21[cut])
-        yerr = err_13co21[cut] / abs(data_13co21[cut])
-        c    = np.array(c)[cut]
+            data_cerr,_ = imval_all(cerrimage)
+            data_cerr   = data_cerr["data"] * data_cerr["mask"]
+            data_cerr   = data_cerr.flatten()
+            data_cerr[np.isnan(data_cerr)] = 0
+            cerr        = data_cerr
+            # prepare
+            cut  = np.where((data_13co10>abs(err_13co10)*snr)&(data_13co21>abs(err_13co21)*snr)&(c>abs(cerr)*snr))
+            x    = np.log10(data_13co10[cut])
+            xerr = err_13co10[cut] / abs(data_13co10[cut])
+            y    = np.log10(data_13co21[cut])
+            yerr = err_13co21[cut] / abs(data_13co21[cut])
+            c    = np.array(c)[cut]
 
         # plot
         fig = plt.figure(figsize=(13,10))
@@ -1694,7 +1708,7 @@ class ToolsNcol():
         ad  = [0.215,0.83,0.10,0.90]
         myax_set(ax1, "both", lim, lim, title, xlabel, ylabel, adjust=ad)
 
-        cs = ax1.scatter(x, y, c=c, cmap="rainbow_r", lw=0, s=20, zorder=1e9)
+        cs = ax1.scatter(x, y, c=c, cmap=cmap, lw=0, s=20, zorder=1e9)
         plt.errorbar(x, y, xerr, yerr, lw=1, capsize=0, color="grey", linestyle="None")
 
         # colorbar
