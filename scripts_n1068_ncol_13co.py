@@ -3443,6 +3443,7 @@ class ToolsNcol():
                 dec_cnt=self.dec_agn,
                 snr=3.0,
                 snr_limit=3.0,
+                ratio_max=3.0,
                 )
 
             #
