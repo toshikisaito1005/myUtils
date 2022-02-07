@@ -1604,7 +1604,7 @@ class ToolsNcol():
             data_13co10     = data_13co10["data"] * data_13co10["mask"]
             data_13co10[np.isnan(data_13co10)] = 0
 
-            err_13co10,_ = imval_all(self.outmaps_emom0_13co10.replace("???",this_beam))
+            err_13co10,_ = imval_all(self.outemaps_mom0_13co10.replace("???",this_beam))
             err_13co10   = err_13co10["data"] * err_13co10["mask"]
             err_13co10[np.isnan(err_13co10)] = 0
 
@@ -1616,7 +1616,7 @@ class ToolsNcol():
             err_13co21,_ = imval_all(self.outmaps_emom0_13co21.replace("???",this_beam))
             err_13co21   = err_13co21["data"] * err_13co21["mask"]
             err_13co21[np.isnan(err_13co21)] = 0
-            
+
             # coords
             data_coords = imval(self.outmaps_mom0_13co10.replace("???",this_beam),box=box)["coords"]
             ra_deg      = data_coords[:,:,0] * 180/np.pi
