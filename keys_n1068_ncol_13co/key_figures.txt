@@ -104,6 +104,8 @@ outpng_modelmom0_13co10 ,,,fig_map_modelmom0_13co10.png
 outpng_modelmom0_13co21 ,,,fig_map_modelmom0_13co21.png
 outpng_simumom0_13co10  ,,,fig_map_simumom0_13co10.png
 outpng_simumom0_13co21  ,,,fig_map_simumom0_13co21.png
+# png files: plot
+outpng_13co10_vs_13co21 ,,,fig_scatter_13co10_vs_13co21.png
 # box for imagemajick
 box_map             ,,,2225x1870+335+80
 box_map_nox         ,,,2225x1730+335+80

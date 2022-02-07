@@ -198,6 +198,8 @@ class ToolsNcol():
         self.dec_agn     = float(self._read_key("dec_agn", "gal").split("deg")[0])
         self.ra_agn_str  = self._read_key("ra_agn", "gal")
         self.dec_agn_str = self._read_key("dec_agn", "gal")
+        self.pa          = float(self._read_key("pa", "gal"))
+        self.incl        = float(self._read_key("incl", "gal"))
         self.scale_pc    = float(self._read_key("scale", "gal"))
         self.scale_kpc   = self.scale_pc / 1000.
 
@@ -232,6 +234,8 @@ class ToolsNcol():
         self.outpng_modelmom0_13co21 = self.dir_products + self._read_key("outpng_modelmom0_13co21")
         self.outpng_simumom0_13co10  = self.dir_products + self._read_key("outpng_simumom0_13co10")
         self.outpng_simumom0_13co21  = self.dir_products + self._read_key("outpng_simumom0_13co21")
+
+        self.outpng_13co10_vs_13co21 = self.dir_products + self._read_key("outpng_13co10_vs_13co21")
 
         # finals
         self.final_60pc_obs      = self.dir_final + self._read_key("final_60pc_obs")
@@ -283,6 +287,7 @@ class ToolsNcol():
         # plot figures in paper
         plot_showcase    = False, # after do_fitting
         plot_showsim     = False, # after do_simulate_mom
+        plot_scatter     = False,
         do_imagemagick   = False,
         immagick_all     = False,
         # supplement
@@ -323,6 +328,9 @@ class ToolsNcol():
 
         if plot_showsim==True:
             self.showsim()
+
+        if plot_scatter==True:
+            self.plot_scatter()
 
         if do_imagemagick==True:
             self.immagick_figures(do_all=immagick_all,delin=False)
@@ -1566,6 +1574,68 @@ class ToolsNcol():
                 axis="column",
                 )
 
+    ################
+    # plot_scatter #
+    ################
+
+    def plot_scatter(
+        self,
+        snr=3.0,
+        ):
+        """
+        """
+
+        taskname = self.modname + sys._getframe().f_code.co_name
+        check_first(self.outmodelcube_13co10.replace(".fits","_snr10.fits"),taskname)
+
+        fig = plt.figure(figsize=(13,10))
+        gs = gridspec.GridSpec(nrows=10, ncols=10)
+        ax1 = plt.subplot(gs[0:10,0:10])
+        ad = [0.215,0.83,0.10,0.90]
+        myax_set(ax1, "both", None, None, None, "13co10", "13co21", adjust=ad)
+
+        for i in range(len(self.beams)):
+            this_beam  = self.beams[i]
+            this_color = cm.rainbow( (i+1)/float(len(self.beams)) )
+            # coords
+            data_coords = imval(self.outmaps_mom0_13co10.replace("???",this_beam),box=box)["coords"]
+            ra_deg      = data_coords[:,:,0] * 180/np.pi
+            ra_deg      = ra_deg.flatten()
+            dec_deg     = data_coords[:,:,1] * 180/np.pi
+            dec_deg     = dec_deg.flatten()
+            dist_pc,_   = get_reldist_pc(ra_deg, dec_deg, self.ra_agn, self.dec_agn, self.scale_pc, 0, 0)
+
+            # 13co10
+            data_13co10,box = imval_all(self.outmaps_mom0_13co10.replace("???",this_beam))
+            data_13co10     = data_13co10["data"] * data_13co10["mask"]
+            data_13co10[np.isnan(data_13co10)] = 0
+
+            err_13co10,_ = imval_all(self.outmaps_emom0_13co10.replace("???",this_beam))
+            err_13co10   = err_13co10["data"] * err_13co10["mask"]
+            err_13co10[np.isnan(err_13co10)] = 0
+
+            # 13co21
+            data_13co21,box = imval_all(self.outmaps_mom0_13co21.replace("???",this_beam))
+            data_13co21     = data_13co21["data"] * data_13co21["mask"]
+            data_13co21[np.isnan(data_13co21)] = 0
+
+            err_13co21,_ = imval_all(self.outmaps_emom0_13co21.replace("???",this_beam))
+            err_13co21   = err_13co21["data"] * err_13co21["mask"]
+            err_13co21[np.isnan(err_13co21)] = 0
+
+            # prepare
+            cut  = np.where((data_13co10>abs(err_13co10)*snr)&(data_13co21>abs(err_13co21)*snr))
+            x    = np.log10(data_13co10[cut])
+            xerr = err_13co10[cut] / abs(data_13co10[cut])
+            y    = np.log10(data_13co21[cut])
+            yerr = err_13co21[cut] / abs(data_13co21[cut])
+
+            # plot
+            ax1.scatter(x, y, lw=0, c=this_color, s=40, alpha=0.5)
+
+        os.system("rm -rf " + self.outpng_13co10_vs_13co21)
+        plt.savefig(self.outpng_13co10_vs_13co21, dpi=self.fig_dpi)
+
     ############
     # eval_sim #
     ############
@@ -1632,359 +1702,6 @@ class ToolsNcol():
             outpng_ratio_nomask,
             outpng_ratio_mask,
             )
-
-    ###############
-    # _eval_a_sim #
-    ###############
-
-    def _eval_a_sim(
-        self,
-        nbins,
-        lim,
-        lim2,
-        this_snr,
-        outpng_mom0_nomask,
-        outpng_mom0_mask,
-        outpng_ratio_nomask,
-        outpng_ratio_mask,
-        ):
-
-        snrtext = this_snr.replace("snr","")
-        snrfloat = float(this_snr.replace("snr",""))
-
-        # hereafter
-        simumom0a_1  = self.outsimumom0_13co10.replace(".fits","_noclip_"+this_snr+".fits")
-        simumom0a_2  = self.outsimumom0_13co10.replace(".fits","_noclip_"+this_snr+".fits").replace("mom0","emom0")
-        simumom0a_3  = self.outsimumom0_13co10.replace(".fits","_clip0_"+this_snr+".fits")
-        simumom0a_4  = self.outsimumom0_13co10.replace(".fits","_clip0_"+this_snr+".fits").replace("mom0","emom0")
-        simumom0a_5  = self.outsimumom0_13co10.replace(".fits","_clip3_"+this_snr+".fits")
-        simumom0a_6  = self.outsimumom0_13co10.replace(".fits","_clip3_"+this_snr+".fits").replace("mom0","emom0")
-        simumom0a_1m = self.outsimumom0_13co10.replace(".fits","_noclip_masked_"+this_snr+".fits")
-        simumom0a_2m = self.outsimumom0_13co10.replace(".fits","_noclip_masked_"+this_snr+".fits").replace("mom0","emom0")
-        simumom0a_3m = self.outsimumom0_13co10.replace(".fits","_clip0_masked_"+this_snr+".fits")
-        simumom0a_4m = self.outsimumom0_13co10.replace(".fits","_clip0_masked_"+this_snr+".fits").replace("mom0","emom0")
-        simumom0a_5m = self.outsimumom0_13co10.replace(".fits","_clip3_masked_"+this_snr+".fits")
-        simumom0a_6m = self.outsimumom0_13co10.replace(".fits","_clip3_masked_"+this_snr+".fits").replace("mom0","emom0")
-        modelmom0a   = self.outmodelmom0_13co10
-
-        simumom0b_1  = self.outsimumom0_13co21.replace(".fits","_noclip_"+this_snr+".fits")
-        simumom0b_2  = self.outsimumom0_13co21.replace(".fits","_noclip_"+this_snr+".fits").replace("mom0","emom0")
-        simumom0b_3  = self.outsimumom0_13co21.replace(".fits","_clip0_"+this_snr+".fits")
-        simumom0b_4  = self.outsimumom0_13co21.replace(".fits","_clip0_"+this_snr+".fits").replace("mom0","emom0")
-        simumom0b_5  = self.outsimumom0_13co21.replace(".fits","_clip3_"+this_snr+".fits")
-        simumom0b_6  = self.outsimumom0_13co21.replace(".fits","_clip3_"+this_snr+".fits").replace("mom0","emom0")
-        simumom0b_1m = self.outsimumom0_13co21.replace(".fits","_noclip_masked_"+this_snr+".fits")
-        simumom0b_2m = self.outsimumom0_13co21.replace(".fits","_noclip_masked_"+this_snr+".fits").replace("mom0","emom0")
-        simumom0b_3m = self.outsimumom0_13co21.replace(".fits","_clip0_masked_"+this_snr+".fits")
-        simumom0b_4m = self.outsimumom0_13co21.replace(".fits","_clip0_masked_"+this_snr+".fits").replace("mom0","emom0")
-        simumom0b_5m = self.outsimumom0_13co21.replace(".fits","_clip3_masked_"+this_snr+".fits")
-        simumom0b_6m = self.outsimumom0_13co21.replace(".fits","_clip3_masked_"+this_snr+".fits").replace("mom0","emom0")
-        modelmom0b   = self.outmodelmom0_13co21
-
-        #################
-        # import 13co10 #
-        #################
-        x1,y1,binx1,biny1,bine1 = self._get_sim_data(simumom0a_1,simumom0a_2,modelmom0a,lim)   # noclip
-        x2,y2,binx2,biny2,bine2 = self._get_sim_data(simumom0a_3,simumom0a_4,modelmom0a,lim)   # clip0
-        x3,y3,binx3,biny3,bine3 = self._get_sim_data(simumom0a_5,simumom0a_6,modelmom0a,lim)   # clip3
-        x4,y4,binx4,biny4,bine4 = self._get_sim_data(simumom0a_1m,simumom0a_2m,modelmom0a,lim) # noclip+mask
-        x5,y5,binx5,biny5,bine5 = self._get_sim_data(simumom0a_3m,simumom0a_4m,modelmom0a,lim) # clip0+mask
-        x6,y6,binx6,biny6,bine6 = self._get_sim_data(simumom0a_5m,simumom0a_6m,modelmom0a,lim) # clip3+mask
-
-        ################
-        # import ratio #
-        ################
-        # model
-        l,_ = imval_all(modelmom0a)
-        a0 = l["data"] * l["mask"]
-        a0 = np.log10(np.array(a0.flatten()))
-
-        l,_ = imval_all(modelmom0b)
-        a0b = l["data"] * l["mask"]
-        a0b = np.array(a0b.flatten())
-        b0   = np.log10(a0b / 10**a0)
-
-        n,_   = np.histogram(a0, bins=nbins, range=lim)
-        sy,_  = np.histogram(a0, bins=nbins, range=lim, weights=b0)
-        sy2,_ = np.histogram(a0, bins=nbins, range=lim, weights=b0*b0)
-        mean  = sy / n
-        std   = np.sqrt(sy2/n - mean*mean)
-        bina0 = (_[1:]+_[:-1])/2
-        binb0 = mean
-        binc0 = std
-
-        a1,b1,bina1,binb1,binc1 = self._get_sim_ratio(simumom0a_1,simumom0a_2,modelmom0a,simumom0b_1,simumom0b_2,modelmom0b,lim)     # noclip
-        a2,b2,bina2,binb2,binc2 = self._get_sim_ratio(simumom0a_3,simumom0a_4,modelmom0a,simumom0b_3,simumom0b_4,modelmom0b,lim)     # clip0
-        a3,b3,bina3,binb3,binc3 = self._get_sim_ratio(simumom0a_5,simumom0a_6,modelmom0a,simumom0b_5,simumom0b_6,modelmom0b,lim)     # clip3
-        a4,b4,bina4,binb4,binc4 = self._get_sim_ratio(simumom0a_1m,simumom0a_2m,modelmom0a,simumom0b_1m,simumom0b_2m,modelmom0b,lim) # noclip+mask
-        a5,b5,bina5,binb5,binc5 = self._get_sim_ratio(simumom0a_3m,simumom0a_4m,modelmom0a,simumom0b_3m,simumom0b_4m,modelmom0b,lim) # clip0+mask
-        a6,b6,bina6,binb6,binc6 = self._get_sim_ratio(simumom0a_5m,simumom0a_6m,modelmom0a,simumom0b_5m,simumom0b_6m,modelmom0b,lim) # clip3+mask
-
-        ########
-        # plot #
-        ########
-        # set plt, ax
-        fig  = plt.figure(figsize=(13,10))
-        plt.rcParams["font.size"] = 16
-        gs   = gridspec.GridSpec(nrows=11, ncols=11)
-        ax   = plt.subplot(gs[0:10,0:10])
-
-        # set ax parameter
-        myax_set(
-        ax,
-        grid="both",
-        xlim=lim,
-        ylim=lim,
-        xlabel="log$_{\mathrm{10}}$ $I_{\mathrm{^{13}CO(1-0),model}}$",
-        ylabel="log$_{\mathrm{10}}$ $I_{\mathrm{^{13}CO(1-0),reconstructed}}$",
-        adjust=[0.215,0.83,0.10,0.90],
-        )
-
-        ax.scatter(x1+np.log10(snrfloat/10.0), y1, marker=".", color="green", lw=0.5, alpha=0.2)
-        ax.scatter(x2+np.log10(snrfloat/10.0), y2, marker=".", color="deepskyblue", lw=0.5, alpha=0.2)
-        ax.scatter(x3+np.log10(snrfloat/10.0), y3, marker=".", color="tomato", lw=0.5, alpha=0.2)
-
-        ax.errorbar(binx1+np.log10(snrfloat/10.0), biny1, yerr=bine1, color="green", capsize=0, lw=2.0)
-        ax.errorbar(binx2+np.log10(snrfloat/10.0), biny2, yerr=bine1, color="blue", capsize=0, lw=2.0)
-        ax.errorbar(binx3+np.log10(snrfloat/10.0), biny3, yerr=bine1, color="red", capsize=0, lw=2.0)
-
-        # ann
-        ax.plot(lim,lim,"--",color="black",lw=1)
-
-        # text
-        ax.text(0.05,0.90, "mom0$_{\mathrm{SNR="+snrtext+"}}$", transform=ax.transAxes, weight="bold", fontsize=26, ha="left")
-        ax.text(0.95, 0.15, "noclip", color="green", transform=ax.transAxes, weight="bold", fontsize=22, ha="right")
-        ax.text(0.95, 0.10, "clip0$\sigma$", color="deepskyblue", transform=ax.transAxes, weight="bold", fontsize=22, ha="right")
-        ax.text(0.95, 0.05, "clip3$\sigma$", color="tomato", transform=ax.transAxes, weight="bold", fontsize=22, ha="right")
-
-        # save
-        os.system("rm -rf " + outpng_mom0_nomask)
-        plt.savefig(outpng_mom0_nomask, dpi=300)
-
-        ########
-        # plot #
-        ########
-        # set plt, ax
-        fig  = plt.figure(figsize=(13,10))
-        plt.rcParams["font.size"] = 16
-        gs   = gridspec.GridSpec(nrows=11, ncols=11)
-        ax   = plt.subplot(gs[0:10,0:10])
-
-        # set ax parameter
-        myax_set(
-        ax,
-        grid="both",
-        xlim=lim,
-        ylim=lim,
-        xlabel="log$_{\mathrm{10}}$ $I_{\mathrm{^{13}CO(1-0),model}}$",
-        ylabel="log$_{\mathrm{10}}$ $I_{\mathrm{^{13}CO(1-0),reconstructed}}$",
-        adjust=[0.215,0.83,0.10,0.90],
-        )
-
-        ax.scatter(x4+np.log10(snrfloat/10.0), y4, marker=".", color="green", lw=0.5, alpha=0.2)
-        ax.scatter(x5+np.log10(snrfloat/10.0), y5, marker=".", color="deepskyblue", lw=0.5, alpha=0.2)
-        ax.scatter(x6+np.log10(snrfloat/10.0), y6, marker=".", color="tomato", lw=0.5, alpha=0.2)
-
-        ax.errorbar(binx4+np.log10(snrfloat/10.0), biny4, yerr=bine1, color="green", capsize=0, lw=2.0)
-        ax.errorbar(binx5+np.log10(snrfloat/10.0), biny5, yerr=bine1, color="blue", capsize=0, lw=2.0)
-        ax.errorbar(binx6+np.log10(snrfloat/10.0), biny6, yerr=bine1, color="red", capsize=0, lw=2.0)
-
-        # ann
-        ax.plot(lim,lim,"--",color="black",lw=1)
-
-        # text
-        ax.text(0.05,0.90, "mom0$_{\mathrm{SNR="+snrtext+"}}$", transform=ax.transAxes, weight="bold", fontsize=26, ha="left")
-        ax.text(0.95, 0.15, "noclip+masking", color="green", transform=ax.transAxes, weight="bold", fontsize=22, ha="right")
-        ax.text(0.95, 0.10, "clip0$\sigma$+masking", color="deepskyblue", transform=ax.transAxes, weight="bold", fontsize=22, ha="right")
-        ax.text(0.95, 0.05, "clip3$\sigma$+masking", color="tomato", transform=ax.transAxes, weight="bold", fontsize=22, ha="right")
-
-        # save
-        os.system("rm -rf " + outpng_mom0_mask)
-        plt.savefig(outpng_mom0_mask, dpi=300)
-
-        ########
-        # plot #
-        ########
-        # set plt, ax
-        fig  = plt.figure(figsize=(13,10))
-        plt.rcParams["font.size"] = 16
-        gs   = gridspec.GridSpec(nrows=11, ncols=11)
-        ax   = plt.subplot(gs[0:10,0:10])
-
-        # set ax parameter
-        myax_set(
-        ax,
-        grid="both",
-        xlim=lim,
-        ylim=lim2,
-        xlabel="log$_{\mathrm{10}}$ $I_{\mathrm{^{13}CO(1-0),model}}$",
-        ylabel="log$_{\mathrm{10}}$ Ratio$_{\mathrm{reconstructed}}$",
-        adjust=[0.215,0.83,0.10,0.90],
-        )
-
-        ax.scatter(a0+np.log10(snrfloat/10.0), b0, marker=".", color="grey", lw=0.5, alpha=0.2)
-        ax.scatter(a1+np.log10(snrfloat/10.0), b1, marker=".", color="green", lw=0.5, alpha=0.2)
-        ax.scatter(a2+np.log10(snrfloat/10.0), b2, marker=".", color="deepskyblue", lw=0.5, alpha=0.2)
-        ax.scatter(a3+np.log10(snrfloat/10.0), b3, marker=".", color="tomato", lw=0.5, alpha=0.2)
-
-        ax.errorbar(bina0+np.log10(snrfloat/10.0), binb0, yerr=binc0, color="black", capsize=0, lw=2.0)
-        ax.errorbar(bina1+np.log10(snrfloat/10.0), binb1, yerr=binc1, color="green", capsize=0, lw=2.0)
-        ax.errorbar(bina2+np.log10(snrfloat/10.0), binb2, yerr=binc1, color="blue", capsize=0, lw=2.0)
-        ax.errorbar(bina3+np.log10(snrfloat/10.0), binb3, yerr=binc1, color="red", capsize=0, lw=2.0)
-
-        # text
-        ax.text(0.05,0.90, "mom0$_{\mathrm{SNR="+snrtext+"}}$", transform=ax.transAxes, weight="bold", fontsize=26, ha="left")
-        ax.text(0.95, 0.20, "model", color="grey", transform=ax.transAxes, weight="bold", fontsize=22, ha="right")
-        ax.text(0.95, 0.15, "noclip", color="green", transform=ax.transAxes, weight="bold", fontsize=22, ha="right")
-        ax.text(0.95, 0.10, "clip0$\sigma$", color="deepskyblue", transform=ax.transAxes, weight="bold", fontsize=22, ha="right")
-        ax.text(0.95, 0.05, "clip3$\sigma$", color="tomato", transform=ax.transAxes, weight="bold", fontsize=22, ha="right")
-
-        # save
-        os.system("rm -rf " + outpng_ratio_nomask)
-        plt.savefig(outpng_ratio_nomask, dpi=300)
-
-        ########
-        # plot #
-        ########
-        # set plt, ax
-        fig  = plt.figure(figsize=(13,10))
-        plt.rcParams["font.size"] = 16
-        gs   = gridspec.GridSpec(nrows=11, ncols=11)
-        ax   = plt.subplot(gs[0:10,0:10])
-
-        # set ax parameter
-        myax_set(
-        ax,
-        grid="both",
-        xlim=lim,
-        ylim=lim2,
-        xlabel="log$_{\mathrm{10}}$ $I_{\mathrm{^{13}CO(1-0),model}}$",
-        ylabel="log$_{\mathrm{10}}$ Ratio$_{\mathrm{reconstructed}}$",
-        adjust=[0.215,0.83,0.10,0.90],
-        )
-
-        ax.scatter(a0+np.log10(snrfloat/10.0), b0, marker=".", color="grey", lw=0.5, alpha=0.2)
-        ax.scatter(a4+np.log10(snrfloat/10.0), b4, marker=".", color="green", lw=0.5, alpha=0.2)
-        ax.scatter(a5+np.log10(snrfloat/10.0), b5, marker=".", color="deepskyblue", lw=0.5, alpha=0.2)
-        ax.scatter(a6+np.log10(snrfloat/10.0), b6, marker=".", color="tomato", lw=0.5, alpha=0.2)
-
-        ax.errorbar(bina0+np.log10(snrfloat/10.0), binb0, yerr=binc0, color="black", capsize=0, lw=2.0)
-        ax.errorbar(bina4+np.log10(snrfloat/10.0), binb4, yerr=binc1, color="green", capsize=0, lw=2.0)
-        ax.errorbar(bina5+np.log10(snrfloat/10.0), binb5, yerr=binc1, color="blue", capsize=0, lw=2.0)
-        ax.errorbar(bina6+np.log10(snrfloat/10.0), binb6, yerr=binc1, color="red", capsize=0, lw=2.0)
-
-        # text
-        ax.text(0.05,0.90, "mom0$_{\mathrm{SNR="+snrtext+"}}$", transform=ax.transAxes, weight="bold", fontsize=26, ha="left")
-        ax.text(0.95, 0.20, "model", color="grey", transform=ax.transAxes, weight="bold", fontsize=22, ha="right")
-        ax.text(0.95, 0.15, "noclip+masking", color="green", transform=ax.transAxes, weight="bold", fontsize=22, ha="right")
-        ax.text(0.95, 0.10, "clip0$\sigma$+masking", color="deepskyblue", transform=ax.transAxes, weight="bold", fontsize=22, ha="right")
-        ax.text(0.95, 0.05, "clip3$\sigma$+masking", color="tomato", transform=ax.transAxes, weight="bold", fontsize=22, ha="right")
-
-        # save
-        os.system("rm -rf " + outpng_ratio_mask)
-        plt.savefig(outpng_ratio_mask, dpi=300)
-
-    ##################
-    # _get_sim_ratio #
-    ##################
-
-    def _get_sim_ratio(
-        self,
-        mom0_13co10,
-        emom0_13co10,
-        input_mom0_13co10,
-        mom0_13co21,
-        emom0_13co21,
-        input_mom0_13co21,
-        lim,
-        snr=3,
-        nbins=10,
-        ):
-        """
-        """
-
-        # input
-        l,_ = imval_all(input_mom0_13co10)
-        model_mom0_13co10 = l["data"] * l["mask"]
-        model_mom0_13co10 = np.array(model_mom0_13co10.flatten())
-
-        l,_ = imval_all(input_mom0_13co21)
-        model_mom0_13co21 = l["data"] * l["mask"]
-        model_mom0_13co21 = np.array(model_mom0_13co21.flatten())
-
-        #
-        l,_  = imval_all(mom0_13co10)
-        l = l["data"] * l["mask"]
-        sim_mom0_13co10 = np.array(l.flatten())
-
-        l,_  = imval_all(mom0_13co21)
-        l = l["data"] * l["mask"]
-        sim_mom0_13co21 = np.array(l.flatten())
-
-        l,_ = imval_all(emom0_13co10)
-        l = l["data"] * l["mask"]
-        sim_emom0_13co10 = np.array(l.flatten())
-
-        l,_ = imval_all(emom0_13co21)
-        l = l["data"] * l["mask"]
-        sim_emom0_13co21 = np.array(l.flatten())
-
-        cut = np.where((sim_mom0_13co10>=sim_emom0_13co10*snr)&(~np.isnan(np.log10(model_mom0_13co10)))&(~np.isnan(np.log10(sim_mom0_13co10)))&(sim_mom0_13co21>=sim_emom0_13co21*snr)&(~np.isnan(np.log10(model_mom0_13co21)))&(~np.isnan(np.log10(sim_mom0_13co21))))
-        x = np.log10(model_mom0_13co10[cut])
-        y = np.log10(sim_mom0_13co21[cut]/sim_mom0_13co10[cut])
-
-        # binning
-        n,_ = np.histogram(x, bins=nbins, range=lim)
-        sy,_ = np.histogram(x, bins=nbins, range=lim, weights=y)
-        sy2,_ = np.histogram(x, bins=nbins, range=lim, weights=y*y)
-        mean = sy / n
-        std = np.sqrt(sy2/n - mean*mean)
-
-        return x, y, (_[1:]+_[:-1])/2, mean, std
-
-    #################
-    # _get_sim_data #
-    #################
-
-    def _get_sim_data(
-        self,
-        mom0,
-        emom0,
-        input_mom0,
-        lim,
-        snr=3,
-        nbins=10,
-        ):
-        """
-        """
-
-        # input
-        l,_ = imval_all(input_mom0)
-        model_mom0 = l["data"] * l["mask"]
-        model_mom0 = np.array(model_mom0.flatten())
-
-        # noclip
-        l,_  = imval_all(mom0)
-        l = l["data"] * l["mask"]
-        sim_mom0 = np.array(l.flatten())
-
-        l,_ = imval_all(emom0)
-        l = l["data"] * l["mask"]
-        sim_emom0 = np.array(l.flatten())
-
-        cut = np.where((sim_mom0>=sim_emom0*snr)&(~np.isnan(np.log10(model_mom0)))&(~np.isnan(np.log10(sim_mom0))))
-        x = np.log10(model_mom0[cut])
-        y = np.log10(sim_mom0[cut])
-        #e = sim_emom0[cut]/abs(sim_mom0[cut])
-
-        # binning
-        n,_ = np.histogram(x, bins=nbins, range=lim)
-        sy,_ = np.histogram(x, bins=nbins, range=lim, weights=y)
-        sy2,_ = np.histogram(x, bins=nbins, range=lim, weights=y*y)
-        mean = sy / n
-        std = np.sqrt(sy2/n - mean*mean)
-
-        return x, y, (_[1:]+_[:-1])/2, mean, std
 
     #######################
     # simulate_mom_13co10 #
@@ -3575,6 +3292,359 @@ class ToolsNcol():
                 self.outecubes_hcop10.replace("???",this_beam),
                 )
         """
+
+    ###############
+    # _eval_a_sim #
+    ###############
+
+    def _eval_a_sim(
+        self,
+        nbins,
+        lim,
+        lim2,
+        this_snr,
+        outpng_mom0_nomask,
+        outpng_mom0_mask,
+        outpng_ratio_nomask,
+        outpng_ratio_mask,
+        ):
+
+        snrtext = this_snr.replace("snr","")
+        snrfloat = float(this_snr.replace("snr",""))
+
+        # hereafter
+        simumom0a_1  = self.outsimumom0_13co10.replace(".fits","_noclip_"+this_snr+".fits")
+        simumom0a_2  = self.outsimumom0_13co10.replace(".fits","_noclip_"+this_snr+".fits").replace("mom0","emom0")
+        simumom0a_3  = self.outsimumom0_13co10.replace(".fits","_clip0_"+this_snr+".fits")
+        simumom0a_4  = self.outsimumom0_13co10.replace(".fits","_clip0_"+this_snr+".fits").replace("mom0","emom0")
+        simumom0a_5  = self.outsimumom0_13co10.replace(".fits","_clip3_"+this_snr+".fits")
+        simumom0a_6  = self.outsimumom0_13co10.replace(".fits","_clip3_"+this_snr+".fits").replace("mom0","emom0")
+        simumom0a_1m = self.outsimumom0_13co10.replace(".fits","_noclip_masked_"+this_snr+".fits")
+        simumom0a_2m = self.outsimumom0_13co10.replace(".fits","_noclip_masked_"+this_snr+".fits").replace("mom0","emom0")
+        simumom0a_3m = self.outsimumom0_13co10.replace(".fits","_clip0_masked_"+this_snr+".fits")
+        simumom0a_4m = self.outsimumom0_13co10.replace(".fits","_clip0_masked_"+this_snr+".fits").replace("mom0","emom0")
+        simumom0a_5m = self.outsimumom0_13co10.replace(".fits","_clip3_masked_"+this_snr+".fits")
+        simumom0a_6m = self.outsimumom0_13co10.replace(".fits","_clip3_masked_"+this_snr+".fits").replace("mom0","emom0")
+        modelmom0a   = self.outmodelmom0_13co10
+
+        simumom0b_1  = self.outsimumom0_13co21.replace(".fits","_noclip_"+this_snr+".fits")
+        simumom0b_2  = self.outsimumom0_13co21.replace(".fits","_noclip_"+this_snr+".fits").replace("mom0","emom0")
+        simumom0b_3  = self.outsimumom0_13co21.replace(".fits","_clip0_"+this_snr+".fits")
+        simumom0b_4  = self.outsimumom0_13co21.replace(".fits","_clip0_"+this_snr+".fits").replace("mom0","emom0")
+        simumom0b_5  = self.outsimumom0_13co21.replace(".fits","_clip3_"+this_snr+".fits")
+        simumom0b_6  = self.outsimumom0_13co21.replace(".fits","_clip3_"+this_snr+".fits").replace("mom0","emom0")
+        simumom0b_1m = self.outsimumom0_13co21.replace(".fits","_noclip_masked_"+this_snr+".fits")
+        simumom0b_2m = self.outsimumom0_13co21.replace(".fits","_noclip_masked_"+this_snr+".fits").replace("mom0","emom0")
+        simumom0b_3m = self.outsimumom0_13co21.replace(".fits","_clip0_masked_"+this_snr+".fits")
+        simumom0b_4m = self.outsimumom0_13co21.replace(".fits","_clip0_masked_"+this_snr+".fits").replace("mom0","emom0")
+        simumom0b_5m = self.outsimumom0_13co21.replace(".fits","_clip3_masked_"+this_snr+".fits")
+        simumom0b_6m = self.outsimumom0_13co21.replace(".fits","_clip3_masked_"+this_snr+".fits").replace("mom0","emom0")
+        modelmom0b   = self.outmodelmom0_13co21
+
+        #################
+        # import 13co10 #
+        #################
+        x1,y1,binx1,biny1,bine1 = self._get_sim_data(simumom0a_1,simumom0a_2,modelmom0a,lim)   # noclip
+        x2,y2,binx2,biny2,bine2 = self._get_sim_data(simumom0a_3,simumom0a_4,modelmom0a,lim)   # clip0
+        x3,y3,binx3,biny3,bine3 = self._get_sim_data(simumom0a_5,simumom0a_6,modelmom0a,lim)   # clip3
+        x4,y4,binx4,biny4,bine4 = self._get_sim_data(simumom0a_1m,simumom0a_2m,modelmom0a,lim) # noclip+mask
+        x5,y5,binx5,biny5,bine5 = self._get_sim_data(simumom0a_3m,simumom0a_4m,modelmom0a,lim) # clip0+mask
+        x6,y6,binx6,biny6,bine6 = self._get_sim_data(simumom0a_5m,simumom0a_6m,modelmom0a,lim) # clip3+mask
+
+        ################
+        # import ratio #
+        ################
+        # model
+        l,_ = imval_all(modelmom0a)
+        a0 = l["data"] * l["mask"]
+        a0 = np.log10(np.array(a0.flatten()))
+
+        l,_ = imval_all(modelmom0b)
+        a0b = l["data"] * l["mask"]
+        a0b = np.array(a0b.flatten())
+        b0   = np.log10(a0b / 10**a0)
+
+        n,_   = np.histogram(a0, bins=nbins, range=lim)
+        sy,_  = np.histogram(a0, bins=nbins, range=lim, weights=b0)
+        sy2,_ = np.histogram(a0, bins=nbins, range=lim, weights=b0*b0)
+        mean  = sy / n
+        std   = np.sqrt(sy2/n - mean*mean)
+        bina0 = (_[1:]+_[:-1])/2
+        binb0 = mean
+        binc0 = std
+
+        a1,b1,bina1,binb1,binc1 = self._get_sim_ratio(simumom0a_1,simumom0a_2,modelmom0a,simumom0b_1,simumom0b_2,modelmom0b,lim)     # noclip
+        a2,b2,bina2,binb2,binc2 = self._get_sim_ratio(simumom0a_3,simumom0a_4,modelmom0a,simumom0b_3,simumom0b_4,modelmom0b,lim)     # clip0
+        a3,b3,bina3,binb3,binc3 = self._get_sim_ratio(simumom0a_5,simumom0a_6,modelmom0a,simumom0b_5,simumom0b_6,modelmom0b,lim)     # clip3
+        a4,b4,bina4,binb4,binc4 = self._get_sim_ratio(simumom0a_1m,simumom0a_2m,modelmom0a,simumom0b_1m,simumom0b_2m,modelmom0b,lim) # noclip+mask
+        a5,b5,bina5,binb5,binc5 = self._get_sim_ratio(simumom0a_3m,simumom0a_4m,modelmom0a,simumom0b_3m,simumom0b_4m,modelmom0b,lim) # clip0+mask
+        a6,b6,bina6,binb6,binc6 = self._get_sim_ratio(simumom0a_5m,simumom0a_6m,modelmom0a,simumom0b_5m,simumom0b_6m,modelmom0b,lim) # clip3+mask
+
+        ########
+        # plot #
+        ########
+        # set plt, ax
+        fig  = plt.figure(figsize=(13,10))
+        plt.rcParams["font.size"] = 16
+        gs   = gridspec.GridSpec(nrows=11, ncols=11)
+        ax   = plt.subplot(gs[0:10,0:10])
+
+        # set ax parameter
+        myax_set(
+        ax,
+        grid="both",
+        xlim=lim,
+        ylim=lim,
+        xlabel="log$_{\mathrm{10}}$ $I_{\mathrm{^{13}CO(1-0),model}}$",
+        ylabel="log$_{\mathrm{10}}$ $I_{\mathrm{^{13}CO(1-0),reconstructed}}$",
+        adjust=[0.215,0.83,0.10,0.90],
+        )
+
+        ax.scatter(x1+np.log10(snrfloat/10.0), y1, marker=".", color="green", lw=0.5, alpha=0.2)
+        ax.scatter(x2+np.log10(snrfloat/10.0), y2, marker=".", color="deepskyblue", lw=0.5, alpha=0.2)
+        ax.scatter(x3+np.log10(snrfloat/10.0), y3, marker=".", color="tomato", lw=0.5, alpha=0.2)
+
+        ax.errorbar(binx1+np.log10(snrfloat/10.0), biny1, yerr=bine1, color="green", capsize=0, lw=2.0)
+        ax.errorbar(binx2+np.log10(snrfloat/10.0), biny2, yerr=bine1, color="blue", capsize=0, lw=2.0)
+        ax.errorbar(binx3+np.log10(snrfloat/10.0), biny3, yerr=bine1, color="red", capsize=0, lw=2.0)
+
+        # ann
+        ax.plot(lim,lim,"--",color="black",lw=1)
+
+        # text
+        ax.text(0.05,0.90, "mom0$_{\mathrm{SNR="+snrtext+"}}$", transform=ax.transAxes, weight="bold", fontsize=26, ha="left")
+        ax.text(0.95, 0.15, "noclip", color="green", transform=ax.transAxes, weight="bold", fontsize=22, ha="right")
+        ax.text(0.95, 0.10, "clip0$\sigma$", color="deepskyblue", transform=ax.transAxes, weight="bold", fontsize=22, ha="right")
+        ax.text(0.95, 0.05, "clip3$\sigma$", color="tomato", transform=ax.transAxes, weight="bold", fontsize=22, ha="right")
+
+        # save
+        os.system("rm -rf " + outpng_mom0_nomask)
+        plt.savefig(outpng_mom0_nomask, dpi=300)
+
+        ########
+        # plot #
+        ########
+        # set plt, ax
+        fig  = plt.figure(figsize=(13,10))
+        plt.rcParams["font.size"] = 16
+        gs   = gridspec.GridSpec(nrows=11, ncols=11)
+        ax   = plt.subplot(gs[0:10,0:10])
+
+        # set ax parameter
+        myax_set(
+        ax,
+        grid="both",
+        xlim=lim,
+        ylim=lim,
+        xlabel="log$_{\mathrm{10}}$ $I_{\mathrm{^{13}CO(1-0),model}}$",
+        ylabel="log$_{\mathrm{10}}$ $I_{\mathrm{^{13}CO(1-0),reconstructed}}$",
+        adjust=[0.215,0.83,0.10,0.90],
+        )
+
+        ax.scatter(x4+np.log10(snrfloat/10.0), y4, marker=".", color="green", lw=0.5, alpha=0.2)
+        ax.scatter(x5+np.log10(snrfloat/10.0), y5, marker=".", color="deepskyblue", lw=0.5, alpha=0.2)
+        ax.scatter(x6+np.log10(snrfloat/10.0), y6, marker=".", color="tomato", lw=0.5, alpha=0.2)
+
+        ax.errorbar(binx4+np.log10(snrfloat/10.0), biny4, yerr=bine1, color="green", capsize=0, lw=2.0)
+        ax.errorbar(binx5+np.log10(snrfloat/10.0), biny5, yerr=bine1, color="blue", capsize=0, lw=2.0)
+        ax.errorbar(binx6+np.log10(snrfloat/10.0), biny6, yerr=bine1, color="red", capsize=0, lw=2.0)
+
+        # ann
+        ax.plot(lim,lim,"--",color="black",lw=1)
+
+        # text
+        ax.text(0.05,0.90, "mom0$_{\mathrm{SNR="+snrtext+"}}$", transform=ax.transAxes, weight="bold", fontsize=26, ha="left")
+        ax.text(0.95, 0.15, "noclip+masking", color="green", transform=ax.transAxes, weight="bold", fontsize=22, ha="right")
+        ax.text(0.95, 0.10, "clip0$\sigma$+masking", color="deepskyblue", transform=ax.transAxes, weight="bold", fontsize=22, ha="right")
+        ax.text(0.95, 0.05, "clip3$\sigma$+masking", color="tomato", transform=ax.transAxes, weight="bold", fontsize=22, ha="right")
+
+        # save
+        os.system("rm -rf " + outpng_mom0_mask)
+        plt.savefig(outpng_mom0_mask, dpi=300)
+
+        ########
+        # plot #
+        ########
+        # set plt, ax
+        fig  = plt.figure(figsize=(13,10))
+        plt.rcParams["font.size"] = 16
+        gs   = gridspec.GridSpec(nrows=11, ncols=11)
+        ax   = plt.subplot(gs[0:10,0:10])
+
+        # set ax parameter
+        myax_set(
+        ax,
+        grid="both",
+        xlim=lim,
+        ylim=lim2,
+        xlabel="log$_{\mathrm{10}}$ $I_{\mathrm{^{13}CO(1-0),model}}$",
+        ylabel="log$_{\mathrm{10}}$ Ratio$_{\mathrm{reconstructed}}$",
+        adjust=[0.215,0.83,0.10,0.90],
+        )
+
+        ax.scatter(a0+np.log10(snrfloat/10.0), b0, marker=".", color="grey", lw=0.5, alpha=0.2)
+        ax.scatter(a1+np.log10(snrfloat/10.0), b1, marker=".", color="green", lw=0.5, alpha=0.2)
+        ax.scatter(a2+np.log10(snrfloat/10.0), b2, marker=".", color="deepskyblue", lw=0.5, alpha=0.2)
+        ax.scatter(a3+np.log10(snrfloat/10.0), b3, marker=".", color="tomato", lw=0.5, alpha=0.2)
+
+        ax.errorbar(bina0+np.log10(snrfloat/10.0), binb0, yerr=binc0, color="black", capsize=0, lw=2.0)
+        ax.errorbar(bina1+np.log10(snrfloat/10.0), binb1, yerr=binc1, color="green", capsize=0, lw=2.0)
+        ax.errorbar(bina2+np.log10(snrfloat/10.0), binb2, yerr=binc1, color="blue", capsize=0, lw=2.0)
+        ax.errorbar(bina3+np.log10(snrfloat/10.0), binb3, yerr=binc1, color="red", capsize=0, lw=2.0)
+
+        # text
+        ax.text(0.05,0.90, "mom0$_{\mathrm{SNR="+snrtext+"}}$", transform=ax.transAxes, weight="bold", fontsize=26, ha="left")
+        ax.text(0.95, 0.20, "model", color="grey", transform=ax.transAxes, weight="bold", fontsize=22, ha="right")
+        ax.text(0.95, 0.15, "noclip", color="green", transform=ax.transAxes, weight="bold", fontsize=22, ha="right")
+        ax.text(0.95, 0.10, "clip0$\sigma$", color="deepskyblue", transform=ax.transAxes, weight="bold", fontsize=22, ha="right")
+        ax.text(0.95, 0.05, "clip3$\sigma$", color="tomato", transform=ax.transAxes, weight="bold", fontsize=22, ha="right")
+
+        # save
+        os.system("rm -rf " + outpng_ratio_nomask)
+        plt.savefig(outpng_ratio_nomask, dpi=300)
+
+        ########
+        # plot #
+        ########
+        # set plt, ax
+        fig  = plt.figure(figsize=(13,10))
+        plt.rcParams["font.size"] = 16
+        gs   = gridspec.GridSpec(nrows=11, ncols=11)
+        ax   = plt.subplot(gs[0:10,0:10])
+
+        # set ax parameter
+        myax_set(
+        ax,
+        grid="both",
+        xlim=lim,
+        ylim=lim2,
+        xlabel="log$_{\mathrm{10}}$ $I_{\mathrm{^{13}CO(1-0),model}}$",
+        ylabel="log$_{\mathrm{10}}$ Ratio$_{\mathrm{reconstructed}}$",
+        adjust=[0.215,0.83,0.10,0.90],
+        )
+
+        ax.scatter(a0+np.log10(snrfloat/10.0), b0, marker=".", color="grey", lw=0.5, alpha=0.2)
+        ax.scatter(a4+np.log10(snrfloat/10.0), b4, marker=".", color="green", lw=0.5, alpha=0.2)
+        ax.scatter(a5+np.log10(snrfloat/10.0), b5, marker=".", color="deepskyblue", lw=0.5, alpha=0.2)
+        ax.scatter(a6+np.log10(snrfloat/10.0), b6, marker=".", color="tomato", lw=0.5, alpha=0.2)
+
+        ax.errorbar(bina0+np.log10(snrfloat/10.0), binb0, yerr=binc0, color="black", capsize=0, lw=2.0)
+        ax.errorbar(bina4+np.log10(snrfloat/10.0), binb4, yerr=binc1, color="green", capsize=0, lw=2.0)
+        ax.errorbar(bina5+np.log10(snrfloat/10.0), binb5, yerr=binc1, color="blue", capsize=0, lw=2.0)
+        ax.errorbar(bina6+np.log10(snrfloat/10.0), binb6, yerr=binc1, color="red", capsize=0, lw=2.0)
+
+        # text
+        ax.text(0.05,0.90, "mom0$_{\mathrm{SNR="+snrtext+"}}$", transform=ax.transAxes, weight="bold", fontsize=26, ha="left")
+        ax.text(0.95, 0.20, "model", color="grey", transform=ax.transAxes, weight="bold", fontsize=22, ha="right")
+        ax.text(0.95, 0.15, "noclip+masking", color="green", transform=ax.transAxes, weight="bold", fontsize=22, ha="right")
+        ax.text(0.95, 0.10, "clip0$\sigma$+masking", color="deepskyblue", transform=ax.transAxes, weight="bold", fontsize=22, ha="right")
+        ax.text(0.95, 0.05, "clip3$\sigma$+masking", color="tomato", transform=ax.transAxes, weight="bold", fontsize=22, ha="right")
+
+        # save
+        os.system("rm -rf " + outpng_ratio_mask)
+        plt.savefig(outpng_ratio_mask, dpi=300)
+
+    ##################
+    # _get_sim_ratio #
+    ##################
+
+    def _get_sim_ratio(
+        self,
+        mom0_13co10,
+        emom0_13co10,
+        input_mom0_13co10,
+        mom0_13co21,
+        emom0_13co21,
+        input_mom0_13co21,
+        lim,
+        snr=3,
+        nbins=10,
+        ):
+        """
+        """
+
+        # input
+        l,_ = imval_all(input_mom0_13co10)
+        model_mom0_13co10 = l["data"] * l["mask"]
+        model_mom0_13co10 = np.array(model_mom0_13co10.flatten())
+
+        l,_ = imval_all(input_mom0_13co21)
+        model_mom0_13co21 = l["data"] * l["mask"]
+        model_mom0_13co21 = np.array(model_mom0_13co21.flatten())
+
+        #
+        l,_  = imval_all(mom0_13co10)
+        l = l["data"] * l["mask"]
+        sim_mom0_13co10 = np.array(l.flatten())
+
+        l,_  = imval_all(mom0_13co21)
+        l = l["data"] * l["mask"]
+        sim_mom0_13co21 = np.array(l.flatten())
+
+        l,_ = imval_all(emom0_13co10)
+        l = l["data"] * l["mask"]
+        sim_emom0_13co10 = np.array(l.flatten())
+
+        l,_ = imval_all(emom0_13co21)
+        l = l["data"] * l["mask"]
+        sim_emom0_13co21 = np.array(l.flatten())
+
+        cut = np.where((sim_mom0_13co10>=sim_emom0_13co10*snr)&(~np.isnan(np.log10(model_mom0_13co10)))&(~np.isnan(np.log10(sim_mom0_13co10)))&(sim_mom0_13co21>=sim_emom0_13co21*snr)&(~np.isnan(np.log10(model_mom0_13co21)))&(~np.isnan(np.log10(sim_mom0_13co21))))
+        x = np.log10(model_mom0_13co10[cut])
+        y = np.log10(sim_mom0_13co21[cut]/sim_mom0_13co10[cut])
+
+        # binning
+        n,_ = np.histogram(x, bins=nbins, range=lim)
+        sy,_ = np.histogram(x, bins=nbins, range=lim, weights=y)
+        sy2,_ = np.histogram(x, bins=nbins, range=lim, weights=y*y)
+        mean = sy / n
+        std = np.sqrt(sy2/n - mean*mean)
+
+        return x, y, (_[1:]+_[:-1])/2, mean, std
+
+    #################
+    # _get_sim_data #
+    #################
+
+    def _get_sim_data(
+        self,
+        mom0,
+        emom0,
+        input_mom0,
+        lim,
+        snr=3,
+        nbins=10,
+        ):
+        """
+        """
+
+        # input
+        l,_ = imval_all(input_mom0)
+        model_mom0 = l["data"] * l["mask"]
+        model_mom0 = np.array(model_mom0.flatten())
+
+        # noclip
+        l,_  = imval_all(mom0)
+        l = l["data"] * l["mask"]
+        sim_mom0 = np.array(l.flatten())
+
+        l,_ = imval_all(emom0)
+        l = l["data"] * l["mask"]
+        sim_emom0 = np.array(l.flatten())
+
+        cut = np.where((sim_mom0>=sim_emom0*snr)&(~np.isnan(np.log10(model_mom0)))&(~np.isnan(np.log10(sim_mom0))))
+        x = np.log10(model_mom0[cut])
+        y = np.log10(sim_mom0[cut])
+        #e = sim_emom0[cut]/abs(sim_mom0[cut])
+
+        # binning
+        n,_ = np.histogram(x, bins=nbins, range=lim)
+        sy,_ = np.histogram(x, bins=nbins, range=lim, weights=y)
+        sy2,_ = np.histogram(x, bins=nbins, range=lim, weights=y*y)
+        mean = sy / n
+        std = np.sqrt(sy2/n - mean*mean)
+
+        return x, y, (_[1:]+_[:-1])/2, mean, std
 
     #################################
     # _create_correlated_noise_cube #
