@@ -236,9 +236,8 @@ class ToolsNcol():
         # finals
         self.final_60pc_obs      = self.dir_final + self._read_key("final_60pc_obs")
         self.final_60pc_rot      = self.dir_final + self._read_key("final_60pc_rot")
-        #
-        self.final_60pc_obs_err  = self.dir_final + self._read_key("final_60pc_obs_err")
-        self.final_60pc_rot_err  = self.dir_final + self._read_key("final_60pc_rot_err")
+        # appendix
+        self.final_60pc_err      = self.dir_final + self._read_key("final_60pc_err")
         #
         self.final_sim_mom0      = self.dir_final + self._read_key("final_sim_mom0")
         self.final_sim_emom0     = self.dir_final + self._read_key("final_sim_emom0")
@@ -336,8 +335,7 @@ class ToolsNcol():
         do_final_60pc_obs     = True,
         do_final_60pc_rot     = True,
         # appendix_err
-        do_final_60pc_obs_err = True,
-        do_final_60pc_rot_err = True,
+        do_final_60pc_err     = True,
         do_final_sim_mom0     = False,
         do_final_sim_emom0    = False,
         #
@@ -435,53 +433,51 @@ class ToolsNcol():
                 delin=delin,
                 )
 
-        if do_final_60pc_obs_err==True:
-            print("################################")
-            print("# create do_final_60pc_obs_err #")
-            print("################################")
+        if do_final_60pc_err==True:
+            print("############################")
+            print("# create do_final_60pc_err #")
+            print("############################")
 
             #
             combine_three_png(
                 self.outpng_emom0_13co10.replace("???","60pc"),
                 self.outpng_emom0_13co21.replace("???","60pc"),
                 self.outpng_eratio.replace("???","60pc"),
-                self.final_60pc_obs_err+"_tmp1.png",
+                self.final_60pc_err+"_tmp1.png",
+                self.box_map_nox,
+                self.box_map_noxy,
+                self.box_map_noxy,
+                delin=delin,
+                )
+            combine_three_png(
+                self.outpng_emom1.replace("???","60pc"),
+                self.outpng_emom2.replace("???","60pc"),
+                self.outpng_e13co_trot.replace("???","60pc"),
+                self.final_60pc_err+"_tmp2.png",
                 self.box_map_nox,
                 self.box_map_noxy,
                 self.box_map_noxy,
                 delin=delin,
                 )
             combine_two_png(
-                self.outpng_emom1.replace("???","60pc"),
-                self.outpng_emom2.replace("???","60pc"),
-                self.final_60pc_obs_err+"_tmp2.png",
-                self.box_map,
-                self.box_map_noy,
-                delin=delin,
-                )
-            combine_two_png(
-                self.final_60pc_obs_err+"_tmp1.png",
-                self.final_60pc_obs_err+"_tmp2.png",
-                self.final_60pc_obs_err,
+                self.final_60pc_err+"_tmp1.png",
+                self.final_60pc_err+"_tmp2.png",
+                self.final_60pc_err+"_tmp12.png",
                 "1000000x10000000+0+0",
                 "1000000x10000000+0+0",
                 axis="column",
                 delin=True,
                 )
-
-        if do_final_60pc_rot_err==True:
-            print("################################")
-            print("# create do_final_60pc_rot_err #")
-            print("################################")
-
             combine_two_png(
-                self.outpng_e13co_trot.replace("???","60pc"),
+                self.final_60pc_err+"_tmp12.png",
                 self.outpng_e13co_ncol.replace("???","60pc"),
-                self.final_60pc_rot_err,
-                self.box_map,
+                self.final_60pc_err,
+                "1000000x10000000+0+0",
                 self.box_map_noy,
+                axis="column",
                 delin=delin,
                 )
+            os.system("rm -rf " + self.final_60pc_err+"_tmp12.png")
 
         if do_final_sim_mom0==True:
             print("############################")
