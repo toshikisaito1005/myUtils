@@ -59,28 +59,28 @@ outmaps_ratio       ,,,n1068_ratio_???.fits
 outmaps_13co_trot   ,,,n1068_13co_trot_???.fits
 outmaps_13co_ncol   ,,,n1068_13co_log_ncol_???.fits
 #
-outemaps_13co10     ,,,n1068_emom0_13co10_???.fits
-outemaps_13co21     ,,,n1068_emom0_13co21_???.fits
-outemaps_mom1       ,,,n1068_emom1_???.fits
-outemaps_mom2       ,,,n1068_emom2_???.fits
-outemaps_ratio      ,,,n1068_eratio_???.fits
-outemaps_13co_trot  ,,,n1068_e13co_trot_???.fits
-outemaps_13co_ncol  ,,,n1068_e13co_log_ncol_???.fits
+outemaps_13co10           ,,,n1068_emom0_13co10_???.fits
+outemaps_13co21           ,,,n1068_emom0_13co21_???.fits
+outemaps_mom1             ,,,n1068_emom1_???.fits
+outemaps_mom2             ,,,n1068_emom2_???.fits
+outemaps_ratio            ,,,n1068_eratio_???.fits
+outemaps_13co_trot        ,,,n1068_e13co_trot_???.fits
+outemaps_13co_ncol        ,,,n1068_e13co_log_ncol_???.fits
 #
-outmodelcube_13co10 ,,,model_13co10_cube.fits
-outmodelcube_13co21 ,,,model_13co21_cube.fits
-outmodelmom0_13co10 ,,,model_13co10_mom0.fits
-outmodelmom0_13co21 ,,,model_13co21_mom0.fits
-outsimumom0_13co10  ,,,simulated_13co10_mom0.fits
-outsimumom0_13co21  ,,,simulated_13co21_mom0.fits
+outmodelcube_13co10       ,,,model_13co10_cube.fits
+outmodelcube_13co21       ,,,model_13co21_cube.fits
+outmodelmom0_13co10       ,,,model_13co10_mom0.fits
+outmodelmom0_13co21       ,,,model_13co21_mom0.fits
+outsimumom0_13co10        ,,,simulated_13co10_mom0.fits
+outsimumom0_13co21        ,,,simulated_13co21_mom0.fits
 
 ###################
 # input paramters #
 ###################
-imsize_as           ,,,39
-snr_mom             ,,,4.0
-r_cnd_as            ,,,3.0
-r_sbr_as            ,,,10.0
+imsize_as                 ,,,39
+snr_mom                   ,,,4.0
+r_cnd_as                  ,,,3.0
+r_sbr_as                  ,,,10.0
 
 ######################
 # output png and txt #

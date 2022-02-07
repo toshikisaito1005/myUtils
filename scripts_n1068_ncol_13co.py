@@ -1742,8 +1742,8 @@ class ToolsNcol():
         ax1.errorbar(x2, y, xerr=x2err, yerr=yerr, lw=1, capsize=0, color="grey", linestyle="None")
 
         # text
-        ax.text(0.05,0.90, "$J$ = 1-0", color="deespkyblue", transform=ax.transAxes, weight="bold", fontsize=26, ha="left")
-        ax.text(0.05,0.85, "$J$ = 2-1", color="deespkyblue", transform=ax.transAxes, weight="bold", fontsize=26, ha="left")
+        ax1.text(0.05,0.90, "$J$ = 1-0", color="deespkyblue", transform=ax.transAxes, weight="bold", fontsize=26, ha="left")
+        ax1.text(0.05,0.85, "$J$ = 2-1", color="deespkyblue", transform=ax.transAxes, weight="bold", fontsize=26, ha="left")
 
         # save
         os.system("rm -rf " + outpng)
