@@ -1653,7 +1653,7 @@ class ToolsNcol():
 
             this_beam  = "60pc"
             xlim       = [-0.4,2.3]
-            ylim       = [15.0,17.0]
+            ylim       = [14.5,17.5]
             title      = "log$_{\mathrm{10}}$ $I_{\mathrm{^{13}CO}}$ vs. log$_{\mathrm{10}}$ $N_{\mathrm{^{13}CO}}$"
             xlabel     = "log$_{\mathrm{10}}$ $I_{\mathrm{^{13}CO}}$ (K km s$^{-1}$)"
             ylabel     = "log$_{\mathrm{10}}$ $N_{\mathrm{^{13}CO}}$ (cm$^{-2}$)"
@@ -1740,6 +1740,10 @@ class ToolsNcol():
 
         ax1.scatter(x2, y, c="tomato", lw=0, s=40, zorder=1e9)
         ax1.errorbar(x2, y, xerr=x2err, yerr=yerr, lw=1, capsize=0, color="grey", linestyle="None")
+
+        # text
+        ax.text(0.05,0.90, "$J$ = 1-0", color="deespkyblue", transform=ax.transAxes, weight="bold", fontsize=26, ha="left")
+        ax.text(0.05,0.85, "$J$ = 2-1", color="deespkyblue", transform=ax.transAxes, weight="bold", fontsize=26, ha="left")
 
         # save
         os.system("rm -rf " + outpng)
