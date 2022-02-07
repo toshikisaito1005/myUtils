@@ -40,13 +40,17 @@ cube_13co10         ,,,ngc1068_b3_12m_13co10_???.fits
 ecube_13co10        ,,,ngc1068_b3_12m_13co10_???_noise.fits
 cube_13co21         ,,,ngc1068_b6_12m_13co21_???.fits
 ecube_13co21        ,,,ngc1068_b6_12m_13co21_???_noise.fits
+#
+cube_hcn10          ,,,ngc1068_b3_12m_hcn10_???.fits
+ecube_hcn10         ,,,ngc1068_b3_12m_hcn10_???_noise.fits
+cube_hcop10         ,,,ngc1068_b6_12m_hcop10_???.fits
+ecube_hcop10        ,,,ngc1068_b6_12m_hcop10_???_noise.fits
 
 ###############
 # output maps #
 ###############
 outcubes_13co10     ,,,n1068_13co10_???.cube.fits
 outcubes_13co21     ,,,n1068_13co21_???.cube.fits
-#
 outecubes_13co10    ,,,n1068_13co10_???.ecube.fits
 outecubes_13co21    ,,,n1068_13co21_???.ecube.fits
 #
@@ -72,6 +76,25 @@ outmodelmom0_13co10 ,,,model_13co10_mom0.fits
 outmodelmom0_13co21 ,,,model_13co21_mom0.fits
 outsimumom0_13co10  ,,,simulated_13co10_mom0.fits
 outsimumom0_13co21  ,,,simulated_13co21_mom0.fits
+#
+#
+#
+outcubes_hcn10       ,,,n1068_hcn10_???.cube.fits
+outcubes_hcop10      ,,,n1068_hcop10_???.cube.fits
+outecubes_hcn10      ,,,n1068_hcn10_???.ecube.fits
+outecubes_hcop10     ,,,n1068_hcop10_???.ecube.fits
+#
+outmaps_hcn10        ,,,n1068_mom0_hcn10_???.fits
+outmaps_hcop10       ,,,n1068_mom0_hcop10_???.fits
+outmaps_hcn10_mom1   ,,,n1068_mom1_hcn10_???.fits
+outmaps_hcn10_mom2   ,,,n1068_mom2_hcn10_???.fits
+outmaps_hcn10_ratio  ,,,n1068_ratio_hcnhcop_???.fits
+#
+outemaps_hcn10       ,,,n1068_emom0_hcn10_???.fits
+outemaps_hcop10      ,,,n1068_emom0_hcop10_???.fits
+outemaps_hcn10_mom1  ,,,n1068_emom1_hcn10_???.fits
+outemaps_hcn10_mom2  ,,,n1068_emom2_hcn10_???.fits
+outemaps_hcn10_ratio ,,,n1068_eratio_hcnhcop_???.fits
 
 ###################
 # input paramters #

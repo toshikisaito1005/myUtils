@@ -123,10 +123,15 @@ class ToolsNcol():
         """
         """
 
-        self.cube_13co10 = self.dir_raw + self._read_key("cube_13co10")
+        self.cube_13co10  = self.dir_raw + self._read_key("cube_13co10")
         self.ecube_13co10 = self.dir_raw + self._read_key("ecube_13co10")
-        self.cube_13co21 = self.dir_raw + self._read_key("cube_13co21")
+        self.cube_13co21  = self.dir_raw + self._read_key("cube_13co21")
         self.ecube_13co21 = self.dir_raw + self._read_key("ecube_13co21")
+        #
+        self.cube_hcn10   = self.dir_raw + self._read_key("cube_hcn10")
+        self.ecube_hcn10  = self.dir_raw + self._read_key("ecube_hcn10")
+        self.cube_hcop10  = self.dir_raw + self._read_key("cube_hcop10")
+        self.ecube_hcop10 = self.dir_raw + self._read_key("ecube_13co21")
 
     def _set_output_fits(self):
         """
@@ -159,6 +164,24 @@ class ToolsNcol():
         self.outmodelmom0_13co21  = self.dir_ready + self._read_key("outmodelmom0_13co21")
         self.outsimumom0_13co10   = self.dir_ready + self._read_key("outsimumom0_13co10")
         self.outsimumom0_13co21   = self.dir_ready + self._read_key("outsimumom0_13co21")
+
+        #
+        self.outcubes_hcn10      = self.dir_ready + self._read_key("outcubes_hcn10")
+        self.outecubes_hcn10     = self.dir_ready + self._read_key("outecubes_hcn10")
+        self.outcubes_hcop10     = self.dir_ready + self._read_key("outcubes_hcop10")
+        self.outecubes_hcop10    = self.dir_ready + self._read_key("outecubes_hcop10")
+
+        self.outmaps_mom0_hcn10  = self.dir_ready + self._read_key("outmaps_hcn10")
+        self.outmaps_mom0_hcop10 = self.dir_ready + self._read_key("outmaps_hcop10")
+        self.outmaps_hcn10_mom1  = self.dir_ready + self._read_key("outmaps_hcn10_mom1")
+        self.outmaps_hcn10_mom2  = self.dir_ready + self._read_key("outmaps_hcn10_mom2")
+        self.outmaps_hcn10_ratio = self.dir_ready + self._read_key("outmaps_hcn10_ratio")
+
+        self.outemaps_mom0_hcn10  = self.dir_ready + self._read_key("outemaps_hcn10")
+        self.outemaps_mom0_hcop10 = self.dir_ready + self._read_key("outemaps_hcop10")
+        self.outemaps_hcn10_mom1  = self.dir_ready + self._read_key("outemaps_hcn10_mom1")
+        self.outemaps_hcn10_mom2  = self.dir_ready + self._read_key("outemaps_hcn10_mom2")
+        self.outemaps_hcn10_ratio = self.dir_ready + self._read_key("outemaps_hcn10_ratio")
 
     def _set_input_param(self):
         """
@@ -3469,6 +3492,19 @@ class ToolsNcol():
         """
         """
 
+        for this_beam in ["60pv"]:
+            print("# align_maps for cubes at " + this_beam)
+            self._align_maps_at_a_res(
+                self.cube_hcn10.replace("???",this_beam),
+                self.cube_hcop10.replace("???",this_beam),
+                self.outcubes_hcn10.replace("???",this_beam),
+                self.outcubes_hcop10.replace("???",this_beam),
+                self.ecube_hcn10.replace("???",this_beam),
+                self.ecube_hcop10.replace("???",this_beam),
+                self.outecubes_hcn10.replace("???",this_beam),
+                self.outecubes_hcop10.replace("???",this_beam),
+                )
+        """
         for this_beam in self.beams:
             print("# align_maps for cubes at " + this_beam)
             self._align_maps_at_a_res(
@@ -3481,6 +3517,7 @@ class ToolsNcol():
                 self.outecubes_13co10.replace("???",this_beam),
                 self.outecubes_13co21.replace("???",this_beam),
                 )
+        """
 
     #################################
     # _create_correlated_noise_cube #
