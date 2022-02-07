@@ -131,7 +131,7 @@ class ToolsNcol():
         self.cube_hcn10   = self.dir_raw + self._read_key("cube_hcn10")
         self.ecube_hcn10  = self.dir_raw + self._read_key("ecube_hcn10")
         self.cube_hcop10  = self.dir_raw + self._read_key("cube_hcop10")
-        self.ecube_hcop10 = self.dir_raw + self._read_key("ecube_hcop21")
+        self.ecube_hcop10 = self.dir_raw + self._read_key("ecube_hcop10")
 
     def _set_output_fits(self):
         """
