@@ -1594,19 +1594,23 @@ class ToolsNcol():
         # 13co10
         data_13co10,box = imval_all(self.outmaps_mom0_13co10.replace("???",this_beam))
         data_13co10     = data_13co10["data"] * data_13co10["mask"]
+        data_13co10     = data_13co10.flatten()
         data_13co10[np.isnan(data_13co10)] = 0
 
         err_13co10,_ = imval_all(self.outemaps_mom0_13co10.replace("???",this_beam))
         err_13co10   = err_13co10["data"] * err_13co10["mask"]
+        err_13co10   = err_13co10.flatten()
         err_13co10[np.isnan(err_13co10)] = 0
 
         # 13co21
         data_13co21,_ = imval_all(self.outmaps_mom0_13co21.replace("???",this_beam))
         data_13co21   = data_13co21["data"] * data_13co21["mask"]
+        data_13co21   = data_13co21.flatten()
         data_13co21[np.isnan(data_13co21)] = 0
 
         err_13co21,_ = imval_all(self.outemaps_mom0_13co21.replace("???",this_beam))
         err_13co21   = err_13co21["data"] * err_13co21["mask"]
+        err_13co21   = err_13co21.flatten()
         err_13co21[np.isnan(err_13co21)] = 0
 
         # coords
@@ -1617,14 +1621,12 @@ class ToolsNcol():
         dec_deg     = dec_deg.flatten()
         dist_pc,_   = get_reldist_pc(ra_deg, dec_deg, self.ra_agn, self.dec_agn, self.scale_pc, 0, 0)
 
-        print(len(data_13co10), len(dist_pc))
         # prepare
         cut  = np.where((data_13co10>abs(err_13co10)*snr)&(data_13co21>abs(err_13co21)*snr))
         x    = np.log10(data_13co10[cut])
         xerr = err_13co10[cut] / abs(data_13co10[cut])
         y    = np.log10(data_13co21[cut])
         yerr = err_13co21[cut] / abs(data_13co21[cut])
-        print(len(x), len(dist_pc), len(cut))
         r    = np.array(dist_pc)[cut]
 
         # plot
