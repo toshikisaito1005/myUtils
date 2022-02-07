@@ -473,7 +473,7 @@ class ToolsNcol():
                 self.outpng_e13co_ncol.replace("???","60pc"),
                 self.final_60pc_err,
                 "1000000x10000000+0+0",
-                self.box_map_noy,
+                self.box_map,
                 axis="column",
                 delin=delin,
                 )
