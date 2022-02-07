@@ -1648,7 +1648,7 @@ class ToolsNcol():
         plt.errorbar(x, y, xerr, yerr, lw=1, capsize=0, color="grey", linestyle="None")
 
         # colorbar
-        cax = fig.add_axes([0.25, 0.83, 0.33, 0.05])
+        cax = fig.add_axes([0.25, 0.81, 0.33, 0.04])
         cbar = plt.colorbar(cs, cax=cax, orientation="horizontal")
         cbar.set_label("Distance (kpc)")
         cbar.set_ticks([0,0.3,0.6,0.9,1.2])
