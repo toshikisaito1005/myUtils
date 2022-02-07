@@ -1595,7 +1595,7 @@ class ToolsNcol():
         ad = [0.215,0.83,0.10,0.90]
         myax_set(ax1, "both", None, None, None, "13co10", "13co21", adjust=ad)
 
-        for i in range(len(["60pc"])): for i in range(len(self.beams)):
+        for i in range(len(["60pc"])): # for i in range(len(self.beams)):
             this_beam  = self.beams[i]
             this_color = cm.rainbow( (i+1)/float(len(self.beams)) )
 
