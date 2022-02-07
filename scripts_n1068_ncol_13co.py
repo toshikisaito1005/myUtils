@@ -465,7 +465,7 @@ class ToolsNcol():
             immagick_crop(
                 self.outpng_13co10_vs_13co21_r,
                 self.final_scatter_int,
-                self.box_map,
+                self.box_map_noc,
                 )
 
         if do_final_scatter_rot==True:
@@ -477,8 +477,8 @@ class ToolsNcol():
                 self.outpng_trot_vs_int,
                 self.outpng_ncol_vs_int,
                 self.final_scatter_rot,
-                self.box_map,
-                self.box_map,
+                self.box_map_noc,
+                self.box_map_noc,
                 delin=delin,
                 )
 
