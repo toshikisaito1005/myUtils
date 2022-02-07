@@ -52,6 +52,7 @@ Toshiki Saito@Nichidai/NAOJ
 
 import os, sys, glob
 import numpy as np
+import matplotlib.cm as cm
 
 from mycasa_rotation import *
 from mycasa_sampling import *
@@ -1637,7 +1638,9 @@ class ToolsNcol():
         ad = [0.215,0.83,0.10,0.90]
         myax_set(ax1, "both", lim, lim, None, "13co10", "13co21", adjust=ad)
 
-        color = np.array([(mapper.to_rgba(v)) for v in y])
+        norm   = plt.colors.Normalize(vmin=np.min(y), vmax=np.max(y), clip=True)
+        mapper = cm.ScalarMappable(norm=norm, cmap='viridis')
+        color  = np.array([(mapper.to_rgba(v)) for v in y])
         for this_x, this_y, this_xerr, this_yerr, this_c in zip(x, y, xerr, yerr, color):
             plt.plot(this_x, this_y, 'o', color=color, lw=0, s=20)
             plt.errorbar(this_x, this_y, this_xerr, this_yerr, lw=1, capsize=0, color=this_c)
