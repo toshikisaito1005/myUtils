@@ -1637,7 +1637,8 @@ class ToolsNcol():
         ad = [0.215,0.83,0.10,0.90]
         myax_set(ax1, "both", lim, lim, None, "13co10", "13co21", adjust=ad)
 
-        ax1.scatter(x, y, c=r, cmap="rainbow_r", lw=0, s=40, alpha=0.5)
+        ax1.scatter(x, y, c=r, cmap="rainbow_r", lw=0, s=20)
+        ax1.errorbar(x, y, xerr=xerr, yerr=yerr, capsize=0, c=r, cmap="rainbow_r")
 
         # ann
         ax1.plot(lim, lim, "--", color="black", lw=1)
