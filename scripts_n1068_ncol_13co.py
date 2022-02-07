@@ -3441,9 +3441,9 @@ class ToolsNcol():
                 ecube_hcn10,
                 ra_cnt=self.ra_agn,
                 dec_cnt=self.dec_agn,
-                snr=3.0,
-                snr_limit=3.0,
-                ratio_max=3.0,
+                snr=4.0,
+                snr_limit=4.0,
+                ratio_max=4.0,
                 )
 
             #
@@ -3544,6 +3544,7 @@ class ToolsNcol():
         """
         """
 
+        """
         for this_beam in self.beams:
             print("# align_maps for cubes at " + this_beam)
             self._align_maps_at_a_res(
@@ -3556,6 +3557,7 @@ class ToolsNcol():
                 self.outecubes_13co10.replace("???",this_beam),
                 self.outecubes_13co21.replace("???",this_beam),
                 )
+        """
  
         # hcn10 hcop10 case
         for this_beam in ["60pc"]:
