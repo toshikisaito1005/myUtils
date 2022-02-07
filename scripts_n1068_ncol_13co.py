@@ -330,8 +330,8 @@ class ToolsNcol():
         delin                 = False,
         do_all                = False,
         #
-        do_final_60pc_obs     = False,
-        do_final_60pc_rot     = False,
+        do_final_60pc_obs     = True,
+        do_final_60pc_rot     = True,
         # appendix_err
         do_final_60pc_obs_err = True,
         do_final_60pc_rot_err = True,
