@@ -1636,7 +1636,7 @@ class ToolsNcol():
         fig = plt.figure(figsize=(13,10))
         gs  = gridspec.GridSpec(nrows=10, ncols=10)
         ax1 = plt.subplot(gs[0:10,0:10])
-        ad  = [0.215,0.83,0.10,0.90]
+        ad  = [0.19,0.99,0.10,0.90]
         myax_set(ax1, "both", lim, lim, None, "13co10", "13co21", adjust=ad)
 
         sc = ax1.scatter(x, y, c=r, cmap="rainbow_r", lw=0, s=1)
