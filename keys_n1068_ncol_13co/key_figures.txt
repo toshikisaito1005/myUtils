@@ -16,6 +16,7 @@ final_60pc_obs      ,,,fig_gallery_obs_60pc.png
 final_60pc_rot      ,,,fig_gallery_rot_60pc.png
 # appendix
 final_60pc_err      ,,,fig_gallery_err_60pc.png
+final_sim_input     ,,,fig_sim_input.png
 final_sim_mom0      ,,,fig_sim_mom0.png
 final_sim_emom0     ,,,fig_sim_emom0.png
 #
@@ -108,7 +109,6 @@ box_map             ,,,2225x1870+335+80
 box_map_nox         ,,,2225x1730+335+80
 box_map_noy         ,,,2225x1870+550+80
 box_map_noxy        ,,,2225x1730+550+80
-#
 box_map_noc         ,,,1825x1870+335+80
 box_map_noxc        ,,,1825x1730+335+80
 box_map_noyc        ,,,1625x1870+550+80
