@@ -1617,13 +1617,14 @@ class ToolsNcol():
         dec_deg     = dec_deg.flatten()
         dist_pc,_   = get_reldist_pc(ra_deg, dec_deg, self.ra_agn, self.dec_agn, self.scale_pc, 0, 0)
 
+        print(len(x), len(dist_pc))
         # prepare
         cut  = np.where((data_13co10>abs(err_13co10)*snr)&(data_13co21>abs(err_13co21)*snr))
         x    = np.log10(data_13co10[cut])
         xerr = err_13co10[cut] / abs(data_13co10[cut])
         y    = np.log10(data_13co21[cut])
         yerr = err_13co21[cut] / abs(data_13co21[cut])
-        print(len(cut), len(x), len(dist_pc))
+        print(len(x), len(dist_pc), len(cut))
         r    = np.array(dist_pc)[cut]
 
         # plot
