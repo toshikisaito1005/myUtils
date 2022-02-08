@@ -1709,29 +1709,9 @@ class ToolsNcol():
         ylabel2 = "log$_{\mathrm{10}}$ $N_{\mathrm{^{13}CO}}$ (cm$^{-2}$)"
         title2  = "$N_{\mathrm{^{13}CO}}$ Distribution"
 
-        # KDE
-        l = gaussian_kde(N)
-        N_all = np.array(l(n_grid) / np.max(l(n_grid))) / 1.1
-
-        cut = np.where(R_as<self.r_cnd_as)
-        l = gaussian_kde(T[cut])
-        T_cnd = np.array(l(t_grid) / np.max(l(t_grid))) / 1.1
-        l = gaussian_kde(N[cut])
-        N_cnd = np.array(l(n_grid) / np.max(l(n_grid))) / 1.1
-
-        cut = np.where((R_as>=self.r_cnd_as)&(R_as<self.r_sbr_as))
-        l = gaussian_kde(T[cut])
-        T_int = np.array(l(t_grid) / np.max(l(t_grid))) / 1.1
-        l = gaussian_kde(N[cut])
-        N_int = np.array(l(n_grid) / np.max(l(n_grid))) / 1.1
-
-        cut = np.where(R_as>=self.r_sbr_as)
-        l = gaussian_kde(T[cut])
-        T_sbr = np.array(l(t_grid) / np.max(l(t_grid))) / 1.1
-        l = gaussian_kde(N[cut])
-        N_sbr = np.array(l(n_grid) / np.max(l(n_grid))) / 1.1
-
-        # plot
+        ########
+        # plot #
+        ########
         fig = plt.figure(figsize=(17,10))
         gs  = gridspec.GridSpec(nrows=10, ncols=10)
         ax1 = plt.subplot(gs[0:10,0:5])
@@ -1744,28 +1724,22 @@ class ToolsNcol():
         ax3.set_ylim(nlim)
         ax2.tick_params(labelleft=False)
 
-        # plot KDE
+        cut = np.where((R_as>=self.r_cnd_as)&(R_as<self.r_sbr_as))
+
+        cut = np.where(R_as>=self.r_sbr_as)
+
+        # plot all data
         n = 1
         self._ax_violin(ax1,T,n,t_grid,"grey")
+        self._ax_violin(ax1,N,n,n_grid,"grey")
 
-
-        n = 1
-        y, left, right = n_grid, n-N_all, n+N_all
-        ax2.plot(right, y, lw=2, color="grey")
-        ax2.plot(left, y, lw=2, color="grey")
-        ax2.fill_betweenx(y, left, right, facecolor="grey", alpha=0.5)
-
+        # plot cnd data
         n = 3
-        y, left, right = t_grid, n-T_cnd, n+T_cnd
-        ax1.plot(right, y, lw=2, color="grey")
-        ax1.plot(left, y, lw=2, color="grey")
-        ax1.fill_betweenx(y, left, right, facecolor="tomato", alpha=0.5)
+        cut = np.where(R_as<self.r_cnd_as)
+        self._ax_violin(ax1,T[cut],n,t_grid,"tomato")
+        self._ax_violin(ax1,N[cut],n,n_grid,"tomato")
 
-        y, left, right = n_grid, n-N_cnd, n+N_cnd
-        ax2.plot(right, y, lw=2, color="grey")
-        ax2.plot(left, y, lw=2, color="grey")
-        ax2.fill_betweenx(y, left, right, facecolor="tomato", alpha=0.5)
-
+        """
         n = 5
         y, left, right = t_grid, n-T_int, n+T_int
         ax1.plot(right, y, lw=2, color="grey")
@@ -1787,6 +1761,7 @@ class ToolsNcol():
         ax2.plot(right, y, lw=2, color="grey")
         ax2.plot(left, y, lw=2, color="grey")
         ax2.fill_betweenx(y, left, right, facecolor="deepskyblue", alpha=0.5)
+        """
 
         # save
         os.system("rm -rf " + self.outpng_violin)
