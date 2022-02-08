@@ -1721,6 +1721,7 @@ class ToolsNcol():
             factor,
             cmap="rainbow_r",
             outfits=self.outmaps_aco,
+            templatefits=self.outcubes_13co10.replace("???",this_beam),
             )
 
         os.system("rm -rf " + self.mom0_12co10.replace("???",this_beam) + ".regrid")
@@ -3700,6 +3701,7 @@ class ToolsNcol():
         factor,
         cmap="rainbow_r",
         outfits=None,
+        templatefits=None,
         ):
         """
         use only for aco
@@ -3817,7 +3819,7 @@ class ToolsNcol():
             self._fits_creation(
                 input_array=outarray,
                 output_map=outfits,
-                coords_template=yimage,
+                coords_template=templatefits,
                 bunit="K",
                 )
 
