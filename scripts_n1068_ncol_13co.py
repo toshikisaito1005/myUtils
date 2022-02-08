@@ -1701,6 +1701,7 @@ class ToolsNcol():
 
         limt = [2,13]
         t_grid = np.linspace(limt[0], limt[1], num=1000)
+        xlabel = "$T_{\mathrm{rot}}$ (K)"
 
         # KDE Trit
         l = gaussian_kde(T)
@@ -1718,16 +1719,12 @@ class ToolsNcol():
         l = gaussian_kde(T[cut])
         T_sbr = np.array(l(t_grid) / np.max(l(t_grid)))
 
-        # save
-        os.system("rm -rf " + "test.png")
-        plt.savefig("test.png", dpi=self.fig_dpi)
-
         # plot
         fig = plt.figure(figsize=(13,10))
         gs  = gridspec.GridSpec(nrows=10, ncols=10)
         ax1 = plt.subplot(gs[0:10,0:10])
         ad  = [0.10,0.90,0.10,0.90]
-        myax_set(ax1, None, None, limt, None, None, None, adjust=ad)
+        myax_set(ax1, None, None, limt, None, xlabel, None, adjust=ad)
 
         n = 1
         y, left, right = t_grid, n-T_all, n+T_all
