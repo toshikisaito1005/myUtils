@@ -3789,7 +3789,6 @@ class ToolsNcol():
         plt.savefig(outpng, dpi=self.fig_dpi)
 
         #
-        outarray = outarray.reshape([shape[0],shape[1]])
         if outfits!=None:
             # 12co10
             data_13co10,box = imval_all(ximage)
