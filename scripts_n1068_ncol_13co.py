@@ -3811,7 +3811,8 @@ class ToolsNcol():
 
             # prepare
             outarray = data_13co21 + np.log10(factor) - np.log10(data_13co10)
-            outarray = np.where((data_13co10>abs(err_13co10)*self.snr)&(data_13co21>abs(err_13co21)*self.snr),outarray,0)
+            outarray = 10**outarray / 2e20 * 4.3
+            outarray = np.flip(np.where((data_13co10>abs(err_13co10)*self.snr)&(data_13co21>abs(err_13co21)*self.snr),outarray,0))
 
             self._fits_creation(
                 input_array=outarray,
