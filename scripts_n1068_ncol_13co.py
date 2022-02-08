@@ -3823,9 +3823,6 @@ class ToolsNcol():
                 bunit="K",
                 )
 
-            importfits(fitsimage=outfits, imagename=outfits+".image", overwrite=True)
-
-
     ##################
     # _plot_scatter3 #
     ##################
