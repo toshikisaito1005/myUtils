@@ -1703,7 +1703,7 @@ class ToolsNcol():
         ###############
         this_beam  = "60pc"
         if plot_radial==True:
-            xlim       = [0.0,2.0]
+            xlim       = [0.0,1.3]
             ylim       = [2,13]
             ylim2      = [14.7,17.2]
             title      = "radial $T_{\mathrm{rot}}$ and log$_{\mathrm{10}}$ $N_{\mathrm{^{13}CO}}$ at " + this_beam.replace("pc"," pc")
@@ -1759,12 +1759,12 @@ class ToolsNcol():
         err_y1[np.isnan(err_y1)] = 0
 
         # y2
-        data_y2,_ = imval_all(yimage)
+        data_y2,_ = imval_all(y2image)
         data_y2   = data_y2["data"] * data_y2["mask"]
         data_y2   = data_y2.flatten()
         data_y2[np.isnan(data_y2)] = 0
 
-        err_y2,_ = imval_all(yerrimage)
+        err_y2,_ = imval_all(y2errimage)
         err_y2   = err_y2["data"] * err_y2["mask"]
         err_y2   = err_y2.flatten()
         err_y2[np.isnan(err_y2)] = 0
@@ -1828,7 +1828,7 @@ class ToolsNcol():
 
         # text
         ax1.text(0.05,0.93, "$T_{\mathrm{rot}}$", color="deepskyblue", transform=ax1.transAxes, weight="bold", fontsize=26, ha="left")
-        ax1.text(0.05,0.88, "log$_{\mathrm{10}}$ $I_{\mathrm{^{13}CO}}$", color="tomato", transform=ax1.transAxes, weight="bold", fontsize=26, ha="left")
+        ax1.text(0.05,0.88, "log$_{\mathrm{10}}$ $N_{\mathrm{^{13}CO}}$", color="tomato", transform=ax1.transAxes, weight="bold", fontsize=26, ha="left")
 
         # save
         os.system("rm -rf " + outpng)
