@@ -835,9 +835,26 @@ def myax_fig2png_ann(ax,number,ra_cnt,dec_cnt,add_text=True,txtfiles=None):
     number==2 is used for Figure 1 of the NGC 3110 CO paper.
     """
 
-    ####################################
-    # Figures of CI-GMC NGC 1068 paper #
-    ####################################
+    ##############################################
+    # Figures of the 13co roration diagram paper #
+    ##############################################
+
+    if number=="13co":
+        diameter_cnd = 6.0 # = 432 pc
+        efov1 = patches.Ellipse(xy=(-0,0), width=diameter_cnd,
+            height=diameter_cnd, angle=0, fill=False, edgecolor="black",
+            alpha=1.0, lw=3.5)
+        ax.add_patch(efov1)
+
+        diameter_sbr = 20.0 # = 1440 pc
+        efov2 = patches.Ellipse(xy=(-0,0), width=diameter_sbr,
+            height=diameter_sbr, angle=0, fill=False, edgecolor="black",
+            alpha=1.0, lw=3.5)
+        ax.add_patch(efov2)
+
+    ######################################
+    # Figures of CI-GMC NGC 1068 project #
+    ######################################
 
     if number=="ci-gmc":
         x     = (txtfiles["XCTR_DEG"] - float(ra_cnt.split("deg")[0])) * 3600.
@@ -908,7 +925,6 @@ def myax_fig2png_ann(ax,number,ra_cnt,dec_cnt,add_text=True,txtfiles=None):
         theta2      = 70.0 # degree
         fov_diamter = 16.5 # arcsec (12m+7m Band 8)
 
-        fov_diamter = 16.5
         efov1 = patches.Ellipse(xy=(-0,0), width=fov_diamter,
             height=fov_diamter, angle=0, fill=False, edgecolor="black",
             alpha=1.0, lw=3.5)

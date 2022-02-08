@@ -295,7 +295,8 @@ class ToolsNcol():
         # plot figures in paper
         plot_showcase    = False, # after do_fitting
         plot_showsim     = False, # after do_simulate_mom
-        plot_scatter     = False,
+        plot_scatter     = False, # after do_fitting
+        plot_violin      = False, # after do_fitting
         do_imagemagick   = False,
         immagick_all     = False,
         # supplement
@@ -341,6 +342,9 @@ class ToolsNcol():
         if plot_scatter==True:
             self.plot_scatter()
 
+        if plot_violin==True:
+            self.plot_violin()
+
         if do_imagemagick==True:
             self.immagick_figures(do_all=immagick_all,delin=False)
 
@@ -357,7 +361,7 @@ class ToolsNcol():
         do_final_60pc_rot     = False,
         do_final_scatter_int  = False,
         do_final_scatter_rot  = False,
-        do_final_radial       = True,
+        do_final_radial       = False,
         # appendix_err
         do_final_60pc_err     = False,
         do_final_sim_input    = False,
@@ -1624,6 +1628,29 @@ class ToolsNcol():
                 axis="column",
                 )
 
+    ###############
+    # plot_violin #
+    ###############
+
+    def plot_violin(
+        self,
+        plot_I_vs_I=True,
+        plot_phys_vs_I=True,
+        plot_radial=True,
+        ):
+        """
+        """
+        this_beam = "60pc"
+
+        taskname = self.modname + sys._getframe().f_code.co_name
+        check_first(self.outmaps_mom0_13co10.replace("???",this_beam),taskname)
+
+        #
+        yimage     = self.outmaps_13co_trot.replace("???",this_beam)
+        yerrimage  = self.outemaps_13co_trot.replace("???",this_beam)
+        y2image    = self.outmaps_13co_ncol.replace("???",this_beam)
+        y2errimage = self.outemaps_13co_ncol.replace("???",this_beam)
+
     ################
     # plot_scatter #
     ################
@@ -1641,7 +1668,7 @@ class ToolsNcol():
         """
 
         taskname = self.modname + sys._getframe().f_code.co_name
-        check_first(self.outmodelcube_13co10.replace(".fits","_snr10.fits"),taskname)
+        check_first(self.outmaps_mom0_13co10.replace("???","60pc"),taskname)
 
         ###############
         # plot_I_vs_I #
@@ -1729,353 +1756,6 @@ class ToolsNcol():
             y2errimage = self.outemaps_13co_ncol.replace("???",this_beam)
             outpng     = self.outpng_radial
             self._plot_scatter3(yimage,yerrimage,y2image,y2errimage,outpng,xlim,ylim,ylim2,title,xlabel,ylabel,ylabel2)
-
-    ##################
-    # _plot_scatter3 #
-    ##################
-
-    def _plot_scatter3(
-        self,
-        yimage,
-        yerrimage,
-        y2image,
-        y2errimage,
-        outpng,
-        xlim,
-        ylim,
-        ylim2,
-        title,
-        xlabel,
-        ylabel,
-        ylabel2,
-        snr=3.0,
-        ):
-        # coords
-        _,box       = imval_all(yimage)
-        data_coords = imval(yimage,box=box)["coords"]
-        ra_deg      = data_coords[:,:,0] * 180/np.pi
-        ra_deg      = ra_deg.flatten()
-        dec_deg     = data_coords[:,:,1] * 180/np.pi
-        dec_deg     = dec_deg.flatten()
-        dist_pc,_   = get_reldist_pc(ra_deg, dec_deg, self.ra_agn, self.dec_agn, self.scale_pc, 0, 0)
-        data_x      = dist_pc / 1000.0
-
-        # y1
-        data_y1,_ = imval_all(yimage)
-        data_y1   = data_y1["data"] * data_y1["mask"]
-        data_y1   = data_y1.flatten()
-        data_y1[np.isnan(data_y1)] = 0
-
-        err_y1,_ = imval_all(yerrimage)
-        err_y1   = err_y1["data"] * err_y1["mask"]
-        err_y1   = err_y1.flatten()
-        err_y1[np.isnan(err_y1)] = 0
-
-        # y2
-        data_y2,_ = imval_all(y2image)
-        data_y2   = data_y2["data"] * data_y2["mask"]
-        data_y2   = data_y2.flatten()
-        data_y2[np.isnan(data_y2)] = 0
-
-        err_y2,_ = imval_all(y2errimage)
-        err_y2   = err_y2["data"] * err_y2["mask"]
-        err_y2   = err_y2.flatten()
-        err_y2[np.isnan(err_y2)] = 0
-
-        # prepare
-        cut   = np.where((data_y1>abs(err_y1)*snr)&(data_y2>abs(err_y2)*snr))
-        x     = data_x[cut]
-        y1    = data_y1[cut]
-        y1err = err_y1[cut]
-        y2    = data_y2[cut]
-        y2err = err_y2[cut]
-
-        # binned
-        n,_   = np.histogram(x, bins=10, range=[np.min(x),np.max(x)])
-        sy,_  = np.histogram(x, bins=10, range=[np.min(x),np.max(x)], weights=y1)
-        sy2,_ = np.histogram(x, bins=10, range=[np.min(x),np.max(x)], weights=y1*y1)
-        mean  = sy / n
-        std   = np.sqrt(sy2/n - mean*mean)
-        binx1 = (_[1:]+_[:-1])/2
-        biny1 = mean
-        binyerr1 = std
-
-        n,_   = np.histogram(x, bins=10, range=[np.min(x),np.max(x)])
-        sy,_  = np.histogram(x, bins=10, range=[np.min(x),np.max(x)], weights=y2)
-        sy2,_ = np.histogram(x, bins=10, range=[np.min(x),np.max(x)], weights=y2*y2)
-        mean  = sy / n
-        std   = np.sqrt(sy2/n - mean*mean)
-        binx2 = (_[1:]+_[:-1])/2
-        biny2 = mean
-        binyerr2 = std
-
-        # plot
-        fig = plt.figure(figsize=(13,10))
-        gs  = gridspec.GridSpec(nrows=10, ncols=10)
-        ax1 = plt.subplot(gs[0:10,0:10])
-        ax2 = ax1.twinx()
-        ad  = [0.215,0.83,0.10,0.90]
-        myax_set(ax1, "both", xlim, ylim, title, xlabel, ylabel, adjust=ad)
-        ax2.set_ylabel(ylabel2)
-        ax2.set_ylim(ylim2)
-
-        ax1.errorbar(x, y1, yerr=y1err, lw=1, capsize=0, color="grey", linestyle="None")
-        ax2.errorbar(x, y2, yerr=y2err, lw=1, capsize=0, color="grey", linestyle="None")
-        ax1.scatter(x, y1, c="deepskyblue", lw=0, s=40, zorder=1e9)
-        ax2.scatter(x, y2, c="tomato", lw=0, s=40, zorder=1e9)
-
-        ax1.plot(binx1, biny1, color="blue", lw=2.0, zorder=1e11)
-        for i in range(len(binx1)):
-            this_binx1    = binx1[i]
-            this_biny1    = biny1[i]
-            this_binyerr1 = binyerr1[i]
-            ax1.plot([this_binx1,this_binx1],[this_biny1-this_binyerr1,this_biny1+this_binyerr1], color="blue", lw=2.0, zorder=1e11)
-
-        ax2.plot(binx2, biny2, color="red", lw=2.0, zorder=1e11)
-        for i in range(len(binx2)):
-            this_binx2    = binx2[i]
-            this_biny2    = biny2[i]
-            this_binyerr2 = binyerr2[i]
-            ax2.plot([this_binx2,this_binx2],[this_biny2-this_binyerr2,this_biny2+this_binyerr2], color="red", lw=2.0, zorder=1e11)
-
-        # text
-        ax1.text(0.05,0.93, "$T_{\mathrm{rot}}$", color="deepskyblue", transform=ax1.transAxes, weight="bold", fontsize=26, ha="left")
-        ax1.text(0.05,0.88, "log$_{\mathrm{10}}$ $N_{\mathrm{^{13}CO}}$", color="tomato", transform=ax1.transAxes, weight="bold", fontsize=26, ha="left")
-
-        # save
-        os.system("rm -rf " + outpng)
-        plt.savefig(outpng, dpi=self.fig_dpi)
-
-    ##################
-    # _plot_scatter2 #
-    ##################
-
-    def _plot_scatter2(
-        self,
-        x1image,
-        x1errimage,
-        x2image,
-        x2errimage,
-        yimage,
-        yerrimage,
-        outpng,
-        xlim,
-        ylim,
-        title,
-        xlabel,
-        ylabel,
-        snr=3.0,
-        colorlog=False,
-        ):
-        # x1
-        data_x1,_ = imval_all(x1image)
-        data_x1   = data_x1["data"] * data_x1["mask"]
-        data_x1   = data_x1.flatten()
-        data_x1[np.isnan(data_x1)] = 0
-
-        err_x1,_ = imval_all(x1errimage)
-        err_x1   = err_x1["data"] * err_x1["mask"]
-        err_x1   = err_x1.flatten()
-        err_x1[np.isnan(err_x1)] = 0
-
-        # x2
-        data_x2,_ = imval_all(x2image)
-        data_x2   = data_x2["data"] * data_x2["mask"]
-        data_x2   = data_x2.flatten()
-        data_x2[np.isnan(data_x2)] = 0
-
-        err_x2,_ = imval_all(x2errimage)
-        err_x2   = err_x2["data"] * err_x2["mask"]
-        err_x2   = err_x2.flatten()
-        err_x2[np.isnan(err_x2)] = 0
-
-        # y
-        data_y,_ = imval_all(yimage)
-        data_y   = data_y["data"] * data_y["mask"]
-        data_y   = data_y.flatten()
-        data_y[np.isnan(data_y)] = 0
-
-        err_y,_ = imval_all(yerrimage)
-        err_y   = err_y["data"] * err_y["mask"]
-        err_y   = err_y.flatten()
-        err_y[np.isnan(err_y)] = 0
-
-        # prepare
-        cut   = np.where((data_x1>abs(err_x1)*snr)&(data_x2>abs(err_x2)*snr)&(data_y>abs(err_y)*snr))
-        x1    = np.log10(data_x1[cut])
-        x1err = err_x1[cut] / abs(data_x1[cut])
-        x2    = np.log10(data_x2[cut])
-        x2err = err_x2[cut] / abs(data_x2[cut])
-        y     = data_y[cut]
-        yerr  = err_y[cut]
-
-        if colorlog==True:
-            y    = np.log10(y)
-            yerr = yerr / abs(10**y)
-
-        # binned
-        n,_   = np.histogram(x1, bins=10, range=[np.min(x1),np.max(x1)])
-        sy,_  = np.histogram(x1, bins=10, range=[np.min(x1),np.max(x1)], weights=y)
-        sy2,_ = np.histogram(x1, bins=10, range=[np.min(x1),np.max(x1)], weights=y*y)
-        mean  = sy / n
-        std   = np.sqrt(sy2/n - mean*mean)
-        binx1 = (_[1:]+_[:-1])/2
-        biny1 = mean
-        binyerr1 = std
-
-        n,_   = np.histogram(x2, bins=10, range=[np.min(x2),np.max(x2)])
-        sy,_  = np.histogram(x2, bins=10, range=[np.min(x2),np.max(x2)], weights=y)
-        sy2,_ = np.histogram(x2, bins=10, range=[np.min(x2),np.max(x2)], weights=y*y)
-        mean  = sy / n
-        std   = np.sqrt(sy2/n - mean*mean)
-        binx2 = (_[1:]+_[:-1])/2
-        biny2 = mean
-        binyerr2 = std
-
-        # plot
-        fig = plt.figure(figsize=(13,10))
-        gs  = gridspec.GridSpec(nrows=10, ncols=10)
-        ax1 = plt.subplot(gs[0:10,0:10])
-        ad  = [0.215,0.83,0.10,0.90]
-        myax_set(ax1, "both", xlim, ylim, title, xlabel, ylabel, adjust=ad)
-
-        ax1.errorbar(x1, y, xerr=x1err, yerr=yerr, lw=1, capsize=0, color="grey", linestyle="None")
-        ax1.errorbar(x2, y, xerr=x2err, yerr=yerr, lw=1, capsize=0, color="grey", linestyle="None")
-        ax1.scatter(x1, y, c="deepskyblue", lw=0, s=40, zorder=1e9)
-        ax1.scatter(x2, y, c="tomato", lw=0, s=40, zorder=1e9)
-
-        ax1.plot(binx1, biny1, color="blue", lw=2.0, zorder=1e11)
-        for i in range(len(binx1)):
-            this_binx1    = binx1[i]
-            this_biny1    = biny1[i]
-            this_binyerr1 = binyerr1[i]
-            ax1.plot([this_binx1,this_binx1],[this_biny1-this_binyerr1,this_biny1+this_binyerr1], color="blue", lw=2.0, zorder=1e11)
-
-        ax1.plot(binx2, biny2, color="red", lw=2.0, zorder=1e11)
-        for i in range(len(binx2)):
-            this_binx2    = binx2[i]
-            this_biny2    = biny2[i]
-            this_binyerr2 = binyerr2[i]
-            ax1.plot([this_binx2,this_binx2],[this_biny2-this_binyerr2,this_biny2+this_binyerr2], color="red", lw=2.0, zorder=1e11)
-
-        # text
-        ax1.text(0.05,0.93, "J = 1-0", color="deepskyblue", transform=ax1.transAxes, weight="bold", fontsize=26, ha="left")
-        ax1.text(0.05,0.88, "J = 2-1", color="tomato", transform=ax1.transAxes, weight="bold", fontsize=26, ha="left")
-
-        # save
-        os.system("rm -rf " + outpng)
-        plt.savefig(outpng, dpi=self.fig_dpi)
-
-    ##################
-    # _plot_scatter1 #
-    ##################
-
-    def _plot_scatter1(
-        self,
-        ximage,
-        xerrimage,
-        yimage,
-        yerrimage,
-        cimage,
-        cerrimage,
-        outpng,
-        lim,
-        title,
-        xlabel,
-        ylabel,
-        cblabel,
-        snr=3.0,
-        cmap="rainbow_r",
-        ):
-
-        # 13co10
-        data_13co10,box = imval_all(ximage)
-        data_13co10     = data_13co10["data"] * data_13co10["mask"]
-        data_13co10     = data_13co10.flatten()
-        data_13co10[np.isnan(data_13co10)] = 0
-
-        err_13co10,_ = imval_all(xerrimage)
-        err_13co10   = err_13co10["data"] * err_13co10["mask"]
-        err_13co10   = err_13co10.flatten()
-        err_13co10[np.isnan(err_13co10)] = 0
-
-        # 13co21
-        data_13co21,_ = imval_all(yimage)
-        data_13co21   = data_13co21["data"] * data_13co21["mask"]
-        data_13co21   = data_13co21.flatten()
-        data_13co21[np.isnan(data_13co21)] = 0
-
-        err_13co21,_ = imval_all(yerrimage)
-        err_13co21   = err_13co21["data"] * err_13co21["mask"]
-        err_13co21   = err_13co21.flatten()
-        err_13co21[np.isnan(err_13co21)] = 0
-
-        if cimage==None:
-            # coords
-            data_coords = imval(ximage,box=box)["coords"]
-            ra_deg      = data_coords[:,:,0] * 180/np.pi
-            ra_deg      = ra_deg.flatten()
-            dec_deg     = data_coords[:,:,1] * 180/np.pi
-            dec_deg     = dec_deg.flatten()
-            dist_pc,_   = get_reldist_pc(ra_deg, dec_deg, self.ra_agn, self.dec_agn, self.scale_pc, 0, 0)
-            c           = dist_pc / 1000.0
-            # prepare
-            cut  = np.where((data_13co10>abs(err_13co10)*snr)&(data_13co21>abs(err_13co21)*snr))
-            x    = np.log10(data_13co10[cut])
-            xerr = err_13co10[cut] / abs(data_13co10[cut])
-            y    = np.log10(data_13co21[cut])
-            yerr = err_13co21[cut] / abs(data_13co21[cut])
-            c    = np.array(c)[cut]
-
-        else:
-            data_c,_    = imval_all(cimage)
-            data_c      = data_c["data"] * data_c["mask"]
-            data_c      = data_c.flatten()
-            data_c[np.isnan(data_c)] = 0
-            c           = data_c
-            data_cerr,_ = imval_all(cerrimage)
-            data_cerr   = data_cerr["data"] * data_cerr["mask"]
-            data_cerr   = data_cerr.flatten()
-            data_cerr[np.isnan(data_cerr)] = 0
-            cerr        = data_cerr
-            # prepare
-            cut  = np.where((data_13co10>abs(err_13co10)*snr)&(data_13co21>abs(err_13co21)*snr)&(c>abs(cerr)*snr))
-            x    = np.log10(data_13co10[cut])
-            xerr = err_13co10[cut] / abs(data_13co10[cut])
-            y    = np.log10(data_13co21[cut])
-            yerr = err_13co21[cut] / abs(data_13co21[cut])
-            c    = np.array(c)[cut]
-
-        # plot
-        fig = plt.figure(figsize=(13,10))
-        gs  = gridspec.GridSpec(nrows=10, ncols=10)
-        ax1 = plt.subplot(gs[0:10,0:10])
-        ad  = [0.215,0.83,0.10,0.90]
-        myax_set(ax1, "both", lim, lim, title, xlabel, ylabel, adjust=ad)
-
-        cs = ax1.scatter(x, y, c=c, cmap=cmap, lw=0, s=40, zorder=1e9)
-        ax1.errorbar(x, y, xerr, yerr, lw=1, capsize=0, color="grey", linestyle="None")
-
-        # colorbar
-        cax = fig.add_axes([0.25, 0.81, 0.33, 0.04])
-        cbar = plt.colorbar(cs, cax=cax, orientation="horizontal")
-        cbar.set_label(cblabel)
-        if cimage==None:
-            cbar.set_ticks([0,0.3,0.6,0.9,1.2])
-
-        """ cmap for errorbar
-        clb   = plt.colorbar(sc)
-        color = clb.to_rgba(r)
-        for this_x, this_y, this_xerr, this_yerr, this_c in zip(x, y, xerr, yerr, color):
-            plt.errorbar(this_x, this_y, this_xerr, this_yerr, lw=1, capsize=0, color=this_c)
-        """
-
-        # ann
-        ax1.plot(lim, lim, "--", color="black", lw=1)
-
-        # save
-        os.system("rm -rf " + outpng)
-        plt.savefig(outpng, dpi=self.fig_dpi)
 
     ############
     # eval_sim #
@@ -3734,6 +3414,353 @@ class ToolsNcol():
                 )
         """
 
+    ##################
+    # _plot_scatter3 #
+    ##################
+
+    def _plot_scatter3(
+        self,
+        yimage,
+        yerrimage,
+        y2image,
+        y2errimage,
+        outpng,
+        xlim,
+        ylim,
+        ylim2,
+        title,
+        xlabel,
+        ylabel,
+        ylabel2,
+        snr=3.0,
+        ):
+        # coords
+        _,box       = imval_all(yimage)
+        data_coords = imval(yimage,box=box)["coords"]
+        ra_deg      = data_coords[:,:,0] * 180/np.pi
+        ra_deg      = ra_deg.flatten()
+        dec_deg     = data_coords[:,:,1] * 180/np.pi
+        dec_deg     = dec_deg.flatten()
+        dist_pc,_   = get_reldist_pc(ra_deg, dec_deg, self.ra_agn, self.dec_agn, self.scale_pc, 0, 0)
+        data_x      = dist_pc / 1000.0
+
+        # y1
+        data_y1,_ = imval_all(yimage)
+        data_y1   = data_y1["data"] * data_y1["mask"]
+        data_y1   = data_y1.flatten()
+        data_y1[np.isnan(data_y1)] = 0
+
+        err_y1,_ = imval_all(yerrimage)
+        err_y1   = err_y1["data"] * err_y1["mask"]
+        err_y1   = err_y1.flatten()
+        err_y1[np.isnan(err_y1)] = 0
+
+        # y2
+        data_y2,_ = imval_all(y2image)
+        data_y2   = data_y2["data"] * data_y2["mask"]
+        data_y2   = data_y2.flatten()
+        data_y2[np.isnan(data_y2)] = 0
+
+        err_y2,_ = imval_all(y2errimage)
+        err_y2   = err_y2["data"] * err_y2["mask"]
+        err_y2   = err_y2.flatten()
+        err_y2[np.isnan(err_y2)] = 0
+
+        # prepare
+        cut   = np.where((data_y1>abs(err_y1)*snr)&(data_y2>abs(err_y2)*snr))
+        x     = data_x[cut]
+        y1    = data_y1[cut]
+        y1err = err_y1[cut]
+        y2    = data_y2[cut]
+        y2err = err_y2[cut]
+
+        # binned
+        n,_   = np.histogram(x, bins=10, range=[np.min(x),np.max(x)])
+        sy,_  = np.histogram(x, bins=10, range=[np.min(x),np.max(x)], weights=y1)
+        sy2,_ = np.histogram(x, bins=10, range=[np.min(x),np.max(x)], weights=y1*y1)
+        mean  = sy / n
+        std   = np.sqrt(sy2/n - mean*mean)
+        binx1 = (_[1:]+_[:-1])/2
+        biny1 = mean
+        binyerr1 = std
+
+        n,_   = np.histogram(x, bins=10, range=[np.min(x),np.max(x)])
+        sy,_  = np.histogram(x, bins=10, range=[np.min(x),np.max(x)], weights=y2)
+        sy2,_ = np.histogram(x, bins=10, range=[np.min(x),np.max(x)], weights=y2*y2)
+        mean  = sy / n
+        std   = np.sqrt(sy2/n - mean*mean)
+        binx2 = (_[1:]+_[:-1])/2
+        biny2 = mean
+        binyerr2 = std
+
+        # plot
+        fig = plt.figure(figsize=(13,10))
+        gs  = gridspec.GridSpec(nrows=10, ncols=10)
+        ax1 = plt.subplot(gs[0:10,0:10])
+        ax2 = ax1.twinx()
+        ad  = [0.215,0.83,0.10,0.90]
+        myax_set(ax1, "both", xlim, ylim, title, xlabel, ylabel, adjust=ad)
+        ax2.set_ylabel(ylabel2)
+        ax2.set_ylim(ylim2)
+
+        ax1.errorbar(x, y1, yerr=y1err, lw=1, capsize=0, color="grey", linestyle="None")
+        ax2.errorbar(x, y2, yerr=y2err, lw=1, capsize=0, color="grey", linestyle="None")
+        ax1.scatter(x, y1, c="deepskyblue", lw=0, s=40, zorder=1e9)
+        ax2.scatter(x, y2, c="tomato", lw=0, s=40, zorder=1e9)
+
+        ax1.plot(binx1, biny1, color="blue", lw=2.0, zorder=1e11)
+        for i in range(len(binx1)):
+            this_binx1    = binx1[i]
+            this_biny1    = biny1[i]
+            this_binyerr1 = binyerr1[i]
+            ax1.plot([this_binx1,this_binx1],[this_biny1-this_binyerr1,this_biny1+this_binyerr1], color="blue", lw=2.0, zorder=1e11)
+
+        ax2.plot(binx2, biny2, color="red", lw=2.0, zorder=1e11)
+        for i in range(len(binx2)):
+            this_binx2    = binx2[i]
+            this_biny2    = biny2[i]
+            this_binyerr2 = binyerr2[i]
+            ax2.plot([this_binx2,this_binx2],[this_biny2-this_binyerr2,this_biny2+this_binyerr2], color="red", lw=2.0, zorder=1e11)
+
+        # text
+        ax1.text(0.05,0.93, "$T_{\mathrm{rot}}$", color="deepskyblue", transform=ax1.transAxes, weight="bold", fontsize=26, ha="left")
+        ax1.text(0.05,0.88, "log$_{\mathrm{10}}$ $N_{\mathrm{^{13}CO}}$", color="tomato", transform=ax1.transAxes, weight="bold", fontsize=26, ha="left")
+
+        # save
+        os.system("rm -rf " + outpng)
+        plt.savefig(outpng, dpi=self.fig_dpi)
+
+    ##################
+    # _plot_scatter2 #
+    ##################
+
+    def _plot_scatter2(
+        self,
+        x1image,
+        x1errimage,
+        x2image,
+        x2errimage,
+        yimage,
+        yerrimage,
+        outpng,
+        xlim,
+        ylim,
+        title,
+        xlabel,
+        ylabel,
+        snr=3.0,
+        colorlog=False,
+        ):
+        # x1
+        data_x1,_ = imval_all(x1image)
+        data_x1   = data_x1["data"] * data_x1["mask"]
+        data_x1   = data_x1.flatten()
+        data_x1[np.isnan(data_x1)] = 0
+
+        err_x1,_ = imval_all(x1errimage)
+        err_x1   = err_x1["data"] * err_x1["mask"]
+        err_x1   = err_x1.flatten()
+        err_x1[np.isnan(err_x1)] = 0
+
+        # x2
+        data_x2,_ = imval_all(x2image)
+        data_x2   = data_x2["data"] * data_x2["mask"]
+        data_x2   = data_x2.flatten()
+        data_x2[np.isnan(data_x2)] = 0
+
+        err_x2,_ = imval_all(x2errimage)
+        err_x2   = err_x2["data"] * err_x2["mask"]
+        err_x2   = err_x2.flatten()
+        err_x2[np.isnan(err_x2)] = 0
+
+        # y
+        data_y,_ = imval_all(yimage)
+        data_y   = data_y["data"] * data_y["mask"]
+        data_y   = data_y.flatten()
+        data_y[np.isnan(data_y)] = 0
+
+        err_y,_ = imval_all(yerrimage)
+        err_y   = err_y["data"] * err_y["mask"]
+        err_y   = err_y.flatten()
+        err_y[np.isnan(err_y)] = 0
+
+        # prepare
+        cut   = np.where((data_x1>abs(err_x1)*snr)&(data_x2>abs(err_x2)*snr)&(data_y>abs(err_y)*snr))
+        x1    = np.log10(data_x1[cut])
+        x1err = err_x1[cut] / abs(data_x1[cut])
+        x2    = np.log10(data_x2[cut])
+        x2err = err_x2[cut] / abs(data_x2[cut])
+        y     = data_y[cut]
+        yerr  = err_y[cut]
+
+        if colorlog==True:
+            y    = np.log10(y)
+            yerr = yerr / abs(10**y)
+
+        # binned
+        n,_   = np.histogram(x1, bins=10, range=[np.min(x1),np.max(x1)])
+        sy,_  = np.histogram(x1, bins=10, range=[np.min(x1),np.max(x1)], weights=y)
+        sy2,_ = np.histogram(x1, bins=10, range=[np.min(x1),np.max(x1)], weights=y*y)
+        mean  = sy / n
+        std   = np.sqrt(sy2/n - mean*mean)
+        binx1 = (_[1:]+_[:-1])/2
+        biny1 = mean
+        binyerr1 = std
+
+        n,_   = np.histogram(x2, bins=10, range=[np.min(x2),np.max(x2)])
+        sy,_  = np.histogram(x2, bins=10, range=[np.min(x2),np.max(x2)], weights=y)
+        sy2,_ = np.histogram(x2, bins=10, range=[np.min(x2),np.max(x2)], weights=y*y)
+        mean  = sy / n
+        std   = np.sqrt(sy2/n - mean*mean)
+        binx2 = (_[1:]+_[:-1])/2
+        biny2 = mean
+        binyerr2 = std
+
+        # plot
+        fig = plt.figure(figsize=(13,10))
+        gs  = gridspec.GridSpec(nrows=10, ncols=10)
+        ax1 = plt.subplot(gs[0:10,0:10])
+        ad  = [0.215,0.83,0.10,0.90]
+        myax_set(ax1, "both", xlim, ylim, title, xlabel, ylabel, adjust=ad)
+
+        ax1.errorbar(x1, y, xerr=x1err, yerr=yerr, lw=1, capsize=0, color="grey", linestyle="None")
+        ax1.errorbar(x2, y, xerr=x2err, yerr=yerr, lw=1, capsize=0, color="grey", linestyle="None")
+        ax1.scatter(x1, y, c="deepskyblue", lw=0, s=40, zorder=1e9)
+        ax1.scatter(x2, y, c="tomato", lw=0, s=40, zorder=1e9)
+
+        ax1.plot(binx1, biny1, color="blue", lw=2.0, zorder=1e11)
+        for i in range(len(binx1)):
+            this_binx1    = binx1[i]
+            this_biny1    = biny1[i]
+            this_binyerr1 = binyerr1[i]
+            ax1.plot([this_binx1,this_binx1],[this_biny1-this_binyerr1,this_biny1+this_binyerr1], color="blue", lw=2.0, zorder=1e11)
+
+        ax1.plot(binx2, biny2, color="red", lw=2.0, zorder=1e11)
+        for i in range(len(binx2)):
+            this_binx2    = binx2[i]
+            this_biny2    = biny2[i]
+            this_binyerr2 = binyerr2[i]
+            ax1.plot([this_binx2,this_binx2],[this_biny2-this_binyerr2,this_biny2+this_binyerr2], color="red", lw=2.0, zorder=1e11)
+
+        # text
+        ax1.text(0.05,0.93, "J = 1-0", color="deepskyblue", transform=ax1.transAxes, weight="bold", fontsize=26, ha="left")
+        ax1.text(0.05,0.88, "J = 2-1", color="tomato", transform=ax1.transAxes, weight="bold", fontsize=26, ha="left")
+
+        # save
+        os.system("rm -rf " + outpng)
+        plt.savefig(outpng, dpi=self.fig_dpi)
+
+    ##################
+    # _plot_scatter1 #
+    ##################
+
+    def _plot_scatter1(
+        self,
+        ximage,
+        xerrimage,
+        yimage,
+        yerrimage,
+        cimage,
+        cerrimage,
+        outpng,
+        lim,
+        title,
+        xlabel,
+        ylabel,
+        cblabel,
+        snr=3.0,
+        cmap="rainbow_r",
+        ):
+
+        # 13co10
+        data_13co10,box = imval_all(ximage)
+        data_13co10     = data_13co10["data"] * data_13co10["mask"]
+        data_13co10     = data_13co10.flatten()
+        data_13co10[np.isnan(data_13co10)] = 0
+
+        err_13co10,_ = imval_all(xerrimage)
+        err_13co10   = err_13co10["data"] * err_13co10["mask"]
+        err_13co10   = err_13co10.flatten()
+        err_13co10[np.isnan(err_13co10)] = 0
+
+        # 13co21
+        data_13co21,_ = imval_all(yimage)
+        data_13co21   = data_13co21["data"] * data_13co21["mask"]
+        data_13co21   = data_13co21.flatten()
+        data_13co21[np.isnan(data_13co21)] = 0
+
+        err_13co21,_ = imval_all(yerrimage)
+        err_13co21   = err_13co21["data"] * err_13co21["mask"]
+        err_13co21   = err_13co21.flatten()
+        err_13co21[np.isnan(err_13co21)] = 0
+
+        if cimage==None:
+            # coords
+            data_coords = imval(ximage,box=box)["coords"]
+            ra_deg      = data_coords[:,:,0] * 180/np.pi
+            ra_deg      = ra_deg.flatten()
+            dec_deg     = data_coords[:,:,1] * 180/np.pi
+            dec_deg     = dec_deg.flatten()
+            dist_pc,_   = get_reldist_pc(ra_deg, dec_deg, self.ra_agn, self.dec_agn, self.scale_pc, 0, 0)
+            c           = dist_pc / 1000.0
+            # prepare
+            cut  = np.where((data_13co10>abs(err_13co10)*snr)&(data_13co21>abs(err_13co21)*snr))
+            x    = np.log10(data_13co10[cut])
+            xerr = err_13co10[cut] / abs(data_13co10[cut])
+            y    = np.log10(data_13co21[cut])
+            yerr = err_13co21[cut] / abs(data_13co21[cut])
+            c    = np.array(c)[cut]
+
+        else:
+            data_c,_    = imval_all(cimage)
+            data_c      = data_c["data"] * data_c["mask"]
+            data_c      = data_c.flatten()
+            data_c[np.isnan(data_c)] = 0
+            c           = data_c
+            data_cerr,_ = imval_all(cerrimage)
+            data_cerr   = data_cerr["data"] * data_cerr["mask"]
+            data_cerr   = data_cerr.flatten()
+            data_cerr[np.isnan(data_cerr)] = 0
+            cerr        = data_cerr
+            # prepare
+            cut  = np.where((data_13co10>abs(err_13co10)*snr)&(data_13co21>abs(err_13co21)*snr)&(c>abs(cerr)*snr))
+            x    = np.log10(data_13co10[cut])
+            xerr = err_13co10[cut] / abs(data_13co10[cut])
+            y    = np.log10(data_13co21[cut])
+            yerr = err_13co21[cut] / abs(data_13co21[cut])
+            c    = np.array(c)[cut]
+
+        # plot
+        fig = plt.figure(figsize=(13,10))
+        gs  = gridspec.GridSpec(nrows=10, ncols=10)
+        ax1 = plt.subplot(gs[0:10,0:10])
+        ad  = [0.215,0.83,0.10,0.90]
+        myax_set(ax1, "both", lim, lim, title, xlabel, ylabel, adjust=ad)
+
+        cs = ax1.scatter(x, y, c=c, cmap=cmap, lw=0, s=40, zorder=1e9)
+        ax1.errorbar(x, y, xerr, yerr, lw=1, capsize=0, color="grey", linestyle="None")
+
+        # colorbar
+        cax = fig.add_axes([0.25, 0.81, 0.33, 0.04])
+        cbar = plt.colorbar(cs, cax=cax, orientation="horizontal")
+        cbar.set_label(cblabel)
+        if cimage==None:
+            cbar.set_ticks([0,0.3,0.6,0.9,1.2])
+
+        """ cmap for errorbar
+        clb   = plt.colorbar(sc)
+        color = clb.to_rgba(r)
+        for this_x, this_y, this_xerr, this_yerr, this_c in zip(x, y, xerr, yerr, color):
+            plt.errorbar(this_x, this_y, this_xerr, this_yerr, lw=1, capsize=0, color=this_c)
+        """
+
+        # ann
+        ax1.plot(lim, lim, "--", color="black", lw=1)
+
+        # save
+        os.system("rm -rf " + outpng)
+        plt.savefig(outpng, dpi=self.fig_dpi)
+
     ###############
     # _eval_a_sim #
     ###############
@@ -4174,6 +4201,7 @@ class ToolsNcol():
             label_cbar=label_cbar,
             clim=clim,
             set_bg_color=set_bg_color,
+            numann="13co",
             )
 
     ########################
