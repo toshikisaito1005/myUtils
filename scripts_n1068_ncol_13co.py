@@ -283,6 +283,7 @@ class ToolsNcol():
         self.box_map_noxc       = self._read_key("box_map_noxc")
         self.box_map_noyc       = self._read_key("box_map_noyc")
         self.box_map_noxyc      = self._read_key("box_map_noxyc")
+        self.box_map2           = self._read_key("box_map2")
 
     ####################
     # run_ngc1068_ncol #
@@ -509,7 +510,7 @@ class ToolsNcol():
                 self.outpng_violin,
                 self.final_radial,
                 self.box_map,
-                self.box_map,
+                self.box_map2,
                 )
 
         ############
