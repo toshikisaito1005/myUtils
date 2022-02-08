@@ -1749,6 +1749,8 @@ class ToolsNcol():
         data = np.array(l(n_grid) / np.max(l(n_grid))) / 1.1
         self._ax_violin(ax1,data,1,n_grid,"grey")
 
+
+
         y, left, right = n_grid, n-N_all, n+N_all
         ax2.plot(right, y, lw=2, color="grey")
         ax2.plot(left, y, lw=2, color="grey")
@@ -1805,9 +1807,7 @@ class ToolsNcol():
         ):
         """
         """
-
-        l    = gaussian_kde(data)
-        data = np.array(l(ygrid) / np.max(l(ygrid))) / 1.1
+        
         p2   = np.nanpercentile(data[data!=0],2)
         p16  = np.nanpercentile(data[data!=0],16)
         p50  = np.nanpercentile(data[data!=0],50)
