@@ -1685,7 +1685,7 @@ class ToolsNcol():
             )
         os.system("rm -rf template.image")
 
-        xlim      = None # [0.5,5.0]
+        xlim      = [0.4,3.7]
         ylim      = None # [14.7,17.2]
         factor    = 1.0 / self.abundance_13co_h2
         title     = "log$_{\mathrm{10}}$ $I_{\mathrm{^{12}CO(1-0)}}$ vs. log$_{\mathrm{10}}$ $N_{\mathrm{H_2}}$ at " + this_beam.replace("pc"," pc")
@@ -3934,7 +3934,7 @@ class ToolsNcol():
 
         if h2column==True:
             data_13co21 = data_13co21 + np.log10(factor)
-            err_13co21  = err_13co21 + np.log10(factor)
+            err_13co21  = err_13co21
 
         if cimage==None:
             # coords
