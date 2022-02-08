@@ -1708,7 +1708,7 @@ class ToolsNcol():
 
         cut   = np.where(R_as<self.r_cnd_as)
         T_cnd = gaussian_kde(T[cut])
-        T_cnd = T_all(t_grid) / np.max(T_cnd(t_grid))
+        T_cnd = T_cnd(t_grid) / np.max(T_cnd(t_grid))
 
         """
         xn_all, yn_all = np.histogram(N, bins=nbins, range=[14.7,17.2])
