@@ -1617,8 +1617,8 @@ class ToolsNcol():
 
     def plot_scatter(
         self,
-        plot_I_vs_I=True,
-        plot_phys_vs_I=True,
+        plot_I_vs_I=False,
+        plot_phys_vs_I=False,
         plot_radial=True,
         ):
         """
@@ -1708,12 +1708,14 @@ class ToolsNcol():
             ylim2      = [14.7,17.2]
             title      = "radial $T_{\mathrm{rot}}$ and log$_{\mathrm{10}}$ $I_{\mathrm{^{13}CO}}$ at " + this_beam.replace("pc"," pc")
             xlabel     = "Distance (kpc)"
-            ylabel     = "Value"
+            ylabel     = "$T_{\mathrm{rot}}$ (K)"
+            ylabel2    = "log$_{\mathrm{10}}$ $I_{\mathrm{^{13}CO}}$ (cm$^{-2}$)"
             yimage     = self.outmaps_13co_trot.replace("???",this_beam)
             yerrimage  = self.outemaps_13co_trot.replace("???",this_beam)
             y2image    = self.outmaps_13co_ncol.replace("???",this_beam)
             y2errimage = self.outemaps_13co_ncol.replace("???",this_beam)
             outpng     = self.outpng_radial
+            self._plot_scatter3(yimage,yerrimage,y2image,y2errimage,outpng,xlim,ylim,ylim2,title,xlabel,ylabel,ylabel2)
 
     ##################
     # _plot_scatter3 #
@@ -1732,6 +1734,7 @@ class ToolsNcol():
         title,
         xlabel,
         ylabel,
+        ylabel2,
         snr=3.0,
         ):
         # coords
@@ -1799,7 +1802,7 @@ class ToolsNcol():
         ax2 = ax1.twinx()
         ad  = [0.215,0.83,0.10,0.90]
         myax_set(ax1, "both", xlim, ylim, title, xlabel, ylabel, adjust=ad)
-        myax_set(ax2, "both", xlim, ylim2, title, xlabel, ylabel, adjust=ad)
+        myax_set(ax2, "both", xlim, ylim2, title, xlabel, ylabel2, adjust=ad)
 
         ax1.errorbar(x, y1, yerr=y1err, lw=1, capsize=0, color="grey", linestyle="None")
         ax2.errorbar(x, y2, yerr=y2err, lw=1, capsize=0, color="grey", linestyle="None")
