@@ -216,6 +216,10 @@ class ToolsNcol():
         self.r_sbr       = float(self._read_key("r_sbr_as")) * self.scale_pc / 1000. # kpc
         self.r_sbr_as    = float(self._read_key("r_sbr_as"))
 
+        self.abundance_12co_h2 = 3e-4
+        self.abundance_12co_13co = 40.0
+        self.abundance_13co_h2 = self.abundance_12co_h2 / self.abundance_12co_13co
+
     def _set_output_txt_png(self):
         """
         """
@@ -1681,8 +1685,9 @@ class ToolsNcol():
             )
         os.system("rm -rf template.image")
 
-        xlim      = [0.5,5.0]
-        ylim      = [14.7,17.2]
+        xlim      = None # [0.5,5.0]
+        ylim      = None # [14.7,17.2]
+        yfactor   = 1.0 / self.abundance_13co_h2
         title     = "log$_{\mathrm{10}}$ $I_{\mathrm{^{12}CO(1-0)}}$ vs. log$_{\mathrm{10}}$ $N_{\mathrm{H_2}}$ at " + this_beam.replace("pc"," pc")
         xlabel    = "log$_{\mathrm{10}}$ $I_{\mathrm{^{12}CO(1-0)}}$ (K km s$^{-1}$)"
         ylabel    = "log$_{\mathrm{10}}$ $N_{\mathrm{H_2}}$ (cm$^{-2}$)"
@@ -1698,21 +1703,22 @@ class ToolsNcol():
         outpng    = self.outpng_12co_vs_aco
 
         self._plot_scatter1(
-        ximage,
-        xerrimage,
-        yimage,
-        yerrimage,
-        cimage,
-        cerrimage,
-        outpng,
-        xlim,
-        title,
-        xlabel,
-        ylabel,
-        cblabel,
-        ylim=ylim,
-        cmap="rainbow_r",
-        )
+            ximage,
+            xerrimage,
+            yimage,
+            yerrimage,
+            cimage,
+            cerrimage,
+            outpng,
+            xlim,
+            title,
+            xlabel,
+            ylabel,
+            cblabel,
+            ylim=ylim,
+            cmap="rainbow_r",
+            yfactor=yfactor,
+            )
 
         os.system("rm -rf " + self.mom0_12co10.replace("???",this_beam) + ".regrid")
         os.system("rm -rf " + self.emom0_12co10.replace("???",this_beam) + ".regrid")
@@ -3899,6 +3905,7 @@ class ToolsNcol():
         cblabel,
         ylim=None,
         cmap="rainbow_r",
+        yfactor=None,
         ):
 
         # 13co10
@@ -3922,6 +3929,10 @@ class ToolsNcol():
         err_13co21   = err_13co21["data"] * err_13co21["mask"]
         err_13co21   = err_13co21.flatten()
         err_13co21[np.isnan(err_13co21)] = 0
+
+        if yfactor!=None:
+            data_13co21 = data_13co21 * yfactor
+            err_13co21  = err_13co21 * yfactor
 
         if cimage==None:
             # coords
