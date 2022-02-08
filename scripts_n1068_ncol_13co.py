@@ -267,6 +267,7 @@ class ToolsNcol():
         self.final_scatter_int   = self.dir_final + self._read_key("final_scatter_int")
         self.final_scatter_rot   = self.dir_final + self._read_key("final_scatter_rot")
         self.final_radial        = self.dir_final + self._read_key("final_radial")
+        self.final_aco           = self.dir_final + self._read_key("final_aco")
         # appendix
         self.final_60pc_err      = self.dir_final + self._read_key("final_60pc_err")
         self.final_sim_input     = self.dir_final + self._read_key("final_sim_input")
@@ -388,6 +389,7 @@ class ToolsNcol():
         do_final_scatter_int  = False,
         do_final_scatter_rot  = False,
         do_final_radial       = False,
+        do_final_aco          = True,
         # appendix
         do_final_60pc_err     = False,
         do_final_sim_input    = False,
@@ -422,6 +424,7 @@ class ToolsNcol():
             do_final_scatter_int  = True
             do_final_scatter_rot  = True
             do_final_radial       = True
+            do_final_aco          = True
             # appendix
             do_final_60pc_err     = True
             do_final_sim_input    = True
@@ -530,6 +533,19 @@ class ToolsNcol():
                 self.final_radial,
                 self.box_map,
                 self.box_map2,
+                )
+
+        if do_final_aco==True:
+            print("#######################")
+            print("# create do_final_aco #")
+            print("#######################")
+
+            combine_two_png(
+                self.outpng_12co_vs_aco,
+                self.outmaps_aco,
+                self.final_aco,
+                self.box_map_noc,
+                self.box_map,
                 )
 
         ############
