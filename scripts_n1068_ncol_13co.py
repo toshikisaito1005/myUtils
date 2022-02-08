@@ -1710,14 +1710,14 @@ class ToolsNcol():
         l = gaussian_kde(T[cut])
         T_cnd = l(t_grid) / np.max(l(t_grid))
 
+        cut = np.where((R_as>=self.r_cnd_as)&(R_as<self.r_sbr_as))
+
         """
         xn_all, yn_all = np.histogram(N, bins=nbins, range=[14.7,17.2])
 
-        cut = np.where(R_as<self.r_cnd_as)
         xt_cnd, yt_cnd = np.histogram(T[cut], bins=nbins, range=[2,13])
         xn_cnd, yn_cnd = np.histogram(N[cut], bins=nbins, range=[14.7,17.2])
 
-        cut = np.where((R_as>=self.r_cnd_as)&(R_as<self.r_sbr_as))
         xt_int, yt_int = np.histogram(T[cut], bins=nbins, range=[2,13])
         xn_int, yn_int = np.histogram(N[cut], bins=nbins, range=[14.7,17.2])
 
@@ -1740,7 +1740,7 @@ class ToolsNcol():
         n = 1
         ax1.plot(n+T_all, t_grid, lw=2, color="black")
         ax1.plot(n-T_all, t_grid, lw=2, color="black")
-        ax1.fill_betwee([n-T_all,n+T_all], t_grid, color="grey")
+        ax1.fill_between([n-T_all,n+T_all], t_grid, color="grey")
 
         n = 2
         ax1.plot(n+T_cnd, t_grid, lw=2, color="black")
