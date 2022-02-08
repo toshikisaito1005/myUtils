@@ -216,8 +216,8 @@ class ToolsNcol():
         self.r_sbr       = float(self._read_key("r_sbr_as")) * self.scale_pc / 1000. # kpc
         self.r_sbr_as    = float(self._read_key("r_sbr_as"))
 
-        self.abundance_12co_h2 = 1e-4
-        self.abundance_12co_13co = 60.0
+        self.abundance_12co_h2 = 1e-4   # Cormier et al. 2018
+        self.abundance_12co_13co = 60.0 # Cormier et al. 2018
         self.abundance_13co_h2 = self.abundance_12co_h2 / self.abundance_12co_13co
 
     def _set_output_txt_png(self):
@@ -1686,7 +1686,7 @@ class ToolsNcol():
         os.system("rm -rf template.image")
 
         xlim      = [0.3,3.8]
-        ylim      = [20.0,22.1]
+        ylim      = [20.8,22.9]
         factor    = 1.0 / self.abundance_13co_h2
         title     = "log$_{\mathrm{10}}$ $I_{\mathrm{^{12}CO(1-0)}}$ vs. log$_{\mathrm{10}}$ $N_{\mathrm{H_2}}$ at " + this_beam.replace("pc"," pc")
         xlabel    = "log$_{\mathrm{10}}$ $I_{\mathrm{^{12}CO(1-0)}}$ (K km s$^{-1}$)"
