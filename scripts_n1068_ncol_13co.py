@@ -3757,7 +3757,7 @@ class ToolsNcol():
         """
 
         # ann
-        ax1.plot(lim, lim, "--", color="black", lw=1)
+        #ax1.plot(xlim, ylim, "--", color="black", lw=1)
 
         # save
         os.system("rm -rf " + outpng)
