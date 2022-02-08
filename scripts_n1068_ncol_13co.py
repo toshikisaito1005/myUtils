@@ -1706,6 +1706,7 @@ class ToolsNcol():
 
         xt_all = np.delete(xt_all,-1)
 
+        """
         xn_all, yn_all = np.histogram(N, bins=nbins, range=[14.7,17.2])
 
         cut = np.where(R_as<self.r_cnd_as)
@@ -1719,8 +1720,9 @@ class ToolsNcol():
         cut = np.where(R_as>=self.r_sbr_as)
         xt_sbr, yt_sbr = np.histogram(T[cut], bins=nbins, range=[2,13])
         xn_sbr, yn_sbr = np.histogram(N[cut], bins=nbins, range=[14.7,17.2])
+        """
 
-        print(np.c_[xt_all, yt_all])
+        print(len(xt_all_kde), len(yt_all_kde))
         print(np.c_[xt_all_kde, yt_all_kde])
 
     ################
