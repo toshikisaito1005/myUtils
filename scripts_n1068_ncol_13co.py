@@ -1738,6 +1738,7 @@ class ToolsNcol():
         snr=3.0,
         ):
         # coords
+        _,box       = imval_all(yimage)
         data_coords = imval(yimage,box=box)["coords"]
         ra_deg      = data_coords[:,:,0] * 180/np.pi
         ra_deg      = ra_deg.flatten()
