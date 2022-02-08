@@ -360,13 +360,13 @@ class ToolsNcol():
         self,
         delin                 = False,
         do_all                = False,
-        #
+        # figure
         do_final_60pc_obs     = False,
         do_final_60pc_rot     = False,
         do_final_scatter_int  = False,
         do_final_scatter_rot  = False,
-        do_final_radial       = False,
-        # appendix_err
+        do_final_radial       = True,
+        # appendix
         do_final_60pc_err     = False,
         do_final_sim_input    = False,
         do_final_sim_mom0     = False,
@@ -394,17 +394,18 @@ class ToolsNcol():
         check_first(self.outpng_mom0_13co10.replace("???","60pc"),taskname)
 
         if do_all==True:
-            #
+            # figure
             do_final_60pc_obs     = True
             do_final_60pc_rot     = True
             do_final_scatter_int  = True
             do_final_scatter_rot  = True
+            do_final_radial       = True
             # appendix
             do_final_60pc_obs_err = True
             do_final_60pc_rot_err = True
             do_final_sim_mom0     = True
             do_final_sim_emom0    = True
-            #
+            # supplement
             do_final_13co10_mom0  = True
             do_final_13co21_mom0  = True
             do_final_ratio        = True
@@ -420,6 +421,9 @@ class ToolsNcol():
             do_final_etrot        = True
             do_final_encol        = True
 
+        ##########
+        # figure #
+        ##########
         if do_final_60pc_obs==True:
             print("############################")
             print("# create do_final_60pc_obs #")
@@ -1705,6 +1709,11 @@ class ToolsNcol():
         cut = np.where((R_as>=self.r_cnd_as)&(R_as<self.r_sbr_as))
         xt_int, yt_int = np.histogram(T[cut], bins=nbins, range=[2,13])
         xn_int, yn_int = np.histogram(N[cut], bins=nbins, range=[14.7,17.2])
+
+        cut = np.where(R_as>=self.r_sbr_as)
+        xt_sbr, yt_sbr = np.histogram(T[cut], bins=nbins, range=[2,13])
+        xn_sbr, yn_sbr = np.histogram(N[cut], bins=nbins, range=[14.7,17.2])
+
 
 
     ################
