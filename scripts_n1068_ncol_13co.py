@@ -1701,9 +1701,12 @@ class ToolsNcol():
         # histogram
         nbins = 25
         xt_all, yt_all = np.histogram(T, bins=nbins, range=[2,13])
-        xn_all, yn_all = np.histogram(N, bins=nbins, range=[14.7,17.2])
         yt_all_kde = gaussian_kde(T)
         xt_all_kde = yt_all_kde(xt_all)
+        xt_all = np.delete(xt_all,-1)
+        xt_all_kde = np.delete(xt_all_kde,-1)
+
+        xn_all, yn_all = np.histogram(N, bins=nbins, range=[14.7,17.2])
 
         cut = np.where(R_as<self.r_cnd_as)
         xt_cnd, yt_cnd = np.histogram(T[cut], bins=nbins, range=[2,13])
