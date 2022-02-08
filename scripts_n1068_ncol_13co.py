@@ -3814,7 +3814,7 @@ class ToolsNcol():
             # prepare
             outarray = data_13co21 + np.log10(factor) - np.log10(data_13co10)
             outarray = 10**outarray / 2e20 * 4.3
-            outarray = np.fliplr(np.where((data_13co10>abs(err_13co10)*self.snr)&(data_13co21>abs(err_13co21)*self.snr),outarray,0) )
+            outarray = np.rot90(np.fliplr( np.where((data_13co10>abs(err_13co10)*self.snr)&(data_13co21>abs(err_13co21)*self.snr),outarray,0) ))
 
             self._fits_creation(
                 input_array=outarray,
@@ -3825,12 +3825,6 @@ class ToolsNcol():
 
             importfits(fitsimage=outfits, imagename=outfits+".image", overwrite=True)
 
-            ia.open("W43_24um.im")
-            imr = ia.rotate(outfile="W43_24um.rot.im", pa="60.0deg")
-            imr.done()
-            ia.close()
-
-            exportfits(imagename="W43_24um.rot.im", fitsimage="W43_24um.rot.fits", overwrite=True)
 
     ##################
     # _plot_scatter3 #
