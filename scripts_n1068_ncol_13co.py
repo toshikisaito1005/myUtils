@@ -3668,6 +3668,7 @@ class ToolsNcol():
         Reference:
         https://stackoverflow.com/questions/45744394/write-a-new-fits-file-after-modification-in-pixel-values
         """
+        print(output_map)
         os.system("rm -rf " + output_map)
         os.system("cp " + coords_template + " " + output_map)
 
@@ -3789,9 +3790,9 @@ class ToolsNcol():
         #
         if outfits!=None:
             self._fits_creation(
-                y-x,
-                outfits,
-                ximage,
+                input_array=y-x,
+                output_map=outfits,
+                coords_template=ximage,
                 )
 
     ##################
