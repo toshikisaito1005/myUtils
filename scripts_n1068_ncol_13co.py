@@ -1740,8 +1740,7 @@ class ToolsNcol():
         n = 1
         ax1.plot(n+T_all, t_grid, lw=2, color="black")
         ax1.plot(n-T_all, t_grid, lw=2, color="black")
-        ax1.fill_between(n-T_all, np.array([n]*len(T_all)), t_grid, color="grey")
-        ax1.fill_between(n+T_all, np.array([n]*len(T_all)), t_grid, color="grey")
+        ax1.fill_betweenx(t_grid, n-T_all, n+T_all, facecolor="grey")
 
         n = 3
         ax1.plot(n+T_cnd, t_grid, lw=2, color="black")
