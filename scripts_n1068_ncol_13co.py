@@ -1701,8 +1701,8 @@ class ToolsNcol():
         # histogram
         nbins = 25
         yt_all, xt_all = np.histogram(T, bins=nbins, range=[2,13])
-        xt_all_kde = gaussian_kde(T)
-        yt_all_kde = xt_all_kde(yt_all)
+        yt_all_kde = gaussian_kde(T)
+        yt_all_kde = yt_all_kde(xt_all)
 
         xt_all = np.delete(xt_all,-1)
 
@@ -1722,8 +1722,10 @@ class ToolsNcol():
         xn_sbr, yn_sbr = np.histogram(N[cut], bins=nbins, range=[14.7,17.2])
         """
 
-        print(len(xt_all_kde), len(yt_all_kde))
-        print(np.c_[xt_all_kde, yt_all_kde])
+        plt.figure(figsize=(14,7))
+        plt.plot(xt_all, yt_all_kde)
+        plt.hist(T, alpha=0.3, bins=20, weights=weights)
+        plt.show()
 
     ################
     # plot_scatter #
