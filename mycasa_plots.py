@@ -846,7 +846,7 @@ def myax_fig2png_ann(ax,number,ra_cnt,dec_cnt,add_text=True,txtfiles=None):
             alpha=1.0, lw=3.5)
         ax.add_patch(efov1)
 
-        diameter_sbr = 20.0 # = 1440 pc
+        diameter_sbr = 24.0 # = 1440 pc
         efov2 = patches.Ellipse(xy=(-0,0), width=diameter_sbr,
             height=diameter_sbr, angle=0, fill=False, edgecolor="black",
             alpha=1.0, lw=3.5)

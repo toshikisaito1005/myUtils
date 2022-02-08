@@ -1645,11 +1645,51 @@ class ToolsNcol():
         taskname = self.modname + sys._getframe().f_code.co_name
         check_first(self.outmaps_mom0_13co10.replace("???",this_beam),taskname)
 
-        #
+        # fits
         yimage     = self.outmaps_13co_trot.replace("???",this_beam)
         yerrimage  = self.outemaps_13co_trot.replace("???",this_beam)
         y2image    = self.outmaps_13co_ncol.replace("???",this_beam)
         y2errimage = self.outemaps_13co_ncol.replace("???",this_beam)
+
+        # coords
+        _,box       = imval_all(yimage)
+        data_coords = imval(yimage,box=box)["coords"]
+        ra_deg      = data_coords[:,:,0] * 180/np.pi
+        ra_deg      = ra_deg.flatten()
+        dec_deg     = data_coords[:,:,1] * 180/np.pi
+        dec_deg     = dec_deg.flatten()
+        dist_pc,_   = get_reldist_pc(ra_deg, dec_deg, self.ra_agn, self.dec_agn, self.scale_pc, 0, 0)
+        data_x      = dist_pc / 1000.0
+
+        # y1
+        data_y1,_ = imval_all(yimage)
+        data_y1   = data_y1["data"] * data_y1["mask"]
+        data_y1   = data_y1.flatten()
+        data_y1[np.isnan(data_y1)] = 0
+
+        err_y1,_ = imval_all(yerrimage)
+        err_y1   = err_y1["data"] * err_y1["mask"]
+        err_y1   = err_y1.flatten()
+        err_y1[np.isnan(err_y1)] = 0
+
+        # y2
+        data_y2,_ = imval_all(y2image)
+        data_y2   = data_y2["data"] * data_y2["mask"]
+        data_y2   = data_y2.flatten()
+        data_y2[np.isnan(data_y2)] = 0
+
+        err_y2,_ = imval_all(y2errimage)
+        err_y2   = err_y2["data"] * err_y2["mask"]
+        err_y2   = err_y2.flatten()
+        err_y2[np.isnan(err_y2)] = 0
+
+        # prepare
+        cut  = np.where((data_y1>abs(err_y1)*snr)&(data_y2>abs(err_y2)*snr))
+        R    = data_x[cut]
+        T    = data_y1[cut]
+        Terr = err_y1[cut]
+        N    = data_y2[cut]
+        Nerr = err_y2[cut]
 
     ################
     # plot_scatter #
