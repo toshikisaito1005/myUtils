@@ -1704,8 +1704,8 @@ class ToolsNcol():
         this_beam  = "60pc"
         if plot_radial==True:
             xlim       = [0.0,1.3]
-            ylim       = [2,26]
-            ylim2      = [12.2,17.2]
+            ylim       = [2,21]
+            ylim2      = [12.2,16.2]
             title      = "radial $T_{\mathrm{rot}}$ and log$_{\mathrm{10}}$ $N_{\mathrm{^{13}CO}}$ at " + this_beam.replace("pc"," pc")
             xlabel     = "Distance (kpc)"
             ylabel     = "$T_{\mathrm{rot}}$ (K)"
