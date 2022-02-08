@@ -3789,6 +3789,9 @@ class ToolsNcol():
         plt.savefig(outpng, dpi=self.fig_dpi)
 
         #
+        shape = imhead(yimage,mode="list")["shape"]
+        outarray = y-x
+        outarray = outarray.reshape([shape[0],shape[1]])
         if outfits!=None:
             self._fits_creation(
                 input_array=y-x,
