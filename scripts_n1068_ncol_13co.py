@@ -1760,7 +1760,7 @@ class ToolsNcol():
         ax1.fill_betweenx(y, left, right, facecolor="grey", alpha=0.5)
         ax1.plot([n,n],[pctls[0],pctls[4]],lw=1,color="grey")
         ax1.plot([n,n],[pctls[1],pctls[3]],lw=2,color="grey")
-        ax1.plot(n,pctls[2],".",color="white",s=20)
+        ax1.plot(n,pctls[2],".",color="white",markersize=20)
 
         y, left, right = n_grid, n-N_all, n+N_all
         ax2.plot(right, y, lw=2, color="grey")
