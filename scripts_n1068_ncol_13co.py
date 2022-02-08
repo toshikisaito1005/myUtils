@@ -1702,34 +1702,43 @@ class ToolsNcol():
         tlim    = [np.log10(2),np.log10(13)]
         t_grid  = np.linspace(tlim[0], tlim[1], num=1000)
         ylabel  = "log$_{\mathrm{10}}$ $T_{\mathrm{rot}}$ (K)"
+        title   = "log$_{\mathrm{10}}$ $T_{\mathrm{rot}}$" 
 
         nlim    = [14.7,17.2]
         n_grid  = np.linspace(nlim[0], nlim[1], num=1000)
         ylabel2 = "log$_{\mathrm{10}}$ $N_{\mathrm{^{13}CO}}$ (cm$^{-2}$)"
+        title2  = 
 
         # KDE
         l = gaussian_kde(T)
-        T_all = np.array(l(t_grid) / np.max(l(t_grid)))
+        T_all = np.array(l(t_grid) / np.max(l(t_grid))) / 1.1
+        pT_all = [
+            np.nanpercentile(T,1),
+            np.nanpercentile(T,16),
+            np.nanpercentile(T,50),
+            np.nanpercentile(T,84),
+            np.nanpercentile(T,99),
+            ]
         l = gaussian_kde(N)
-        N_all = np.array(l(n_grid) / np.max(l(n_grid)))
+        N_all = np.array(l(n_grid) / np.max(l(n_grid))) / 1.1
 
         cut = np.where(R_as<self.r_cnd_as)
         l = gaussian_kde(T[cut])
-        T_cnd = np.array(l(t_grid) / np.max(l(t_grid)))
+        T_cnd = np.array(l(t_grid) / np.max(l(t_grid))) / 1.1
         l = gaussian_kde(N[cut])
-        N_cnd = np.array(l(n_grid) / np.max(l(n_grid)))
+        N_cnd = np.array(l(n_grid) / np.max(l(n_grid))) / 1.1
 
         cut = np.where((R_as>=self.r_cnd_as)&(R_as<self.r_sbr_as))
         l = gaussian_kde(T[cut])
-        T_int = np.array(l(t_grid) / np.max(l(t_grid)))
+        T_int = np.array(l(t_grid) / np.max(l(t_grid))) / 1.1
         l = gaussian_kde(N[cut])
-        N_int = np.array(l(n_grid) / np.max(l(n_grid)))
+        N_int = np.array(l(n_grid) / np.max(l(n_grid))) / 1.1
 
         cut = np.where(R_as>=self.r_sbr_as)
         l = gaussian_kde(T[cut])
-        T_sbr = np.array(l(t_grid) / np.max(l(t_grid)))
+        T_sbr = np.array(l(t_grid) / np.max(l(t_grid))) / 1.1
         l = gaussian_kde(N[cut])
-        N_sbr = np.array(l(n_grid) / np.max(l(n_grid)))
+        N_sbr = np.array(l(n_grid) / np.max(l(n_grid))) / 1.1
 
         # plot
         fig = plt.figure(figsize=(17,10))
@@ -1738,55 +1747,58 @@ class ToolsNcol():
         ax2 = plt.subplot(gs[0:10,5:10])
         ax3 = ax2.twinx()
         ad  = [0.10,0.90,0.10,0.90]
-        myax_set(ax1, None, [-0.5,8.5], tlim, None, None, ylabel, adjust=ad)
-        myax_set(ax2, None, [-0.5,8.5], nlim, None, None, None, adjust=ad)
+        myax_set(ax1, None, [-0.5,8.5], tlim, title, None, ylabel, adjust=ad)
+        myax_set(ax2, None, [-0.5,8.5], nlim, title2, None, None, adjust=ad)
         ax3.set_ylabel(ylabel2)
         ax3.set_ylim(nlim)
         ax2.tick_params(labelleft=False)
 
         n = 1
-        y, left, right = t_grid, n-T_all, n+T_all
-        ax1.plot(right, y, lw=2, color="black")
-        ax1.plot(left, y, lw=2, color="black")
-        ax1.fill_betweenx(y, left, right, facecolor="grey")
+        y, left, right, pctls = t_grid, n-T_all, n+T_all, pT_all
+        ax1.plot(right, y, lw=2, color="grey")
+        ax1.plot(left, y, lw=2, color="grey")
+        ax1.fill_betweenx(y, left, right, facecolor="grey", alpha=0.5)
+        ax1.plot([n,n],[pctls[0],pctls[4]],lw=1,color="grey")
+        ax1.plot([n,n],[pctls[1],pctls[3]],lw=2,color="grey")
+        ax1.plot(n,pctls[2],".",color="white",s=20)
 
         y, left, right = n_grid, n-N_all, n+N_all
-        ax2.plot(right, y, lw=2, color="black")
-        ax2.plot(left, y, lw=2, color="black")
-        ax2.fill_betweenx(y, left, right, facecolor="grey")
+        ax2.plot(right, y, lw=2, color="grey")
+        ax2.plot(left, y, lw=2, color="grey")
+        ax2.fill_betweenx(y, left, right, facecolor="grey", alpha=0.5)
 
         n = 3
         y, left, right = t_grid, n-T_cnd, n+T_cnd
-        ax1.plot(right, y, lw=2, color="black")
-        ax1.plot(left, y, lw=2, color="black")
-        ax1.fill_betweenx(y, left, right, facecolor="tomato")
+        ax1.plot(right, y, lw=2, color="grey")
+        ax1.plot(left, y, lw=2, color="grey")
+        ax1.fill_betweenx(y, left, right, facecolor="tomato", alpha=0.5)
 
         y, left, right = n_grid, n-N_cnd, n+N_cnd
-        ax2.plot(right, y, lw=2, color="black")
-        ax2.plot(left, y, lw=2, color="black")
-        ax2.fill_betweenx(y, left, right, facecolor="tomato")
+        ax2.plot(right, y, lw=2, color="grey")
+        ax2.plot(left, y, lw=2, color="grey")
+        ax2.fill_betweenx(y, left, right, facecolor="tomato", alpha=0.5)
 
         n = 5
         y, left, right = t_grid, n-T_int, n+T_int
-        ax1.plot(right, y, lw=2, color="black")
-        ax1.plot(left, y, lw=2, color="black")
-        ax1.fill_betweenx(y, left, right, facecolor="green")
+        ax1.plot(right, y, lw=2, color="grey")
+        ax1.plot(left, y, lw=2, color="grey")
+        ax1.fill_betweenx(y, left, right, facecolor="green", alpha=0.5)
 
         y, left, right = n_grid, n-N_int, n+N_int
-        ax2.plot(right, y, lw=2, color="black")
-        ax2.plot(left, y, lw=2, color="black")
-        ax2.fill_betweenx(y, left, right, facecolor="green")
+        ax2.plot(right, y, lw=2, color="grey")
+        ax2.plot(left, y, lw=2, color="grey")
+        ax2.fill_betweenx(y, left, right, facecolor="green", alpha=0.5)
 
         n = 7
         y, left, right = t_grid, n-T_sbr, n+T_sbr
-        ax1.plot(right, y, lw=2, color="black")
-        ax1.plot(left, y, lw=2, color="black")
-        ax1.fill_betweenx(y, left, right, facecolor="deepskyblue")
+        ax1.plot(right, y, lw=2, color="grey")
+        ax1.plot(left, y, lw=2, color="grey")
+        ax1.fill_betweenx(y, left, right, facecolor="deepskyblue", alpha=0.5)
 
         y, left, right = n_grid, n-N_sbr, n+N_sbr
-        ax2.plot(right, y, lw=2, color="black")
-        ax2.plot(left, y, lw=2, color="black")
-        ax2.fill_betweenx(y, left, right, facecolor="deepskyblue")
+        ax2.plot(right, y, lw=2, color="grey")
+        ax2.plot(left, y, lw=2, color="grey")
+        ax2.fill_betweenx(y, left, right, facecolor="deepskyblue", alpha=0.5)
 
         # save
         os.system("rm -rf " + self.outpng_violin)
