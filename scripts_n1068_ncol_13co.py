@@ -367,7 +367,7 @@ class ToolsNcol():
         do_final_60pc_rot     = False,
         do_final_scatter_int  = False,
         do_final_scatter_rot  = False,
-        do_final_radial       = False,
+        do_final_radial       = True,
         # appendix
         do_final_60pc_err     = False,
         do_final_sim_input    = False,
@@ -504,9 +504,11 @@ class ToolsNcol():
             print("# create do_final_radial #")
             print("##########################")
 
-            immagick_crop(
+            combine_two_png(
                 self.outpng_radial,
+                self.outpng_violin,
                 self.final_radial,
+                self.box_map,
                 self.box_map,
                 )
 
