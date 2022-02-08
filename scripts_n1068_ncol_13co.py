@@ -1732,20 +1732,20 @@ class ToolsNcol():
         # plot cnd data
         n = 3
         cut = np.where(R_as<self.r_cnd_as)
-        self._ax_violin(ax1,T[cut],n,t_grid,"tomato")
-        self._ax_violin(ax3,N[cut],n,n_grid,"tomato")
+        self._ax_violin(ax1,T[cut],n,t_grid,"tomato",vmin=1.2,vmax=0.42)
+        self._ax_violin(ax3,N[cut],n,n_grid,"tomato",vmin=15.1,vmax=16.7)
 
         # plot intermediate data
         n = 5
         cut = np.where((R_as>=self.r_cnd_as)&(R_as<self.r_sbr_as))
-        self._ax_violin(ax1,T[cut],n,t_grid,"green")
-        self._ax_violin(ax3,N[cut],n,n_grid,"green")
+        self._ax_violin(ax1,T[cut],n,t_grid,"green",vmin=0.40,vmax=0.91)
+        self._ax_violin(ax3,N[cut],n,n_grid,"green",vmin=15.0,vmax=16.4)
 
         # plot sbr data
         n = 7
         cut = np.where(R_as>=self.r_sbr_as)
         self._ax_violin(ax1,T[cut],n,t_grid,"deepskyblue")
-        self._ax_violin(ax3,N[cut],n,n_grid,"deepskyblue")
+        self._ax_violin(ax3,N[cut],n,n_grid,"deepskyblue",vmax=16.9)
 
         # save
         os.system("rm -rf " + self.outpng_violin)
@@ -1762,13 +1762,18 @@ class ToolsNcol():
         n,
         ygrid,
         color,
+        vmin=None,
+        vmax=None,
         ):
         """
         """
 
         # prepare
-        vmin = np.min(data)
-        vmax = np.max(data)
+        if vmin==None:
+            vmin = np.min(data)
+
+        if vmax==None:
+            vmax = np.max(data)
 
         # percentiles
         p2   = np.nanpercentile(data[data!=0],2)
