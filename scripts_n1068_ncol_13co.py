@@ -1710,16 +1710,6 @@ class ToolsNcol():
         title2  = "$N_{\mathrm{^{13}CO}}$ Distribution"
 
         # KDE
-        l = gaussian_kde(T)
-        T_all = np.array(l(t_grid) / np.max(l(t_grid))) / 1.1
-        pT_all = [
-            np.nanpercentile(T[T!=0],2),
-            np.nanpercentile(T[T!=0],16),
-            np.nanpercentile(T[T!=0],50),
-            np.nanpercentile(T[T!=0],84),
-            np.nanpercentile(T[T!=0],98),
-            ]
-
         l = gaussian_kde(N)
         N_all = np.array(l(n_grid) / np.max(l(n_grid))) / 1.1
 
@@ -1754,15 +1744,10 @@ class ToolsNcol():
         ax3.set_ylim(nlim)
         ax2.tick_params(labelleft=False)
 
-        n = 1
-        y, left, right, pctls = t_grid, n-T_all, n+T_all, pT_all
-        cut = np.where((y<np.max(T))&(y>np.min(T)))
-        ax1.plot(right[cut], y[cut], lw=2, color="grey")
-        ax1.plot(left[cut], y[cut], lw=2, color="grey")
-        ax1.fill_betweenx(y, left, right, facecolor="grey", alpha=0.5, lw=0)
-        ax1.plot([n,n],[pctls[0],pctls[4]],lw=2,color="grey")
-        ax1.plot([n,n],[pctls[1],pctls[3]],lw=8,color="grey")
-        ax1.plot(n,pctls[2],".",color="white",markersize=10, markeredgewidth=0)
+        # plot KDE
+        l = gaussian_kde(T)
+        data = np.array(l(n_grid) / np.max(l(n_grid))) / 1.1
+        self._ax_violin(ax1,data,1,n_grid,"grey")
 
         y, left, right = n_grid, n-N_all, n+N_all
         ax2.plot(right, y, lw=2, color="grey")
@@ -1805,6 +1790,42 @@ class ToolsNcol():
         # save
         os.system("rm -rf " + self.outpng_violin)
         plt.savefig(self.outpng_violin, dpi=self.fig_dpi)
+
+    ################
+    # plot_scatter #
+    ################
+
+    def _ax_violin(
+        self,
+        ax,
+        data,
+        n,
+        grid,
+        color,
+        ):
+        """
+        """
+
+        l    = gaussian_kde(data)
+        data = np.array(l(ygrid) / np.max(l(ygrid))) / 1.1
+        p2   = np.nanpercentile(data[data!=0],2)
+        p16  = np.nanpercentile(data[data!=0],16)
+        p50  = np.nanpercentile(data[data!=0],50)
+        p84  = np.nanpercentile(data[data!=0],84)
+        p98  = np.nanpercentile(data[data!=0],98)
+
+        left  = n-data
+        right = n+data
+        cut = np.where((ygrid<np.nanmax(data[data!=0]))&(ygrid>np.nanmin(data[data!=0])))
+
+        ax.plot(right[cut], ygrid[cut], lw=2, color="grey")
+        ax.plot(left[cut], ygrid[cut], lw=2, color="grey")
+        ax.fill_betweenx(ygrid, left, right, facecolor=color, alpha=0.5, lw=0)
+
+        # percentiles
+        ax.plot([n,n],[p2,p98],lw=2,color="grey")
+        ax.plot([n,n],[p16,p84],lw=8,color="grey")
+        ax.plot(n,p50,".",color="white",markersize=10, markeredgewidth=0)
 
     ################
     # plot_scatter #
