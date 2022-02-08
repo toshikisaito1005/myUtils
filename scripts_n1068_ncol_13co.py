@@ -1711,20 +1711,12 @@ class ToolsNcol():
         T_cnd = np.array(l(t_grid) / np.max(l(t_grid)))
 
         cut = np.where((R_as>=self.r_cnd_as)&(R_as<self.r_sbr_as))
-
-        """
-        xn_all, yn_all = np.histogram(N, bins=nbins, range=[14.7,17.2])
-
-        xt_cnd, yt_cnd = np.histogram(T[cut], bins=nbins, range=[2,13])
-        xn_cnd, yn_cnd = np.histogram(N[cut], bins=nbins, range=[14.7,17.2])
-
-        xt_int, yt_int = np.histogram(T[cut], bins=nbins, range=[2,13])
-        xn_int, yn_int = np.histogram(N[cut], bins=nbins, range=[14.7,17.2])
+        l = gaussian_kde(T[cut])
+        T_int = np.array(l(t_grid) / np.max(l(t_grid)))
 
         cut = np.where(R_as>=self.r_sbr_as)
-        xt_sbr, yt_sbr = np.histogram(T[cut], bins=nbins, range=[2,13])
-        xn_sbr, yn_sbr = np.histogram(N[cut], bins=nbins, range=[14.7,17.2])
-        """
+        l = gaussian_kde(T[cut])
+        T_sbr = np.array(l(t_grid) / np.max(l(t_grid)))
 
         # save
         os.system("rm -rf " + "test.png")
@@ -1738,14 +1730,28 @@ class ToolsNcol():
         myax_set(ax1, None, None, limt, None, None, None, adjust=ad)
 
         n = 1
-        ax1.plot(n+T_all, t_grid, lw=2, color="black")
-        ax1.plot(n-T_all, t_grid, lw=2, color="black")
-        ax1.fill_betweenx(t_grid, n-T_all, n+T_all, facecolor="grey")
+        y, left, right = t_grid, n-T_all, n+T_all
+        ax1.plot(n+right, y, lw=2, color="black")
+        ax1.plot(left, y, lw=2, color="black")
+        ax1.fill_betweenx(y, left, right, facecolor="grey")
 
         n = 3
-        ax1.plot(n+T_cnd, t_grid, lw=2, color="black")
-        ax1.plot(n-T_cnd, t_grid, lw=2, color="black")
-        ax1.fill_betweenx(t_grid, n-T_cnd, n+T_cnd, facecolor="tomato")
+        y, left, right = t_grid, n-T_cnd, n+T_cnd
+        ax1.plot(n+right, y, lw=2, color="black")
+        ax1.plot(left, y, lw=2, color="black")
+        ax1.fill_betweenx(y, left, right, facecolor="tomato")
+
+        n = 5
+        y, left, right = t_grid, n-T_int, n+T_int
+        ax1.plot(n+right, y, lw=2, color="black")
+        ax1.plot(left, y, lw=2, color="black")
+        ax1.fill_betweenx(y, left, right, facecolor="green")
+
+        n = 7
+        y, left, right = t_grid, n-T_sbr, n+T_sbr
+        ax1.plot(n+right, y, lw=2, color="black")
+        ax1.plot(left, y, lw=2, color="black")
+        ax1.fill_betweenx(y, left, right, facecolor="deepskyblue")
 
         # save
         os.system("rm -rf " + self.outpng_violin)
