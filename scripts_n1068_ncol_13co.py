@@ -1737,16 +1737,15 @@ class ToolsNcol():
         ad  = [0.10,0.90,0.10,0.90]
         myax_set(ax1, None, None, limt, None, None, None, adjust=ad)
 
-        print(np.c_[3-T_all,3+T_all])
         n = 1
         ax1.plot(n+T_all, t_grid, lw=2, color="black")
         ax1.plot(n-T_all, t_grid, lw=2, color="black")
-        ax1.fill_between([np.array(n-T_all),np.array(n+T_all)], t_grid, color="grey")
+        ax1.fill_between(n-T_all, n+T_all, t_grid, color="grey")
 
         n = 3
         ax1.plot(n+T_cnd, t_grid, lw=2, color="black")
         ax1.plot(n-T_cnd, t_grid, lw=2, color="black")
-        ax1.fill_between([np.array(n-T_all),np.array(n+T_all)], t_grid, color="tomato")
+        ax1.fill_between(n-T_cnd, n+T_cnd, t_grid, color="tomato")
 
         # save
         os.system("rm -rf " + self.outpng_violin)
