@@ -1717,7 +1717,8 @@ class ToolsNcol():
         xt_sbr, yt_sbr = np.histogram(T[cut], bins=nbins, range=[2,13])
         xn_sbr, yn_sbr = np.histogram(N[cut], bins=nbins, range=[14.7,17.2])
 
-        print(np.c_[xt_all, yt_all, xt_all_kde, yt_all_kde])
+        print(np.c_[xt_all, yt_all])
+        print(np.c_[xt_all_kde, yt_all_kde])
 
     ################
     # plot_scatter #
