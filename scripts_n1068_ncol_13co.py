@@ -1704,8 +1704,6 @@ class ToolsNcol():
         yt_all_kde = gaussian_kde(T)
         yt_all_kde = yt_all_kde(xt_all)
 
-        xt_all = np.delete(xt_all,-1)
-
         """
         xn_all, yn_all = np.histogram(N, bins=nbins, range=[14.7,17.2])
 
@@ -1725,7 +1723,10 @@ class ToolsNcol():
         plt.figure(figsize=(14,7))
         plt.plot(xt_all, yt_all_kde)
         plt.hist(T, alpha=0.3, bins=20, weights=weights)
-        plt.show()
+
+        # save
+        os.system("rm -rf " + "test.png")
+        plt.savefig("test.png", dpi=self.fig_dpi)
 
     ################
     # plot_scatter #
