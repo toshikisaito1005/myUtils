@@ -1719,10 +1719,6 @@ class ToolsNcol():
             np.nanpercentile(T[T!=0],84),
             np.nanpercentile(T[T!=0],98),
             ]
-        m = T_all!=0
-        index = m.argmax()-1, m.size - m[::-1].argmax()
-        x_T_all = t_grid[index[0]+1:index[1]]
-        T_all = T_all[index[0]+1:index[1]]
 
         l = gaussian_kde(N)
         N_all = np.array(l(n_grid) / np.max(l(n_grid))) / 1.1
@@ -1759,9 +1755,10 @@ class ToolsNcol():
         ax2.tick_params(labelleft=False)
 
         n = 1
-        y, left, right, pctls = x_T_all, n-T_all, n+T_all, pT_all
-        ax1.plot(right, y, lw=2, color="grey")
-        ax1.plot(left, y, lw=2, color="grey")
+        y, left, right, pctls = t_grid, n-T_all, n+T_all, pT_all
+        cut = np.where((y<np.max(T))&(y>npmin(T)))
+        ax1.plot(right[cut], y[cut], lw=2, color="grey")
+        ax1.plot(left[cut], y[cut], lw=2, color="grey")
         ax1.fill_betweenx(y, left, right, facecolor="grey", alpha=0.5)
         ax1.plot([n,n],[pctls[0],pctls[4]],lw=2,color="grey")
         ax1.plot([n,n],[pctls[1],pctls[3]],lw=8,color="grey")
