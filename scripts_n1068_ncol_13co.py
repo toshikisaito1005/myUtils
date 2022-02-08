@@ -240,6 +240,7 @@ class ToolsNcol():
         self.outpng_13co10_vs_13co21_n = self.dir_products + self._read_key("outpng_13co10_vs_13co21_n")
         self.outpng_trot_vs_int        = self.dir_products + self._read_key("outpng_trot_vs_int")
         self.outpng_ncol_vs_int        = self.dir_products + self._read_key("outpng_ncol_vs_int")
+        self.outpng_radial             = self.dir_products + self._read_key("outpng_radial")
 
         # finals
         self.final_60pc_obs      = self.dir_final + self._read_key("final_60pc_obs")
@@ -1618,6 +1619,7 @@ class ToolsNcol():
         self,
         plot_I_vs_I=True,
         plot_phys_vs_I=True,
+        plot_radial=True,
         ):
         """
         References:
@@ -1695,6 +1697,136 @@ class ToolsNcol():
             yerrimage  = self.outemaps_13co_ncol.replace("???",this_beam)
             outpng     = self.outpng_ncol_vs_int
             self._plot_scatter2(x1image,x1errimage,x2image,x2errimage,yimage,yerrimage,outpng,xlim,ylim,title,xlabel,ylabel)
+
+        ###############
+        # plot_radial #
+        ###############
+        this_beam  = "60pc"
+        if plot_radial==True:
+            xlim       = [0.0,1.2]
+            ylim       = [2,13]
+            ylim2      = [14.7,17.2]
+            title      = "radial $T_{\mathrm{rot}}$ and log$_{\mathrm{10}}$ $I_{\mathrm{^{13}CO}}$ at " + this_beam.replace("pc"," pc")
+            xlabel     = "Distance (kpc)"
+            ylabel     = "Value"
+            yimage     = self.outmaps_13co_trot.replace("???",this_beam)
+            yerrimage  = self.outemaps_13co_trot.replace("???",this_beam)
+            y2image    = self.outmaps_13co_ncol.replace("???",this_beam)
+            y2errimage = self.outemaps_13co_ncol.replace("???",this_beam)
+            outpng     = self.outpng_radial
+
+    ##################
+    # _plot_scatter3 #
+    ##################
+
+    def _plot_scatter3(
+        self,
+        yimage,
+        yerrimage,
+        y2image,
+        y2errimage,
+        outpng,
+        xlim,
+        ylim,
+        ylim2,
+        title,
+        xlabel,
+        ylabel,
+        snr=3.0,
+        ):
+        # coords
+        data_coords = imval(yimage,box=box)["coords"]
+        ra_deg      = data_coords[:,:,0] * 180/np.pi
+        ra_deg      = ra_deg.flatten()
+        dec_deg     = data_coords[:,:,1] * 180/np.pi
+        dec_deg     = dec_deg.flatten()
+        dist_pc,_   = get_reldist_pc(ra_deg, dec_deg, self.ra_agn, self.dec_agn, self.scale_pc, 0, 0)
+        data_x      = dist_pc / 1000.0
+
+        # y1
+        data_y1,_ = imval_all(yimage)
+        data_y1   = data_y1["data"] * data_y1["mask"]
+        data_y1   = data_y1.flatten()
+        data_y1[np.isnan(data_y1)] = 0
+
+        err_y1,_ = imval_all(yerrimage)
+        err_y1   = err_y1["data"] * err_y1["mask"]
+        err_y1   = err_y1.flatten()
+        err_y1[np.isnan(err_y1)] = 0
+
+        # y2
+        data_y2,_ = imval_all(yimage)
+        data_y2   = data_y2["data"] * data_y2["mask"]
+        data_y2   = data_y2.flatten()
+        data_y2[np.isnan(data_y2)] = 0
+
+        err_y2,_ = imval_all(yerrimage)
+        err_y2   = err_y2["data"] * err_y2["mask"]
+        err_y2   = err_y2.flatten()
+        err_y2[np.isnan(err_y2)] = 0
+
+        # prepare
+        cut   = np.where((data_y1>abs(err_y1)*snr)&(data_y2>abs(err_y2)*snr))
+        x     = data_x[cut]
+        y1    = data_y1[cut]
+        y1err = err_y1[cut]
+        y2    = data_y2[cut]
+        y2err = err_y2[cut]
+
+        # binned
+        n,_   = np.histogram(x, bins=10, range=[np.min(x),np.max(x)])
+        sy,_  = np.histogram(x, bins=10, range=[np.min(x),np.max(x)], weights=y1)
+        sy2,_ = np.histogram(x, bins=10, range=[np.min(x),np.max(x)], weights=y1*y1)
+        mean  = sy / n
+        std   = np.sqrt(sy2/n - mean*mean)
+        binx1 = (_[1:]+_[:-1])/2
+        biny1 = mean
+        binyerr1 = std
+
+        n,_   = np.histogram(x, bins=10, range=[np.min(x),np.max(x)])
+        sy,_  = np.histogram(x, bins=10, range=[np.min(x),np.max(x)], weights=y2)
+        sy2,_ = np.histogram(x, bins=10, range=[np.min(x),np.max(x)], weights=y2*y2)
+        mean  = sy / n
+        std   = np.sqrt(sy2/n - mean*mean)
+        binx2 = (_[1:]+_[:-1])/2
+        biny2 = mean
+        binyerr2 = std
+
+        # plot
+        fig = plt.figure(figsize=(13,10))
+        gs  = gridspec.GridSpec(nrows=10, ncols=10)
+        ax1 = plt.subplot(gs[0:10,0:10])
+        ax2 = ax1.twinx()
+        ad  = [0.215,0.83,0.10,0.90]
+        myax_set(ax1, "both", xlim, ylim, title, xlabel, ylabel, adjust=ad)
+        myax_set(ax2, "both", xlim, ylim2, title, xlabel, ylabel, adjust=ad)
+
+        ax1.errorbar(x, y1, yerr=y1err, lw=1, capsize=0, color="grey", linestyle="None")
+        ax2.errorbar(x, y2, yerr=y2err, lw=1, capsize=0, color="grey", linestyle="None")
+        ax1.scatter(x, y1, c="deepskyblue", lw=0, s=40, zorder=1e9)
+        ax2.scatter(x, y2, c="tomato", lw=0, s=40, zorder=1e9)
+
+        ax1.plot(binx1, biny1, color="blue", lw=2.0, zorder=1e11)
+        for i in range(len(binx1)):
+            this_binx1    = binx1[i]
+            this_biny1    = biny1[i]
+            this_binyerr1 = binyerr1[i]
+            ax1.plot([this_binx1,this_binx1],[this_biny1-this_binyerr1,this_biny1+this_binyerr1], color="blue", lw=2.0, zorder=1e11)
+
+        ax2.plot(binx2, biny2, color="red", lw=2.0, zorder=1e11)
+        for i in range(len(binx2)):
+            this_binx2    = binx2[i]
+            this_biny2    = biny2[i]
+            this_binyerr2 = binyerr2[i]
+            ax2.plot([this_binx2,this_binx2],[this_biny2-this_binyerr2,this_biny2+this_binyerr2], color="red", lw=2.0, zorder=1e11)
+
+        # text
+        ax1.text(0.05,0.93, "$T_{\mathrm{rot}}$", color="deepskyblue", transform=ax1.transAxes, weight="bold", fontsize=26, ha="left")
+        ax1.text(0.05,0.88, "log$_{\mathrm{10}}$ $I_{\mathrm{^{13}CO}}$", color="tomato", transform=ax1.transAxes, weight="bold", fontsize=26, ha="left")
+
+        # save
+        os.system("rm -rf " + outpng)
+        plt.savefig(outpng, dpi=self.fig_dpi)
 
     ##################
     # _plot_scatter2 #
