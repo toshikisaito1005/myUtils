@@ -1702,12 +1702,12 @@ class ToolsNcol():
         tlim    = [np.log10(2),np.log10(13)]
         t_grid  = np.linspace(tlim[0], tlim[1], num=1000)
         ylabel  = "log$_{\mathrm{10}}$ $T_{\mathrm{rot}}$ (K)"
-        title   = "log$_{\mathrm{10}}$ $T_{\mathrm{rot}}$" 
+        title   = "$T_{\mathrm{rot}}$ Distribution"
 
         nlim    = [14.7,17.2]
         n_grid  = np.linspace(nlim[0], nlim[1], num=1000)
         ylabel2 = "log$_{\mathrm{10}}$ $N_{\mathrm{^{13}CO}}$ (cm$^{-2}$)"
-        title2  = 
+        title2  = "$N_{\mathrm{^{13}CO}}$ Distribution"
 
         # KDE
         l = gaussian_kde(T)
