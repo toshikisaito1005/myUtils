@@ -1746,7 +1746,7 @@ class ToolsNcol():
 
         # plot KDE
         this_data = T
-        self._ax_violin(ax1,data,1,n_grid,"grey")
+        self._ax_violin(ax1,this_data,1,n_grid,"grey")
 
 
         n = 1
