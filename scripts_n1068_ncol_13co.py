@@ -1732,7 +1732,7 @@ class ToolsNcol():
         # plot cnd data
         n = 3
         cut = np.where(R_as<self.r_cnd_as)
-        self._ax_violin(ax1,T[cut],n,t_grid,"tomato",vmin=1.2,vmax=0.42)
+        self._ax_violin(ax1,T[cut],n,t_grid,"tomato",vmin=0.42,vmax=1.2)
         self._ax_violin(ax3,N[cut],n,n_grid,"tomato",vmin=15.1,vmax=16.7)
 
         # plot intermediate data
