@@ -1733,8 +1733,8 @@ class ToolsNcol():
         ad  = [0.10,0.90,0.10,0.90]
         myax_set(ax1, None, None, limt, None, None, None, adjust=ad)
 
-        ax1.plot(1+T_all, t_grid, lw=2, lc="black", color="grey")
-        ax1.plot(1+-T_all, t_grid, lw=2, lc="black", color="grey")
+        ax1.plot(1+T_all, t_grid, lw=2, color="black")
+        ax1.plot(1+-T_all, t_grid, lw=2, color="black")
 
         # save
         os.system("rm -rf " + self.outpng_violin)
