@@ -17,6 +17,7 @@ final_60pc_rot            ,,,fig_gallery_rot_60pc.png
 final_scatter_int         ,,,fig_scatter_int.png
 final_scatter_rot         ,,,fig_scatter_rot.png
 final_radial              ,,,fig_radial_rot.png
+final_aco                 ,,,fig_aco.png
 # appendix
 final_60pc_err            ,,,fig_gallery_err_60pc.png
 final_sim_input           ,,,fig_sim_input.png

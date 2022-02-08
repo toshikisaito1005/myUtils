@@ -1737,8 +1737,8 @@ class ToolsNcol():
             self.outmaps_aco,
             self.outmaps_12co10.replace("???",this_beam),
             self.outpng_aco_map,
-            "$\alpha_{\mathrm{CO}}$",
-            "($M_{\odot}$ (K km s$^{-1}$ pc$^{2}$)$^{-1}$)",
+            "$\\alpha_{\mathrm{CO}}$",
+            "($M_{\\odot}$ (K km s$^{-1}$ pc$^{2}$)$^{-1}$)",
             clim=[0.2,3],
             )
 
