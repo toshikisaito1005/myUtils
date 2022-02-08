@@ -1700,7 +1700,7 @@ class ToolsNcol():
         N    = data_y2[cut]
 
         limt = [2,13]
-        t_grid = np.linspace(limt[0], limt[1], num=20)
+        t_grid = np.linspace(limt[0], limt[1], num=1000)
 
         # KDE Trit
         l = gaussian_kde(T)
@@ -1747,7 +1747,7 @@ class ToolsNcol():
         ax1.plot(n+T_cnd, t_grid, lw=2, color="black")
         ax1.plot(n-T_cnd, t_grid, lw=2, color="black")
         ax1.fill_between(n-T_cnd, np.array([n]*len(n-T_cnd)), t_grid, color="tomato")
-        ax1.fill_between(np.array([n]*len(n-T_cnd)), n+T_cnd, t_grid, color="tomato")
+        ax1.fill_between(n+T_cnd, np.array([n]*len(n-T_cnd)), t_grid, color="tomato")
 
         # save
         os.system("rm -rf " + self.outpng_violin)
