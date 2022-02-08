@@ -1724,6 +1724,7 @@ class ToolsNcol():
         ax3.set_ylim(nlim)
         ax2.tick_params(labelleft=False)
 
+        ax1.set_yticks([0.4,0.6,0.8,1.0])
         ax1.set_xticks([1,3,5,7])
         ax1.set_xticklabels(["All","CND","INT","SBR"], rotation=0, ha="center")
 
