@@ -1685,8 +1685,8 @@ class ToolsNcol():
             )
         os.system("rm -rf template.image")
 
-        xlim      = [0.4,3.7]
-        ylim      = None # [14.7,17.2]
+        xlim      = [0.3,3.8]
+        ylim      = [20.0,22.1]
         factor    = 1.0 / self.abundance_13co_h2
         title     = "log$_{\mathrm{10}}$ $I_{\mathrm{^{12}CO(1-0)}}$ vs. log$_{\mathrm{10}}$ $N_{\mathrm{H_2}}$ at " + this_beam.replace("pc"," pc")
         xlabel    = "log$_{\mathrm{10}}$ $I_{\mathrm{^{12}CO(1-0)}}$ (K km s$^{-1}$)"
@@ -3749,15 +3749,8 @@ class ToolsNcol():
         if cimage==None:
             cbar.set_ticks([0,0.3,0.6,0.9,1.2])
 
-        """ cmap for errorbar
-        clb   = plt.colorbar(sc)
-        color = clb.to_rgba(r)
-        for this_x, this_y, this_xerr, this_yerr, this_c in zip(x, y, xerr, yerr, color):
-            plt.errorbar(this_x, this_y, this_xerr, this_yerr, lw=1, capsize=0, color=this_c)
-        """
-
         # ann
-        #ax1.plot(xlim, ylim, "--", color="black", lw=1)
+        ax1.plot(xlim, [xlim[0]+np.log10(2e20),xlim[1]+np.log10(2e20)], "--", color="black", lw=1)
 
         # save
         os.system("rm -rf " + outpng)
