@@ -1667,8 +1667,18 @@ class ToolsNcol():
         #
         template = "template.image"
         run_importfits(self.outmaps_13co_ncol.replace("???",this_beam),template)
-        run_imregrid(self.mom0_12co10.replace("???",this_beam),template,self.mom0_12co10.replace("???",this_beam)+".regrid",axes=-1)
-        run_imregrid(self.emom0_12co10.replace("???",this_beam),template,self.emom0_12co10.replace("???",this_beam)+".regrid",axes=-1)
+        run_imregrid(
+            self.mom0_12co10.replace("???",this_beam),
+            template,
+            self.mom0_12co10.replace("???",this_beam)+".regrid",
+            axes=-1,
+            )
+        run_imregrid(
+            self.emom0_12co10.replace("???",this_beam),
+            template,
+            self.emom0_12co10.replace("???",this_beam)+".regrid",
+            axes=-1,
+            )
         os.system("rm -rf template.image")
 
         xlim      = [0.5,5.0]
@@ -1676,8 +1686,8 @@ class ToolsNcol():
         title     = "log$_{\mathrm{10}}$ $I_{\mathrm{^{12}CO(1-0)}}$ vs. log$_{\mathrm{10}}$ $N_{\mathrm{H_2}}$ at " + this_beam.replace("pc"," pc")
         xlabel    = "log$_{\mathrm{10}}$ $I_{\mathrm{^{12}CO(1-0)}}$ (K km s$^{-1}$)"
         ylabel    = "log$_{\mathrm{10}}$ $N_{\mathrm{H_2}}$ (cm$^{-2}$)"
-        ximage    = self.mom0_12co10+".regrid"
-        xerrimage = self.emom0_12co10+".regrid"
+        ximage    = self.mom0_12co10.replace("???",this_beam)+".regrid"
+        xerrimage = self.emom0_12co10.replace("???",this_beam)+".regrid"
         yimage    = self.outmaps_13co_ncol.replace("???",this_beam)
         yerrimage = self.outemaps_13co_ncol.replace("???",this_beam)
 
@@ -1686,7 +1696,7 @@ class ToolsNcol():
         cimage    = None
         cerrimage = None
         outpng    = self.outpng_12co_vs_aco
-        
+
         self._plot_scatter1(
         ximage,
         xerrimage,
@@ -1704,8 +1714,8 @@ class ToolsNcol():
         cmap="rainbow_r",
         )
 
-        os.system("rm -rf " + self.mom0_12co10 + ".regrid")
-        os.system("rm -rf " + self.emom0_12co10 + ".regrid")
+        os.system("rm -rf " + self.mom0_12co10.replace("???",this_beam) + ".regrid")
+        os.system("rm -rf " + self.emom0_12co10.replace("???",this_beam) + ".regrid")
 
     ###############
     # plot_violin #
