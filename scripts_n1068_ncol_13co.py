@@ -1721,7 +1721,8 @@ class ToolsNcol():
         """
 
         plt.figure(figsize=(14,7))
-        plt.plot(t_grid, T_all)
+        plt.plot(T_all, t_grid)
+        plt.plot(-T_all, t_grid)
         #plt.hist(T, alpha=0.3, bins=20)
 
         # save
