@@ -1745,8 +1745,7 @@ class ToolsNcol():
         ax2.tick_params(labelleft=False)
 
         # plot KDE
-        l = gaussian_kde(T)
-        data = np.array(l(n_grid) / np.max(l(n_grid))) / 1.1
+        this_data = T
         self._ax_violin(ax1,data,1,n_grid,"grey")
 
 
@@ -1808,6 +1807,15 @@ class ToolsNcol():
         """
         """
 
+        # prepare
+        vmin = np.min(data)
+        vmax = np.max(data)
+
+        # kde
+        l = gaussian_kde(data)
+        data = np.array(l(ygrid) / np.max(l(ygrid))) / 1.1
+
+        # percentiles
         p2   = np.nanpercentile(data[data!=0],2)
         p16  = np.nanpercentile(data[data!=0],16)
         p50  = np.nanpercentile(data[data!=0],50)
@@ -1816,7 +1824,7 @@ class ToolsNcol():
 
         left  = n-data
         right = n+data
-        cut = np.where((ygrid<np.nanmax(data[data!=0]))&(ygrid>np.nanmin(data[data!=0])))
+        cut = np.where((ygrid<vmax)&(ygrid>vmin))
 
         ax.plot(right[cut], ygrid[cut], lw=2, color="grey")
         ax.plot(left[cut], ygrid[cut], lw=2, color="grey")
