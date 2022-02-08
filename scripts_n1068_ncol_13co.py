@@ -316,6 +316,7 @@ class ToolsNcol():
             plot_showcase    = True
             plot_showsim     = True
             plot_scatter     = True
+            plot_violin      = True
             do_imagemagick   = True
             immagick_all     = True
 
@@ -1688,13 +1689,22 @@ class ToolsNcol():
 
         # prepare
         cut  = np.where((data_y1>abs(err_y1)*self.snr)&(data_y2>abs(err_y2)*self.snr))
-        Ras  = data_x[cut]
+        R_as = data_x[cut]
         T    = data_y1[cut]
         N    = data_y2[cut]
 
         # histogram
-        xt_all,yt_all = np.histogram(T, bins=12, range=[0,12])
-        print(xt_all,yt_all)
+        nbins = 25
+        xt_all, yt_all = np.histogram(T, bins=nbins, range=[2,13])
+        xn_all, yn_all = np.histogram(N, bins=nbins, range=[14.7,17.2])
+
+        cut = np.where(R_as<self.r_cnd_as)
+        xt_cnd, yt_cnd = np.histogram(T[cut], bins=nbins, range=[2,13])
+        xn_cnd, yn_cnd = np.histogram(N[cut], bins=nbins, range=[14.7,17.2])
+
+        cut = np.where((R_as>=self.r_cnd_as)&(R_as<self.r_sbr_as))
+        xt_int, yt_int = np.histogram(T[cut], bins=nbins, range=[2,13])
+        xn_int, yn_int = np.histogram(N[cut], bins=nbins, range=[14.7,17.2])
 
 
     ################

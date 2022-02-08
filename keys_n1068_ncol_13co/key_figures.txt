@@ -82,7 +82,7 @@ outsimumom0_13co21        ,,,simulated_13co21_mom0.fits
 ###################
 imsize_as                 ,,,39
 snr                       ,,,3.0
-snr_clip                  ,,,3.0
+snr_clip                  ,,,3
 snr_model                 ,,,3.0
 snr_fit                   ,,,3.0
 r_cnd_as                  ,,,3.0
