@@ -1696,10 +1696,10 @@ class ToolsNcol():
         # prepare
         cut  = np.where((data_y1>abs(err_y1)*self.snr)&(data_y2>abs(err_y2)*self.snr))
         R_as = data_x[cut]
-        T    = data_y1[cut]
+        T    = np.log10(data_y1[cut])
         N    = data_y2[cut]
 
-        tlim = [2,13]
+        tlim = [np.log10(2),np.log10(13)]
         t_grid = np.linspace(tlim[0], tlim[1], num=1000)
         ylabel = "$T_{\mathrm{rot}}$ (K)"
 
