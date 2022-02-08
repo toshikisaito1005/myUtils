@@ -1722,7 +1722,7 @@ class ToolsNcol():
 
         plt.figure(figsize=(14,7))
         plt.plot(xt_all, yt_all_kde)
-        plt.hist(T, alpha=0.3, bins=20)
+        #plt.hist(T, alpha=0.3, bins=20)
 
         # save
         os.system("rm -rf " + "test.png")
