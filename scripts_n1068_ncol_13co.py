@@ -1738,8 +1738,8 @@ class ToolsNcol():
         ax2 = plt.subplot(gs[0:10,5:10])
         ax3 = ax2.twinx()
         ad  = [0.10,0.90,0.10,0.90]
-        myax_set(ax1, None, None, tlim, None, None, ylabel, adjust=ad)
-        myax_set(ax2, None, None, nlim, None, None, None, adjust=ad)
+        myax_set(ax1, None, [-0.5,8.5], tlim, None, None, ylabel, adjust=ad)
+        myax_set(ax2, None, [-0.5,8.5], nlim, None, None, None, adjust=ad)
         ax3.set_ylabel(ylabel2)
         ax3.set_ylim(nlim)
 
@@ -1760,17 +1760,32 @@ class ToolsNcol():
         ax1.plot(left, y, lw=2, color="black")
         ax1.fill_betweenx(y, left, right, facecolor="tomato")
 
+        y, left, right = t_grid, n-N_cnd, n+N_cnd
+        ax2.plot(right, y, lw=2, color="black")
+        ax2.plot(left, y, lw=2, color="black")
+        ax2.fill_betweenx(y, left, right, facecolor="tomato")
+
         n = 5
         y, left, right = t_grid, n-T_int, n+T_int
         ax1.plot(right, y, lw=2, color="black")
         ax1.plot(left, y, lw=2, color="black")
         ax1.fill_betweenx(y, left, right, facecolor="green")
 
+        y, left, right = t_grid, n-N_int, n+N_int
+        ax3.plot(right, y, lw=2, color="black")
+        ax3.plot(left, y, lw=2, color="black")
+        ax3.fill_betweenx(y, left, right, facecolor="green")
+
         n = 7
         y, left, right = t_grid, n-T_sbr, n+T_sbr
         ax1.plot(right, y, lw=2, color="black")
         ax1.plot(left, y, lw=2, color="black")
         ax1.fill_betweenx(y, left, right, facecolor="deepskyblue")
+
+        y, left, right = t_grid, n-N_sbr, n+N_sbr
+        ax3.plot(right, y, lw=2, color="black")
+        ax3.plot(left, y, lw=2, color="black")
+        ax3.fill_betweenx(y, left, right, facecolor="deepskyblue")
 
         # save
         os.system("rm -rf " + self.outpng_violin)
