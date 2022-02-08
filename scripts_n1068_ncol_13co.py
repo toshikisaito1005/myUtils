@@ -1759,7 +1759,7 @@ class ToolsNcol():
         cut = np.where((y<np.max(T))&(y>np.min(T)))
         ax1.plot(right[cut], y[cut], lw=2, color="grey")
         ax1.plot(left[cut], y[cut], lw=2, color="grey")
-        ax1.fill_betweenx(y, left, right, facecolor="grey", alpha=0.5)
+        ax1.fill_betweenx(y, left, right, facecolor="grey", alpha=0.5, lw=0)
         ax1.plot([n,n],[pctls[0],pctls[4]],lw=2,color="grey")
         ax1.plot([n,n],[pctls[1],pctls[3]],lw=8,color="grey")
         ax1.plot(n,pctls[2],".",color="white",markersize=10, markeredgewidth=0)
