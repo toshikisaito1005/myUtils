@@ -1704,8 +1704,8 @@ class ToolsNcol():
         this_beam  = "60pc"
         if plot_radial==True:
             xlim       = [0.0,1.3]
-            ylim       = [2,13]
-            ylim2      = [14.7,17.2]
+            ylim       = [2,26]
+            ylim2      = [12.2,17.2]
             title      = "radial $T_{\mathrm{rot}}$ and log$_{\mathrm{10}}$ $N_{\mathrm{^{13}CO}}$ at " + this_beam.replace("pc"," pc")
             xlabel     = "Distance (kpc)"
             ylabel     = "$T_{\mathrm{rot}}$ (K)"
@@ -1803,7 +1803,6 @@ class ToolsNcol():
         ax2 = ax1.twinx()
         ad  = [0.215,0.83,0.10,0.90]
         myax_set(ax1, "both", xlim, ylim, title, xlabel, ylabel, adjust=ad)
-        #myax_set(ax2, "both", xlim, ylim2, title, xlabel, ylabel2, adjust=ad)
         ax2.set_ylabel(ylabel2)
         ax2.set_ylim(ylim2)
 
