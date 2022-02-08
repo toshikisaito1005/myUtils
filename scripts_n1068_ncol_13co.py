@@ -259,6 +259,7 @@ class ToolsNcol():
         self.outpng_radial             = self.dir_products + self._read_key("outpng_radial")
         self.outpng_violin             = self.dir_products + self._read_key("outpng_violin")
         self.outpng_12co_vs_aco        = self.dir_products + self._read_key("outpng_12co_vs_aco")
+        self.outpng_aco_map            = self.dir_products + self._read_key("outpng_aco_map")
 
         # finals
         self.final_60pc_obs      = self.dir_final + self._read_key("final_60pc_obs")
@@ -1735,7 +1736,7 @@ class ToolsNcol():
         self._showcase_one(
             self.outmaps_aco,
             self.outmaps_12co10.replace("???",this_beam),
-            outfile,
+            self.outpng_aco_map,
             "$\alpha_{\mathrm{CO}}$",
             "($M_{\odot}$ (K km s$^{-1}$ pc$^{2}$)$^{-1}$)",
             clim=[0.2,3],
