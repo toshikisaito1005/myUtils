@@ -1703,12 +1703,12 @@ class ToolsNcol():
         t_grid = np.linspace(limt[0], limt[1], num=500)
 
         # KDE Trit
-        T_all = gaussian_kde(T)
-        T_all = T_all(t_grid) / np.max(T_all(t_grid))
+        l = gaussian_kde(T)
+        T_all = l(t_grid) / np.max(l(t_grid))
 
-        cut   = np.where(R_as<self.r_cnd_as)
-        T_cnd = gaussian_kde(T[cut])
-        T_cnd = T_cnd(t_grid) / np.max(T_cnd(t_grid))
+        cut = np.where(R_as<self.r_cnd_as)
+        l = gaussian_kde(T[cut])
+        T_cnd = l(t_grid) / np.max(l(t_grid))
 
         """
         xn_all, yn_all = np.histogram(N, bins=nbins, range=[14.7,17.2])
@@ -1745,7 +1745,7 @@ class ToolsNcol():
         n = 2
         ax1.plot(n+T_cnd, t_grid, lw=2, color="black")
         ax1.plot(n-T_cnd, t_grid, lw=2, color="black")
-        ax1.fill_betwee([n-T_cnd,n+T_cnd], t_grid, color="tomato")
+        ax1.fill_between([n-T_cnd,n+T_cnd], t_grid, color="tomato")
 
         # save
         os.system("rm -rf " + self.outpng_violin)
