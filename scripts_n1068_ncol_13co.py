@@ -1707,7 +1707,7 @@ class ToolsNcol():
         n_grid  = np.linspace(nlim[0], nlim[1], num=1000)
         ylabel2 = "log$_{\mathrm{10}}$ $N_{\mathrm{^{13}CO}}$ (cm$^{-2}$)"
 
-        # KDE Trit
+        # KDE
         l = gaussian_kde(T)
         T_all = np.array(l(t_grid) / np.max(l(t_grid)))
         l = gaussian_kde(N)
@@ -1742,7 +1742,7 @@ class ToolsNcol():
         myax_set(ax2, None, [-0.5,8.5], nlim, None, None, None, adjust=ad)
         ax3.set_ylabel(ylabel2)
         ax3.set_ylim(nlim)
-        ax2.spines["left"].set_visible(False)
+        ax2.tick_params(labelleft=False)
 
         n = 1
         y, left, right = t_grid, n-T_all, n+T_all
@@ -1773,9 +1773,9 @@ class ToolsNcol():
         ax1.fill_betweenx(y, left, right, facecolor="green")
 
         y, left, right = n_grid, n-N_int, n+N_int
-        ax3.plot(right, y, lw=2, color="black")
-        ax3.plot(left, y, lw=2, color="black")
-        ax3.fill_betweenx(y, left, right, facecolor="green")
+        ax2.plot(right, y, lw=2, color="black")
+        ax2.plot(left, y, lw=2, color="black")
+        ax2.fill_betweenx(y, left, right, facecolor="green")
 
         n = 7
         y, left, right = t_grid, n-T_sbr, n+T_sbr
@@ -1784,9 +1784,9 @@ class ToolsNcol():
         ax1.fill_betweenx(y, left, right, facecolor="deepskyblue")
 
         y, left, right = n_grid, n-N_sbr, n+N_sbr
-        ax3.plot(right, y, lw=2, color="black")
-        ax3.plot(left, y, lw=2, color="black")
-        ax3.fill_betweenx(y, left, right, facecolor="deepskyblue")
+        ax2.plot(right, y, lw=2, color="black")
+        ax2.plot(left, y, lw=2, color="black")
+        ax2.fill_betweenx(y, left, right, facecolor="deepskyblue")
 
         # save
         os.system("rm -rf " + self.outpng_violin)
