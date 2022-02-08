@@ -72,7 +72,7 @@ outemaps_ratio            ,,,n1068_eratio_???.fits
 outemaps_13co_trot        ,,,n1068_e13co_trot_???.fits
 outemaps_13co_ncol        ,,,n1068_e13co_log_ncol_???.fits
 #
-outemaps_aco              ,,,n1068_aco.fits
+outmaps_aco               ,,,n1068_aco.fits
 #
 outmodelcube_13co10       ,,,model_13co10_cube.fits
 outmodelcube_13co21       ,,,model_13co21_cube.fits

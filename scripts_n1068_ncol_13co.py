@@ -164,7 +164,7 @@ class ToolsNcol():
         self.outemaps_13co_trot   = self.dir_ready + self._read_key("outemaps_13co_trot")
         self.outemaps_13co_ncol   = self.dir_ready + self._read_key("outemaps_13co_ncol")
 
-        self.outemaps_aco         = self.dir_ready + self._read_key("outemaps_aco")
+        self.outmaps_aco          = self.dir_ready + self._read_key("outmaps_aco")
 
         self.outmodelcube_13co10  = self.dir_ready + self._read_key("outmodelcube_13co10")
         self.outmodelcube_13co21  = self.dir_ready + self._read_key("outmodelcube_13co21")
@@ -1720,7 +1720,7 @@ class ToolsNcol():
             cblabel,
             factor,
             cmap="rainbow_r",
-            outfits=self.outemaps_aco,
+            outfits=self.outmaps_aco,
             )
 
         os.system("rm -rf " + self.mom0_12co10.replace("???",this_beam) + ".regrid")
@@ -3792,7 +3792,6 @@ class ToolsNcol():
                 y-x,
                 outfits,
                 ximage,
-                bunit="K",
                 )
 
     ##################
