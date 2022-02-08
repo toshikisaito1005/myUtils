@@ -3793,7 +3793,7 @@ class ToolsNcol():
             self._fits_creation(
                 input_array=y-x,
                 output_map=outfits,
-                coords_template=ximage,
+                coords_template=yimage,
                 bunit="K",
                 )
 
