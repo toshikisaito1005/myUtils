@@ -1737,7 +1737,7 @@ class ToolsNcol():
         ad  = [0.10,0.90,0.10,0.90]
         myax_set(ax1, None, None, limt, None, None, None, adjust=ad)
 
-        print(np.c_[n-T_all,n+T_all])
+        print(np.c_[3-T_all,3+T_all])
         n = 1
         ax1.plot(n+T_all, t_grid, lw=2, color="black")
         ax1.plot(n-T_all, t_grid, lw=2, color="black")
