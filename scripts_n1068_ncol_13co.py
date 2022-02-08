@@ -1731,13 +1731,13 @@ class ToolsNcol():
         # plot all data
         n = 1
         self._ax_violin(ax1,T,n,t_grid,"grey")
-        self._ax_violin(ax1,N,n,n_grid,"grey")
+        self._ax_violin(ax3,N,n,n_grid,"grey")
 
         # plot cnd data
         n = 3
         cut = np.where(R_as<self.r_cnd_as)
         self._ax_violin(ax1,T[cut],n,t_grid,"tomato")
-        self._ax_violin(ax1,N[cut],n,n_grid,"tomato")
+        self._ax_violin(ax3,N[cut],n,n_grid,"tomato")
 
         """
         n = 5
