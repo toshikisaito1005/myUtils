@@ -3810,8 +3810,8 @@ class ToolsNcol():
             err_13co21[np.isnan(err_13co21)] = 0
 
             # prepare
-            cut  = np.where((data_13co10>abs(err_13co10)*self.snr)&(data_13co21>abs(err_13co21)*self.snr))
-            outarray = data_13co21[cut] + np.log10(factor) - np.log10(data_13co10[cut])
+            outarray = data_13co21 + np.log10(factor) - np.log10(data_13co10)
+            outarray = np.where((data_13co10>abs(err_13co10)*self.snr)&(data_13co21>abs(err_13co21)*self.snr),outarray,0)
 
             self._fits_creation(
                 input_array=outarray,
