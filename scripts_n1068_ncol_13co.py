@@ -1704,11 +1704,11 @@ class ToolsNcol():
 
         # KDE Trit
         l = gaussian_kde(T)
-        T_all = l(t_grid) / np.max(l(t_grid))
+        T_all = np.array(l(t_grid) / np.max(l(t_grid)))
 
         cut = np.where(R_as<self.r_cnd_as)
         l = gaussian_kde(T[cut])
-        T_cnd = l(t_grid) / np.max(l(t_grid))
+        T_cnd = np.array(l(t_grid) / np.max(l(t_grid)))
 
         cut = np.where((R_as>=self.r_cnd_as)&(R_as<self.r_sbr_as))
 
