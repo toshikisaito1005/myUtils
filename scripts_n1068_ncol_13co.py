@@ -217,7 +217,7 @@ class ToolsNcol():
         self.r_sbr_as    = float(self._read_key("r_sbr_as"))
 
         self.abundance_12co_h2 = 1e-4   # Cormier et al. 2018
-        self.abundance_12co_13co = 60.0 # Cormier et al. 2018
+        self.abundance_12co_13co = 100 # starburst asspmtion? or 60.0 # Cormier et al. 2018
         self.abundance_13co_h2 = self.abundance_12co_h2 / self.abundance_12co_13co
 
     def _set_output_txt_png(self):
