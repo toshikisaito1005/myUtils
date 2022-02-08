@@ -1667,8 +1667,8 @@ class ToolsNcol():
         #
         template = "template.image"
         run_importfits(self.outmaps_13co_ncol.replace("???",this_beam),template)
-        run_imregrid(self.mom0_12co10,template,self.mom0_12co10+".regrid",axes=-1)
-        run_imregrid(self.emom0_12co10,template,self.emom0_12co10+".regrid",axes=-1)
+        run_imregrid(self.mom0_12co10.replace("???",this_beam),template,self.mom0_12co10.replace("???",this_beam)+".regrid",axes=-1)
+        run_imregrid(self.emom0_12co10.replace("???",this_beam),template,self.emom0_12co10.replace("???",this_beam)+".regrid",axes=-1)
         os.system("rm -rf template.image")
 
         xlim      = [0.5,5.0]
