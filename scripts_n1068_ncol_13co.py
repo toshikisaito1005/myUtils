@@ -1699,12 +1699,12 @@ class ToolsNcol():
         T    = np.log10(data_y1[cut])
         N    = data_y2[cut]
 
-        tlim    = [np.log10(2),np.log10(13)]
+        tlim    = [0.35,1.15]
         t_grid  = np.linspace(tlim[0], tlim[1], num=1000)
         ylabel  = "log$_{\mathrm{10}}$ $T_{\mathrm{rot}}$ (K)"
         title   = "$T_{\mathrm{rot}}$ Distribution"
 
-        nlim    = [14.7,17.2]
+        nlim    = [14.9,17.0]
         n_grid  = np.linspace(nlim[0], nlim[1], num=1000)
         ylabel2 = "log$_{\mathrm{10}}$ $N_{\mathrm{^{13}CO}}$ (cm$^{-2}$)"
         title2  = "$N_{\mathrm{^{13}CO}}$ Distribution"
@@ -1723,6 +1723,9 @@ class ToolsNcol():
         ax3.set_ylabel(ylabel2)
         ax3.set_ylim(nlim)
         ax2.tick_params(labelleft=False)
+
+        ax1.set_xticks([1,3,5,7])
+        ax1.set_xticklabels(["All","CND","INT","SBR"], rotation = 60, ha="right")
 
         # plot all data
         n = 1
