@@ -3659,6 +3659,7 @@ class ToolsNcol():
     ##################
 
     def _fits_creation(
+        self,
         input_array,
         output_map,
         coords_template,
@@ -3793,6 +3794,7 @@ class ToolsNcol():
                 input_array=y-x,
                 output_map=outfits,
                 coords_template=ximage,
+                bunit="K",
                 )
 
     ##################
