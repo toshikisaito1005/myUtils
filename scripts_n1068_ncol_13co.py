@@ -1724,10 +1724,6 @@ class ToolsNcol():
         ax3.set_ylim(nlim)
         ax2.tick_params(labelleft=False)
 
-        cut = np.where((R_as>=self.r_cnd_as)&(R_as<self.r_sbr_as))
-
-        cut = np.where(R_as>=self.r_sbr_as)
-
         # plot all data
         n = 1
         self._ax_violin(ax1,T,n,t_grid,"grey")
@@ -1739,29 +1735,17 @@ class ToolsNcol():
         self._ax_violin(ax1,T[cut],n,t_grid,"tomato")
         self._ax_violin(ax3,N[cut],n,n_grid,"tomato")
 
-        """
+        # plot intermediate data
         n = 5
-        y, left, right = t_grid, n-T_int, n+T_int
-        ax1.plot(right, y, lw=2, color="grey")
-        ax1.plot(left, y, lw=2, color="grey")
-        ax1.fill_betweenx(y, left, right, facecolor="green", alpha=0.5)
+        cut = np.where((R_as>=self.r_cnd_as)&(R_as<self.r_sbr_as))
+        self._ax_violin(ax1,T[cut],n,t_grid,"green")
+        self._ax_violin(ax3,N[cut],n,n_grid,"green")
 
-        y, left, right = n_grid, n-N_int, n+N_int
-        ax2.plot(right, y, lw=2, color="grey")
-        ax2.plot(left, y, lw=2, color="grey")
-        ax2.fill_betweenx(y, left, right, facecolor="green", alpha=0.5)
-
+        # plot sbr data
         n = 7
-        y, left, right = t_grid, n-T_sbr, n+T_sbr
-        ax1.plot(right, y, lw=2, color="grey")
-        ax1.plot(left, y, lw=2, color="grey")
-        ax1.fill_betweenx(y, left, right, facecolor="deepskyblue", alpha=0.5)
-
-        y, left, right = n_grid, n-N_sbr, n+N_sbr
-        ax2.plot(right, y, lw=2, color="grey")
-        ax2.plot(left, y, lw=2, color="grey")
-        ax2.fill_betweenx(y, left, right, facecolor="deepskyblue", alpha=0.5)
-        """
+        cut = np.where(R_as>=self.r_sbr_as)
+        self._ax_violin(ax1,T[cut],n,t_grid,"deepskyblue")
+        self._ax_violin(ax3,N[cut],n,n_grid,"deepskyblue")
 
         # save
         os.system("rm -rf " + self.outpng_violin)
