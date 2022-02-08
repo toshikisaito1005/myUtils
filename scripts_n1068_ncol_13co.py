@@ -1731,25 +1731,25 @@ class ToolsNcol():
 
         n = 1
         y, left, right = t_grid, n-T_all, n+T_all
-        ax1.plot(n+right, y, lw=2, color="black")
+        ax1.plot(right, y, lw=2, color="black")
         ax1.plot(left, y, lw=2, color="black")
         ax1.fill_betweenx(y, left, right, facecolor="grey")
 
         n = 3
         y, left, right = t_grid, n-T_cnd, n+T_cnd
-        ax1.plot(n+right, y, lw=2, color="black")
+        ax1.plot(right, y, lw=2, color="black")
         ax1.plot(left, y, lw=2, color="black")
         ax1.fill_betweenx(y, left, right, facecolor="tomato")
 
         n = 5
         y, left, right = t_grid, n-T_int, n+T_int
-        ax1.plot(n+right, y, lw=2, color="black")
+        ax1.plot(right, y, lw=2, color="black")
         ax1.plot(left, y, lw=2, color="black")
         ax1.fill_betweenx(y, left, right, facecolor="green")
 
         n = 7
         y, left, right = t_grid, n-T_sbr, n+T_sbr
-        ax1.plot(n+right, y, lw=2, color="black")
+        ax1.plot(right, y, lw=2, color="black")
         ax1.plot(left, y, lw=2, color="black")
         ax1.fill_betweenx(y, left, right, facecolor="deepskyblue")
 
