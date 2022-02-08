@@ -1745,8 +1745,8 @@ class ToolsNcol():
         ax2.tick_params(labelleft=False)
 
         # plot KDE
-        this_data = T
-        self._ax_violin(ax1,this_data,1,n_grid,"grey")
+        n = 1
+        self._ax_violin(ax1,T,n,t_grid,"grey")
 
 
         n = 1
