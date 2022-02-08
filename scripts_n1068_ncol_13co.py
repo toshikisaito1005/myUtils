@@ -1746,9 +1746,8 @@ class ToolsNcol():
         n = 3
         ax1.plot(n+T_cnd, t_grid, lw=2, color="black")
         ax1.plot(n-T_cnd, t_grid, lw=2, color="black")
-        ax1.fill_between(n-T_cnd, n+T_cnd, t_grid, facecolor="tomato")
-        #ax1.fill_between(n-T_cnd, np.array([n]*len(T_cnd)), t_grid, facecolor="tomato")
-        #ax1.fill_between(n+T_cnd, np.array([n]*len(T_cnd)), t_grid, facecolor="tomato")
+        ax1.fill_between(n-T_cnd, np.array([n]*len(T_cnd)), t_grid, facecolor="tomato")
+        ax1.fill_between(np.array([n]*len(T_cnd)), n+T_cnd, t_grid, facecolor="tomato")
 
         # save
         os.system("rm -rf " + self.outpng_violin)
