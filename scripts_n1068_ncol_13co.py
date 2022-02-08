@@ -1756,7 +1756,7 @@ class ToolsNcol():
 
         n = 1
         y, left, right, pctls = t_grid, n-T_all, n+T_all, pT_all
-        cut = np.where((y<np.max(T))&(y>npmin(T)))
+        cut = np.where((y<np.max(T))&(y>np.min(T)))
         ax1.plot(right[cut], y[cut], lw=2, color="grey")
         ax1.plot(left[cut], y[cut], lw=2, color="grey")
         ax1.fill_betweenx(y, left, right, facecolor="grey", alpha=0.5)
