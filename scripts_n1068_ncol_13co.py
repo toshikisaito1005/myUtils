@@ -52,6 +52,7 @@ Toshiki Saito@Nichidai/NAOJ
 
 import os, sys, glob
 import numpy as np
+from scipy.stats import gaussian_kde
 
 from mycasa_rotation import *
 from mycasa_sampling import *
@@ -1701,6 +1702,8 @@ class ToolsNcol():
         nbins = 25
         xt_all, yt_all = np.histogram(T, bins=nbins, range=[2,13])
         xn_all, yn_all = np.histogram(N, bins=nbins, range=[14.7,17.2])
+        yt_all_kde = gaussian_kde(T)
+        xt_all_kde = kde_model(x_grid)
 
         cut = np.where(R_as<self.r_cnd_as)
         xt_cnd, yt_cnd = np.histogram(T[cut], bins=nbins, range=[2,13])
@@ -1714,8 +1717,7 @@ class ToolsNcol():
         xt_sbr, yt_sbr = np.histogram(T[cut], bins=nbins, range=[2,13])
         xn_sbr, yn_sbr = np.histogram(N[cut], bins=nbins, range=[14.7,17.2])
 
-        print(xt_all, yt_all)
-        print(xn_all, yn_all)
+        print(np.c_[xt_all, yt_all, xt_all_kde, yt_all_kde])
 
     ################
     # plot_scatter #
