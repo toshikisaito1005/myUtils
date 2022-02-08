@@ -1726,20 +1726,20 @@ class ToolsNcol():
 
         # plot all data
         n = 1
-        self._ax_violin(ax1,T,n,t_grid,"grey")
-        self._ax_violin(ax3,N,n,n_grid,"grey")
+        self._ax_violin(ax1,T,n,t_grid,"grey",vmax=1.05)
+        self._ax_violin(ax3,N,n,n_grid,"grey",vmin=15.05,vmax=16.9)
 
         # plot cnd data
         n = 3
         cut = np.where(R_as<self.r_cnd_as)
-        self._ax_violin(ax1,T[cut],n,t_grid,"tomato",vmin=0.42,vmax=1.2)
-        self._ax_violin(ax3,N[cut],n,n_grid,"tomato",vmin=15.1,vmax=16.7)
+        self._ax_violin(ax1,T[cut],n,t_grid,"tomato",vmin=0.40,vmax=1.2)
+        self._ax_violin(ax3,N[cut],n,n_grid,"tomato",vmin=15.1,vmax=16.8)
 
         # plot intermediate data
         n = 5
         cut = np.where((R_as>=self.r_cnd_as)&(R_as<self.r_sbr_as))
-        self._ax_violin(ax1,T[cut],n,t_grid,"green",vmin=0.40,vmax=0.91)
-        self._ax_violin(ax3,N[cut],n,n_grid,"green",vmin=15.0,vmax=16.4)
+        self._ax_violin(ax1,T[cut],n,t_grid,"green",vmin=0.40,vmax=0.93)
+        self._ax_violin(ax3,N[cut],n,n_grid,"green",vmin=15.0,vmax=16.5)
 
         # plot sbr data
         n = 7
@@ -1796,7 +1796,7 @@ class ToolsNcol():
 
         # percentiles
         ax.plot([n,n],[p2,p98],lw=2,color="grey")
-        ax.plot([n,n],[p16,p84],lw=8,color="grey")
+        ax.plot([n,n],[p16,p84],lw=9,color="grey")
         ax.plot(n,p50,".",color="white",markersize=10, markeredgewidth=0)
 
     ################
