@@ -3789,12 +3789,31 @@ class ToolsNcol():
         plt.savefig(outpng, dpi=self.fig_dpi)
 
         #
-        shape = imhead(yimage,mode="list")["shape"]
-        outarray = y-x
-        print(shape)
-        print(np.shape(outarray))
         outarray = outarray.reshape([shape[0],shape[1]])
         if outfits!=None:
+            # 12co10
+            data_13co10,box = imval_all(ximage)
+            data_13co10     = data_13co10["data"] * data_13co10["mask"]
+            data_13co10[np.isnan(data_13co10)] = 0
+
+            err_13co10,_ = imval_all(xerrimage)
+            err_13co10   = err_13co10["data"] * err_13co10["mask"]
+            err_13co10[np.isnan(err_13co10)] = 0
+
+            # log ncol
+            data_13co21,_ = imval_all(yimage)
+            data_13co21   = data_13co21["data"] * data_13co21["mask"]
+            data_13co21[np.isnan(data_13co21)] = 0
+
+
+            err_13co21,_ = imval_all(yerrimage)
+            err_13co21   = err_13co21["data"] * err_13co21["mask"]
+            err_13co21[np.isnan(err_13co21)] = 0
+
+            # prepare
+            cut  = np.where((data_13co10>abs(err_13co10)*self.snr)&(data_13co21>abs(err_13co21)*self.snr))
+            outarray = data_13co21[cut] + np.log10(factor) - np.log10(data_13co10[cut])
+
             self._fits_creation(
                 input_array=outarray,
                 output_map=outfits,
