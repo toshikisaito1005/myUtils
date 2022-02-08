@@ -1702,7 +1702,7 @@ class ToolsNcol():
         cerrimage = None
         outpng    = self.outpng_12co_vs_aco
 
-        self._plot_scatter1(
+        self._plot_scatter4(
             ximage,
             xerrimage,
             yimage,
@@ -1711,14 +1711,13 @@ class ToolsNcol():
             cerrimage,
             outpng,
             xlim,
+            ylim,
             title,
             xlabel,
             ylabel,
             cblabel,
-            ylim=ylim,
+            factor,
             cmap="rainbow_r",
-            h2column=True,
-            factor=factor,
             )
 
         os.system("rm -rf " + self.mom0_12co10.replace("???",this_beam) + ".regrid")
@@ -3653,6 +3652,118 @@ class ToolsNcol():
         """
 
     ##################
+    # _plot_scatter4 #
+    ##################
+
+    def _plot_scatter4(
+        self,
+        ximage,
+        xerrimage,
+        yimage,
+        yerrimage,
+        cimage,
+        cerrimage,
+        outpng,
+        xlim,
+        ylim,
+        title,
+        xlabel,
+        ylabel,
+        cblabel,
+        factor,
+        cmap="rainbow_r",
+        ):
+
+        # 13co10
+        data_13co10,box = imval_all(ximage)
+        data_13co10     = data_13co10["data"] * data_13co10["mask"]
+        data_13co10     = data_13co10.flatten()
+        data_13co10[np.isnan(data_13co10)] = 0
+
+        err_13co10,_ = imval_all(xerrimage)
+        err_13co10   = err_13co10["data"] * err_13co10["mask"]
+        err_13co10   = err_13co10.flatten()
+        err_13co10[np.isnan(err_13co10)] = 0
+
+        # 13co21
+        data_13co21,_ = imval_all(yimage)
+        data_13co21   = data_13co21["data"] * data_13co21["mask"]
+        data_13co21   = data_13co21.flatten()
+        data_13co21[np.isnan(data_13co21)] = 0
+
+        err_13co21,_ = imval_all(yerrimage)
+        err_13co21   = err_13co21["data"] * err_13co21["mask"]
+        err_13co21   = err_13co21.flatten()
+        err_13co21[np.isnan(err_13co21)] = 0
+
+        if cimage==None:
+            # coords
+            data_coords = imval(ximage,box=box)["coords"]
+            ra_deg      = data_coords[:,:,0] * 180/np.pi
+            ra_deg      = ra_deg.flatten()
+            dec_deg     = data_coords[:,:,1] * 180/np.pi
+            dec_deg     = dec_deg.flatten()
+            dist_pc,_   = get_reldist_pc(ra_deg, dec_deg, self.ra_agn, self.dec_agn, self.scale_pc, 0, 0)
+            c           = dist_pc / 1000.0
+            # prepare
+            cut  = np.where((data_13co10>abs(err_13co10)*self.snr)&(data_13co21>abs(err_13co21)*self.snr))
+            x    = np.log10(data_13co10[cut])
+            xerr = err_13co10[cut] / abs(data_13co10[cut])
+            y    = data_13co21[cut] + np.log10(factor)
+            yerr = err_13co21[cut]
+            c    = np.array(c)[cut]
+
+        else:
+            data_c,_    = imval_all(cimage)
+            data_c      = data_c["data"] * data_c["mask"]
+            data_c      = data_c.flatten()
+            data_c[np.isnan(data_c)] = 0
+            c           = data_c
+            data_cerr,_ = imval_all(cerrimage)
+            data_cerr   = data_cerr["data"] * data_cerr["mask"]
+            data_cerr   = data_cerr.flatten()
+            data_cerr[np.isnan(data_cerr)] = 0
+            cerr        = data_cerr
+            # prepare
+            cut  = np.where((data_13co10>abs(err_13co10)*self.snr)&(data_13co21>abs(err_13co21)*self.snr)&(c>abs(cerr)*self.snr))
+            x    = np.log10(data_13co10[cut])
+            xerr = err_13co10[cut] / abs(data_13co10[cut])
+            y    = data_13co21[cut] + np.log10(factor)
+            yerr = err_13co21[cut]
+            c    = np.array(c)[cut]
+
+        # plot
+        fig = plt.figure(figsize=(13,10))
+        gs  = gridspec.GridSpec(nrows=10, ncols=10)
+        ax1 = plt.subplot(gs[0:10,0:10])
+        ad  = [0.215,0.83,0.10,0.90]
+        myax_set(ax1, "both", xlim, ylim, title, xlabel, ylabel, adjust=ad)
+
+        cs = ax1.scatter(x, y, c=c, cmap=cmap, lw=0, s=40, zorder=1e9)
+        ax1.errorbar(x, y, xerr, yerr, lw=1, capsize=0, color="grey", linestyle="None")
+
+        # colorbar
+        cax = fig.add_axes([0.25, 0.81, 0.33, 0.04])
+        cbar = plt.colorbar(cs, cax=cax, orientation="horizontal")
+        cbar.set_label(cblabel)
+        if cimage==None:
+            cbar.set_ticks([0,0.3,0.6,0.9,1.2])
+
+        """ cmap for errorbar
+        clb   = plt.colorbar(sc)
+        color = clb.to_rgba(r)
+        for this_x, this_y, this_xerr, this_yerr, this_c in zip(x, y, xerr, yerr, color):
+            plt.errorbar(this_x, this_y, this_xerr, this_yerr, lw=1, capsize=0, color=this_c)
+        """
+
+        # ann
+        ax1.plot(lim, lim, "--", color="black", lw=1)
+
+        # save
+        os.system("rm -rf " + outpng)
+        plt.savefig(outpng, dpi=self.fig_dpi)
+
+    ##################
     # _plot_scatter3 #
     ##################
 
@@ -3906,8 +4017,6 @@ class ToolsNcol():
         cblabel,
         ylim=None,
         cmap="rainbow_r",
-        h2column=True,
-        factor=None,
         ):
 
         # 13co10
@@ -3931,10 +4040,6 @@ class ToolsNcol():
         err_13co21   = err_13co21["data"] * err_13co21["mask"]
         err_13co21   = err_13co21.flatten()
         err_13co21[np.isnan(err_13co21)] = 0
-
-        if h2column==True:
-            data_13co21 = data_13co21 + np.log10(factor)
-            err_13co21  = err_13co21
 
         if cimage==None:
             # coords
@@ -3977,10 +4082,7 @@ class ToolsNcol():
         gs  = gridspec.GridSpec(nrows=10, ncols=10)
         ax1 = plt.subplot(gs[0:10,0:10])
         ad  = [0.215,0.83,0.10,0.90]
-        if ylim==None:
-            myax_set(ax1, "both", lim, lim, title, xlabel, ylabel, adjust=ad)
-        else:
-            myax_set(ax1, "both", lim, ylim, title, xlabel, ylabel, adjust=ad)
+        myax_set(ax1, "both", lim, lim, title, xlabel, ylabel, adjust=ad)
 
         cs = ax1.scatter(x, y, c=c, cmap=cmap, lw=0, s=40, zorder=1e9)
         ax1.errorbar(x, y, xerr, yerr, lw=1, capsize=0, color="grey", linestyle="None")
