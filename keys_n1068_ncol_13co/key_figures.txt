@@ -45,6 +45,8 @@ cube_13co10               ,,,ngc1068_b3_12m_13co10_???.fits
 ecube_13co10              ,,,ngc1068_b3_12m_13co10_???_noise.fits
 cube_13co21               ,,,ngc1068_b6_12m_13co21_???.fits
 ecube_13co21              ,,,ngc1068_b6_12m_13co21_???_noise.fits
+mom0_12co10               ,,,ngc1068_b3_12m_co10_???_strict_mom0.fits
+emom0_12co10              ,,,ngc1068_b3_12m_co10_???_strict_emom0.fits
 
 ###############
 # output maps #
@@ -118,6 +120,7 @@ outpng_trot_vs_int        ,,,fig_scatter_trot_vs_int.png
 outpng_ncol_vs_int        ,,,fig_scatter_ncol_vs_int.png
 outpng_radial             ,,,fig_radial_rot.png
 outpng_violin             ,,,fig_violin_rot.png
+outpng_12co_vs_aco        ,,,fig_scatter_12co_vs_aco.png
 # box for imagemajick
 box_map                   ,,,2225x1870+335+80
 box_map_nox               ,,,2225x1730+335+80
@@ -127,7 +130,6 @@ box_map_noc               ,,,1830x1870+335+80
 box_map_noxc              ,,,1830x1730+335+80
 box_map_noyc              ,,,1630x1870+550+80
 box_map_noxyc             ,,,1630x1730+550+80
-#
 box_map2                  ,,,3155x1870+135+80
 #######
 # end #

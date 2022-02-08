@@ -128,6 +128,9 @@ class ToolsNcol():
         self.ecube_13co10 = self.dir_raw + self._read_key("ecube_13co10")
         self.cube_13co21  = self.dir_raw + self._read_key("cube_13co21")
         self.ecube_13co21 = self.dir_raw + self._read_key("ecube_13co21")
+
+        self.mom0_12co10  = self.dir_raw + self._read_key("mom0_12co10")
+        self.emom0_12co10 = self.dir_raw + self._read_key("emom0_12co10")
         
         """
         self.cube_hcn10   = self.dir_raw + self._read_key("cube_hcn10")
@@ -246,6 +249,7 @@ class ToolsNcol():
         self.outpng_ncol_vs_int        = self.dir_products + self._read_key("outpng_ncol_vs_int")
         self.outpng_radial             = self.dir_products + self._read_key("outpng_radial")
         self.outpng_violin             = self.dir_products + self._read_key("outpng_violin")
+        self.outpng_12co_vs_aco        = self.dir_products + self._read_key("outpng_12co_vs_aco")
 
         # finals
         self.final_60pc_obs      = self.dir_final + self._read_key("final_60pc_obs")
@@ -303,6 +307,7 @@ class ToolsNcol():
         plot_showsim     = False, # after do_simulate_mom
         plot_scatter     = False, # after do_fitting
         plot_violin      = False, # after do_fitting
+        plot_aco         = False, # after do_fitting
         do_imagemagick   = False,
         immagick_all     = False,
         # supplement
@@ -320,6 +325,7 @@ class ToolsNcol():
             plot_showsim     = True
             plot_scatter     = True
             plot_violin      = True
+            plot_aco         = True
             do_imagemagick   = True
             immagick_all     = True
 
@@ -352,6 +358,9 @@ class ToolsNcol():
         if plot_violin==True:
             self.plot_violin()
 
+        if plot_aco==True:
+            self.plot_aco()
+
         if do_imagemagick==True:
             self.immagick_figures(do_all=immagick_all,delin=False)
 
@@ -368,7 +377,7 @@ class ToolsNcol():
         do_final_60pc_rot     = False,
         do_final_scatter_int  = False,
         do_final_scatter_rot  = False,
-        do_final_radial       = True,
+        do_final_radial       = False,
         # appendix
         do_final_60pc_err     = False,
         do_final_sim_input    = False,
@@ -1640,6 +1649,63 @@ class ToolsNcol():
                 delin=True,
                 axis="column",
                 )
+
+    ############
+    # plot_aco #
+    ############
+
+    def plot_aco(
+        self,
+        ):
+        """
+        """
+        this_beam = "60pc"
+
+        taskname = self.modname + sys._getframe().f_code.co_name
+        check_first(self.outmaps_13co_ncol.replace("???",this_beam),taskname)
+
+        #
+        template = "template.image"
+        run_importfits(self.outmaps_13co_ncol.replace("???",this_beam),template)
+        run_imregrid(self.mom0_12co10,template,self.mom0_12co10+".regrid",axes=-1)
+        run_imregrid(self.emom0_12co10,template,self.emom0_12co10+".regrid",axes=-1)
+        os.system("rm -rf template.image")
+
+        xlim      = [0.5,5.0]
+        ylim      = [14.7,17.2]
+        title     = "log$_{\mathrm{10}}$ $I_{\mathrm{^{12}CO(1-0)}}$ vs. log$_{\mathrm{10}}$ $N_{\mathrm{H_2}}$ at " + this_beam.replace("pc"," pc")
+        xlabel    = "log$_{\mathrm{10}}$ $I_{\mathrm{^{12}CO(1-0)}}$ (K km s$^{-1}$)"
+        ylabel    = "log$_{\mathrm{10}}$ $N_{\mathrm{H_2}}$ (cm$^{-2}$)"
+        ximage    = self.mom0_12co10+".regrid"
+        xerrimage = self.emom0_12co10+".regrid"
+        yimage    = self.outmaps_13co_ncol.replace("???",this_beam)
+        yerrimage = self.outemaps_13co_ncol.replace("???",this_beam)
+
+        # cmap = distance
+        cblabel   = "Distance (kpc)"
+        cimage    = None
+        cerrimage = None
+        outpng    = self.outpng_12co_vs_aco
+        
+        self._plot_scatter1(
+        ximage,
+        xerrimage,
+        yimage,
+        yerrimage,
+        cimage,
+        cerrimage,
+        outpng,
+        xlim,
+        title,
+        xlabel,
+        ylabel,
+        cblabel,
+        ylim=ylim,
+        cmap="rainbow_r",
+        )
+
+        os.system("rm -rf " + self.mom0_12co10 + ".regrid")
+        os.system("rm -rf " + self.emom0_12co10 + ".regrid")
 
     ###############
     # plot_violin #
@@ -3821,6 +3887,7 @@ class ToolsNcol():
         xlabel,
         ylabel,
         cblabel,
+        ylim=None,
         cmap="rainbow_r",
         ):
 
@@ -3887,7 +3954,10 @@ class ToolsNcol():
         gs  = gridspec.GridSpec(nrows=10, ncols=10)
         ax1 = plt.subplot(gs[0:10,0:10])
         ad  = [0.215,0.83,0.10,0.90]
-        myax_set(ax1, "both", lim, lim, title, xlabel, ylabel, adjust=ad)
+        if ylim==None:
+            myax_set(ax1, "both", lim, lim, title, xlabel, ylabel, adjust=ad)
+        else:
+            myax_set(ax1, "both", lim, ylim, title, xlabel, ylabel, adjust=ad)
 
         cs = ax1.scatter(x, y, c=c, cmap=cmap, lw=0, s=40, zorder=1e9)
         ax1.errorbar(x, y, xerr, yerr, lw=1, capsize=0, color="grey", linestyle="None")
