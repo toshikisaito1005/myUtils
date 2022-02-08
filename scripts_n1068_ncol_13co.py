@@ -3791,6 +3791,8 @@ class ToolsNcol():
         #
         shape = imhead(yimage,mode="list")["shape"]
         outarray = y-x
+        print(shape)
+        print(np.shape(outarray))
         outarray = outarray.reshape([shape[0],shape[1]])
         if outfits!=None:
             self._fits_creation(
