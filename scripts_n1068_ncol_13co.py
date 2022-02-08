@@ -1750,7 +1750,7 @@ class ToolsNcol():
         self._ax_violin(ax1,data,1,n_grid,"grey")
 
 
-
+        n = 1
         y, left, right = n_grid, n-N_all, n+N_all
         ax2.plot(right, y, lw=2, color="grey")
         ax2.plot(left, y, lw=2, color="grey")
