@@ -1698,11 +1698,11 @@ class ToolsNcol():
         T    = data_y1[cut]
         N    = data_y2[cut]
 
-        # histogram
-        nbins = 25
-        yt_all, xt_all = np.histogram(T, bins=nbins, range=[2,13])
-        yt_all_kde = gaussian_kde(T)
-        yt_all_kde = yt_all_kde(xt_all)
+        t_grid = np.linspace(2, 13, num=100)
+
+        # KDE
+        T_all = gaussian_kde(T)
+        T_all = T_all(t_grid)
 
         """
         xn_all, yn_all = np.histogram(N, bins=nbins, range=[14.7,17.2])
@@ -1721,7 +1721,7 @@ class ToolsNcol():
         """
 
         plt.figure(figsize=(14,7))
-        plt.plot(xt_all, yt_all_kde)
+        plt.plot(t_grid, T_all)
         #plt.hist(T, alpha=0.3, bins=20)
 
         # save
