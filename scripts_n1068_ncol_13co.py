@@ -1719,7 +1719,7 @@ class ToolsNcol():
             np.nanpercentile(T[T!=0],84),
             np.nanpercentile(T[T!=0],98),
             ]
-        m = a!=0
+        m = T_all!=0
         index = m.argmax()-1, m.size - m[::-1].argmax()
         x_T_all = t_grid[index[0]+1:index[1]]
         T_all = T_all[index[0]+1:index[1]]
