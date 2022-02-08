@@ -542,7 +542,7 @@ class ToolsNcol():
 
             combine_two_png(
                 self.outpng_12co_vs_aco,
-                self.outmaps_aco,
+                self.outpng_aco_map,
                 self.final_aco,
                 self.box_map_noc,
                 self.box_map,
