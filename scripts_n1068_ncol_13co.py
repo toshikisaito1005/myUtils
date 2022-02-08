@@ -164,6 +164,8 @@ class ToolsNcol():
         self.outemaps_13co_trot   = self.dir_ready + self._read_key("outemaps_13co_trot")
         self.outemaps_13co_ncol   = self.dir_ready + self._read_key("outemaps_13co_ncol")
 
+        self.outemaps_aco         = self.dir_ready + self._read_key("outemaps_aco")
+
         self.outmodelcube_13co10  = self.dir_ready + self._read_key("outmodelcube_13co10")
         self.outmodelcube_13co21  = self.dir_ready + self._read_key("outmodelcube_13co21")
         self.outmodelmom0_13co10  = self.dir_ready + self._read_key("outmodelmom0_13co10")
@@ -1718,6 +1720,7 @@ class ToolsNcol():
             cblabel,
             factor,
             cmap="rainbow_r",
+            outfits=self.outemaps_aco,
             )
 
         os.system("rm -rf " + self.mom0_12co10.replace("???",this_beam) + ".regrid")
@@ -3652,6 +3655,28 @@ class ToolsNcol():
         """
 
     ##################
+    # _fits_creation #
+    ##################
+
+    def _fits_creation(
+        input_array,
+        output_map,
+        coords_template,
+        bunit="K",
+        ):
+        """
+        Reference:
+        https://stackoverflow.com/questions/45744394/write-a-new-fits-file-after-modification-in-pixel-values
+        """
+        os.system("rm -rf " + output_map)
+        os.system("cp " + coords_template + " " + output_map)
+
+        obj = pyfits.open(output_map)
+        obj[0].data = input_array
+        obj[0].header.append(("BUNIT", bunit))
+        obj.writeto(output_map, clobber=True)
+
+    ##################
     # _plot_scatter4 #
     ##################
 
@@ -3672,7 +3697,11 @@ class ToolsNcol():
         cblabel,
         factor,
         cmap="rainbow_r",
+        outfits=None,
         ):
+        """
+        use only for aco
+        """
 
         # 13co10
         data_13co10,box = imval_all(ximage)
@@ -3756,6 +3785,15 @@ class ToolsNcol():
         # save
         os.system("rm -rf " + outpng)
         plt.savefig(outpng, dpi=self.fig_dpi)
+
+        #
+        if outfits!=None:
+            self._fits_creation(
+                y-x,
+                outfits,
+                ximage,
+                bunit="K",
+                )
 
     ##################
     # _plot_scatter3 #
