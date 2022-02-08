@@ -1711,25 +1711,25 @@ class ToolsNcol():
         l = gaussian_kde(T)
         T_all = np.array(l(t_grid) / np.max(l(t_grid)))
         l = gaussian_kde(N)
-        N_all = np.array(l(t_grid) / np.max(l(t_grid)))
+        N_all = np.array(l(n_grid) / np.max(l(n_grid)))
 
         cut = np.where(R_as<self.r_cnd_as)
         l = gaussian_kde(T[cut])
         T_cnd = np.array(l(t_grid) / np.max(l(t_grid)))
         l = gaussian_kde(N[cut])
-        N_cnd = np.array(l(t_grid) / np.max(l(t_grid)))
+        N_cnd = np.array(l(n_grid) / np.max(l(n_grid)))
 
         cut = np.where((R_as>=self.r_cnd_as)&(R_as<self.r_sbr_as))
         l = gaussian_kde(T[cut])
         T_int = np.array(l(t_grid) / np.max(l(t_grid)))
         l = gaussian_kde(N[cut])
-        N_int = np.array(l(t_grid) / np.max(l(t_grid)))
+        N_int = np.array(l(n_grid) / np.max(l(n_grid)))
 
         cut = np.where(R_as>=self.r_sbr_as)
         l = gaussian_kde(T[cut])
         T_sbr = np.array(l(t_grid) / np.max(l(t_grid)))
         l = gaussian_kde(N[cut])
-        N_sbr = np.array(l(t_grid) / np.max(l(t_grid)))
+        N_sbr = np.array(l(n_grid) / np.max(l(n_grid)))
 
         # plot
         fig = plt.figure(figsize=(17,10))
