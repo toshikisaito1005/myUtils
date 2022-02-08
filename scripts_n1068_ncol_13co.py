@@ -367,8 +367,8 @@ class ToolsNcol():
         do_final_scatter_rot  = False,
         do_final_radial       = True,
         # appendix
-        do_final_60pc_err     = False,
-        do_final_sim_input    = False,
+        do_final_60pc_err     = True,
+        do_final_sim_input    = True,
         do_final_sim_mom0     = False,
         do_final_sim_emom0    = False,
         # supplement
@@ -401,8 +401,8 @@ class ToolsNcol():
             do_final_scatter_rot  = True
             do_final_radial       = True
             # appendix
-            do_final_60pc_obs_err = True
-            do_final_60pc_rot_err = True
+            do_final_60pc_err     = True
+            do_final_sim_input    = True
             do_final_sim_mom0     = True
             do_final_sim_emom0    = True
             # supplement
