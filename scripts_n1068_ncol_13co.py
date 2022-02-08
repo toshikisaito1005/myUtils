@@ -1718,8 +1718,8 @@ class ToolsNcol():
         ax2 = plt.subplot(gs[0:10,5:10])
         ax3 = ax2.twinx()
         ad  = [0.10,0.90,0.10,0.90]
-        myax_set(ax1, None, [-0.5,8.5], tlim, title, None, ylabel, adjust=ad)
-        myax_set(ax2, None, [-0.5,8.5], nlim, title2, None, None, adjust=ad)
+        myax_set(ax1, "y", [-0.5,8.5], tlim, title, None, ylabel, adjust=ad)
+        myax_set(ax2, "y", [-0.5,8.5], nlim, title2, None, None, adjust=ad)
         ax3.set_ylabel(ylabel2)
         ax3.set_ylim(nlim)
         ax2.tick_params(labelleft=False)
