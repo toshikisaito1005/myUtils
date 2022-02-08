@@ -216,8 +216,8 @@ class ToolsNcol():
         self.r_sbr       = float(self._read_key("r_sbr_as")) * self.scale_pc / 1000. # kpc
         self.r_sbr_as    = float(self._read_key("r_sbr_as"))
 
-        self.abundance_12co_h2 = 3e-4
-        self.abundance_12co_13co = 40.0
+        self.abundance_12co_h2 = 1e-4
+        self.abundance_12co_13co = 60.0
         self.abundance_13co_h2 = self.abundance_12co_h2 / self.abundance_12co_13co
 
     def _set_output_txt_png(self):
