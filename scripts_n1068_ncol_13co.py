@@ -245,6 +245,7 @@ class ToolsNcol():
         self.outpng_trot_vs_int        = self.dir_products + self._read_key("outpng_trot_vs_int")
         self.outpng_ncol_vs_int        = self.dir_products + self._read_key("outpng_ncol_vs_int")
         self.outpng_radial             = self.dir_products + self._read_key("outpng_radial")
+        self.outpng_violin             = self.dir_products + self._read_key("outpng_violin")
 
         # finals
         self.final_60pc_obs      = self.dir_final + self._read_key("final_60pc_obs")
@@ -1698,11 +1699,12 @@ class ToolsNcol():
         T    = data_y1[cut]
         N    = data_y2[cut]
 
-        t_grid = np.linspace(2, 13, num=100)
+        limt = [2,13]
+        t_grid = np.linspace(limt[0], limt[1], num=100)
 
         # KDE
         T_all = gaussian_kde(T)
-        T_all = T_all(t_grid)
+        T_all = T_all(t_grid) / np.max(T_all(t_grid))
 
         """
         xn_all, yn_all = np.histogram(N, bins=nbins, range=[14.7,17.2])
@@ -1720,14 +1722,24 @@ class ToolsNcol():
         xn_sbr, yn_sbr = np.histogram(N[cut], bins=nbins, range=[14.7,17.2])
         """
 
-        plt.figure(figsize=(14,7))
-        plt.plot(T_all, t_grid)
-        plt.plot(-T_all, t_grid)
-        #plt.hist(T, alpha=0.3, bins=20)
-
         # save
         os.system("rm -rf " + "test.png")
         plt.savefig("test.png", dpi=self.fig_dpi)
+
+        # plot
+        fig = plt.figure(figsize=(13,10))
+        gs  = gridspec.GridSpec(nrows=10, ncols=10)
+        ax1 = plt.subplot(gs[0:10,0:10])
+        ad  = [0.10,0.90,0.10,0.90]
+        myax_set(ax1, None, None, limt, None, None, None, adjust=ad)
+
+
+        ax1.plot(1+T_all, t_grid, lw=2, lc="black", colro="grey")
+        ax1.plot(1+-T_all, t_grid, lw=2, lc="black", colro="grey")
+
+        # save
+        os.system("rm -rf " + self.outpng_violin)
+        plt.savefig(self.outpng_violin, dpi=self.fig_dpi)
 
     ################
     # plot_scatter #
