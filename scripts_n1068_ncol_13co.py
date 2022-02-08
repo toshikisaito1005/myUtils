@@ -1703,13 +1703,13 @@ class ToolsNcol():
         ###############
         this_beam  = "60pc"
         if plot_radial==True:
-            xlim       = [0.0,1.2]
+            xlim       = [0.0,2.0]
             ylim       = [2,13]
             ylim2      = [14.7,17.2]
-            title      = "radial $T_{\mathrm{rot}}$ and log$_{\mathrm{10}}$ $I_{\mathrm{^{13}CO}}$ at " + this_beam.replace("pc"," pc")
+            title      = "radial $T_{\mathrm{rot}}$ and log$_{\mathrm{10}}$ $N_{\mathrm{^{13}CO}}$ at " + this_beam.replace("pc"," pc")
             xlabel     = "Distance (kpc)"
             ylabel     = "$T_{\mathrm{rot}}$ (K)"
-            ylabel2    = "log$_{\mathrm{10}}$ $I_{\mathrm{^{13}CO}}$ (cm$^{-2}$)"
+            ylabel2    = "log$_{\mathrm{10}}$ $N_{\mathrm{^{13}CO}}$ (cm$^{-2}$)"
             yimage     = self.outmaps_13co_trot.replace("???",this_beam)
             yerrimage  = self.outemaps_13co_trot.replace("???",this_beam)
             y2image    = self.outmaps_13co_ncol.replace("???",this_beam)
@@ -1803,7 +1803,9 @@ class ToolsNcol():
         ax2 = ax1.twinx()
         ad  = [0.215,0.83,0.10,0.90]
         myax_set(ax1, "both", xlim, ylim, title, xlabel, ylabel, adjust=ad)
-        myax_set(ax2, "both", xlim, ylim2, title, xlabel, ylabel2, adjust=ad)
+        #myax_set(ax2, "both", xlim, ylim2, title, xlabel, ylabel2, adjust=ad)
+        ax2.set_ylabel(ylabel2)
+        ax2.set_ylim(ylim2)
 
         ax1.errorbar(x, y1, yerr=y1err, lw=1, capsize=0, color="grey", linestyle="None")
         ax2.errorbar(x, y2, yerr=y2err, lw=1, capsize=0, color="grey", linestyle="None")
