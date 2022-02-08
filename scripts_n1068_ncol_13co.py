@@ -204,7 +204,7 @@ class ToolsNcol():
         self.scale_kpc   = self.scale_pc / 1000.
 
         self.snr         = float(self._read_key("snr"))
-        self.snr_clip    = float(self._read_key("snr_clip"))
+        self.snr_clip    = int(self._read_key("snr_clip"))
         self.snr_model   = float(self._read_key("snr_model"))
         self.snr_fit     = float(self._read_key("snr_fit"))
         self.r_cnd       = float(self._read_key("r_cnd_as")) * self.scale_pc / 1000. # kpc
