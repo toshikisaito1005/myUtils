@@ -1755,7 +1755,7 @@ class ToolsNcol():
             self.outpng_aco_map,
             "$\\alpha_{\mathrm{CO}}$",
             "($M_{\\odot}$ (K km s$^{-1}$ pc$^{2}$)$^{-1}$)",
-            clim=[0.2,3],
+            clim=[0.1,2],
             )
 
     ###############
