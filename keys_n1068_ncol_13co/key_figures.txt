@@ -56,6 +56,9 @@ outcubes_13co21           ,,,n1068_13co21_???.cube.fits
 outecubes_13co10          ,,,n1068_13co10_???.ecube.fits
 outecubes_13co21          ,,,n1068_13co21_???.ecube.fits
 #
+outmaps_12co10            ,,,n1068_mom0_12co10_???.fits
+outemaps_12co10           ,,,n1068_emom0_12co10_???.fits
+#
 outmaps_13co10            ,,,n1068_mom0_13co10_???.fits
 outmaps_13co21            ,,,n1068_mom0_13co21_???.fits
 outmaps_mom1              ,,,n1068_mom1_???.fits

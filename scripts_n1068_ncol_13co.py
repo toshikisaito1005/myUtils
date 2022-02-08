@@ -148,6 +148,9 @@ class ToolsNcol():
         self.outcubes_13co21     = self.dir_ready + self._read_key("outcubes_13co21")
         self.outecubes_13co21    = self.dir_ready + self._read_key("outecubes_13co21")
 
+        self.outmaps_12co10      = self.dir_ready + self._read_key("outmaps_12co10")
+        self.outemaps_12co10     = self.dir_ready + self._read_key("outemaps_12co10")
+
         self.outmaps_mom0_13co10 = self.dir_ready + self._read_key("outmaps_13co10")
         self.outmaps_mom0_13co21 = self.dir_ready + self._read_key("outmaps_13co21")
         self.outmaps_mom1        = self.dir_ready + self._read_key("outmaps_mom1")
@@ -1679,12 +1682,14 @@ class ToolsNcol():
             self.mom0_12co10.replace("???",this_beam)+".regrid",
             axes=-1,
             )
+        run_exportfits(self.mom0_12co10.replace("???",this_beam)+".regrid",self.outmaps_12co10.replace("???",this_beam),delin=True)
         run_imregrid(
             self.emom0_12co10.replace("???",this_beam),
             template,
             self.emom0_12co10.replace("???",this_beam)+".regrid",
             axes=-1,
             )
+        run_exportfits(self.emom0_12co10.replace("???",this_beam)+".regrid",self.outemaps_12co10.replace("???",this_beam),delin=True)
         os.system("rm -rf template.image")
 
         xlim      = [0.3,4.0]
@@ -1693,8 +1698,8 @@ class ToolsNcol():
         title     = "log$_{\mathrm{10}}$ $I_{\mathrm{^{12}CO(1-0)}}$ vs. log$_{\mathrm{10}}$ $N_{\mathrm{H_2}}$ at " + this_beam.replace("pc"," pc")
         xlabel    = "log$_{\mathrm{10}}$ $I_{\mathrm{^{12}CO(1-0)}}$ (K km s$^{-1}$)"
         ylabel    = "log$_{\mathrm{10}}$ $N_{\mathrm{H_2}}$ (cm$^{-2}$)"
-        ximage    = self.mom0_12co10.replace("???",this_beam)+".regrid"
-        xerrimage = self.emom0_12co10.replace("???",this_beam)+".regrid"
+        ximage    = self.outmaps_12co10.replace("???",this_beam)
+        xerrimage = self.outemaps_12co10.replace("???",this_beam)
         yimage    = self.outmaps_13co_ncol.replace("???",this_beam)
         yerrimage = self.outemaps_13co_ncol.replace("???",this_beam)
 
@@ -1726,6 +1731,15 @@ class ToolsNcol():
 
         os.system("rm -rf " + self.mom0_12co10.replace("???",this_beam) + ".regrid")
         os.system("rm -rf " + self.emom0_12co10.replace("???",this_beam) + ".regrid")
+
+        self._showcase_one(
+            self.outmaps_aco,
+            self.outmaps_12co10.replace("???",this_beam),
+            outfile,
+            "$\alpha_{\mathrm{CO}}$",
+            "($M_{\odot}$ (K km s$^{-1}$ pc$^{2}$)$^{-1}$)",
+            clim=[0.2,3],
+            )
 
     ###############
     # plot_violin #
