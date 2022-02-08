@@ -1802,12 +1802,12 @@ class ToolsNcol():
         ax,
         data,
         n,
-        grid,
+        ygrid,
         color,
         ):
         """
         """
-        
+
         p2   = np.nanpercentile(data[data!=0],2)
         p16  = np.nanpercentile(data[data!=0],16)
         p50  = np.nanpercentile(data[data!=0],50)
