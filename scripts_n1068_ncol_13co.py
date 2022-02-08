@@ -1704,7 +1704,6 @@ class ToolsNcol():
         yt_all_kde = gaussian_kde(T)
         xt_all_kde = yt_all_kde(xt_all)
         yt_all = np.delete(yt_all,-1)
-        yt_all_kde = np.delete(yt_all_kde,-1)
 
         xn_all, yn_all = np.histogram(N, bins=nbins, range=[14.7,17.2])
 
