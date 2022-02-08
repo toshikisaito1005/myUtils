@@ -1740,14 +1740,15 @@ class ToolsNcol():
         n = 1
         ax1.plot(n+T_all, t_grid, lw=2, color="black")
         ax1.plot(n-T_all, t_grid, lw=2, color="black")
-        ax1.fill_between(n-T_all, np.array([n]*len(n-T_all)), t_grid, color="grey")
-        ax1.fill_between(n+T_all, np.array([n]*len(n-T_all)), t_grid, color="grey")
+        ax1.fill_between(n-T_all, np.array([n]*len(T_all)), t_grid, color="grey")
+        ax1.fill_between(n+T_all, np.array([n]*len(T_all)), t_grid, color="grey")
 
         n = 3
         ax1.plot(n+T_cnd, t_grid, lw=2, color="black")
         ax1.plot(n-T_cnd, t_grid, lw=2, color="black")
-        ax1.fill_between(n-T_cnd, np.array([n]*len(n-T_cnd)), t_grid, color="tomato")
-        ax1.fill_between(n+T_cnd, np.array([n]*len(n-T_cnd)), t_grid, color="tomato")
+        ax1.fill_between(n-T_cnd, n+T_cnd, t_grid, facecolor="tomato")
+        #ax1.fill_between(n-T_cnd, np.array([n]*len(T_cnd)), t_grid, facecolor="tomato")
+        #ax1.fill_between(n+T_cnd, np.array([n]*len(T_cnd)), t_grid, facecolor="tomato")
 
         # save
         os.system("rm -rf " + self.outpng_violin)
