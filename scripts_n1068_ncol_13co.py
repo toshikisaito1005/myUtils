@@ -1742,6 +1742,7 @@ class ToolsNcol():
         myax_set(ax2, None, [-0.5,8.5], nlim, None, None, None, adjust=ad)
         ax3.set_ylabel(ylabel2)
         ax3.set_ylim(nlim)
+        ax2.spines["left"].set_visible(False)
 
         n = 1
         y, left, right = t_grid, n-T_all, n+T_all
