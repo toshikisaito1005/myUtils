@@ -365,10 +365,10 @@ class ToolsNcol():
         do_final_60pc_rot     = False,
         do_final_scatter_int  = False,
         do_final_scatter_rot  = False,
-        do_final_radial       = True,
+        do_final_radial       = False,
         # appendix
-        do_final_60pc_err     = True,
-        do_final_sim_input    = True,
+        do_final_60pc_err     = False,
+        do_final_sim_input    = False,
         do_final_sim_mom0     = False,
         do_final_sim_emom0    = False,
         # supplement
@@ -1714,7 +1714,8 @@ class ToolsNcol():
         xt_sbr, yt_sbr = np.histogram(T[cut], bins=nbins, range=[2,13])
         xn_sbr, yn_sbr = np.histogram(N[cut], bins=nbins, range=[14.7,17.2])
 
-
+        print(xt_all, yt_all)
+        print(xn_all, yn_all)
 
     ################
     # plot_scatter #
