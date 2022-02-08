@@ -1699,9 +1699,9 @@ class ToolsNcol():
         T    = data_y1[cut]
         N    = data_y2[cut]
 
-        limt = [2,13]
-        t_grid = np.linspace(limt[0], limt[1], num=1000)
-        xlabel = "$T_{\mathrm{rot}}$ (K)"
+        tlim = [2,13]
+        t_grid = np.linspace(tlim[0], tlim[1], num=1000)
+        ylabel = "$T_{\mathrm{rot}}$ (K)"
 
         # KDE Trit
         l = gaussian_kde(T)
@@ -1724,7 +1724,7 @@ class ToolsNcol():
         gs  = gridspec.GridSpec(nrows=10, ncols=10)
         ax1 = plt.subplot(gs[0:10,0:10])
         ad  = [0.10,0.90,0.10,0.90]
-        myax_set(ax1, None, None, limt, None, xlabel, None, adjust=ad)
+        myax_set(ax1, None, None, tlim, None, None, ylabel, adjust=ad)
 
         n = 1
         y, left, right = t_grid, n-T_all, n+T_all
