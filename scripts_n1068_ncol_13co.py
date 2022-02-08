@@ -1750,7 +1750,7 @@ class ToolsNcol():
         ax1.plot(left, y, lw=2, color="black")
         ax1.fill_betweenx(y, left, right, facecolor="grey")
 
-        y, left, right = t_grid, n-N_all, n+N_all
+        y, left, right = n_grid, n-N_all, n+N_all
         ax2.plot(right, y, lw=2, color="black")
         ax2.plot(left, y, lw=2, color="black")
         ax2.fill_betweenx(y, left, right, facecolor="grey")
@@ -1761,7 +1761,7 @@ class ToolsNcol():
         ax1.plot(left, y, lw=2, color="black")
         ax1.fill_betweenx(y, left, right, facecolor="tomato")
 
-        y, left, right = t_grid, n-N_cnd, n+N_cnd
+        y, left, right = n_grid, n-N_cnd, n+N_cnd
         ax2.plot(right, y, lw=2, color="black")
         ax2.plot(left, y, lw=2, color="black")
         ax2.fill_betweenx(y, left, right, facecolor="tomato")
@@ -1772,7 +1772,7 @@ class ToolsNcol():
         ax1.plot(left, y, lw=2, color="black")
         ax1.fill_betweenx(y, left, right, facecolor="green")
 
-        y, left, right = t_grid, n-N_int, n+N_int
+        y, left, right = n_grid, n-N_int, n+N_int
         ax3.plot(right, y, lw=2, color="black")
         ax3.plot(left, y, lw=2, color="black")
         ax3.fill_betweenx(y, left, right, facecolor="green")
@@ -1783,7 +1783,7 @@ class ToolsNcol():
         ax1.plot(left, y, lw=2, color="black")
         ax1.fill_betweenx(y, left, right, facecolor="deepskyblue")
 
-        y, left, right = t_grid, n-N_sbr, n+N_sbr
+        y, left, right = n_grid, n-N_sbr, n+N_sbr
         ax3.plot(right, y, lw=2, color="black")
         ax3.plot(left, y, lw=2, color="black")
         ax3.fill_betweenx(y, left, right, facecolor="deepskyblue")
