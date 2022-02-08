@@ -1699,38 +1699,60 @@ class ToolsNcol():
         T    = np.log10(data_y1[cut])
         N    = data_y2[cut]
 
-        tlim = [np.log10(2),np.log10(13)]
-        t_grid = np.linspace(tlim[0], tlim[1], num=1000)
-        ylabel = "$T_{\mathrm{rot}}$ (K)"
+        tlim    = [np.log10(2),np.log10(13)]
+        t_grid  = np.linspace(tlim[0], tlim[1], num=1000)
+        ylabel  = "log$_{\mathrm{10}}$ $T_{\mathrm{rot}}$ (K)"
+
+        nlim    = [14.7,17.2]
+        n_grid  = np.linspace(nlim[0], nlim[1], num=1000)
+        ylabel2 = "log$_{\mathrm{10}}$ $N_{\mathrm{^{13}CO}}$ (cm$^{-2}$)"
 
         # KDE Trit
         l = gaussian_kde(T)
         T_all = np.array(l(t_grid) / np.max(l(t_grid)))
+        l = gaussian_kde(N)
+        N_all = np.array(l(t_grid) / np.max(l(t_grid)))
 
         cut = np.where(R_as<self.r_cnd_as)
         l = gaussian_kde(T[cut])
         T_cnd = np.array(l(t_grid) / np.max(l(t_grid)))
+        l = gaussian_kde(N[cut])
+        N_cnd = np.array(l(t_grid) / np.max(l(t_grid)))
 
         cut = np.where((R_as>=self.r_cnd_as)&(R_as<self.r_sbr_as))
         l = gaussian_kde(T[cut])
         T_int = np.array(l(t_grid) / np.max(l(t_grid)))
+        l = gaussian_kde(N[cut])
+        N_int = np.array(l(t_grid) / np.max(l(t_grid)))
 
         cut = np.where(R_as>=self.r_sbr_as)
         l = gaussian_kde(T[cut])
         T_sbr = np.array(l(t_grid) / np.max(l(t_grid)))
+        l = gaussian_kde(N[cut])
+        N_sbr = np.array(l(t_grid) / np.max(l(t_grid)))
 
         # plot
-        fig = plt.figure(figsize=(13,10))
+        fig = plt.figure(figsize=(17,10))
         gs  = gridspec.GridSpec(nrows=10, ncols=10)
-        ax1 = plt.subplot(gs[0:10,0:10])
+        ax1 = plt.subplot(gs[0:10,0:5])
+        ax2 = plt.subplot(gs[0:10,5:10])
+        ax3 = ax2.twinx()
         ad  = [0.10,0.90,0.10,0.90]
         myax_set(ax1, None, None, tlim, None, None, ylabel, adjust=ad)
+        myax_set(ax2, None, None, nlim, None, None, None, adjust=ad)
+        ax3.set_ylabel(ylabel2)
+        ax3.set_ylim(nlim)
 
         n = 1
         y, left, right = t_grid, n-T_all, n+T_all
         ax1.plot(right, y, lw=2, color="black")
         ax1.plot(left, y, lw=2, color="black")
         ax1.fill_betweenx(y, left, right, facecolor="grey")
+
+        y, left, right = t_grid, n-N_all, n+N_all
+        ax2.plot(right, y, lw=2, color="black")
+        ax2.plot(left, y, lw=2, color="black")
+        ax2.fill_betweenx(y, left, right, facecolor="grey")
 
         n = 3
         y, left, right = t_grid, n-T_cnd, n+T_cnd
