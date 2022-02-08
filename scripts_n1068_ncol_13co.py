@@ -3794,7 +3794,7 @@ class ToolsNcol():
         outarray = outarray.reshape([shape[0],shape[1]])
         if outfits!=None:
             self._fits_creation(
-                input_array=y-x,
+                input_array=outarray,
                 output_map=outfits,
                 coords_template=yimage,
                 bunit="K",
