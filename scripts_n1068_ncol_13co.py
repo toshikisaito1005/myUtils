@@ -1687,7 +1687,7 @@ class ToolsNcol():
 
         xlim      = None # [0.5,5.0]
         ylim      = None # [14.7,17.2]
-        yfactor   = 1.0 / self.abundance_13co_h2
+        factor    = 1.0 / self.abundance_13co_h2
         title     = "log$_{\mathrm{10}}$ $I_{\mathrm{^{12}CO(1-0)}}$ vs. log$_{\mathrm{10}}$ $N_{\mathrm{H_2}}$ at " + this_beam.replace("pc"," pc")
         xlabel    = "log$_{\mathrm{10}}$ $I_{\mathrm{^{12}CO(1-0)}}$ (K km s$^{-1}$)"
         ylabel    = "log$_{\mathrm{10}}$ $N_{\mathrm{H_2}}$ (cm$^{-2}$)"
@@ -1717,7 +1717,8 @@ class ToolsNcol():
             cblabel,
             ylim=ylim,
             cmap="rainbow_r",
-            yfactor=yfactor,
+            h2column=True,
+            factor=factor,
             )
 
         os.system("rm -rf " + self.mom0_12co10.replace("???",this_beam) + ".regrid")
@@ -3905,7 +3906,8 @@ class ToolsNcol():
         cblabel,
         ylim=None,
         cmap="rainbow_r",
-        yfactor=None,
+        h2column=True,
+        factor=None,
         ):
 
         # 13co10
@@ -3930,9 +3932,9 @@ class ToolsNcol():
         err_13co21   = err_13co21.flatten()
         err_13co21[np.isnan(err_13co21)] = 0
 
-        if yfactor!=None:
-            data_13co21 = data_13co21 * yfactor
-            err_13co21  = err_13co21 * yfactor
+        if h2column==True:
+            data_13co21 = data_13co21 + np.log10(factor)
+            err_13co21  = err_13co21 + np.log10(factor)
 
         if cimage==None:
             # coords
