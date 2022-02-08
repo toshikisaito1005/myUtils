@@ -1811,16 +1811,16 @@ class ToolsNcol():
         vmin = np.min(data)
         vmax = np.max(data)
 
-        # kde
-        l = gaussian_kde(data)
-        data = np.array(l(ygrid) / np.max(l(ygrid))) / 1.1
-
         # percentiles
         p2   = np.nanpercentile(data[data!=0],2)
         p16  = np.nanpercentile(data[data!=0],16)
         p50  = np.nanpercentile(data[data!=0],50)
         p84  = np.nanpercentile(data[data!=0],84)
         p98  = np.nanpercentile(data[data!=0],98)
+
+        # kde
+        l = gaussian_kde(data)
+        data = np.array(l(ygrid) / np.max(l(ygrid))) / 1.1
 
         left  = n-data
         right = n+data
