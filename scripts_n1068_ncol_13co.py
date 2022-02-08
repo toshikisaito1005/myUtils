@@ -1659,7 +1659,7 @@ class ToolsNcol():
         dec_deg     = data_coords[:,:,1] * 180/np.pi
         dec_deg     = dec_deg.flatten()
         dist_pc,_   = get_reldist_pc(ra_deg, dec_deg, self.ra_agn, self.dec_agn, self.scale_pc, 0, 0)
-        data_x      = dist_pc / 1000.0
+        data_x      = dist_pc / self.scale_pc
 
         # y1
         data_y1,_ = imval_all(yimage)
@@ -1685,11 +1685,14 @@ class ToolsNcol():
 
         # prepare
         cut  = np.where((data_y1>abs(err_y1)*snr)&(data_y2>abs(err_y2)*snr))
-        R    = data_x[cut]
+        Ras  = data_x[cut]
         T    = data_y1[cut]
-        Terr = err_y1[cut]
         N    = data_y2[cut]
-        Nerr = err_y2[cut]
+
+        # histogram
+        xt_all,yt_all = np.histogram(T, bins=12, range=[0,12])
+        print(xt_all,yt_all)
+
 
     ################
     # plot_scatter #
