@@ -1725,7 +1725,10 @@ class ToolsNcol():
         ax2.tick_params(labelleft=False)
 
         ax1.set_xticks([1,3,5,7])
-        ax1.set_xticklabels(["All","CND","INT","SBR"], rotation = 60, ha="right")
+        ax1.set_xticklabels(["All","CND","INT","SBR"], rotation = 90, ha="center")
+
+        ax2.set_xticks([1,3,5,7])
+        ax2.set_xticklabels(["All","CND","INT","SBR"], rotation = 90, ha="center")
 
         # plot all data
         n = 1
