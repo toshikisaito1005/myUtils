@@ -1713,11 +1713,11 @@ class ToolsNcol():
         l = gaussian_kde(T)
         T_all = np.array(l(t_grid) / np.max(l(t_grid))) / 1.1
         pT_all = [
-            np.nanpercentile(T,1),
+            np.nanpercentile(T,2),
             np.nanpercentile(T,16),
             np.nanpercentile(T,50),
             np.nanpercentile(T,84),
-            np.nanpercentile(T,99),
+            np.nanpercentile(T,98),
             ]
         l = gaussian_kde(N)
         N_all = np.array(l(n_grid) / np.max(l(n_grid))) / 1.1
@@ -1759,8 +1759,8 @@ class ToolsNcol():
         ax1.plot(left, y, lw=2, color="grey")
         ax1.fill_betweenx(y, left, right, facecolor="grey", alpha=0.5)
         ax1.plot([n,n],[pctls[0],pctls[4]],lw=2,color="grey")
-        ax1.plot([n,n],[pctls[1],pctls[3]],lw=5,color="grey")
-        ax1.plot(n,pctls[2],".",color="white",markersize=10)
+        ax1.plot([n,n],[pctls[1],pctls[3]],lw=8,color="grey")
+        ax1.plot(n,pctls[2],".",color="white",markersize=10, markeredgewidth=0)
 
         y, left, right = n_grid, n-N_all, n+N_all
         ax2.plot(right, y, lw=2, color="grey")
