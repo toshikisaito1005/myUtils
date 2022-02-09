@@ -1700,13 +1700,31 @@ class ToolsNcol():
             axes=-1,
             )
         run_exportfits(self.mom0_12co10.replace("???",this_beam)+".regrid",self.outmaps_12co10.replace("???",this_beam),delin=True)
-        run_imregrid(
+
+        #
+        run_immath_one(
             self.emom0_12co10.replace("???",this_beam),
-            template,
-            self.emom0_12co10.replace("???",this_beam)+".regrid",
-            axes=-1,
+            self.emom0_12co10.replace("???",this_beam)+"_tmp1",
+            "IM0*IM0",
             )
-        run_exportfits(self.emom0_12co10.replace("???",this_beam)+".regrid",self.outemaps_12co10.replace("???",this_beam),delin=True)
+        run_imregrid(
+            self.emom0_12co10.replace("???",this_beam)+"_tmp1",
+            template,
+            self.emom0_12co10.replace("???",this_beam)+"_tmp2",
+            axes=[0,1],
+            delin=True,
+            )
+        run_immath_one(
+            self.emom0_12co10.replace("???",this_beam)+"_tmp2",
+            self.emom0_12co10.replace("???",this_beam)+"_tmp3",
+            "sqrt(IM0)/sqrt("+str(numpix)+")",
+            delin=True,
+            )
+        run_exportfits(
+            self.emom0_12co10.replace("???",this_beam)+"_tmp3",
+            self.outemaps_12co10.replace("???",this_beam),
+            delin=True,
+            )
         os.system("rm -rf template.image")
 
         xlim      = [0.3,4.0]
@@ -1720,12 +1738,11 @@ class ToolsNcol():
         yimage    = self.outmaps_13co_ncol.replace("???",this_beam)
         yerrimage = self.outemaps_13co_ncol.replace("???",this_beam)
 
-        # cmap = distance
+        # plot 12co10 vs NH2
         cblabel   = "Distance (kpc)"
         cimage    = None
         cerrimage = None
         outpng    = self.outpng_12co_vs_aco
-
         self._plot_scatter4(
             ximage,
             xerrimage,
@@ -1749,6 +1766,7 @@ class ToolsNcol():
         os.system("rm -rf " + self.mom0_12co10.replace("???",this_beam) + ".regrid")
         os.system("rm -rf " + self.emom0_12co10.replace("???",this_beam) + ".regrid")
 
+        # aco map
         self._showcase_one(
             self.outmaps_aco,
             self.outmaps_12co10.replace("???",this_beam),
