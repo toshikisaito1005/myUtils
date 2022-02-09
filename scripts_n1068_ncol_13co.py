@@ -168,6 +168,7 @@ class ToolsNcol():
         self.outemaps_13co_ncol   = self.dir_ready + self._read_key("outemaps_13co_ncol")
 
         self.outmaps_aco          = self.dir_ready + self._read_key("outmaps_aco")
+        self.outmaps_eaco         = self.dir_ready + self._read_key("outmaps_eaco")
 
         self.outmodelcube_13co10  = self.dir_ready + self._read_key("outmodelcube_13co10")
         self.outmodelcube_13co21  = self.dir_ready + self._read_key("outmodelcube_13co21")
@@ -1764,6 +1765,7 @@ class ToolsNcol():
             factor,
             cmap="rainbow_r",
             outfits=self.outmaps_aco,
+            outefits=self.outmaps_eaco,
             templatefits=self.outcubes_13co10.replace("???",this_beam),
             )
 
@@ -3754,6 +3756,7 @@ class ToolsNcol():
         factor,
         cmap="rainbow_r",
         outfits=None,
+        outefits=None,
         templatefits=None,
         ):
         """
@@ -3875,6 +3878,16 @@ class ToolsNcol():
             self._fits_creation(
                 input_array=outarray,
                 output_map=outfits,
+                coords_template=templatefits,
+                bunit="K",
+                )
+
+            outarray = np.sqrt( (np.log(10)/data_13co21*10**data_13co10)*err_13co10**2 + (np.log(10)/data_13co21**2)*err_13co21**2 ) * factor / 2e20 * 4.3
+            outarray = np.rot90(np.fliplr( np.where((data_13co10>abs(err_13co10)*self.snr)&(data_13co21>abs(err_13co21)*self.snr),outarray,np.nan) ))
+
+            self._fits_creation(
+                input_array=outarray,
+                output_map=outefits,
                 coords_template=templatefits,
                 bunit="K",
                 )
