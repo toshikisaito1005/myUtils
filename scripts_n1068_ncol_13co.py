@@ -1731,8 +1731,8 @@ class ToolsNcol():
             )
         os.system("rm -rf template.image")
 
-        xlim      = [0.3,4.0]
-        ylim      = [20.7,23.1]
+        xlim      = [0.6,3.4]
+        ylim      = [20.7,23.2]
         factor    = 1.0 / self.abundance_13co_h2
         title     = "log$_{\mathrm{10}}$ $I_{\mathrm{^{12}CO(1-0)}}$ vs. log$_{\mathrm{10}}$ $N_{\mathrm{H_2}}$ at " + this_beam.replace("pc"," pc")
         xlabel    = "log$_{\mathrm{10}}$ $I_{\mathrm{^{12}CO(1-0)}}$ (K km s$^{-1}$)"
