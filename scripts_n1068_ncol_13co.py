@@ -1864,11 +1864,13 @@ class ToolsNcol():
         y1    =(log_nh2-log_co) - np.log10(2e20) + np.log10(4.3)
         xerr1 = elog_co
         yerr1 = np.sqrt(elog_co**2+elog_nh2**2)
+        c1    = dist
         # cut
         x    = x1[y1<0.5]
         y    = y1[y1<0.5]
         xerr = xerr1[y1<0.5]
         yerr = yerr1[y1<0.5]
+        c    = c1[y1<0.5]
         # binning
         n,_   = np.histogram(x, bins=10, range=[np.min(x),np.max(x)])
         sy,_  = np.histogram(x, bins=10, range=[np.min(x),np.max(x)], weights=y)
@@ -1887,7 +1889,7 @@ class ToolsNcol():
         myax_set(
             ax1,
             "both",
-            [0.0,1.3],
+            [1.3,3.4],
             [-1.3,0.8],
             "log$_{\mathrm{10}}$ $I_{\mathrm{^{12}CO(1-0)}}$ vs. log$_{\mathrm{10}}$ $\\alpha_{\mathrm{CO}}$ at " + this_beam.replace("pc"," pc"),
             "log$_{\mathrm{10}}$ $I_{\mathrm{^{12}CO(1-0)}}$ (K km s$^{-1}$)",
@@ -1895,15 +1897,15 @@ class ToolsNcol():
             adjust=ad,
             )
 
-        ax1.scatter(x, y, c="tomato", lw=0, s=40, zorder=1e9)
+        ax1.scatter(x, y, c=c, cmap="rainbow_r", lw=0, s=40, zorder=1e9)
         ax1.errorbar(x, y, yerr=yerr, lw=1, capsize=0, color="grey", linestyle="None")
 
-        ax1.plot(binx1, biny1, color="red", lw=2.0, zorder=1e11)
+        ax1.plot(binx1, biny1, color="black", lw=2.0, zorder=1e11)
         for i in range(len(binx1)):
             this_binx1    = binx1[i]
             this_biny1    = biny1[i]
             this_binyerr1 = binyerr1[i]
-            ax1.plot([this_binx1,this_binx1],[this_biny1-this_binyerr1,this_biny1+this_binyerr1], color="red", lw=2.0, zorder=1e11)
+            ax1.plot([this_binx1,this_binx1],[this_biny1-this_binyerr1,this_biny1+this_binyerr1], color="black", lw=2.0, zorder=1e11)
 
         # save
         os.system("rm -rf " + self.outpng_12co_vs_aco)
