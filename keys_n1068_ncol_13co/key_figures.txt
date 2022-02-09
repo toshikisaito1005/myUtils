@@ -79,6 +79,7 @@ outemaps_13co_ncol        ,,,n1068_e13co_log_ncol_???.fits
 #
 outmaps_aco               ,,,n1068_aco_???.fits
 outemaps_aco              ,,,n1068_eaco_???.fits
+outmaps_vla               ,,,n1068_vla_???.fits
 #
 outmodelcube_13co10       ,,,model_13co10_cube.fits
 outmodelcube_13co21       ,,,model_13co21_cube.fits

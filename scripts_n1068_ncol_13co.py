@@ -171,6 +171,7 @@ class ToolsNcol():
 
         self.outmaps_aco          = self.dir_ready + self._read_key("outmaps_aco")
         self.outemaps_aco         = self.dir_ready + self._read_key("outemaps_aco")
+        self.outmaps_vla          = self.dir_ready + self._read_key("outmaps_vla")
 
         self.outmodelcube_13co10  = self.dir_ready + self._read_key("outmodelcube_13co10")
         self.outmodelcube_13co21  = self.dir_ready + self._read_key("outmodelcube_13co21")
@@ -1702,7 +1703,6 @@ class ToolsNcol():
                 axis="column",
                 )
 
-
     ############
     # plot_jet #
     ############
@@ -1717,7 +1717,12 @@ class ToolsNcol():
         taskname = self.modname + sys._getframe().f_code.co_name
         check_first(self.outmaps_13co_trot.replace("???",this_beam),taskname)
 
-        # self.vla
+        #
+        template = "template.image"
+        run_importfits(self.outmaps_13co_trot.replace("???",this_beam),template)
+        run_roundsmooth(self.vla,self.vla+"_tmp1",150/72.)
+        run_imregrid(self.vla+"_tmp1",template,self.vla+"_tmp2",delin=True)
+        run_exportfits(self.vla+"_tmp2",self.outmaps_vla,delin=True)
 
     ############
     # plot_aco #
