@@ -1919,7 +1919,7 @@ class ToolsNcol():
         ########
         fig = plt.figure(figsize=(13,10))
         gs  = gridspec.GridSpec(nrows=10, ncols=10)
-        ax1 = plt.subplot(gs[0:10,0:5])
+        ax1 = plt.subplot(gs[0:10,0:10])
         ad  = [0.215,0.83,0.10,0.90]
         myax_set(ax1, "y", [-0.5,8.5], tlim, title, None, ylabel, adjust=ad)
 
@@ -1944,7 +1944,7 @@ class ToolsNcol():
         # plot sbr data
         n = 7
         cut = np.where(R_as>=self.r_sbr_as)
-        #self._ax_violin(ax1,T[cut],n,t_grid,"deepskyblue")
+        self._ax_violin(ax1,T[cut],n,t_grid,"deepskyblue")
 
         # save
         os.system("rm -rf " + self.outpng_12co_vs_aco)
