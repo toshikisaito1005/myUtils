@@ -391,8 +391,8 @@ class ToolsNcol():
         do_final_60pc_rot     = False,
         do_final_scatter_int  = False,
         do_final_scatter_rot  = False,
-        do_final_radial       = False,
-        do_final_aco          = True,
+        do_final_radial       = True,
+        do_final_aco          = False,
         # appendix
         do_final_60pc_err     = False,
         do_final_sim_input    = False,
