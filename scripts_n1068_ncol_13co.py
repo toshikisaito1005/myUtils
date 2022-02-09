@@ -1944,7 +1944,7 @@ class ToolsNcol():
         # plot sbr data
         n = 7
         cut = np.where(R_as>=self.r_sbr_as)
-        self._ax_violin(ax1,T[cut],n,t_grid,"deepskyblue")
+        #self._ax_violin(ax1,T[cut],n,t_grid,"deepskyblue")
 
         # save
         os.system("rm -rf " + self.outpng_12co_vs_aco)
