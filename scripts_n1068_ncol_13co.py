@@ -3840,8 +3840,8 @@ class ToolsNcol():
 
         # text
         ax1.text(
-            1.5,21.8, "$X_{\mathrm{CO}}$=2.0$\times$10$^{20}$ cm$^{-2}$ ($\\alpha_{\mathrm{CO}}$=4.3)",
-            color="deepskyblue", weight="bold", fontsize=26, ha="left", va="bottom", rotation=40)
+            1.5,21.8, "$X_{\mathrm{CO}}$=2.0$\\times$10$^{20}$ cm$^{-2}$",
+            fontsize=22, ha="left", va="bottom", rotation=40)
 
         # save
         os.system("rm -rf " + outpng)
