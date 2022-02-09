@@ -132,14 +132,14 @@ outpng_aco_map            ,,,fig_map_aco.png
 outpng_radial_aco         ,,,fig_radial_aco.png
 outpng_12co_vs_aco        ,,,fig_scatter_12co_vs_aco.png
 # box for imagemajick
-box_map                   ,,,2225x1870+335+80
-box_map_nox               ,,,2225x1730+335+80
-box_map_noy               ,,,2225x1870+550+80
-box_map_noxy              ,,,2225x1730+550+80
-box_map_noc               ,,,1830x1870+335+80
-box_map_noxc              ,,,1830x1730+335+80
-box_map_noyc              ,,,1630x1870+550+80
-box_map_noxyc             ,,,1630x1730+550+80
+box_map                   ,,,2235x1870+325+80
+box_map_nox               ,,,2235x1730+325+80
+box_map_noy               ,,,2235x1870+540+80
+box_map_noxy              ,,,2235x1730+540+80
+box_map_noc               ,,,1840x1870+325+80
+box_map_noxc              ,,,1840x1730+325+80
+box_map_noyc              ,,,1640x1870+540+80
+box_map_noxyc             ,,,1640x1730+540+80
 box_map2                  ,,,3155x1870+135+80
 #######
 # end #
