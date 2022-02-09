@@ -3838,6 +3838,11 @@ class ToolsNcol():
         ax1.plot(xlim, [xlim[0]+np.log10(2e20),xlim[1]+np.log10(2e20)], "--", color="black", lw=1)
         ax1.plot(xlim, [xlim[0]+np.log10(2e20)-1.0,xlim[1]+np.log10(2e20)-1.0], "--", color="black", lw=1)
 
+        # text
+        ax1.text(
+            1.5,21.8, "$X_{\mathrm{CO}}$=2.0$\times$10$^{20}$ cm$^{-2}$ ($\\alpha_{\mathrm{CO}}$=4.3)",
+            color="deepskyblue", weight="bold", fontsize=26, ha="left", va="bottom", rotation=40)
+
         # save
         os.system("rm -rf " + outpng)
         plt.savefig(outpng, dpi=self.fig_dpi)
