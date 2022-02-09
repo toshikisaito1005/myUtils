@@ -1789,9 +1789,9 @@ class ToolsNcol():
         y1    = (log_nh2-log_co) - np.log10(2e20) + np.log10(4.3)
         yerr1 = np.sqrt(elog_co**2+elog_nh2**2)
         # cut
-        x    = x1[y<0.5]
-        y    = y[y<0.5]
-        yerr = yerr[y<0.5]
+        x    = x1[y1<0.5]
+        y    = y[y1<0.5]
+        yerr = yerr[y1<0.5]
         # plot
         fig = plt.figure(figsize=(13,10))
         gs  = gridspec.GridSpec(nrows=10, ncols=10)
