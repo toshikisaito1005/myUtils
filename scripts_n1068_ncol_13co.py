@@ -1864,7 +1864,7 @@ class ToolsNcol():
         y1    =(log_nh2-log_co) - np.log10(2e20) + np.log10(4.3)
         xerr1 = elog_co
         yerr1 = np.sqrt(elog_co**2+elog_nh2**2)
-        c1    = dist
+        c1    = dist * 1000 / self.scale_pc
         # cut
         x    = x1[y1<0.5]
         y    = y1[y1<0.5]
