@@ -259,9 +259,10 @@ class ToolsNcol():
         self.outpng_ncol_vs_int        = self.dir_products + self._read_key("outpng_ncol_vs_int")
         self.outpng_radial             = self.dir_products + self._read_key("outpng_radial")
         self.outpng_violin             = self.dir_products + self._read_key("outpng_violin")
-        self.outpng_12co_vs_aco        = self.dir_products + self._read_key("outpng_12co_vs_aco")
+        self.outpng_12co_vs_nh2        = self.dir_products + self._read_key("outpng_12co_vs_nh2")
         self.outpng_aco_map            = self.dir_products + self._read_key("outpng_aco_map")
         self.outpng_radial_aco         = self.dir_products + self._read_key("outpng_radial_aco")
+        self.outpng_12co_vs_aco        = self.dir_products + self._read_key("outpng_12co_vs_aco")
 
         # finals
         self.final_60pc_obs      = self.dir_final + self._read_key("final_60pc_obs")
@@ -543,23 +544,28 @@ class ToolsNcol():
             print("#######################")
 
             combine_two_png(
-                self.outpng_12co_vs_aco,
+                self.outpng_12co_vs_nh2,
                 self.outpng_aco_map,
                 self.final_aco+"_tmp1",
                 self.box_map_noc,
                 self.box_map,
                 )
-
-            # self.outpng_radial_aco
+            combine_two_png(
+                self.outpng_radial_aco,
+                self.outpng_12co_vs_aco,
+                self.final_aco+"_tmp2",
+                self.box_map_noc,
+                self.box_map_noc,
+                )
             combine_two_png(
                 self.final_aco+"_tmp1",
-                self.outpng_radial_aco,
+                self.final_aco+"_tmp2",
                 self.final_aco,
                 "1000000x1000000+0+0",
-                self.box_map_noc,
+                "1000000x1000000+0+0",
                 axis="column",
+                delin=True,
                 )
-            os.system("rm -rf " + self.final_aco+"_tmp1")
 
         ############
         # appendix #
@@ -1703,7 +1709,9 @@ class ToolsNcol():
         taskname = self.modname + sys._getframe().f_code.co_name
         check_first(self.outmaps_13co_ncol.replace("???",this_beam),taskname)
 
-        #
+        ###########
+        # prepare #
+        ###########
         template = "template.image"
         run_importfits(self.outmaps_13co_ncol.replace("???",this_beam),template)
         run_imregrid(
@@ -1744,6 +1752,9 @@ class ToolsNcol():
             )
         os.system("rm -rf template.image")
 
+        ######################
+        # plot 12co10 vs NH2 #
+        ######################
         xlim      = [1.3,3.4]
         ylim      = [20.7,23.2]
         factor    = 1.0 / self.abundance_13co_h2
@@ -1755,11 +1766,11 @@ class ToolsNcol():
         yimage    = self.outmaps_13co_ncol.replace("???",this_beam)
         yerrimage = self.outemaps_13co_ncol.replace("???",this_beam)
 
-        # plot 12co10 vs NH2
+        # plot
         cblabel   = "Distance (kpc)"
         cimage    = None
         cerrimage = None
-        outpng    = self.outpng_12co_vs_aco
+        outpng    = self.outpng_12co_vs_nh2
         log_co,elog_co,log_nh2,elog_nh2,dist = self._plot_scatter4(
             ximage,
             xerrimage,
@@ -1784,7 +1795,9 @@ class ToolsNcol():
         os.system("rm -rf " + self.mom0_12co10.replace("???",this_beam) + ".regrid")
         os.system("rm -rf " + self.emom0_12co10.replace("???",this_beam) + ".regrid")
 
-        # aco map
+        ################
+        # plot aco map #
+        ################
         self._showcase_one(
             self.outmaps_aco.replace("???",this_beam),
             self.outmaps_12co10.replace("???",this_beam),
@@ -1794,8 +1807,9 @@ class ToolsNcol():
             clim=[0.1,1.3],
             )
 
-        # radial
-        # log_co,elog_co,log_nh2,elog_nh2,dist
+        ###################
+        # plot radial aco #
+        ###################
         x1    = dist
         y1    = (log_nh2-log_co) - np.log10(2e20) + np.log10(4.3)
         yerr1 = np.sqrt(elog_co**2+elog_nh2**2)
@@ -1842,6 +1856,58 @@ class ToolsNcol():
         # save
         os.system("rm -rf " + self.outpng_radial_aco)
         plt.savefig(self.outpng_radial_aco, dpi=self.fig_dpi)
+
+        #################
+        # 12co10 vs aco #
+        #################
+        x1    = log_co
+        y1    =(log_nh2-log_co) - np.log10(2e20) + np.log10(4.3)
+        xerr1 = elog_co
+        yerr1 = np.sqrt(elog_co**2+elog_nh2**2)
+        # cut
+        x    = x1[y1<0.5]
+        y    = y1[y1<0.5]
+        xerr = xerr1[y1<0.5]
+        yerr = yerr1[y1<0.5]
+        # binning
+        n,_   = np.histogram(x, bins=10, range=[np.min(x),np.max(x)])
+        sy,_  = np.histogram(x, bins=10, range=[np.min(x),np.max(x)], weights=y)
+        sy2,_ = np.histogram(x, bins=10, range=[np.min(x),np.max(x)], weights=y*y)
+        mean  = sy / n
+        std   = np.sqrt(sy2/n - mean*mean)
+        binx1 = (_[1:]+_[:-1])/2
+        biny1 = mean
+        binyerr1 = std
+
+        # plot
+        fig = plt.figure(figsize=(13,10))
+        gs  = gridspec.GridSpec(nrows=10, ncols=10)
+        ax1 = plt.subplot(gs[0:10,0:10])
+        ad  = [0.215,0.83,0.10,0.90]
+        myax_set(
+            ax1,
+            "both",
+            [0.0,1.3],
+            [-1.3,0.8],
+            "log$_{\mathrm{10}}$ $I_{\mathrm{^{12}CO(1-0)}}$ vs. log$_{\mathrm{10}}$ $\\alpha_{\mathrm{CO}}$ at " + this_beam.replace("pc"," pc"),
+            "log$_{\mathrm{10}}$ $I_{\mathrm{^{12}CO(1-0)}}$ (K km s$^{-1}$)",
+            "log$_{\mathrm{10}}$ $\\alpha_{\mathrm{CO}}$ (K km s$^{-1}$ pc$^{2}$)$^{-1}$)",
+            adjust=ad,
+            )
+
+        ax1.scatter(x, y, c="tomato", lw=0, s=40, zorder=1e9)
+        ax1.errorbar(x, y, yerr=yerr, lw=1, capsize=0, color="grey", linestyle="None")
+
+        ax1.plot(binx1, biny1, color="red", lw=2.0, zorder=1e11)
+        for i in range(len(binx1)):
+            this_binx1    = binx1[i]
+            this_biny1    = biny1[i]
+            this_binyerr1 = binyerr1[i]
+            ax1.plot([this_binx1,this_binx1],[this_biny1-this_binyerr1,this_biny1+this_binyerr1], color="red", lw=2.0, zorder=1e11)
+
+        # save
+        os.system("rm -rf " + self.outpng_12co_vs_aco)
+        plt.savefig(self.outpng_12co_vs_aco, dpi=self.fig_dpi)
 
     ###############
     # plot_violin #
