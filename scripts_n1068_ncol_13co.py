@@ -3882,7 +3882,7 @@ class ToolsNcol():
                 bunit="K",
                 )
 
-            outarray = np.sqrt( (np.log(10)/data_13co21*10**data_13co10)**2*err_13co10**2 + (10**data_13co10/data_13co21**2)**2*err_13co21**2 ) * factor / 2e20 * 4.3
+            outarray = np.log(10) * factor / 2e20 * 4.3 * 10**data_13co21 * err_13co21
             outarray = np.rot90(np.fliplr( np.where((data_13co10>abs(err_13co10)*self.snr)&(data_13co21>abs(err_13co21)*self.snr),outarray,np.nan) ))
 
             self._fits_creation(
