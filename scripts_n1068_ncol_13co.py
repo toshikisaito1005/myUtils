@@ -1923,8 +1923,8 @@ class ToolsNcol():
         ad  = [0.215,0.83,0.10,0.90]
         myax_set(ax1, "y", [-0.5,8.5], tlim, title, None, ylabel, adjust=ad)
 
-        ax1.set_yticks([0.4,0.6,0.8,1.0])
-        ax1.set_xticks([1,3,5,7])
+        #ax1.set_yticks([0.4,0.6,0.8,1.0])
+        #ax1.set_xticks([1,3,5,7])
         ax1.set_xticklabels(["All","CND","INT","SBR"], rotation=0, ha="center")
 
         # plot all data
