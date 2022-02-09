@@ -1857,9 +1857,9 @@ class ToolsNcol():
         os.system("rm -rf " + self.outpng_radial_aco)
         plt.savefig(self.outpng_radial_aco, dpi=self.fig_dpi)
 
-        #################
-        # 12co10 vs aco #
-        #################
+        ##############
+        # aco violin #
+        ##############
         x1    = log_co
         y1    =(log_nh2-log_co) - np.log10(2e20) + np.log10(4.3)
         xerr1 = elog_co
@@ -1876,7 +1876,7 @@ class ToolsNcol():
         R_as = c
         T    = y
 
-        tlim    = [-1.3,0.8]
+        tlim    = [-0.8,0.4]
         t_grid  = np.linspace(tlim[0], tlim[1], num=1000)
         ylabel  = "log$_{\mathrm{10}}$ $\\alpha_{\mathrm{CO}}$ (K km s$^{-1}$ pc$^{2}$)$^{-1}$)"
         title   = "$\\alpha_{\mathrm{CO}}$ Distribution"
@@ -1895,17 +1895,17 @@ class ToolsNcol():
 
         # plot all data
         n = 1
-        self._ax_violin(ax1,T,n,t_grid,"grey")#,vmax=1.05)
+        self._ax_violin(ax1,T,n,t_grid,"grey")
 
         # plot cnd data
         n = 3
         cut = np.where(R_as<self.r_cnd_as)
-        self._ax_violin(ax1,T[cut],n,t_grid,"tomato")#,vmin=0.40,vmax=1.2)
+        self._ax_violin(ax1,T[cut],n,t_grid,"tomato",vmin=-0.75,vmax=0.05)
 
         # plot intermediate data
         n = 5
         cut = np.where((R_as>=self.r_cnd_as)&(R_as<self.r_sbr_as))
-        self._ax_violin(ax1,T[cut],n,t_grid,"green")#,vmin=0.40,vmax=0.93)
+        self._ax_violin(ax1,T[cut],n,t_grid,"green")
 
         # plot sbr data
         n = 7
