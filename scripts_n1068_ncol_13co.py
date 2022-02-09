@@ -1724,7 +1724,7 @@ class ToolsNcol():
         run_importfits(self.outmaps_13co_trot.replace("???",this_beam),template)
         run_roundsmooth(self.vla,self.vla+"_tmp1",150/72.)
         run_imregrid(self.vla+"_tmp1",template,self.vla+"_tmp2",delin=True)
-        run_exportfits(self.vla+"_tmp2",self.outmaps_vla.replace("???",this_beam),delin=True)
+        run_exportfits(self.vla+"_tmp2",self.outmaps_vla.replace("???",this_beam),dropdeg=True,dropstokes=True,delin=True)
         os.system("rm -rf template.image")
 
         scalebar = 100. / self.scale_pc
