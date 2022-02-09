@@ -1786,7 +1786,7 @@ class ToolsNcol():
         # radial
         # log_co,elog_co,log_nh2,elog_nh2,dist
         x    = dist
-        y    = (log_nh2-elog_co) - np.log10(2e20) + np.log10(4.3)
+        y    = (log_nh2-log_co) - np.log10(2e20) + np.log10(4.3)
         yerr = np.sqrt(elog_co**2+elog_nh2**2)
         # plot
         fig = plt.figure(figsize=(13,10))
