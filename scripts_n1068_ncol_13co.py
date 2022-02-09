@@ -3825,7 +3825,7 @@ class ToolsNcol():
         myax_set(ax1, "both", xlim, ylim, title, xlabel, ylabel, adjust=ad)
 
         cs = ax1.scatter(x, y, c=c, cmap=cmap, lw=0, s=40, zorder=1e9)
-        ax1.errorbar(x, y, xerr=xerr, xerr=yerr, lw=1, capsize=0, color="grey", linestyle="None")
+        ax1.errorbar(x, y, xerr=xerr, yerr=yerr, lw=1, capsize=0, color="grey", linestyle="None")
 
         # colorbar
         cax = fig.add_axes([0.25, 0.81, 0.33, 0.04])
@@ -4197,7 +4197,7 @@ class ToolsNcol():
         myax_set(ax1, "both", lim, lim, title, xlabel, ylabel, adjust=ad)
 
         cs = ax1.scatter(x, y, c=c, cmap=cmap, lw=0, s=40, zorder=1e9)
-        ax1.errorbar(x, y, xerr=xerr, xerr=yerr, lw=1, capsize=0, color="grey", linestyle="None")
+        ax1.errorbar(x, y, xerr=xerr, yerr=yerr, lw=1, capsize=0, color="grey", linestyle="None")
 
         # colorbar
         cax = fig.add_axes([0.25, 0.81, 0.33, 0.04])
