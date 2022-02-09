@@ -1705,7 +1705,6 @@ class ToolsNcol():
         pix_before = abs(imhead(imagename=self.mom0_12co10.replace("???",this_beam),mode="list")["cdelt1"]) * 3600 * 180 / np.pi
         pix_after  = abs(imhead(imagename=self.outmaps_12co10.replace("???",this_beam),mode="list")["cdelt1"]) * 3600 * 180 / np.pi
         numpix     = pix_after**2/pix_before**2
-        print(numpix)
 
         run_immath_one(
             self.emom0_12co10.replace("???",this_beam),
@@ -3826,7 +3825,7 @@ class ToolsNcol():
         myax_set(ax1, "both", xlim, ylim, title, xlabel, ylabel, adjust=ad)
 
         cs = ax1.scatter(x, y, c=c, cmap=cmap, lw=0, s=40, zorder=1e9)
-        ax1.errorbar(x, y, xerr, yerr, lw=1, capsize=0, color="grey", linestyle="None")
+        ax1.errorbar(x, y, xerr=xerr, xerr=yerr, lw=1, capsize=0, color="grey", linestyle="None")
 
         # colorbar
         cax = fig.add_axes([0.25, 0.81, 0.33, 0.04])
@@ -4198,7 +4197,7 @@ class ToolsNcol():
         myax_set(ax1, "both", lim, lim, title, xlabel, ylabel, adjust=ad)
 
         cs = ax1.scatter(x, y, c=c, cmap=cmap, lw=0, s=40, zorder=1e9)
-        ax1.errorbar(x, y, xerr, yerr, lw=1, capsize=0, color="grey", linestyle="None")
+        ax1.errorbar(x, y, xerr=xerr, xerr=yerr, lw=1, capsize=0, color="grey", linestyle="None")
 
         # colorbar
         cax = fig.add_axes([0.25, 0.81, 0.33, 0.04])
