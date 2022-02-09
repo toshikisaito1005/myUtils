@@ -1774,13 +1774,15 @@ class ToolsNcol():
 
         # aco map
         self._showcase_one(
-            self.outmaps_aco,
+            self.outmaps_aco.replace("???",this_beam),
             self.outmaps_12co10.replace("???",this_beam),
             self.outpng_aco_map,
             "$\\alpha_{\mathrm{CO}}$ map at " + this_beam.replace("pc"," pc"),
             "($M_{\\odot}$ (K km s$^{-1}$ pc$^{2}$)$^{-1}$)",
             clim=[0.1,1.3],
             )
+
+        # radial
 
     ###############
     # plot_violin #
