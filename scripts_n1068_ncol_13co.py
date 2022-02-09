@@ -168,7 +168,7 @@ class ToolsNcol():
         self.outemaps_13co_ncol   = self.dir_ready + self._read_key("outemaps_13co_ncol")
 
         self.outmaps_aco          = self.dir_ready + self._read_key("outmaps_aco")
-        self.outmaps_eaco         = self.dir_ready + self._read_key("outmaps_eaco")
+        self.outemaps_aco         = self.dir_ready + self._read_key("outemaps_aco")
 
         self.outmodelcube_13co10  = self.dir_ready + self._read_key("outmodelcube_13co10")
         self.outmodelcube_13co21  = self.dir_ready + self._read_key("outmodelcube_13co21")
@@ -1765,7 +1765,7 @@ class ToolsNcol():
             factor,
             cmap="rainbow_r",
             outfits=self.outmaps_aco,
-            outefits=self.outmaps_eaco,
+            outefits=self.outemaps_aco,
             templatefits=self.outcubes_13co10.replace("???",this_beam),
             )
 
