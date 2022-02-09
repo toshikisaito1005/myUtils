@@ -1920,7 +1920,7 @@ class ToolsNcol():
         fig = plt.figure(figsize=(13,10))
         gs  = gridspec.GridSpec(nrows=10, ncols=10)
         ax1 = plt.subplot(gs[0:10,0:5])
-        ad  = [0.10,0.90,0.10,0.90]
+        ad  = [0.215,0.83,0.10,0.90]
         myax_set(ax1, "y", [-0.5,8.5], tlim, title, None, ylabel, adjust=ad)
 
         ax1.set_yticks([0.4,0.6,0.8,1.0])
