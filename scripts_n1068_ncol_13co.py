@@ -3840,7 +3840,7 @@ class ToolsNcol():
 
         # text
         ax1.text(1.5,21.9, "$X_{\mathrm{CO}}$=2.0$\\times $10$^{20}$ cm$^{-2}$", fontsize=22, ha="left", va="bottom", rotation=40)
-        ax1.text(1.5,20.8, "$X_{\mathrm{CO}}$=2.0$\\times $10$^{20}$ cm$^{-2}$", fontsize=22, ha="left", va="top", rotation=40)
+        ax1.text(1.5,20.7, "$X_{\mathrm{CO}}$=2.0$\\times $10$^{20}$ cm$^{-2}$", fontsize=22, ha="left", va="bottom", rotation=40)
 
         # save
         os.system("rm -rf " + outpng)
