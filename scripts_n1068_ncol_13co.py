@@ -1785,9 +1785,13 @@ class ToolsNcol():
 
         # radial
         # log_co,elog_co,log_nh2,elog_nh2,dist
-        x    = dist
-        y    = (log_nh2-log_co) - np.log10(2e20) + np.log10(4.3)
-        yerr = np.sqrt(elog_co**2+elog_nh2**2)
+        x1    = dist
+        y1    = (log_nh2-log_co) - np.log10(2e20) + np.log10(4.3)
+        yerr1 = np.sqrt(elog_co**2+elog_nh2**2)
+        # cut
+        x    = x1[y<0.5]
+        y    = y[y<0.5]
+        yerr = yerr[y<0.5]
         # plot
         fig = plt.figure(figsize=(13,10))
         gs  = gridspec.GridSpec(nrows=10, ncols=10)
