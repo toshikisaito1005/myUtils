@@ -220,7 +220,7 @@ def rotation_13co21_13co10(
                 Z = derive_Z_13co(Trot)
 
                 logNmol  = popt2[1] + np.log10(Z)
-                elogNmol = perr2[1] + np.log10(Z)
+                elogNmol = abs(perr2[1]) + np.log10(Z)
 
                 if Trot>eTrot*3.0:
                     # add pixel
@@ -346,7 +346,7 @@ def rotation_13co21_13co10(
 
                 Z = derive_Z_13co(Trot)
 
-                logNmol  = popt2[1] + np.log10(Z)
+                logNmol  = abs(popt2[1]) + np.log10(Z)
 
                 # add pixel
                 map_Trot[this_x,this_y]   = Trot
@@ -424,7 +424,7 @@ def rotation_13co21_13co10(
 
                 Z = derive_Z_13co(Trot)
 
-                logNmol  = popt2[1] + np.log10(Z)
+                logNmol  = abs(popt2[1]) + np.log10(Z)
 
                 # add pixel
                 map_Trot[this_x,this_y]   = Trot
