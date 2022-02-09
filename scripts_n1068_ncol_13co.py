@@ -1873,46 +1873,13 @@ class ToolsNcol():
         c    = c1[y1<0.5]
 
         # prepare
-        #cut  = np.where((y>abs(yerr)*self.snr)&(x>abs(xerr)*self.snr))
-        R_as = x # data_x[cut]
-        T    = y # np.log10(data_y1[cut])
+        R_as = c
+        T    = y
 
         tlim    = [-1.3,0.8]
         t_grid  = np.linspace(tlim[0], tlim[1], num=1000)
         ylabel  = "log$_{\mathrm{10}}$ $\\alpha_{\mathrm{CO}}$ (K km s$^{-1}$ pc$^{2}$)$^{-1}$)"
         title   = "$\\alpha_{\mathrm{CO}}$ Distribution"
-
-        """
-        # plot
-        fig = plt.figure(figsize=(13,10))
-        gs  = gridspec.GridSpec(nrows=10, ncols=10)
-        ax1 = plt.subplot(gs[0:10,0:10])
-        ad  = [0.215,0.83,0.10,0.90]
-        myax_set(
-            ax1,
-            "both",
-            [1.3,3.4],
-            [-1.3,0.8],
-            "log$_{\mathrm{10}}$ $I_{\mathrm{^{12}CO(1-0)}}$ vs. log$_{\mathrm{10}}$ $\\alpha_{\mathrm{CO}}$ at " + this_beam.replace("pc"," pc"),
-            "log$_{\mathrm{10}}$ $I_{\mathrm{^{12}CO(1-0)}}$ (K km s$^{-1}$)",
-            "log$_{\mathrm{10}}$ $\\alpha_{\mathrm{CO}}$ (K km s$^{-1}$ pc$^{2}$)$^{-1}$)",
-            adjust=ad,
-            )
-
-        ax1.scatter(x, y, c=c, cmap="rainbow_r", lw=0, s=40, zorder=1e9)
-        ax1.errorbar(x, y, yerr=yerr, lw=1, capsize=0, color="grey", linestyle="None")
-
-        ax1.plot(binx1, biny1, color="black", lw=2.0, zorder=1e11)
-        for i in range(len(binx1)):
-            this_binx1    = binx1[i]
-            this_biny1    = biny1[i]
-            this_binyerr1 = binyerr1[i]
-            ax1.plot([this_binx1,this_binx1],[this_biny1-this_binyerr1,this_biny1+this_binyerr1], color="black", lw=2.0, zorder=1e11)
-
-        # save
-        os.system("rm -rf " + self.outpng_12co_vs_aco)
-        plt.savefig(self.outpng_12co_vs_aco, dpi=self.fig_dpi)
-        """
 
         ########
         # plot #
