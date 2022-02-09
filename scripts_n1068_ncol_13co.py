@@ -1702,6 +1702,10 @@ class ToolsNcol():
         run_exportfits(self.mom0_12co10.replace("???",this_beam)+".regrid",self.outmaps_12co10.replace("???",this_beam),delin=True)
 
         #
+        pix_before = abs(imhead(imagename=self.mom0_12co10.replace("???",this_beam),mode="list")["cdelt1"]) * 3600 * 180 / np.pi
+        pix_after  = abs(imhead(imagename=self.outmaps_12co10.replace("???",this_beam),mode="list")["cdelt1"]) * 3600 * 180 / np.pi
+        numpix     = pix_after**2/pix_before**2
+
         run_immath_one(
             self.emom0_12co10.replace("???",this_beam),
             self.emom0_12co10.replace("???",this_beam)+"_tmp1",
