@@ -1742,6 +1742,7 @@ class ToolsNcol():
             imsize_as=self.imsize,
             ra_cnt=self.ra_agn_str,
             dec_cnt=self.dec_agn_str,
+            unit_cont1=rms_vla,
             levels_cont1=[-3,3,6,12,24,48],
             width_cont1=[1.0],
             set_title="$T_{\mathrm{rot}}$ + Radio continuum at " + this_beam.replace("pc"," pc"),
