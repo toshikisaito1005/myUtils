@@ -545,10 +545,21 @@ class ToolsNcol():
             combine_two_png(
                 self.outpng_12co_vs_aco,
                 self.outpng_aco_map,
-                self.final_aco,
+                self.final_aco+"_tmp1",
                 self.box_map_noc,
                 self.box_map,
                 )
+
+            # self.outpng_radial_aco
+            combine_two_png(
+                self.final_aco+"_tmp1",
+                self.outpng_radial_aco,
+                self.final_aco,
+                "1000000x1000000+0+0",
+                self.box_map_noc,
+                axis="column",
+                )
+            os.system("rm -rf " + self.final_aco+"_tmp1")
 
         ############
         # appendix #
