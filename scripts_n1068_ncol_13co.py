@@ -1791,7 +1791,7 @@ class ToolsNcol():
         # cut
         x    = x1[y1<0.5]
         y    = y1[y1<0.5]
-        yerr = yerr[y1<0.5]
+        yerr = yerr1[y1<0.5]
         # plot
         fig = plt.figure(figsize=(13,10))
         gs  = gridspec.GridSpec(nrows=10, ncols=10)
