@@ -1947,8 +1947,8 @@ class ToolsNcol():
         #self._ax_violin(ax1,T[cut],n,t_grid,"deepskyblue")
 
         # save
-        os.system("rm -rf " + self.outpng_violin)
-        plt.savefig(self.outpng_violin, dpi=self.fig_dpi)
+        os.system("rm -rf " + self.outpng_12co_vs_aco)
+        plt.savefig(self.outpng_12co_vs_aco, dpi=self.fig_dpi)
 
     ###############
     # plot_violin #
