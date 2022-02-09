@@ -3839,8 +3839,8 @@ class ToolsNcol():
         ax1.plot(xlim, [xlim[0]+np.log10(2e20)-1.0,xlim[1]+np.log10(2e20)-1.0], "--", color="black", lw=1)
 
         # text
-        ax1.text(1.5,21.9, "$X_{\mathrm{CO}}$=2.0$\\times $10$^{20}$ cm$^{-2}$", fontsize=22, ha="left", va="bottom", rotation=40)
-        ax1.text(1.5,20.7, "$X_{\mathrm{CO}}$=2.0$\\times $10$^{20}$ cm$^{-2}$", fontsize=22, ha="left", va="bottom", rotation=40)
+        ax1.text(1.5,21.9, "$X_{\mathrm{CO}}$=2.0$\\times $10$^{20}$ cm$^{-2}$", fontsize=20, ha="left", va="bottom", rotation=40)
+        ax1.text(1.5,20.7, "$X_{\mathrm{CO}}$=2.0$\\times $10$^{20}$ cm$^{-2}$", fontsize=20, ha="left", va="bottom", rotation=40)
 
         # save
         os.system("rm -rf " + outpng)
