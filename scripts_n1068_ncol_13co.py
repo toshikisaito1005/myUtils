@@ -266,6 +266,7 @@ class ToolsNcol():
         self.outpng_aco_map            = self.dir_products + self._read_key("outpng_aco_map")
         self.outpng_radial_aco         = self.dir_products + self._read_key("outpng_radial_aco")
         self.outpng_12co_vs_aco        = self.dir_products + self._read_key("outpng_12co_vs_aco")
+        self.outpng_radio_trot         = self.dir_products + self._read_key("outpng_radio_trot")
 
         # finals
         self.final_60pc_obs      = self.dir_final + self._read_key("final_60pc_obs")
@@ -1713,6 +1714,7 @@ class ToolsNcol():
         """
         """
         this_beam = "150pc"
+        rms_vla   = 0.00122696
 
         taskname = self.modname + sys._getframe().f_code.co_name
         check_first(self.outmaps_13co_trot.replace("???",this_beam),taskname)
@@ -1722,7 +1724,36 @@ class ToolsNcol():
         run_importfits(self.outmaps_13co_trot.replace("???",this_beam),template)
         run_roundsmooth(self.vla,self.vla+"_tmp1",150/72.)
         run_imregrid(self.vla+"_tmp1",template,self.vla+"_tmp2",delin=True)
-        run_exportfits(self.vla+"_tmp2",self.outmaps_vla,delin=True)
+        run_exportfits(self.vla+"_tmp2",self.outmaps_vla.replace("???",this_beam),delin=True)
+        os.system("rm -rf template.image")
+
+        scalebar = 100. / self.scale_pc
+        label_scalebar = "100 pc"
+
+        levels_cont1 = [-3,3,6,12,24,48]
+        width_cont1  = [1.0]
+        set_bg_color = "white"
+
+        # plot
+        myfig_fits2png(
+            imcolor=self.outmaps_13co_trot.replace("???",this_beam),
+            outfile=self.outpng_radio_trot,
+            imcontour1=self.outmaps_vla.replace("???",this_beam),
+            imsize_as=self.imsize,
+            ra_cnt=self.ra_agn_str,
+            dec_cnt=self.dec_agn_str,
+            levels_cont1=[-3,3,6,12,24,48],
+            width_cont1=[1.0],
+            set_title="$T_{\mathrm{rot}}$ + Radio continuum at " + this_beam.replace("pc"," pc"),
+            colorlog=False,
+            scalebar=scalebar,
+            label_scalebar=label_scalebar,
+            set_cbar=True,
+            label_cbar="(K)",
+            clim=clim,
+            set_bg_color=set_bg_color,
+            numann="13co",
+            )
 
     ############
     # plot_aco #
