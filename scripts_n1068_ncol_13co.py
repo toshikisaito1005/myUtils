@@ -1714,7 +1714,7 @@ class ToolsNcol():
         """
         """
         this_beam = "150pc"
-        rms_vla   = 0.00122696
+        rms_vla   = 0.001473485
 
         taskname = self.modname + sys._getframe().f_code.co_name
         check_first(self.outmaps_13co_trot.replace("???",this_beam),taskname)
@@ -1730,7 +1730,7 @@ class ToolsNcol():
         scalebar = 100. / self.scale_pc
         label_scalebar = "100 pc"
 
-        levels_cont1 = [-3,3,6,12,24,48,96]
+        levels_cont1 = [-2,2,4,8,16,32,64,96]
         width_cont1  = [1.0]
         set_bg_color = "white"
 
