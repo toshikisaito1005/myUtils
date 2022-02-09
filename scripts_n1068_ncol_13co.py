@@ -131,6 +131,8 @@ class ToolsNcol():
 
         self.mom0_12co10  = self.dir_raw + self._read_key("mom0_12co10")
         self.emom0_12co10 = self.dir_raw + self._read_key("emom0_12co10")
+
+        self.vla          = self.dir_other + self._read_key("vla")
         
         """
         self.cube_hcn10   = self.dir_raw + self._read_key("cube_hcn10")
@@ -322,6 +324,7 @@ class ToolsNcol():
         plot_scatter     = False, # after do_fitting
         plot_violin      = False, # after do_fitting
         plot_aco         = False, # after do_fitting
+        plot_jet         = False,
         do_imagemagick   = False,
         immagick_all     = False,
         # supplement
@@ -340,6 +343,7 @@ class ToolsNcol():
             plot_scatter     = True
             plot_violin      = True
             plot_aco         = True
+            plot_jet         = True
             do_imagemagick   = True
             immagick_all     = True
 
@@ -375,6 +379,9 @@ class ToolsNcol():
         if plot_aco==True:
             self.plot_aco()
 
+        if plot_jet==True:
+            self.plot_jet()
+
         if do_imagemagick==True:
             self.immagick_figures(do_all=immagick_all,delin=False)
 
@@ -391,7 +398,7 @@ class ToolsNcol():
         do_final_60pc_rot     = False,
         do_final_scatter_int  = False,
         do_final_scatter_rot  = False,
-        do_final_radial       = True,
+        do_final_radial       = False,
         do_final_aco          = False,
         # appendix
         do_final_60pc_err     = False,
@@ -1695,6 +1702,23 @@ class ToolsNcol():
                 axis="column",
                 )
 
+
+    ############
+    # plot_jet #
+    ############
+
+    def plot_jet(
+        self,
+        ):
+        """
+        """
+        this_beam = "150pc"
+
+        taskname = self.modname + sys._getframe().f_code.co_name
+        check_first(self.outmaps_13co_trot.replace("???",this_beam),taskname)
+
+        # self.vla
+
     ############
     # plot_aco #
     ############
@@ -1881,9 +1905,7 @@ class ToolsNcol():
         ylabel  = "log$_{\mathrm{10}}$ $\\alpha_{\mathrm{CO}}$ (K km s$^{-1}$ pc$^{2}$)$^{-1}$)"
         title   = "$\\alpha_{\mathrm{CO}}$ Distribution"
 
-        ########
-        # plot #
-        ########
+        # plot
         fig = plt.figure(figsize=(13,10))
         gs  = gridspec.GridSpec(nrows=10, ncols=10)
         ax1 = plt.subplot(gs[0:10,0:10])
