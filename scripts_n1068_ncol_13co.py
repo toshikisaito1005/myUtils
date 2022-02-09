@@ -1751,7 +1751,7 @@ class ToolsNcol():
             label_scalebar=label_scalebar,
             set_cbar=True,
             label_cbar="(K)",
-            clim=[2.73,8],
+            clim=[2.73,6],
             set_bg_color=set_bg_color,
             numann="13co",
             )
