@@ -1730,7 +1730,7 @@ class ToolsNcol():
         scalebar = 100. / self.scale_pc
         label_scalebar = "100 pc"
 
-        levels_cont1 = [-3,3,6,12,24,48]
+        levels_cont1 = [-3,3,6,12,24,48,96]
         width_cont1  = [1.0]
         set_bg_color = "white"
 

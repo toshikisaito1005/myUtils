@@ -48,7 +48,7 @@ cube_13co21               ,,,ngc1068_b6_12m_13co21_???.fits
 ecube_13co21              ,,,ngc1068_b6_12m_13co21_???_noise.fits
 mom0_12co10               ,,,ngc1068_b3_12m_co10_???_strict_mom0.fits
 emom0_12co10              ,,,ngc1068_b3_12m_co10_???_strict_emom0.fits
-vla                       ,,,8.49I0.23_AC0467_1999SEP08_1_61.8U28.0S.imfits
+vla                       ,,,14.9I0.41_AL0249_1991DEC05_1_157.U1.23M.imfits
 
 ###############
 # output maps #
