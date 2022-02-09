@@ -1792,24 +1792,41 @@ class ToolsNcol():
         x    = x1[y1<0.5]
         y    = y1[y1<0.5]
         yerr = yerr1[y1<0.5]
+        # binning
+        n,_   = np.histogram(x, bins=10, range=[np.min(x),np.max(x)])
+        sy,_  = np.histogram(x, bins=10, range=[np.min(x),np.max(x)], weights=y)
+        sy2,_ = np.histogram(x, bins=10, range=[np.min(x),np.max(x)], weights=y*y)
+        mean  = sy / n
+        std   = np.sqrt(sy2/n - mean*mean)
+        binx1 = (_[1:]+_[:-1])/2
+        biny1 = mean
+        binyerr1 = std
+
         # plot
         fig = plt.figure(figsize=(13,10))
         gs  = gridspec.GridSpec(nrows=10, ncols=10)
         ax1 = plt.subplot(gs[0:10,0:10])
         ad  = [0.215,0.83,0.10,0.90]
-        myax_set(ax1, "both", [0.0,1.3], None, None, "Distance (kpc)", "log$_{\mathrm{10}}$ $\\alpha_{\mathrm{CO}}$", adjust=ad)
+        myax_set(
+            ax1,
+            "both",
+            [0.0,1.3],
+            [-1.3,0.8],
+            "radial $\\alpha_{\mathrm{CO}}$ at " + this_beam.replace("pc"," pc"),
+            "Distance (kpc)",
+            "log$_{\mathrm{10}}$ $\\alpha_{\mathrm{CO}}$ (K km s$^{-1}$ pc$^{2}$)$^{-1}$)",
+            adjust=ad,
+            )
 
-        cs = ax1.scatter(x, y, c="black", lw=0, s=40, zorder=1e9)
+        ax1.scatter(x, y, c="tomato", lw=0, s=40, zorder=1e9)
         ax1.errorbar(x, y, yerr=yerr, lw=1, capsize=0, color="grey", linestyle="None")
 
-        """
-        # colorbar
-        cax = fig.add_axes([0.25, 0.81, 0.33, 0.04])
-        cbar = plt.colorbar(cs, cax=cax, orientation="horizontal")
-        cbar.set_label(cblabel)
-        if cimage==None:
-            cbar.set_ticks([0,0.3,0.6,0.9,1.2])
-        """
+        ax1.plot(binx1, biny1, color="red", lw=2.0, zorder=1e11)
+        for i in range(len(binx1)):
+            this_binx1    = binx1[i]
+            this_biny1    = biny1[i]
+            this_binyerr1 = binyerr1[i]
+            ax1.plot([this_binx1,this_binx1],[this_biny1-this_binyerr1,this_biny1+this_binyerr1], color="red", lw=2.0, zorder=1e11)
 
         # save
         os.system("rm -rf " + self.outpng_radial_aco)
