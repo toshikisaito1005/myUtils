@@ -275,6 +275,7 @@ class ToolsNcol():
         self.final_scatter_rot   = self.dir_final + self._read_key("final_scatter_rot")
         self.final_radial        = self.dir_final + self._read_key("final_radial")
         self.final_aco           = self.dir_final + self._read_key("final_aco")
+        self.final_jet           = self.dir_final + self._read_key("final_jet")
         # appendix
         self.final_60pc_err      = self.dir_final + self._read_key("final_60pc_err")
         self.final_sim_input     = self.dir_final + self._read_key("final_sim_input")
@@ -402,6 +403,7 @@ class ToolsNcol():
         do_final_scatter_rot  = False,
         do_final_radial       = False,
         do_final_aco          = False,
+        do_final_jet          = True,
         # appendix
         do_final_60pc_err     = False,
         do_final_sim_input    = False,
@@ -437,6 +439,7 @@ class ToolsNcol():
             do_final_scatter_rot  = True
             do_final_radial       = True
             do_final_aco          = True
+            do_final_jet          = True
             # appendix
             do_final_60pc_err     = True
             do_final_sim_input    = True
@@ -574,6 +577,17 @@ class ToolsNcol():
                 "1000000x1000000+0+0",
                 axis="column",
                 delin=True,
+                )
+
+        if do_final_jet==True:
+            print("#######################")
+            print("# create do_final_jet #")
+            print("#######################")
+
+            immagick_crop(
+                self.outpng_radio_trot,
+                self.final_jet,
+                self.box_map,
                 )
 
         ############
