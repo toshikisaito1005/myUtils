@@ -1793,7 +1793,7 @@ class ToolsNcol():
         myax_set(ax1, "both", [0.0,1.3], None, None, "Distance (kpc)", "log$_{\mathrm{10}}$ $\\alpha_{\mathrm{CO}}$", adjust=ad)
 
         cs = ax1.scatter(dist, log_nh2-elog_co, c="black", lw=0, s=40, zorder=1e9)
-        ax1.errorbar(x, y, xerr=xerr, yerr=yerr, lw=1, capsize=0, color="grey", linestyle="None")
+        ax1.errorbar(dist, log_nh2-elog_co, yerr=np.swrt(elog_co**2+elog_nh2**2), lw=1, capsize=0, color="grey", linestyle="None")
 
         """
         # colorbar
