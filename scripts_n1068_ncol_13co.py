@@ -1785,6 +1785,9 @@ class ToolsNcol():
 
         # radial
         # log_co,elog_co,log_nh2,elog_nh2,dist
+        x    = dist
+        y    = (log_nh2-elog_co) / (2e20) * 4.3
+        yerr = np.sqrt(elog_co**2+elog_nh2**2) / (2e20) * 4.3
         # plot
         fig = plt.figure(figsize=(13,10))
         gs  = gridspec.GridSpec(nrows=10, ncols=10)
@@ -1792,8 +1795,8 @@ class ToolsNcol():
         ad  = [0.215,0.83,0.10,0.90]
         myax_set(ax1, "both", [0.0,1.3], None, None, "Distance (kpc)", "log$_{\mathrm{10}}$ $\\alpha_{\mathrm{CO}}$", adjust=ad)
 
-        cs = ax1.scatter(dist, log_nh2-elog_co, c="black", lw=0, s=40, zorder=1e9)
-        ax1.errorbar(dist, log_nh2-elog_co, yerr=np.sqrt(elog_co**2+elog_nh2**2), lw=1, capsize=0, color="grey", linestyle="None")
+        cs = ax1.scatter(x, y, c="black", lw=0, s=40, zorder=1e9)
+        ax1.errorbar(x, y, yerr=yerr, lw=1, capsize=0, color="grey", linestyle="None")
 
         """
         # colorbar
