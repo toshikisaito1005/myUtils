@@ -1871,16 +1871,18 @@ class ToolsNcol():
         xerr = xerr1[y1<0.5]
         yerr = yerr1[y1<0.5]
         c    = c1[y1<0.5]
-        # binning
-        n,_   = np.histogram(x, bins=10, range=[np.min(x),np.max(x)])
-        sy,_  = np.histogram(x, bins=10, range=[np.min(x),np.max(x)], weights=y)
-        sy2,_ = np.histogram(x, bins=10, range=[np.min(x),np.max(x)], weights=y*y)
-        mean  = sy / n
-        std   = np.sqrt(sy2/n - mean*mean)
-        binx1 = (_[1:]+_[:-1])/2
-        biny1 = mean
-        binyerr1 = std
 
+        # prepare
+        #cut  = np.where((y>abs(yerr)*self.snr)&(x>abs(xerr)*self.snr))
+        R_as = x # data_x[cut]
+        T    = y # np.log10(data_y1[cut])
+
+        tlim    = [-1.3,0.8]
+        t_grid  = np.linspace(tlim[0], tlim[1], num=1000)
+        ylabel  = "log$_{\mathrm{10}}$ $\\alpha_{\mathrm{CO}}$ (K km s$^{-1}$ pc$^{2}$)$^{-1}$)"
+        title   = "$\\alpha_{\mathrm{CO}}$ Distribution"
+
+        """
         # plot
         fig = plt.figure(figsize=(13,10))
         gs  = gridspec.GridSpec(nrows=10, ncols=10)
@@ -1910,6 +1912,43 @@ class ToolsNcol():
         # save
         os.system("rm -rf " + self.outpng_12co_vs_aco)
         plt.savefig(self.outpng_12co_vs_aco, dpi=self.fig_dpi)
+        """
+
+        ########
+        # plot #
+        ########
+        fig = plt.figure(figsize=(13,10))
+        gs  = gridspec.GridSpec(nrows=10, ncols=10)
+        ax1 = plt.subplot(gs[0:10,0:5])
+        ad  = [0.10,0.90,0.10,0.90]
+        myax_set(ax1, "y", [-0.5,8.5], tlim, title, None, ylabel, adjust=ad)
+
+        ax1.set_yticks([0.4,0.6,0.8,1.0])
+        ax1.set_xticks([1,3,5,7])
+        ax1.set_xticklabels(["All","CND","INT","SBR"], rotation=0, ha="center")
+
+        # plot all data
+        n = 1
+        self._ax_violin(ax1,T,n,t_grid,"grey",vmax=1.05)
+
+        # plot cnd data
+        n = 3
+        cut = np.where(R_as<self.r_cnd_as)
+        self._ax_violin(ax1,T[cut],n,t_grid,"tomato",vmin=0.40,vmax=1.2)
+
+        # plot intermediate data
+        n = 5
+        cut = np.where((R_as>=self.r_cnd_as)&(R_as<self.r_sbr_as))
+        self._ax_violin(ax1,T[cut],n,t_grid,"green",vmin=0.40,vmax=0.93)
+
+        # plot sbr data
+        n = 7
+        cut = np.where(R_as>=self.r_sbr_as)
+        self._ax_violin(ax1,T[cut],n,t_grid,"deepskyblue")
+
+        # save
+        os.system("rm -rf " + self.outpng_violin)
+        plt.savefig(self.outpng_violin, dpi=self.fig_dpi)
 
     ###############
     # plot_violin #
