@@ -129,6 +129,7 @@ outpng_radial             ,,,fig_radial_rot.png
 outpng_violin             ,,,fig_violin_rot.png
 outpng_12co_vs_aco        ,,,fig_scatter_12co_vs_aco.png
 outpng_aco_map            ,,,fig_map_aco.png
+outpng_radial_aco         ,,,fig_radial_aco.png
 # box for imagemajick
 box_map                   ,,,2225x1870+335+80
 box_map_nox               ,,,2225x1730+335+80

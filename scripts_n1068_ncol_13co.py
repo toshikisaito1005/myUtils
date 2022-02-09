@@ -261,6 +261,7 @@ class ToolsNcol():
         self.outpng_violin             = self.dir_products + self._read_key("outpng_violin")
         self.outpng_12co_vs_aco        = self.dir_products + self._read_key("outpng_12co_vs_aco")
         self.outpng_aco_map            = self.dir_products + self._read_key("outpng_aco_map")
+        self.outpng_radial_aco         = self.dir_products + self._read_key("outpng_radial_aco")
 
         # finals
         self.final_60pc_obs      = self.dir_final + self._read_key("final_60pc_obs")
@@ -1748,7 +1749,7 @@ class ToolsNcol():
         cimage    = None
         cerrimage = None
         outpng    = self.outpng_12co_vs_aco
-        self._plot_scatter4(
+        log_co,elog_co,log_nh2,elog_nh2,dist = self._plot_scatter4(
             ximage,
             xerrimage,
             yimage,
@@ -1783,6 +1784,29 @@ class ToolsNcol():
             )
 
         # radial
+        # log_co,elog_co,log_nh2,elog_nh2,dist
+        # plot
+        fig = plt.figure(figsize=(13,10))
+        gs  = gridspec.GridSpec(nrows=10, ncols=10)
+        ax1 = plt.subplot(gs[0:10,0:10])
+        ad  = [0.215,0.83,0.10,0.90]
+        myax_set(ax1, "both", [0.0,1.3], None, None, "Distance (kpc)", "log$_{\mathrm{10}}$ $\\alpha_{\mathrm{CO}}$", adjust=ad)
+
+        cs = ax1.scatter(dist, log_nh2-elog_co, c="black", lw=0, s=40, zorder=1e9)
+        ax1.errorbar(x, y, xerr=xerr, yerr=yerr, lw=1, capsize=0, color="grey", linestyle="None")
+
+        """
+        # colorbar
+        cax = fig.add_axes([0.25, 0.81, 0.33, 0.04])
+        cbar = plt.colorbar(cs, cax=cax, orientation="horizontal")
+        cbar.set_label(cblabel)
+        if cimage==None:
+            cbar.set_ticks([0,0.3,0.6,0.9,1.2])
+        """
+
+        # save
+        os.system("rm -rf " + self.outpng_radial_aco)
+        plt.savefig(self.outpng_radial_aco, dpi=self.fig_dpi)
 
     ###############
     # plot_violin #
@@ -3893,6 +3917,8 @@ class ToolsNcol():
                 coords_template=templatefits,
                 bunit="K",
                 )
+
+        return x, xerr, y, yerr, c
 
     ##################
     # _plot_scatter3 #
