@@ -1764,8 +1764,8 @@ class ToolsNcol():
             cblabel,
             factor,
             cmap="rainbow_r",
-            outfits=self.outmaps_aco,
-            outefits=self.outemaps_aco,
+            outfits=self.outmaps_aco.replace("???",this_beam),
+            outefits=self.outemaps_aco.replace("???",this_beam),
             templatefits=self.outcubes_13co10.replace("???",this_beam),
             )
 
