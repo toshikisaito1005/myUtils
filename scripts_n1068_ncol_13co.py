@@ -1929,17 +1929,17 @@ class ToolsNcol():
 
         # plot all data
         n = 1
-        self._ax_violin(ax1,T,n,t_grid,"grey",vmax=1.05)
+        self._ax_violin(ax1,T,n,t_grid,"grey")#,vmax=1.05)
 
         # plot cnd data
         n = 3
         cut = np.where(R_as<self.r_cnd_as)
-        self._ax_violin(ax1,T[cut],n,t_grid,"tomato",vmin=0.40,vmax=1.2)
+        self._ax_violin(ax1,T[cut],n,t_grid,"tomato")#,vmin=0.40,vmax=1.2)
 
         # plot intermediate data
         n = 5
         cut = np.where((R_as>=self.r_cnd_as)&(R_as<self.r_sbr_as))
-        self._ax_violin(ax1,T[cut],n,t_grid,"green",vmin=0.40,vmax=0.93)
+        self._ax_violin(ax1,T[cut],n,t_grid,"green")#,vmin=0.40,vmax=0.93)
 
         # plot sbr data
         n = 7
