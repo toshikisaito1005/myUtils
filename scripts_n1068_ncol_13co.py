@@ -4091,7 +4091,6 @@ class ToolsNcol():
             cbar.set_ticks([0,0.3,0.6,0.9,1.2])
 
         # ann
-        ax1.plot(lim, lim, "--", color="black", lw=1)
 
         # save
         os.system("rm -rf " + outpng)
