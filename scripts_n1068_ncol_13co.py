@@ -4194,7 +4194,7 @@ class ToolsNcol():
 
             self._fits_creation(
                 input_array=outarray,
-                output_map=outfits_P,
+                output_map=outfits_vir,
                 coords_template=templatefits,
                 bunit="K",
                 )
