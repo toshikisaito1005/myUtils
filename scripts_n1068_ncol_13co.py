@@ -267,6 +267,7 @@ class ToolsNcol():
         self.outpng_radial_aco         = self.dir_products + self._read_key("outpng_radial_aco")
         self.outpng_12co_vs_aco        = self.dir_products + self._read_key("outpng_12co_vs_aco")
         self.outpng_radio_trot         = self.dir_products + self._read_key("outpng_radio_trot")
+        self.outpng_ncol_vs_m2         = self.dir_products + self._read_key("outpng_ncol_vs_m2")
 
         # finals
         self.final_60pc_obs      = self.dir_final + self._read_key("final_60pc_obs")
@@ -403,7 +404,7 @@ class ToolsNcol():
         do_final_scatter_rot  = False,
         do_final_radial       = False,
         do_final_aco          = False,
-        do_final_jet          = True,
+        do_final_jet          = False,
         # appendix
         do_final_60pc_err     = False,
         do_final_sim_input    = False,
@@ -1717,6 +1718,52 @@ class ToolsNcol():
                 delin=True,
                 axis="column",
                 )
+
+    ############
+    # plot_gmc #
+    ############
+
+    def plot_gmc(
+        self,
+        ):
+        """
+        """
+        this_beam = "60pc"
+
+        taskname = self.modname + sys._getframe().f_code.co_name
+        check_first(self.outmaps_13co_ncol.replace("???",this_beam),taskname)
+
+        xlim      = [14.7,17.2]
+        ylim      = [0,3]
+        title     = "log$_{\mathrm{10}}$ $N_{\mathrm{^{13}CO}}$ vs. log$_{\mathrm{10}}$ $\\sigma_{\mathrm{v}}$ at " + this_beam.replace("pc"," pc")
+        xlabel    = "log$_{\mathrm{10}}$ $N_{\mathrm{^{13}CO}}$ (cm$^{-2}$)"
+        ylabel    = "log$_{\mathrm{10}}$ $\\sigma_{\mathrm{v}}$ (km s$^{-1}$)"
+        ximage    = self.outmaps_13co_ncol.replace("???",this_beam)
+        xerrimage = self.outemaps_13co_ncol.replace("???",this_beam)
+        yimage    = self.outmaps_mom2.replace("???",this_beam)
+        yerrimage = self.outemaps_mom2.replace("???",this_beam)
+
+        # cmap = distance
+        cblabel   = "Distance (kpc)"
+        cimage    = None
+        cerrimage = None
+        outpng    = self.outpng_ncol_vs_m2
+
+        self._plot_scatter5(
+            ximage,
+            xerrimage,
+            yimage,
+            yerrimage,
+            cimage,
+            cerrimage,
+            outpng,
+            xlim,
+            ylim,
+            title,
+            xlabel,
+            ylabel,
+            cblabel,
+            )
 
     ############
     # plot_jet #
@@ -3940,6 +3987,110 @@ class ToolsNcol():
         obj[0].data = input_array
         obj[0].header.append(("BUNIT", bunit))
         obj.writeto(output_map, clobber=True)
+
+    ##################
+    # _plot_scatter5 #
+    ##################
+
+    def _plot_scatter5(
+        self,
+        ximage,
+        xerrimage,
+        yimage,
+        yerrimage,
+        cimage,
+        cerrimage,
+        outpng,
+        xlim,
+        ylim,
+        title,
+        xlabel,
+        ylabel,
+        cblabel,
+        cmap="rainbow_r",
+        ):
+
+        # 13co10
+        data_13co10,box = imval_all(ximage)
+        data_13co10     = data_13co10["data"] * data_13co10["mask"]
+        data_13co10     = data_13co10.flatten()
+        data_13co10[np.isnan(data_13co10)] = 0
+
+        err_13co10,_ = imval_all(xerrimage)
+        err_13co10   = err_13co10["data"] * err_13co10["mask"]
+        err_13co10   = err_13co10.flatten()
+        err_13co10[np.isnan(err_13co10)] = 0
+
+        # 13co21
+        data_13co21,_ = imval_all(yimage)
+        data_13co21   = data_13co21["data"] * data_13co21["mask"]
+        data_13co21   = data_13co21.flatten()
+        data_13co21[np.isnan(data_13co21)] = 0
+
+        err_13co21,_ = imval_all(yerrimage)
+        err_13co21   = err_13co21["data"] * err_13co21["mask"]
+        err_13co21   = err_13co21.flatten()
+        err_13co21[np.isnan(err_13co21)] = 0
+
+        if cimage==None:
+            # coords
+            data_coords = imval(ximage,box=box)["coords"]
+            ra_deg      = data_coords[:,:,0] * 180/np.pi
+            ra_deg      = ra_deg.flatten()
+            dec_deg     = data_coords[:,:,1] * 180/np.pi
+            dec_deg     = dec_deg.flatten()
+            dist_pc,_   = get_reldist_pc(ra_deg, dec_deg, self.ra_agn, self.dec_agn, self.scale_pc, 0, 0)
+            c           = dist_pc / 1000.0
+            # prepare
+            cut  = np.where((data_13co10>abs(err_13co10)*self.snr)&(data_13co21>abs(err_13co21)*self.snr))
+            x    = data_13co10[cut]
+            xerr = err_13co10[cut]
+            y    = np.log10(data_13co21[cut])
+            yerr = err_13co21[cut] / abs(data_13co21[cut])
+            c    = np.array(c)[cut]
+
+        else:
+            data_c,_    = imval_all(cimage)
+            data_c      = data_c["data"] * data_c["mask"]
+            data_c      = data_c.flatten()
+            data_c[np.isnan(data_c)] = 0
+            c           = data_c
+            data_cerr,_ = imval_all(cerrimage)
+            data_cerr   = data_cerr["data"] * data_cerr["mask"]
+            data_cerr   = data_cerr.flatten()
+            data_cerr[np.isnan(data_cerr)] = 0
+            cerr        = data_cerr
+            # prepare
+            cut  = np.where((data_13co10>abs(err_13co10)*self.snr)&(data_13co21>abs(err_13co21)*self.snr)&(c>abs(cerr)*self.snr))
+            x    = data_13co10[cut]
+            xerr = err_13co10[cut]
+            y    = np.log10(data_13co21[cut])
+            yerr = err_13co21[cut] / abs(data_13co21[cut])
+            c    = np.array(c)[cut]
+
+        # plot
+        fig = plt.figure(figsize=(13,10))
+        gs  = gridspec.GridSpec(nrows=10, ncols=10)
+        ax1 = plt.subplot(gs[0:10,0:10])
+        ad  = [0.215,0.83,0.10,0.90]
+        myax_set(ax1, "both", xlim, ylim, title, xlabel, ylabel, adjust=ad)
+
+        cs = ax1.scatter(x, y, c=c, cmap=cmap, lw=0, s=40, zorder=1e9)
+        ax1.errorbar(x, y, xerr=xerr, yerr=yerr, lw=1, capsize=0, color="grey", linestyle="None")
+
+        # colorbar
+        cax = fig.add_axes([0.25, 0.81, 0.33, 0.04])
+        cbar = plt.colorbar(cs, cax=cax, orientation="horizontal")
+        cbar.set_label(cblabel)
+        if cimage==None:
+            cbar.set_ticks([0,0.3,0.6,0.9,1.2])
+
+        # ann
+        ax1.plot(lim, lim, "--", color="black", lw=1)
+
+        # save
+        os.system("rm -rf " + outpng)
+        plt.savefig(outpng, dpi=self.fig_dpi)
 
     ##################
     # _plot_scatter4 #
