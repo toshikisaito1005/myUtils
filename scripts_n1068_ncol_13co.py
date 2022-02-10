@@ -1793,9 +1793,9 @@ class ToolsNcol():
             self.outmaps_avir.replace("???",this_beam),
             self.outmaps_mom0_13co21.replace("???",this_beam),
             self.outpng_pturb,
-            "$\\alpha_{\mathrm{vir}}$ at " + this_beam.replace("pc"," pc"),
+            "log$_{\mathrm{10}}$ $\\alpha_{\mathrm{vir}}$ at " + this_beam.replace("pc"," pc"),
             "",
-            clim=[0,10],
+            clim=[0,2],
             )
 
     ############
@@ -4211,7 +4211,7 @@ class ToolsNcol():
             y    = data_13co21
             yerr = err_13co21
 
-            outarray = 5.77 * y**2 / 10**x / (beamr/40.)
+            outarray = np.log10(5.77 * y**2 / 10**x / (beamr/40.))
             outarray = np.rot90(np.fliplr( np.where((x>abs(xerr)*self.snr)&(y>abs(yerr)*self.snr),outarray,np.nan) ))
 
             self._fits_creation(
