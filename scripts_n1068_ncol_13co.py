@@ -1775,6 +1775,7 @@ class ToolsNcol():
             ylabel,
             cblabel,
             factor,
+            cmap="rainbow",
             outfits_P=self.outmaps_pturb.replace("???",this_beam),
             outfits_vir=self.outmaps_avir.replace("???",this_beam),
             templatefits=self.outcubes_13co10.replace("???",this_beam),
