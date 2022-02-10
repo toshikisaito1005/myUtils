@@ -4097,8 +4097,8 @@ class ToolsNcol():
 
         # ann
         # virial paramter: eq 13 of Sun et al. 2018
-        vir1 = [1.0/5.77*10**xlim[0]*30./40.,1.0/5.77*10**xlim[1]*30./40.]
-        vir2 = [2.0/5.77*10**xlim[0]*30./40.,2.0/5.77*10**xlim[1]*30./40.]
+        vir1 = [np.log10(np.sqrt(1.0/5.77*10**xlim[0]*30./40.)),np.log10(np.sqrt(1.0/5.77*10**xlim[1]*30./40.))]
+        vir2 = [np.log10(np.sqrt(2.0/5.77*10**xlim[0]*30./40.)),np.log10(np.sqrt(2.0/5.77*10**xlim[1]*30./40.))]
         ax1.plot([xlim[0],xlim[1]],[vir1[0],vir1[1]],"--",lw=1,color="black")
         ax1.plot([xlim[0],xlim[1]],[vir2[0],vir2[1]],"--",lw=1,color="black")
 
