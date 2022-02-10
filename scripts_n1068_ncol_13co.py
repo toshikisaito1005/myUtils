@@ -4270,19 +4270,23 @@ class ToolsNcol():
         # 13co10
         data_13co10,box = imval_all(ximage)
         data_13co10     = data_13co10["data"] * data_13co10["mask"]
+        data_13co10     = data_13co10.flatten()
         data_13co10[np.isnan(data_13co10)] = 0
 
         err_13co10,_ = imval_all(xerrimage)
         err_13co10   = err_13co10["data"] * err_13co10["mask"]
+        data_13co10  = err_13co10.flatten()
         err_13co10[np.isnan(err_13co10)] = 0
 
         # 13co21
         data_13co21,_ = imval_all(yimage)
         data_13co21   = data_13co21["data"] * data_13co21["mask"]
+        data_13co21   = data_13co21.flatten()
         data_13co21[np.isnan(data_13co21)] = 0
 
         err_13co21,_ = imval_all(yerrimage)
         err_13co21   = err_13co21["data"] * err_13co21["mask"]
+        err_13co21   = err_13co21.flatten()
         err_13co21[np.isnan(err_13co21)] = 0
 
         log_Sh2     = data_13co10 + np.log10(factor) + np.log10(unit_conv)
