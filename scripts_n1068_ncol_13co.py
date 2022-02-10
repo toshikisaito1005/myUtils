@@ -4289,10 +4289,11 @@ class ToolsNcol():
         err_13co21   = err_13co21.flatten()
         err_13co21[np.isnan(err_13co21)] = 0
 
-        log_Sh2     = data_13co10 + np.log10(factor) + np.log10(unit_conv)
-        log_Sh2_err = err_13co10
-        mom2        = data_13co21
-        mom2_err    = err_13co21
+        cut  = np.where((data_13co10>abs(err_13co10)*self.snr)&(data_13co21>abs(err_13co21)*self.snr))
+        log_Sh2     = data_13co10[cut] + np.log10(factor) + np.log10(unit_conv)
+        log_Sh2_err = err_13co10[cut]
+        mom2        = data_13co21[cut]
+        mom2_err    = err_13co21[cut]
 
         return log_Sh2, log_Sh2_err, mom2, mom2_err, c
 
