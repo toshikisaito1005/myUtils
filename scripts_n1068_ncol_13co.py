@@ -1845,6 +1845,51 @@ class ToolsNcol():
         os.system("rm -rf " + self.outpng_violin_pturb)
         plt.savefig(self.outpng_violin_pturb, dpi=self.fig_dpi)
 
+        ###############
+        # avir violin #
+        ###############
+        # prepare
+        R_as = dist * 1000 / self.scale_pc
+        T    = np.log10(5.77 * mom2**2 / 10**log_Sh2 / (beamr/40.))
+
+        tlim    = [-0.5,2]
+        t_grid  = np.linspace(tlim[0], tlim[1], num=1000)
+        ylabel  = "log$_{\mathrm{10}}$ $P_{\mathrm{turb}}$ (K cm$^{-3}$)"
+        title   = "$P_{\mathrm{turb}}$ Distribution"
+
+        # plot
+        fig = plt.figure(figsize=(13,10))
+        gs  = gridspec.GridSpec(nrows=10, ncols=10)
+        ax1 = plt.subplot(gs[0:10,0:10])
+        ad  = [0.215,0.83,0.10,0.90]
+        myax_set(ax1, "y", [-0.5,8.5], tlim, title, None, ylabel, adjust=ad)
+
+        ax1.set_xticks([1,3,5,7])
+        ax1.set_xticklabels(["All","CND","INT","SBR"], rotation=0, ha="center")
+
+        # plot all data
+        n = 1
+        self._ax_violin(ax1,T,n,t_grid,"grey")
+
+        # plot cnd data
+        n = 3
+        cut = np.where(R_as<self.r_cnd_as)
+        self._ax_violin(ax1,T[cut],n,t_grid,"tomato",vmin=-0.75,vmax=0.05)
+
+        # plot intermediate data
+        n = 5
+        cut = np.where((R_as>=self.r_cnd_as)&(R_as<self.r_sbr_as))
+        self._ax_violin(ax1,T[cut],n,t_grid,"green")
+
+        # plot sbr data
+        n = 7
+        cut = np.where(R_as>=self.r_sbr_as)
+        self._ax_violin(ax1,T[cut],n,t_grid,"deepskyblue")
+
+        # save
+        os.system("rm -rf " + self.outpng_violin_avir)
+        plt.savefig(self.outpng_violin_avir_a, dpi=self.fig_dpi)
+
     ############
     # plot_jet #
     ############
