@@ -1854,8 +1854,8 @@ class ToolsNcol():
 
         tlim    = [-0.2,3]
         t_grid  = np.linspace(tlim[0], tlim[1], num=1000)
-        ylabel  = "log$_{\mathrm{10}}$ $P_{\mathrm{turb}}$ (K cm$^{-3}$)"
-        title   = "$P_{\mathrm{turb}}$ Distribution"
+        ylabel  = "log$_{\mathrm{10}}$ $\\alpha_{\mathrm{vir}}$"
+        title   = "$\\alpha_{\mathrm{vir}}$ Distribution"
 
         # plot
         fig = plt.figure(figsize=(13,10))
