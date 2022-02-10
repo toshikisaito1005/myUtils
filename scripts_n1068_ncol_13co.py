@@ -273,6 +273,7 @@ class ToolsNcol():
         self.outpng_pturb              = self.dir_products + self._read_key("outpng_pturb")
         self.outpng_avir               = self.dir_products + self._read_key("outpng_avir")
         self.outpng_violin_pturb       = self.dir_products + self._read_key("outpng_violin_pturb")
+        self.outpng_violin_avir        = self.dir_products + self._read_key("outpng_violin_avir")
 
         # finals
         self.final_60pc_obs      = self.dir_final + self._read_key("final_60pc_obs")
@@ -4275,7 +4276,7 @@ class ToolsNcol():
 
         err_13co10,_ = imval_all(xerrimage)
         err_13co10   = err_13co10["data"] * err_13co10["mask"]
-        data_13co10  = err_13co10.flatten()
+        err_13co10   = err_13co10.flatten()
         err_13co10[np.isnan(err_13co10)] = 0
 
         # 13co21
