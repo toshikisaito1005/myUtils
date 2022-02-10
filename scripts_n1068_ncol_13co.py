@@ -1852,7 +1852,7 @@ class ToolsNcol():
         R_as = dist * 1000 / self.scale_pc
         T    = np.log10(5.77 * mom2**2 / 10**log_Sh2 / (beamr/40.))
 
-        tlim    = [-0.5,2]
+        tlim    = [-0.2,3]
         t_grid  = np.linspace(tlim[0], tlim[1], num=1000)
         ylabel  = "log$_{\mathrm{10}}$ $P_{\mathrm{turb}}$ (K cm$^{-3}$)"
         title   = "$P_{\mathrm{turb}}$ Distribution"
