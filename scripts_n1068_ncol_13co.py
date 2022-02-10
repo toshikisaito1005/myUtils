@@ -1738,8 +1738,8 @@ class ToolsNcol():
         taskname = self.modname + sys._getframe().f_code.co_name
         check_first(self.outmaps_13co_ncol.replace("???",this_beam),taskname)
 
-        xlim      = [14.7,17.2]
-        ylim      = [0,3]
+        xlim      = [14.6,17.4]
+        ylim      = [0,2.5]
         title     = "log$_{\mathrm{10}}$ $N_{\mathrm{^{13}CO}}$ vs. log$_{\mathrm{10}}$ $\\sigma_{\mathrm{v}}$ at " + this_beam.replace("pc"," pc")
         xlabel    = "log$_{\mathrm{10}}$ $N_{\mathrm{^{13}CO}}$ (cm$^{-2}$)"
         ylabel    = "log$_{\mathrm{10}}$ $\\sigma_{\mathrm{v}}$ (km s$^{-1}$)"
