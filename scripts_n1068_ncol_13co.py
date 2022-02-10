@@ -4083,7 +4083,7 @@ class ToolsNcol():
         gs  = gridspec.GridSpec(nrows=10, ncols=10)
         ax1 = plt.subplot(gs[0:10,0:10])
         ad  = [0.215,0.83,0.10,0.90]
-        myax_set(ax1, "both", xlim, ylim, title, xlabel, ylabel, adjust=ad)
+        myax_set(ax1, None, xlim, ylim, title, xlabel, ylabel, adjust=ad)
 
         cs = ax1.scatter(x, y, c=c, cmap=cmap, lw=0, s=40, zorder=1e9)
         ax1.errorbar(x, y, xerr=xerr, yerr=yerr, lw=1, capsize=0, color="grey", linestyle="None")
@@ -4096,6 +4096,11 @@ class ToolsNcol():
             cbar.set_ticks([0,0.3,0.6,0.9,1.2])
 
         # ann
+        # virial paramter: eq 13 of Sun et al. 2018
+        vir1 = [1.0/5.77*10**xlim[0]*30./40.,1.0/5.77*10**xlim[1]*30./40.]
+        vir2 = [2.0/5.77*10**xlim[0]*30./40.,2.0/5.77*10**xlim[1]*30./40.]
+        ax1.plot([xlim[0],xlim[1]],[vir1[0],vir1[1]],"--",lw=1,color="black")
+        ax1.plot([xlim[0],xlim[1]],[vir2[0],vir2[1]],"--",lw=1,color="black")
 
         # save
         os.system("rm -rf " + outpng)
