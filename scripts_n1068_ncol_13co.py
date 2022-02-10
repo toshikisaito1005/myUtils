@@ -1755,9 +1755,9 @@ class ToolsNcol():
         yerrimage = self.outemaps_mom2.replace("???",this_beam)
 
         # cmap = distance
-        cblabel   = "Distance (kpc)"
-        cimage    = None
-        cerrimage = None
+        cblabel   = "$T_{\mathrm{rot}}$ (K)" # "Distance (kpc)"
+        cimage    = self.outmaps_13co_trot.replace("???",this_beam) # None
+        cerrimage = self.outemaps_13co_trot.replace("???",this_beam) # None
         outpng    = self.outpng_ncol_vs_m2
 
         self._plot_scatter5(
