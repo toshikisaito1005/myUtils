@@ -283,6 +283,7 @@ class ToolsNcol():
         self.final_radial        = self.dir_final + self._read_key("final_radial")
         self.final_aco           = self.dir_final + self._read_key("final_aco")
         self.final_jet           = self.dir_final + self._read_key("final_jet")
+        self.final_gmc           = self.dir_final + self._read_key("final_gmc")
         # appendix
         self.final_60pc_err      = self.dir_final + self._read_key("final_60pc_err")
         self.final_sim_input     = self.dir_final + self._read_key("final_sim_input")
@@ -416,6 +417,7 @@ class ToolsNcol():
         do_final_radial       = False,
         do_final_aco          = False,
         do_final_jet          = False,
+        do_final_gmc          = True,
         # appendix
         do_final_60pc_err     = False,
         do_final_sim_input    = False,
@@ -452,6 +454,7 @@ class ToolsNcol():
             do_final_radial       = True
             do_final_aco          = True
             do_final_jet          = True
+            do_final_gmc          = True
             # appendix
             do_final_60pc_err     = True
             do_final_sim_input    = True
@@ -600,6 +603,35 @@ class ToolsNcol():
                 self.outpng_radio_trot,
                 self.final_jet,
                 self.box_map,
+                )
+
+        if do_final_gmc==True:
+            print("#######################")
+            print("# create do_final_gmc #")
+            print("#######################")
+
+            combine_two_png(
+                self.outpng_ncol_vs_m2,
+                self.outpng_pturb,
+                self.final_gmc+"_tmp1",
+                self.box_map_noc,
+                self.box_map,
+                )
+            combine_two_png(
+                self.outpng_violin_avir,
+                self.outpng_violin_pturb,
+                self.final_gmc+"_tmp2",
+                self.box_map_noc,
+                self.box_map_noc,
+                )
+            combine_two_png(
+                self.final_gmc+"_tmp1",
+                self.final_gmc+"_tmp2",
+                self.final_gmc,
+                "1000000x1000000+0+0",
+                "1000000x1000000+0+0",
+                axis="column",
+                delin=True,
                 )
 
         ############
@@ -1829,7 +1861,7 @@ class ToolsNcol():
         # plot cnd data
         n = 3
         cut = np.where(R_as<self.r_cnd_as)
-        self._ax_violin(ax1,T[cut],n,t_grid,"tomato",vmin=-0.75,vmax=0.05)
+        self._ax_violin(ax1,T[cut],n,t_grid,"tomato")
 
         # plot intermediate data
         n = 5
@@ -1874,7 +1906,7 @@ class ToolsNcol():
         # plot cnd data
         n = 3
         cut = np.where(R_as<self.r_cnd_as)
-        self._ax_violin(ax1,T[cut],n,t_grid,"tomato",vmin=-0.75,vmax=0.05)
+        self._ax_violin(ax1,T[cut],n,t_grid,"tomato")
 
         # plot intermediate data
         n = 5
