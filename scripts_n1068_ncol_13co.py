@@ -1755,9 +1755,9 @@ class ToolsNcol():
         yerrimage = self.outemaps_mom2.replace("???",this_beam)
 
         # cmap = distance
-        cblabel   = "$T_{\mathrm{rot}}$ (K)" # "Distance (kpc)"
-        cimage    = self.outmaps_13co_trot.replace("???",this_beam) # None
-        cerrimage = self.outemaps_13co_trot.replace("???",this_beam) # None
+        cblabel   = "Distance (kpc)"
+        cimage    = None
+        cerrimage = None
         outpng    = self.outpng_ncol_vs_m2
 
         self._plot_scatter5(
@@ -1775,7 +1775,6 @@ class ToolsNcol():
             ylabel,
             cblabel,
             factor,
-            cmap="rainbow",
             outfits_P=self.outmaps_pturb.replace("???",this_beam),
             outfits_vir=self.outmaps_avir.replace("???",this_beam),
             templatefits=self.outcubes_13co10.replace("???",this_beam),
