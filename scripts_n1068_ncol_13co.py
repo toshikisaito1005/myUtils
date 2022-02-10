@@ -1740,6 +1740,7 @@ class ToolsNcol():
 
         xlim      = [14.6,17.4]
         ylim      = [0,2.5]
+        factor    = 1.0 / self.abundance_13co_h2
         title     = "log$_{\mathrm{10}}$ $N_{\mathrm{^{13}CO}}$ vs. log$_{\mathrm{10}}$ $\\sigma_{\mathrm{v}}$ at " + this_beam.replace("pc"," pc")
         xlabel    = "log$_{\mathrm{10}}$ $N_{\mathrm{^{13}CO}}$ (cm$^{-2}$)"
         ylabel    = "log$_{\mathrm{10}}$ $\\sigma_{\mathrm{v}}$ (km s$^{-1}$)"
@@ -1768,6 +1769,7 @@ class ToolsNcol():
             xlabel,
             ylabel,
             cblabel,
+            factor,
             )
 
     ############
@@ -4012,8 +4014,11 @@ class ToolsNcol():
         xlabel,
         ylabel,
         cblabel,
+        factor,
         cmap="rainbow_r",
         ):
+
+        unit_conv = 2 * 3.24078**-2 * 10**38 / (6.02*10**23 * 1.9884 * 10**33)
 
         # 13co10
         data_13co10,box = imval_all(ximage)
@@ -4048,8 +4053,8 @@ class ToolsNcol():
             c           = dist_pc / 1000.0
             # prepare
             cut  = np.where((data_13co10>abs(err_13co10)*self.snr)&(data_13co21>abs(err_13co21)*self.snr))
-            x    = data_13co10[cut]
-            xerr = err_13co10[cut]
+            x    = (data_13co10[cut] + np.log10(factor)) * unit_conv
+            xerr = (err_13co10[cut]) * unit_conv
             y    = np.log10(data_13co21[cut])
             yerr = err_13co21[cut] / abs(data_13co21[cut])
             c    = np.array(c)[cut]
@@ -4067,8 +4072,8 @@ class ToolsNcol():
             cerr        = data_cerr
             # prepare
             cut  = np.where((data_13co10>abs(err_13co10)*self.snr)&(data_13co21>abs(err_13co21)*self.snr)&(c>abs(cerr)*self.snr))
-            x    = data_13co10[cut]
-            xerr = err_13co10[cut]
+            x    = (data_13co10[cut] + np.log10(factor)) * unit_conv
+            xerr = (err_13co10[cut]) * unit_conv
             y    = np.log10(data_13co21[cut])
             yerr = err_13co21[cut] / abs(data_13co21[cut])
             c    = np.array(c)[cut]
