@@ -4109,12 +4109,14 @@ class ToolsNcol():
         p6 = [np.log10(np.sqrt(10**6/61.3/10**xlim[0]*30./40.)),np.log10(np.sqrt(10**6/61.3/10**xlim[1]*30./40.))]
         p7 = [np.log10(np.sqrt(10**7/61.3/10**xlim[0]*30./40.)),np.log10(np.sqrt(10**7/61.3/10**xlim[1]*30./40.))]
         p8 = [np.log10(np.sqrt(10**8/61.3/10**xlim[0]*30./40.)),np.log10(np.sqrt(10**8/61.3/10**xlim[1]*30./40.))]
-        ax1.plot([xlim[0],xlim[1]],[p3[0],p4[1]],":",lw=1,color="black")
+        p9 = [np.log10(np.sqrt(10**9/61.3/10**xlim[0]*30./40.)),np.log10(np.sqrt(10**9/61.3/10**xlim[1]*30./40.))]
+        ax1.plot([xlim[0],xlim[1]],[p3[0],p3[1]],":",lw=1,color="black")
         ax1.plot([xlim[0],xlim[1]],[p4[0],p5[1]],":",lw=1,color="black")
         ax1.plot([xlim[0],xlim[1]],[p5[0],p5[1]],":",lw=1,color="black")
         ax1.plot([xlim[0],xlim[1]],[p6[0],p6[1]],":",lw=1,color="black")
         ax1.plot([xlim[0],xlim[1]],[p7[0],p7[1]],":",lw=1,color="black")
         ax1.plot([xlim[0],xlim[1]],[p8[0],p8[1]],":",lw=1,color="black")
+        ax1.plot([xlim[0],xlim[1]],[p9[0],p9[1]],":",lw=1,color="black")
 
         # save
         os.system("rm -rf " + outpng)
