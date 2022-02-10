@@ -270,6 +270,8 @@ class ToolsNcol():
         self.outpng_12co_vs_aco        = self.dir_products + self._read_key("outpng_12co_vs_aco")
         self.outpng_radio_trot         = self.dir_products + self._read_key("outpng_radio_trot")
         self.outpng_ncol_vs_m2         = self.dir_products + self._read_key("outpng_ncol_vs_m2")
+        self.outpng_pturb              = self.dir_products + self._read_key("outpng_pturb")
+        self.outpng_avir               = self.dir_products + self._read_key("outpng_avir")
 
         # finals
         self.final_60pc_obs      = self.dir_final + self._read_key("final_60pc_obs")
@@ -1776,6 +1778,24 @@ class ToolsNcol():
             outfits_P=self.outmaps_pturb.replace("???",this_beam),
             outfits_vir=self.outmaps_avir.replace("???",this_beam),
             templatefits=self.outcubes_13co10.replace("???",this_beam),
+            )
+
+        self._showcase_one(
+            self.outmaps_pturb.replace("???",this_beam),
+            self.outmaps_mom0_13co21.replace("???",this_beam),
+            self.outpng_pturb,
+            "$P_{\mathrm{turb}}$ at " + this_beam.replace("pc"," pc"),
+            "K cm$^{-3}$",
+            clim=None,
+            )
+
+        self._showcase_one(
+            self.outmaps_avir.replace("???",this_beam),
+            self.outmaps_mom0_13co21.replace("???",this_beam),
+            self.outpng_pturb,
+            "$\\alpha_{\mathrm{vir}}$ at " + this_beam.replace("pc"," pc"),
+            "",
+            clim=[0,10],
             )
 
     ############

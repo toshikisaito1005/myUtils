@@ -138,6 +138,8 @@ outpng_radial_aco         ,,,fig_radial_aco.png
 outpng_12co_vs_aco        ,,,fig_scatter_12co_vs_aco.png
 outpng_radio_trot         ,,,fig_map_radio_trot.png
 outpng_ncol_vs_m2         ,,,fig_scatter_ncol_vs_mom2.png
+outpng_pturb              ,,,fig_map_pturb.png
+outpng_avir               ,,,fig_map_avir.png
 # box for imagemajick
 box_map                   ,,,2245x1870+325+80
 box_map_nox               ,,,2245x1730+325+80
