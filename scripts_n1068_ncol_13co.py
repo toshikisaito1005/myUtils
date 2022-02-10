@@ -4099,8 +4099,12 @@ class ToolsNcol():
         # virial paramter: eq 13 of Sun et al. 2018
         vir1 = [np.log10(np.sqrt(1.0/5.77*10**xlim[0]*30./40.)),np.log10(np.sqrt(1.0/5.77*10**xlim[1]*30./40.))]
         vir2 = [np.log10(np.sqrt(2.0/5.77*10**xlim[0]*30./40.)),np.log10(np.sqrt(2.0/5.77*10**xlim[1]*30./40.))]
-        ax1.plot([xlim[0],xlim[1]],[vir1[0],vir1[1]],"--",lw=1,color="black")
-        ax1.plot([xlim[0],xlim[1]],[vir2[0],vir2[1]],"--",lw=1,color="black")
+        ax1.plot([xlim[0],xlim[1]],[vir1[0],vir1[1]],"dashdot",lw=1,color="black")
+        ax1.plot([xlim[0],xlim[1]],[vir2[0],vir2[1]],"dashdot",lw=1,color="black")
+
+        # internal pressure: eq 15 of Sun et al. 2018
+        p5 = [np.log10(np.sqrt(10**5/61.3/10**xlim[0]*30./40.)),np.log10(np.sqrt(10**5/61.3/10**xlim[1]*30./40.))]
+        ax1.plot([xlim[0],xlim[1]],[p5[0],p5[1]],"dotted",lw=1,color="black")
 
         # save
         os.system("rm -rf " + outpng)
