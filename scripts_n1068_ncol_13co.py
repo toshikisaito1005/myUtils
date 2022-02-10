@@ -328,7 +328,8 @@ class ToolsNcol():
         plot_scatter     = False, # after do_fitting
         plot_violin      = False, # after do_fitting
         plot_aco         = False, # after do_fitting
-        plot_jet         = False,
+        plot_jet         = False, # after do_fitting
+        plot_gmc         = False, # after do_fitting
         do_imagemagick   = False,
         immagick_all     = False,
         # supplement
@@ -348,6 +349,7 @@ class ToolsNcol():
             plot_violin      = True
             plot_aco         = True
             plot_jet         = True
+            plot_gmc         = True
             do_imagemagick   = True
             immagick_all     = True
 
@@ -385,6 +387,9 @@ class ToolsNcol():
 
         if plot_jet==True:
             self.plot_jet()
+
+        if plot_gmc==True:
+            self.plot_gmc()
 
         if do_imagemagick==True:
             self.immagick_figures(do_all=immagick_all,delin=False)
