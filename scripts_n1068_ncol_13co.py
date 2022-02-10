@@ -1738,7 +1738,7 @@ class ToolsNcol():
         taskname = self.modname + sys._getframe().f_code.co_name
         check_first(self.outmaps_13co_ncol.replace("???",this_beam),taskname)
 
-        xlim      = [14.6,17.4]
+        xlim      = None # [14.6,17.4]
         ylim      = [0,2.5]
         factor    = 1.0 / self.abundance_13co_h2
         title     = "log$_{\mathrm{10}}$ $N_{\mathrm{^{13}CO}}$ vs. log$_{\mathrm{10}}$ $\\sigma_{\mathrm{v}}$ at " + this_beam.replace("pc"," pc")
@@ -4053,8 +4053,8 @@ class ToolsNcol():
             c           = dist_pc / 1000.0
             # prepare
             cut  = np.where((data_13co10>abs(err_13co10)*self.snr)&(data_13co21>abs(err_13co21)*self.snr))
-            x    = (data_13co10[cut] + np.log10(factor)) * unit_conv
-            xerr = (err_13co10[cut]) * unit_conv
+            x    = data_13co10[cut] + np.log10(factor) + np.log10(unit_conv)
+            xerr = err_13co10[cut]
             y    = np.log10(data_13co21[cut])
             yerr = err_13co21[cut] / abs(data_13co21[cut])
             c    = np.array(c)[cut]
@@ -4072,8 +4072,8 @@ class ToolsNcol():
             cerr        = data_cerr
             # prepare
             cut  = np.where((data_13co10>abs(err_13co10)*self.snr)&(data_13co21>abs(err_13co21)*self.snr)&(c>abs(cerr)*self.snr))
-            x    = (data_13co10[cut] + np.log10(factor)) * unit_conv
-            xerr = (err_13co10[cut]) * unit_conv
+            x    = data_13co10[cut] + np.log10(factor) + np.log10(unit_conv)
+            xerr = err_13co10[cut]
             y    = np.log10(data_13co21[cut])
             yerr = err_13co21[cut] / abs(data_13co21[cut])
             c    = np.array(c)[cut]
