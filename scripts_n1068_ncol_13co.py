@@ -1792,7 +1792,7 @@ class ToolsNcol():
         self._showcase_one(
             self.outmaps_avir.replace("???",this_beam),
             self.outmaps_mom0_13co21.replace("???",this_beam),
-            self.outpng_pturb,
+            self.outpng_avir,
             "log$_{\mathrm{10}}$ $\\alpha_{\mathrm{vir}}$ at " + this_beam.replace("pc"," pc"),
             "",
             clim=[0,2],
