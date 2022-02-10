@@ -272,6 +272,7 @@ class ToolsNcol():
         self.outpng_ncol_vs_m2         = self.dir_products + self._read_key("outpng_ncol_vs_m2")
         self.outpng_pturb              = self.dir_products + self._read_key("outpng_pturb")
         self.outpng_avir               = self.dir_products + self._read_key("outpng_avir")
+        self.outpng_violin_pturb       = self.dir_products + self._read_key("outpng_violin_pturb")
 
         # finals
         self.final_60pc_obs      = self.dir_final + self._read_key("final_60pc_obs")
@@ -1760,7 +1761,7 @@ class ToolsNcol():
         cerrimage = None
         outpng    = self.outpng_ncol_vs_m2
 
-        self._plot_scatter5(
+        log_Sh2, log_Sh2_err, mom2, mom2_err, dist = self._plot_scatter5(
             ximage,
             xerrimage,
             yimage,
@@ -1797,6 +1798,51 @@ class ToolsNcol():
             "",
             clim=[0,2],
             )
+
+        ################
+        # pturb violin #
+        ################
+        # prepare
+        R_as = dist * 1000 / self.scale_pc
+        T    = 61.3 * 10**log_Sh2 * mom2**2 / (beamr/40.)
+
+        tlim    = [-0.8,0.4]
+        t_grid  = np.linspace(tlim[0], tlim[1], num=1000)
+        ylabel  = "log$_{\mathrm{10}}$ $P_{\mathrm{turb}}$ (K cm$^{-3}$)"
+        title   = "$P_{\mathrm{turb}}$ Distribution"
+
+        # plot
+        fig = plt.figure(figsize=(13,10))
+        gs  = gridspec.GridSpec(nrows=10, ncols=10)
+        ax1 = plt.subplot(gs[0:10,0:10])
+        ad  = [0.215,0.83,0.10,0.90]
+        myax_set(ax1, "y", [-0.5,8.5], tlim, title, None, ylabel, adjust=ad)
+
+        ax1.set_xticks([1,3,5,7])
+        ax1.set_xticklabels(["All","CND","INT","SBR"], rotation=0, ha="center")
+
+        # plot all data
+        n = 1
+        self._ax_violin(ax1,T,n,t_grid,"grey")
+
+        # plot cnd data
+        n = 3
+        cut = np.where(R_as<self.r_cnd_as)
+        self._ax_violin(ax1,T[cut],n,t_grid,"tomato",vmin=-0.75,vmax=0.05)
+
+        # plot intermediate data
+        n = 5
+        cut = np.where((R_as>=self.r_cnd_as)&(R_as<self.r_sbr_as))
+        self._ax_violin(ax1,T[cut],n,t_grid,"green")
+
+        # plot sbr data
+        n = 7
+        cut = np.where(R_as>=self.r_sbr_as)
+        self._ax_violin(ax1,T[cut],n,t_grid,"deepskyblue")
+
+        # save
+        os.system("rm -rf " + self.outpng_violin_pturb)
+        plt.savefig(self.outpng_violin_pturb, dpi=self.fig_dpi)
 
     ############
     # plot_jet #
@@ -4220,6 +4266,31 @@ class ToolsNcol():
                 coords_template=templatefits,
                 bunit="K",
                 )
+
+        # 13co10
+        data_13co10,box = imval_all(ximage)
+        data_13co10     = data_13co10["data"] * data_13co10["mask"]
+        data_13co10[np.isnan(data_13co10)] = 0
+
+        err_13co10,_ = imval_all(xerrimage)
+        err_13co10   = err_13co10["data"] * err_13co10["mask"]
+        err_13co10[np.isnan(err_13co10)] = 0
+
+        # 13co21
+        data_13co21,_ = imval_all(yimage)
+        data_13co21   = data_13co21["data"] * data_13co21["mask"]
+        data_13co21[np.isnan(data_13co21)] = 0
+
+        err_13co21,_ = imval_all(yerrimage)
+        err_13co21   = err_13co21["data"] * err_13co21["mask"]
+        err_13co21[np.isnan(err_13co21)] = 0
+
+        log_Sh2     = data_13co10 + np.log10(factor) + np.log10(unit_conv)
+        log_Sh2_err = err_13co10
+        mom2        = data_13co21
+        mom2_err    = err_13co21
+
+        return log_Sh2, log_Sh2_err, mom2, mom2_err, c
 
     ##################
     # _plot_scatter4 #
