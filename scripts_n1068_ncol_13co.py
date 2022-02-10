@@ -1805,7 +1805,7 @@ class ToolsNcol():
         ################
         # prepare
         R_as = dist * 1000 / self.scale_pc
-        T    = 61.3 * 10**log_Sh2 * mom2**2 / (beamr/40.)
+        T    = np.log10(61.3 * 10**log_Sh2 * mom2**2 / (beamr/40.))
 
         tlim    = [3,8]
         t_grid  = np.linspace(tlim[0], tlim[1], num=1000)
