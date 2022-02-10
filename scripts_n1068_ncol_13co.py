@@ -1738,11 +1738,11 @@ class ToolsNcol():
         taskname = self.modname + sys._getframe().f_code.co_name
         check_first(self.outmaps_13co_ncol.replace("???",this_beam),taskname)
 
-        xlim      = None # [14.6,17.4]
+        xlim      = [0.9,3.6]
         ylim      = [0,2.5]
         factor    = 1.0 / self.abundance_13co_h2
-        title     = "log$_{\mathrm{10}}$ $N_{\mathrm{^{13}CO}}$ vs. log$_{\mathrm{10}}$ $\\sigma_{\mathrm{v}}$ at " + this_beam.replace("pc"," pc")
-        xlabel    = "log$_{\mathrm{10}}$ $N_{\mathrm{^{13}CO}}$ (cm$^{-2}$)"
+        title     = "log$_{\mathrm{10}}$ $\\Sigma_{\mathrm{H_2}}$ vs. log$_{\mathrm{10}}$ $\\sigma_{\mathrm{v}}$ at " + this_beam.replace("pc"," pc")
+        xlabel    = "log$_{\mathrm{10}}$ $\\Sigma_{\mathrm{H_2}}$ ($M_{\odot}$ pc$^{-2}$)"
         ylabel    = "log$_{\mathrm{10}}$ $\\sigma_{\mathrm{v}}$ (km s$^{-1}$)"
         ximage    = self.outmaps_13co_ncol.replace("???",this_beam)
         xerrimage = self.outemaps_13co_ncol.replace("???",this_beam)
