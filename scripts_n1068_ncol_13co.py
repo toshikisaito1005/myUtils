@@ -1735,8 +1735,8 @@ class ToolsNcol():
         ):
         """
         """
-        this_beam = "150pc"
-        beamr     = 75
+        this_beam = "60pc"
+        beamr     = 30
 
         taskname = self.modname + sys._getframe().f_code.co_name
         check_first(self.outmaps_13co_ncol.replace("???",this_beam),taskname)
