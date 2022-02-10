@@ -4133,33 +4133,27 @@ class ToolsNcol():
             # 13co10
             data_13co10,box = imval_all(ximage)
             data_13co10     = data_13co10["data"] * data_13co10["mask"]
-            data_13co10     = data_13co10.flatten()
             data_13co10[np.isnan(data_13co10)] = 0
 
             err_13co10,_ = imval_all(xerrimage)
             err_13co10   = err_13co10["data"] * err_13co10["mask"]
-            err_13co10   = err_13co10.flatten()
             err_13co10[np.isnan(err_13co10)] = 0
 
             # 13co21
             data_13co21,_ = imval_all(yimage)
             data_13co21   = data_13co21["data"] * data_13co21["mask"]
-            data_13co21   = data_13co21.flatten()
             data_13co21[np.isnan(data_13co21)] = 0
 
             err_13co21,_ = imval_all(yerrimage)
             err_13co21   = err_13co21["data"] * err_13co21["mask"]
-            err_13co21   = err_13co21.flatten()
             err_13co21[np.isnan(err_13co21)] = 0
 
-            cut  = np.where((data_13co10>abs(err_13co10)*self.snr)&(data_13co21>abs(err_13co21)*self.snr))
-            x    = data_13co10[cut] + np.log10(factor) + np.log10(unit_conv)
-            xerr = err_13co10[cut]
-            y    = data_13co21[cut]
-            yerr = err_13co21[cut]
+            x    = data_13co10 + np.log10(factor) + np.log10(unit_conv)
+            xerr = err_13co10
+            y    = data_13co21
+            yerr = err_13co21
 
-            # x, y, xerr=xerr, yerr=yerr
-            outarray = 5.77 * y**2 / 10**x / (30./40.)
+            outarray = np.log10(61.3 * 10**x * y**2 / (30./40.)) # 5.77 * y**2 / 10**x / (30./40.)
             outarray = np.rot90(np.fliplr( np.where((x>abs(xerr)*self.snr)&(y>abs(yerr)*self.snr),outarray,np.nan) ))
 
             self._fits_creation(
