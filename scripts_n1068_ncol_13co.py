@@ -173,6 +173,7 @@ class ToolsNcol():
         self.outemaps_aco         = self.dir_ready + self._read_key("outemaps_aco")
         self.outmaps_vla          = self.dir_ready + self._read_key("outmaps_vla")
         self.outmaps_pturb        = self.dir_ready + self._read_key("outmaps_pturb")
+        self.self.outmaps_avir    = self.dir_ready + self._read_key("outmaps_avir")
 
         self.outmodelcube_13co10  = self.dir_ready + self._read_key("outmodelcube_13co10")
         self.outmodelcube_13co21  = self.dir_ready + self._read_key("outmodelcube_13co21")
@@ -1772,6 +1773,7 @@ class ToolsNcol():
             cblabel,
             factor,
             outfits_P=self.outmaps_pturb.replace("???",this_beam),
+            outfits_vir=self.outmaps_avir.replace("???",this_beam),
             templatefits=self.outcubes_13co10.replace("???",this_beam),
             )
 
@@ -4153,7 +4155,41 @@ class ToolsNcol():
             y    = data_13co21
             yerr = err_13co21
 
-            outarray = np.log10(61.3 * 10**x * y**2 / (30./40.)) # 5.77 * y**2 / 10**x / (30./40.)
+            outarray = np.log10(61.3 * 10**x * y**2 / (30./40.))
+            outarray = np.rot90(np.fliplr( np.where((x>abs(xerr)*self.snr)&(y>abs(yerr)*self.snr),outarray,np.nan) ))
+
+            self._fits_creation(
+                input_array=outarray,
+                output_map=outfits_P,
+                coords_template=templatefits,
+                bunit="K",
+                )
+
+        if outfits_vir!=None:
+            # 13co10
+            data_13co10,box = imval_all(ximage)
+            data_13co10     = data_13co10["data"] * data_13co10["mask"]
+            data_13co10[np.isnan(data_13co10)] = 0
+
+            err_13co10,_ = imval_all(xerrimage)
+            err_13co10   = err_13co10["data"] * err_13co10["mask"]
+            err_13co10[np.isnan(err_13co10)] = 0
+
+            # 13co21
+            data_13co21,_ = imval_all(yimage)
+            data_13co21   = data_13co21["data"] * data_13co21["mask"]
+            data_13co21[np.isnan(data_13co21)] = 0
+
+            err_13co21,_ = imval_all(yerrimage)
+            err_13co21   = err_13co21["data"] * err_13co21["mask"]
+            err_13co21[np.isnan(err_13co21)] = 0
+
+            x    = data_13co10 + np.log10(factor) + np.log10(unit_conv)
+            xerr = err_13co10
+            y    = data_13co21
+            yerr = err_13co21
+
+            outarray = 5.77 * y**2 / 10**x / (30./40.)
             outarray = np.rot90(np.fliplr( np.where((x>abs(xerr)*self.snr)&(y>abs(yerr)*self.snr),outarray,np.nan) ))
 
             self._fits_creation(
