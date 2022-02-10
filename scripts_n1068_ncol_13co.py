@@ -173,7 +173,7 @@ class ToolsNcol():
         self.outemaps_aco         = self.dir_ready + self._read_key("outemaps_aco")
         self.outmaps_vla          = self.dir_ready + self._read_key("outmaps_vla")
         self.outmaps_pturb        = self.dir_ready + self._read_key("outmaps_pturb")
-        self.self.outmaps_avir    = self.dir_ready + self._read_key("outmaps_avir")
+        self.outmaps_avir         = self.dir_ready + self._read_key("outmaps_avir")
 
         self.outmodelcube_13co10  = self.dir_ready + self._read_key("outmodelcube_13co10")
         self.outmodelcube_13co21  = self.dir_ready + self._read_key("outmodelcube_13co21")
