@@ -1888,7 +1888,7 @@ class ToolsNcol():
 
         # save
         os.system("rm -rf " + self.outpng_violin_avir)
-        plt.savefig(self.outpng_violin_avir_a, dpi=self.fig_dpi)
+        plt.savefig(self.outpng_violin_avir, dpi=self.fig_dpi)
 
     ############
     # plot_jet #
