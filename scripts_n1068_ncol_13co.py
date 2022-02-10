@@ -1784,7 +1784,7 @@ class ToolsNcol():
             self.outmaps_pturb.replace("???",this_beam),
             self.outmaps_mom0_13co21.replace("???",this_beam),
             self.outpng_pturb,
-            "$P_{\mathrm{turb}}$ at " + this_beam.replace("pc"," pc"),
+            "log$_{\mathrm{10}}$ $P_{\mathrm{turb}}$ at " + this_beam.replace("pc"," pc"),
             "K cm$^{-3}$",
             clim=None,
             )
