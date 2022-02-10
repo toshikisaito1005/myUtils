@@ -1735,7 +1735,8 @@ class ToolsNcol():
         ):
         """
         """
-        this_beam = "60pc"
+        this_beam = "150pc"
+        beamr     = 75
 
         taskname = self.modname + sys._getframe().f_code.co_name
         check_first(self.outmaps_13co_ncol.replace("???",this_beam),taskname)
@@ -4024,6 +4025,7 @@ class ToolsNcol():
         outfits_P=None,
         outfits_vir=None,
         templatefits=None,
+        beamr=30, # pc
         ):
 
         unit_conv = 2 * 3.24078**-2 * 10**38 / (6.02*10**23 * 1.9884 * 10**33)
@@ -4105,19 +4107,19 @@ class ToolsNcol():
 
         # ann
         # virial paramter: eq 13 of Sun et al. 2018
-        vir1 = [np.log10(np.sqrt(1.0/5.77*10**xlim[0]*30./40.)),np.log10(np.sqrt(1.0/5.77*10**xlim[1]*30./40.))]
-        vir2 = [np.log10(np.sqrt(2.0/5.77*10**xlim[0]*30./40.)),np.log10(np.sqrt(2.0/5.77*10**xlim[1]*30./40.))]
+        vir1 = [np.log10(np.sqrt(1.0/5.77*10**xlim[0]*beamr/40.)),np.log10(np.sqrt(1.0/5.77*10**xlim[1]*beamr/40.))]
+        vir2 = [np.log10(np.sqrt(2.0/5.77*10**xlim[0]*beamr/40.)),np.log10(np.sqrt(2.0/5.77*10**xlim[1]*beamr/40.))]
         ax1.plot([xlim[0],xlim[1]],[vir1[0],vir1[1]],"--",lw=1,color="black")
         ax1.plot([xlim[0],xlim[1]],[vir2[0],vir2[1]],"--",lw=1,color="black")
 
         # internal pressure: eq 15 of Sun et al. 2018
-        p3 = [np.log10(np.sqrt(10**3/61.3/10**xlim[0]*30./40.)),np.log10(np.sqrt(10**3/61.3/10**xlim[1]*30./40.))]
-        p4 = [np.log10(np.sqrt(10**4/61.3/10**xlim[0]*30./40.)),np.log10(np.sqrt(10**4/61.3/10**xlim[1]*30./40.))]
-        p5 = [np.log10(np.sqrt(10**5/61.3/10**xlim[0]*30./40.)),np.log10(np.sqrt(10**5/61.3/10**xlim[1]*30./40.))]
-        p6 = [np.log10(np.sqrt(10**6/61.3/10**xlim[0]*30./40.)),np.log10(np.sqrt(10**6/61.3/10**xlim[1]*30./40.))]
-        p7 = [np.log10(np.sqrt(10**7/61.3/10**xlim[0]*30./40.)),np.log10(np.sqrt(10**7/61.3/10**xlim[1]*30./40.))]
-        p8 = [np.log10(np.sqrt(10**8/61.3/10**xlim[0]*30./40.)),np.log10(np.sqrt(10**8/61.3/10**xlim[1]*30./40.))]
-        p9 = [np.log10(np.sqrt(10**9/61.3/10**xlim[0]*30./40.)),np.log10(np.sqrt(10**9/61.3/10**xlim[1]*30./40.))]
+        p3 = [np.log10(np.sqrt(10**3/61.3/10**xlim[0]*beamr/40.)),np.log10(np.sqrt(10**3/61.3/10**xlim[1]*beamr/40.))]
+        p4 = [np.log10(np.sqrt(10**4/61.3/10**xlim[0]*beamr/40.)),np.log10(np.sqrt(10**4/61.3/10**xlim[1]*beamr/40.))]
+        p5 = [np.log10(np.sqrt(10**5/61.3/10**xlim[0]*beamr/40.)),np.log10(np.sqrt(10**5/61.3/10**xlim[1]*beamr/40.))]
+        p6 = [np.log10(np.sqrt(10**6/61.3/10**xlim[0]*beamr/40.)),np.log10(np.sqrt(10**6/61.3/10**xlim[1]*beamr/40.))]
+        p7 = [np.log10(np.sqrt(10**7/61.3/10**xlim[0]*beamr/40.)),np.log10(np.sqrt(10**7/61.3/10**xlim[1]*beamr/40.))]
+        p8 = [np.log10(np.sqrt(10**8/61.3/10**xlim[0]*beamr/40.)),np.log10(np.sqrt(10**8/61.3/10**xlim[1]*beamr/40.))]
+        p9 = [np.log10(np.sqrt(10**9/61.3/10**xlim[0]*beamr/40.)),np.log10(np.sqrt(10**9/61.3/10**xlim[1]*beamr/40.))]
         ax1.plot([xlim[0],xlim[1]],[p3[0],p3[1]],":",lw=1,color="black")
         ax1.plot([xlim[0],xlim[1]],[p4[0],p4[1]],":",lw=1,color="black")
         ax1.plot([xlim[0],xlim[1]],[p5[0],p5[1]],":",lw=1,color="black")
@@ -4155,7 +4157,7 @@ class ToolsNcol():
             y    = data_13co21
             yerr = err_13co21
 
-            outarray = np.log10(61.3 * 10**x * y**2 / (30./40.))
+            outarray = np.log10(61.3 * 10**x * y**2 / (beamr/40.))
             outarray = np.rot90(np.fliplr( np.where((x>abs(xerr)*self.snr)&(y>abs(yerr)*self.snr),outarray,np.nan) ))
 
             self._fits_creation(
@@ -4189,7 +4191,7 @@ class ToolsNcol():
             y    = data_13co21
             yerr = err_13co21
 
-            outarray = 5.77 * y**2 / 10**x / (30./40.)
+            outarray = 5.77 * y**2 / 10**x / (beamr/40.)
             outarray = np.rot90(np.fliplr( np.where((x>abs(xerr)*self.snr)&(y>abs(yerr)*self.snr),outarray,np.nan) ))
 
             self._fits_creation(
