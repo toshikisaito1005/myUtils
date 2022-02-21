@@ -3985,7 +3985,7 @@ class ToolsNcol():
             ecube_13co21 = self.outecubes_13co21.replace("???",this_beam)
 
             # output
-            rotation_13co21_13co10(
+            self.list_qqdata = rotation_13co21_13co10(
                 cube_13co10,
                 cube_13co21,
                 ecube_13co10,

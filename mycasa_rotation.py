@@ -116,6 +116,8 @@ def rotation_13co21_13co10(
     map_emom2[:,:]      = np.nan
     map_eratio[:,:]     = np.nan
 
+    list_qqdata = []
+
     for i in xy:
         # get data of this sightline
         this_x,this_y  = i[0],i[1]
@@ -160,6 +162,15 @@ def rotation_13co21_13co10(
                 absolute_sigma = True,
                 )
             perr = np.sqrt(np.diag(pcov))
+
+            # Q-Q plot
+            qf_two     = _f_two(x, popt[0], 0, popt[2], abs(popt[3]), restfreq_low, restfreq_high)
+            qthres     = mp.max(qf_two) * 0.026673718259424
+            qrange     = [np.where(qf_two>qthres)[0][0]:np.where(qf_two>qthres)[0][-1]+1]
+            qdatacsum  = np.cumsum( (this_data[qrange]-popt[0])/abs(popt[3]) )
+            qmodelcsum = np.cumsum( (qf_two[qrange]-popt[0])/abs(popt[3]) )
+            qqdata     = np.c_[qmodelcsum,qdatacsum]
+            list_qqdata.append(qqdata)
 
             p0 = popt[0] # 1-0
             p1 = popt[1] # 2-1
@@ -457,6 +468,8 @@ def rotation_13co21_13co10(
     # Ncol in log to fits
     fits_creation(map_logN.T,"logN_all.fits",cubelow,"cm**-2 in log10")
     fits_creation(map_elogN.T,"elogN_all.fits",cubelow,"cm**-2 in log10")
+
+    return list_qqdata
 
 #################
 # fit_two_lines #
