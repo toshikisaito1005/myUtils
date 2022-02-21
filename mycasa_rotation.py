@@ -164,30 +164,6 @@ def rotation_13co21_13co10(
                 )
             perr = np.sqrt(np.diag(pcov))
 
-            # Q-Q plot
-            qf_one  = np.array( _f_one( this_freq_low, popt[0], popt[2], abs(popt[3]), restfreq_low ) )
-            qthres  = popt[0] * 0.026673718259424 # 1st or 99th percentiles
-            qthres2 = popt[0] * 0.24197072451914  # +/-1sigma
-            if len(np.where(qf_one>qthres)[0])>3:
-                qrange  = [ np.where(qf_one>qthres)[0][0], np.where(qf_one>qthres)[0][-1]+1 ]
-                qrange2 = [ np.where(qf_one>qthres2)[0][0], np.where(qf_one>qthres2)[0][-1]+1 ]
-
-                #
-                qdata  = np.array(this_data_low[qrange[0]:qrange[1]])
-                qmodel = np.array(qf_one[qrange[0]:qrange[1]])
-                qerror = np.array(this_err_low[qrange[0]:qrange[1]])
-
-                qdatacsum  = np.cumsum( qdata / np.sum(qmodel) )
-                qmodelcsum = np.cumsum( qmodel / np.sum(qmodel) )
-                qresidual_snr = abs(np.sum(qdata)-np.sum(qmodel))/np.sqrt(np.sum(qerror**2))
-                qsnr       = (np.zeros(len(qdatacsum))+1) * qresidual_snr
-                qqdata     = np.c_[qmodelcsum,qdatacsum,qsnr]
-                list_qqdata.append(qqdata)
-
-                #map_residual[this_x,this_y] = qresidual_snr
-                if qresidual_snr>=3:
-                    map_residual[this_x,this_y] = 3
-
             p0 = popt[0] # 1-0
             p1 = popt[1] # 2-1
             pr = p1/p0   # 2-1/1-0
@@ -255,6 +231,30 @@ def rotation_13co21_13co10(
                     map_logN[this_x,this_y]   = logNmol
                     map_eTrot[this_x,this_y]  = eTrot
                     map_elogN[this_x,this_y]  = elogNmol
+
+                # Q-Q plot
+                qf_one  = np.array( _f_one( this_freq_low, popt[0], popt[2], abs(popt[3]), restfreq_low ) )
+                qthres  = popt[0] * 0.026673718259424 # 1st or 99th percentiles
+                qthres2 = popt[0] * 0.24197072451914  # +/-1sigma
+                if len(np.where(qf_one>qthres)[0])>3:
+                    qrange  = [ np.where(qf_one>qthres)[0][0], np.where(qf_one>qthres)[0][-1]+1 ]
+                    qrange2 = [ np.where(qf_one>qthres2)[0][0], np.where(qf_one>qthres2)[0][-1]+1 ]
+
+                    #
+                    qdata  = np.array(this_data_low[qrange[0]:qrange[1]])
+                    qmodel = np.array(qf_one[qrange[0]:qrange[1]])
+                    qerror = np.array(this_err_low[qrange[0]:qrange[1]])
+
+                    qdatacsum  = np.cumsum( qdata / np.sum(qmodel) )
+                    qmodelcsum = np.cumsum( qmodel / np.sum(qmodel) )
+                    qresidual_snr = abs(np.sum(qdata)-np.sum(qmodel))/np.sqrt(np.sum(qerror**2))
+                    qsnr       = (np.zeros(len(qdatacsum))+1) * qresidual_snr
+                    qqdata     = np.c_[qmodelcsum,qdatacsum,qsnr]
+                    list_qqdata.append(qqdata)
+
+                    #map_residual[this_x,this_y] = qresidual_snr
+                    if qresidual_snr>=3:
+                        map_residual[this_x,this_y] = 3
 
     # low-J mom0 to fits
     fits_creation(map_mom0_low.T,"mom0_low.fits",template,"K.km/s")
