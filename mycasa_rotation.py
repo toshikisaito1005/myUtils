@@ -247,12 +247,12 @@ def rotation_13co21_13co10(
 
                     qdatacsum  = np.cumsum( qdata / np.sum(qmodel) )
                     qmodelcsum = np.cumsum( qmodel / np.sum(qmodel) )
-                    qresidual_snr = np.max(abs(qdata-qmodel)/qerror) # abs(np.sum(qdata)-np.sum(qmodel))/np.sqrt(np.sum(qerror**2))
-                    qsnr       = (np.zeros(len(qdatacsum))+1) * qresidual_snr
+                    qresidual_ratio = np.sum(qdata-qmodel)/np.sum(qmodel) # abs(np.sum(qdata)-np.sum(qmodel))/np.sqrt(np.sum(qerror**2))
+                    qsnr       = (np.zeros(len(qdatacsum))+1) * qresidual_ratio
                     qqdata     = np.c_[qmodelcsum,qdatacsum,qsnr]
                     list_qqdata.append(qqdata)
 
-                    map_residual[this_x,this_y] = qresidual_snr
+                    map_residual[this_x,this_y] = qresidual_ratio
 
     # low-J mom0 to fits
     fits_creation(map_mom0_low.T,"mom0_low.fits",template,"K.km/s")

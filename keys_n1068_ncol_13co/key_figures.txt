@@ -70,7 +70,7 @@ outmaps_mom2              ,,,n1068_mom2_???.fits
 outmaps_ratio             ,,,n1068_ratio_???.fits
 outmaps_13co_trot         ,,,n1068_13co_trot_???.fits
 outmaps_13co_ncol         ,,,n1068_13co_log_ncol_???.fits
-outmaps_residual          ,,,n1068_residual_abs_snr_???.fits
+outmaps_residual          ,,,n1068_residual_model_ratio_???.fits
 #
 outemaps_13co10           ,,,n1068_emom0_13co10_???.fits
 outemaps_13co21           ,,,n1068_emom0_13co21_???.fits
