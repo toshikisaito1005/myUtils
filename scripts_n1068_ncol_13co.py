@@ -4055,11 +4055,11 @@ class ToolsNcol():
                 this_c = cm.rainbow( this_qqdata[:,2][0] / np.max(list_snr) )
                 ax1.plot(this_x, this_y, color=this_c, lw=2, marker=None, alpha=0.3)
 
-            sc = ax1.scatter(list_snr*0+2, list_snr, color=list_snr, cmap="rainbow", markersize=0)
+            cs = ax1.scatter(list_snr*0+2, list_snr, c=list_snr, cmap="rainbow", s=1)
 
             # colorbar
             cax = fig.add_axes([0.25, 0.81, 0.33, 0.04])
-            cbar = plt.colorbar(sc, cax=cax, orientation="horizontal")
+            cbar = plt.colorbar(cs, cax=cax, orientation="horizontal")
             cbar.set_label(cblabel)
             if cimage==None:
                 cbar.set_ticks([0,0.3,0.6,0.9,1.2])
