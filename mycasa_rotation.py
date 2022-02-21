@@ -168,7 +168,6 @@ def rotation_13co21_13co10(
             qthres  = popt[0] * 0.026673718259424 # 1st or 99th percentiles
             qthres2 = popt[0] * 0.24197072451914  # +/-1sigma
             if len(np.where(qf_one>qthres)[0])>3:
-                print(np.max(qf_one),popt[0])
                 qrange  = [ np.where(qf_one>qthres)[0][0], np.where(qf_one>qthres)[0][-1]+1 ]
                 qrange2 = [ np.where(qf_one>qthres2)[0][0], np.where(qf_one>qthres2)[0][-1]+1 ]
 
@@ -178,6 +177,7 @@ def rotation_13co21_13co10(
                 qmean  = np.argmax(qmodel)
                 qstd   = (qrange2[1] - qrange2[0]) / 2.0
 
+                print(len(qmodel),qmean)
                 qdatacsum  = np.cumsum( (qdata-qmean) )
                 qmodelcsum = np.cumsum( (qmodel-qmean) )
 
