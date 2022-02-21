@@ -165,7 +165,7 @@ def rotation_13co21_13co10(
 
             # Q-Q plot
             qf_two     = _f_two(x, popt[0], 0, popt[2], abs(popt[3]), restfreq_low, restfreq_high)
-            qthres     = mp.max(qf_two) * 0.026673718259424
+            qthres     = np.max(qf_two) * 0.026673718259424
             qrange     = [np.where(qf_two>qthres)[0][0],np.where(qf_two>qthres)[0][-1]+1]
             qdatacsum  = np.cumsum( (this_data[qrange[0]:qrange[1]]-popt[0])/abs(popt[3]) )
             qmodelcsum = np.cumsum( (qf_two[qrange[0]:qrange[1]]-popt[0])/abs(popt[3]) )
