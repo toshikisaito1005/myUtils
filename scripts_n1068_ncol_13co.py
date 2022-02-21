@@ -3995,6 +3995,7 @@ class ToolsNcol():
                 snr=self.snr_fit,
                 snr_limit=self.snr_fit,
                 )
+            print(self.list_qqdata)
 
             #
             os.system("mv mom0_low.fits " + self.outmaps_mom0_13co10.replace("???",this_beam))
