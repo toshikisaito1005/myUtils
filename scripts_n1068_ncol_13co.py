@@ -4039,7 +4039,7 @@ class ToolsNcol():
             xlim     = ylim = [-0.15,1.15]
             title    = "Quantile-Quantile plot"
             xlabel   = "Optimized Gaussian"
-            ylabel   = "Observed Spectrum"
+            ylabel   = "Observed $^{13}$CO(1-0) spectrum"
             cblabel  = "Residual/Gaussian ratio"
             vmax     = 1
             list_res = np.array([s[:,2][0] for s in self.list_qqdata])
@@ -4058,7 +4058,7 @@ class ToolsNcol():
 
                 #ax1.plot(this_x, this_y, color=this_c, lw=2, marker=None, alpha=0.3)
                 if this_res_snr>=0.2:
-                    ax1.plot(this_x, this_y, color="red", lw=2, marker=None, alpha=1.0, zorder=1e9)
+                    ax1.plot(this_x, this_y, color="tomato", lw=2, marker=None, alpha=1.0, zorder=1e9)
                 else:
                     ax1.plot(this_x, this_y, color="grey", lw=1, marker=None, alpha=0.3)
 
