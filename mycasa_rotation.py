@@ -165,12 +165,16 @@ def rotation_13co21_13co10(
 
             # Q-Q plot
             qf_two     = np.array(_f_two(x, popt[0], 0, popt[2], abs(popt[3]), restfreq_low, restfreq_high))
-            qthres     = popt[0] * 0.026673718259424
+            qthres     = popt[0] * 0.026673718259424 # 1st or 99th percentiles
+            qthres2    = popt[0] * 0.24197072451914  # +/-1sigma
             if len(np.where(qf_two>qthres)[0])>3:
+                qstd       = [ np.where(qf_two>qthres2)[0][0], np.where(qf_two>qthres2)[0][-1]+1 ]
+                qstd       = (qstd[1]-qstd[0]) / 2.0
                 qrange     = [ np.where(qf_two>qthres)[0][0], np.where(qf_two>qthres)[0][-1]+1 ]
-                qpos       = np.argmax(this_data[qrange[0]:qrange[1]])
-                qdatacsum  = np.cumsum( (this_data[qrange[0]:qrange[1]]-qpos)/abs(popt[3]) )
-                qmodelcsum = np.cumsum( (qf_two[qrange[0]:qrange[1]]-qpos)/abs(popt[3]) )
+                qpos       = np.argmax(qf_two[qrange[0]:qrange[1]])
+                qdisp      = np.std(qf_two[qrange[0]:qrange[1]])
+                qdatacsum  = np.cumsum( (this_data[qrange[0]:qrange[1]]-qpos) / qstd )
+                qmodelcsum = np.cumsum( (qf_two[qrange[0]:qrange[1]]-qpos) / qstd )
                 qqdata     = np.c_[qmodelcsum,qdatacsum]
                 list_qqdata.append(qqdata)
 
