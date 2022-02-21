@@ -4041,7 +4041,7 @@ class ToolsNcol():
             xlabel   = "fit"
             ylabel   = "data"
             cblabel  = "residual snr"
-            vmax     = 5
+            vmax     = 1
             list_res = np.array([s[:,2][0] for s in self.list_qqdata])
 
             fig = plt.figure(figsize=(13,10))
