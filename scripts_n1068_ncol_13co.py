@@ -4061,8 +4061,7 @@ class ToolsNcol():
             cax = fig.add_axes([0.25, 0.81, 0.33, 0.04])
             cbar = plt.colorbar(cs, cax=cax, orientation="horizontal")
             cbar.set_label(cblabel)
-            if cimage==None:
-                cbar.set_ticks([0,0.3,0.6,0.9,1.2])
+            #cbar.set_ticks([0,0.3,0.6,0.9,1.2])
 
             # ann
             ax1.plot(xlim,ylim,"--",color="black",lw=1)
