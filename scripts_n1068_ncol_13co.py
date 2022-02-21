@@ -4066,10 +4066,9 @@ class ToolsNcol():
             #cs = ax1.scatter(list_snr*0+2, list_snr, c=list_snr, cmap="rainbow", s=1, vmin=0, vmax=vmax)
 
             # colorbar
-            cax = fig.add_axes([0.25, 0.81, 0.33, 0.04])
-            cbar = plt.colorbar(cs, cax=cax, orientation="horizontal")
-            cbar.set_label(cblabel)
-            #cbar.set_ticks([0,0.3,0.6,0.9,1.2])
+            #cax = fig.add_axes([0.25, 0.81, 0.33, 0.04])
+            #cbar = plt.colorbar(cs, cax=cax, orientation="horizontal")
+            #cbar.set_label(cblabel)
 
             # ann
             ax1.plot(xlim,ylim,"--",color="black",lw=1)
