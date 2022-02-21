@@ -164,7 +164,7 @@ def rotation_13co21_13co10(
             perr = np.sqrt(np.diag(pcov))
 
             # Q-Q plot
-            qf_two     = np.array(_f_two(x, popt[0], 0, popt[2], abs(popt[3]), restfreq_low, restfreq_high))
+            qf_two     = np.array(_f_two(this_f_two, popt[0], 0, popt[2], abs(popt[3]), restfreq_low, restfreq_high))
             print(qf_two)
             qthres     = popt[0] * 0.026673718259424 # 1st or 99th percentiles
             qthres2    = popt[0] * 0.24197072451914  # +/-1sigma
@@ -175,8 +175,8 @@ def rotation_13co21_13co10(
 
                 #
                 qpos       = np.argmax(qf_two[qrange[0]:qrange[1]])
-                qdatacsum  = np.cumsum( (this_data[qrange[0]:qrange[1]]) )
-                qmodelcsum = np.cumsum( (qf_two[qrange[0]:qrange[1]]) )
+                qdatacsum  = np.cumsum( (this_data[qrange[0]:qrange[1]] - qpos) / qstd )
+                qmodelcsum = np.cumsum( (qf_two[qrange[0]:qrange[1]] - qpos) / qstd )
                 qqdata     = np.c_[qmodelcsum,qdatacsum]
                 list_qqdata.append(qqdata)
 
