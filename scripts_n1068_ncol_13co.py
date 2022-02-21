@@ -4084,7 +4084,7 @@ class ToolsNcol():
                 self.outpng_residual.replace("???",this_beam),
                 "Residual/Gaussian ratio map",
                 "Ratio",
-                clim=[0,1],
+                clim=[0,0.5],
                 )
 
         """ hcn10-hcop10 ratio case
