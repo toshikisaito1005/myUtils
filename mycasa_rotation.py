@@ -171,8 +171,9 @@ def rotation_13co21_13co10(
                 qstd       = [ np.where(qf_two>qthres2)[0][0], np.where(qf_two>qthres2)[0][-1]+1 ]
                 qstd       = (qstd[1]-qstd[0]) / 2.0
                 qrange     = [ np.where(qf_two>qthres)[0][0], np.where(qf_two>qthres)[0][-1]+1 ]
+
+                #
                 qpos       = np.argmax(qf_two[qrange[0]:qrange[1]])
-                qdisp      = np.std(qf_two[qrange[0]:qrange[1]])
                 qdatacsum  = np.cumsum( (this_data[qrange[0]:qrange[1]]-qpos) / qstd )
                 qmodelcsum = np.cumsum( (qf_two[qrange[0]:qrange[1]]-qpos) / qstd )
                 qqdata     = np.c_[qmodelcsum,qdatacsum]

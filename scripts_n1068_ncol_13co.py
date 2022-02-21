@@ -3996,6 +3996,7 @@ class ToolsNcol():
                 snr=self.snr_fit,
                 snr_limit=self.snr_fit,
                 )
+            print(self.list_qqdata)
 
             #
             os.system("mv mom0_low.fits " + self.outmaps_mom0_13co10.replace("???",this_beam))
@@ -4034,9 +4035,6 @@ class ToolsNcol():
             os.system("mv elogN_all.fits " + self.outemaps_13co_ncol.replace("???","all_"+this_beam))
 
             # plot qq-plot
-            # self.list_qqdata
-
-            # plot
             fig = plt.figure(figsize=(13,10))
             gs  = gridspec.GridSpec(nrows=10, ncols=10)
             ax1 = plt.subplot(gs[0:10,0:10])
