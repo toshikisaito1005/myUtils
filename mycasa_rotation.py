@@ -164,7 +164,7 @@ def rotation_13co21_13co10(
             perr = np.sqrt(np.diag(pcov))
 
             # Q-Q plot
-            qf_two     = np.array(this_f_two(this_freq, popt[0], 0, popt[2], abs(popt[3])))
+            qf_two     = np.array( _f_one( this_freq, popt[0], popt[2], abs(popt[3]), restfreq_low ) )
             print(qf_two)
             qthres     = popt[0] * 0.026673718259424 # 1st or 99th percentiles
             qthres2    = popt[0] * 0.24197072451914  # +/-1sigma
