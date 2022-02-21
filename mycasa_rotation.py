@@ -168,7 +168,7 @@ def rotation_13co21_13co10(
             qthres     = popt[0] * 0.026673718259424
             if len(np.where(qf_two>qthres)[0])>3:
                 qrange     = [ np.where(qf_two>qthres)[0][0], np.where(qf_two>qthres)[0][-1]+1 ]
-                qpos       = np.argmax(this_data[qrange[0]:qrange[1])
+                qpos       = np.argmax(this_data[qrange[0]:qrange[1]])
                 qdatacsum  = np.cumsum( (this_data[qrange[0]:qrange[1]]-qpos)/abs(popt[3]) )
                 qmodelcsum = np.cumsum( (qf_two[qrange[0]:qrange[1]]-qpos)/abs(popt[3]) )
                 qqdata     = np.c_[qmodelcsum,qdatacsum]
