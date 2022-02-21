@@ -179,12 +179,14 @@ def rotation_13co21_13co10(
 
                 qdatacsum  = np.cumsum( qdata / np.sum(qmodel) )
                 qmodelcsum = np.cumsum( qmodel / np.sum(qmodel) )
-                qresidual_snr = (np.sum(qdata)-np.sum(qmodel))/np.sqrt(np.sum(qerror**2))
+                qresidual_snr = abs(np.sum(qdata)-np.sum(qmodel))/np.sqrt(np.sum(qerror**2))
                 qsnr       = (np.zeros(len(qdatacsum))+1) * qresidual_snr
                 qqdata     = np.c_[qmodelcsum,qdatacsum,qsnr]
                 list_qqdata.append(qqdata)
 
-                map_residual[this_x,this_y]  = qresidual_snr
+                #map_residual[this_x,this_y] = qresidual_snr
+                if qresidual_snr>=3:
+                    map_residual[this_x,this_y] = 3
 
             p0 = popt[0] # 1-0
             p1 = popt[1] # 2-1
