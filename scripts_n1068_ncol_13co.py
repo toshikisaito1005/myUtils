@@ -274,6 +274,7 @@ class ToolsNcol():
         self.outpng_avir               = self.dir_products + self._read_key("outpng_avir")
         self.outpng_violin_pturb       = self.dir_products + self._read_key("outpng_violin_pturb")
         self.outpng_violin_avir        = self.dir_products + self._read_key("outpng_violin_avir")
+        self.outpng_qqplot             = self.dir_products + self._read_key("outpng_qqplot")
 
         # finals
         self.final_60pc_obs      = self.dir_final + self._read_key("final_60pc_obs")
@@ -3995,7 +3996,6 @@ class ToolsNcol():
                 snr=self.snr_fit,
                 snr_limit=self.snr_fit,
                 )
-            print(self.list_qqdata)
 
             #
             os.system("mv mom0_low.fits " + self.outmaps_mom0_13co10.replace("???",this_beam))
@@ -4032,6 +4032,25 @@ class ToolsNcol():
             os.system("mv eratio_all.fits " + self.outemaps_ratio.replace("???","all_"+this_beam))
             os.system("mv eTrot_all.fits " + self.outemaps_13co_trot.replace("???","all_"+this_beam))
             os.system("mv elogN_all.fits " + self.outemaps_13co_ncol.replace("???","all_"+this_beam))
+
+            # plot qq-plot
+            # self.list_qqdata
+
+            # plot
+            fig = plt.figure(figsize=(13,10))
+            gs  = gridspec.GridSpec(nrows=10, ncols=10)
+            ax1 = plt.subplot(gs[0:10,0:10])
+            ad  = [0.215,0.83,0.10,0.90]
+            myax_set(ax1, None, None, None, None, None, None, adjust=ad)
+
+            for this_qqdata in self.list_qqdata:
+                this_x = this_qqdata[:,0]
+                this_y = this_qqdata[:,1]
+            ax1.plot(this_x, this_y, lw=1, marker=None, color="grey", alpha=0.3)
+
+            # save
+            os.system("rm -rf " + self.outpng_qqplot)
+            plt.savefig(self.outpng_qqplot, dpi=self.fig_dpi)
 
         """ hcn10-hcop10 ratio case
         for this_beam in ["60pc"]:
