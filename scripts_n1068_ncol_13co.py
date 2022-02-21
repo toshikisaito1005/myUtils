@@ -4059,9 +4059,9 @@ class ToolsNcol():
 
                 #ax1.plot(this_x, this_y, color=this_c, lw=2, marker=None, alpha=0.3)
                 if this_res_snr>=0.2:
-                    ax1.plot(this_x, this_y, color="tomato", lw=2, marker=None, alpha=1.0, zorder=1e9)
+                    ax1.plot(this_x, this_y, color="tomato", lw=2, marker=None, alpha=1.0)
                 else:
-                    ax1.plot(this_x, this_y, color="grey", lw=1, marker=None, alpha=0.3)
+                    ax1.plot(this_x, this_y, color="grey", lw=1, marker=None, alpha=0.3, zorder=1e9)
 
             #cs = ax1.scatter(list_res*0+2, list_res, c=list_res, cmap="rainbow", s=1, vmin=0, vmax=vmax)
 
