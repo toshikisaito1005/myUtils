@@ -4040,7 +4040,7 @@ class ToolsNcol():
             xlabel = "fit"
             ylabel = "data"
 
-            list_snr = [s[:,3][0] for s in self.list_qqdata]
+            list_snr = [s[:,2][0] for s in self.list_qqdata]
 
 
             fig = plt.figure(figsize=(13,10))
