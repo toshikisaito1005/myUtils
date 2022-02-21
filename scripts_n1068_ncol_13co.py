@@ -4053,12 +4053,12 @@ class ToolsNcol():
             for this_qqdata in self.list_qqdata:
                 this_x = this_qqdata[:,0]
                 this_y = this_qqdata[:,1]
-                thsi_res_snr = this_qqdata[:,2][0]
-                this_c = cm.rainbow(thsi_res_snr)
+                this_res_snr = this_qqdata[:,2][0]
+                this_c = cm.rainbow(this_res_snr)
 
-                ax1.plot(this_x, this_y, color=this_c, lw=2, marker=None, alpha=0.3)
-                if thsi_res_snr>=0.2:
-                    ax1.plot(this_x, this_y, color=this_c, lw=2, marker=None, alpha=1.0, zorder=1e9)
+                #ax1.plot(this_x, this_y, color=this_c, lw=2, marker=None, alpha=0.3)
+                if this_res_snr>=0.2:
+                    ax1.plot(this_x, this_y, color="red", lw=1, marker=None, alpha=0.3, zorder=1e9)
                 else:
                     ax1.plot(this_x, this_y, color="grey", lw=1, marker=None, alpha=0.3)
 
