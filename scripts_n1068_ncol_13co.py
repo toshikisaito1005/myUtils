@@ -4040,8 +4040,8 @@ class ToolsNcol():
             title = "test"
             xlabel = "fit"
             ylabel = "data"
-            cblabel = "snr"
-            vmax = 20
+            cblabel = "residual snr"
+            vmax = 5
 
             list_snr = np.array([s[:,2][0] for s in self.list_qqdata])
 
