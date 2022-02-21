@@ -4036,6 +4036,10 @@ class ToolsNcol():
 
             # plot qq-plot
             xlim = ylim = [-0.1,1.1]
+            title = "test"
+            xlabel = "fit"
+            ylabel = "data"
+            
             fig = plt.figure(figsize=(13,10))
             gs  = gridspec.GridSpec(nrows=10, ncols=10)
             ax1 = plt.subplot(gs[0:10,0:10])
