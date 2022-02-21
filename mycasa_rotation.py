@@ -184,7 +184,7 @@ def rotation_13co21_13co10(
 
                 qsnr       = (np.zeros(len(qdatacsum))+1) * qresidual_snr
 
-                qqdata     = np.c_[qmodelcsum,qdatacsum,qresidual_snr]
+                qqdata     = np.c_[qmodelcsum,qdatacsum,qsnr]
                 list_qqdata.append(qqdata)
 
                 map_residual[this_x,this_y]  = qresidual_snr
