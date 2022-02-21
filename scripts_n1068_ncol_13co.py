@@ -4037,10 +4037,10 @@ class ToolsNcol():
 
             # plot qq-plot
             xlim     = ylim = [-0.15,1.15]
-            title    = "test"
-            xlabel   = "fit"
-            ylabel   = "data"
-            cblabel  = "residual snr"
+            title    = "Quantile-Quantile plot"
+            xlabel   = "Optimized Gaussian"
+            ylabel   = "Observed Spectrum"
+            cblabel  = "Residual/Gaussian ratio"
             vmax     = 1
             list_res = np.array([s[:,2][0] for s in self.list_qqdata])
 
@@ -4057,10 +4057,10 @@ class ToolsNcol():
                 this_c = cm.rainbow(thsi_res_snr)
 
                 ax1.plot(this_x, this_y, color=this_c, lw=2, marker=None, alpha=0.3)
-                #if thsi_res_snr>=5:
-                #    ax1.plot(this_x, this_y, color="red", lw=2, marker=None, alpha=1.0, zorder=1e9)
-                #else:
-                #    ax1.plot(this_x, this_y, color="grey", lw=1, marker=None, alpha=0.3)
+                if thsi_res_snr>=0.2:
+                    ax1.plot(this_x, this_y, color=this_c, lw=2, marker=None, alpha=1.0, zorder=1e9)
+                else:
+                    ax1.plot(this_x, this_y, color="grey", lw=1, marker=None, alpha=0.3)
 
             cs = ax1.scatter(list_res*0+2, list_res, c=list_res, cmap="rainbow", s=1, vmin=0, vmax=vmax)
 
@@ -4068,7 +4068,7 @@ class ToolsNcol():
             cax = fig.add_axes([0.25, 0.81, 0.33, 0.04])
             cbar = plt.colorbar(cs, cax=cax, orientation="horizontal")
             cbar.set_label(cblabel)
-            #cbar.set_ticks([0,0.3,0.6,0.9,1.2])
+            cbar.set_ticks([0,0.2,0.4,0.6,0.8,1.0])
 
             # ann
             ax1.plot(xlim,ylim,"--",color="black",lw=1)
