@@ -122,6 +122,7 @@ outpng_emom2              ,,,fig_map_emom2_???.png
 outpng_eratio             ,,,fig_map_eratio_???.png
 outpng_e13co_trot         ,,,fig_map_etrot_???.png
 outpng_e13co_ncol         ,,,fig_map_encol_???.png
+outpng_residual           ,,,fig_map_residual_???.png
 outpng_modelmom0_13co10   ,,,fig_map_modelmom0_13co10.png
 outpng_modelmom0_13co21   ,,,fig_map_modelmom0_13co21.png
 outpng_simumom0_13co10    ,,,fig_map_simumom0_13co10.png

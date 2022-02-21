@@ -252,6 +252,7 @@ class ToolsNcol():
         self.outpng_eratio       = self.dir_products + self._read_key("outpng_eratio")
         self.outpng_e13co_trot   = self.dir_products + self._read_key("outpng_e13co_trot")
         self.outpng_e13co_ncol   = self.dir_products + self._read_key("outpng_e13co_ncol")
+        self.outpng_residual     = self.dir_products + self._read_key("outpng_residual")
 
         self.outpng_modelmom0_13co10 = self.dir_products + self._read_key("outpng_modelmom0_13co10")
         self.outpng_modelmom0_13co21 = self.dir_products + self._read_key("outpng_modelmom0_13co21")
@@ -3975,7 +3976,7 @@ class ToolsNcol():
         check_first(self.outcubes_13co10.replace("???","60pc"),taskname)
 
         for this_beam in self.beams:
-            if this_beam!="150pc":
+            if this_beam!="60pc":
                 continue
 
             print("# multi_fitting for cubes at " + this_beam)
@@ -4071,11 +4072,20 @@ class ToolsNcol():
             #cbar.set_ticks([0,0.2,0.4,0.6,0.8,1.0])
 
             # ann
-            ax1.plot(xlim,ylim,"--",color="black",lw=1)
+            ax1.plot(xlim,ylim,"--",color="black",lw=1,zorder=1e10)
 
             # save
             os.system("rm -rf " + self.outpng_qqplot)
             plt.savefig(self.outpng_qqplot, dpi=self.fig_dpi)
+
+            self._showcase_one(
+                self.outmaps_residual.replace("???",this_beam),
+                self.outmaps_mom0_13co10.replace("???",this_beam),
+                self.outpng_residual,
+                "Residual/Gaussian ratio map",
+                "Ratio",
+                clim=[0,1],
+                )
 
         """ hcn10-hcop10 ratio case
         for this_beam in ["60pc"]:
