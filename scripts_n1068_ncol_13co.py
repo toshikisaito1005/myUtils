@@ -4035,21 +4035,24 @@ class ToolsNcol():
             os.system("mv elogN_all.fits " + self.outemaps_13co_ncol.replace("???","all_"+this_beam))
 
             # plot qq-plot
-            xlim = ylim = [-0.1,1.1]
+            xlim = ylim = [-0.2,1.2]
             title = "test"
             xlabel = "fit"
             ylabel = "data"
-            
+
             fig = plt.figure(figsize=(13,10))
             gs  = gridspec.GridSpec(nrows=10, ncols=10)
             ax1 = plt.subplot(gs[0:10,0:10])
             ad  = [0.215,0.83,0.10,0.90]
-            myax_set(ax1, None, xlim, ylim, title, xlabel, ylabel, adjust=ad)
+            myax_set(ax1, "both", xlim, ylim, title, xlabel, ylabel, adjust=ad)
 
             for this_qqdata in self.list_qqdata:
                 this_x = this_qqdata[:,0]
                 this_y = this_qqdata[:,1]
                 ax1.plot(this_x, this_y, lw=1, marker=None, color="grey", alpha=0.3)
+
+            # ann
+            ax1.plot(xlim,ylim,"--",color="black",lw=1)
 
             # save
             os.system("rm -rf " + self.outpng_qqplot)
