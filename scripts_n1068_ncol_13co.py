@@ -4057,7 +4057,7 @@ class ToolsNcol():
 
             # colorbar
             cax = fig.add_axes([0.25, 0.81, 0.33, 0.04])
-            cbar = plt.colorbar(list_snr, cax=cax, orientation="horizontal")
+            cbar = plt.colorbar(np.array(list_snr), cax=cax, orientation="horizontal")
             cbar.set_label(cblabel)
             if cimage==None:
                 cbar.set_ticks([0,0.3,0.6,0.9,1.2])
