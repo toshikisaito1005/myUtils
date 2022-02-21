@@ -4081,7 +4081,7 @@ class ToolsNcol():
             self._showcase_one(
                 self.outmaps_residual.replace("???",this_beam),
                 self.outmaps_mom0_13co10.replace("???",this_beam),
-                self.outpng_residual,
+                self.outpng_residual.replace("???",this_beam),
                 "Residual/Gaussian ratio map",
                 "Ratio",
                 clim=[0,1],
