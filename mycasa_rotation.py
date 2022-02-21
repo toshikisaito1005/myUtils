@@ -169,7 +169,7 @@ def rotation_13co21_13co10(
             qthres2    = popt[0] * 0.24197072451914  # +/-1sigma
             if len(np.where(qf_two>qthres)[0])>3:
                 qstd       = [ np.where(qf_two>qthres2)[0][0], np.where(qf_two>qthres2)[0][-1]+1 ]
-                qstd       = (qstd[1]-qstd[0]) / 2.0
+                qstd       = float((qstd[1]-qstd[0]) / 2.0)
                 qrange     = [ np.where(qf_two>qthres)[0][0], np.where(qf_two>qthres)[0][-1]+1 ]
 
                 #
