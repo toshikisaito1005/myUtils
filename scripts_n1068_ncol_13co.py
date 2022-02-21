@@ -3996,7 +3996,6 @@ class ToolsNcol():
                 snr=self.snr_fit,
                 snr_limit=self.snr_fit,
                 )
-            print(self.list_qqdata)
 
             #
             os.system("mv mom0_low.fits " + self.outmaps_mom0_13co10.replace("???",this_beam))
@@ -4039,6 +4038,7 @@ class ToolsNcol():
             title = "test"
             xlabel = "fit"
             ylabel = "data"
+            cblabel = "snr"
 
             list_snr = [s[:,2][0] for s in self.list_qqdata]
 
@@ -4053,7 +4053,14 @@ class ToolsNcol():
                 this_x = this_qqdata[:,0]
                 this_y = this_qqdata[:,1]
                 this_c = cm.rainbow( this_qqdata[:,2][0] / np.max(list_snr) )
-                ax1.plot(this_x, this_y, color=this_c, lw=1, marker=None, alpha=0.3)
+                ax1.plot(this_x, this_y, color=this_c, lw=2, marker=None, alpha=0.3)
+
+            # colorbar
+            cax = fig.add_axes([0.25, 0.81, 0.33, 0.04])
+            cbar = plt.colorbar(list_snr, cax=cax, orientation="horizontal")
+            cbar.set_label(cblabel)
+            if cimage==None:
+                cbar.set_ticks([0,0.3,0.6,0.9,1.2])
 
             # ann
             ax1.plot(xlim,ylim,"--",color="black",lw=1)
