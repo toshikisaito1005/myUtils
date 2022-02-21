@@ -178,7 +178,7 @@ def rotation_13co21_13co10(
                 qdatacsum  = np.cumsum( qdata / np.sum(qmodel) )
                 qmodelcsum = np.cumsum( qmodel / np.sum(qmodel) )
 
-                qqdata     = np.c_[qmodelcsum,qdatacsum]
+                qqdata     = np.c_[qmodelcsum,qdatacsum,max_snr_low]
                 list_qqdata.append(qqdata)
 
             p0 = popt[0] # 1-0

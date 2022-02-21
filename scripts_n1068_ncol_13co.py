@@ -4040,6 +4040,9 @@ class ToolsNcol():
             xlabel = "fit"
             ylabel = "data"
 
+            list_snr = [s[:,3] for s in self.list_qqdata]
+
+
             fig = plt.figure(figsize=(13,10))
             gs  = gridspec.GridSpec(nrows=10, ncols=10)
             ax1 = plt.subplot(gs[0:10,0:10])
@@ -4049,7 +4052,8 @@ class ToolsNcol():
             for this_qqdata in self.list_qqdata:
                 this_x = this_qqdata[:,0]
                 this_y = this_qqdata[:,1]
-                ax1.plot(this_x, this_y, lw=1, marker=None, color="grey", alpha=0.3)
+                this_c = cm.rainbow(this_qqdata[:,2] / np.max(list_snr))
+                ax1.plot(this_x, this_y, color=this_c, lw=1, marker=None, alpha=0.3)
 
             # ann
             ax1.plot(xlim,ylim,"--",color="black",lw=1)
