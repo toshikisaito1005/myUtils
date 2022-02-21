@@ -4075,8 +4075,8 @@ class ToolsNcol():
             ax1.plot(xlim,ylim,"--",color="black",lw=1,zorder=1e10)
 
             # save
-            os.system("rm -rf " + self.outpng_qqplot)
-            plt.savefig(self.outpng_qqplot, dpi=self.fig_dpi)
+            os.system("rm -rf " + self.outpng_qqplot.replace("???",this_beam))
+            plt.savefig(self.outpng_qqplot.replace("???",this_beam), dpi=self.fig_dpi)
 
             self._showcase_one(
                 self.outmaps_residual.replace("???",this_beam),
