@@ -4036,15 +4036,13 @@ class ToolsNcol():
             os.system("mv elogN_all.fits " + self.outemaps_13co_ncol.replace("???","all_"+this_beam))
 
             # plot qq-plot
-            xlim = ylim = [-0.15,1.15]
-            title = "test"
-            xlabel = "fit"
-            ylabel = "data"
-            cblabel = "residual snr"
-            vmax = 5
-
+            xlim     = ylim = [-0.15,1.15]
+            title    = "test"
+            xlabel   = "fit"
+            ylabel   = "data"
+            cblabel  = "residual snr"
+            vmax     = 5
             list_snr = np.array([s[:,2][0] for s in self.list_qqdata])
-
 
             fig = plt.figure(figsize=(13,10))
             gs  = gridspec.GridSpec(nrows=10, ncols=10)
@@ -4055,8 +4053,9 @@ class ToolsNcol():
             for this_qqdata in self.list_qqdata:
                 this_x = this_qqdata[:,0]
                 this_y = this_qqdata[:,1]
-                thsi_res_snr = this_qqdata[:,2][0] / vmax
+                thsi_res_snr = list_snr
                 this_c = cm.rainbow(thsi_res_snr)
+
                 #ax1.plot(this_x, this_y, color=this_c, lw=2, marker=None, alpha=0.3)
                 if thsi_res_snr>=5:
                     ax1.plot(this_x, this_y, color="red", lw=2, marker=None, alpha=1.0, zorder=1e9)
