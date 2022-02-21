@@ -4036,7 +4036,7 @@ class ToolsNcol():
             os.system("mv elogN_all.fits " + self.outemaps_13co_ncol.replace("???","all_"+this_beam))
 
             # plot qq-plot
-            xlim = ylim = [-0.2,1.2]
+            xlim = ylim = [-0.15,1.15]
             title = "test"
             xlabel = "fit"
             ylabel = "data"
@@ -4058,8 +4058,8 @@ class ToolsNcol():
                 thsi_res_snr = this_qqdata[:,2][0] / vmax
                 this_c = cm.rainbow(thsi_res_snr)
                 #ax1.plot(this_x, this_y, color=this_c, lw=2, marker=None, alpha=0.3)
-                if thsi_res_snr>=3:
-                    ax1.plot(this_x, this_y, color="red", lw=2, marker=None, alpha=0.3)
+                if thsi_res_snr>=5:
+                    ax1.plot(this_x, this_y, color="red", lw=2, marker=None, alpha=0.3, zorder=1e9)
                 else:
                     ax1.plot(this_x, this_y, color="grey", lw=1, marker=None, alpha=0.3)
 
@@ -4069,6 +4069,7 @@ class ToolsNcol():
             #cax = fig.add_axes([0.25, 0.81, 0.33, 0.04])
             #cbar = plt.colorbar(cs, cax=cax, orientation="horizontal")
             #cbar.set_label(cblabel)
+            #cbar.set_ticks([0,0.3,0.6,0.9,1.2])
 
             # ann
             ax1.plot(xlim,ylim,"--",color="black",lw=1)
