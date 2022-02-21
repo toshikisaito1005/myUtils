@@ -4046,7 +4046,7 @@ class ToolsNcol():
             for this_qqdata in self.list_qqdata:
                 this_x = this_qqdata[:,0]
                 this_y = this_qqdata[:,1]
-            ax1.plot(this_x, this_y, lw=1, marker=None, color="grey", alpha=0.3)
+                ax1.plot(this_x, this_y, lw=1, marker=None, color="grey", alpha=0.3)
 
             # save
             os.system("rm -rf " + self.outpng_qqplot)
