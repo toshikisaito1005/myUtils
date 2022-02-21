@@ -252,9 +252,7 @@ def rotation_13co21_13co10(
                     qqdata     = np.c_[qmodelcsum,qdatacsum,qsnr]
                     list_qqdata.append(qqdata)
 
-                    #map_residual[this_x,this_y] = qresidual_snr
-                    if qresidual_snr>=5:
-                        map_residual[this_x,this_y] = 5
+                    map_residual[this_x,this_y] = qresidual_snr
 
     # low-J mom0 to fits
     fits_creation(map_mom0_low.T,"mom0_low.fits",template,"K.km/s")
