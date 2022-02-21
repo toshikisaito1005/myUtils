@@ -4055,7 +4055,7 @@ class ToolsNcol():
                 this_c = cm.rainbow( this_qqdata[:,2][0] / 20 )
                 ax1.plot(this_x, this_y, color=this_c, lw=2, marker=None, alpha=0.3)
 
-            cs = ax1.scatter(list_snr*0+2, list_snr, c=list_snr, cmap="rainbow", s=1, vmin=0, vmax=20)
+            cs = ax1.scatter(list_snr*0+2, list_snr, c=list_snr, cmap="rainbow", s=1, vmin=0, vmax=40)
 
             # colorbar
             cax = fig.add_axes([0.25, 0.81, 0.33, 0.04])
