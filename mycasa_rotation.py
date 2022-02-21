@@ -91,6 +91,7 @@ def rotation_13co21_13co10(
     map_mom1            = np.zeros((np.shape(data_low)[0],np.shape(data_low)[1]))
     map_mom2            = np.zeros((np.shape(data_low)[0],np.shape(data_low)[1]))
     map_ratio           = np.zeros((np.shape(data_low)[0],np.shape(data_low)[1]))
+    map_residual        = np.zeros((np.shape(data_low)[0],np.shape(data_low)[1]))
 
     map_eTrot           = np.zeros((np.shape(data_low)[0],np.shape(data_low)[1]))
     map_elogN           = np.zeros((np.shape(data_low)[0],np.shape(data_low)[1]))
@@ -174,6 +175,7 @@ def rotation_13co21_13co10(
                 #
                 qdata  = np.array(this_data_low[qrange[0]:qrange[1]])
                 qmodel = np.array(qf_one[qrange[0]:qrange[1]])
+                qerror = np.array(this_err_low[qrange[0]:qrange[1]])
 
                 qdatacsum  = np.cumsum( qdata / np.sum(qmodel) )
                 qmodelcsum = np.cumsum( qmodel / np.sum(qmodel) )
@@ -181,6 +183,9 @@ def rotation_13co21_13co10(
 
                 qqdata     = np.c_[qmodelcsum,qdatacsum,qsnr]
                 list_qqdata.append(qqdata)
+
+                this_residual = np.max( abs(qdata-qmodel)/qerror )
+                map_residual[this_x,this_y]  = this_residual
 
             p0 = popt[0] # 1-0
             p1 = popt[1] # 2-1
@@ -277,6 +282,9 @@ def rotation_13co21_13co10(
     # Ncol in log to fits
     fits_creation(map_logN.T,"logN.fits",cubelow,"cm**-2 in log10")
     fits_creation(map_elogN.T,"elogN.fits",cubelow,"cm**-2 in log10")
+
+    # residual of the fitting
+    fits_creation(map_residual.T,"residual_snr.fits",cubelow,"")
 
     max_ratio_detected = np.nanmax(map_ratio)
     max_trot_detected  = np.nanmax(map_Trot)

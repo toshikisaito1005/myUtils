@@ -160,6 +160,7 @@ class ToolsNcol():
         self.outmaps_ratio       = self.dir_ready + self._read_key("outmaps_ratio")
         self.outmaps_13co_trot   = self.dir_ready + self._read_key("outmaps_13co_trot")
         self.outmaps_13co_ncol   = self.dir_ready + self._read_key("outmaps_13co_ncol")
+        self.outmaps_residual    = self.dir_ready + self._read_key("outmaps_residual")
 
         self.outemaps_mom0_13co10 = self.dir_ready + self._read_key("outemaps_13co10")
         self.outemaps_mom0_13co21 = self.dir_ready + self._read_key("outemaps_13co21")
@@ -4005,6 +4006,7 @@ class ToolsNcol():
             os.system("mv ratio.fits " + self.outmaps_ratio.replace("???",this_beam))
             os.system("mv Trot.fits " + self.outmaps_13co_trot.replace("???",this_beam))
             os.system("mv logN.fits " + self.outmaps_13co_ncol.replace("???",this_beam))
+            os.system("mv residual_snr.fits " + self.outmaps_residual.replace("???",this_beam))
 
             #
             os.system("mv emom0_low.fits " + self.outemaps_mom0_13co10.replace("???",this_beam))
