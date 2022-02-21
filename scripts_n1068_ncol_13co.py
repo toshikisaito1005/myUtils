@@ -4040,7 +4040,7 @@ class ToolsNcol():
             xlabel = "fit"
             ylabel = "data"
 
-            list_snr = [s[:,3] for s in self.list_qqdata]
+            list_snr = [s[:,3][0] for s in self.list_qqdata]
 
 
             fig = plt.figure(figsize=(13,10))
@@ -4052,7 +4052,7 @@ class ToolsNcol():
             for this_qqdata in self.list_qqdata:
                 this_x = this_qqdata[:,0]
                 this_y = this_qqdata[:,1]
-                this_c = cm.rainbow(this_qqdata[:,2] / np.max(list_snr))
+                this_c = cm.rainbow( this_qqdata[:,2][0] / np.max(list_snr) )
                 ax1.plot(this_x, this_y, color=this_c, lw=1, marker=None, alpha=0.3)
 
             # ann
