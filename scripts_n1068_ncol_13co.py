@@ -4059,7 +4059,7 @@ class ToolsNcol():
                 this_c = cm.rainbow(thsi_res_snr)
                 #ax1.plot(this_x, this_y, color=this_c, lw=2, marker=None, alpha=0.3)
                 if thsi_res_snr>=5:
-                    ax1.plot(this_x, this_y, color="red", lw=2, marker=None, alpha=0.3, zorder=1e9)
+                    ax1.plot(this_x, this_y, color="red", lw=2, marker=None, alpha=1.0, zorder=1e9)
                 else:
                     ax1.plot(this_x, this_y, color="grey", lw=1, marker=None, alpha=0.3)
 
