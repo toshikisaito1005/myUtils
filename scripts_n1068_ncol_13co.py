@@ -4059,7 +4059,7 @@ class ToolsNcol():
 
                 #ax1.plot(this_x, this_y, color=this_c, lw=2, marker=None, alpha=0.3)
                 if this_res_snr>=0.2:
-                    ax1.plot(this_x, this_y, color="tomato", lw=2, marker=None, alpha=1.0)
+                    ax1.plot(this_x, this_y, color="tomato", lw=1, marker=None, alpha=1.0)
                 else:
                     ax1.plot(this_x, this_y, color="grey", lw=1, marker=None, alpha=0.3, zorder=1e9)
 
@@ -4084,7 +4084,7 @@ class ToolsNcol():
                 self.outpng_residual.replace("???",this_beam),
                 "Residual/Gaussian ratio map",
                 "Ratio",
-                clim=[0,0.5],
+                clim=[0,0.2],
                 )
 
         """ hcn10-hcop10 ratio case
