@@ -21,6 +21,7 @@ final_aco                 ,,,fig_aco.png
 final_jet                 ,,,fig_jet.png
 final_gmc                 ,,,fig_gmc.png
 # appendix
+final_qqplot              ,,,fig_qqplot.png
 final_60pc_err            ,,,fig_gallery_err_60pc.png
 final_sim_input           ,,,fig_sim_input.png
 final_sim_mom0            ,,,fig_sim_mom0.png

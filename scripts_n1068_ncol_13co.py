@@ -288,6 +288,7 @@ class ToolsNcol():
         self.final_jet           = self.dir_final + self._read_key("final_jet")
         self.final_gmc           = self.dir_final + self._read_key("final_gmc")
         # appendix
+        self.final_qqplot        = self.dir_final + self._read_key("final_qqplot")
         self.final_60pc_err      = self.dir_final + self._read_key("final_60pc_err")
         self.final_sim_input     = self.dir_final + self._read_key("final_sim_input")
         self.final_sim_mom0      = self.dir_final + self._read_key("final_sim_mom0")
@@ -420,8 +421,9 @@ class ToolsNcol():
         do_final_radial       = False,
         do_final_aco          = False,
         do_final_jet          = False,
-        do_final_gmc          = True,
+        do_final_gmc          = False,
         # appendix
+        do_final_qqplot       = True,
         do_final_60pc_err     = False,
         do_final_sim_input    = False,
         do_final_sim_mom0     = False,
@@ -459,6 +461,7 @@ class ToolsNcol():
             do_final_jet          = True
             do_final_gmc          = True
             # appendix
+            do_final_qqplot       = True
             do_final_60pc_err     = True
             do_final_sim_input    = True
             do_final_sim_mom0     = True
@@ -640,6 +643,21 @@ class ToolsNcol():
         ############
         # appendix #
         ############
+        if do_final_qqplot==True:
+            print("##########################")
+            print("# create do_final_qqplot #")
+            print("##########################")
+
+            combine_two_png(
+                self.outpng_qqplot.replace("???","60pc"),
+                self.outpng_residual.replace("???","60pc"),
+                self.final_qqplot,
+                self.box_map_noc,
+                self.box_map,
+                axis="column",
+                delin=True,
+                )
+
         if do_final_60pc_err==True:
             print("############################")
             print("# create do_final_60pc_err #")
