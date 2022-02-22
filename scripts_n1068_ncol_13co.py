@@ -654,8 +654,7 @@ class ToolsNcol():
                 self.final_qqplot,
                 self.box_map_noc,
                 self.box_map,
-                axis="column",
-                delin=True,
+                delin=delin,
                 )
 
         if do_final_60pc_err==True:
@@ -4057,9 +4056,9 @@ class ToolsNcol():
             # plot qq-plot
             xlim     = ylim = [-0.15,1.15]
             title    = "Quantile-Quantile plot"
-            xlabel   = "Optimized Gaussian"
-            ylabel   = "Observed $^{13}$CO(1-0) spectrum"
-            cblabel  = "Residual/Gaussian ratio"
+            xlabel   = "Gaussian quantiles"
+            ylabel   = "Observation quantiles"
+            cblabel  = "Residual-to-Gaussian intensity ratio"
             vmax     = 1
             list_res = np.array([s[:,2][0] for s in self.list_qqdata])
 
@@ -4100,7 +4099,7 @@ class ToolsNcol():
                 self.outmaps_residual.replace("???",this_beam),
                 self.outmaps_mom0_13co21.replace("???",this_beam),
                 self.outpng_residual.replace("???",this_beam),
-                "Residual/Gaussian ratio map",
+                "Residual-to-Gaussian intensity ratio",
                 "Ratio",
                 clim=[0,0.2],
                 )
