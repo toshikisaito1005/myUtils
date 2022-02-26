@@ -153,7 +153,7 @@ def rotation_13co21_13co10(
 
             # fitting
             this_f_two = lambda x, a1, a2, b, c: _f_two(x, a1, a2, b, c, restfreq_low, restfreq_high)
-            print(np.mean(this_f_two),np.mean(this_freq),np.mean(this_data),np.mean(this_err))
+            print(np.mean(this_freq),np.mean(this_data),np.mean(this_err))
             popt,pcov  = curve_fit(
                 this_f_two,
                 this_freq,
