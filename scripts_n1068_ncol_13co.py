@@ -2970,7 +2970,6 @@ class ToolsNcol():
                 cubehigh,
                 "noisemodel_low.fits",
                 "noisemodel_high.fits",
-                fitsigma=False,
                 ra_cnt=self.ra_agn,
                 dec_cnt=self.dec_agn,
                 snr=self.snr_fit,
