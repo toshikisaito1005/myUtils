@@ -5208,7 +5208,7 @@ class ToolsNcol():
         gs  = gridspec.GridSpec(nrows=10, ncols=10)
         ax1 = plt.subplot(gs[0:10,0:10])
         ad  = [0.215,0.83,0.10,0.90]
-        myax_set(ax1, "y", [-0.5,8.5], tlim, title, None, ylabel, adjust=ad)
+        myax_set(ax1, "y", [-0.5,15.5], lim2, None, None, None, adjust=ad)
 
         #ax1.set_xticks([1,3,5,7])
         #ax1.set_xticklabels(["All","CND","INT","SBR"], rotation=0, ha="center")
