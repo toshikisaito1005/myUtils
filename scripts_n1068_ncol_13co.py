@@ -2560,12 +2560,12 @@ class ToolsNcol():
 
     def simulate_mom_13co10(
         self,
-        do_noclip=False,
-        do_zeroclip=False,
-        do_clip=False,
-        do_noclip_mask=False,
-        do_zeroclip_mask=False,
-        do_clip_mask=False,
+        do_noclip=True,
+        do_zeroclip=True,
+        do_clip=True,
+        do_noclip_mask=True,
+        do_zeroclip_mask=True,
+        do_clip_mask=True,
         do_fitting=True,
         rms=0.227283716202,
         ):
@@ -2984,12 +2984,12 @@ class ToolsNcol():
 
     def simulate_mom_13co21(
         self,
-        do_noclip=False,
-        do_zeroclip=False,
-        do_clip=False,
-        do_noclip_mask=False,
-        do_zeroclip_mask=False,
-        do_clip_mask=False,
+        do_noclip=True,
+        do_zeroclip=True,
+        do_clip=True,
+        do_noclip_mask=True,
+        do_zeroclip_mask=True,
+        do_clip_mask=True,
         rms=0.227283716202,
         ):
         """
@@ -3469,15 +3469,22 @@ class ToolsNcol():
             )
 
         # create 13co21 model cube based on the 13co10 model
-        maxval = str(imstat(self.outmodelcube_13co10)["max"][0])
-        run_immath_one(
-            self.outmodelcube_13co10,
+        nchan = imhead(self.outcubes_13co21.replace("???","60pc"),mode="list")["shape"][2]
+        run_immath_two(
+            self.outcubes_13co21.replace("???","60pc"),
+            self.outecubes_13co21.replace("???","60pc"),
             self.outmodelcube_13co21 + "_tmp1",
-            "IM0*IM0/"+maxval,
+            "iif(IM0/IM1>"+str(self.snr_model)+",IM0,0)",
+            chans="1~" + str(nchan-2),
             )
-
-        run_exportfits(
+        run_roundsmooth(
             self.outmodelcube_13co21 + "_tmp1",
+            self.outmodelcube_13co21 + "_tmp2",
+            1.666,
+            delin=True,
+            )
+        run_exportfits(
+            self.outmodelcube_13co21 + "_tmp2",
             self.outmodelcube_13co21,
             delin=True,
             velocity=False,
