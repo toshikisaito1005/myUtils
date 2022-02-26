@@ -2974,8 +2974,8 @@ class ToolsNcol():
                 dec_cnt=self.dec_agn,
                 snr=self.snr_fit,
                 snr_limit=self.snr_fit,
-                restfreq_low=None,
-                restfreq_high=None,
+                restfreq_low=110.20135430,
+                restfreq_high=220.39868420,
                 )
 
     #######################
