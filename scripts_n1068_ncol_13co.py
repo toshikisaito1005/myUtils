@@ -5331,12 +5331,12 @@ class ToolsNcol():
         this_6 = this_6[~np.isinf(this_6)]
 
         cut = np.where((data_simumom0a_7>=data_simumom0a_8*self.snr)&(data_simumom0b_7>=data_simumom0b_8*self.snr))
-        this_7 = np.log10((data_simumom0b_7[cut] / data_simumom0a_6[cut]) / (data_modelmom0b[cut] / data_modelmom0a[cut]))
+        this_7 = np.log10((data_simumom0b_7[cut] / data_simumom0a_7[cut]) / (data_modelmom0b[cut] / data_modelmom0a[cut]))
         this_7 = this_7[~np.isnan(this_7)]
         this_7 = this_7[~np.isinf(this_7)]
 
         #
-        lim3 = [-1.0,1.0]
+        lim3 = [-1.2,1.2]
         this_grid = np.linspace(lim3[0], lim3[1], num=1000)
 
         fig = plt.figure(figsize=(13,10))
