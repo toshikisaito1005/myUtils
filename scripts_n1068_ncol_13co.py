@@ -5251,12 +5251,6 @@ class ToolsNcol():
         l,_ = imval_all(simumom0a_6m)
         l = l["data"] * l["mask"]
         data_simumom0a_6m = np.array(l.flatten())
-        l,_ = imval_all(simumom0a_7m)
-        l = l["data"] * l["mask"]
-        data_simumom0a_7m = np.array(l.flatten())
-        l,_ = imval_all(simumom0a_8m)
-        l = l["data"] * l["mask"]
-        data_simumom0a_8m = np.array(l.flatten())
 
         # 13co21
         l,_ = imval_all(modelmom0b)
@@ -5305,12 +5299,6 @@ class ToolsNcol():
         l,_ = imval_all(simumom0b_6m)
         l = l["data"] * l["mask"]
         data_simumom0b_6m = np.array(l.flatten())
-        l,_ = imval_all(simumom0b_7m)
-        l = l["data"] * l["mask"]
-        data_simumom0b_7m = np.array(l.flatten())
-        l,_ = imval_all(simumom0b_8m)
-        l = l["data"] * l["mask"]
-        data_simumom0b_8m = np.array(l.flatten())
 
         cut = np.where((data_simumom0a_1>=data_simumom0a_2*self.snr)&(data_simumom0b_1>=data_simumom0b_2*self.snr))
         this_1 = (data_simumom0b_1[cut] / data_simumom0a_1[cut]) / (data_modelmom0b[cut] / data_modelmom0a[cut])
