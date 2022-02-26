@@ -175,8 +175,7 @@ def rotation_13co21_13co10(
             e2 = perr[2]
             e3 = abs(perr[3])
 
-            print(popt)
-            print(p0>0,p0<max_low,p1>0,p1<max_high,pr>0,pr<=ratio_max,p2!=guess_b,p3!=40,p0/e0>snr,p1/e1>snr)
+            print(p0/e0,p1/e1)
 
             if p0>0 and p0<max_low and p1>0 and p1<max_high and pr>0 and pr<=ratio_max and p2!=guess_b and p3!=40 and p0/e0>snr and p1/e1>snr:
                 # derive parameters
