@@ -2496,6 +2496,8 @@ class ToolsNcol():
     def eval_sim(
         self,
         do_snr10=True,
+        do_snr25=True,
+        do_snr50=True,
         ):
         """
         """
@@ -2524,49 +2526,47 @@ class ToolsNcol():
                 outpng_violins,
                 )
 
-        """
-        lim      = [0.75,np.log10(10**2.25*2.5)] # 13co10 range
-        lim2     = [np.log10(10**-1.0/2.5),0.2]  # ratio range
-        this_snr = "snr25"
-        outpng_mom0_nomask  = "test1_"+this_snr+".png"
-        outpng_mom0_mask    = "test2_"+this_snr+".png"
-        outpng_ratio_nomask = "test3_"+this_snr+".png"
-        outpng_ratio_mask   = "test4_"+this_snr+".png"
-        outpng_violins      = "test5_"+this_snr+".png"
-        self._eval_a_sim(
-            10,
-            lim,
-            lim2,
-            this_snr,
-            outpng_mom0_nomask,
-            outpng_mom0_mask,
-            outpng_ratio_nomask,
-            outpng_ratio_mask,
-            outpng_violins,
-            )
-        """
+        if do_snr25==True:
+            lim      = [0.75,np.log10(10**2.25*2.5)] # 13co10 range
+            lim2     = [np.log10(10**-1.0/2.5),0.2]  # ratio range
+            this_snr = "snr25"
+            outpng_mom0_nomask  = "test1_"+this_snr+".png"
+            outpng_mom0_mask    = "test2_"+this_snr+".png"
+            outpng_ratio_nomask = "test3_"+this_snr+".png"
+            outpng_ratio_mask   = "test4_"+this_snr+".png"
+            outpng_violins      = "test5_"+this_snr+".png"
+            self._eval_a_sim(
+                10,
+                lim,
+                lim2,
+                this_snr,
+                outpng_mom0_nomask,
+                outpng_mom0_mask,
+                outpng_ratio_nomask,
+                outpng_ratio_mask,
+                outpng_violins,
+                )
 
-        """
-        lim      = [0.75,np.log10(10**2.25*5.0)] # 13co10 range
-        lim2     = [np.log10(10**-1.0/2.5),0.2]  # ratio range
-        this_snr = "snr50"
-        outpng_mom0_nomask  = "test1_"+this_snr+".png"
-        outpng_mom0_mask    = "test2_"+this_snr+".png"
-        outpng_ratio_nomask = "test3_"+this_snr+".png"
-        outpng_ratio_mask   = "test4_"+this_snr+".png"
-        outpng_violins      = "test5_"+this_snr+".png"
-        self._eval_a_sim(
-            10,
-            lim,
-            lim2,
-            this_snr,
-            outpng_mom0_nomask,
-            outpng_mom0_mask,
-            outpng_ratio_nomask,
-            outpng_ratio_mask,
-            outpng_violins,
-            )
-        """
+        if do_snr50==True:
+            lim      = [0.75,np.log10(10**2.25*5.0)] # 13co10 range
+            lim2     = [np.log10(10**-1.0/2.5),0.2]  # ratio range
+            this_snr = "snr50"
+            outpng_mom0_nomask  = "test1_"+this_snr+".png"
+            outpng_mom0_mask    = "test2_"+this_snr+".png"
+            outpng_ratio_nomask = "test3_"+this_snr+".png"
+            outpng_ratio_mask   = "test4_"+this_snr+".png"
+            outpng_violins      = "test5_"+this_snr+".png"
+            self._eval_a_sim(
+                10,
+                lim,
+                lim2,
+                this_snr,
+                outpng_mom0_nomask,
+                outpng_mom0_mask,
+                outpng_ratio_nomask,
+                outpng_ratio_mask,
+                outpng_violins,
+                )
 
     #########################
     # simulate_fitting_mom0 #
