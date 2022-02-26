@@ -2554,6 +2554,53 @@ class ToolsNcol():
             outpng_ratio_mask,
             )
 
+    #########################
+    # simulate_fitting_mom0 #
+    #########################
+
+    def simulate_fitting_mom0(
+        self,
+        rms=0.227283716202,
+        ):
+        """
+        """
+
+        taskname = self.modname + sys._getframe().f_code.co_name
+        check_first(self.outmodelcube_13co10.replace(".fits","_snr50.fits"),taskname)
+
+        ##############
+        # do_fitting #
+        ##############
+        # get model cubes
+        os.system("cp " + self.outmodelcube_13co10.replace(".fits","_snr50.fits") + " model_low.fits")
+        os.system("cp " + self.outmodelcube_13co21.replace(".fits","_snr50.fits") + " model_high.fits")
+        cubelow  = "model_low.fits"
+        cubehigh = "model_high.fits"
+
+        # create two model ecubes with a single value of rms
+        run_importfits(cubelow,"noisemodel_low.cube1")
+        run_immath_one("noisemodel_low.cube1","noisemodel_low.cube2","IM0*0+"+str(rms))
+        run_exportfits("noisemodel_low.cube2","noisemodel_low.fits")
+        os.system("rm -rf noisemodel_low.cube1 noisemodel_low.cube2")
+
+        run_importfits(cubehigh,"noisemodel_high.cube1")
+        run_immath_one("noisemodel_high.cube1","noisemodel_high.cube2","IM0*0+"+str(rms))
+        run_exportfits("noisemodel_high.cube2","noisemodel_high.fits")
+        os.system("rm -rf noisemodel_high.cube1 noisemodel_high.cube2")
+
+        rotation_13co21_13co10(
+            cubelow,
+            cubehigh,
+            "noisemodel_low.fits",
+            "noisemodel_high.fits",
+            ra_cnt=self.ra_agn,
+            dec_cnt=self.dec_agn,
+            snr=self.snr_fit,
+            snr_limit=self.snr_fit,
+            restfreq_low=110.20135430,
+            restfreq_high=220.39868420,
+            )
+
     #######################
     # simulate_mom_13co10 #
     #######################
@@ -2566,7 +2613,6 @@ class ToolsNcol():
         do_noclip_mask=False,
         do_zeroclip_mask=False,
         do_clip_mask=False,
-        do_fitting=True,
         rms=0.227283716202,
         ):
         """
@@ -2943,40 +2989,6 @@ class ToolsNcol():
             os.system("rm -rf " + this_mask + ".image?")
             run_immath_two(outfile,this_mask,outerr+".image","IM0*0+"+str(rms)+"*"+str(chanwidth_kms)+"*sqrt(IM1)")
             run_exportfits(outerr+".image",outerr,delin=True,dropdeg=True,dropstokes=True)
-
-        ##############
-        # do_fitting #
-        ##############
-        if do_fitting==True:
-            # get model cubes
-            os.system("cp " + self.outmodelcube_13co10.replace(".fits","_snr10.fits") + " model_low.fits")
-            os.system("cp " + self.outmodelcube_13co21.replace(".fits","_snr10.fits") + " model_high.fits")
-            cubelow  = "model_low.fits"
-            cubehigh = "model_high.fits"
-
-            # create two model ecubes with a single value of rms
-            run_importfits(cubelow,"noisemodel_low.cube1")
-            run_immath_one("noisemodel_low.cube1","noisemodel_low.cube2","IM0*0+"+str(rms))
-            run_exportfits("noisemodel_low.cube2","noisemodel_low.fits")
-            os.system("rm -rf noisemodel_low.cube1 noisemodel_low.cube2")
-
-            run_importfits(cubehigh,"noisemodel_high.cube1")
-            run_immath_one("noisemodel_high.cube1","noisemodel_high.cube2","IM0*0+"+str(rms))
-            run_exportfits("noisemodel_high.cube2","noisemodel_high.fits")
-            os.system("rm -rf noisemodel_high.cube1 noisemodel_high.cube2")
-
-            rotation_13co21_13co10(
-                cubelow,
-                cubehigh,
-                "noisemodel_low.fits",
-                "noisemodel_high.fits",
-                ra_cnt=self.ra_agn,
-                dec_cnt=self.dec_agn,
-                snr=self.snr_fit,
-                snr_limit=self.snr_fit,
-                restfreq_low=110.20135430,
-                restfreq_high=220.39868420,
-                )
 
     #######################
     # simulate_mom_13co21 #
