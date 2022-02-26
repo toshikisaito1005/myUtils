@@ -2951,8 +2951,10 @@ class ToolsNcol():
             print("implement fitting simulation!")
 
             # get model cubes
-            cubelow  = self.outmodelcube_13co10.replace(".fits","_snr10.fits")
-            cubehigh = self.outmodelcube_13co21.replace(".fits","_snr10.fits")
+            os.system("cp " + self.outmodelcube_13co10.replace(".fits","_snr10.fits") + " model_low.fits")
+            os.system("cp " + self.outmodelcube_13co21.replace(".fits","_snr10.fits") + " model_high.fits")
+            cubelow  = "model_low.fits"
+            cubehigh = "model_high.fits"
 
             # create two model ecubes with a single value of rms
             run_importfits(cubelow,"noisemodel_low.cube1")
@@ -2975,7 +2977,7 @@ class ToolsNcol():
                 snr=self.snr_fit,
                 snr_limit=self.snr_fit,
                 restfreq_low=110.20135430,
-                restfreq_high=220.39868420,
+                restfreq_high=220.39868420c,
                 )
 
     #######################
