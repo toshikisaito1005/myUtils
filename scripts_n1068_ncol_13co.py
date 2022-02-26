@@ -378,6 +378,7 @@ class ToolsNcol():
         if do_simulate_mom==True:
             self.simulate_mom_13co10()
             self.simulate_mom_13co21()
+            self.simulate_fitting_mom0()
             self.eval_sim()
 
         # plot figures in paper
