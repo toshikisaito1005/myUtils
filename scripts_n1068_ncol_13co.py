@@ -5203,6 +5203,14 @@ class ToolsNcol():
         # plot #
         ########
         this_grid = np.linspace(lim2[0], lim2[1], num=1000)
+        this_b0 = b0[~np.isnan(b0)]
+        this_b1 = b1[~np.isnan(b1)]
+        this_b2 = b2[~np.isnan(b2)]
+        this_b3 = b3[~np.isnan(b3)]
+        this_b4 = b4[~np.isnan(b4)]
+        this_b5 = b5[~np.isnan(b5)]
+        this_b6 = b6[~np.isnan(b6)]
+        this_b7 = b7[~np.isnan(b7)]
 
         fig = plt.figure(figsize=(13,10))
         gs  = gridspec.GridSpec(nrows=10, ncols=10)
@@ -5213,14 +5221,14 @@ class ToolsNcol():
         #ax1.set_xticks([1,3,5,7])
         #ax1.set_xticklabels(["All","CND","INT","SBR"], rotation=0, ha="center")
 
-        self._ax_violin(ax1, b0, 1, this_grid, "grey")
-        self._ax_violin(ax1, b1, 3, this_grid, "deepskyblue")
-        self._ax_violin(ax1, b2, 5, this_grid, "deepskyblue")
-        self._ax_violin(ax1, b3, 7, this_grid, "deepskyblue")
-        self._ax_violin(ax1, b4, 9, this_grid, "green")
-        self._ax_violin(ax1, b5, 11, this_grid, "green")
-        self._ax_violin(ax1, b6, 13, this_grid, "green")
-        self._ax_violin(ax1, b7, 15, this_grid, "tomato")
+        self._ax_violin(ax1, this_b0, 1, this_grid, "grey")
+        self._ax_violin(ax1, this_b1, 3, this_grid, "deepskyblue")
+        self._ax_violin(ax1, this_b2, 5, this_grid, "deepskyblue")
+        self._ax_violin(ax1, this_b3, 7, this_grid, "deepskyblue")
+        self._ax_violin(ax1, this_b4, 9, this_grid, "green")
+        self._ax_violin(ax1, this_b5, 11, this_grid, "green")
+        self._ax_violin(ax1, this_b6, 13, this_grid, "green")
+        self._ax_violin(ax1, this_b7, 15, this_grid, "tomato")
 
         # save
         os.system("rm -rf " + outpng_violins)
