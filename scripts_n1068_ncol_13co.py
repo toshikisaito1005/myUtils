@@ -2545,6 +2545,7 @@ class ToolsNcol():
         outpng_mom0_mask    = "test2_"+this_snr+".png"
         outpng_ratio_nomask = "test3_"+this_snr+".png"
         outpng_ratio_mask   = "test4_"+this_snr+".png"
+        outpng_violins      = "test5_"+this_snr+".png"
         self._eval_a_sim(
             10,
             lim,
@@ -2554,6 +2555,7 @@ class ToolsNcol():
             outpng_mom0_mask,
             outpng_ratio_nomask,
             outpng_ratio_mask,
+            outpng_violins,
             )
 
     #########################
@@ -5111,6 +5113,7 @@ class ToolsNcol():
         outpng_mom0_mask,
         outpng_ratio_nomask,
         outpng_ratio_mask,
+        outpng_violins,
         ):
 
         snrtext = this_snr.replace("snr","")
@@ -5189,6 +5192,33 @@ class ToolsNcol():
         a5,b5,bina5,binb5,binc5 = self._get_sim_ratio(simumom0a_3m,simumom0a_4m,modelmom0a,simumom0b_3m,simumom0b_4m,modelmom0b,lim) # clip0+mask
         a6,b6,bina6,binb6,binc6 = self._get_sim_ratio(simumom0a_5m,simumom0a_6m,modelmom0a,simumom0b_5m,simumom0b_6m,modelmom0b,lim) # clip3+mask
         a7,b7,bina7,binb7,binc7 = self._get_sim_ratio(simumom0a_7,simumom0a_8,modelmom0a,simumom0b_7,simumom0b_8,modelmom0b,lim)     # fitting
+
+        ########
+        # plot #
+        ########
+        this_grid = np.linspace(lim2[0], tlim[1], num=1000)
+
+        fig = plt.figure(figsize=(13,10))
+        gs  = gridspec.GridSpec(nrows=10, ncols=10)
+        ax1 = plt.subplot(gs[0:10,0:10])
+        ad  = [0.215,0.83,0.10,0.90]
+        myax_set(ax1, "y", [-0.5,8.5], tlim, title, None, ylabel, adjust=ad)
+
+        #ax1.set_xticks([1,3,5,7])
+        #ax1.set_xticklabels(["All","CND","INT","SBR"], rotation=0, ha="center")
+
+        self._ax_violin(ax1, b0, 1, this_grid, "grey")
+        self._ax_violin(ax1, b1, 3, this_grid, "deepskyblue")
+        self._ax_violin(ax1, b2, 5, this_grid, "deepskyblue")
+        self._ax_violin(ax1, b3, 7, this_grid, "deepskyblue")
+        self._ax_violin(ax1, b4, 9, this_grid, "green")
+        self._ax_violin(ax1, b5, 11, this_grid, "green")
+        self._ax_violin(ax1, b6, 13, this_grid, "green")
+        self._ax_violin(ax1, b7, 15, this_grid, "tomato")
+
+        # save
+        os.system("rm -rf " + outpng_violins)
+        plt.savefig(outpng_violins, dpi=self.fig_dpi)
 
         ########
         # plot #
