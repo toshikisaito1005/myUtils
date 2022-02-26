@@ -2955,12 +2955,12 @@ class ToolsNcol():
             cubehigh = self.outmodelcube_13co21.replace(".fits","_snr10.fits")
 
             # create two model ecubes with a single value of rms
-            run_importfits(noiselow,"noisemodel_low.cube1")
+            run_importfits(cubelow,"noisemodel_low.cube1")
             run_immath_one("noisemodel_low.cube1","noisemodel_low.cube2","IM0*0+"+str(rms))
             run_exportfits("noisemodel_low.cube2","noisemodel_low.fits")
             os.system("rm -rf noisemodel_low.cube1 noisemodel_low.cube2")
 
-            run_importfits(noiselow,"noisemodel_high.cube1")
+            run_importfits(cubehigh,"noisemodel_high.cube1")
             run_immath_one("noisemodel_high.cube1","noisemodel_high.cube2","IM0*0+"+str(rms))
             run_exportfits("noisemodel_high.cube2","noisemodel_high.fits")
             os.system("rm -rf noisemodel_high.cube1 noisemodel_high.cube2")
