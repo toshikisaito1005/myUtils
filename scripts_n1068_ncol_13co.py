@@ -2948,11 +2948,9 @@ class ToolsNcol():
         # do_fitting #
         ##############
         if do_fitting==True:
-            print("implement fitting simulation!")
-
             # get model cubes
-            os.system("cp " + self.outmodelcube_13co10.replace(".fits","_snr10.fits") + " model_low.fits")
-            os.system("cp " + self.outmodelcube_13co21.replace(".fits","_snr10.fits") + " model_high.fits")
+            os.system("cp " + self.outmodelcube_13co10.replace(".fits","_snr50.fits") + " model_low.fits")
+            os.system("cp " + self.outmodelcube_13co21.replace(".fits","_snr50.fits") + " model_high.fits")
             cubelow  = "model_low.fits"
             cubehigh = "model_high.fits"
 
