@@ -65,8 +65,8 @@ Date         Filename                To
 2022-01-19   draft_v3_220119.zip     all co-authors
 2022-02-03   draft_v4_220202.zip     ApJL
 2022-02-03   reply_v2_220202.pdf     ApJL
-2022-02-17?  draft_v5_2202??.zip     ApJL
-2022-02-17?  reply_v3_2202??.pdf     ApJL
+2022-02-23   draft_v5_220223.zip     ApJL
+2022-02-23   reply_v3_220223.pdf     ApJL
 
 history:
 2021-04-22   start project, write README
@@ -85,7 +85,7 @@ history:
 2022-01-19   v3 draft and v1 reply circular
 2022-02-03   submitted v4 draft and v2 reply!
 2021-02-10   received the 2nd referee report
-2022-02-17?  submitted v5 draft and v3 reply!
+2022-02-23   submitted v5 draft and v3 reply!
 Toshiki Saito@Nichidai/NAOJ
 """
 

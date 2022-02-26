@@ -2566,6 +2566,7 @@ class ToolsNcol():
         do_noclip_mask=True,
         do_zeroclip_mask=True,
         do_clip_mask=True,
+        do_fitting=True,
         rms=0.227283716202,
         ):
         """
@@ -2942,6 +2943,44 @@ class ToolsNcol():
             os.system("rm -rf " + this_mask + ".image?")
             run_immath_two(outfile,this_mask,outerr+".image","IM0*0+"+str(rms)+"*"+str(chanwidth_kms)+"*sqrt(IM1)")
             run_exportfits(outerr+".image",outerr,delin=True,dropdeg=True,dropstokes=True)
+
+        ##############
+        # do_fitting #
+        ##############
+        if do_fitting==True:
+            print("implement fitting simulation!")
+
+            # get model cubes
+            cubelow  = self.outmodelcube_13co10.replace(".fits","_snr10.fits")
+            cubehigh = self.outmodelcube_13co21.replace(".fits","_snr10.fits")
+
+            # measure noise
+            noiselow  = measure_rms(cubelow,snr=3.0,"p84")
+            noisehigh = measure_rms(cubehigh,snr=3.0,"p84")
+
+            # create two model ecubes with a single value of rms
+            run_importfits(noiselow,"noisemodel_low.cube1")
+            run_immath_one("noisemodel_low.cube1","noisemodel_low.cube2","IM0*0+"+str(noiselow))
+            run_exportfits("noisemodel_low.cube2","noisemodel_low.fits")
+            os.system("rm -rf noisemodel_low.cube1 noisemodel_low.cube2")
+
+            run_importfits(noiselow,"noisemodel_high.cube1")
+            run_immath_one("noisemodel_high.cube1","noisemodel_high.cube2","IM0*0+"+str(noiselow))
+            run_exportfits("noisemodel_high.cube2","noisemodel_high.fits")
+            os.system("rm -rf noisemodel_high.cube1 noisemodel_high.cube2")
+
+            rotation_13co21_13co10(
+                cubelow,
+                cubehigh,
+                "noisemodel_low.fits",
+                "noisemodel_high.fits",
+                ra_cnt=self.ra_agn,
+                dec_cnt=self.dec_agn,
+                snr=self.snr_fit,
+                snr_limit=self.snr_fit,
+                restfreq_low=None,
+                restfreq_high=None,
+                )
 
     #######################
     # simulate_mom_13co21 #
