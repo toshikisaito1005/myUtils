@@ -5306,12 +5306,12 @@ class ToolsNcol():
         this_1 = this_1[~np.isinf(this_1)]
 
         cut = np.where((data_simumom0a_3>=data_simumom0a_4*self.snr)&(data_simumom0b_3>=data_simumom0b_4*self.snr))
-        this_2 = np.log10((data_simumom0b_3[cut] / data_simumom0a_4[cut]) / (data_modelmom0b[cut] / data_modelmom0a[cut]))
+        this_2 = np.log10((data_simumom0b_3[cut] / data_simumom0a_3[cut]) / (data_modelmom0b[cut] / data_modelmom0a[cut]))
         this_2 = this_2[~np.isnan(this_2)]
         this_2 = this_2[~np.isinf(this_2)]
 
         cut = np.where((data_simumom0a_5>=data_simumom0a_6*self.snr)&(data_simumom0b_5>=data_simumom0b_6*self.snr))
-        this_3 = np.log10((data_simumom0b_5[cut] / data_simumom0a_6[cut]) / (data_modelmom0b[cut] / data_modelmom0a[cut]))
+        this_3 = np.log10((data_simumom0b_5[cut] / data_simumom0a_5[cut]) / (data_modelmom0b[cut] / data_modelmom0a[cut]))
         this_3 = this_3[~np.isnan(this_3)]
         this_3 = this_3[~np.isinf(this_3)]
 
@@ -5321,17 +5321,17 @@ class ToolsNcol():
         this_4 = this_4[~np.isinf(this_4)]
 
         cut = np.where((data_simumom0a_3m>=data_simumom0a_4m*self.snr)&(data_simumom0b_3m>=data_simumom0b_4m*self.snr))
-        this_5 = np.log10((data_simumom0b_3m[cut] / data_simumom0a_4m[cut]) / (data_modelmom0b[cut] / data_modelmom0a[cut]))
+        this_5 = np.log10((data_simumom0b_3m[cut] / data_simumom0a_3m[cut]) / (data_modelmom0b[cut] / data_modelmom0a[cut]))
         this_5 = this_5[~np.isnan(this_5)]
         this_5 = this_5[~np.isinf(this_5)]
 
         cut = np.where((data_simumom0a_5m>=data_simumom0a_6m*self.snr)&(data_simumom0b_5m>=data_simumom0b_6m*self.snr))
-        this_6 = np.log10((data_simumom0b_5m[cut] / data_simumom0a_6m[cut]) / (data_modelmom0b[cut] / data_modelmom0a[cut]))
+        this_6 = np.log10((data_simumom0b_5m[cut] / data_simumom0a_5m[cut]) / (data_modelmom0b[cut] / data_modelmom0a[cut]))
         this_6 = this_6[~np.isnan(this_6)]
         this_6 = this_6[~np.isinf(this_6)]
 
         cut = np.where((data_simumom0a_7>=data_simumom0a_8*self.snr)&(data_simumom0b_7>=data_simumom0b_8*self.snr))
-        this_7 = np.log10((data_simumom0b_7[cut] / data_simumom0a_8[cut]) / (data_modelmom0b[cut] / data_modelmom0a[cut]))
+        this_7 = np.log10((data_simumom0b_7[cut] / data_simumom0a_6[cut]) / (data_modelmom0b[cut] / data_modelmom0a[cut]))
         this_7 = this_7[~np.isnan(this_7)]
         this_7 = this_7[~np.isinf(this_7)]
 
