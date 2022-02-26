@@ -2522,6 +2522,7 @@ class ToolsNcol():
             outpng_ratio_mask,
             outpng_violins,
             )
+        """
 
         lim      = [0.75,np.log10(10**2.25*2.5)] # 13co10 range
         lim2     = [np.log10(10**-1.0/2.5),0.2]  # ratio range
@@ -2542,8 +2543,8 @@ class ToolsNcol():
             outpng_ratio_mask,
             outpng_violins,
             )
-        """
 
+        """
         lim      = [0.75,np.log10(10**2.25*5.0)] # 13co10 range
         lim2     = [np.log10(10**-1.0/2.5),0.2]  # ratio range
         this_snr = "snr50"
@@ -2563,6 +2564,7 @@ class ToolsNcol():
             outpng_ratio_mask,
             outpng_violins,
             )
+        """
 
     #########################
     # simulate_fitting_mom0 #
@@ -5202,7 +5204,8 @@ class ToolsNcol():
         ########
         # plot #
         ########
-        this_grid = np.linspace(lim2[0], lim2[1], num=1000)
+        new_lim2 = [lim2[0]-0.3, lim2[1]+0.3]
+        this_grid = np.linspace(new_lim2[0], new_lim2[1], num=1000)
         this_b0 = b0[~np.isnan(b0)]
         this_b1 = b1[~np.isnan(b1)]
         this_b2 = b2[~np.isnan(b2)]
@@ -5224,7 +5227,7 @@ class ToolsNcol():
         gs  = gridspec.GridSpec(nrows=10, ncols=10)
         ax1 = plt.subplot(gs[0:10,0:10])
         ad  = [0.215,0.83,0.10,0.90]
-        myax_set(ax1, "y", [-0.5,15.5], lim2, None, None, None, adjust=ad)
+        myax_set(ax1, "y", [-0.5,16.5], new_lim2, None, None, None, adjust=ad)
 
         #ax1.set_xticks([1,3,5,7])
         #ax1.set_xticklabels(["All","CND","INT","SBR"], rotation=0, ha="center")
