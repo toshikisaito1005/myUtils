@@ -3382,11 +3382,11 @@ class ToolsNcol():
 
         # create correlated noise
         noise1 = self._create_correlated_noise_cube(self.outmodelcube_13co10)
-        noise2 = self._create_correlated_noise_cube(self.outmodelcube_13co10)
+        noise2 = self._create_correlated_noise_cube(self.outmodelcube_13co21)
         noise3 = self._create_correlated_noise_cube(self.outmodelcube_13co10)
-        noise4 = self._create_correlated_noise_cube(self.outmodelcube_13co10)
+        noise4 = self._create_correlated_noise_cube(self.outmodelcube_13co21)
         noise5 = self._create_correlated_noise_cube(self.outmodelcube_13co10)
-        noise6 = self._create_correlated_noise_cube(self.outmodelcube_13co10)
+        noise6 = self._create_correlated_noise_cube(self.outmodelcube_13co21)
 
         # snr = 10
         model_snr = self.outmodelcube_13co10.replace(".fits","_snr10.fits")
