@@ -154,8 +154,10 @@ def rotation_13co21_13co10(
 
             if fitsigma==True:
                 this_sigma = this_err
+                absolute_sigma = True
             else:
                 this_sigma = None
+                absolute_sigma = False
 
             # fitting
             this_f_two = lambda x, a1, a2, b, c: _f_two(x, a1, a2, b, c, restfreq_low, restfreq_high)
@@ -166,7 +168,7 @@ def rotation_13co21_13co10(
                 sigma          = this_sigma,
                 p0             = p0,
                 maxfev         = 100000,
-                absolute_sigma = True,
+                absolute_sigma = absolute_sigma,
                 )
             perr = np.sqrt(np.diag(pcov))
 
@@ -970,6 +972,8 @@ def _get_data(
 
     data[np.isnan(data)] = 0
     err[np.isnan(err)]   = 0
+    data[np.isinf(data)] = 0
+    err[np.isinf(err)]   = 0
     spec_data = np.sum(data,axis=(0,1))
     spec_err  = np.sum(err,axis=(0,1))
 
