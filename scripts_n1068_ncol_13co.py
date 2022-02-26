@@ -5204,22 +5204,138 @@ class ToolsNcol():
         ########
         # plot #
         ########
+        # 13co10
+        l,_ = imval_all(modelmom0a)
+        l = l["data"] * l["mask"]
+        data_modelmom0a = np.array(l.flatten())
+        l,_ = imval_all(simumom0a_1)
+        l = l["data"] * l["mask"]
+        data_simumom0a_1 = np.array(l.flatten())
+        l,_ = imval_all(simumom0a_2)
+        l = l["data"] * l["mask"]
+        data_simumom0a_2 = np.array(l.flatten())
+        l,_ = imval_all(simumom0a_3)
+        l = l["data"] * l["mask"]
+        data_simumom0a_3 = np.array(l.flatten())
+        l,_ = imval_all(simumom0a_4)
+        l = l["data"] * l["mask"]
+        data_simumom0a_4 = np.array(l.flatten())
+        l,_ = imval_all(simumom0a_5)
+        l = l["data"] * l["mask"]
+        data_simumom0a_5 = np.array(l.flatten())
+        l,_ = imval_all(simumom0a_6)
+        l = l["data"] * l["mask"]
+        data_simumom0a_6 = np.array(l.flatten())
+        l,_ = imval_all(simumom0a_7)
+        l = l["data"] * l["mask"]
+        data_simumom0a_7 = np.array(l.flatten())
+        l,_ = imval_all(simumom0a_8)
+        l = l["data"] * l["mask"]
+        data_simumom0a_8 = np.array(l.flatten())
+
+        l,_ = imval_all(simumom0a_1m)
+        l = l["data"] * l["mask"]
+        data_simumom0a_1m = np.array(l.flatten())
+        l,_ = imval_all(simumom0a_2m)
+        l = l["data"] * l["mask"]
+        data_simumom0a_2m = np.array(l.flatten())
+        l,_ = imval_all(simumom0a_3m)
+        l = l["data"] * l["mask"]
+        data_simumom0a_3m = np.array(l.flatten())
+        l,_ = imval_all(simumom0a_4m)
+        l = l["data"] * l["mask"]
+        data_simumom0a_4m = np.array(l.flatten())
+        l,_ = imval_all(simumom0a_5m)
+        l = l["data"] * l["mask"]
+        data_simumom0a_5m = np.array(l.flatten())
+        l,_ = imval_all(simumom0a_6m)
+        l = l["data"] * l["mask"]
+        data_simumom0a_6m = np.array(l.flatten())
+        l,_ = imval_all(simumom0a_7m)
+        l = l["data"] * l["mask"]
+        data_simumom0a_7m = np.array(l.flatten())
+        l,_ = imval_all(simumom0a_8m)
+        l = l["data"] * l["mask"]
+        data_simumom0a_8m = np.array(l.flatten())
+
+        # 13co21
+        l,_ = imval_all(modelmom0b)
+        l = l["data"] * l["mask"]
+        data_modelmom0b = np.array(l.flatten())
+        l,_ = imval_all(simumom0b_1)
+        l = l["data"] * l["mask"]
+        data_simumom0b_1 = np.array(l.flatten())
+        l,_ = imval_all(simumom0b_2)
+        l = l["data"] * l["mask"]
+        data_simumom0b_2 = np.array(l.flatten())
+        l,_ = imval_all(simumom0b_3)
+        l = l["data"] * l["mask"]
+        data_simumom0b_3 = np.array(l.flatten())
+        l,_ = imval_all(simumom0b_4)
+        l = l["data"] * l["mask"]
+        data_simumom0b_4 = np.array(l.flatten())
+        l,_ = imval_all(simumom0b_5)
+        l = l["data"] * l["mask"]
+        data_simumom0b_5 = np.array(l.flatten())
+        l,_ = imval_all(simumom0b_6)
+        l = l["data"] * l["mask"]
+        data_simumom0b_6 = np.array(l.flatten())
+        l,_ = imval_all(simumom0b_7)
+        l = l["data"] * l["mask"]
+        data_simumom0b_7 = np.array(l.flatten())
+        l,_ = imval_all(simumom0b_8)
+        l = l["data"] * l["mask"]
+        data_simumom0b_8 = np.array(l.flatten())
+
+        l,_ = imval_all(simumom0b_1m)
+        l = l["data"] * l["mask"]
+        data_simumom0b_1m = np.array(l.flatten())
+        l,_ = imval_all(simumom0b_2m)
+        l = l["data"] * l["mask"]
+        data_simumom0b_2m = np.array(l.flatten())
+        l,_ = imval_all(simumom0b_3m)
+        l = l["data"] * l["mask"]
+        data_simumom0b_3m = np.array(l.flatten())
+        l,_ = imval_all(simumom0b_4m)
+        l = l["data"] * l["mask"]
+        data_simumom0b_4m = np.array(l.flatten())
+        l,_ = imval_all(simumom0b_5m)
+        l = l["data"] * l["mask"]
+        data_simumom0b_5m = np.array(l.flatten())
+        l,_ = imval_all(simumom0b_6m)
+        l = l["data"] * l["mask"]
+        data_simumom0b_6m = np.array(l.flatten())
+        l,_ = imval_all(simumom0b_7m)
+        l = l["data"] * l["mask"]
+        data_simumom0b_7m = np.array(l.flatten())
+        l,_ = imval_all(simumom0b_8m)
+        l = l["data"] * l["mask"]
+        data_simumom0b_8m = np.array(l.flatten())
+
+        cut = np.where((data_simumom0a_1>=data_simumom0a_2*self.snr)&(data_simumom0b_1>=data_simumom0b_2*self.snr))
+        this_1 = (data_simumom0b_1[cut] / data_simumom0a_1[cut]) / (data_modelmom0b[cut] / data_modelmom0a[cut])
+
+        cut = np.where((data_simumom0a_3>=data_simumom0a_4*self.snr)&(data_simumom0b_3>=data_simumom0b_4*self.snr))
+        this_2 = (data_simumom0b_3[cut] / data_simumom0a_4[cut]) / (data_modelmom0b[cut] / data_modelmom0a[cut])
+
+        cut = np.where((data_simumom0a_5>=data_simumom0a_6*self.snr)&(data_simumom0b_5>=data_simumom0b_6*self.snr))
+        this_3 = (data_simumom0b_5[cut] / data_simumom0a_6[cut]) / (data_modelmom0b[cut] / data_modelmom0a[cut])
+
+        cut = np.where((data_simumom0a_1m>=data_simumom0a_2m*self.snr)&(data_simumom0b_1m>=data_simumom0b_2m*self.snr))
+        this_4 = (data_simumom0b_1m[cut] / data_simumom0a_1m[cut]) / (data_modelmom0b[cut] / data_modelmom0a[cut])
+
+        cut = np.where((data_simumom0a_3m>=data_simumom0a_4m*self.snr)&(data_simumom0b_3m>=data_simumom0b_4m*self.snr))
+        this_5 = (data_simumom0b_3m[cut] / data_simumom0a_4m[cut]) / (data_modelmom0b[cut] / data_modelmom0a[cut])
+
+        cut = np.where((data_simumom0a_5m>=data_simumom0a_6m*self.snr)&(data_simumom0b_5m>=data_simumom0b_6m*self.snr))
+        this_6 = (data_simumom0b_5m[cut] / data_simumom0a_6m[cut]) / (data_modelmom0b[cut] / data_modelmom0a[cut])
+
+        cut = np.where((data_simumom0a_7>=data_simumom0a_8*self.snr)&(data_simumom0b_7>=data_simumom0b_8*self.snr))
+        this_7 = (data_simumom0b_7[cut] / data_simumom0a_8[cut]) / (data_modelmom0b[cut] / data_modelmom0a[cut])
+
+        #
         lim3 = [-1.0,1.0]
         this_grid = np.linspace(lim3[0], lim3[1], num=1000)
-        this_b1 = b1[~np.isnan(b1-b0)]
-        this_b2 = b2[~np.isnan(b2-b0)]
-        this_b3 = b3[~np.isnan(b3-b0)]
-        this_b4 = b4[~np.isnan(b4-b0)]
-        this_b5 = b5[~np.isnan(b5-b0)]
-        this_b6 = b6[~np.isnan(b6-b0)]
-        this_b7 = b7[~np.isnan(b7-b0)]
-        this_b1 = this_b1[~np.isinf(this_b1)]
-        this_b2 = this_b2[~np.isinf(this_b2)]
-        this_b3 = this_b3[~np.isinf(this_b3)]
-        this_b4 = this_b4[~np.isinf(this_b4)]
-        this_b5 = this_b5[~np.isinf(this_b5)]
-        this_b6 = this_b6[~np.isinf(this_b6)]
-        this_b7 = this_b7[~np.isinf(this_b7)]
 
         fig = plt.figure(figsize=(13,10))
         gs  = gridspec.GridSpec(nrows=10, ncols=10)
@@ -5230,13 +5346,13 @@ class ToolsNcol():
         #ax1.set_xticks([1,3,5,7])
         #ax1.set_xticklabels(["All","CND","INT","SBR"], rotation=0, ha="center")
 
-        self._ax_violin(ax1, this_b1, 1, this_grid, "deepskyblue")
-        self._ax_violin(ax1, this_b2, 3, this_grid, "deepskyblue")
-        self._ax_violin(ax1, this_b3, 5, this_grid, "deepskyblue")
-        self._ax_violin(ax1, this_b4, 7, this_grid, "green")
-        self._ax_violin(ax1, this_b5, 9, this_grid, "green")
-        self._ax_violin(ax1, this_b6, 11, this_grid, "green")
-        self._ax_violin(ax1, this_b7, 13, this_grid, "tomato")
+        self._ax_violin(ax1, this_1, 1, this_grid, "deepskyblue")
+        self._ax_violin(ax1, this_2, 3, this_grid, "deepskyblue")
+        self._ax_violin(ax1, this_3, 5, this_grid, "deepskyblue")
+        self._ax_violin(ax1, this_4, 7, this_grid, "green")
+        self._ax_violin(ax1, this_5, 9, this_grid, "green")
+        self._ax_violin(ax1, this_6, 11, this_grid, "green")
+        self._ax_violin(ax1, this_7, 13, this_grid, "tomato")
 
         # save
         os.system("rm -rf " + outpng_violins)
