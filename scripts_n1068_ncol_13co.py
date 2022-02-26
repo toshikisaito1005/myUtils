@@ -5211,6 +5211,14 @@ class ToolsNcol():
         this_b5 = b5[~np.isnan(b5)]
         this_b6 = b6[~np.isnan(b6)]
         this_b7 = b7[~np.isnan(b7)]
+        this_b0 = this_b0[~np.isinf(this_b0)]
+        this_b1 = this_b1[~np.isinf(this_b1)]
+        this_b2 = this_b2[~np.isinf(this_b2)]
+        this_b3 = this_b3[~np.isinf(this_b3)]
+        this_b4 = this_b4[~np.isinf(this_b4)]
+        this_b5 = this_b5[~np.isinf(this_b5)]
+        this_b6 = this_b6[~np.isinf(this_b6)]
+        this_b7 = this_b7[~np.isinf(this_b7)]
 
         fig = plt.figure(figsize=(13,10))
         gs  = gridspec.GridSpec(nrows=10, ncols=10)
