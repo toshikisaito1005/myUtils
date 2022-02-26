@@ -2560,12 +2560,12 @@ class ToolsNcol():
 
     def simulate_mom_13co10(
         self,
-        do_noclip=True,
-        do_zeroclip=True,
-        do_clip=True,
-        do_noclip_mask=True,
-        do_zeroclip_mask=True,
-        do_clip_mask=True,
+        do_noclip=False,
+        do_zeroclip=False,
+        do_clip=False,
+        do_noclip_mask=False,
+        do_zeroclip_mask=False,
+        do_clip_mask=False,
         do_fitting=True,
         rms=0.227283716202,
         ):
@@ -2949,8 +2949,8 @@ class ToolsNcol():
         ##############
         if do_fitting==True:
             # get model cubes
-            os.system("cp " + self.outmodelcube_13co10.replace(".fits","_snr50.fits") + " model_low.fits")
-            os.system("cp " + self.outmodelcube_13co21.replace(".fits","_snr50.fits") + " model_high.fits")
+            os.system("cp " + self.outmodelcube_13co10.replace(".fits","_snr10.fits") + " model_low.fits")
+            os.system("cp " + self.outmodelcube_13co21.replace(".fits","_snr10.fits") + " model_high.fits")
             cubelow  = "model_low.fits"
             cubehigh = "model_high.fits"
 
@@ -2984,12 +2984,12 @@ class ToolsNcol():
 
     def simulate_mom_13co21(
         self,
-        do_noclip=True,
-        do_zeroclip=True,
-        do_clip=True,
-        do_noclip_mask=True,
-        do_zeroclip_mask=True,
-        do_clip_mask=True,
+        do_noclip=False,
+        do_zeroclip=False,
+        do_clip=False,
+        do_noclip_mask=False,
+        do_zeroclip_mask=False,
+        do_clip_mask=False,
         rms=0.227283716202,
         ):
         """
