@@ -2562,6 +2562,7 @@ class ToolsNcol():
 
     def simulate_fitting_mom0(
         self,
+        do_sim=False,
         rms=0.227283716202,
         ):
         """
@@ -2570,125 +2571,126 @@ class ToolsNcol():
         taskname = self.modname + sys._getframe().f_code.co_name
         check_first(self.outmodelcube_13co10.replace(".fits","_snr50.fits"),taskname)
 
-        ####################
-        # do_fitting snr10 #
-        ####################
-        this_snr = "snr10"
-        
-        # get model cubes
-        os.system("cp " + self.outmodelcube_13co10.replace(".fits","_"+this_snr+".fits") + " model_low.fits")
-        os.system("cp " + self.outmodelcube_13co21.replace(".fits","_"+this_snr+".fits") + " model_high.fits")
-        cubelow  = "model_low.fits"
-        cubehigh = "model_high.fits"
+        if do_sim==True:
+            ####################
+            # do_fitting snr10 #
+            ####################
+            this_snr = "snr10"
+            
+            # get model cubes
+            os.system("cp " + self.outmodelcube_13co10.replace(".fits","_"+this_snr+".fits") + " model_low.fits")
+            os.system("cp " + self.outmodelcube_13co21.replace(".fits","_"+this_snr+".fits") + " model_high.fits")
+            cubelow  = "model_low.fits"
+            cubehigh = "model_high.fits"
 
-        # create two model ecubes with a single value of rms
-        run_importfits(cubelow,"noisemodel_low.cube1")
-        run_immath_one("noisemodel_low.cube1","noisemodel_low.cube2","IM0*0+"+str(rms))
-        run_exportfits("noisemodel_low.cube2","noisemodel_low.fits")
-        os.system("rm -rf noisemodel_low.cube1 noisemodel_low.cube2")
+            # create two model ecubes with a single value of rms
+            run_importfits(cubelow,"noisemodel_low.cube1")
+            run_immath_one("noisemodel_low.cube1","noisemodel_low.cube2","IM0*0+"+str(rms))
+            run_exportfits("noisemodel_low.cube2","noisemodel_low.fits")
+            os.system("rm -rf noisemodel_low.cube1 noisemodel_low.cube2")
 
-        run_importfits(cubehigh,"noisemodel_high.cube1")
-        run_immath_one("noisemodel_high.cube1","noisemodel_high.cube2","IM0*0+"+str(rms))
-        run_exportfits("noisemodel_high.cube2","noisemodel_high.fits")
-        os.system("rm -rf noisemodel_high.cube1 noisemodel_high.cube2")
+            run_importfits(cubehigh,"noisemodel_high.cube1")
+            run_immath_one("noisemodel_high.cube1","noisemodel_high.cube2","IM0*0+"+str(rms))
+            run_exportfits("noisemodel_high.cube2","noisemodel_high.fits")
+            os.system("rm -rf noisemodel_high.cube1 noisemodel_high.cube2")
 
-        rotation_13co21_13co10(
-            cubelow,
-            cubehigh,
-            "noisemodel_low.fits",
-            "noisemodel_high.fits",
-            ra_cnt=self.ra_agn,
-            dec_cnt=self.dec_agn,
-            snr=self.snr_fit,
-            snr_limit=self.snr_fit,
-            restfreq_low=110.20135430,
-            restfreq_high=220.39868420,
-            )
-        os.system("cp mom0_low.fits " + self.outsimumom0_13co10.replace(".fits","_fitting_"+this_snr+".fits"))
-        os.system("cp emom0_low.fits " + self.outsimumom0_13co10.replace(".fits","_fitting_"+this_snr+".fits").replace("mom0","emom0"))
-        os.system("cp mom0_high.fits " + self.outsimumom0_13co21.replace(".fits","_fitting_"+this_snr+".fits"))
-        os.system("cp emom0_high.fits " + self.outsimumom0_13co21.replace(".fits","_fitting_"+this_snr+".fits").replace("mom0","emom0"))
-        os.system("rm -rf *.fits")
+            rotation_13co21_13co10(
+                cubelow,
+                cubehigh,
+                "noisemodel_low.fits",
+                "noisemodel_high.fits",
+                ra_cnt=self.ra_agn,
+                dec_cnt=self.dec_agn,
+                snr=self.snr_fit,
+                snr_limit=self.snr_fit,
+                restfreq_low=110.20135430,
+                restfreq_high=220.39868420,
+                )
+            os.system("cp mom0_low.fits " + self.outsimumom0_13co10.replace(".fits","_fitting_"+this_snr+".fits"))
+            os.system("cp emom0_low.fits " + self.outsimumom0_13co10.replace(".fits","_fitting_"+this_snr+".fits").replace("mom0","emom0"))
+            os.system("cp mom0_high.fits " + self.outsimumom0_13co21.replace(".fits","_fitting_"+this_snr+".fits"))
+            os.system("cp emom0_high.fits " + self.outsimumom0_13co21.replace(".fits","_fitting_"+this_snr+".fits").replace("mom0","emom0"))
+            os.system("rm -rf *.fits")
 
-        ####################
-        # do_fitting snr25 #
-        ####################
-        this_snr = "snr25"
-        
-        # get model cubes
-        os.system("cp " + self.outmodelcube_13co10.replace(".fits","_"+this_snr+".fits") + " model_low.fits")
-        os.system("cp " + self.outmodelcube_13co21.replace(".fits","_"+this_snr+".fits") + " model_high.fits")
-        cubelow  = "model_low.fits"
-        cubehigh = "model_high.fits"
+            ####################
+            # do_fitting snr25 #
+            ####################
+            this_snr = "snr25"
+            
+            # get model cubes
+            os.system("cp " + self.outmodelcube_13co10.replace(".fits","_"+this_snr+".fits") + " model_low.fits")
+            os.system("cp " + self.outmodelcube_13co21.replace(".fits","_"+this_snr+".fits") + " model_high.fits")
+            cubelow  = "model_low.fits"
+            cubehigh = "model_high.fits"
 
-        # create two model ecubes with a single value of rms
-        run_importfits(cubelow,"noisemodel_low.cube1")
-        run_immath_one("noisemodel_low.cube1","noisemodel_low.cube2","IM0*0+"+str(rms))
-        run_exportfits("noisemodel_low.cube2","noisemodel_low.fits")
-        os.system("rm -rf noisemodel_low.cube1 noisemodel_low.cube2")
+            # create two model ecubes with a single value of rms
+            run_importfits(cubelow,"noisemodel_low.cube1")
+            run_immath_one("noisemodel_low.cube1","noisemodel_low.cube2","IM0*0+"+str(rms))
+            run_exportfits("noisemodel_low.cube2","noisemodel_low.fits")
+            os.system("rm -rf noisemodel_low.cube1 noisemodel_low.cube2")
 
-        run_importfits(cubehigh,"noisemodel_high.cube1")
-        run_immath_one("noisemodel_high.cube1","noisemodel_high.cube2","IM0*0+"+str(rms))
-        run_exportfits("noisemodel_high.cube2","noisemodel_high.fits")
-        os.system("rm -rf noisemodel_high.cube1 noisemodel_high.cube2")
+            run_importfits(cubehigh,"noisemodel_high.cube1")
+            run_immath_one("noisemodel_high.cube1","noisemodel_high.cube2","IM0*0+"+str(rms))
+            run_exportfits("noisemodel_high.cube2","noisemodel_high.fits")
+            os.system("rm -rf noisemodel_high.cube1 noisemodel_high.cube2")
 
-        rotation_13co21_13co10(
-            cubelow,
-            cubehigh,
-            "noisemodel_low.fits",
-            "noisemodel_high.fits",
-            ra_cnt=self.ra_agn,
-            dec_cnt=self.dec_agn,
-            snr=self.snr_fit,
-            snr_limit=self.snr_fit,
-            restfreq_low=110.20135430,
-            restfreq_high=220.39868420,
-            )
-        os.system("cp mom0_low.fits " + self.outsimumom0_13co10.replace(".fits","_fitting_"+this_snr+".fits"))
-        os.system("cp emom0_low.fits " + self.outsimumom0_13co10.replace(".fits","_fitting_"+this_snr+".fits").replace("mom0","emom0"))
-        os.system("cp mom0_high.fits " + self.outsimumom0_13co21.replace(".fits","_fitting_"+this_snr+".fits"))
-        os.system("cp emom0_high.fits " + self.outsimumom0_13co21.replace(".fits","_fitting_"+this_snr+".fits").replace("mom0","emom0"))
-        os.system("rm -rf *.fits")
+            rotation_13co21_13co10(
+                cubelow,
+                cubehigh,
+                "noisemodel_low.fits",
+                "noisemodel_high.fits",
+                ra_cnt=self.ra_agn,
+                dec_cnt=self.dec_agn,
+                snr=self.snr_fit,
+                snr_limit=self.snr_fit,
+                restfreq_low=110.20135430,
+                restfreq_high=220.39868420,
+                )
+            os.system("cp mom0_low.fits " + self.outsimumom0_13co10.replace(".fits","_fitting_"+this_snr+".fits"))
+            os.system("cp emom0_low.fits " + self.outsimumom0_13co10.replace(".fits","_fitting_"+this_snr+".fits").replace("mom0","emom0"))
+            os.system("cp mom0_high.fits " + self.outsimumom0_13co21.replace(".fits","_fitting_"+this_snr+".fits"))
+            os.system("cp emom0_high.fits " + self.outsimumom0_13co21.replace(".fits","_fitting_"+this_snr+".fits").replace("mom0","emom0"))
+            os.system("rm -rf *.fits")
 
-        ####################
-        # do_fitting snr50 #
-        ####################
-        this_snr = "snr50"
-        
-        # get model cubes
-        os.system("cp " + self.outmodelcube_13co10.replace(".fits","_"+this_snr+".fits") + " model_low.fits")
-        os.system("cp " + self.outmodelcube_13co21.replace(".fits","_"+this_snr+".fits") + " model_high.fits")
-        cubelow  = "model_low.fits"
-        cubehigh = "model_high.fits"
+            ####################
+            # do_fitting snr50 #
+            ####################
+            this_snr = "snr50"
+            
+            # get model cubes
+            os.system("cp " + self.outmodelcube_13co10.replace(".fits","_"+this_snr+".fits") + " model_low.fits")
+            os.system("cp " + self.outmodelcube_13co21.replace(".fits","_"+this_snr+".fits") + " model_high.fits")
+            cubelow  = "model_low.fits"
+            cubehigh = "model_high.fits"
 
-        # create two model ecubes with a single value of rms
-        run_importfits(cubelow,"noisemodel_low.cube1")
-        run_immath_one("noisemodel_low.cube1","noisemodel_low.cube2","IM0*0+"+str(rms))
-        run_exportfits("noisemodel_low.cube2","noisemodel_low.fits")
-        os.system("rm -rf noisemodel_low.cube1 noisemodel_low.cube2")
+            # create two model ecubes with a single value of rms
+            run_importfits(cubelow,"noisemodel_low.cube1")
+            run_immath_one("noisemodel_low.cube1","noisemodel_low.cube2","IM0*0+"+str(rms))
+            run_exportfits("noisemodel_low.cube2","noisemodel_low.fits")
+            os.system("rm -rf noisemodel_low.cube1 noisemodel_low.cube2")
 
-        run_importfits(cubehigh,"noisemodel_high.cube1")
-        run_immath_one("noisemodel_high.cube1","noisemodel_high.cube2","IM0*0+"+str(rms))
-        run_exportfits("noisemodel_high.cube2","noisemodel_high.fits")
-        os.system("rm -rf noisemodel_high.cube1 noisemodel_high.cube2")
+            run_importfits(cubehigh,"noisemodel_high.cube1")
+            run_immath_one("noisemodel_high.cube1","noisemodel_high.cube2","IM0*0+"+str(rms))
+            run_exportfits("noisemodel_high.cube2","noisemodel_high.fits")
+            os.system("rm -rf noisemodel_high.cube1 noisemodel_high.cube2")
 
-        rotation_13co21_13co10(
-            cubelow,
-            cubehigh,
-            "noisemodel_low.fits",
-            "noisemodel_high.fits",
-            ra_cnt=self.ra_agn,
-            dec_cnt=self.dec_agn,
-            snr=self.snr_fit,
-            snr_limit=self.snr_fit,
-            restfreq_low=110.20135430,
-            restfreq_high=220.39868420,
-            )
-        os.system("cp mom0_low.fits " + self.outsimumom0_13co10.replace(".fits","_fitting_"+this_snr+".fits"))
-        os.system("cp emom0_low.fits " + self.outsimumom0_13co10.replace(".fits","_fitting_"+this_snr+".fits").replace("mom0","emom0"))
-        os.system("cp mom0_high.fits " + self.outsimumom0_13co21.replace(".fits","_fitting_"+this_snr+".fits"))
-        os.system("cp emom0_high.fits " + self.outsimumom0_13co21.replace(".fits","_fitting_"+this_snr+".fits").replace("mom0","emom0"))
-        os.system("rm -rf *.fits")
+            rotation_13co21_13co10(
+                cubelow,
+                cubehigh,
+                "noisemodel_low.fits",
+                "noisemodel_high.fits",
+                ra_cnt=self.ra_agn,
+                dec_cnt=self.dec_agn,
+                snr=self.snr_fit,
+                snr_limit=self.snr_fit,
+                restfreq_low=110.20135430,
+                restfreq_high=220.39868420,
+                )
+            os.system("cp mom0_low.fits " + self.outsimumom0_13co10.replace(".fits","_fitting_"+this_snr+".fits"))
+            os.system("cp emom0_low.fits " + self.outsimumom0_13co10.replace(".fits","_fitting_"+this_snr+".fits").replace("mom0","emom0"))
+            os.system("cp mom0_high.fits " + self.outsimumom0_13co21.replace(".fits","_fitting_"+this_snr+".fits"))
+            os.system("cp emom0_high.fits " + self.outsimumom0_13co21.replace(".fits","_fitting_"+this_snr+".fits").replace("mom0","emom0"))
+            os.system("rm -rf *.fits")
 
     #######################
     # simulate_mom_13co10 #
