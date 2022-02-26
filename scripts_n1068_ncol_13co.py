@@ -5202,7 +5202,7 @@ class ToolsNcol():
         ########
         # plot #
         ########
-        this_grid = np.linspace(lim2[0], tlim[1], num=1000)
+        this_grid = np.linspace(lim2[0], lim2[1], num=1000)
 
         fig = plt.figure(figsize=(13,10))
         gs  = gridspec.GridSpec(nrows=10, ncols=10)
