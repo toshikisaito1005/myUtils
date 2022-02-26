@@ -30,6 +30,7 @@ def rotation_13co21_13co10(
     cubehigh,
     ecubelow,
     ecubehigh,
+    fitsigma=True, # curve_fit with ecubes
     ra_cnt=40.669625, # deg
     dec_cnt=-0.01331667, # deg
     snr=5.0,
@@ -151,13 +152,18 @@ def rotation_13co21_13co10(
             # guess
             p0 = [np.max(this_data)/2.0, np.max(this_data), guess_b, 40.]
 
+            if fitsigma==True:
+                this_sigma = this_err
+            else:
+                this_sigma = None
+
             # fitting
             this_f_two = lambda x, a1, a2, b, c: _f_two(x, a1, a2, b, c, restfreq_low, restfreq_high)
             popt,pcov  = curve_fit(
                 this_f_two,
                 this_freq,
                 this_data,
-                sigma          = this_err,
+                sigma          = this_sigma,
                 p0             = p0,
                 maxfev         = 100000,
                 absolute_sigma = True,
