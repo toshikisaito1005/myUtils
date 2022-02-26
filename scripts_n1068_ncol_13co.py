@@ -2977,7 +2977,7 @@ class ToolsNcol():
                 snr=self.snr_fit,
                 snr_limit=self.snr_fit,
                 restfreq_low=110.20135430,
-                restfreq_high=220.39868420c,
+                restfreq_high=220.39868420,
                 )
 
     #######################
