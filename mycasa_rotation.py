@@ -151,10 +151,9 @@ def rotation_13co21_13co10(
             # guess
             p0 = [np.max(this_data)/2.0, np.max(this_data), guess_b, 40.]
 
-            print(np.mean(this_f_two),np.mean(this_freq),np.mean(this_data),np.mean(this_err))
-
             # fitting
             this_f_two = lambda x, a1, a2, b, c: _f_two(x, a1, a2, b, c, restfreq_low, restfreq_high)
+            print(np.mean(this_f_two),np.mean(this_freq),np.mean(this_data),np.mean(this_err))
             popt,pcov  = curve_fit(
                 this_f_two,
                 this_freq,
