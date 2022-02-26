@@ -2560,12 +2560,12 @@ class ToolsNcol():
 
     def simulate_mom_13co10(
         self,
-        do_noclip=True,
-        do_zeroclip=True,
-        do_clip=True,
-        do_noclip_mask=True,
-        do_zeroclip_mask=True,
-        do_clip_mask=True,
+        do_noclip=False,
+        do_zeroclip=False,
+        do_clip=False,
+        do_noclip_mask=False,
+        do_zeroclip_mask=False,
+        do_clip_mask=False,
         do_fitting=True,
         rms=0.227283716202,
         ):
@@ -2954,18 +2954,14 @@ class ToolsNcol():
             cubelow  = self.outmodelcube_13co10.replace(".fits","_snr10.fits")
             cubehigh = self.outmodelcube_13co21.replace(".fits","_snr10.fits")
 
-            # measure noise
-            noiselow  = measure_rms(cubelow,snr=3.0,"p84")
-            noisehigh = measure_rms(cubehigh,snr=3.0,"p84")
-
             # create two model ecubes with a single value of rms
             run_importfits(noiselow,"noisemodel_low.cube1")
-            run_immath_one("noisemodel_low.cube1","noisemodel_low.cube2","IM0*0+"+str(noiselow))
+            run_immath_one("noisemodel_low.cube1","noisemodel_low.cube2","IM0*0+"+str(rms))
             run_exportfits("noisemodel_low.cube2","noisemodel_low.fits")
             os.system("rm -rf noisemodel_low.cube1 noisemodel_low.cube2")
 
             run_importfits(noiselow,"noisemodel_high.cube1")
-            run_immath_one("noisemodel_high.cube1","noisemodel_high.cube2","IM0*0+"+str(noiselow))
+            run_immath_one("noisemodel_high.cube1","noisemodel_high.cube2","IM0*0+"+str(rms))
             run_exportfits("noisemodel_high.cube2","noisemodel_high.fits")
             os.system("rm -rf noisemodel_high.cube1 noisemodel_high.cube2")
 
@@ -2988,12 +2984,12 @@ class ToolsNcol():
 
     def simulate_mom_13co21(
         self,
-        do_noclip=True,
-        do_zeroclip=True,
-        do_clip=True,
-        do_noclip_mask=True,
-        do_zeroclip_mask=True,
-        do_clip_mask=True,
+        do_noclip=False,
+        do_zeroclip=False,
+        do_clip=False,
+        do_noclip_mask=False,
+        do_zeroclip_mask=False,
+        do_clip_mask=False,
         rms=0.227283716202,
         ):
         """
