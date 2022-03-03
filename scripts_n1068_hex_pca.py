@@ -52,6 +52,7 @@ usage:
 paper drafts:
 Date         Filename                To
 2021-12-21   draft_v0_211221.zip     Takano-san,Nakajima-san,Harada-san,Tamura-san
+2022-02-18   draft_v1_220218.zip     Editage (English proofreading)
 
 history:
 2021-11-10   created
@@ -60,6 +61,7 @@ history:
 2021-11-22   implement LOWESS and bootstrapped standard deviation
 2021-12-21   circulate v0 draft to the paper team
 2022-01-25   replace radial plot with line graph
+2022-02-18   send to Editage (English proofreading)
 Toshiki Saito@Nichidai/NAOJ
 """
 
