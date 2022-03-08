@@ -166,71 +166,7 @@ class ToolsLSTSim():
     def _set_output_txt_png(self):
         """
         """
-
-        # output txt and png
-        self.table_hex_obs            = self.dir_ready + self._read_key("table_hex_obs")
-        self.table_hex_pca_mom0       = self.dir_ready + self._read_key("table_hex_pca_mom0")
-        self.table_hex_pca_r13co      = self.dir_ready + self._read_key("table_hex_pca_r13co")
-        self.table_hex_pca_rhcn       = self.dir_ready + self._read_key("table_hex_pca_rhcn")
-
-        self.outpng_pca_mom0          = self.dir_products + self._read_key("outpng_pca_mom0")
-        self.outpng_pca_r13co         = self.dir_products + self._read_key("outpng_pca_r13co")
-        self.outpng_pca_rhcn          = self.dir_products + self._read_key("outpng_pca_rhcn")
-
-        self.outpng_mom0              = self.dir_products + self._read_key("outpng_mom0")
-        self.outpng_12co10_oveall     = self.outpng_mom0.replace("???","12co10_overall")
-
-        self.outpng_pca_hexmap        = self.dir_products + self._read_key("outpng_pca_hexmap")
-        self.outpng_pca_scatter       = self.dir_products + self._read_key("outpng_pca_scatter")
-        self.outpng_pca_hexmap_r13co  = self.dir_products + self._read_key("outpng_pca_hexmap_r13co")
-        self.outpng_pca_scatter_r13co = self.dir_products + self._read_key("outpng_pca_scatter_r13co")
-
-        outpng_pca1_mom0_podium       = self.dir_products + self._read_key("outpng_pca1_mom0_podium")
-        self.outpng_pca1_mom0_1st     = outpng_pca1_mom0_podium.replace("???","1st")
-        self.outpng_pca1_mom0_2nd     = outpng_pca1_mom0_podium.replace("???","2nd")
-        self.outpng_pca1_mom0_3rd     = outpng_pca1_mom0_podium.replace("???","3rd")
-        self.outpng_pca1_mom0_4th     = outpng_pca1_mom0_podium.replace("???","4th")
-
-        outpng_pca2_mom0_podium       = self.dir_products + self._read_key("outpng_pca2_mom0_podium")
-        self.outpng_pca2_mom0_1st     = outpng_pca2_mom0_podium.replace("???","1st")
-        self.outpng_pca2_mom0_2nd     = outpng_pca2_mom0_podium.replace("???","2nd")
-        self.outpng_pca2_mom0_3rd     = outpng_pca2_mom0_podium.replace("???","3rd")
-        self.outpng_pca2_mom0_4th     = outpng_pca2_mom0_podium.replace("???","4th")
-
-        outpng_pca1_ratio_podium      = self.dir_products + self._read_key("outpng_pca1_ratio_podium")
-        self.outpng_pca1_ratio_1st    = outpng_pca1_ratio_podium.replace("???","1st")
-        self.outpng_pca1_ratio_2nd    = outpng_pca1_ratio_podium.replace("???","2nd")
-        self.outpng_pca1_ratio_3rd    = outpng_pca1_ratio_podium.replace("???","3rd")
-        self.outpng_pca1_ratio_4th    = outpng_pca1_ratio_podium.replace("???","4th")
-
-        outpng_pca2_ratio_podium      = self.dir_products + self._read_key("outpng_pca2_ratio_podium")
-        self.outpng_pca2_ratio_1st    = outpng_pca2_ratio_podium.replace("???","1st")
-        self.outpng_pca2_ratio_2nd    = outpng_pca2_ratio_podium.replace("???","2nd")
-        self.outpng_pca2_ratio_3rd    = outpng_pca2_ratio_podium.replace("???","3rd")
-        self.outpng_pca2_ratio_4th    = outpng_pca2_ratio_podium.replace("???","4th")
-
-        self.outpng_radial1           = self.dir_products + self._read_key("outpng_radial1")
-        self.outpng_radial2           = self.dir_products + self._read_key("outpng_radial2")
-        self.outpng_radial3           = self.dir_products + self._read_key("outpng_radial3")
-
-        self.outpng_line_graph        = self.dir_products + self._read_key("outpng_line_graph")
-        self.outpng_envmask           = self.dir_products + self._read_key("outpng_envmask")
-
-        # final
-        self.final_overall            = self.dir_final + self._read_key("final_overall")
-        self.final_mom0               = self.dir_final + self._read_key("final_mom0")
-        self.final_pca_mom0           = self.dir_final + self._read_key("final_pca_mom0")
-        self.final_pca_r13co          = self.dir_final + self._read_key("final_pca_r13co")
-        self.final_pca_mom0_podium    = self.dir_final + self._read_key("final_pca_mom0_podium")
-        self.final_pca_ratio_podium   = self.dir_final + self._read_key("final_pca_ratio_podium")
-        self.final_hex_radial         = self.dir_final + self._read_key("final_hex_radial")
-        self.final_line_graph         = self.dir_final + self._read_key("final_line_graph")
-
-        self.box_map                  = self._read_key("box_map")
-        self.box_map_noxlabel         = self._read_key("box_map_noxlabel")
-        self.box_map_noylabel         = self._read_key("box_map_noylabel")
-        self.box_map_noxylabel        = self._read_key("box_map_noxylabel")
-
+        
     ####################
     # run_sim_lst_alma #
     ####################
