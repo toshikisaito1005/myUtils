@@ -10,7 +10,7 @@ import numpy as np
 import pyfits
 import shutil
 
-myia = aU.createCasaTool(iatool)
+myia = au.createCasaTool(iatool)
 
 def gen_cube(
     template_dir,
