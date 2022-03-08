@@ -103,7 +103,7 @@ class ToolsLSTSim():
         self._create_dir(self.dir_final)
 
         # simobserve
-        self.project_sim  = self.dir_proj + self._read_key("project_sim")
+        self.project_sim  = self._read_key("project_sim")
         self.config_12m   = self.dir_keyfile + self._read_key("config_12m")
         self.config_7m    = self.dir_keyfile + self._read_key("config_7m")
 
