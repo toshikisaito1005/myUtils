@@ -210,8 +210,8 @@ class ToolsLSTSim():
             working_dir=self.dir_ready,
             template=self.template_fullspec,
             antennalist=self.config_12m,
-            self.project_sim,
-            project=totaltime="1.5h",
+            project=self.project_sim,
+            totaltime="1.5h",
             )
 
     #######################
