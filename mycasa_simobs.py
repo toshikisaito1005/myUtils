@@ -414,6 +414,9 @@ def run_simobserve(
     if not done:
         os.mkdir(ms_dir)
 
+    print(antennalist)
+    print(input_dir+template)
+
     # simobserve
     simobserve(
         antennalist = antennalist,
