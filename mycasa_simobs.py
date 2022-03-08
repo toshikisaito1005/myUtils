@@ -409,8 +409,10 @@ def run_simobserve(
     output_dir      = working_dir + "outputs/"
     ms_dir          = working_dir + "./"
     move_ms_to_here = working_dir + "ms/"
-    os.mkdir(ms_dir)
-    os.mkdir(move_ms_to_here)
+
+    done = glob.glob(ms_dir)
+    if not done:
+        os.mkdir(ms_dir)
 
     # simobserve
     default("simobserve")
