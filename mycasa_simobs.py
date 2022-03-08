@@ -382,6 +382,8 @@ def gen_cube(
     os.system("rm -rf " + sdimage_div100+".temp")
     os.system("rm -rf " + sdnoise_image+".temp")
     os.system("rm -rf " + sdnoise_image+".temp2")
+    os.system("rm -rf " + template_rotated+".temp2")
+    os.system("rm -rf " + template_rotated+".temp2.fits")
 
     #######################
     ### Drop back to FITS #

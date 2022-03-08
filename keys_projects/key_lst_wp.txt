@@ -23,6 +23,9 @@ dir_final                 ,,,images/
 ###################
 # input paramters #
 ###################
+project_sim ,,,ngc3059sim
+config_12m  ,,,alma-configuration-files/alma.cycle7.1.cfg
+config_7m   ,,,alma-configuration-files/aca.cycle7.cfg
 
 ######################
 # output png and txt #
