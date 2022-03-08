@@ -42,6 +42,7 @@ from imregrid import imregrid
 from imsmooth import imsmooth
 from makemask import makemask
 from immoments import immoments
+from simobserve import simobserve
 from importfits import importfits
 from exportfits import exportfits
 mycl = aU.createCasaTool(cltool)
