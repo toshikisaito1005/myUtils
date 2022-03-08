@@ -27,8 +27,8 @@ usage:
 > # key
 > tl = tools(
 >     refresh     = False,
->     keyfile_gal = "/home02/saitots/myUtils/keys_n1068_hex_pca/key_ngc1068.txt",
->     keyfile_fig = "/home02/saitots/myUtils/keys_n1068_hex_pca/key_figures.txt",
+>     keyfile_gal = "/home02/saitots/myUtils/keys_projects/galkey_ngc1068.txt",
+>     keyfile_fig = "/home02/saitots/myUtils/keys_projects/key_n1068_hex_pca.txt",
 >     )
 >
 > # main
@@ -38,12 +38,14 @@ usage:
 >     do_sampling            = True,
 >     do_pca                 = True,
 >     # plot
+>     plot_hexmap_mom0       = True,
+>     plot_envmask           = True,
 >     plot_hexmap_pca        = True,
 >     plot_hexmap_pca_podium = True,
->     plot_radial            = True,
+>     plot_median_line_graph = True,
 >     do_imagemagick         = True,
 >     # supplement
->     plot_hexmap            = True,
+>     plot_supplements       = True,
 >     do_imagemagick_sub     = True,
 >     )
 >

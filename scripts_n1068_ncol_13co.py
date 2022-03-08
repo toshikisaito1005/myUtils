@@ -23,19 +23,30 @@ usage:
 > # key
 > tl = tools(
 >     refresh     = False,
->     keyfile_gal = "/home02/saitots/myUtils/keys_n1068_ncol_13co/key_ngc1068.txt",
->     keyfile_fig = "/home02/saitots/myUtils/keys_n1068_ncol_13co/key_figures.txt",
+>     keyfile_gal = "/home02/saitots/myUtils/keys_projects/galkey_ngc1068.txt",
+>     keyfile_fig = "/home02/saitots/myUtils/keys_projects/key_n1068_ncol_13co.txt",
 >     )
 >
 > # main
 > tl.run_ngc1068_ncol(
+>     do_all           = True,
 >     # analysis
->     do_prepare     = False,
->     do_fitting     = False,
+>     do_prepare       = True,
+>     do_fitting       = True,
+>     # mom0 creation simulation
+>     do_create_models = True,
+>     do_simulate_mom  = True,
 >     # plot
->     plot_showcase  = True,
->     do_imagemagick = True,
->     immagick_all   = False,
+>     plot_showcase    = True,
+>     plot_showsim     = True,
+>     plot_scatter     = True,
+>     plot_violin      = True,
+>     plot_aco         = True,
+>     plot_jet         = True,
+>     plot_gmc         = True,
+>     # paper-ready plot
+>     do_imagemagick   = True,
+>     immagick_all     = True,
 >     # supplement
 >     )
 >

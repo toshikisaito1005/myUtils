@@ -1,8 +1,11 @@
-########################################
-### galaxy properties (str(np.round(np.tan(np.radians(1/3600.))*9.84*1e6,1)))
-########################################
+#####################
+# galaxy properties #
+#####################
+# (str(np.round(np.tan(np.radians(1/3600.))*9.84*1e6,1)))
 # Armus et al. 2009, PASP, 121, 559
 # vsys from Garcia-Burillo et al. 2014
+# distane from Anand et al. 2021
+# agn position from Roy et al. 1998
 ra         ,,,40.67144167deg
 dec        ,,,-0.0150275deg
 scale      ,,,67.7
@@ -19,3 +22,6 @@ dec_wknot  ,,,-0.01354528deg
 ra_sbr     ,,,40.66800417deg
 dec_sbr    ,,,-0.01721417deg
 vsys       ,,,1116kms
+#######
+# end #
+#######
