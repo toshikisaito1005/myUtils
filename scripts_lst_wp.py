@@ -103,7 +103,7 @@ class ToolsLSTSim():
         self._create_dir(self.dir_final)
 
         # simobserve
-        self.project_sim  = self.dir_ready + "ngc3059sim"
+        self.project_sim  = "ngc3059sim"
         self.config_12m   = self.dir_keyfile + "alma.cycle7.1.cfg"
         self.config_7m    = self.dir_keyfile + "aca.cycle7.cfg"
 
@@ -204,7 +204,7 @@ class ToolsLSTSim():
         """
 
         taskname = self.modname + sys._getframe().f_code.co_name
-        check_first(self.template_file,taskname)
+        check_first(self.template_fullspec,taskname)
 
         run_simobserve(
             working_dir=self.dir_ready,
