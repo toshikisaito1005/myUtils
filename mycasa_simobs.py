@@ -13,6 +13,10 @@ import shutil
 # import CASA and python stuff
 exec(open(os.environ["HOME"]+"/myUtils/stuff_casa.py").read())
 
+############
+# gen_cube #
+############
+
 def gen_cube(
     template_dir,
     template_file,
@@ -385,6 +389,46 @@ def gen_cube(
 
     exportfits(imagename=template_fullspec, fitsimage=template_fullspec.replace('.image','.fits'), dropstokes=True, overwrite=True)
     exportfits(imagename=template_withcont, fitsimage=template_withcont.replace('.image','.fits'), dropstokes=True, overwrite=True)
+
+##############
+# simobserve #
+##############
+
+def run_simobserve(
+    working_dir,
+    template,
+    antennalist,
+    project,
+    totaltime="1.5h",
+    ):
+    """
+    """
+
+    # make sure directories
+    input_dir       = working_dir + "inputs/"
+    output_dir      = working_dir + "outputs/"
+    ms_dir          = working_dir + "./"
+    move_ms_to_here = working_dir + "ms/"
+    os.mkdir(ms_dir)
+    os.mkdir(move_ms_to_here)
+
+    # simobserve
+    default("simobserve")
+    simobserve(
+        antennalist = antennalist,
+        skymodel = input_dir+template,
+        project = project,
+        setpointings = True,
+        integration = "10s",
+        graphics = "none",
+        obsmode = "int",
+        totaltime = totaltime, 
+        thermalnoise = 'tsys-atm',
+        user_pwv = 1.0,
+        overwrite = True,
+        )
+    os.system("rm -rf " + move_ms_to_here+"/"+project+"_12m")
+    os.system("mv "+ project+"_12m " + move_ms_to_here+".")
 
 #######
 # end #

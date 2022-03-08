@@ -63,6 +63,7 @@ class ToolsLSTSim():
         # initialize keys
         self.keyfile_gal = keyfile_gal
         self.keyfile_fig = keyfile_fig
+        self.dir_keyfile = "/".join(self.keyfile_gal.split("/")[:-1]) + "/"
 
         # intialize task
         self.refresh      = refresh
@@ -100,6 +101,11 @@ class ToolsLSTSim():
         self._create_dir(self.dir_ready)
         self._create_dir(self.dir_products)
         self._create_dir(self.dir_final)
+
+        # simobserve
+        self.project_sim  = self.dir_ready + "ngc3059sim"
+        self.config_12m   = self.dir_keyfile + "alma.cycle7.1.cfg"
+        self.config_7m    = self.dir_keyfile + "aca.cycle7.cfg"
 
     def _set_input_fits(self):
         """
@@ -176,6 +182,7 @@ class ToolsLSTSim():
         self,
         # analysis
         do_template = False,
+        do_simint   = False,
         ):
         """
         This method runs all the methods which will create figures in the white paper.
@@ -184,6 +191,28 @@ class ToolsLSTSim():
         # analysis
         if do_template==True:
             self.prepare_do_template()
+
+        if do_simint==True:
+            self.simint()
+
+    ##########
+    # simint #
+    ##########
+
+    def simint(self):
+        """
+        """
+
+        taskname = self.modname + sys._getframe().f_code.co_name
+        check_first(self.template_file,taskname)
+
+        run_simobserve(
+            working_dir=self.dir_ready,
+            template=self.template_fullspec,
+            self.config_12m,
+            self.project_sim,
+            totaltime="1.5h",
+            )
 
     #######################
     # prepare_do_template #
