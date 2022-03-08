@@ -415,7 +415,6 @@ def run_simobserve(
         os.mkdir(ms_dir)
 
     # simobserve
-    default("simobserve")
     simobserve(
         antennalist = antennalist,
         skymodel = input_dir+template,
