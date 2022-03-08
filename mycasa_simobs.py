@@ -77,6 +77,8 @@ def gen_cube(
     # Convert the template to Jansky/pixel units #
     ##############################################
 
+    print(template_dir+template_file)
+
     bmaj = imhead(template_dir+template_file)["restoringbeam"]["major"]["value"]
     bmin = imhead(template_dir+template_file)["restoringbeam"]["minor"]["value"]
     obsfreq = imhead(template_dir+template_file)["refval"][2] / 1e9 # GHz
