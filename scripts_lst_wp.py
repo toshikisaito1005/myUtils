@@ -204,7 +204,7 @@ class ToolsLSTSim():
         """
 
         taskname = self.modname + sys._getframe().f_code.co_name
-        check_first(self.template_file, taskname)
+        check_first(self.template_file,taskname)
 
         run_simobserve(
             working_dir=self.dir_ready,
