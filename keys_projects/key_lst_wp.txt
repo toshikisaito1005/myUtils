@@ -1,12 +1,12 @@
 ###############
 # directories #
 ###############
-dir_proj                  ,,,/lfs13/saitots/proj_lst_wp/
-dir_raw                   ,,,data_raw/
-dir_ready                 ,,,data_ready/
-dir_other                 ,,,data_other/
-dir_products              ,,,products_png/
-dir_final                 ,,,images/
+dir_proj      ,,,/lfs13/saitots/proj_lst_wp/
+dir_raw       ,,,data_raw/
+dir_ready     ,,,data_ready/
+dir_other     ,,,data_other/
+dir_products  ,,,products_png/
+dir_final     ,,,images/
 
 ##################
 # final products #
@@ -15,6 +15,8 @@ dir_final                 ,,,images/
 ############
 # raw maps #
 ############
+template_file ,,,ngc1097_12m+7m+tp_co21.fits
+template_mask ,,,ngc1097_12m+7m+tp_co21_11as_strictmask.fits
 
 ###############
 # output maps #
@@ -23,9 +25,9 @@ dir_final                 ,,,images/
 ###################
 # input paramters #
 ###################
-project_sim ,,,ngc3059sim
-config_12m  ,,,alma-configuration-files/alma.cycle7.1.cfg
-config_7m   ,,,alma-configuration-files/aca.cycle7.cfg
+project_sim   ,,,ngc1097sim
+config_12m    ,,,alma-configuration-files/alma.cycle7.1.cfg
+config_7m     ,,,alma-configuration-files/aca.cycle7.cfg
 
 ######################
 # output png and txt #

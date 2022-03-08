@@ -402,6 +402,7 @@ def run_simobserve(
     antennalist,
     project,
     totaltime="1.5h",
+    incenter="230GHz",
     ):
     """
     """
@@ -412,9 +413,9 @@ def run_simobserve(
     ms_dir          = working_dir + "./"
     move_ms_to_here = working_dir + "ms/"
 
-    done = glob.glob(ms_dir)
+    done = glob.glob(move_ms_to_here)
     if not done:
-        os.mkdir(ms_dir)
+        os.mkdir(move_ms_to_here)
 
     # simobserve
     simobserve(
@@ -429,6 +430,7 @@ def run_simobserve(
         thermalnoise = 'tsys-atm',
         user_pwv = 1.0,
         overwrite = True,
+        incenter = incenter,
         )
     os.system("rm -rf " + move_ms_to_here+"/"+project+"_12m")
     os.system("mv "+ project+"_12m " + move_ms_to_here+".")

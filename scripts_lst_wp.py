@@ -111,41 +111,43 @@ class ToolsLSTSim():
         """
         """
 
-        self.template_file = "ngc3059_12m+7m+tp_co21.fits"
-        self.template_mask = "ngc3059_12m+7m+tp_co21_strictmask.fits"
+        self.template_file = self._read_key("template_file")
+        self.template_mask = self._read_key("template_mask")
 
     def _set_output_fits(self):
         """
         """
 
-        self.template_in_jypix        = "ngc3059_template_jypixel.image"
-        self.template_clipped         = "ngc3059_template_clipped.image"
-        self.template_mask_imported   = "ngc3059_template_mask.image"
-        self.template_rotated         = "ngc3059_template_rotated.image"
-        self.template_shrunk          = "ngc3059_template_shrunk.image"
-        self.template_fullspec        = "ngc3059_template_fullspec.image"
-        self.template_fullspec_div3   = "ngc3059_template_fullspec_div3.image"
-        self.template_fullspec_div10  = "ngc3059_template_fullspec_div10.image"
-        self.template_fullspec_div30  = "ngc3059_template_fullspec_div30.image"
-        self.template_fullspec_div100 = "ngc3059_template_fullspec_div100.image"
-        self.template_withcont        = "ngc3059_template_withcont.image"
-        self.template_withcont_div3   = "ngc3059_template_withcont_div3.image"
-        self.template_withcont_div10  = "ngc3059_template_withcont_div10.image"
-        self.template_withcont_div30  = "ngc3059_template_withcont_div30.image"
-        self.template_withcont_div100 = "ngc3059_template_withcont_div100.image"
-        self.sdnoise_image            = "ngc3059_singledish_noise_nocont.image"
-        self.sdimage_fullspec         = "ngc3059_singledish_nocont.image"
-        self.sdimage_div3             = "ngc3059_singledish_div3.image"
-        self.sdimage_div10            = "ngc3059_singledish_div10.image"
-        self.sdimage_div30            = "ngc3059_singledish_div30.image"
-        self.sdimage_div100           = "ngc3059_singledish_div100.image"
+        tempgal = "ngc1097"
 
-        self.sdnoise_image            = "ngc3059_singledish_noise_nocont.image"
-        self.sdimage_fullspec         = "ngc3059_singledish_nocont.image"
-        self.sdimage_div3             = "ngc3059_singledish_div3.image"
-        self.sdimage_div10            = "ngc3059_singledish_div10.image"
-        self.sdimage_div30            = "ngc3059_singledish_div30.image"
-        self.sdimage_div100           = "ngc3059_singledish_div100.image"
+        self.template_in_jypix        = tempgal + "_template_jypixel.image"
+        self.template_clipped         = tempgal + "_template_clipped.image"
+        self.template_mask_imported   = tempgal + "_template_mask.image"
+        self.template_rotated         = tempgal + "_template_rotated.image"
+        self.template_shrunk          = tempgal + "_template_shrunk.image"
+        self.template_fullspec        = tempgal + "_template_fullspec.image"
+        self.template_fullspec_div3   = tempgal + "_template_fullspec_div3.image"
+        self.template_fullspec_div10  = tempgal + "_template_fullspec_div10.image"
+        self.template_fullspec_div30  = tempgal + "_template_fullspec_div30.image"
+        self.template_fullspec_div100 = tempgal + "_template_fullspec_div100.image"
+        self.template_withcont        = tempgal + "_template_withcont.image"
+        self.template_withcont_div3   = tempgal + "_template_withcont_div3.image"
+        self.template_withcont_div10  = tempgal + "_template_withcont_div10.image"
+        self.template_withcont_div30  = tempgal + "_template_withcont_div30.image"
+        self.template_withcont_div100 = tempgal + "_template_withcont_div100.image"
+        self.sdnoise_image            = tempgal + "_singledish_noise_nocont.image"
+        self.sdimage_fullspec         = tempgal + "_singledish_nocont.image"
+        self.sdimage_div3             = tempgal + "_singledish_div3.image"
+        self.sdimage_div10            = tempgal + "_singledish_div10.image"
+        self.sdimage_div30            = tempgal + "_singledish_div30.image"
+        self.sdimage_div100           = tempgal + "_singledish_div100.image"
+
+        self.sdnoise_image            = tempgal + "_singledish_noise_nocont.image"
+        self.sdimage_fullspec         = tempgal + "_singledish_nocont.image"
+        self.sdimage_div3             = tempgal + "_singledish_div3.image"
+        self.sdimage_div10            = tempgal + "_singledish_div10.image"
+        self.sdimage_div30            = tempgal + "_singledish_div30.image"
+        self.sdimage_div100           = tempgal + "_singledish_div100.image"
 
     def _set_input_param(self):
         """
@@ -155,6 +157,7 @@ class ToolsLSTSim():
         self.singledish_noise = 0.102 # Jy/beam at final res
         self.singledish_res   = "28.37arcsec" # resolution
         self.image_roration   = "23deg"
+        self.incenter         = "490.30240489GHz" #CI at z = 0.00379
 
         # ngc1068 properties
         self.ra_agn    = float(self._read_key("ra_agn", "gal").split("deg")[0])
@@ -181,8 +184,9 @@ class ToolsLSTSim():
     def run_sim_lst_alma(
         self,
         # analysis
-        do_template = False,
-        do_simint   = False,
+        do_template   = False,
+        do_simint     = False, # sim ALMA-only
+        do_simsynergy = False, # sim LST+ALMA
         ):
         """
         This method runs all the methods which will create figures in the white paper.
@@ -212,6 +216,7 @@ class ToolsLSTSim():
             antennalist=self.config_12m,
             project=self.project_sim,
             totaltime="1.5h",
+            incenter=self.incenter,
             )
 
     #######################
