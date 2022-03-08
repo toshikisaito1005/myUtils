@@ -95,6 +95,7 @@ class ToolsLSTSim():
         self.dir_other    = self.dir_proj + self._read_key("dir_other")
         self.dir_products = self.dir_proj + self._read_key("dir_products")
         self.dir_final    = self.dir_proj + self._read_key("dir_final")
+        self.dir_final    = self.dir_proj + self._read_key("dir_final")
 
         self._create_dir(self.dir_ready)
         self._create_dir(self.dir_products)
@@ -166,7 +167,7 @@ class ToolsLSTSim():
     def _set_output_txt_png(self):
         """
         """
-        
+
     ####################
     # run_sim_lst_alma #
     ####################
@@ -222,8 +223,8 @@ class ToolsLSTSim():
             sdimage_div30=self.sdimage_div30,
             sdimage_div100=self.sdimage_div100,
             pa=self.image_roration, # rotation angle
-            singledish_res=self.singledish_noise, # 12m TP resolution
-            singledish_noise=self.singledish_res, # Jy/beam at final res
+            singledish_res=self.singledish_res, # 12m TP resolution
+            singledish_noise=self.singledish_noise, # Jy/beam at final res
             )
 
     ###############
