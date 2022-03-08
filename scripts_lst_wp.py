@@ -209,9 +209,9 @@ class ToolsLSTSim():
         run_simobserve(
             working_dir=self.dir_ready,
             template=self.template_fullspec,
-            self.config_12m,
+            antennalist=self.config_12m,
             self.project_sim,
-            totaltime="1.5h",
+            project=totaltime="1.5h",
             )
 
     #######################
