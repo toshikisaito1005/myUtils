@@ -47,9 +47,16 @@ def gen_cube(
     version from phangs-alma pipeline (sim_ngc3059.py)
     """
 
+    # cleanup directories
     input_dir  = working_dir + "inputs/"
     output_dir = working_dir + "outputs/"
     ms_dir     = working_dir + "ms/"
+    os.system("rm -rf " + input_dir)
+    os.system("rm -rf " + output_dir)
+    os.system("rm -rf " + ms_dir)
+    os.mkdir(input_dir)
+    os.mkdir(output_dir)
+    os.mkdir(ms_dir)
 
     template_in_jypix        = input_dir + template_in_jypix
     template_clipped         = input_dir + template_clipped
