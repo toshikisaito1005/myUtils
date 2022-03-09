@@ -331,7 +331,7 @@ class ToolsLSTSim():
         trange = np.r_[np.arange(0, tinteg/24.*360, 0.5), tinteg/24.*360]
         for this_t in trange:
             list_baselinex = np.r_[list_baselinex, list_dist * np.cos(np.radians(list_angle+this_t))]
-            list_baseliney = np.r_[list_baselinex, list_dist * np.sin(np.radians(list_angle+this_t))]
+            list_baseliney = np.r_[list_baseliney, list_dist * np.sin(np.radians(list_angle+this_t))]
 
         return list_baselinex, list_baseliney
 
