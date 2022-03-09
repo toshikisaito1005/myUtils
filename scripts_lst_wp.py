@@ -327,6 +327,7 @@ class ToolsLSTSim():
         list_phi   = []
         combinations = itertools.product(x,y)
         for comb in combinations:
+            print(comb[0], comb[1])
             this_vec = comb[0] - comb[1]
 
             this_d = np.linalg.norm(this_vec)
