@@ -315,6 +315,7 @@ class ToolsLSTSim():
     def _get_baselines(self,x,y,decl=60,tinteg=0):
         """
         """
+        latitude = -67.755 # degree
 
         list_dist  = []
         list_theta = []
@@ -336,9 +337,9 @@ class ToolsLSTSim():
         t = np.radians( np.array(list_theta) )
         p = np.radians( np.array(list_phi) )
         D = np.radians(decl)
-        X = l*np.sin(t)*np.cos(p)
+        X = l*(np.cos(latitude)*np.sin(p)-np.sin(latitude)*np.cos(p)*np.cos(t)) # l*np.sin(t)*np.cos(p)
         Y = l*np.sin(t)*np.sin(p)
-        Z = l*np.cos(t)
+        Z = D*(np.sin(latitude)*np.sin(p)+np.cos(latitude)*np.cos(p)*np.cos(t)) # l*np.cos(t)
 
         # output
         list_u = []
