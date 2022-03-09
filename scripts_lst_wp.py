@@ -238,8 +238,8 @@ class ToolsLSTSim():
 
         # get dist and angle: alma-alma baselines
         this_data = np.c_[x_12m.flatten(),y_12m.flatten()]
-        basex_alma, basey_alma = self._get_baselines(this_data,this_data,tinteg=1)
-        basex_lst_center, basey_lst_center = self._get_baselines(np.array([0,0]),this_data,tinteg=1)
+        basex_alma, basey_alma = self._get_baselines(this_data,this_data,decl=60,tinteg=1)
+        basex_lst_center, basey_lst_center = self._get_baselines(np.array([0,0]),this_data,decl=60,tinteg=1)
 
         ##########################
         # plot: antenna position #
@@ -307,7 +307,7 @@ class ToolsLSTSim():
     # _get_baselines #
     ##################
 
-    def _get_baselines(self,x,y,tinteg=0):
+    def _get_baselines(self,x,y,decl=60,tinteg=0):
         """
         """
 
@@ -327,14 +327,16 @@ class ToolsLSTSim():
         list_angle = np.array(list_angle)
 
         # output
-        list_baselinex = []
-        list_baseliney = []
+        list_baselineu = []
+        list_baselinev = []
         trange = np.r_[np.arange(0, tinteg/24.*360, 0.5), tinteg/24.*360]
         for this_t in trange:
-            list_baselinex = np.r_[list_baselinex, list_dist * np.cos(np.radians(list_angle+this_t))]
-            list_baseliney = np.r_[list_baseliney, list_dist * np.sin(np.radians(list_angle+this_t))]
+            u_angle = np.cos(np.radians(list_angle+this_t))
+            v_angle = np.sin(np.radians(list_angle+this_t)) * np.cos(np.radians(decl))
+            list_baselineu = np.r_[list_baselinex, list_dist * u_angle]
+            list_baselinev = np.r_[list_baseliney, list_dist * v_angle]
 
-        return list_baselinex, list_baseliney
+        return list_baselineu, list_baselinev
 
     ###########################
     # phangs_pipeline_imaging #
