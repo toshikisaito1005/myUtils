@@ -331,7 +331,7 @@ class ToolsLSTSim():
         trange = np.r_[np.arange(0, tinteg/24.*360, 0.5), tinteg/24.*360]
         for this_t in trange:
             d   = np.radians(list_angle)
-            H_h = np.radians(trange)
+            H_h = np.radians(this_t)
             D   = np.radians(decl)
 
             uvcos = np.cos(d) * np.sin(H_h)
