@@ -339,7 +339,7 @@ class ToolsLSTSim():
             this_u = X*np.sin(H_h) + Y*np.cos(H_h)
             this_v = -X*np.sin(D)*np.cos(H_h) + Y*np.sin(D)*np.sin(H_h)
             list_u = np.r_[list_u, this_u]
-            list_v = np.r_[list_v, list_dist * uvsin]
+            list_v = np.r_[list_v, this_v]
 
         return list_u, list_v
 
