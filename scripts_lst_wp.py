@@ -255,9 +255,9 @@ class ToolsLSTSim():
         gs  = gridspec.GridSpec(nrows=10, ncols=10)
         ax1 = plt.subplot(gs[0:10,0:10])
         plt.subplots_adjust(left=ad[0], right=ad[1], bottom=ad[2], top=ad[3])
-        myax_set(ax1, "both", xlim, ylim, title, xlabel, ylabel, adjust=ad)
+        myax_set(ax1, None, xlim, ylim, title, xlabel, ylabel, adjust=ad)
 
-        ax1.scatter(x_12m, y_12m, color="black", lw=0, s=100)
+        ax1.scatter(x_12m, y_12m, color="grey", lw=0, s=100)
         ax1.scatter(x_7m, y_7m, color="deepskyblue", lw=0, s=100)
         ax1.scatter(8, 8, color="tomato", marker="*", lw=0, s=600)
         ax1.scatter(8, -8, color="tomato", marker="*", lw=0, s=600)
@@ -265,9 +265,9 @@ class ToolsLSTSim():
         ax1.scatter(0, 0, color="tomato", marker="*", lw=0, s=600)
 
         # text
-        ax1.text(0.05,0.92, "ALMA - 12-m array", color="black", weight="bold", transform=ax1.transAxes)
-        ax1.text(0.05,0.87, "ALMA - ACA", color="deepskyblue", weight="bold", transform=ax1.transAxes)
-        ax1.text(0.05,0.82, "LSTsim", color="tomato", weight="bold", transform=ax1.transAxes)
+        ax1.text(0.05,0.92, "ALMA 12-m array", color="grey", weight="bold", transform=ax1.transAxes)
+        ax1.text(0.05,0.87, "ACA 7-m array", color="deepskyblue", weight="bold", transform=ax1.transAxes)
+        ax1.text(0.05,0.82, "LSTsim 50-m", color="tomato", weight="bold", transform=ax1.transAxes)
 
         # save
         plt.subplots_adjust(hspace=.0)
@@ -290,11 +290,11 @@ class ToolsLSTSim():
         plt.subplots_adjust(left=ad[0], right=ad[1], bottom=ad[2], top=ad[3])
         myax_set(ax1, "both", xlim, ylim, title, xlabel, ylabel, adjust=ad)
 
-        ax1.scatter(basex_alma, basey_alma, color="black", lw=0, s=10)
+        ax1.scatter(basex_alma, basey_alma, color="grey", lw=0, s=10)
         ax1.scatter(basex_lst_center, basey_lst_center, color="tomato", lw=0, s=50)
 
         # text
-        ax1.text(0.05,0.92, "ALMA - ALMA baselines", color="black", weight="bold", transform=ax1.transAxes)
+        ax1.text(0.05,0.92, "ALMA - ALMA baselines", color="grey", weight="bold", transform=ax1.transAxes)
         ax1.text(0.05,0.87, "ALMA - LSTsim baselines", color="tomato", weight="bold", transform=ax1.transAxes)
 
         # save
@@ -326,6 +326,7 @@ class ToolsLSTSim():
         list_dist = np.array(list_dist)
         list_angle = np.array(list_angle)
 
+        # output
         list_baselinex = []
         list_baseliney = []
         trange = np.r_[np.arange(0, tinteg/24.*360, 0.5), tinteg/24.*360]
