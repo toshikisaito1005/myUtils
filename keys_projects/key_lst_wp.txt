@@ -26,7 +26,8 @@ template_mask ,,,ngc1097_12m+7m+tp_co21_11as_strictmask.fits
 # input paramters #
 ###################
 project_sim   ,,,ngc1097sim
-config_12m    ,,,alma-configuration-files/alma.cycle7.1.cfg
+config_c1     ,,,alma-configuration-files/alma.cycle7.1.cfg
+config_c10    ,,,alma-configuration-files/alma.cycle7.10.cfg
 config_7m     ,,,alma-configuration-files/aca.cycle7.cfg
 
 ######################

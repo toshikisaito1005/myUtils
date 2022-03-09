@@ -104,7 +104,8 @@ class ToolsLSTSim():
 
         # simobserve
         self.project_sim  = self._read_key("project_sim")
-        self.config_12m   = self.dir_keyfile + self._read_key("config_12m")
+        self.config_c1    = self.dir_keyfile + self._read_key("config_c1")
+        self.config_c10   = self.dir_keyfile + self._read_key("config_c10")
         self.config_7m    = self.dir_keyfile + self._read_key("config_7m")
 
     def _set_input_fits(self):
@@ -223,10 +224,10 @@ class ToolsLSTSim():
         """
 
         taskname = self.modname + sys._getframe().f_code.co_name
-        check_first(self.config_12m,taskname)
+        check_first(self.config_c10,taskname)
 
         # get data
-        data  = np.loadtxt(self.config_12m,"str")
+        data  = np.loadtxt(self.config_c10,"str")
         x_12m = data[:,0].astype(np.float32)
         y_12m = data[:,1].astype(np.float32)
 
@@ -239,8 +240,8 @@ class ToolsLSTSim():
         xlim  = None
         ylim  = None
         title = None
-        xlabel = "x-offset (km)"
-        ylabel = "y-offset (km)"
+        xlabel = "x-offset (m)"
+        ylabel = "y-offset (m)"
 
         fig = plt.figure(figsize=(13,10))
         gs  = gridspec.GridSpec(nrows=10, ncols=10)
@@ -268,7 +269,7 @@ class ToolsLSTSim():
         check_first(self.template_fullspec,taskname)
 
         # ms
-        sim_12m_ms_orig = self.dir_ready + "ms/" + self.project_sim + "." + self.config_12m + ".noisy.ms"
+        sim_12m_ms_orig = self.dir_ready + "ms/" + self.project_sim + "." + self.config_c1 + ".noisy.ms"
         sim_7m_ms_orig  = self.dir_ready + "ms/" + self.project_sim + "." + self.config_7m + ".noisy.ms"
 
         # prepare dir
@@ -381,7 +382,7 @@ class ToolsLSTSim():
         run_simobserve(
             working_dir=self.dir_ready,
             template=self.template_fullspec_div3,
-            antennalist=self.config_12m,
+            antennalist=self.config_c1,
             project=self.project_sim+"_12m",
             totaltime="1.5h",
             incenter=self.incenter,
