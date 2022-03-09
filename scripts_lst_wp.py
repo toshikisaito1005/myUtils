@@ -238,8 +238,8 @@ class ToolsLSTSim():
 
         # get dist and angle: alma-alma baselines
         this_data = np.c_[x_12m.flatten(),y_12m.flatten()]
-        basex_alma, basey_alma = self._get_baselines(this_data,this_data,decl=60,tinteg=1)
-        basex_lst_center, basey_lst_center = self._get_baselines(np.array([0,0]),this_data,decl=60,tinteg=1)
+        u_alma, v_alma = self._get_baselines(this_data,this_data,decl=60,tinteg=1)
+        u_lst_center, v_lst_center = self._get_baselines(np.array([0,0]),this_data,decl=60,tinteg=1)
 
         ##########################
         # plot: antenna position #
@@ -290,8 +290,8 @@ class ToolsLSTSim():
         plt.subplots_adjust(left=ad[0], right=ad[1], bottom=ad[2], top=ad[3])
         myax_set(ax1, "both", xlim, ylim, title, xlabel, ylabel, adjust=ad)
 
-        ax1.scatter(basex_alma, basey_alma, color="grey", lw=0, s=10)
-        ax1.scatter(basex_lst_center, basey_lst_center, color="tomato", lw=0, s=50)
+        ax1.scatter(u_alma, v_alma, color="grey", lw=0, s=10)
+        ax1.scatter(u_lst_center, v_lst_center, color="tomato", lw=0, s=50)
 
         # text
         ax1.text(0.05,0.92, "ALMA - ALMA baselines", color="grey", weight="bold", transform=ax1.transAxes)
@@ -301,7 +301,6 @@ class ToolsLSTSim():
         plt.subplots_adjust(hspace=.0)
         os.system("rm -rf " + self.outpng_uv_alma_lst1)
         plt.savefig(self.outpng_uv_alma_lst1, dpi=self.fig_dpi)
-
 
     ##################
     # _get_baselines #
@@ -327,16 +326,16 @@ class ToolsLSTSim():
         list_angle = np.array(list_angle)
 
         # output
-        list_baselineu = []
-        list_baselinev = []
+        list_u = []
+        list_v = []
         trange = np.r_[np.arange(0, tinteg/24.*360, 0.5), tinteg/24.*360]
         for this_t in trange:
             u_angle = np.cos(np.radians(list_angle+this_t))
             v_angle = np.sin(np.radians(list_angle+this_t)) * np.cos(np.radians(decl))
-            list_baselineu = np.r_[list_baselinex, list_dist * u_angle]
-            list_baselinev = np.r_[list_baseliney, list_dist * v_angle]
+            list_u = np.r_[list_u, list_dist * u_angle]
+            list_v = np.r_[list_v, list_dist * v_angle]
 
-        return list_baselineu, list_baselinev
+        return list_u, list_v
 
     ###########################
     # phangs_pipeline_imaging #
