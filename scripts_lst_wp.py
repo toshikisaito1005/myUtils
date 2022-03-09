@@ -226,9 +226,13 @@ class ToolsLSTSim():
         check_first(self.config_12m,taskname)
 
         # get data
-        data = np.loadtxt(self.config_12m,"str")
-        x    = data[:,0].astype(np.float32)
-        y    = data[:,1].astype(np.float32)
+        data  = np.loadtxt(self.config_12m,"str")
+        x_12m = data[:,0].astype(np.float32)
+        y_12m = data[:,1].astype(np.float32)
+
+        data  = np.loadtxt(self.config_7m,"str")
+        x_7m  = data[:,0].astype(np.float32)
+        y_7m  = data[:,1].astype(np.float32)
 
         # plot
         ad    = [0.215,0.83,0.10,0.90]
@@ -243,9 +247,9 @@ class ToolsLSTSim():
         ax1 = plt.subplot(gs[0:10,0:10])
         plt.subplots_adjust(left=ad[0], right=ad[1], bottom=ad[2], top=ad[3])
         myax_set(ax1, "both", xlim, ylim, title, xlabel, ylabel, adjust=ad)
-        ax1.tick_params(labelbottom=False)
 
-        ax1.scatter(x, y, color="tomato", lw=0)
+        ax1.scatter(x_12m, y_12m, color="tomato", lw=0, s=40)
+        ax1.scatter(x_7m, y_7m, color="deepskyblue", lw=0, s=40)
 
         # save
         plt.subplots_adjust(hspace=.0)
