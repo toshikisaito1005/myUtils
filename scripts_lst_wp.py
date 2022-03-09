@@ -241,7 +241,7 @@ class ToolsLSTSim():
         z_7m  = data[:,2].astype(np.float32) / 1000.
 
         # get dist and angle: alma-alma baselines
-        decl = 60 # 0=north pole
+        decl = 90 # 0=north pole
         tinteg = 2
         this_data = np.c_[x_12m.flatten(),y_12m.flatten(),z_12m.flatten()]
         u_alma, v_alma = self._get_baselines(this_data,this_data,decl=decl,tinteg=tinteg)
