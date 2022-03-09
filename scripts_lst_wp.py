@@ -231,7 +231,7 @@ class ToolsLSTSim():
 
         decl = -37.755 # 0=celestial equator, 90=north pole, -90=south pole
         tinteg = 2
-        lst_position = np.array([8,8,-0.245]) # km/s
+        lst_position = np.array([6.452141 7.886675 -0.245131]) # km/s
 
         # get data
         data  = np.loadtxt(self.config_c10,"str")
@@ -270,7 +270,7 @@ class ToolsLSTSim():
 
         ax1.scatter(x_12m, y_12m, color="grey", lw=0, s=100)
         ax1.scatter(x_7m, y_7m, color="deepskyblue", lw=0, s=100)
-        ax1.scatter(8, 8, color="tomato", marker="*", lw=0, s=600)
+        ax1.scatter(6.452141, 7.886675, color="tomato", marker="*", lw=0, s=600)
         ax1.scatter(8, -8, color="tomato", marker="*", lw=0, s=600)
         ax1.scatter(-8, 0, color="tomato", marker="*", lw=0, s=600)
         ax1.scatter(0, 0, color="tomato", marker="*", lw=0, s=600)
