@@ -326,19 +326,19 @@ class ToolsLSTSim():
             this_a = np.degrees(np.arctan2(this_vec[0], this_vec[1]))
             list_angle.append(this_a)
 
-        list_dist = np.array(list_dist)
-        list_angle = np.array(list_angle)
+        l = np.array(list_dist)
+        d = np.radians( np.array(list_angle) )
+        D = np.radians(decl)
 
         # output
         list_u = []
         list_v = []
         trange = np.r_[np.arange(-tinteg/24.*360/2.0, tinteg/24.*360/2.0, 0.5), tinteg/24.*360/2.0]
         for this_t in trange:
-            this_x = list_dist * np.cos( np.radians(list_angle) )
-            this_y = list_dist * np.sin( np.radians(list_angle) )
+            H_h = np.radians(decl - this_t)
 
-            this_u = this_x * np.sin( np.radians(decl - this_t) )
-            this_v = this_y * np.cos( np.radians(decl - this_t) )
+            this_u = l*np.cos(d)*np.sin(H_h)
+            this_v = l*np.sin(d)*np.cos(D) - l*np.cos(d)*np.sin(D)*np.cos(H_h)
 
             # output
             list_u = np.r_[list_u, this_u]
