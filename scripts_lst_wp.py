@@ -337,8 +337,8 @@ class ToolsLSTSim():
         for this_t in trange:
             H_h = np.radians(this_t)
 
-            this_u = l*np.cos(d)*np.sin(H_h)
-            this_v = l*np.sin(d)*np.cos(D) - l*np.cos(d)*np.sin(D)*np.cos(H_h)
+            this_u = l*np.cos(d) + np.sin(H_h)
+            this_v = l*np.sin(d)*np.cos(D) - l*np.cos(d)*np.sin(D) + np.cos(H_h)
 
             # output
             list_u = np.r_[list_u, this_u]
