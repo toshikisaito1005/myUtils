@@ -231,7 +231,7 @@ class ToolsLSTSim():
 
         decl = -37.755 # 0=celestial equator, 90=north pole, -90=south pole
         tinteg = 2
-        lst_position = np.array([8,8,0])
+        lst_position = np.array([8,8,-0.245]) # km/s
 
         # get data
         data  = np.loadtxt(self.config_c10,"str")
