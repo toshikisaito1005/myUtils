@@ -300,8 +300,8 @@ class ToolsLSTSim():
         plt.subplots_adjust(left=ad[0], right=ad[1], bottom=ad[2], top=ad[3])
         myax_set(ax1, "both", xlim, ylim, title, xlabel, ylabel, adjust=ad)
 
-        ax1.scatter(u_alma, v_alma, color="grey", lw=0, s=10, alpha=0.5)
-        ax1.scatter(u_lst_center, v_lst_center, color="tomato", lw=0, s=10, alpha=0.5)
+        ax1.scatter(u_alma, v_alma, color="grey", lw=0, s=5, alpha=0.5)
+        ax1.scatter(u_lst_center, v_lst_center, color="tomato", lw=0, s=5, alpha=0.5)
 
         # text
         ax1.text(0.05,0.92, "Baselines: ALMA - ALMA", color="grey", weight="bold", transform=ax1.transAxes)
@@ -349,7 +349,7 @@ class ToolsLSTSim():
         # output
         list_u = []
         list_v = []
-        trange = np.r_[np.arange(-tinteg/24.*360/2.0, tinteg/24.*360/2.0, 0.5), tinteg/24.*360/2.0]
+        trange = np.r_[np.arange(-tinteg/24.*360/2.0, tinteg/24.*360/2.0, 0.1), tinteg/24.*360/2.0]
         for this_t in trange:
             H = np.radians(this_t)
 
