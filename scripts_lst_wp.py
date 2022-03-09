@@ -181,7 +181,8 @@ class ToolsLSTSim():
         """
         """
 
-        self.outpng_config_12m = self.dir_products + self._read_key("outpng_config_12m")
+        self.outpng_config_12m   = self.dir_products + self._read_key("outpng_config_12m")
+        self.outpng_uv_alma_lst1 = self.dir_products + self._read_key("outpng_uv_alma_lst1")
 
     ####################
     # run_sim_lst_alma #
@@ -235,7 +236,25 @@ class ToolsLSTSim():
         x_7m  = data[:,0].astype(np.float32) / 1000.
         y_7m  = data[:,1].astype(np.float32) / 1000.
 
-        # plot
+        # get dist and angle
+        this_data = np.c_[x_12m.flatten(),y_12m.flatten()]
+
+        list_dist  = []
+        list_angle = []
+        combinations = itertools.product(this_data,this_data)
+        for comb in combinations:
+            this_vec = comb[0] - comb[1]
+
+            # distance and angle
+            this_d = np.linalg.norm(this_vec)
+            this_a = np.degrees(np.arctan2(this_vec[0], this_vec[1]))
+
+            list_dist.append(this_d)
+            list_angle.append(this_a)
+
+        ##########################
+        # plot: antenna position #
+        ##########################
         ad    = [0.215,0.83,0.10,0.90]
         xlim  = [-10,10]
         ylim  = [-10,10]
@@ -265,6 +284,34 @@ class ToolsLSTSim():
         plt.subplots_adjust(hspace=.0)
         os.system("rm -rf " + self.outpng_config_12m)
         plt.savefig(self.outpng_config_12m, dpi=self.fig_dpi)
+
+        ############
+        # plot: uv #
+        ############
+        ad    = [0.215,0.83,0.10,0.90]
+        xlim  = None # [-10,10]
+        ylim  = None # [-10,10]
+        title = "$uv# coverage"
+        xlabel = "East-West (km)"
+        ylabel = "North-South (km)"
+
+        fig = plt.figure(figsize=(13,10))
+        gs  = gridspec.GridSpec(nrows=10, ncols=10)
+        ax1 = plt.subplot(gs[0:10,0:10])
+        plt.subplots_adjust(left=ad[0], right=ad[1], bottom=ad[2], top=ad[3])
+        myax_set(ax1, "both", xlim, ylim, title, xlabel, ylabel, adjust=ad)
+
+        ax1.scatter(x_12m, y_12m, color="black", lw=0, s=100)
+        ax1.scatter(x_7m, y_7m, color="deepskyblue", lw=0, s=100)
+
+        # text
+        ax1.text(0.05,0.92, "ALMA - ALMA baselines", color="black", weight="bold", transform=ax1.transAxes)
+        ax1.text(0.05,0.82, "ALMA - LSTsim baselines", color="tomato", weight="bold", transform=ax1.transAxes)
+
+        # save
+        plt.subplots_adjust(hspace=.0)
+        os.system("rm -rf " + self.outpng_uv_alma_lst1)
+        plt.savefig(self.outpng_uv_alma_lst1, dpi=self.fig_dpi)
 
     ###########################
     # phangs_pipeline_imaging #
