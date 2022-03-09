@@ -248,8 +248,8 @@ class ToolsLSTSim():
         plt.subplots_adjust(left=ad[0], right=ad[1], bottom=ad[2], top=ad[3])
         myax_set(ax1, "both", xlim, ylim, title, xlabel, ylabel, adjust=ad)
 
-        ax1.scatter(x_12m, y_12m, color="tomato", lw=0, s=40)
-        ax1.scatter(x_7m, y_7m, color="deepskyblue", lw=0, s=40)
+        ax1.scatter(x_12m, y_12m, color="tomato", lw=0, s=100)
+        ax1.scatter(x_7m, y_7m, color="deepskyblue", lw=0, s=100)
 
         # save
         plt.subplots_adjust(hspace=.0)
