@@ -238,8 +238,8 @@ class ToolsLSTSim():
 
         # get dist and angle: alma-alma baselines
         this_data = np.c_[x_12m.flatten(),y_12m.flatten()]
-        u_alma, v_alma = self._get_baselines(this_data,this_data,decl=60,tinteg=6)
-        u_lst_center, v_lst_center = self._get_baselines(np.array([0,0]),this_data,decl=60,tinteg=6)
+        u_alma, v_alma = self._get_baselines(this_data,this_data,decl=-20,tinteg=8)
+        u_lst_center, v_lst_center = self._get_baselines(np.array([0,0]),this_data,decl=-20,tinteg=8)
 
         ##########################
         # plot: antenna position #
