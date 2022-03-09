@@ -230,7 +230,7 @@ class ToolsLSTSim():
         check_first(self.config_c10,taskname)
 
         decl = -37.755 # 0=celestial equator, 90=north pole, -90=south pole
-        tinteg = 2
+        tinteg = 12
         lst_position = np.array([6.452141+0.1, 7.886675+0.1, -0.245131]) # km/s
 
         # get data
@@ -353,7 +353,7 @@ class ToolsLSTSim():
         trange = np.r_[np.arange(-tinteg/24.*360/2.0, tinteg/24.*360/2.0, 0.1), tinteg/24.*360/2.0]
         for this_t in trange:
             H = np.radians(this_t)
-
+ 
             this_u = X*np.sin(H) + Y*np.cos(H)
             this_v = -X*np.sin(dec)*np.cos(H) + Y*np.sin(dec)*np.sin(H) + Z*np.cos(dec)
 
