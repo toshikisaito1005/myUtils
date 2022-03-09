@@ -229,7 +229,7 @@ class ToolsLSTSim():
         taskname = self.modname + sys._getframe().f_code.co_name
         check_first(self.config_c10,taskname)
 
-        decl = -67 # 0=celestial equator, 90=north pole, -90=south pole
+        decl = -37.755 # 0=celestial equator, 90=north pole, -90=south pole
         tinteg = 2
         lst_position = np.array([8,8,0])
 
