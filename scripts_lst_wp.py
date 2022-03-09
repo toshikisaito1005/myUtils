@@ -214,7 +214,7 @@ class ToolsLSTSim():
             working_dir=self.dir_ready,
             template=self.template_fullspec,
             antennalist=self.config_12m,
-            project=self.project_sim,
+            project=self.project_sim+"_12m",
             totaltime="1.5h",
             incenter=self.incenter,
             )

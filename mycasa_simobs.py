@@ -432,8 +432,8 @@ def run_simobserve(
         overwrite = True,
         incenter = incenter,
         )
-    os.system("rm -rf " + move_ms_to_here+"/"+project+"_12m")
-    os.system("mv "+ project+"_12m " + move_ms_to_here+".")
+    os.system("rm -rf " + move_ms_to_here + "/" + project)
+    os.system("mv "+ project + " " + move_ms_to_here + ".")
 
 #######
 # end #
