@@ -239,7 +239,7 @@ class ToolsLSTSim():
         z_7m  = data[:,2].astype(np.float32) / 1000.
 
         # get dist and angle: alma-alma baselines
-        decl = 30 # 0=north pole
+        decl = 60 # 0=north pole
         tinteg = 12
         this_data = np.c_[x_12m.flatten(),y_12m.flatten(),z_12m.flatten()]
         u_alma, v_alma = self._get_baselines(this_data,this_data,decl=decl,tinteg=tinteg)
@@ -342,13 +342,13 @@ class ToolsLSTSim():
 
         # output
         list_u = []
-        list_v = [] 
+        list_v = []
         trange = np.r_[np.arange(-tinteg/24.*360/2.0, tinteg/24.*360/2.0, 0.5), tinteg/24.*360/2.0]
         for this_t in trange:
             H = np.radians(this_t)
 
-            this_u = np.sin(H) + np.cos(H)
-            this_v = -np.sin(D)*np.cos(H) + np.sin(D)*np.sin(H) + np.cos(D)
+            this_u = X*np.sin(H) + Y*np.cos(H)
+            this_v = -X*np.sin(D)*np.cos(H) + Y*np.sin(D)*np.sin(H) + Z*np.cos(D)
 
             # output
             list_u = np.r_[list_u, this_u]
