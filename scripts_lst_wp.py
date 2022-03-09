@@ -342,7 +342,7 @@ class ToolsLSTSim():
 
         X = l*(np.cos(latitude)*np.sin(t) - np.sin(latitude)*np.cos(t)*np.cos(p)) # l*np.sin(t)*np.cos(p)
         Y = l*np.sin(t)*np.sin(p)
-        Z = D*(np.sin(latitude)*np.sin(t) + np.cos(latitude)*np.cos(t)*np.cos(p)) # l*np.cos(t)
+        Z = l*(np.sin(latitude)*np.sin(t) + np.cos(latitude)*np.cos(t)*np.cos(p)) # l*np.cos(t)
 
         # output
         list_u = []
