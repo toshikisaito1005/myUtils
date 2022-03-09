@@ -69,17 +69,20 @@ def gen_cube(
     template_shrunk          = input_dir + template_shrunk
     template_fullspec        = input_dir + template_fullspec
     template_fullspec_div3   = input_dir + template_fullspec_div3
+    template_fullspec_div5   = input_dir + template_fullspec_div5
     template_fullspec_div10  = input_dir + template_fullspec_div10
     template_fullspec_div30  = input_dir + template_fullspec_div30
     template_fullspec_div100 = input_dir + template_fullspec_div100
     template_withcont        = input_dir + template_withcont
     template_withcont_div3   = input_dir + template_withcont_div3
+    template_withcont_div5   = input_dir + template_withcont_div5
     template_withcont_div10  = input_dir + template_withcont_div10
     template_withcont_div30  = input_dir + template_withcont_div30
     template_withcont_div100 = input_dir + template_withcont_div100
     sdnoise_image            = input_dir + sdnoise_image
     sdimage_fullspec         = input_dir + sdimage_fullspec
     sdimage_div3             = input_dir + sdimage_div3
+    sdimage_div5             = input_dir + sdimage_div5
     sdimage_div10            = input_dir + sdimage_div10
     sdimage_div30            = input_dir + sdimage_div30
     sdimage_div100           = input_dir + sdimage_div100
@@ -258,21 +261,25 @@ def gen_cube(
     ################################
 
     os.system("rm -rf " + template_withcont_div3)
+    os.system("rm -rf " + template_withcont_div5)
     os.system("rm -rf " + template_withcont_div10)
     os.system("rm -rf " + template_withcont_div30)
     os.system("rm -rf " + template_withcont_div100)
 
     immath(imagename = template_withcont, expr="IM0/3.0", outfile=template_withcont_div3)
+    immath(imagename = template_withcont, expr="IM0/5.0", outfile=template_withcont_div5)
     immath(imagename = template_withcont, expr="IM0/10.0", outfile=template_withcont_div10)
     immath(imagename = template_withcont, expr="IM0/30.0", outfile=template_withcont_div30)
     immath(imagename = template_withcont, expr="IM0/100.0", outfile=template_withcont_div100)
 
     os.system("rm -rf " + template_fullspec_div3)
+    os.system("rm -rf " + template_fullspec_div5)
     os.system("rm -rf " + template_fullspec_div10)
     os.system("rm -rf " + template_fullspec_div30)
     os.system("rm -rf " + template_fullspec_div100)
 
     immath(imagename = template_fullspec, expr="IM0/3.0", outfile=template_fullspec_div3)
+    immath(imagename = template_fullspec, expr="IM0/5.0", outfile=template_fullspec_div5)
     immath(imagename = template_fullspec, expr="IM0/10.0", outfile=template_fullspec_div10)
     immath(imagename = template_fullspec, expr="IM0/30.0", outfile=template_fullspec_div30)
     immath(imagename = template_fullspec, expr="IM0/100.0", outfile=template_fullspec_div100)
@@ -285,12 +292,14 @@ def gen_cube(
 
     os.system("rm -rf " + sdimage_fullspec)
     os.system("rm -rf " + sdimage_div3)
+    os.system("rm -rf " + sdimage_div5)
     os.system("rm -rf " + sdimage_div10)
     os.system("rm -rf " + sdimage_div30)
     os.system("rm -rf " + sdimage_div100)
 
     os.system("rm -rf " + sdimage_fullspec+".temp")
     os.system("rm -rf " + sdimage_div3+".temp")
+    os.system("rm -rf " + sdimage_div5+".temp")
     os.system("rm -rf " + sdimage_div10+".temp")
     os.system("rm -rf " + sdimage_div30+".temp")
     os.system("rm -rf " + sdimage_div100+".temp")
@@ -330,6 +339,10 @@ def gen_cube(
              targetres=True, major=singledish_res, minor=singledish_res, pa='0.0deg',
              outfile=sdimage_div3+'.temp', overwrite=True)
 
+    imsmooth(imagename = template_fullspec_div5,  kernel='gaussian',
+             targetres=True, major=singledish_res, minor=singledish_res, pa='0.0deg',
+             outfile=sdimage_div5+'.temp', overwrite=True)
+
     imsmooth(imagename = template_fullspec_div10,  kernel='gaussian',
              targetres=True, major=singledish_res, minor=singledish_res, pa='0.0deg',
              outfile=sdimage_div10+'.temp', overwrite=True)
@@ -349,6 +362,9 @@ def gen_cube(
     immath(imagename = [sdimage_div3+'.temp', sdnoise_image], 
            expr="IM0+IM1", outfile=sdimage_div3)
 
+    immath(imagename = [sdimage_div5+'.temp', sdnoise_image], 
+           expr="IM0+IM1", outfile=sdimage_div5)
+
     immath(imagename = [sdimage_div10+'.temp', sdnoise_image], 
            expr="IM0+IM1", outfile=sdimage_div10)
 
@@ -365,6 +381,9 @@ def gen_cube(
     exportfits(imagename = sdimage_div3, fitsimage = sdimage_div3.replace('.image','.fits'),
                dropstokes=True, overwrite=True)
 
+    exportfits(imagename = sdimage_div5, fitsimage = sdimage_div5.replace('.image','.fits'),
+               dropstokes=True, overwrite=True)
+
     exportfits(imagename = sdimage_div10, fitsimage = sdimage_div10.replace('.image','.fits'),
                dropstokes=True, overwrite=True)
 
@@ -377,6 +396,7 @@ def gen_cube(
     # Cleanup
     os.system("rm -rf " + sdimage_fullspec+".temp")
     os.system("rm -rf " + sdimage_div3+".temp")
+    os.system("rm -rf " + sdimage_div5+".temp")
     os.system("rm -rf " + sdimage_div10+".temp")
     os.system("rm -rf " + sdimage_div30+".temp")
     os.system("rm -rf " + sdimage_div100+".temp")

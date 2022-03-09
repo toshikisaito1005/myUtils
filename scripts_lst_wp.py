@@ -118,36 +118,40 @@ class ToolsLSTSim():
         """
         """
 
-        tempgal = "ngc1097"
+        self.tempgal = "ngc1097"
 
-        self.template_in_jypix        = tempgal + "_template_jypixel.image"
-        self.template_clipped         = tempgal + "_template_clipped.image"
-        self.template_mask_imported   = tempgal + "_template_mask.image"
-        self.template_rotated         = tempgal + "_template_rotated.image"
-        self.template_shrunk          = tempgal + "_template_shrunk.image"
-        self.template_fullspec        = tempgal + "_template_fullspec.image"
-        self.template_fullspec_div3   = tempgal + "_template_fullspec_div3.image"
-        self.template_fullspec_div10  = tempgal + "_template_fullspec_div10.image"
-        self.template_fullspec_div30  = tempgal + "_template_fullspec_div30.image"
-        self.template_fullspec_div100 = tempgal + "_template_fullspec_div100.image"
-        self.template_withcont        = tempgal + "_template_withcont.image"
-        self.template_withcont_div3   = tempgal + "_template_withcont_div3.image"
-        self.template_withcont_div10  = tempgal + "_template_withcont_div10.image"
-        self.template_withcont_div30  = tempgal + "_template_withcont_div30.image"
-        self.template_withcont_div100 = tempgal + "_template_withcont_div100.image"
-        self.sdnoise_image            = tempgal + "_singledish_noise_nocont.image"
-        self.sdimage_fullspec         = tempgal + "_singledish_nocont.image"
-        self.sdimage_div3             = tempgal + "_singledish_div3.image"
-        self.sdimage_div10            = tempgal + "_singledish_div10.image"
-        self.sdimage_div30            = tempgal + "_singledish_div30.image"
-        self.sdimage_div100           = tempgal + "_singledish_div100.image"
+        self.template_in_jypix        = self.tempgal + "_template_jypixel.image"
+        self.template_clipped         = self.tempgal + "_template_clipped.image"
+        self.template_mask_imported   = self.tempgal + "_template_mask.image"
+        self.template_rotated         = self.tempgal + "_template_rotated.image"
+        self.template_shrunk          = self.tempgal + "_template_shrunk.image"
+        self.template_fullspec        = self.tempgal + "_template_fullspec.image"
+        self.template_fullspec_div3   = self.tempgal + "_template_fullspec_div3.image"
+        self.template_fullspec_div5   = self.tempgal + "_template_fullspec_div5.image"
+        self.template_fullspec_div10  = self.tempgal + "_template_fullspec_div10.image"
+        self.template_fullspec_div30  = self.tempgal + "_template_fullspec_div30.image"
+        self.template_fullspec_div100 = self.tempgal + "_template_fullspec_div100.image"
+        self.template_withcont        = self.tempgal + "_template_withcont.image"
+        self.template_withcont_div3   = self.tempgal + "_template_withcont_div3.image"
+        self.template_withcont_div5   = self.tempgal + "_template_withcont_div5.image"
+        self.template_withcont_div10  = self.tempgal + "_template_withcont_div10.image"
+        self.template_withcont_div30  = self.tempgal + "_template_withcont_div30.image"
+        self.template_withcont_div100 = self.tempgal + "_template_withcont_div100.image"
+        self.sdnoise_image            = self.tempgal + "_singledish_noise_nocont.image"
+        self.sdimage_fullspec         = self.tempgal + "_singledish_nocont.image"
+        self.sdimage_div3             = self.tempgal + "_singledish_div3.image"
+        self.sdimage_div5             = self.tempgal + "_singledish_div5.image"
+        self.sdimage_div10            = self.tempgal + "_singledish_div10.image"
+        self.sdimage_div30            = self.tempgal + "_singledish_div30.image"
+        self.sdimage_div100           = self.tempgal + "_singledish_div100.image"
 
-        self.sdnoise_image            = tempgal + "_singledish_noise_nocont.image"
-        self.sdimage_fullspec         = tempgal + "_singledish_nocont.image"
-        self.sdimage_div3             = tempgal + "_singledish_div3.image"
-        self.sdimage_div10            = tempgal + "_singledish_div10.image"
-        self.sdimage_div30            = tempgal + "_singledish_div30.image"
-        self.sdimage_div100           = tempgal + "_singledish_div100.image"
+        self.sdnoise_image            = self.tempgal + "_singledish_noise_nocont.image"
+        self.sdimage_fullspec         = self.tempgal + "_singledish_nocont.image"
+        self.sdimage_div3             = self.tempgal + "_singledish_div3.image"
+        self.sdimage_div5             = self.tempgal + "_singledish_div5.image"
+        self.sdimage_div10            = self.tempgal + "_singledish_div10.image"
+        self.sdimage_div30            = self.tempgal + "_singledish_div30.image"
+        self.sdimage_div100           = self.tempgal + "_singledish_div100.image"
 
     def _set_input_param(self):
         """
@@ -157,7 +161,7 @@ class ToolsLSTSim():
         self.singledish_noise = 0.102 # Jy/beam at final res
         self.singledish_res   = "28.37arcsec" # resolution
         self.image_roration   = "23deg"
-        self.incenter         = "490.30240489GHz" #CI at z = 0.00379
+        self.incenter         = "492.16065100GHz" #CI 3P1-3P0
 
         # ngc1068 properties
         self.ra_agn    = float(self._read_key("ra_agn", "gal").split("deg")[0])
@@ -187,6 +191,7 @@ class ToolsLSTSim():
         do_template   = False,
         do_simint     = False, # sim ALMA-only
         do_simsynergy = False, # sim LST+ALMA
+        do_imaging    = False, # imaging sim ms
         ):
         """
         This method runs all the methods which will create figures in the white paper.
@@ -198,6 +203,120 @@ class ToolsLSTSim():
 
         if do_simint==True:
             self.simint()
+
+        if do_imaging==True:
+            self.phangs_pipeline_imaging()
+
+    ###########################
+    # phangs_pipeline_imaging #
+    ###########################
+
+    def phangs_pipeline_imaging(self):
+        """
+        """
+
+        taskname = self.modname + sys._getframe().f_code.co_name
+        check_first(self.template_fullspec,taskname)
+
+        # ms
+        sim_12m_ms_orig = self.dir_ready + "ms/" + self.project_sim + "." + self.config_12m + ".noisy.ms"
+        sim_7m_ms_orig  = self.dir_ready + "ms/" + self.project_sim + "." + self.config_7m + ".noisy.ms"
+
+        # prepare dir
+        dir_cleanmask = self.dir_ready + "outputs/cleanmasks/"
+        if not dir_cleanmask:
+            os.mkdir(dir_cleanmask)
+
+        dir_singledish = self.dir_ready + "outputs/singledish/"
+        if not dir_singledish:
+            os.mkdir(dir_singledish)
+
+        # set piepline
+        relpath_master_key = "/keys_sim/master_key.txt"
+
+        pipepath = os.environ.get('PHANGSPIPE')
+        if pipepath is not None:
+            sys.path.append(os.environ.get('PHANGSPIPE'))
+        else:
+            sys.path.append(os.getcwd())
+
+        # Check casa environment by importing CASA-only packages
+        try:
+            import taskinit
+        except ImportError:
+            print('Please run this script inside CASA!')
+            sys.exit()
+
+        # Set the logging
+        from phangsPipeline import phangsLogger as pl
+        reload(pl)
+        pl.setup_logger(level='DEBUG', logfile=None)
+        # Imports
+
+        from phangsPipeline import handlerKeys as kh
+        from phangsPipeline import handlerVis as uvh
+        from phangsPipeline import handlerImaging as imh
+        from phangsPipeline import handlerPostprocess as pph
+
+        # Reloads for debugging
+        reload(kh)
+        reload(uvh)
+        reload(imh)
+        reload(pph)
+
+        # Initialize key handler
+        this_kh  = kh.KeyHandler(master_key = master_key)
+        this_uvh = uvh.VisHandler(key_handler = this_kh)
+        this_imh = imh.ImagingHandler(key_handler = this_kh)
+        this_pph = pph.PostProcessHandler(key_handler= this_kh)
+        dry_run_key = False
+        this_uvh.set_dry_run(dry_run_key)
+        this_imh.set_dry_run(dry_run_key)
+        this_pph.set_dry_run(dry_run_key)
+
+        # set handlers
+        target = [self.tempgal]
+        array  = ["12m"]
+        line   = ["ci10"]
+        for this_hander in [this_uvh,this_imh,this_pph]:
+            this_hander.set_targets(only=target)
+            this_hander.set_line_products(only=line)
+            this_hander.set_no_cont_products(True)
+            this_hander.set_no_line_products(True)
+            this_hander.set_interf_configs(only=array)
+
+        # run piepline
+        this_uvh.loop_stage_uvdata(\
+                do_copy           = True,
+                do_remove_staging = True,
+                do_contsub        = False,
+                do_extract_line   = True,
+                do_extract_cont   = False,
+                overwrite         = False,
+                )
+        this_imh.loop_imaging(\
+                do_dirty_image          = True,
+                do_revert_to_dirty      = False,
+                do_read_clean_mask      = False,
+                do_multiscale_clean     = False,
+                do_revert_to_multiscale = False,
+                do_singlescale_mask     = False,
+                do_singlescale_clean    = True,
+                do_export_to_fits       = False,
+                extra_ext_in            = '',
+                extra_ext_out           = '',
+                )
+        this_pph.loop_postprocess(\
+                do_prep               = True,
+                do_feather            = False,
+                do_mosaic             = True,
+                do_cleanup            = True,
+                do_summarize          = True,
+                # feather_apod          = True,
+                feather_noapod        = True,
+                # feather_before_mosaic = False,
+                # feather_after_mosaic  = False,
+                )
 
     ##########
     # simint #
@@ -212,7 +331,7 @@ class ToolsLSTSim():
 
         run_simobserve(
             working_dir=self.dir_ready,
-            template=self.template_fullspec,
+            template=self.template_fullspec_div3,
             antennalist=self.config_12m,
             project=self.project_sim+"_12m",
             totaltime="1.5h",
