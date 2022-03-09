@@ -33,8 +33,11 @@ config_7m     ,,,alma-configuration-files/aca.cycle7.cfg
 # output png and txt #
 ######################
 # png files
+outpng_config_12m ,,,fig_confing_12m.png
+
 # box for imagemajick
 box_map                   ,,,2245x1870+325+80
+
 #######
 # end #
 #######

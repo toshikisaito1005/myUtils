@@ -175,7 +175,6 @@ class ToolsLSTSim():
         self.r_cnd_as  = 3.0
         self.r_sbr     = 10.0 * self.scale_pc / 1000. # kpc
         self.r_sbr_as  = 10.0
-        self.gridsize  = 27 # int(np.ceil(self.r_sbr_as*2/self.beam))
 
     def _set_output_txt_png(self):
         """
@@ -188,10 +187,12 @@ class ToolsLSTSim():
     def run_sim_lst_alma(
         self,
         # analysis
-        do_template   = False,
+        do_template   = False, # create template cube for simobserve
         do_simint     = False, # sim ALMA-only
         do_simsynergy = False, # sim LST+ALMA
         do_imaging    = False, # imaging sim ms
+        # plot
+        plot_config   = False,
         ):
         """
         This method runs all the methods which will create figures in the white paper.
@@ -206,6 +207,48 @@ class ToolsLSTSim():
 
         if do_imaging==True:
             self.phangs_pipeline_imaging()
+
+        # plot
+        if plot_config==True:
+            self.plot_config()
+
+    ###############
+    # plot_config #
+    ###############
+
+    def plot_config(self):
+        """
+        """
+
+        taskname = self.modname + sys._getframe().f_code.co_name
+        check_first(self.config_12m,taskname)
+
+        # get data
+        data = np.loadtxt(self.config_12m,"str")
+        x    = data[:,0].astype(np.float32)
+        y    = data[:,1].astype(np.float32)
+
+        # plot
+        ad    = [0.215,0.83,0.10,0.90]
+        xlim  = None
+        ylim  = None
+        title = None
+        xlabel = "x-offset (km)"
+        ylabel = "y-offset (km)"
+
+        fig = plt.figure(figsize=(13,10))
+        gs  = gridspec.GridSpec(nrows=10, ncols=10)
+        ax1 = plt.subplot(gs[0:10,0:10])
+        plt.subplots_adjust(left=ad[0], right=ad[1], bottom=ad[2], top=ad[3])
+        myax_set(ax1, "both", xlim, ylim, title, xlabel, ylabel, adjust=ad)
+        ax1.tick_params(labelbottom=False)
+
+        ax1.scatter(x, y, color="tomato", lw=0)
+
+        # save
+        plt.subplots_adjust(hspace=.0)
+        os.system("rm -rf " + self.outpng_config_12m)
+        plt.savefig(self.outpng_config_12m, dpi=self.fig_dpi)
 
     ###########################
     # phangs_pipeline_imaging #
