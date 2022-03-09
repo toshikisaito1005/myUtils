@@ -328,7 +328,7 @@ class ToolsLSTSim():
         # output
         list_u = []
         list_v = []
-        trange = np.r_[np.arange(0, tinteg/24.*360, 0.5), tinteg/24.*360]
+        trange = np.r_[np.arange(-tinteg/24.*360/2.0, tinteg/24.*360/2.0, 0.5), tinteg/24.*360/2.0]
         for this_t in trange:
             d   = np.radians(list_angle)
             H_h = np.radians(this_t)
