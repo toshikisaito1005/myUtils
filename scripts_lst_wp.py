@@ -247,9 +247,9 @@ class ToolsLSTSim():
         # get dist and angle: alma-alma baselines
         this_data = np.c_[x_12m.flatten(),y_12m.flatten(),z_12m.flatten()]
         #this_data = np.c_[x_12m.flatten()+[lst_position[0]],y_12m.flatten()+[lst_position[1]],z_12m.flatten()+[lst_position[2]]]
-        u_alma, v_alma = self._get_baselines(this_data,this_data,decl=decl,tinteg=tinteg)
-        u1_lst_center, v1_lst_center = self._get_baselines(lst_position,this_data,decl=decl,tinteg=tinteg)
-        u2_lst_center, v2_lst_center = self._get_baselines(this_data,lst_position,decl=decl,tinteg=tinteg)
+        u_alma, v_alma = self._get_baselines(this_data[0:3],this_data[0:3],decl=decl,tinteg=tinteg)
+        u1_lst_center, v1_lst_center = self._get_baselines(lst_position,this_data[0:3],decl=decl,tinteg=tinteg)
+        u2_lst_center, v2_lst_center = self._get_baselines(this_data[0:3],lst_position,decl=decl,tinteg=tinteg)
 
         ##########################
         # plot: antenna position #
@@ -300,9 +300,9 @@ class ToolsLSTSim():
         plt.subplots_adjust(left=ad[0], right=ad[1], bottom=ad[2], top=ad[3])
         myax_set(ax1, "both", xlim, ylim, title, xlabel, ylabel, adjust=ad)
 
-        ax1.scatter(u_alma[0], v_alma[0], color="grey", lw=0, s=5, alpha=0.5)
-        ax1.scatter(u1_lst_center[0], v1_lst_center[0], color="tomato", lw=0, s=5, alpha=0.5)
-        #ax1.scatter(u2_lst_center, v2_lst_center, color="tomato", lw=0, s=5, alpha=0.5)
+        ax1.scatter(u_alma, v_alma, color="grey", lw=0, s=5, alpha=0.5)
+        ax1.scatter(u1_lst_center, v1_lst_center, color="tomato", lw=0, s=5, alpha=0.5)
+        ax1.scatter(u2_lst_center, v2_lst_center, color="tomato", lw=0, s=5, alpha=0.5)
 
         # text
         ax1.text(0.05,0.92, "Baselines: ALMA - ALMA", color="grey", weight="bold", transform=ax1.transAxes)
