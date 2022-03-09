@@ -252,6 +252,12 @@ class ToolsLSTSim():
             list_dist.append(this_d)
             list_angle.append(this_a)
 
+        list_dist = np.array(list_dist)
+        list_angle = np.array(list_angle)
+
+        list_baselinex = list_dist * np.cos(np.radians(list_angle))
+        list_baseliney = list_dist * np.sin(np.radians(list_angle))
+
         ##########################
         # plot: antenna position #
         ##########################
@@ -297,11 +303,11 @@ class ToolsLSTSim():
 
         fig = plt.figure(figsize=(13,10))
         gs  = gridspec.GridSpec(nrows=10, ncols=10)
-        ax1 = plt.subplot(gs[0:10,0:10], projection="polar")
+        ax1 = plt.subplot(gs[0:10,0:10])
         plt.subplots_adjust(left=ad[0], right=ad[1], bottom=ad[2], top=ad[3])
         myax_set(ax1, "both", xlim, ylim, title, xlabel, ylabel, adjust=ad)
 
-        ax1.scatter(list_dist, list_angle, color="black", lw=0, s=100)
+        ax1.scatter(list_baselinex, list_baseliney, color="black", lw=0, s=100)
 
         # text
         ax1.text(0.05,0.92, "ALMA - ALMA baselines", color="black", weight="bold", transform=ax1.transAxes)
