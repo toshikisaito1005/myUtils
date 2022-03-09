@@ -311,11 +311,9 @@ class ToolsLSTSim():
         """
         """
 
-        this_data = np.c_[x.flatten(),y.flatten()]
-
         list_dist  = []
         list_angle = []
-        combinations = itertools.product(this_data,this_data)
+        combinations = itertools.product(x,y)
         for comb in combinations:
             this_vec = comb[0] - comb[1]
 
