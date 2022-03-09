@@ -300,9 +300,9 @@ class ToolsLSTSim():
         plt.subplots_adjust(left=ad[0], right=ad[1], bottom=ad[2], top=ad[3])
         myax_set(ax1, "both", xlim, ylim, title, xlabel, ylabel, adjust=ad)
 
-        ax1.scatter(u_alma, v_alma, color="grey", lw=0, s=5, alpha=0.5)
-        ax1.scatter(u1_lst_center, v1_lst_center, color="tomato", lw=0, s=5, alpha=0.5)
-        ax1.scatter(u2_lst_center, v2_lst_center, color="tomato", lw=0, s=5, alpha=0.5)
+        ax1.scatter(u_alma[0], v_alma[0], color="grey", lw=0, s=5, alpha=0.5)
+        ax1.scatter(u1_lst_center[0], v1_lst_center[0], color="tomato", lw=0, s=5, alpha=0.5)
+        #ax1.scatter(u2_lst_center, v2_lst_center, color="tomato", lw=0, s=5, alpha=0.5)
 
         # text
         ax1.text(0.05,0.92, "Baselines: ALMA - ALMA", color="grey", weight="bold", transform=ax1.transAxes)
@@ -352,7 +352,7 @@ class ToolsLSTSim():
         list_v = []
         trange = np.r_[np.arange(-tinteg/24.*360/2.0, tinteg/24.*360/2.0, 0.1), tinteg/24.*360/2.0]
         for this_t in trange:
-            H = np.radians(this_t - t)
+            H = np.radians(this_t)
  
             this_u = X*np.sin(H) + Y*np.cos(H)
             this_v = -X*np.sin(dec)*np.cos(H) + Y*np.sin(dec)*np.sin(H) + Z*np.cos(dec)
