@@ -240,7 +240,7 @@ class ToolsLSTSim():
 
         # get dist and angle: alma-alma baselines
         decl = 30 # 0=north pole
-        tinteg = 1
+        tinteg = 12
         this_data = np.c_[x_12m.flatten(),y_12m.flatten(),z_12m.flatten()]
         u_alma, v_alma = self._get_baselines(this_data,this_data,decl=decl,tinteg=tinteg)
         u1_lst_center, v1_lst_center = self._get_baselines(np.array([0,0,0]),this_data,decl=decl,tinteg=tinteg)
@@ -297,7 +297,7 @@ class ToolsLSTSim():
         myax_set(ax1, "both", xlim, ylim, title, xlabel, ylabel, adjust=ad)
 
         ax1.scatter(u_alma, v_alma, color="grey", lw=0, s=10, alpha=0.5)
-        ax1.scatter(u_lst_center, v_lst_center, color="tomato", lw=0, s=50, alpha=0.5)
+        #ax1.scatter(u_lst_center, v_lst_center, color="tomato", lw=0, s=50, alpha=0.5)
 
         # text
         ax1.text(0.05,0.92, "ALMA - ALMA baselines", color="grey", weight="bold", transform=ax1.transAxes)
@@ -342,7 +342,7 @@ class ToolsLSTSim():
 
         # output
         list_u = []
-        list_v = []
+        list_v = [] 
         trange = np.r_[np.arange(-tinteg/24.*360/2.0, tinteg/24.*360/2.0, 0.5), tinteg/24.*360/2.0]
         for this_t in trange:
             H = np.radians(this_t)
