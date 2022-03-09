@@ -231,18 +231,20 @@ class ToolsLSTSim():
         data  = np.loadtxt(self.config_c10,"str")
         x_12m = data[:,0].astype(np.float32) / 1000.
         y_12m = data[:,1].astype(np.float32) / 1000.
+        z_12m = data[:,2].astype(np.float32) / 1000.
 
         data  = np.loadtxt(self.config_7m,"str")
         x_7m  = data[:,0].astype(np.float32) / 1000.
         y_7m  = data[:,1].astype(np.float32) / 1000.
+        z_7m  = data[:,2].astype(np.float32) / 1000.
 
         # get dist and angle: alma-alma baselines
         decl = 0
         tinteg = 2
-        this_data = np.c_[x_12m.flatten(),y_12m.flatten()]
+        this_data = np.c_[x_12m.flatten(),y_12m.flatten(),z_12m.flatten()]
         u_alma, v_alma = self._get_baselines(this_data,this_data,decl=decl,tinteg=tinteg)
-        u1_lst_center, v1_lst_center = self._get_baselines(np.array([0,0]),this_data,decl=decl,tinteg=tinteg)
-        u2_lst_center, v2_lst_center = self._get_baselines(this_data,np.array([0,0]),decl=decl,tinteg=tinteg)
+        u1_lst_center, v1_lst_center = self._get_baselines(np.array([0,0,0]),this_data,decl=decl,tinteg=tinteg)
+        u2_lst_center, v2_lst_center = self._get_baselines(this_data,np.array([0,0,0]),decl=decl,tinteg=tinteg)
         u_lst_center, v_lst_center = np.r_[u1_lst_center,u2_lst_center], np.r_[v1_lst_center,v2_lst_center]
 
         ##########################
@@ -315,7 +317,8 @@ class ToolsLSTSim():
         """
 
         list_dist  = []
-        list_angle = []
+        list_theta = []
+        list_phi   = []
         combinations = itertools.product(x,y)
         for comb in combinations:
             this_vec = comb[0] - comb[1]
@@ -323,14 +326,19 @@ class ToolsLSTSim():
             this_d = np.linalg.norm(this_vec)
             list_dist.append(this_d)
 
-            this_a = np.degrees(np.arctan2(this_vec[0], this_vec[1]))
-            list_angle.append(this_a)
+            this_a = np.degrees(np.arccos(this_vec[2] / this_d))
+            list_theta.append(this_a)
+
+            this_h = np.degrees(np.arctan2(this_vec[0], this_vec[1]))
+            list_phi.append(this_h)
 
         l = np.array(list_dist)
-        d = np.radians( np.array(list_angle) )
+        t = np.radians( np.array(list_theta) )
+        p = np.radians( np.array(list_phi) )
         D = np.radians(decl)
-        X = l*np.cos(d)
-        Y = l*np.sin(d)
+        X = l*np.sin(t)*np.cos(p)
+        Y = l*np.sin(t)*np.sin(p)
+        Z = l*np.cos(t)
 
         # output
         list_u = []
@@ -340,7 +348,7 @@ class ToolsLSTSim():
             H = np.radians(this_t)
 
             this_u = X*np.sin(H) + Y*np.cos(H)
-            this_v = -X*np.sin(D)*np.cos(H) + Y*np.sin(D)*np.sin(H)
+            this_v = -X*np.sin(D)*np.cos(H) + Y*np.sin(D)*np.sin(H) + Z*np.cos(D)
 
             # output
             list_u = np.r_[list_u, this_u]
