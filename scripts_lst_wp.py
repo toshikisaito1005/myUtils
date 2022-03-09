@@ -333,10 +333,12 @@ class ToolsLSTSim():
             d   = np.radians(list_angle)
             H_h = np.radians(this_t)
             D   = np.radians(decl)
+            X   = list_dist * np.cos(d)
+            Y   = list_dist * np.sin(d)
 
-            uvcos = np.cos(d) * np.sin(H_h)
-            uvsin = np.sin(d) * np.cos(D) - np.cos(d) * np.sin(D) * np.cos(H_h)
-            list_u = np.r_[list_u, list_dist * uvcos]
+            this_u = X*np.sin(H_h) + Y*np.cos(H_h)
+            this_v = -X*np.sin(D)*np.cos(H_h) + Y*np.sin(D)*np.sin(H_h)
+            list_u = np.r_[list_u, this_u]
             list_v = np.r_[list_v, list_dist * uvsin]
 
         return list_u, list_v
