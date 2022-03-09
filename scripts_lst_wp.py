@@ -238,8 +238,8 @@ class ToolsLSTSim():
 
         # get dist and angle: alma-alma baselines
         this_data = np.c_[x_12m.flatten(),y_12m.flatten()]
-        u_alma, v_alma = self._get_baselines(this_data,this_data,decl=-20,tinteg=8)
-        u_lst_center, v_lst_center = self._get_baselines(np.array([0,0]),this_data,decl=-20,tinteg=8)
+        u_alma, v_alma = self._get_baselines(this_data,this_data,decl=-20,tinteg=12)
+        u_lst_center, v_lst_center = self._get_baselines(np.array([0,0]),this_data,decl=-20,tinteg=12)
 
         ##########################
         # plot: antenna position #
@@ -290,8 +290,8 @@ class ToolsLSTSim():
         plt.subplots_adjust(left=ad[0], right=ad[1], bottom=ad[2], top=ad[3])
         myax_set(ax1, "both", xlim, ylim, title, xlabel, ylabel, adjust=ad)
 
-        ax1.scatter(u_alma, v_alma, color="grey", lw=0, s=10)
-        ax1.scatter(u_lst_center, v_lst_center, color="tomato", lw=0, s=50)
+        ax1.scatter(u_alma, v_alma, color="grey", lw=0, s=10, alpha=0.5)
+        ax1.scatter(u_lst_center, v_lst_center, color="tomato", lw=0, s=50, alpha=0.5)
 
         # text
         ax1.text(0.05,0.92, "ALMA - ALMA baselines", color="grey", weight="bold", transform=ax1.transAxes)
