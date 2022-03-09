@@ -338,7 +338,7 @@ class ToolsLSTSim():
             H_h = np.radians(decl - this_t)
 
             this_u = l*np.cos(d)*np.sin(H_h)
-            this_v = l*np.sin(d)*np.cos(D) - l*np.cos(d)*np.sin(D)*np.cos(H_h)
+            this_v = l*np.sin(d) - l*np.cos(d)*np.cos(H_h)
 
             # output
             list_u = np.r_[list_u, this_u]
