@@ -251,9 +251,9 @@ class ToolsLSTSim():
 
         ax1.scatter(x_12m, y_12m, color="black", lw=0, s=100)
         ax1.scatter(x_7m, y_7m, color="deepskyblue", lw=0, s=100)
-        ax1.scatter(800, 800, color="tomato", marker="*", lw=0, s=150)
-        ax1.scatter(800, -800, color="tomato", marker="*", lw=0, s=150)
-        ax1.scatter(800, 0, color="tomato", marker="*", lw=0, s=150)
+        ax1.scatter(8, 8, color="tomato", marker="*", lw=0, s=150)
+        ax1.scatter(8, -8, color="tomato", marker="*", lw=0, s=150)
+        ax1.scatter(8, 0, color="tomato", marker="*", lw=0, s=150)
 
         # text
         ax1.text(0.05,0.92, "ALMA - 12-m array", color="black", weight="bold", transform=ax1.transAxes)
