@@ -180,6 +180,8 @@ class ToolsLSTSim():
         """
         """
 
+        self.outpng_config_12m = self.dir_products + self._read_key("outpng_config_12m")
+
     ####################
     # run_sim_lst_alma #
     ####################
