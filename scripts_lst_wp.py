@@ -236,27 +236,10 @@ class ToolsLSTSim():
         x_7m  = data[:,0].astype(np.float32) / 1000.
         y_7m  = data[:,1].astype(np.float32) / 1000.
 
-        # get dist and angle
+        # get dist and angle: alma-alma baselines
         this_data = np.c_[x_12m.flatten(),y_12m.flatten()]
-
-        list_dist  = []
-        list_angle = []
-        combinations = itertools.product(this_data,this_data)
-        for comb in combinations:
-            this_vec = comb[0] - comb[1]
-
-            # distance and angle
-            this_d = np.linalg.norm(this_vec)
-            this_a = np.degrees(np.arctan2(this_vec[0], this_vec[1]))
-
-            list_dist.append(this_d)
-            list_angle.append(this_a)
-
-        list_dist = np.array(list_dist)
-        list_angle = np.array(list_angle)
-
-        list_baselinex = list_dist * np.cos(np.radians(list_angle))
-        list_baseliney = list_dist * np.sin(np.radians(list_angle))
+        basex_alma, basey_alma = self._get_baselines(this_data,this_data)
+        basex_lst_center, basey_lst_center = self._get_baselines(np.array([0,0]),this_data)
 
         ##########################
         # plot: antenna position #
@@ -307,16 +290,48 @@ class ToolsLSTSim():
         plt.subplots_adjust(left=ad[0], right=ad[1], bottom=ad[2], top=ad[3])
         myax_set(ax1, "both", xlim, ylim, title, xlabel, ylabel, adjust=ad)
 
-        ax1.scatter(list_baselinex, list_baseliney, color="black", lw=0, s=100)
+        ax1.scatter(basex_alma, basey_alma, color="black", lw=0, s=50)
+        ax1.scatter(basex_lst_center, basey_lst_center, color="tomato", lw=0, s=50)
 
         # text
         ax1.text(0.05,0.92, "ALMA - ALMA baselines", color="black", weight="bold", transform=ax1.transAxes)
-        ax1.text(0.05,0.82, "ALMA - LSTsim baselines", color="tomato", weight="bold", transform=ax1.transAxes)
+        ax1.text(0.05,0.87, "ALMA - LSTsim baselines", color="tomato", weight="bold", transform=ax1.transAxes)
 
         # save
         plt.subplots_adjust(hspace=.0)
         os.system("rm -rf " + self.outpng_uv_alma_lst1)
         plt.savefig(self.outpng_uv_alma_lst1, dpi=self.fig_dpi)
+
+
+    ##################
+    # _get_baselines #
+    ##################
+
+    def _get_baselines(self,x,y):
+        """
+        """
+
+        this_data = np.c_[x.flatten(),y.flatten()]
+
+        list_dist  = []
+        list_angle = []
+        combinations = itertools.product(this_data,this_data)
+        for comb in combinations:
+            this_vec = comb[0] - comb[1]
+
+            this_d = np.linalg.norm(this_vec)
+            list_dist.append(this_d)
+
+            this_a = np.degrees(np.arctan2(this_vec[0], this_vec[1]))
+            list_angle.append(this_a)
+
+        list_dist = np.array(list_dist)
+        list_angle = np.array(list_angle)
+
+        list_baselinex = list_dist * np.cos(np.radians(list_angle))
+        list_baseliney = list_dist * np.sin(np.radians(list_angle))
+
+        return list_baselinex, list_baseliney
 
     ###########################
     # phangs_pipeline_imaging #
