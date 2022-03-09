@@ -245,7 +245,7 @@ class ToolsLSTSim():
         z_7m  = data[:,2].astype(np.float32) / 1000.
 
         # get dist and angle: alma-alma baselines
-        this_data = np.c_[x_12m.flatten(),y_12m.flatten(),z_12m.flatten()]
+        this_data = np.c_[x_12m.flatten()+[lst_position[0]],y_12m.flatten()+[lst_position[1]],z_12m.flatten()+[lst_position[2]]]
         u_alma, v_alma = self._get_baselines(this_data,this_data,decl=decl,tinteg=tinteg)
         u1_lst_center, v1_lst_center = self._get_baselines(lst_position,this_data,decl=decl,tinteg=tinteg)
         u2_lst_center, v2_lst_center = self._get_baselines(this_data,lst_position,decl=decl,tinteg=tinteg)
@@ -301,7 +301,7 @@ class ToolsLSTSim():
         myax_set(ax1, "both", xlim, ylim, title, xlabel, ylabel, adjust=ad)
 
         ax1.scatter(u_alma, v_alma, color="grey", lw=0, s=5, alpha=0.5)
-        ax1.scatter(u_lst_center, v_lst_center, color="tomato", lw=0, s=5, alpha=0.5)
+        #ax1.scatter(u_lst_center, v_lst_center, color="tomato", lw=0, s=5, alpha=0.5)
 
         # text
         ax1.text(0.05,0.92, "Baselines: ALMA - ALMA", color="grey", weight="bold", transform=ax1.transAxes)
