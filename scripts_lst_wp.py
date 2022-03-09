@@ -248,8 +248,8 @@ class ToolsLSTSim():
         this_data = np.c_[x_12m.flatten(),y_12m.flatten(),z_12m.flatten()]
         #this_data = np.c_[x_12m.flatten()+[lst_position[0]],y_12m.flatten()+[lst_position[1]],z_12m.flatten()+[lst_position[2]]]
         u_alma, v_alma = self._get_baselines(this_data[0:3],this_data[0:3],decl=decl,tinteg=tinteg)
-        u1_lst_center, v1_lst_center = self._get_baselines(lst_position,this_data[0:3],decl=decl,tinteg=tinteg)
-        u2_lst_center, v2_lst_center = self._get_baselines(this_data[0:3],lst_position,decl=decl,tinteg=tinteg)
+        u1_lst_center, v1_lst_center = self._get_baselines([lst_position],this_data[0:3],decl=decl,tinteg=tinteg)
+        u2_lst_center, v2_lst_center = self._get_baselines(this_data[0:3],[lst_position],decl=decl,tinteg=tinteg)
 
         ##########################
         # plot: antenna position #
@@ -327,7 +327,6 @@ class ToolsLSTSim():
         list_phi   = []
         combinations = itertools.product(x,y)
         for comb in combinations:
-            print(comb[0], comb[1])
             this_vec = comb[0] - comb[1]
 
             this_d = np.linalg.norm(this_vec)
