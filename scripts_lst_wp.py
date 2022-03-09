@@ -228,20 +228,20 @@ class ToolsLSTSim():
 
         # get data
         data  = np.loadtxt(self.config_c10,"str")
-        x_12m = data[:,0].astype(np.float32)
-        y_12m = data[:,1].astype(np.float32)
+        x_12m = data[:,0].astype(np.float32) / 1000.
+        y_12m = data[:,1].astype(np.float32) / 1000.
 
         data  = np.loadtxt(self.config_7m,"str")
-        x_7m  = data[:,0].astype(np.float32)
-        y_7m  = data[:,1].astype(np.float32)
+        x_7m  = data[:,0].astype(np.float32) / 1000.
+        y_7m  = data[:,1].astype(np.float32) / 1000.
 
         # plot
         ad    = [0.215,0.83,0.10,0.90]
         xlim  = None
         ylim  = None
         title = None
-        xlabel = "x-offset (m)"
-        ylabel = "y-offset (m)"
+        xlabel = "East-West (km)"
+        ylabel = "North-South (km)"
 
         fig = plt.figure(figsize=(13,10))
         gs  = gridspec.GridSpec(nrows=10, ncols=10)
