@@ -222,6 +222,8 @@ class ToolsLSTSim():
 
     def plot_config(self):
         """
+        Reference:
+        http://math_research.uct.ac.za/~siphelo/admin/interferometry/4_Visibility_Space/4_4_1_UV_Coverage_UV_Tracks.html
         """
 
         taskname = self.modname + sys._getframe().f_code.co_name
@@ -327,7 +329,7 @@ class ToolsLSTSim():
             this_d = np.linalg.norm(this_vec)
             list_dist.append(this_d)
 
-            this_a = np.degrees(np.arccos(this_vec[2] / this_d))
+            this_a = np.degrees(np.arcsin(this_vec[2] / this_d))
             list_theta.append(this_a)
 
             this_h = np.degrees(np.arctan2(this_vec[0], this_vec[1]))
@@ -337,9 +339,9 @@ class ToolsLSTSim():
         t = np.radians( np.array(list_theta) )
         p = np.radians( np.array(list_phi) )
         D = np.radians(decl)
-        X = l*(np.cos(latitude)*np.sin(p)-np.sin(latitude)*np.cos(p)*np.cos(t)) # l*np.sin(t)*np.cos(p)
+        X = l*(np.cos(latitude)*np.sin(p) - np.sin(latitude)*np.cos(p)*np.cos(t)) # l*np.sin(t)*np.cos(p)
         Y = l*np.sin(t)*np.sin(p)
-        Z = D*(np.sin(latitude)*np.sin(p)+np.cos(latitude)*np.cos(p)*np.cos(t)) # l*np.cos(t)
+        Z = D*(np.sin(latitude)*np.sin(p) + np.cos(latitude)*np.cos(p)*np.cos(t)) # l*np.cos(t)
 
         # output
         list_u = []
