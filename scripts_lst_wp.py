@@ -229,7 +229,7 @@ class ToolsLSTSim():
         taskname = self.modname + sys._getframe().f_code.co_name
         check_first(self.config_c10,taskname)
 
-        decl = -30 # 0=celestial equator, 90=north pole, -90=south pole
+        decl = -67 # 0=celestial equator, 90=north pole, -90=south pole
         tinteg = 2
         lst_position = np.array([8,8,0])
 
@@ -301,11 +301,11 @@ class ToolsLSTSim():
         myax_set(ax1, "both", xlim, ylim, title, xlabel, ylabel, adjust=ad)
 
         ax1.scatter(u_alma, v_alma, color="grey", lw=0, s=10, alpha=0.5)
-        ax1.scatter(u_lst_center, v_lst_center, color="tomato", lw=0, s=50, alpha=0.5)
+        ax1.scatter(u_lst_center, v_lst_center, color="tomato", lw=0, s=10, alpha=0.5)
 
         # text
-        ax1.text(0.05,0.92, "ALMA - ALMA baselines", color="grey", weight="bold", transform=ax1.transAxes)
-        ax1.text(0.05,0.87, "ALMA - LSTsim baselines", color="tomato", weight="bold", transform=ax1.transAxes)
+        ax1.text(0.05,0.92, "Baselines: ALMA - ALMA", color="grey", weight="bold", transform=ax1.transAxes)
+        ax1.text(0.05,0.87, "Baselines: ALMA - LSTsim", color="tomato", weight="bold", transform=ax1.transAxes)
 
         # save
         plt.subplots_adjust(hspace=.0)
