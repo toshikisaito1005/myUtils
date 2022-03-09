@@ -268,12 +268,12 @@ class ToolsLSTSim():
         plt.subplots_adjust(left=ad[0], right=ad[1], bottom=ad[2], top=ad[3])
         myax_set(ax1, None, xlim, ylim, title, xlabel, ylabel, adjust=ad)
 
+        ax1.scatter(6.452141, 7.886675, color="tomato", marker="*", lw=0, s=900)
+        ax1.scatter(8, -8, color="tomato", marker="*", lw=0, s=900)
+        ax1.scatter(-8, 0, color="tomato", marker="*", lw=0, s=900)
+        ax1.scatter(0, 0, color="tomato", marker="*", lw=0, s=900)
         ax1.scatter(x_12m, y_12m, color="grey", lw=0, s=100)
         ax1.scatter(x_7m, y_7m, color="deepskyblue", lw=0, s=100)
-        ax1.scatter(6.452141, 7.886675, color="tomato", marker="*", lw=0, s=600)
-        ax1.scatter(8, -8, color="tomato", marker="*", lw=0, s=600)
-        ax1.scatter(-8, 0, color="tomato", marker="*", lw=0, s=600)
-        ax1.scatter(0, 0, color="tomato", marker="*", lw=0, s=600)
 
         # text
         ax1.text(0.05,0.92, "ALMA 12-m array", color="grey", weight="bold", transform=ax1.transAxes)
