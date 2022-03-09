@@ -249,13 +249,16 @@ class ToolsLSTSim():
         plt.subplots_adjust(left=ad[0], right=ad[1], bottom=ad[2], top=ad[3])
         myax_set(ax1, "both", xlim, ylim, title, xlabel, ylabel, adjust=ad)
 
-        ax1.scatter(x_12m, y_12m, color="black", lw=0, s=60)
-        ax1.scatter(x_7m, y_7m, color="deepskyblue", lw=0, s=60)
+        ax1.scatter(x_12m, y_12m, color="black", lw=0, s=100)
+        ax1.scatter(x_7m, y_7m, color="deepskyblue", lw=0, s=100)
+        ax1.scatter(800, 800, color="tomato", marker="*", lw=0, s=150)
+        ax1.scatter(800, -800, color="tomato", marker="*", lw=0, s=150)
+        ax1.scatter(800, 0, color="tomato", marker="*", lw=0, s=150)
 
         # text
-        ax1.text(0.05,0.95, "ALMA - 12-m array", color="tomato", weight="bold", transform=ax1.transAxes)
-        ax1.text(0.05,0.90, "ALMA - ACA", color="deepskyblue", weight="bold", transform=ax1.transAxes)
-        ax1.text(0.05,0.85, "LSTsim", color="black", weight="bold", transform=ax1.transAxes)
+        ax1.text(0.05,0.92, "ALMA - 12-m array", color="black", weight="bold", transform=ax1.transAxes)
+        ax1.text(0.05,0.87, "ALMA - ACA", color="deepskyblue", weight="bold", transform=ax1.transAxes)
+        ax1.text(0.05,0.82, "LSTsim", color="tomato", weight="bold", transform=ax1.transAxes)
 
         # save
         plt.subplots_adjust(hspace=.0)
