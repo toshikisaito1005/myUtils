@@ -332,7 +332,7 @@ class ToolsLSTSim():
             this_d = np.linalg.norm(this_vec)
             list_dist.append(this_d)
 
-            this_a = np.degrees(np.arccos(this_vec[2] / this_d))
+            this_a = np.degrees(np.arcsin(this_vec[2] / this_d))
             list_theta.append(this_a)
 
             this_h = np.degrees(np.arctan2(this_vec[0], this_vec[1]))
