@@ -278,8 +278,8 @@ class ToolsLSTSim():
         # plot: uv #
         ############
         ad    = [0.215,0.83,0.10,0.90]
-        xlim  = None # [-10,10]
-        ylim  = None # [-10,10]
+        xlim  = [-20,20]
+        ylim  = [-20,20]
         title = "$u-v$ coverage"
         xlabel = "East-West (km)"
         ylabel = "North-South (km)"
