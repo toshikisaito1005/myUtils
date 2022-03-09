@@ -338,7 +338,7 @@ class ToolsLSTSim():
             this_y = list_dist * np.sin( np.radians(list_angle) )
 
             this_u = this_x * np.sin( np.radians(decl - this_t) )
-            this_v = this_y
+            this_v = this_y * np.cos( np.radians(decl - this_t) )
 
             # output
             list_u = np.r_[list_u, this_u]
