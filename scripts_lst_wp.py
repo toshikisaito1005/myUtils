@@ -230,7 +230,7 @@ class ToolsLSTSim():
         check_first(self.config_c10,taskname)
 
         decl = -37.755 # 0=celestial equator, 90=north pole, -90=south pole
-        tinteg = 6
+        tinteg = 2
         lst_position = np.array([6.452141+0.1, 7.886675+0.1, -0.245131]) # km/s
 
         # get data
