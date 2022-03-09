@@ -291,18 +291,17 @@ class ToolsLSTSim():
         ad    = [0.215,0.83,0.10,0.90]
         xlim  = None # [-10,10]
         ylim  = None # [-10,10]
-        title = "$uv# coverage"
+        title = "$u-v$ coverage"
         xlabel = "East-West (km)"
         ylabel = "North-South (km)"
 
         fig = plt.figure(figsize=(13,10))
         gs  = gridspec.GridSpec(nrows=10, ncols=10)
-        ax1 = plt.subplot(gs[0:10,0:10])
+        ax1 = plt.subplot(gs[0:10,0:10], projection="polar")
         plt.subplots_adjust(left=ad[0], right=ad[1], bottom=ad[2], top=ad[3])
         myax_set(ax1, "both", xlim, ylim, title, xlabel, ylabel, adjust=ad)
 
-        ax1.scatter(x_12m, y_12m, color="black", lw=0, s=100)
-        ax1.scatter(x_7m, y_7m, color="deepskyblue", lw=0, s=100)
+        ax1.scatter(list_dist, list_angle, color="black", lw=0, s=100)
 
         # text
         ax1.text(0.05,0.92, "ALMA - ALMA baselines", color="black", weight="bold", transform=ax1.transAxes)
