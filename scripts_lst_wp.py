@@ -338,10 +338,10 @@ class ToolsLSTSim():
         l = np.array(list_dist)
         t = np.radians( np.array(list_theta) )
         p = np.radians( np.array(list_phi) )
-        D = np.radians(decl)
+        dec = np.radians(decl)
 
         X = l*(np.cos(latitude)*np.sin(t) - np.sin(latitude)*np.cos(t)*np.cos(p)) # l*np.sin(t)*np.cos(p)
-        Y = l*np.sin(t)*np.sin(p)
+        Y = l*np.cos(t)*np.sin(p)
         Z = l*(np.sin(latitude)*np.sin(t) + np.cos(latitude)*np.cos(t)*np.cos(p)) # l*np.cos(t)
 
         # output
@@ -352,7 +352,7 @@ class ToolsLSTSim():
             H = np.radians(this_t)
 
             this_u = X*np.sin(H) + Y*np.cos(H)
-            this_v = -X*np.sin(D)*np.cos(H) + Y*np.sin(D)*np.sin(H) + Z*np.cos(D)
+            this_v = -X*np.sin(dec)*np.cos(H) + Y*np.sin(dec)*np.sin(H) + Z*np.cos(dec)
 
             # output
             list_u = np.r_[list_u, this_u]
