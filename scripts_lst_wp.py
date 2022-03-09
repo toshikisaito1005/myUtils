@@ -301,7 +301,7 @@ class ToolsLSTSim():
         myax_set(ax1, "both", xlim, ylim, title, xlabel, ylabel, adjust=ad)
 
         ax1.scatter(u_alma, v_alma, color="grey", lw=0, s=5, alpha=0.5)
-        #ax1.scatter(u_lst_center, v_lst_center, color="tomato", lw=0, s=5, alpha=0.5)
+        ax1.scatter(u_lst_center, v_lst_center, color="tomato", lw=0, s=5, alpha=0.5)
 
         # text
         ax1.text(0.05,0.92, "Baselines: ALMA - ALMA", color="grey", weight="bold", transform=ax1.transAxes)
