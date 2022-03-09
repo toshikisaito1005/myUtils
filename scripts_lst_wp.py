@@ -243,8 +243,7 @@ class ToolsLSTSim():
         u_alma, v_alma = self._get_baselines(this_data,this_data,decl=decl,tinteg=tinteg)
         u1_lst_center, v1_lst_center = self._get_baselines(np.array([0,0]),this_data,decl=decl,tinteg=tinteg)
         u2_lst_center, v2_lst_center = self._get_baselines(this_data,np.array([0,0]),decl=decl,tinteg=tinteg)
-        u_lst_center = np.r_[u1_lst_center,u2_lst_center]
-        v_lst_center = np.r_[v1_lst_center,v2_lst_center]
+        u_lst_center, v_lst_center = np.r_[u1_lst_center,u2_lst_center], np.r_[v1_lst_center,v2_lst_center]
 
         ##########################
         # plot: antenna position #
@@ -338,9 +337,12 @@ class ToolsLSTSim():
             this_x = list_dist * np.cos( np.radians(list_angle) )
             this_y = list_dist * np.sin( np.radians(list_angle) )
 
+            this_u = this_x * np.sin( np.radians(trange) )
+            this_v = this_y
+
             # output
-            list_u = np.r_[list_u, this_x]
-            list_v = np.r_[list_v, this_y]
+            list_u = np.r_[list_u, this_u]
+            list_v = np.r_[list_v, this_v]
 
         return list_u, list_v
 
