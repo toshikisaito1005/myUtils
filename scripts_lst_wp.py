@@ -239,8 +239,8 @@ class ToolsLSTSim():
         z_7m  = data[:,2].astype(np.float32) / 1000.
 
         # get dist and angle: alma-alma baselines
-        decl = -30 # 0=north pole
-        tinteg = 12
+        decl = 60 # 0=north pole
+        tinteg = 2
         this_data = np.c_[x_12m.flatten(),y_12m.flatten(),z_12m.flatten()]
         u_alma, v_alma = self._get_baselines(this_data,this_data,decl=decl,tinteg=tinteg)
         u1_lst_center, v1_lst_center = self._get_baselines(np.array([0,0,0]),this_data,decl=decl,tinteg=tinteg)
@@ -315,7 +315,7 @@ class ToolsLSTSim():
     def _get_baselines(self,x,y,decl=60,tinteg=0):
         """
         """
-        latitude = -67.755 # degree
+        latitude = -67.755 # degree, alma site
 
         list_dist  = []
         list_theta = []
