@@ -330,14 +330,17 @@ class ToolsLSTSim():
         list_v = []
         trange = np.r_[np.arange(-tinteg/24.*360/2.0, tinteg/24.*360/2.0, 0.5), tinteg/24.*360/2.0]
         for this_t in trange:
-            d   = np.radians(list_angle)
-            H_h = np.radians(this_t)
-            D   = np.radians(decl)
-            X   = list_dist * np.cos(d)
-            Y   = list_dist * np.sin(d)
+            D = list_dist
+            L = -67.755 # degree
+            A = np.radians(list_angle)
+            dec = np.radians(decl) + np.radians(this_t)
 
-            this_u = X*np.sin(H_h) + Y*np.cos(H_h)
-            this_v = -X*np.sin(D)*np.cos(H_h) + Y*np.sin(D)*np.sin(H_h)
+            X = list_dist*(-np.sin(L)*np.cos(A))
+            Y = D*np.sin(A)
+
+            this_u = np.sin(L)*X + np.cos(L)*Y
+            this_v = -X*np.sin(dec)*np.cos(L) + Y*np.sin(dec)*np.sin(L)
+
             list_u = np.r_[list_u, this_u]
             list_v = np.r_[list_v, this_v]
 
