@@ -229,6 +229,10 @@ class ToolsLSTSim():
         taskname = self.modname + sys._getframe().f_code.co_name
         check_first(self.config_c10,taskname)
 
+        decl = -30 # 0=celestial equator, 90=north pole, -90=south pole
+        tinteg = 2
+        lst_position = np.array([8,8,0])
+
         # get data
         data  = np.loadtxt(self.config_c10,"str")
         x_12m = data[:,0].astype(np.float32) / 1000.
@@ -241,9 +245,6 @@ class ToolsLSTSim():
         z_7m  = data[:,2].astype(np.float32) / 1000.
 
         # get dist and angle: alma-alma baselines
-        decl = -30 # 0=celestial equator, 90=north pole, -90=south pole
-        tinteg = 6
-        lst_position = np.array([8,8,0])
         this_data = np.c_[x_12m.flatten(),y_12m.flatten(),z_12m.flatten()]
         u_alma, v_alma = self._get_baselines(this_data,this_data,decl=decl,tinteg=tinteg)
         u1_lst_center, v1_lst_center = self._get_baselines(lst_position,this_data,decl=decl,tinteg=tinteg)
