@@ -108,6 +108,9 @@ class ToolsLSTSim():
         self.config_c10   = self.dir_keyfile + self._read_key("config_c10")
         self.config_7m    = self.dir_keyfile + self._read_key("config_7m")
 
+        # phangs-alma pipeline
+        self.dir_pipeline = self._read_key("dir_pipeline")
+
     def _set_input_fits(self):
         """
         """
@@ -389,7 +392,7 @@ class ToolsLSTSim():
             os.mkdir(dir_singledish)
 
         # set piepline
-        relpath_master_key = "/keys_sim/master_key.txt"
+        master_key = self.dir_pipeline + "master_key.txt"
 
         pipepath = os.environ.get('PHANGSPIPE')
         if pipepath is not None:
