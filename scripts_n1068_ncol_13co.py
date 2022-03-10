@@ -146,10 +146,10 @@ class ToolsNcol():
 
         self.vla          = self.dir_other + self._read_key("vla")
 
-        self.band3        = self.dir_other + self._read_key("band3")
-        self.band8_fov1   = self.dir_other + self._read_key("band8_fov1")
-        self.band8_fov2   = self.dir_other + self._read_key("band8_fov2")
-        self.band8_fov3   = self.dir_other + self._read_key("band8_fov3")
+        self.band3        = self.dir_raw + self._read_key("band3")
+        self.band8_fov1   = self.dir_raw + self._read_key("band8_fov1")
+        self.band8_fov2   = self.dir_raw + self._read_key("band8_fov2")
+        self.band8_fov3   = self.dir_raw + self._read_key("band8_fov3")
         
         """
         self.cube_hcn10   = self.dir_raw + self._read_key("cube_hcn10")
