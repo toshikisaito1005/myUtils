@@ -197,6 +197,7 @@ class ToolsNcol():
         self.outmaps_band8_fov1   = self.dir_ready + self._read_key("outmaps_band8_fov1")
         self.outmaps_band8_fov2   = self.dir_ready + self._read_key("outmaps_band8_fov2")
         self.outmaps_band8_fov3   = self.dir_ready + self._read_key("outmaps_band8_fov3")
+        self.outmaps_sfr          = self.dir_ready + self._read_key("outmaps_sfr")
 
         self.outmodelcube_13co10  = self.dir_ready + self._read_key("outmodelcube_13co10")
         self.outmodelcube_13co21  = self.dir_ready + self._read_key("outmodelcube_13co21")
@@ -240,6 +241,8 @@ class ToolsNcol():
         self.incl        = float(self._read_key("incl", "gal"))
         self.scale_pc    = float(self._read_key("scale", "gal"))
         self.scale_kpc   = self.scale_pc / 1000.
+        self.distance    = float(self._read_key("distance", "gal"))
+        self.redshift    = float(self._read_key("redshift", "gal"))
 
         self.snr         = float(self._read_key("snr"))
         self.snr_clip    = int(self._read_key("snr_clip"))
@@ -1823,7 +1826,26 @@ class ToolsNcol():
         beamr     = 30
 
         taskname = self.modname + sys._getframe().f_code.co_name
-        check_first(self.outmaps_13co_ncol.replace("???",this_beam),taskname)
+        check_first(self.outmaps_band3,taskname)
+
+        # calc sfr using Murphy et al. 2011 eq 11
+        Te = 1.e4 # election temperature
+        nu = 9.97014909e10 # observed frequency of the band 3 continuum image (header)
+        beam_fwhm = imhead(self.outmaps_band3, mode="list")["beammajor"]["value"]
+        pixesize = abs(imhead(self.outmaps_band3)["incr"][0])*180/np.pi*3600
+        beam_sigma = beam_fwhm / (2*np.sqrt(2*np.log(2)))
+
+        #flux_Jy_beam = imval_all(self.outmaps_band3)
+        #flux_Jy_beam = flux_Jy_beam["data"] * flux_Jy_beam["mask"] * 1000
+
+        sfr = 4.6e-28 * (Te/1.e4)**-0.45 * (nu/1.e9)**0.1 / ( 2 * np.pi * beam_sigma**2 / pixesize**2 ) * ( 1.2e27 * self.distance**2 * (1+self.redshift)**-3 ) * 1000.
+
+        # calc
+        run_immath_one(
+            self.outmaps_band3,
+            "IM0*" + sfr,
+            self.outmaps_sfr,
+            )
 
     ############
     # plot_gmc #

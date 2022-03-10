@@ -95,6 +95,7 @@ outmaps_band3             ,,,n1068_alma_band3.fits
 outmaps_band8_fov1        ,,,n1068_alma_band8_fov1.fits
 outmaps_band8_fov2        ,,,n1068_alma_band8_fov2.fits
 outmaps_band8_fov3        ,,,n1068_alma_band8_fov3.fits
+outmaps_sfr               ,,,n1068_SFR_ff.fits
 #
 outmodelcube_13co10       ,,,model_13co10_cube.fits
 outmodelcube_13co21       ,,,model_13co21_cube.fits
