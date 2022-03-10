@@ -1843,9 +1843,10 @@ class ToolsNcol():
         # calc
         run_immath_one(
             self.outmaps_band3,
-            self.outmaps_sfr,
+            self.outmaps_sfr + "_tmp1",
             "IM0*" + str(sfr),
             )
+        run_exportfits(self.outmaps_sfr+"_tmp1",self.outmaps_sfr,delin=True)
 
     ############
     # plot_gmc #
