@@ -4390,10 +4390,14 @@ class ToolsNcol():
         check_first(self.band3,taskname)
 
         run_roundsmooth(self.band3,self.outmaps_band3+"_tmp1",0.83333,0.75963813066468)
+        os.system("cp -r " + self.outmaps_band3+"_tmp1" + " template.image")
         run_exportfits(self.outmaps_band3+"_tmp1",self.outmaps_band3,delin=True)
 
         run_roundsmooth(self.band8_fov1,self.outmaps_band8_fov1+"_tmp1",0.83333)
-        run_exportfits(self.outmaps_band8_fov1+"_tmp1",self.outmaps_band8_fov1,delin=True)
+        run_imregrid(self.outmaps_band8_fov1+"_tmp1","template.image",self.outmaps_band8_fov1+"_tmp2")
+        run_exportfits(self.outmaps_band8_fov1+"_tmp2",self.outmaps_band8_fov1,delin=True)
+
+        os.system("rm -rf template.image")
 
     ##############
     # align_maps #
