@@ -1835,10 +1835,7 @@ class ToolsNcol():
         pixesize = abs(imhead(self.outmaps_band3)["incr"][0])*180/np.pi*3600
         beam_sigma = beam_fwhm / (2*np.sqrt(2*np.log(2)))
 
-        #flux_Jy_beam = imval_all(self.outmaps_band3)
-        #flux_Jy_beam = flux_Jy_beam["data"] * flux_Jy_beam["mask"] * 1000
-
-        sfr = 4.6e-28 * (Te/1.e4)**-0.45 * (nu/1.e9)**0.1 / ( 2 * np.pi * beam_sigma**2 / pixesize**2 ) * ( 1.2e27 * self.distance**2 * (1+self.redshift)**-3 ) * 1000.
+        sfr = 4.6e-28 * (Te/1.e4)**-0.45 * (nu/1.e9)**0.1 / ( 2 * np.pi * beam_sigma**2 / pixesize**2 ) * ( 1.2e27 * self.distance**2 * (1+self.redshift)**-3 ) / 1000.
 
         # mask center
         run_importfits(self.outmaps_band8_fov1,self.outmaps_band8_fov1+"_tmp1",defaultaxes=True,defaultaxesvalues=["RA","Dec","1GHz","Stokes"])
