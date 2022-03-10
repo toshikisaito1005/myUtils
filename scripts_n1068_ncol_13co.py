@@ -4401,13 +4401,52 @@ class ToolsNcol():
         taskname = self.modname + sys._getframe().f_code.co_name
         check_first(self.band3,taskname)
 
-        run_roundsmooth(self.band3,self.outmaps_band3+"_tmp1",0.83333,0.75963813066468)
-        os.system("cp -r " + self.outmaps_band3+"_tmp1" + " template.image")
-        run_exportfits(self.outmaps_band3+"_tmp1",self.outmaps_band3,delin=True,dropdeg=True,dropstokes=True)
+        # create template image for imregrid
+        run_importfits(
+            self.outmaps_mom0_13co10.replace("???","60pc"),
+            "template.image",
+            )
 
-        run_roundsmooth(self.band8_fov1,self.outmaps_band8_fov1+"_tmp1",0.83333)
-        run_imregrid(self.outmaps_band8_fov1+"_tmp1","template.image",self.outmaps_band8_fov1+"_tmp2")
-        run_exportfits(self.outmaps_band8_fov1+"_tmp2",self.outmaps_band8_fov1,delin=True,dropdeg=True,dropstokes=True)
+        # align band 3
+        run_roundsmooth(
+            self.band3,
+            self.outmaps_band3+"_tmp1",
+            0.83333,
+            0.75963813066468,
+            )
+        run_imregrid(
+            self.outmaps_band3+"_tmp1",
+            "template.image",
+            self.outmaps_band3+"_tmp2",
+            delin=True,
+            )
+        run_exportfits(
+            self.outmaps_band3+"_tmp2",
+            self.outmaps_band3,
+            delin=True,
+            dropdeg=True,
+            dropstokes=True,
+            )
+
+        # align band 8 fov-1 for masking (not SED purpose)
+        run_roundsmooth(
+            self.band8_fov1,
+            self.outmaps_band8_fov1+"_tmp1",
+            0.83333,
+            )
+        run_imregrid(
+            self.outmaps_band8_fov1+"_tmp1",
+            "template.image",
+            self.outmaps_band8_fov1+"_tmp2",
+            delin=True,
+            )
+        run_exportfits(
+            self.outmaps_band8_fov1+"_tmp2",
+            self.outmaps_band8_fov1,
+            delin=True,
+            dropdeg=True,
+            dropstokes=True,
+            )
 
         os.system("rm -rf template.image")
     
