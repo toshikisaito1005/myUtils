@@ -1842,7 +1842,7 @@ class ToolsNcol():
 
         # mask center
         run_importfits(self.outmaps_band8_fov1,self.outmaps_band8_fov1+"_tmp1")
-        makemask(mode="copy", inpimage=self.outmaps_band8_fov1+"_tmp1", inpmask=self.outmaps_band8_fov1+":mask0", output="mask.image", overwrite=False)
+        makemask(mode="copy", inpimage=self.outmaps_band8_fov1+"_tmp1", inpmask=self.outmaps_band8_fov1+"_tmp1:mask0", output="mask.image", overwrite=False)
         run_immath_one("mask.image","mask.image2","-1*(IM0-1)")
 
         # calc
