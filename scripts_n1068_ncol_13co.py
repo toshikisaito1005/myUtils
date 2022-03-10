@@ -1841,7 +1841,7 @@ class ToolsNcol():
         sfr = 4.6e-28 * (Te/1.e4)**-0.45 * (nu/1.e9)**0.1 / ( 2 * np.pi * beam_sigma**2 / pixesize**2 ) * ( 1.2e27 * self.distance**2 * (1+self.redshift)**-3 ) * 1000.
 
         # mask center
-        run_improtfits(self.outmaps_band8_fov1,self.outmaps_band8_fov1+"_tmp1")
+        run_importfits(self.outmaps_band8_fov1,self.outmaps_band8_fov1+"_tmp1")
         makemask(mode="copy", inpimage=self.outmaps_band8_fov1+"_tmp1", inpmask=self.outmaps_band8_fov1+":mask0", output="mask.image", overwrite=False)
         run_immath_one("mask.image","mask.image2","-1*(IM0-1)")
 
@@ -1856,6 +1856,7 @@ class ToolsNcol():
 
         # clean up
         os.system("rm -rf mask.image mask.image2")
+        os.system("rm -rf " + self.outmaps_band8_fov1 + "_tmp1")
 
     ############
     # plot_gmc #
