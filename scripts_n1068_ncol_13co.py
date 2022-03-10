@@ -1848,7 +1848,7 @@ class ToolsNcol():
             self.outmaps_band3,
             "mask.image",
             self.outmaps_sfr + "_tmp1",
-            "iif(IM1=1,0,IM0*" + str(sfr) + ")",
+            "iif(IM1==1,0,IM0*" + str(sfr) + ")",
             )
         run_exportfits(self.outmaps_sfr+"_tmp1",self.outmaps_sfr,delin=True)
 
