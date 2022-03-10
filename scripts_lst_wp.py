@@ -122,7 +122,7 @@ class ToolsLSTSim():
         """
         """
 
-        self.tempgal = "ngc1097"
+        self.tempgal = "ngc1097sim"
 
         self.template_in_jypix        = self.tempgal + "_template_jypixel.image"
         self.template_clipped         = self.tempgal + "_template_clipped.image"
