@@ -1843,20 +1843,21 @@ class ToolsNcol():
         # mask center
         run_importfits(self.outmaps_band8_fov1,self.outmaps_band8_fov1+"_tmp1",defaultaxes=True,defaultaxesvalues=["RA","Dec","1GHz","Stokes"])
         makemask(mode="copy", inpimage=self.outmaps_band8_fov1+"_tmp1", inpmask=self.outmaps_band8_fov1+"_tmp1:mask0", output="mask.image", overwrite=False)
-        run_immath_one("mask.image","mask.image2","-1*(IM0-1)")
+        run_roundsmooth("mask.image","mask.image2",5.0,0.3)
+        run_immath_one("mask.image2","mask.image3","iif( IM0>0.1, 0, 1)")
 
         # calc
         run_importfits(self.outmaps_band3,self.outmaps_band3+"_tmp1",defaultaxes=True,defaultaxesvalues=["RA","Dec","1GHz","Stokes"])
         run_immath_two(
             self.outmaps_band3 + "_tmp1",
-            "mask.image2",
+            "mask.image3",
             self.outmaps_sfr + "_tmp1",
             "iif(IM1==0,0,IM0*" + str(sfr) + ")",
             )
         run_exportfits(self.outmaps_sfr+"_tmp1",self.outmaps_sfr,delin=True,dropdeg=True,dropstokes=True)
 
         # clean up
-        os.system("rm -rf mask.image mask.image2")
+        os.system("rm -rf mask.image mask.image2 mask.image3")
         os.system("rm -rf " + self.outmaps_band8_fov1 + "_tmp1")
         os.system("rm -rf " + self.outmaps_band3 + "_tmp1")
 
