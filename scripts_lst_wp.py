@@ -11,7 +11,7 @@ usage:
 > from scripts_sim_lst_wp import ToolsLSTSim as tools
 >
 > # key
-> tl = tools(
+> tl = tools(s
 >     refresh     = False,
 >     keyfile_gal = "/home02/saitots/myUtils/keys_sim_lst_wp/key_ngc1068.txt",
 >     keyfile_fig = "/home02/saitots/myUtils/keys_sim_lst_wp/key_figures.txt",
@@ -122,7 +122,7 @@ class ToolsLSTSim():
         """
         """
 
-        self.tempgal = "ngc1097sim"
+        self.tempgal = self.project_sim
 
         self.template_in_jypix        = self.tempgal + "_template_jypixel.image"
         self.template_clipped         = self.tempgal + "_template_clipped.image"
@@ -442,7 +442,7 @@ class ToolsLSTSim():
             this_hander.set_targets(only=target)
             this_hander.set_line_products(only=line)
             this_hander.set_no_cont_products(True)
-            this_hander.set_no_line_products(True)
+            this_hander.set_no_line_products(False)
             this_hander.set_interf_configs(only=array)
 
         # run piepline
