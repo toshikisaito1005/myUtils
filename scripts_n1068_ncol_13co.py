@@ -1840,12 +1840,15 @@ class ToolsNcol():
 
         sfr = 4.6e-28 * (Te/1.e4)**-0.45 * (nu/1.e9)**0.1 / ( 2 * np.pi * beam_sigma**2 / pixesize**2 ) * ( 1.2e27 * self.distance**2 * (1+self.redshift)**-3 ) * 1000.
 
+        # mask center
+        run_immath_one(self.outmaps_band8_fov1,"mask.image","iif(IM0>-10000,0,1)")
+
         # calc
         run_immath_two(
             self.outmaps_band3,
-            self.outmaps_band8_fov1,
+            "mask.image",
             self.outmaps_sfr + "_tmp1",
-            "iif(IM1>-100000,0,IM0*" + str(sfr) + ")",
+            "iif(IM1=1,0,IM0*" + str(sfr) + ")",
             )
         run_exportfits(self.outmaps_sfr+"_tmp1",self.outmaps_sfr,delin=True)
 
