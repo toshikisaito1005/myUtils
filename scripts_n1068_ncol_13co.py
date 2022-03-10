@@ -4365,7 +4365,7 @@ class ToolsNcol():
         taskname = self.modname + sys._getframe().f_code.co_name
         check_first(self.band3,taskname)
 
-        run_roundsmooth(self.band3,self.outmaps_band3+"_tmp1",0.83333)
+        run_roundsmooth(self.band3,self.outmaps_band3+"_tmp1",0.83333,0.75963813066468)
         run_exportfits(self.outmaps_band3+"_tmp1",self.outmaps_band3,delin=True)
 
     ##############
