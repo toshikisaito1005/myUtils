@@ -1843,8 +1843,9 @@ class ToolsNcol():
         # calc
         run_immath_one(
             self.outmaps_band3,
+            self.outmaps_band8_fov1,
             self.outmaps_sfr + "_tmp1",
-            "IM0*" + str(sfr),
+            "iif(IM1>-100000,0,IM0*" + str(sfr) + ")",
             )
         run_exportfits(self.outmaps_sfr+"_tmp1",self.outmaps_sfr,delin=True)
 
@@ -4390,6 +4391,9 @@ class ToolsNcol():
 
         run_roundsmooth(self.band3,self.outmaps_band3+"_tmp1",0.83333,0.75963813066468)
         run_exportfits(self.outmaps_band3+"_tmp1",self.outmaps_band3,delin=True)
+
+        run_roundsmooth(self.band8_fov1,self.outmaps_band8_fov1+"_tmp1",0.83333)
+        run_exportfits(self.outmaps_band8_fov1+"_tmp1",self.outmaps_band8_fov1,delin=True)
 
     ##############
     # align_maps #
