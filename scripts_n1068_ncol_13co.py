@@ -1843,8 +1843,8 @@ class ToolsNcol():
         # calc
         run_immath_one(
             self.outmaps_band3,
-            "IM0*" + str(sfr),
             self.outmaps_sfr,
+            "IM0*" + str(sfr),
             )
 
     ############
