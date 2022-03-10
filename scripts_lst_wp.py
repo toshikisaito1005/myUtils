@@ -384,11 +384,11 @@ class ToolsLSTSim():
 
         # prepare dir
         dir_cleanmask = self.dir_ready + "outputs/cleanmasks/"
-        if not dir_cleanmask:
+        if not glob.glob(dir_cleanmask):
             os.mkdir(dir_cleanmask)
 
         dir_singledish = self.dir_ready + "outputs/singledish/"
-        if not dir_singledish:
+        if not glob.glob(dir_singledish):
             os.mkdir(dir_singledish)
 
         # set piepline
