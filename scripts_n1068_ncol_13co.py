@@ -145,6 +145,11 @@ class ToolsNcol():
         self.emom0_12co10 = self.dir_raw + self._read_key("emom0_12co10")
 
         self.vla          = self.dir_other + self._read_key("vla")
+
+        self.band3        = self.dir_other + self._read_key("band3")
+        self.band8_fov1   = self.dir_other + self._read_key("band8_fov1")
+        self.band8_fov2   = self.dir_other + self._read_key("band8_fov2")
+        self.band8_fov3   = self.dir_other + self._read_key("band8_fov3")
         
         """
         self.cube_hcn10   = self.dir_raw + self._read_key("cube_hcn10")
@@ -187,6 +192,11 @@ class ToolsNcol():
         self.outmaps_vla          = self.dir_ready + self._read_key("outmaps_vla")
         self.outmaps_pturb        = self.dir_ready + self._read_key("outmaps_pturb")
         self.outmaps_avir         = self.dir_ready + self._read_key("outmaps_avir")
+
+        self.outmaps_band3        = self.dir_ready + self._read_key("outmaps_band3")
+        self.outmaps_band8_fov1   = self.dir_ready + self._read_key("outmaps_band8_fov1")
+        self.outmaps_band8_fov2   = self.dir_ready + self._read_key("outmaps_band8_fov2")
+        self.outmaps_band8_fov3   = self.dir_ready + self._read_key("outmaps_band8_fov3")
 
         self.outmodelcube_13co10  = self.dir_ready + self._read_key("outmodelcube_13co10")
         self.outmodelcube_13co21  = self.dir_ready + self._read_key("outmodelcube_13co21")
@@ -345,6 +355,7 @@ class ToolsNcol():
         # mom0 creation simulation
         do_create_models = False, # after do_prepare
         do_simulate_mom  = False, # after do_create_models
+        do_sfr_map       = False,
         # plot figures in paper
         plot_showcase    = False, # after do_fitting
         plot_showsim     = False, # after do_simulate_mom
@@ -392,6 +403,10 @@ class ToolsNcol():
             self.simulate_mom_13co21()
             self.simulate_fitting_mom0()
             self.eval_sim()
+
+        if do_sfr_map==True:
+            self.align_contin_map_to_60pc()
+            self.create_sfr()
 
         # plot figures in paper
         if plot_showcase==True:
@@ -1794,6 +1809,21 @@ class ToolsNcol():
                 delin=True,
                 axis="column",
                 )
+
+    ##############
+    # create_sfr #
+    ##############
+
+    def create_sfr(
+        self,
+        ):
+        """
+        """
+        this_beam = "60pc"
+        beamr     = 30
+
+        taskname = self.modname + sys._getframe().f_code.co_name
+        check_first(self.outmaps_13co_ncol.replace("???",this_beam),taskname)
 
     ############
     # plot_gmc #
@@ -4323,6 +4353,20 @@ class ToolsNcol():
             os.system("mv emom2_all.fits " + self.outemaps_hcn10_mom2.replace("???","all_"+this_beam))
             os.system("mv eratio_all.fits " + self.outemaps_hcn10_ratio.replace("???","all_"+this_beam))
         """
+
+    ############################
+    # align_contin_map_to_60pc #
+    ############################
+
+    def align_contin_map_to_60pc(self):
+        """
+        """
+
+        taskname = self.modname + sys._getframe().f_code.co_name
+        check_first(self.band3,taskname)
+
+        run_roundsmooth(self.band3,self.outmaps_band3+"_tmp1",0.83333)
+        run_exportfits(self.outmaps_band3+"_tmp1",self.outmaps_band3,delin=True)
 
     ##############
     # align_maps #

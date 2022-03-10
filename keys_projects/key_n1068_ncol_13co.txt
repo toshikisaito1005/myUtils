@@ -52,6 +52,10 @@ ecube_13co21              ,,,ngc1068_b6_12m_13co21_???_noise.fits
 mom0_12co10               ,,,ngc1068_b3_12m_co10_???_strict_mom0.fits
 emom0_12co10              ,,,ngc1068_b3_12m_co10_???_strict_emom0.fits
 vla                       ,,,14.9I0.41_AL0249_1991DEC05_1_157.U1.23M.imfits
+band3                     ,,,ngc1068_b3_12m+7m_cont_prev.image.tt0.fits
+band8_fov1                ,,,ngc1068_b8_1_12m+7m_cont.fits
+band8_fov2                ,,,ngc1068_b8_2_12m+7m_cont.fits
+band8_fov3                ,,,ngc1068_b8_3_12m+7m_cont.fits
 
 ###############
 # output maps #
@@ -86,6 +90,11 @@ outemaps_aco              ,,,n1068_eaco_???.fits
 outmaps_vla               ,,,n1068_vla_???.fits
 outmaps_pturb             ,,,n1068_pturb_???.fits
 outmaps_avir              ,,,n1068_avir_???.fits
+#
+outmaps_band3             ,,,n1068_alma_band3.fits
+outmaps_band8_fov1        ,,,n1068_alma_band8_fov1.fits
+outmaps_band8_fov2        ,,,n1068_alma_band8_fov2.fits
+outmaps_band8_fov3        ,,,n1068_alma_band8_fov3.fits
 #
 outmodelcube_13co10       ,,,model_13co10_cube.fits
 outmodelcube_13co21       ,,,model_13co21_cube.fits
