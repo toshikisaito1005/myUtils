@@ -210,7 +210,7 @@ class ToolsLSTSim():
             self.prepare_do_template()
 
         if do_simint==True:
-            self.simint()
+            self.simaca()
 
         if do_imaging==True:
             self.phangs_pipeline_imaging()
@@ -479,10 +479,10 @@ class ToolsLSTSim():
                 )
 
     ##########
-    # simint #
+    # simaca #
     ##########
 
-    def simint(self):
+    def simaca(self):
         """
         """
 
@@ -492,8 +492,8 @@ class ToolsLSTSim():
         run_simobserve(
             working_dir=self.dir_ready,
             template=self.template_fullspec_div3,
-            antennalist=self.config_c1,
-            project=self.project_sim+"_12m",
+            antennalist=self.config_7m,
+            project=self.project_sim+"_7m",
             totaltime="1.5h",
             incenter=self.incenter,
             )
