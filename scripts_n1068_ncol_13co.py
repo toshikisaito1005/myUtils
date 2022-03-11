@@ -1837,9 +1837,9 @@ class ToolsNcol():
         print(2 * np.pi * beam_sigma**2 / pixesize**2)
 
         # calc sfr
-        mJyB_to_Jy = 1 / ( 2 * np.pi * beam_sigma**2 / pixesize**2 ) / 1000.
-        mJyB_to_L = mJyB_to_Jy * 1.2e27 * self.distance**2 * (1+self.redshift)**-3
-        sfr = 4.6e-28 * (Te/1.e4)**-0.45 * (nu/1.e9)**0.1 * mJyB_to_L
+        JyB_to_Jy = 1 / ( 2 * np.pi * beam_sigma**2 / pixesize**2 )
+        JyB_to_L = JyB_to_Jy * 1.2e27 * self.distance**2 * (1+self.redshift)**-3
+        sfr = 4.6e-28 * (Te/1.e4)**-0.45 * (nu/1.e9)**0.1 * JyB_to_L
         sfr_density = sfr / (pixesize**2 * self.scale_pc**2)
 
         # mask center
