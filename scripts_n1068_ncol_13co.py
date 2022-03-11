@@ -198,6 +198,9 @@ class ToolsNcol():
         self.outmaps_band8_fov2   = self.dir_ready + self._read_key("outmaps_band8_fov2")
         self.outmaps_band8_fov3   = self.dir_ready + self._read_key("outmaps_band8_fov3")
         self.outmaps_sfr          = self.dir_ready + self._read_key("outmaps_sfr")
+        self.outmaps_dust_ff_ratio_fov1 = self.dir_ready + self._read_key("outmaps_dust_ff_ratio_fov1")
+        self.outmaps_dust_ff_ratio_fov2 = self.dir_ready + self._read_key("outmaps_dust_ff_ratio_fov2")
+        self.outmaps_dust_ff_ratio_fov3 = self.dir_ready + self._read_key("outmaps_dust_ff_ratio_fov3")
 
         self.outmodelcube_13co10  = self.dir_ready + self._read_key("outmodelcube_13co10")
         self.outmodelcube_13co21  = self.dir_ready + self._read_key("outmodelcube_13co21")
@@ -228,6 +231,8 @@ class ToolsNcol():
     def _set_input_param(self):
         """
         """
+
+        self.beta        = 1.8 # dust beta
 
         self.imsize      = float(self._read_key("imsize_as"))
         self.beams       = ["60pc","70pc","80pc","90pc","100pc","110pc","120pc","130pc","140pc","150pc"]
@@ -1829,6 +1834,9 @@ class ToolsNcol():
         taskname = self.modname + sys._getframe().f_code.co_name
         check_first(self.outmaps_band3,taskname)
 
+        ###########
+        # SFR map #
+        ###########
         # calc sfr using Murphy et al. 2011 eq 11
         Te = 1.e4 # election temperature
         nu = 9.97014909e10 # observed frequency of the band 3 continuum image (header)
@@ -1853,10 +1861,28 @@ class ToolsNcol():
         run_immath_two(
             self.outmaps_band3 + "_tmp1",
             "mask.image3",
-            this_sfr + "_tmp1",
+            self.outmaps_dust_ff_ratio_fov1,
             "iif(IM1==0,0,IM0*" + str(sfr_density) + ")",
             )
         run_exportfits(this_sfr+"_tmp1",this_sfr,delin=True,dropdeg=True,dropstokes=True)
+
+        ######################################
+        # dust contribution map using band 8 #
+        ######################################
+        nu_b8 = 4.80060650e+11 # observed frequency of the band 8 continuum image (header)
+        factor = str( (nu / nu_b8)**(2+self.beta) )
+        run_immath_two(
+            self.outmaps_band3,
+            self.outmaps_band8_fov2,
+            self.outmaps_dust_ff_ratio_fov2,
+            "iif((IM0-IM1*"+factor+")/IM0)",
+            )
+        run_immath_two(
+            self.outmaps_band3,
+            self.outmaps_band8_fov3,
+            self.outmaps_dust_ff_ratio_fov3,
+            "iif((IM0-IM1*"+factor+")/IM0)",
+            )
 
         # clean up
         os.system("rm -rf mask.image mask.image2 mask.image3")
@@ -4445,6 +4471,46 @@ class ToolsNcol():
         run_exportfits(
             self.outmaps_band8_fov1+"_tmp2",
             self.outmaps_band8_fov1,
+            delin=True,
+            dropdeg=True,
+            dropstokes=True,
+            )
+
+        # align band 8 fov-2 for masking (not SED purpose)
+        run_roundsmooth(
+            self.band8_fov2,
+            self.outmaps_band8_fov2+"_tmp1",
+            0.83333,
+            )
+        run_imregrid(
+            self.outmaps_band8_fov2+"_tmp1",
+            "template.image",
+            self.outmaps_band8_fov2+"_tmp2",
+            delin=True,
+            )
+        run_exportfits(
+            self.outmaps_band8_fov2+"_tmp2",
+            self.outmaps_band8_fov2,
+            delin=True,
+            dropdeg=True,
+            dropstokes=True,
+            )
+
+        # align band 8 fov-2 for masking (not SED purpose)
+        run_roundsmooth(
+            self.band8_fov3,
+            self.outmaps_band8_fov3+"_tmp1",
+            0.83333,
+            )
+        run_imregrid(
+            self.outmaps_band8_fov3+"_tmp1",
+            "template.image",
+            self.outmaps_band8_fov3+"_tmp2",
+            delin=True,
+            )
+        run_exportfits(
+            self.outmaps_band8_fov3+"_tmp2",
+            self.outmaps_band8_fov3,
             delin=True,
             dropdeg=True,
             dropstokes=True,
