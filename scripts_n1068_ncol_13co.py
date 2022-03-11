@@ -1829,7 +1829,6 @@ class ToolsNcol():
         """
         this_beam = "60pc"
         beamr     = 30
-        this_sfr  = self.outmaps_sfr.replace("???",this_beam)
 
         taskname = self.modname + sys._getframe().f_code.co_name
         check_first(self.outmaps_band3,taskname)
@@ -1838,7 +1837,7 @@ class ToolsNcol():
         # SFR map #
         ###########
         os.system("rm -rf mask.image mask.image2 mask.image3")
-        
+
         # calc sfr using Murphy et al. 2011 eq 11
         Te = 1.e4 # election temperature
         nu = 9.97014909e10 # observed frequency of the band 3 continuum image (header)
@@ -1863,10 +1862,10 @@ class ToolsNcol():
         run_immath_two(
             self.outmaps_band3 + "_tmp1",
             "mask.image3",
-            self.outmaps_dust_ff_ratio_fov1,
+            self.outmaps_sfr.replace("???",this_beam)+"_tmp1",
             "iif(IM1==0,0,IM0*" + str(sfr_density) + ")",
             )
-        run_exportfits(this_sfr+"_tmp1",this_sfr,delin=True,dropdeg=True,dropstokes=True)
+        run_exportfits(self.outmaps_sfr.replace("???",this_beam)+"_tmp1",self.outmaps_sfr.replace("???",this_beam),delin=True,dropdeg=True,dropstokes=True)
 
         ######################################
         # dust contribution map using band 8 #
@@ -1876,15 +1875,17 @@ class ToolsNcol():
         run_immath_two(
             self.outmaps_band3,
             self.outmaps_band8_fov2,
-            self.outmaps_dust_ff_ratio_fov2,
+            self.outmaps_dust_ff_ratio_fov2.replace("???",this_beam)+"_tmp1",
             "(IM0-IM1*"+factor+")/IM0)",
             )
+        run_exportfits(self.outmaps_dust_ff_ratio_fov2.replace("???",this_beam)+"_tmp1",self.outmaps_dust_ff_ratio_fov2.replace("???",this_beam),delin=True,dropdeg=True,dropstokes=True)
         run_immath_two(
             self.outmaps_band3,
             self.outmaps_band8_fov3,
-            self.outmaps_dust_ff_ratio_fov3,
+            self.outmaps_dust_ff_ratio_fov3.replace("???",this_beam)+"_tmp1",
             "(IM0-IM1*"+factor+")/IM0)",
             )
+        run_exportfits(self.outmaps_dust_ff_ratio_fov3.replace("???",this_beam)+"_tmp1",self.outmaps_dust_ff_ratio_fov3.replace("???",this_beam),delin=True,dropdeg=True,dropstokes=True)
 
         # clean up
         os.system("rm -rf mask.image mask.image2 mask.image3")
