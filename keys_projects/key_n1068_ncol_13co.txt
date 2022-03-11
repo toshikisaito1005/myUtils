@@ -96,6 +96,7 @@ outmaps_band8_fov1        ,,,n1068_alma_band8_fov1.fits
 outmaps_band8_fov2        ,,,n1068_alma_band8_fov2.fits
 outmaps_band8_fov3        ,,,n1068_alma_band8_fov3.fits
 outmaps_sfr               ,,,n1068_SFRD_ff_???.fits
+outmaps_dust_ff_ratio_fov1 ,,,n1068_dust_ff_ratio_fov1_???.fits
 outmaps_dust_ff_ratio_fov2 ,,,n1068_dust_ff_ratio_fov2_???.fits
 outmaps_dust_ff_ratio_fov3 ,,,n1068_dust_ff_ratio_fov3_???.fits
 #
