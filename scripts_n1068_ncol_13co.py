@@ -1837,6 +1837,8 @@ class ToolsNcol():
         ###########
         # SFR map #
         ###########
+        os.system("rm -rf mask.image mask.image2 mask.image3")
+        
         # calc sfr using Murphy et al. 2011 eq 11
         Te = 1.e4 # election temperature
         nu = 9.97014909e10 # observed frequency of the band 3 continuum image (header)
