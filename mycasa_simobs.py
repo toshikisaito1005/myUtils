@@ -218,7 +218,19 @@ def gen_cube(
     # Shrink the pixel scale of the image #
     #######################################
 
-    # Skip this for NGC 3059
+    os.system('rm -rf '+ template_shrunk)
+    os.system('cp -r '+ template_rotated + ' '+template_shrunk)
+
+    old_cdelt1 = imhead(imagename = template_shrunk, mode="get", hdkey="cdelt1")
+    old_cdelt2 = imhead(imagename = template_shrunk, mode="get", hdkey="cdelt2")
+
+    new_cdelt1 = old_cdelt1
+    new_cdelt2 = old_cdelt2
+    new_cdelt1['value'] = old_cdelt1['value']*0.5
+    new_cdelt2['value'] = old_cdelt2['value']*0.5
+
+    imhead(imagename = template_shrunk, mode="put", hdkey="cdelt1", hdvalue=new_cdelt1)
+    imhead(imagename = template_shrunk, mode="put", hdkey="cdelt2", hdvalue=new_cdelt2)
 
     ##############################################
     # Regrid to an expanded, finer velocity grid #
