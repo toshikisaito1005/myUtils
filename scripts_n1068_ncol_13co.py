@@ -1876,14 +1876,14 @@ class ToolsNcol():
             self.outmaps_band3,
             self.outmaps_band8_fov2,
             self.outmaps_dust_ff_ratio_fov2.replace("???",this_beam)+"_tmp1",
-            "(IM0-IM1*"+factor+")/IM0",
+            "(IM1*"+factor+")/IM0",
             )
         run_exportfits(self.outmaps_dust_ff_ratio_fov2.replace("???",this_beam)+"_tmp1",self.outmaps_dust_ff_ratio_fov2.replace("???",this_beam),delin=True,dropdeg=True,dropstokes=True)
         run_immath_two(
             self.outmaps_band3,
             self.outmaps_band8_fov3,
             self.outmaps_dust_ff_ratio_fov3.replace("???",this_beam)+"_tmp1",
-            "(IM0-IM1*"+factor+")/IM0",
+            "(IM1*"+factor+")/IM0",
             )
         run_exportfits(self.outmaps_dust_ff_ratio_fov3.replace("???",this_beam)+"_tmp1",self.outmaps_dust_ff_ratio_fov3.replace("???",this_beam),delin=True,dropdeg=True,dropstokes=True)
 
