@@ -1839,7 +1839,7 @@ class ToolsNcol():
         JyB_to_Jy = 1 / ( 2 * np.pi * beam_sigma**2 / pixesize**2 )
         JyB_to_L = JyB_to_Jy * 1.2e27 * self.distance**2 * (1+self.redshift)**-3
         sfr = 4.6e-28 * (Te/1.e4)**-0.45 * (nu/1.e9)**0.1 * JyB_to_L
-        sfr_density = sfr #/ (pixesize * self.scale_pc)**2
+        sfr_density = sfr / (pixesize * self.scale_kpc)**2
 
         # mask center
         run_importfits(self.outmaps_band8_fov1,self.outmaps_band8_fov1+"_tmp1",defaultaxes=True,defaultaxesvalues=["RA","Dec","1GHz","Stokes"])
