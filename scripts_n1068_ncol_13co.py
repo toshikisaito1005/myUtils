@@ -1875,13 +1875,13 @@ class ToolsNcol():
             self.outmaps_band3,
             self.outmaps_band8_fov2,
             self.outmaps_dust_ff_ratio_fov2,
-            "iif((IM0-IM1*"+factor+")/IM0)",
+            "(IM0-IM1*"+factor+")/IM0)",
             )
         run_immath_two(
             self.outmaps_band3,
             self.outmaps_band8_fov3,
             self.outmaps_dust_ff_ratio_fov3,
-            "iif((IM0-IM1*"+factor+")/IM0)",
+            "(IM0-IM1*"+factor+")/IM0)",
             )
 
         # clean up
