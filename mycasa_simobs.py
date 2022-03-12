@@ -62,11 +62,11 @@ def gen_cube(
     #os.system("rm -rf " + input_dir)
     #os.system("rm -rf " + output_dir)
     #os.system("rm -rf " + ms_dir)
-    if glob.glob(input_dir):
+    if not glob.glob(input_dir):
         os.mkdir(input_dir)
-    if glob.glob(output_dir):
+    if not glob.glob(output_dir):
         os.mkdir(output_dir)
-    if glob.glob(ms_dir):
+    if not glob.glob(ms_dir):
         os.mkdir(ms_dir)
 
     template_in_jypix        = input_dir + template_in_jypix
