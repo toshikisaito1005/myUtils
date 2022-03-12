@@ -582,7 +582,7 @@ class ToolsLSTSim():
             sdimage_div3=self.n1097_sdimage_div3,
             sdimage_div5=self.n1097_sdimage_div5,
             sdimage_div10=self.n1097_sdimage_div10,
-            sdimage_div30=self.n1079_sdimage_div30,
+            sdimage_div30=self.n1097_sdimage_div30,
             sdimage_div100=self.n1097_sdimage_div100,
             pa=self.image_roration, # rotation angle
             singledish_res=self.singledish_res, # 12m TP resolution
