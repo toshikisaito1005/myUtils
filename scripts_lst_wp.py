@@ -436,7 +436,7 @@ class ToolsLSTSim():
 
         # set handlers
         target = [self.tempgal]
-        array  = ["12m"]
+        array  = ["7m"]
         line   = ["ci10"]
         for this_hander in [this_uvh,this_imh,this_pph]:
             this_hander.set_targets(only=target)
