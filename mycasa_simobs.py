@@ -49,6 +49,7 @@ def gen_cube(
     pa="23deg", # rotation angle
     singledish_res="28.37arcsec", # resolution
     singledish_noise=0.102, # Jy/beam at final res
+    shrink=0.5,
     ):
     """
     version from phangs-alma pipeline (sim_ngc3059.py)
@@ -226,8 +227,8 @@ def gen_cube(
 
     new_cdelt1 = old_cdelt1
     new_cdelt2 = old_cdelt2
-    new_cdelt1['value'] = old_cdelt1['value']*0.5
-    new_cdelt2['value'] = old_cdelt2['value']*0.5
+    new_cdelt1['value'] = old_cdelt1['value']*shrink
+    new_cdelt2['value'] = old_cdelt2['value']*shrink
 
     imhead(imagename = template_shrunk, mode="put", hdkey="cdelt1", hdvalue=new_cdelt1)
     imhead(imagename = template_shrunk, mode="put", hdkey="cdelt2", hdvalue=new_cdelt2)

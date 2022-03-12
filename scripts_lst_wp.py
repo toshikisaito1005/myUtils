@@ -103,10 +103,11 @@ class ToolsLSTSim():
         self._create_dir(self.dir_final)
 
         # simobserve
-        self.project_sim  = self._read_key("project_sim")
-        self.config_c1    = self.dir_keyfile + self._read_key("config_c1")
-        self.config_c10   = self.dir_keyfile + self._read_key("config_c10")
-        self.config_7m    = self.dir_keyfile + self._read_key("config_7m")
+        self.project_n1068 = self._read_key("project_n1068")
+        self.project_n1097 = self._read_key("project_n1097")
+        self.config_c1     = self.dir_keyfile + self._read_key("config_c1")
+        self.config_c10    = self.dir_keyfile + self._read_key("config_c10")
+        self.config_7m     = self.dir_keyfile + self._read_key("config_7m")
 
         # phangs-alma pipeline
         self.dir_pipeline = self._read_key("dir_pipeline")
@@ -115,47 +116,76 @@ class ToolsLSTSim():
         """
         """
 
-        self.template_file = self._read_key("template_file")
-        self.template_mask = self._read_key("template_mask")
+        self.n1097_template_file = self._read_key("n1097_template_file")
+        self.n1097_template_mask = self._read_key("n1097_template_mask")
 
     def _set_output_fits(self):
         """
         """
 
-        self.tempgal = self.project_sim
+        self.n1068_template_in_jypix        = self.project_n1068 + "_template_jypixel.image"
+        self.n1068_template_clipped         = self.project_n1068 + "_template_clipped.image"
+        self.n1068_template_mask_imported   = self.project_n1068 + "_template_mask.image"
+        self.n1068_template_rotated         = self.project_n1068 + "_template_rotated.image"
+        self.n1068_template_shrunk          = self.project_n1068 + "_template_shrunk.image"
+        self.n1068_template_fullspec        = self.project_n1068 + "_template_fullspec.image"
+        self.n1068_template_fullspec_div3   = self.project_n1068 + "_template_fullspec_div3.image"
+        self.n1068_template_fullspec_div5   = self.project_n1068 + "_template_fullspec_div5.image"
+        self.n1068_template_fullspec_div10  = self.project_n1068 + "_template_fullspec_div10.image"
+        self.n1068_template_fullspec_div30  = self.project_n1068 + "_template_fullspec_div30.image"
+        self.n1068_template_fullspec_div100 = self.project_n1068 + "_template_fullspec_div100.image"
+        self.n1068_template_withcont        = self.project_n1068 + "_template_withcont.image"
+        self.n1068_template_withcont_div3   = self.project_n1068 + "_template_withcont_div3.image"
+        self.n1068_template_withcont_div5   = self.project_n1068 + "_template_withcont_div5.image"
+        self.n1068_template_withcont_div10  = self.project_n1068 + "_template_withcont_div10.image"
+        self.n1068_template_withcont_div30  = self.project_n1068 + "_template_withcont_div30.image"
+        self.n1068_template_withcont_div100 = self.project_n1068 + "_template_withcont_div100.image"
+        self.n1068_sdnoise_image            = self.project_n1068 + "_singledish_noise_nocont.image"
+        self.n1068_sdimage_fullspec         = self.project_n1068 + "_singledish_nocont.image"
+        self.n1068_sdimage_div3             = self.project_n1068 + "_singledish_div3.image"
+        self.n1068_sdimage_div5             = self.project_n1068 + "_singledish_div5.image"
+        self.n1068_sdimage_div10            = self.project_n1068 + "_singledish_div10.image"
+        self.n1068_sdimage_div30            = self.project_n1068 + "_singledish_div30.image"
+        self.n1068_sdimage_div100           = self.project_n1068 + "_singledish_div100.image"
+        self.n1068_sdnoise_image            = self.project_n1068 + "_singledish_noise_nocont.image"
+        self.n1068_sdimage_fullspec         = self.project_n1068 + "_singledish_nocont.image"
+        self.n1068_sdimage_div3             = self.project_n1068 + "_singledish_div3.image"
+        self.n1068_sdimage_div5             = self.project_n1068 + "_singledish_div5.image"
+        self.n1068_sdimage_div10            = self.project_n1068 + "_singledish_div10.image"
+        self.n1068_sdimage_div30            = self.project_n1068 + "_singledish_div30.image"
+        self.n1068_sdimage_div100           = self.project_n1068 + "_singledish_div100.image"
 
-        self.template_in_jypix        = self.tempgal + "_template_jypixel.image"
-        self.template_clipped         = self.tempgal + "_template_clipped.image"
-        self.template_mask_imported   = self.tempgal + "_template_mask.image"
-        self.template_rotated         = self.tempgal + "_template_rotated.image"
-        self.template_shrunk          = self.tempgal + "_template_shrunk.image"
-        self.template_fullspec        = self.tempgal + "_template_fullspec.image"
-        self.template_fullspec_div3   = self.tempgal + "_template_fullspec_div3.image"
-        self.template_fullspec_div5   = self.tempgal + "_template_fullspec_div5.image"
-        self.template_fullspec_div10  = self.tempgal + "_template_fullspec_div10.image"
-        self.template_fullspec_div30  = self.tempgal + "_template_fullspec_div30.image"
-        self.template_fullspec_div100 = self.tempgal + "_template_fullspec_div100.image"
-        self.template_withcont        = self.tempgal + "_template_withcont.image"
-        self.template_withcont_div3   = self.tempgal + "_template_withcont_div3.image"
-        self.template_withcont_div5   = self.tempgal + "_template_withcont_div5.image"
-        self.template_withcont_div10  = self.tempgal + "_template_withcont_div10.image"
-        self.template_withcont_div30  = self.tempgal + "_template_withcont_div30.image"
-        self.template_withcont_div100 = self.tempgal + "_template_withcont_div100.image"
-        self.sdnoise_image            = self.tempgal + "_singledish_noise_nocont.image"
-        self.sdimage_fullspec         = self.tempgal + "_singledish_nocont.image"
-        self.sdimage_div3             = self.tempgal + "_singledish_div3.image"
-        self.sdimage_div5             = self.tempgal + "_singledish_div5.image"
-        self.sdimage_div10            = self.tempgal + "_singledish_div10.image"
-        self.sdimage_div30            = self.tempgal + "_singledish_div30.image"
-        self.sdimage_div100           = self.tempgal + "_singledish_div100.image"
-
-        self.sdnoise_image            = self.tempgal + "_singledish_noise_nocont.image"
-        self.sdimage_fullspec         = self.tempgal + "_singledish_nocont.image"
-        self.sdimage_div3             = self.tempgal + "_singledish_div3.image"
-        self.sdimage_div5             = self.tempgal + "_singledish_div5.image"
-        self.sdimage_div10            = self.tempgal + "_singledish_div10.image"
-        self.sdimage_div30            = self.tempgal + "_singledish_div30.image"
-        self.sdimage_div100           = self.tempgal + "_singledish_div100.image"
+        self.n1097_template_in_jypix        = self.project_n1097 + "_template_jypixel.image"
+        self.n1097_template_clipped         = self.project_n1097 + "_template_clipped.image"
+        self.n1097_template_mask_imported   = self.project_n1097 + "_template_mask.image"
+        self.n1097_template_rotated         = self.project_n1097 + "_template_rotated.image"
+        self.n1097_template_shrunk          = self.project_n1097 + "_template_shrunk.image"
+        self.n1097_template_fullspec        = self.project_n1097 + "_template_fullspec.image"
+        self.n1097_template_fullspec_div3   = self.project_n1097 + "_template_fullspec_div3.image"
+        self.n1097_template_fullspec_div5   = self.project_n1097 + "_template_fullspec_div5.image"
+        self.n1097_template_fullspec_div10  = self.project_n1097 + "_template_fullspec_div10.image"
+        self.n1097_template_fullspec_div30  = self.project_n1097 + "_template_fullspec_div30.image"
+        self.n1097_template_fullspec_div100 = self.project_n1097 + "_template_fullspec_div100.image"
+        self.n1097_template_withcont        = self.project_n1097 + "_template_withcont.image"
+        self.n1097_template_withcont_div3   = self.project_n1097 + "_template_withcont_div3.image"
+        self.n1097_template_withcont_div5   = self.project_n1097 + "_template_withcont_div5.image"
+        self.n1097_template_withcont_div10  = self.project_n1097 + "_template_withcont_div10.image"
+        self.n1097_template_withcont_div30  = self.project_n1097 + "_template_withcont_div30.image"
+        self.n1097_template_withcont_div100 = self.project_n1097 + "_template_withcont_div100.image"
+        self.n1097_sdnoise_image            = self.project_n1097 + "_singledish_noise_nocont.image"
+        self.n1097_sdimage_fullspec         = self.project_n1097 + "_singledish_nocont.image"
+        self.n1097_sdimage_div3             = self.project_n1097 + "_singledish_div3.image"
+        self.n1097_sdimage_div5             = self.project_n1097 + "_singledish_div5.image"
+        self.n1097_sdimage_div10            = self.project_n1097 + "_singledish_div10.image"
+        self.n1097_sdimage_div30            = self.project_n1097 + "_singledish_div30.image"
+        self.n1097_sdimage_div100           = self.project_n1097 + "_singledish_div100.image"
+        self.n1097_sdnoise_image            = self.project_n1097 + "_singledish_noise_nocont.image"
+        self.n1097_sdimage_fullspec         = self.project_n1097 + "_singledish_nocont.image"
+        self.n1097_sdimage_div3             = self.project_n1097 + "_singledish_div3.image"
+        self.n1097_sdimage_div5             = self.project_n1097 + "_singledish_div5.image"
+        self.n1097_sdimage_div10            = self.project_n1097 + "_singledish_div10.image"
+        self.n1097_sdimage_div30            = self.project_n1097 + "_singledish_div30.image"
+        self.n1097_sdimage_div100           = self.project_n1097 + "_singledish_div100.image"
 
     def _set_input_param(self):
         """
@@ -194,20 +224,24 @@ class ToolsLSTSim():
     def run_sim_lst_alma(
         self,
         # analysis
-        do_template   = False, # create template cube for simobserve
-        do_simint     = False, # sim ALMA-only
-        do_simsynergy = False, # sim LST+ALMA
-        do_imaging    = False, # imaging sim ms
+        do_template_n1097sim = False, # create template cube for simobserve
+        do_template_n1068sim = False, 
+        do_simint            = False, # sim ALMA-only
+        do_simsynergy        = False, # sim LST+ALMA
+        do_imaging           = False, # imaging sim ms
         # plot
-        plot_config   = False,
+        plot_config          = False,
         ):
         """
         This method runs all the methods which will create figures in the white paper.
         """
 
         # analysis
-        if do_template==True:
-            self.prepare_do_template()
+        if do_template_n1097sim==True:
+            self.prepare_do_template_n1097sim()
+
+        if do_template_n1068sim==True:
+            self.prepare_do_template_n1068sim()
 
         if do_simint==True:
             self.simaca()
@@ -507,49 +541,95 @@ class ToolsLSTSim():
             incenter=self.incenter,
             )
 
-    #######################
-    # prepare_do_template #
-    #######################
+    ################################
+    # prepare_do_template_n1097sim #
+    ################################
 
-    def prepare_do_template(self):
+    def prepare_do_template_n1097sim(self):
         """
         """
 
         taskname = self.modname + sys._getframe().f_code.co_name
-        check_first(self.template_file,taskname)
+        check_first(self.n1097_template_file,taskname)
 
         gen_cube(
             template_dir=self.dir_raw,
-            template_file=self.template_file,
-            template_mask=self.template_mask,
+            template_file=self.n1097_template_file,
+            template_mask=self.n1097_template_mask,
             working_dir=self.dir_ready,
-            template_in_jypix=self.template_in_jypix,
-            template_clipped=self.template_clipped,
-            template_mask_imported=self.template_mask_imported,
-            template_rotated=self.template_rotated,
-            template_shrunk=self.template_shrunk,
-            template_fullspec=self.template_fullspec,
-            template_fullspec_div3=self.template_fullspec_div3,
-            template_fullspec_div5=self.template_fullspec_div5,
-            template_fullspec_div10=self.template_fullspec_div10,
-            template_fullspec_div30=self.template_fullspec_div30,
-            template_fullspec_div100=self.template_fullspec_div100,
-            template_withcont=self.template_withcont,
-            template_withcont_div3=self.template_withcont_div3,
-            template_withcont_div5=self.template_withcont_div5,
-            template_withcont_div10=self.template_withcont_div10,
-            template_withcont_div30=self.template_withcont_div30,
-            template_withcont_div100=self.template_withcont_div100,
-            sdnoise_image=self.sdnoise_image,
-            sdimage_fullspec=self.sdimage_fullspec,
-            sdimage_div3=self.sdimage_div3,
-            sdimage_div5=self.sdimage_div5,
-            sdimage_div10=self.sdimage_div10,
-            sdimage_div30=self.sdimage_div30,
-            sdimage_div100=self.sdimage_div100,
-            pa=self.image_roration, # rotation angle
-            singledish_res=self.singledish_res, # 12m TP resolution
-            singledish_noise=self.singledish_noise, # Jy/beam at final res
+            template_in_jypix=self.n1097_template_in_jypix,
+            template_clipped=self.n1097_template_clipped,
+            template_mask_imported=self.n1097_template_mask_imported,
+            template_rotated=self.n1097_template_rotated,
+            template_shrunk=self.n1097_template_shrunk,
+            template_fullspec=self.n1097_template_fullspec,
+            template_fullspec_div3=self.n1097_template_fullspec_div3,
+            template_fullspec_div5=self.n1097_template_fullspec_div5,
+            template_fullspec_div10=self.n1097_template_fullspec_div10,
+            template_fullspec_div30=self.n1097_template_fullspec_div30,
+            template_fullspec_div100=self.n1097_template_fullspec_div100,
+            template_withcont=self.n1097_template_withcont,
+            template_withcont_div3=self.n1097_template_withcont_div3,
+            template_withcont_div5=self.n1097_template_withcont_div5,
+            template_withcont_div10=self.n1097_template_withcont_div10,
+            template_withcont_div30=self.n1097_template_withcont_div30,
+            template_withcont_div100=self.n1097_template_withcont_div100,
+            sdnoise_image=self.n1097_sdnoise_image,
+            sdimage_fullspec=self.n1097_sdimage_fullspec,
+            sdimage_div3=self.n1097_sdimage_div3,
+            sdimage_div5=self.n1097_sdimage_div5,
+            sdimage_div10=self.n1097_sdimage_div10,
+            sdimage_div30=self.n1079_sdimage_div30,
+            sdimage_div100=self.n1097_sdimage_div100,
+            pa=self.n1097_image_roration, # rotation angle
+            singledish_res=self.n1097_singledish_res, # 12m TP resolution
+            singledish_noise=self.n1097_singledish_noise, # Jy/beam at final res
+            )
+
+    ################################
+    # prepare_do_template_n1068sim #
+    ################################
+
+    def prepare_do_template_n1068sim(self):
+        """
+        """
+
+        taskname = self.modname + sys._getframe().f_code.co_name
+        check_first(self.n1068_template_file,taskname)
+
+        gen_cube(
+            template_dir=self.dir_raw,
+            template_file=self.n1068_template_file,
+            template_mask=self.n1068_template_mask,
+            working_dir=self.dir_ready,
+            template_in_jypix=self.n1068_template_in_jypix,
+            template_clipped=self.n1068_template_clipped,
+            template_mask_imported=self.n1068_template_mask_imported,
+            template_rotated=self.n1068_template_rotated,
+            template_shrunk=self.n1068_template_shrunk,
+            template_fullspec=self.n1068_template_fullspec,
+            template_fullspec_div3=self.n1068_template_fullspec_div3,
+            template_fullspec_div5=self.n1068_template_fullspec_div5,
+            template_fullspec_div10=self.n1068_template_fullspec_div10,
+            template_fullspec_div30=self.n1068_template_fullspec_div30,
+            template_fullspec_div100=self.n1068_template_fullspec_div100,
+            template_withcont=self.n1068_template_withcont,
+            template_withcont_div3=self.n1068_template_withcont_div3,
+            template_withcont_div5=self.n1068_template_withcont_div5,
+            template_withcont_div10=self.n1068_template_withcont_div10,
+            template_withcont_div30=self.n1068_template_withcont_div30,
+            template_withcont_div100=self.n1068_template_withcont_div100,
+            sdnoise_image=self.n1068_sdnoise_image,
+            sdimage_fullspec=self.n1068_sdimage_fullspec,
+            sdimage_div3=self.n1068_sdimage_div3,
+            sdimage_div5=self.n1068_sdimage_div5,
+            sdimage_div10=self.n1068_sdimage_div10,
+            sdimage_div30=self.n1068_sdimage_div30,
+            sdimage_div100=self.n1068_sdimage_div100,
+            pa=self.n1068_image_roration, # rotation angle
+            singledish_res=self.n1068_singledish_res, # 12m TP resolution
+            singledish_noise=self.n1068_singledish_noise, # Jy/beam at final res
+            shrink=0.1,
             )
 
     ###############
