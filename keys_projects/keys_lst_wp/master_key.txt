@@ -1,7 +1,7 @@
 ##########################################################################
 # MASTER KEY
 ##########################################################################
-key_dir              /home02/saitots/scripts/phangs_imaging_scripts/keys_sim/
+key_dir              /home02/saitots/myUtils/keys_projects/keys_lst_wp/
 ms_root              /lfs13/saitots/proj_lst_wp/data_ready/ms/
 cleanmask_root       /lfs13/saitots/proj_lst_wp/data_ready/outputs/cleanmasks/
 singledish_root      /lfs13/saitots/proj_lst_wp/data_ready/outputs/singledish/

@@ -7,7 +7,7 @@ dir_ready     ,,,data_ready/
 dir_other     ,,,data_other/
 dir_products  ,,,products_png/
 dir_final     ,,,images/
-dir_pipeline  ,,,/home02/saitots/scripts/phangs_imaging_scripts/keys_sim/
+dir_pipeline  ,,,/home02/saitots/myUtils/keys_projects/keys_lst_wp/
 
 ##################
 # final products #

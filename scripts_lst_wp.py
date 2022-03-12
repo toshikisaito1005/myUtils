@@ -226,12 +226,14 @@ class ToolsLSTSim():
 
     def run_sim_lst_alma(
         self,
-        # analysis
+        # ngc1097sim
         do_template_n1097sim = False, # create template cube for simobserve
-        do_template_n1068sim = False, 
-        do_simint            = False, # sim ALMA-only
-        do_simsynergy        = False, # sim LST+ALMA
-        do_imaging           = False, # imaging sim ms
+        do_simint_n1097im    = False, # sim ACA band 8 for big ngc1097sim
+        do_imaging_n1097sim  = False, # imaging sim ms
+        # ngc1068sim
+        do_template_n1068sim = False, # create template cube for simobserve
+        do_simint_n1068im    = False, # sim C-10 band 8 for small ngc1068sim
+        do_imaging_n1068sim  = False, # imaging sim ms
         # plot
         plot_config          = False,
         ):
@@ -239,18 +241,25 @@ class ToolsLSTSim():
         This method runs all the methods which will create figures in the white paper.
         """
 
-        # analysis
+        # ngc1097sim
         if do_template_n1097sim==True:
             self.prepare_template_n1097sim()
 
+        if do_simint_n1097im==True:
+            self.simaca_n1097im()
+
+        if do_imaging_n1097sim==True:
+            self.phangs_pipeline_imaging(self.project_n1097,"7m")
+
+        # ngc1068sim
         if do_template_n1068sim==True:
             self.prepare_template_n1068sim()
 
-        if do_simint==True:
-            self.simaca()
+        if do_simint_n1068im==True:
+            self.simaca_n1068im()
 
-        if do_imaging==True:
-            self.phangs_pipeline_imaging()
+        if do_imaging_n1068sim==True:
+            self.phangs_pipeline_imaging(self.project_n1068,"12m")
 
         # plot
         if plot_config==True:
@@ -408,7 +417,7 @@ class ToolsLSTSim():
     # phangs_pipeline_imaging #
     ###########################
 
-    def phangs_pipeline_imaging(self):
+    def phangs_pipeline_imaging(self,this_proj,this_array):
         """
         """
 
@@ -416,8 +425,8 @@ class ToolsLSTSim():
         check_first(self.template_fullspec,taskname)
 
         # ms
-        sim_12m_ms_orig = self.dir_ready + "ms/" + self.project_sim + "." + self.config_c1 + ".noisy.ms"
-        sim_7m_ms_orig  = self.dir_ready + "ms/" + self.project_sim + "." + self.config_7m + ".noisy.ms"
+        sim_12m_ms_orig = self.dir_ready + "ms/" + this_proj + "." + self.config_c1 + ".noisy.ms"
+        sim_7m_ms_orig  = self.dir_ready + "ms/" + this_proj + "." + self.config_7m + ".noisy.ms"
 
         # prepare dir
         dir_cleanmask = self.dir_ready + "outputs/cleanmasks/"
@@ -472,8 +481,8 @@ class ToolsLSTSim():
         this_pph.set_dry_run(dry_run_key)
 
         # set handlers
-        target = [self.tempgal+"_2p0h",self.tempgal+"_8p0h"]
-        array  = ["7m"]
+        target = [this_proj+"_2p0h",this_proj+"_8p0h"]
+        array  = [this_array]
         line   = ["ci10"]
         for this_hander in [this_uvh,this_imh,this_pph]:
             this_hander.set_targets(only=target)
@@ -515,31 +524,60 @@ class ToolsLSTSim():
                 # feather_after_mosaic  = False,
                 )
 
-    ##########
-    # simaca #
-    ##########
+    ##################
+    # simaca_n1097im #
+    ##################
 
-    def simaca(self):
+    def simaca_n1097im(self):
         """
         """
 
         taskname = self.modname + sys._getframe().f_code.co_name
-        check_first(self.template_fullspec,taskname)
+        check_first(self.n1097_template_fullspec,taskname)
 
         run_simobserve(
             working_dir=self.dir_ready,
-            template=self.template_fullspec,
+            template=self.n1097_template_fullspec,
             antennalist=self.config_7m,
-            project=self.project_sim+"_7m_2p0h",
+            project=self.project_n1097+"_7m_2p0h",
             totaltime="2.0h",
             incenter=self.incenter,
             )
 
         run_simobserve(
             working_dir=self.dir_ready,
-            template=self.template_fullspec,
+            template=self.n1097_template_fullspec,
             antennalist=self.config_7m,
-            project=self.project_sim+"_7m_8p0h",
+            project=self.project_n1097+"_7m_8p0h",
+            totaltime="8.0h",
+            incenter=self.incenter,
+            )
+
+    ##################
+    # simaca_n1068im #
+    ##################
+
+    def simaca_n1068im(self):
+        """
+        """
+
+        taskname = self.modname + sys._getframe().f_code.co_name
+        check_first(self.n1068_template_fullspec,taskname)
+
+        run_simobserve(
+            working_dir=self.dir_ready,
+            template=self.n1068_template_fullspec,
+            antennalist=self.config_7m,
+            project=self.project_n1068+"_7m_2p0h",
+            totaltime="2.0h",
+            incenter=self.incenter,
+            )
+
+        run_simobserve(
+            working_dir=self.dir_ready,
+            template=self.n1068_template_fullspec,
+            antennalist=self.config_7m,
+            project=self.project_n1068+"_7m_8p0h",
             totaltime="8.0h",
             incenter=self.incenter,
             )
