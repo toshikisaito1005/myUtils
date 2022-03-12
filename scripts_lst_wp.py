@@ -584,9 +584,9 @@ class ToolsLSTSim():
             sdimage_div10=self.n1097_sdimage_div10,
             sdimage_div30=self.n1079_sdimage_div30,
             sdimage_div100=self.n1097_sdimage_div100,
-            pa=self.n1097_image_roration, # rotation angle
-            singledish_res=self.n1097_singledish_res, # 12m TP resolution
-            singledish_noise=self.n1097_singledish_noise, # Jy/beam at final res
+            pa=self.image_roration, # rotation angle
+            singledish_res=self.singledish_res, # 12m TP resolution
+            singledish_noise=self.singledish_noise, # Jy/beam at final res
             )
 
     #############################
@@ -629,9 +629,9 @@ class ToolsLSTSim():
             sdimage_div10=self.n1068_sdimage_div10,
             sdimage_div30=self.n1068_sdimage_div30,
             sdimage_div100=self.n1068_sdimage_div100,
-            pa=self.n1068_image_roration, # rotation angle
-            singledish_res=self.n1068_singledish_res, # 12m TP resolution
-            singledish_noise=self.n1068_singledish_noise, # Jy/beam at final res
+            pa=self.image_roration, # rotation angle
+            singledish_res=self.singledish_res, # 12m TP resolution
+            singledish_noise=self.singledish_noise, # Jy/beam at final res
             shrink=0.1,
             )
 
