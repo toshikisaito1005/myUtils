@@ -249,7 +249,16 @@ class ToolsLSTSim():
             self.simaca_n1097im()
 
         if do_imaging_n1097sim==True:
-            self.phangs_pipeline_imaging(self.project_n1097,"7m")
+            self.phangs_pipeline_imaging(
+                self.project_n1097,
+                "7m",
+                self.project_n1097+"_2p0h",
+                )
+            self.phangs_pipeline_imaging(
+                self.project_n1097,
+                "7m",
+                self.project_n1097+"_8p0h",
+                )
 
         # ngc1068sim
         if do_template_n1068sim==True:
@@ -259,7 +268,16 @@ class ToolsLSTSim():
             self.simaca_n1068im()
 
         if do_imaging_n1068sim==True:
-            self.phangs_pipeline_imaging(self.project_n1068,"12m")
+            self.phangs_pipeline_imaging(
+                self.project_n1068,
+                "12m",
+                self.project_n1068+"_2p0h",
+                )
+            self.phangs_pipeline_imaging(
+                self.project_n1068,
+                "12m",
+                self.project_n1068+"_8p0h",
+                )
 
         # plot
         if plot_config==True:
@@ -417,7 +435,7 @@ class ToolsLSTSim():
     # phangs_pipeline_imaging #
     ###########################
 
-    def phangs_pipeline_imaging(self,this_proj,this_array):
+    def phangs_pipeline_imaging(self,this_proj,this_array,this_target):
         """
         """
 
@@ -481,15 +499,12 @@ class ToolsLSTSim():
         this_pph.set_dry_run(dry_run_key)
 
         # set handlers
-        target = [this_proj+"_2p0h",this_proj+"_8p0h"]
-        array  = [this_array]
-        line   = ["ci10"]
         for this_hander in [this_uvh,this_imh,this_pph]:
-            this_hander.set_targets(only=target)
-            this_hander.set_line_products(only=line)
+            this_hander.set_targets(only=[this_target])
+            this_hander.set_line_products(only=["ci10"])
             this_hander.set_no_cont_products(True)
             this_hander.set_no_line_products(False)
-            this_hander.set_interf_configs(only=array)
+            this_hander.set_interf_configs(only=[this_array])
 
         # run piepline
         this_uvh.loop_stage_uvdata(\
