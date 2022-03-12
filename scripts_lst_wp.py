@@ -116,6 +116,9 @@ class ToolsLSTSim():
         """
         """
 
+        self.n1068_template_file = self._read_key("n1068_template_file")
+        self.n1068_template_mask = self._read_key("n1068_template_mask")
+
         self.n1097_template_file = self._read_key("n1097_template_file")
         self.n1097_template_mask = self._read_key("n1097_template_mask")
 
@@ -238,10 +241,10 @@ class ToolsLSTSim():
 
         # analysis
         if do_template_n1097sim==True:
-            self.prepare_do_template_n1097sim()
+            self.prepare_template_n1097sim()
 
         if do_template_n1068sim==True:
-            self.prepare_do_template_n1068sim()
+            self.prepare_template_n1068sim()
 
         if do_simint==True:
             self.simaca()
@@ -541,11 +544,11 @@ class ToolsLSTSim():
             incenter=self.incenter,
             )
 
-    ################################
-    # prepare_do_template_n1097sim #
-    ################################
+    #############################
+    # prepare_template_n1097sim #
+    #############################
 
-    def prepare_do_template_n1097sim(self):
+    def prepare_template_n1097sim(self):
         """
         """
 
@@ -586,11 +589,11 @@ class ToolsLSTSim():
             singledish_noise=self.n1097_singledish_noise, # Jy/beam at final res
             )
 
-    ################################
-    # prepare_do_template_n1068sim #
-    ################################
+    #############################
+    # prepare_template_n1068sim #
+    #############################
 
-    def prepare_do_template_n1068sim(self):
+    def prepare_template_n1068sim(self):
         """
         """
 
