@@ -568,7 +568,7 @@ class ToolsLSTSim():
             working_dir=self.dir_ready,
             template=self.n1068_template_fullspec,
             antennalist=self.config_7m,
-            project=self.project_n1068+"_7m_2p0h",
+            project=self.project_n1068+"_12m_2p0h",
             totaltime="2.0h",
             incenter=self.incenter,
             )
@@ -577,7 +577,7 @@ class ToolsLSTSim():
             working_dir=self.dir_ready,
             template=self.n1068_template_fullspec,
             antennalist=self.config_7m,
-            project=self.project_n1068+"_7m_8p0h",
+            project=self.project_n1068+"_12m_8p0h",
             totaltime="8.0h",
             incenter=self.incenter,
             )
