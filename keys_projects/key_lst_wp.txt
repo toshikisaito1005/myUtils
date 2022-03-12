@@ -16,8 +16,8 @@ dir_pipeline  ,,,/home02/saitots/scripts/phangs_imaging_scripts/keys_sim/
 ############
 # raw maps #
 ############
-n1068_template_file ,,,ngc1068_12m_co21.fits
-n1068_template_mask ,,,ngc1068_12m_co21_strictmask.fits
+n1068_template_file ,,,ngc1068_b3_12m_co10.fits
+n1068_template_mask ,,,ngc1068_b3_12m_co10_strictmask.fits
 n1097_template_file ,,,ngc1097_12m+7m+tp_co21.fits
 n1097_template_mask ,,,ngc1097_12m+7m+tp_co21_11as_strictmask.fits
 
