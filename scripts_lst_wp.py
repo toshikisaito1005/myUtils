@@ -435,7 +435,7 @@ class ToolsLSTSim():
         this_pph.set_dry_run(dry_run_key)
 
         # set handlers
-        target = [self.tempgal]
+        target = [self.tempgal+"_2p0h",self.tempgal+"_8p0h"]
         array  = ["7m"]
         line   = ["ci10"]
         for this_hander in [this_uvh,this_imh,this_pph]:
@@ -491,10 +491,19 @@ class ToolsLSTSim():
 
         run_simobserve(
             working_dir=self.dir_ready,
-            template=self.template_fullspec_div3,
+            template=self.template_fullspec,
             antennalist=self.config_7m,
-            project=self.project_sim+"_7m",
-            totaltime="1.5h",
+            project=self.project_sim+"_7m_2p0h",
+            totaltime="2.0h",
+            incenter=self.incenter,
+            )
+
+        run_simobserve(
+            working_dir=self.dir_ready,
+            template=self.template_fullspec,
+            antennalist=self.config_7m,
+            project=self.project_sim+"_7m_8p0h",
+            totaltime="8.0h",
             incenter=self.incenter,
             )
 
