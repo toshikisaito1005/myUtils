@@ -440,7 +440,7 @@ class ToolsLSTSim():
         """
 
         taskname = self.modname + sys._getframe().f_code.co_name
-        check_first(self.template_fullspec,taskname)
+        #check_first(self.template_fullspec,taskname)
 
         # ms
         sim_12m_ms_orig = self.dir_ready + "ms/" + this_proj + "." + self.config_c1 + ".noisy.ms"
