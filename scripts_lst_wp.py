@@ -46,7 +46,7 @@ from mycasa_simobs import *
 ###############
 class ToolsLSTSim():
     """
-    Class for the L S white paper 2022 project.
+    Class for the LST white paper 2022 project.
     """
 
     ############
@@ -246,40 +246,26 @@ class ToolsLSTSim():
             self.prepare_template_n1097sim()
 
         if do_simint_n1097im==True:
-            self.simaca_n1097im()
+            #self.simaca_n1097im(totaltime="2.0h",totaltimetint="2p0h")
+            #self.simaca_n1097im(totaltime="8.0h",totaltimetint="8p0h")
+            self.simaca_n1097im(totaltime="48.0h",totaltimetint="48p0h")
 
         if do_imaging_n1097sim==True:
-            self.phangs_pipeline_imaging(
-                self.project_n1097,
-                "7m",
-                self.project_n1097+"_2p0h",
-                )
-            self.phangs_pipeline_imaging(
-                self.project_n1097,
-                "7m",
-                self.project_n1097+"_8p0h",
-                )
+            #self.phangs_pipeline_imaging(self.project_n1097,"7m",self.project_n1097+"_2p0h")
+            #self.phangs_pipeline_imaging(self.project_n1097,"7m",self.project_n1097+"_8p0h")
+            self.phangs_pipeline_imaging(self.project_n1097,"7m",self.project_n1097+"_48p0h")
 
         # ngc1068sim
         if do_template_n1068sim==True:
-            self.prepare_template_n1068sim()
+            self.simaca_n1068im(totaltime="2.0h",totaltimetint="2p0h")
+            #self.simaca_n1068im(totaltime="8.0h",totaltimetint="8p0h")
 
         if do_simint_n1068im==True:
             self.simaca_n1068im()
 
         if do_imaging_n1068sim==True:
-            self.phangs_pipeline_imaging(
-                self.project_n1068,
-                "12m",
-                self.project_n1068+"_2p0h",
-                )
-            """
-            self.phangs_pipeline_imaging(
-                self.project_n1068,
-                "12m",
-                self.project_n1068+"_8p0h",
-                )
-            """
+            self.phangs_pipeline_imaging(self.project_n1068,"12m",self.project_n1068+"_2p0h")
+            #self.phangs_pipeline_imaging(self.project_n1068,"12m",self.project_n1068+"_4p0h")
 
         # plot
         if plot_config==True:
@@ -545,7 +531,7 @@ class ToolsLSTSim():
     # simaca_n1097im #
     ##################
 
-    def simaca_n1097im(self):
+    def simaca_n1097im(self,totaltime="2.0h",totaltimetint="2p0h"):
         """
         """
 
@@ -556,17 +542,8 @@ class ToolsLSTSim():
             working_dir=self.dir_ready,
             template=self.n1097_template_fullspec,
             antennalist=self.config_7m,
-            project=self.project_n1097+"_7m_2p0h",
-            totaltime="2.0h",
-            incenter=self.incenter,
-            )
-
-        run_simobserve(
-            working_dir=self.dir_ready,
-            template=self.n1097_template_fullspec,
-            antennalist=self.config_7m,
-            project=self.project_n1097+"_7m_8p0h",
-            totaltime="8.0h",
+            project=self.project_n1097+"_7m_"+totaltimetint,
+            totaltime=totaltime,
             incenter=self.incenter,
             )
 
@@ -574,7 +551,7 @@ class ToolsLSTSim():
     # simaca_n1068im #
     ##################
 
-    def simaca_n1068im(self):
+    def simaca_n1068im(self,totaltime="2.0h",totaltimetint="2p0h"):
         """
         """
 
@@ -585,21 +562,10 @@ class ToolsLSTSim():
             working_dir=self.dir_ready,
             template=self.n1068_template_fullspec,
             antennalist=self.config_c10,
-            project=self.project_n1068+"_12m_2p0h",
-            totaltime="2.0h",
+            project=self.project_n1068+"_7m_"+totaltimetint,
+            totaltime=totaltime,
             incenter=self.incenter,
             )
-
-        """
-        run_simobserve(
-            working_dir=self.dir_ready,
-            template=self.n1068_template_fullspec,
-            antennalist=self.config_c10,
-            project=self.project_n1068+"_12m_8p0h",
-            totaltime="8.0h",
-            incenter=self.incenter,
-            )
-        """
 
     #############################
     # prepare_template_n1097sim #
