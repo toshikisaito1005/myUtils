@@ -243,13 +243,6 @@ class ToolsLSTSim():
         tp_beam_n1097sim        = str(50.6   * 115.27120 / self.observed_freq)+"arcsec"
         tp_beam_n1097sim_float  = 50.6 * 115.27120 / self.observed_freq
 
-        # n1097sim_aca_tp from tinteg_n1097sim
-        # TP integration time = 7m time * 1.7 (Table 7.4 of ALMA Technical Handbook 9.1.1)
-        totaltime_n1097sim_tp  = str(np.round(tinteg_n1097sim * 1.7 * (12./7.)**2, 1))+"h"
-        totaltime_n1097sim_lst = str(np.round(tinteg_n1097sim * 1.7 * (50./7.)**2, 1))+"h"
-        totaltimetint_n1097sim_tp  = (str(np.round(tinteg_n1097sim, 1))+"h7m_"+totaltime_n1097sim_tp+"tp").replace(".","p")
-        totaltimetint_n1097sim_lst = (str(np.round(tinteg_n1097sim, 1))+"h7m").replace(".","p")
-
         # ngc1097sim
         if do_template_n1097sim==True:
             self.prepare_template_n1097sim()
@@ -271,7 +264,7 @@ class ToolsLSTSim():
             self.simtp_n1097sim(
                 singledish_res=tp_beam_n1097sim,
                 totaltime=totaltime_n1097sim_tp,
-                totaltimetint=totaltimetint_n1097sim_tp,
+                totaltimetint=totaltimetint_n1097sim_7m,
                 dryrun=dryrun_simSD,
                 )
 
@@ -279,7 +272,7 @@ class ToolsLSTSim():
             self.simlst_n1097sim(
                 singledish_res=lst_beam_n1097sim,
                 totaltime=totaltime_n1097sim_lst,
-                totaltimetint=totaltimetint_n1097sim_lst,
+                totaltimetint=totaltimetint_n1097sim_7m,
                 dryrun=dryrun_simSD,
                 )
 
@@ -582,7 +575,7 @@ class ToolsLSTSim():
     # simlst_n1097sim #
     ###################
 
-    def simlst_n1097sim(self,singledish_res="3.04arcsec",totaltime="2.0h",totaltimetint="2p0tph",dryrun=True):
+    def simlst_n1097sim(self,singledish_res="3.04arcsec",totaltime="2.0h",totaltimetint="2p0h",dryrun=True):
         """
         The totaltime is the ACA TP integration time to calculate TP achievable sensitivity.
         This module will calculate and map the same sensitivity (in K, not Jy/beam) using LST.
@@ -655,6 +648,10 @@ class ToolsLSTSim():
         taskname = self.modname + sys._getframe().f_code.co_name
         check_first(self.dir_ready+"inputs/"+self.n1097_template_fullspec,taskname)
 
+        image_7m = self.dir_ready + "imaging/"+self.project_n1097+"_"+totaltimetint + "/"+self.project_n1097+"_"+totaltimetint+"_7m_ci10.image"
+        print(image_7m)
+
+        """ failed to calculate SD sensitivity based on 7m observing time...
         # calc pointing number
         header       = imhead(self.dir_ready+"inputs/"+self.n1097_template_fullspec,mode="list")
         area_in_as   = (header["shape"][0]*header["cdelt2"]*3600*180/np.pi) * (header["shape"][1]*header["cdelt2"]*3600*180/np.pi)
@@ -676,6 +673,7 @@ class ToolsLSTSim():
         print("# number of pointing                 = " + str(num_pointing))
         print("# survey area (arcsec^2)             = " + str(int(area_in_as)))
         print("#")
+        """
 
         # run
         if dryrun==False:
