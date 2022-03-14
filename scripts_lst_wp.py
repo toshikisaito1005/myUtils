@@ -243,8 +243,8 @@ class ToolsLSTSim():
 
         # n1097sim_aca_tp from tinteg_n1097sim
         # TP integration time = 7m time * 1.7 (Table 7.4 of ALMA Technical Handbook 9.1.1)
-        totaltime_n1097sim_tp  = str(np.round(tinteg_n1097sim * 1.7 * (tp_beam_n1097sim_float/7.)**2, 1))+"h"
-        totaltime_n1097sim_lst = str(np.round(tinteg_n1097sim * 1.7 * (lst_beam_n1097sim_float/7.)**2, 1))+"h"
+        totaltime_n1097sim_tp  = str(np.round(tinteg_n1097sim * 1.7 * (12./7.)**2, 1))+"h"
+        totaltime_n1097sim_lst = str(np.round(tinteg_n1097sim * 1.7 * (50./7.)**2, 1))+"h"
         totaltimetint_n1097sim_tp  = (str(np.round(tinteg_n1097sim, 1))+"h7m_"+totaltime_n1097sim_tp+"tp").replace(".","p")
         totaltimetint_n1097sim_lst = (str(np.round(tinteg_n1097sim, 1))+"h7m_"+totaltime_n1097sim_lst+"lst").replace(".","p")
 
