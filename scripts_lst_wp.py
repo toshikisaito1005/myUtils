@@ -648,7 +648,7 @@ class ToolsLSTSim():
         singledish_noise_per_pointing = singledish_noise * np.sqrt(num_pointing)
         singledish_noise_per_pointing_K = 1.222e6 * float(singledish_res.replace("arcsec",""))**-2 * self.observed_freq**-2 * singledish_noise_per_pointing
 
-        print("### LST observations with Tinteg     = " + totaltime)
+        print("### ACA TP observations with Tinteg  = " + totaltime)
         print("# sensitivity per pointing (Jy/beam) = " + str(np.round(singledish_noise_per_pointing,5)))
         print("# sensitivity per pointing (K)       = " + str(np.round(singledish_noise_per_pointing_K,5)))
         print("# beam size (arcsec)                 = " + str(np.round(float(singledish_res.replace("arcsec","")),2)))
