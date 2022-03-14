@@ -236,7 +236,7 @@ class ToolsLSTSim():
 
         if do_simtp_n1097im==True:
             # TP integration time = 48.0 * 1.7 = 81.6 (Table 7.4 of ALMA Technical Handbook 9.1.1)
-            self.simtp_n1097sim(singledish_res="11.8arcsec",totaltime="81.6h",totaltimetint="81p6h")
+            self.simtp_n1097sim(singledish_res="3.04arcsec",totaltime="81.6h",totaltimetint="81p6h")
 
         if do_simlst_n1097im==True:
             self.simlst_n1097sim()
@@ -590,7 +590,7 @@ class ToolsLSTSim():
     # simlst_n1097sim #
     ###################
 
-    def simlst_n1097sim(self,singledish_res="11.8arcsec",totaltime="2.0h",totaltimetint="2p0tph"):
+    def simlst_n1097sim(self,singledish_res="3.04arcsec",totaltime="2.0h",totaltimetint="2p0tph"):
         """
         The totaltime is the ACA TP integration time to calculate TP achievable sensitivity.
         This module will calculate and map the same sensitivity (in K, not Jy/beam) using LST.
@@ -599,9 +599,9 @@ class ToolsLSTSim():
         taskname = self.modname + sys._getframe().f_code.co_name
         check_first(self.n1097_template_fullspec,taskname)
 
-        # ACA TP sim at 492.16065100 GHz
-        # 11.8 arcsec resolution
-        # sensitivity at 492.16065100 GHz based on ASC
+        # ACA LST sim at 492.16065100 GHz
+        # 3.04 arcsec resolution
+        # "TP" sensitivity at 492.16065100 GHz based on ASC => same noise in K units (scaled by dish size when Jy/beam units)
         singledish_noise = 3.033450239598523 / 1000. / np.sqrt(float(totaltime.replace("h",""))) * (50.**2 / 12.*2)
 
         simtp(
