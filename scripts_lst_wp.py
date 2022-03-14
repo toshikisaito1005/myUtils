@@ -592,7 +592,7 @@ class ToolsLSTSim():
         header       = imhead(self.dir_ready+"inputs/"+self.n1097_template_fullspec,mode="list")
         area_in_as   = (header["shape"][0]*header["cdelt2"]*3600*180/np.pi) * (header["shape"][1]*header["cdelt2"]*3600*180/np.pi)
         one_hex_as   = (float(singledish_res.replace("arcsec",""))/2.0)**2 * 6/np.sqrt(3) # hex with half-beam length
-        num_pointing = str(np.ceil(area_in_as / one_hex_as))
+        num_pointing = int(np.ceil(area_in_as / one_hex_as))
 
         # calc sensitivity per pointing
         singledish_noise_per_pointing = singledish_noise * np.sqrt(num_pointing)
