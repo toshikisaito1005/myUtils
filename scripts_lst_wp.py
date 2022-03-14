@@ -598,7 +598,7 @@ class ToolsLSTSim():
         singledish_noise_per_pointing = singledish_noise * np.sqrt(num_pointing)
 
         print("### LST observations with Tinteg     = " + totaltime)
-        print("# sensitivity per pointing (Jy/beam) = " + str(np.round(singledish_noise_per_pointing),5))
+        print("# sensitivity per pointing (Jy/beam) = " + str(np.round(singledish_noise_per_pointing,5)))
         print("# beam size (arcsec)                 = " + str(np.round(float(singledish_res.replace("arcsec","")),2)))
         print("# number of pointing                 = " + str(num_pointing))
         print("# survey area (arcsec^2)             = " + str(int(area_in_as)))
@@ -643,7 +643,7 @@ class ToolsLSTSim():
         singledish_noise_per_pointing = singledish_noise * np.sqrt(num_pointing)
 
         print("### LST observations with Tinteg     = " + totaltime)
-        print("# sensitivity per pointing (Jy/beam) = " + str(np.round(singledish_noise_per_pointing),5))
+        print("# sensitivity per pointing (Jy/beam) = " + str(np.round(singledish_noise_per_pointing,5)))
         print("# beam size (arcsec)                 = " + str(np.round(float(singledish_res.replace("arcsec","")),2)))
         print("# number of pointing                 = " + str(num_pointing))
         print("# survey area (arcsec^2)             = " + str(int(area_in_as)))
