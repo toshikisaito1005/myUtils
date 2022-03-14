@@ -239,9 +239,7 @@ class ToolsLSTSim():
 
         # determine LST and TP beam sizes
         lst_beam_n1097sim       = str(12.979 * 115.27120 / self.observed_freq)+"arcsec"
-        lst_beam_n1097sim_float = 12.979 * 115.27120 / self.observed_freq
         tp_beam_n1097sim        = str(50.6   * 115.27120 / self.observed_freq)+"arcsec"
-        tp_beam_n1097sim_float  = 50.6 * 115.27120 / self.observed_freq
 
         # ngc1097sim
         if do_template_n1097sim==True:
@@ -263,7 +261,6 @@ class ToolsLSTSim():
         if do_simTP_n1097im==True:
             self.simtp_n1097sim(
                 singledish_res=tp_beam_n1097sim,
-                totaltime=totaltime_n1097sim_7m,
                 totaltimetint=totaltimetint_n1097sim_7m,
                 dryrun=dryrun_simSD,
                 )
@@ -271,7 +268,6 @@ class ToolsLSTSim():
         if do_simLST_n1097im==True:
             self.simlst_n1097sim(
                 singledish_res=lst_beam_n1097sim,
-                totaltime=totaltime_n1097sim_7m,
                 totaltimetint=totaltimetint_n1097sim_7m,
                 dryrun=dryrun_simSD,
                 )
@@ -575,7 +571,7 @@ class ToolsLSTSim():
     # simlst_n1097sim #
     ###################
 
-    def simlst_n1097sim(self,singledish_res="3.04arcsec",totaltime="2.0h",totaltimetint="2p0h",dryrun=True):
+    def simlst_n1097sim(self,singledish_res="3.04arcsec",totaltimetint="2p0h",dryrun=True):
         """
         The totaltime is the ACA TP integration time to calculate TP achievable sensitivity.
         This module will calculate and map the same sensitivity (in K, not Jy/beam) using LST.
@@ -641,15 +637,16 @@ class ToolsLSTSim():
     # simtp_n1097sim #
     ##################
 
-    def simtp_n1097sim(self,singledish_res="11.8arcsec",totaltime="2.0h",totaltimetint="2p0h",dryrun=True):
+    def simtp_n1097sim(self,singledish_res="11.8arcsec",totaltimetint="2p0h",dryrun=True):
         """
         """
 
         taskname = self.modname + sys._getframe().f_code.co_name
         check_first(self.dir_ready+"inputs/"+self.n1097_template_fullspec,taskname)
 
-        image_7m = self.dir_ready + "outputs/imaging/"+self.project_n1097+"_"+totaltimetint + "/"+self.project_n1097+"_"+totaltimetint+"_7m_ci10.image"
-        print(image_7m)
+        image_7m = self.dir_ready + "outputs/imaging/"+self.project_n1097+"_"+totaltimetint + "/"+self.project_n1097+"_"+totaltimetint+"_7m_ci10_prev.image"
+        rms_7m = measure_rms(imagename,snr=3.0,rms_or_p84 = "p84")
+        print("# rms_7m = " + str(rms_7m))
 
         """ failed to calculate SD sensitivity based on 7m observing time...
         # calc pointing number
