@@ -602,7 +602,7 @@ class ToolsLSTSim():
 
         # calc pointing number
         header       = imhead(self.n1097_template_fullspec,mode="list")
-        area_in_as   = (header["shape"][0]*shape["cdelt2"]*3600*180/np.pi) * (shape["shape"][1]*shape["cdelt2"]*3600*180/np.pi)
+        area_in_as   = (header["shape"][0]*header["cdelt2"]*3600*180/np.pi) * (header["shape"][1]*header["cdelt2"]*3600*180/np.pi)
         one_hex_as   = (singledish_res/2.0)**2 * 6/np.sqrt(3) # hex with half-beam length
         num_pointing = np.ceil(area_in_as / one_hex_as)
 
@@ -635,7 +635,7 @@ class ToolsLSTSim():
 
         # calc pointing number
         header       = imhead(self.n1097_template_fullspec,mode="list")
-        area_in_as   = (header["shape"][0]*shape["cdelt2"]*3600*180/np.pi) * (shape["shape"][1]*shape["cdelt2"]*3600*180/np.pi)
+        area_in_as   = (header["shape"][0]*header["cdelt2"]*3600*180/np.pi) * (header["shape"][1]*header["cdelt2"]*3600*180/np.pi)
         one_hex_as   = (singledish_res/2.0)**2 * 6/np.sqrt(3) # hex with half-beam length
         num_pointing = np.ceil(area_in_as / one_hex_as)
 
