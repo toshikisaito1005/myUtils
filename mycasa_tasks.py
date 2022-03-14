@@ -60,6 +60,8 @@ def check_first(
     if taskname!=None:
         print("# run " + taskname)
         timestamp(taskname=taskname)
+    else:
+        print("# no taskname found!")
 
 def timestamp(
     taskname,

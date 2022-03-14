@@ -374,10 +374,6 @@ def simtp(
     immath(imagename = [sdimage_fullspec+'.temp', sdnoise_image], 
            expr="IM0+IM1", outfile=sdimage_fullspec)
 
-    # Export to FITS
-    exportfits(imagename = sdimage_fullspec, fitsimage = sdimage_fullspec.replace('.image','.fits'),
-               dropstokes=True, overwrite=True)
-
     # Cleanup
     os.system("rm -rf " + sdimage_fullspec+".temp")
     os.system("rm -rf " + sdnoise_image+".temp")

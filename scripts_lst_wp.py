@@ -219,7 +219,7 @@ class ToolsLSTSim():
         # plot
         plot_config          = False,
         # calc
-        calc_collectingarea  = True,
+        calc_collectingarea  = False,
         ):
         """
         This method runs all the methods which will create figures in the white paper.
@@ -493,14 +493,10 @@ class ToolsLSTSim():
         sim_12m_ms_orig = self.dir_ready + "ms/" + this_proj + "." + self.config_c1 + ".noisy.ms"
         sim_7m_ms_orig  = self.dir_ready + "ms/" + this_proj + "." + self.config_7m + ".noisy.ms"
 
-        # prepare dir
+        # prepare dir_cleanmask
         dir_cleanmask = self.dir_ready + "outputs/cleanmasks/"
         if not glob.glob(dir_cleanmask):
             os.mkdir(dir_cleanmask)
-
-        dir_singledish = self.dir_ready + "outputs/singledish/"
-        if not glob.glob(dir_singledish):
-            os.mkdir(dir_singledish)
 
         # set piepline
         master_key = self.dir_pipeline + "master_key.txt"
@@ -604,13 +600,21 @@ class ToolsLSTSim():
         # "TP" sensitivity at 492.16065100 GHz based on ASC => same noise in K units (scaled by dish size when Jy/beam units)
         singledish_noise = 3.033450239598523 / 1000. / np.sqrt(float(totaltime.replace("h",""))) * (50.**2 / 12.*2)
 
+        # calc pointing number
+        header       = imhead(self.n1097_template_fullspec,mode="list")
+        area_in_as   = (header["shape"][0]*shape["cdelt2"]*3600*180/np.pi) * (shape["shape"][1]*shape["cdelt2"]*3600*180/np.pi)
+        one_hex_as   = (singledish_res/2.0)**2 * 6/np.sqrt(3) # hex with half-beam length
+        num_pointing = np.ceil(area_in_as / one_hex_as)
+
+        singledish_noise_per_pointing = singledish_noise / num_pointing
+
         simtp(
             working_dir=self.dir_ready,
             template_fullspec=self.n1097_template_fullspec,
-            sdimage_fullspec=self.n1097_lstimage_fullspec,
+            sdimage_fullspec=self.n1097_lstimage_fullspec.replace(".image","_"+totaltimetint+".image"),
             sdnoise_image=self.n1097_lstnoise_image.replace(".image","_"+totaltimetint+".image"),
             singledish_res=singledish_res, # resolution
-            singledish_noise=singledish_noise, # Jy/beam at final res
+            singledish_noise=singledish_noise_per_pointing, # Jy/beam at final res
             )
 
     ##################
@@ -629,13 +633,21 @@ class ToolsLSTSim():
         # sensitivity at 492.16065100 GHz based on ASC
         singledish_noise = 3.033450239598523 / 1000. / np.sqrt(float(totaltime.replace("h","")))
 
+        # calc pointing number
+        header       = imhead(self.n1097_template_fullspec,mode="list")
+        area_in_as   = (header["shape"][0]*shape["cdelt2"]*3600*180/np.pi) * (shape["shape"][1]*shape["cdelt2"]*3600*180/np.pi)
+        one_hex_as   = (singledish_res/2.0)**2 * 6/np.sqrt(3) # hex with half-beam length
+        num_pointing = np.ceil(area_in_as / one_hex_as)
+
+        singledish_noise_per_pointing = singledish_noise / num_pointing
+
         simtp(
             working_dir=self.dir_ready,
             template_fullspec=self.n1097_template_fullspec,
-            sdimage_fullspec=self.n1097_sdimage_fullspec,
+            sdimage_fullspec=self.n1097_sdimage_fullspec.replace(".image","_"+totaltimetint+".image"),
             sdnoise_image=self.n1097_sdnoise_image.replace(".image","_"+totaltimetint+".image"),
             singledish_res=singledish_res, # resolution
-            singledish_noise=singledish_noise, # Jy/beam at final res
+            singledish_noise=singledish_noise_per_pointing, # Jy/beam at final res
             )
 
     ###################
