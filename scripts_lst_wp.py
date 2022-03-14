@@ -628,6 +628,8 @@ class ToolsLSTSim():
         taskname = self.modname + sys._getframe().f_code.co_name
         check_first(self.n1097_template_fullspec,taskname)
 
+        print(self.n1097_template_fullspec)
+
         # ACA TP sim at 492.16065100 GHz
         # 11.8 arcsec resolution
         # sensitivity at 492.16065100 GHz based on ASC
