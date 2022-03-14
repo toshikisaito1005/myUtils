@@ -593,7 +593,7 @@ class ToolsLSTSim():
         """
 
         taskname = self.modname + sys._getframe().f_code.co_name
-        check_first(self.n1097_template_fullspec,taskname)
+        check_first(self.dir_ready+self.n1097_template_fullspec,taskname)
 
         # ACA LST sim at 492.16065100 GHz
         # 3.04 arcsec resolution
@@ -601,7 +601,7 @@ class ToolsLSTSim():
         singledish_noise = 3.033450239598523 / 1000. / np.sqrt(float(totaltime.replace("h",""))) * (50.**2 / 12.*2)
 
         # calc pointing number
-        header       = imhead(self.n1097_template_fullspec,mode="list")
+        header       = imhead(self.dir_ready+self.n1097_template_fullspec,mode="list")
         area_in_as   = (header["shape"][0]*header["cdelt2"]*3600*180/np.pi) * (header["shape"][1]*header["cdelt2"]*3600*180/np.pi)
         one_hex_as   = (singledish_res/2.0)**2 * 6/np.sqrt(3) # hex with half-beam length
         num_pointing = np.ceil(area_in_as / one_hex_as)
@@ -610,7 +610,7 @@ class ToolsLSTSim():
 
         simtp(
             working_dir=self.dir_ready,
-            template_fullspec=self.n1097_template_fullspec,
+            template_fullspec=self.dir_ready+self.n1097_template_fullspec,
             sdimage_fullspec=self.n1097_lstimage_fullspec.replace(".image","_"+totaltimetint+".image"),
             sdnoise_image=self.n1097_lstnoise_image.replace(".image","_"+totaltimetint+".image"),
             singledish_res=singledish_res, # resolution
@@ -626,9 +626,7 @@ class ToolsLSTSim():
         """
 
         taskname = self.modname + sys._getframe().f_code.co_name
-        check_first(self.n1097_template_fullspec,taskname)
-
-        print(self.n1097_template_fullspec)
+        check_first(self.dir_ready+self.n1097_template_fullspec,taskname)
 
         # ACA TP sim at 492.16065100 GHz
         # 11.8 arcsec resolution
@@ -636,7 +634,7 @@ class ToolsLSTSim():
         singledish_noise = 3.033450239598523 / 1000. / np.sqrt(float(totaltime.replace("h","")))
 
         # calc pointing number
-        header       = imhead(self.n1097_template_fullspec,mode="list")
+        header       = imhead(self.dir_ready+self.n1097_template_fullspec,mode="list")
         area_in_as   = (header["shape"][0]*header["cdelt2"]*3600*180/np.pi) * (header["shape"][1]*header["cdelt2"]*3600*180/np.pi)
         one_hex_as   = (singledish_res/2.0)**2 * 6/np.sqrt(3) # hex with half-beam length
         num_pointing = np.ceil(area_in_as / one_hex_as)
@@ -645,7 +643,7 @@ class ToolsLSTSim():
 
         simtp(
             working_dir=self.dir_ready,
-            template_fullspec=self.n1097_template_fullspec,
+            template_fullspec=self.dir_ready+self.n1097_template_fullspec,
             sdimage_fullspec=self.n1097_sdimage_fullspec.replace(".image","_"+totaltimetint+".image"),
             sdnoise_image=self.n1097_sdnoise_image.replace(".image","_"+totaltimetint+".image"),
             singledish_res=singledish_res, # resolution
