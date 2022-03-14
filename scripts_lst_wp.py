@@ -580,22 +580,10 @@ class ToolsLSTSim():
         taskname = self.modname + sys._getframe().f_code.co_name
         check_first(self.dir_ready+"inputs/"+self.n1097_template_fullspec,taskname)
 
-        """
-        # ACA LST sim at 492.16065100 GHz
-        # 3.04 arcsec resolution
-        # "TP" sensitivity at 492.16065100 GHz based on ASC => same noise in K units (scaled by dish size when Jy/beam units)
-        singledish_noise = 3.033450239598523 / 1000. / np.sqrt(float(totaltime.replace("h",""))) * (50.**2 / 12.**2)
-
-        # calc pointing number
-        header       = imhead(self.dir_ready+"inputs/"+self.n1097_template_fullspec,mode="list")
-        area_in_as   = (header["shape"][0]*header["cdelt2"]*3600*180/np.pi) * (header["shape"][1]*header["cdelt2"]*3600*180/np.pi)
-        one_hex_as   = (float(singledish_res.replace("arcsec",""))/2.0)**2 * 6/np.sqrt(3) # hex with half-beam length
-        num_pointing = int(np.ceil(area_in_as / one_hex_as))
-
-        # calc sensitivity per pointing
-        singledish_noise_per_pointing = singledish_noise * np.sqrt(num_pointing)
-        singledish_noise_per_pointing_K = 1.222e6 * float(singledish_res.replace("arcsec",""))**-2 * self.observed_freq**-2 * singledish_noise_per_pointing
-        """
+        image_7m = self.dir_ready + "outputs/imaging/"+self.project_n1097+"_"+totaltimetint + "/"+self.project_n1097+"_"+totaltimetint+"_7m_ci10_prev.image"
+        rms_7m = measure_rms(image_7m, snr=3.0,rms_or_p84 = "p84")
+        rms_tp = rms_7m * 1.7 * 50.**2 / 12.**2
+        rms_tp_K = 1.222e6 * float(singledish_res.replace("arcsec",""))**-2 * self.observed_freq**-2 * rms_tp
 
         # calc pointing number
         header       = imhead(self.dir_ready+"inputs/"+self.n1097_template_fullspec,mode="list")
@@ -603,17 +591,19 @@ class ToolsLSTSim():
         one_hex_as   = (float(singledish_res.replace("arcsec",""))/4.0)**2 * 6/np.sqrt(3) # hex with 1/4-beam length
         num_pointing = int(np.ceil(area_in_as / one_hex_as))
 
+        """ failed to calculate SD sensitivity based on 7m observing time...
         # tinteg per pointing
         # sensitivity at 492.16065100 GHz based on ASC (1hr = 3.033450239598523 Jy/beam)
         tinteg_per_pointing = float(totaltime.replace("h","")) / num_pointing
         singledish_noise_per_pointing = 3.033450239598523 / 1000. / tinteg_per_pointing**2
         singledish_noise_per_pointing_K = 1.222e6 * float(singledish_res.replace("arcsec",""))**-2 * self.observed_freq**-2 * singledish_noise_per_pointing
+        """
 
-
-        print("### LST observations with Tinteg     = use LST sensitivity calculator")
-        print("# outputname = " + self.n1097_lstimage_fullspec.replace(".image","_"+totaltimetint+".image"))
-        print("# sensitivity per pointing (Jy/beam) = " + str(np.round(singledish_noise_per_pointing,5)))
-        print("# sensitivity per pointing (K)       = " + str(np.round(singledish_noise_per_pointing_K,5)))
+        # ACA TP sim at 492.16065100 GHz
+        print("### LST observations")
+        print("# sensitivity achieved by 7m (Jy/b)  = " + str(np.round(rms_7m,5)))
+        print("# sensitivity achieved by TP (Jy/b)  = " + str(np.round(rms_tp,5)))
+        print("# sensitivity per pointing (K)       = " + str(np.round(rms_tp_K,5)))
         print("# beam size (arcsec)                 = " + str(np.round(float(singledish_res.replace("arcsec","")),2)))
         print("# number of pointing                 = " + str(num_pointing))
         print("# survey area (arcsec^2)             = " + str(int(area_in_as)))
@@ -627,7 +617,7 @@ class ToolsLSTSim():
                 sdimage_fullspec=self.n1097_lstimage_fullspec.replace(".image","_"+totaltimetint+".image"),
                 sdnoise_image=self.n1097_lstnoise_image.replace(".image","_"+totaltimetint+".image"),
                 singledish_res=singledish_res,
-                singledish_noise=singledish_noise_per_pointing, # Jy/beam at final res
+                singledish_noise=rms_tp, # Jy/beam at final res
                 )
         else:
             print("# skipped simtp as dryrun==True")
@@ -646,31 +636,32 @@ class ToolsLSTSim():
 
         image_7m = self.dir_ready + "outputs/imaging/"+self.project_n1097+"_"+totaltimetint + "/"+self.project_n1097+"_"+totaltimetint+"_7m_ci10_prev.image"
         rms_7m = measure_rms(image_7m, snr=3.0,rms_or_p84 = "p84")
-        print("# rms_7m = " + str(rms_7m))
+        rms_tp = rms_7m * 1.7
+        rms_tp_K = 1.222e6 * float(singledish_res.replace("arcsec",""))**-2 * self.observed_freq**-2 * rms_tp
 
-        """ failed to calculate SD sensitivity based on 7m observing time...
         # calc pointing number
         header       = imhead(self.dir_ready+"inputs/"+self.n1097_template_fullspec,mode="list")
         area_in_as   = (header["shape"][0]*header["cdelt2"]*3600*180/np.pi) * (header["shape"][1]*header["cdelt2"]*3600*180/np.pi)
         one_hex_as   = (float(singledish_res.replace("arcsec",""))/4.0)**2 * 6/np.sqrt(3) # hex with 1/4-beam length
         num_pointing = int(np.ceil(area_in_as / one_hex_as))
 
+        """ failed to calculate SD sensitivity based on 7m observing time...
         # tinteg per pointing
         # sensitivity at 492.16065100 GHz based on ASC (1hr = 3.033450239598523 Jy/beam)
         tinteg_per_pointing = float(totaltime.replace("h","")) / num_pointing
         singledish_noise_per_pointing = 3.033450239598523 / 1000. / tinteg_per_pointing**2
         singledish_noise_per_pointing_K = 1.222e6 * float(singledish_res.replace("arcsec",""))**-2 * self.observed_freq**-2 * singledish_noise_per_pointing
+        """
 
         # ACA TP sim at 492.16065100 GHz
-        print("### ACA TP observations with Tinteg  = " + totaltime)
-        print("# outputname = " + self.n1097_sdimage_fullspec.replace(".image","_"+totaltimetint+".image"))
-        print("# sensitivity per pointing (Jy/beam) = " + str(np.round(singledish_noise_per_pointing,5)))
-        print("# sensitivity per pointing (K)       = " + str(np.round(singledish_noise_per_pointing_K,5)))
+        print("### ACA TP observations")
+        print("# sensitivity achieved by 7m (Jy/b)  = " + str(np.round(rms_7m,5)))
+        print("# sensitivity achieved by TP (Jy/b)  = " + str(np.round(rms_tp,5)))
+        print("# sensitivity per pointing (K)       = " + str(np.round(rms_tp_K,5)))
         print("# beam size (arcsec)                 = " + str(np.round(float(singledish_res.replace("arcsec","")),2)))
         print("# number of pointing                 = " + str(num_pointing))
         print("# survey area (arcsec^2)             = " + str(int(area_in_as)))
         print("#")
-        """
 
         # run
         if dryrun==False:
@@ -680,7 +671,7 @@ class ToolsLSTSim():
                 sdimage_fullspec=self.n1097_sdimage_fullspec.replace(".image","_"+totaltimetint+".image"),
                 sdnoise_image=self.n1097_sdnoise_image.replace(".image","_"+totaltimetint+".image"),
                 singledish_res=singledish_res,
-                singledish_noise=singledish_noise_per_pointing, # Jy/beam at final res
+                singledish_noise=rms_tp, # Jy/beam at final res
                 )
         else:
             print("# skipped simtp as dryrun==True")
