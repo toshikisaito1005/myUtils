@@ -574,8 +574,6 @@ class ToolsLSTSim():
 
     def simlst_n1097sim(self,lst_res="3.04arcsec",tp_res="11.8arcsec",totaltimetint="2p0h",dryrun=True):
         """
-        The totaltime is the ACA TP integration time to calculate TP achievable sensitivity.
-        This module will calculate and map the same sensitivity (in K, not Jy/beam) using LST.
         """
 
         taskname = self.modname + sys._getframe().f_code.co_name
@@ -607,8 +605,8 @@ class ToolsLSTSim():
             simtp(
                 working_dir=self.dir_ready,
                 template_fullspec=self.n1097_template_fullspec,
-                sdimage_fullspec=self.n1097_lstimage_fullspec.replace(".image","_"+totaltimetint+".image"),
-                sdnoise_image=self.n1097_lstnoise_image.replace(".image","_"+totaltimetint+".image"),
+                sdimage_fullspec=self.n1097_lstimage_fullspec.replace(".image","_"+totaltimetint+"7m.image"),
+                sdnoise_image=self.n1097_lstnoise_image.replace(".image","_"+totaltimetint+"7m.image"),
                 singledish_res=singledish_res,
                 singledish_noise=rms_tp, # Jy/beam at final res
                 )
@@ -661,8 +659,8 @@ class ToolsLSTSim():
             simtp(
                 working_dir=self.dir_ready,
                 template_fullspec=self.n1097_template_fullspec,
-                sdimage_fullspec=self.n1097_sdimage_fullspec.replace(".image","_"+totaltimetint+".image"),
-                sdnoise_image=self.n1097_sdnoise_image.replace(".image","_"+totaltimetint+".image"),
+                sdimage_fullspec=self.n1097_sdimage_fullspec.replace(".image","_"+totaltimetint+"7m.image"),
+                sdnoise_image=self.n1097_sdnoise_image.replace(".image","_"+totaltimetint+"7m.image"),
                 singledish_res=singledish_res,
                 singledish_noise=rms_tp, # Jy/beam at final res
                 )
