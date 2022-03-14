@@ -143,20 +143,10 @@ class ToolsLSTSim():
         self.n1068_template_withcont_div10  = self.project_n1068 + "_template_withcont_div10.image"
         self.n1068_template_withcont_div30  = self.project_n1068 + "_template_withcont_div30.image"
         self.n1068_template_withcont_div100 = self.project_n1068 + "_template_withcont_div100.image"
-        self.n1068_sdnoise_image            = self.project_n1068 + "_singledish_noise_nocont.image"
-        self.n1068_sdimage_fullspec         = self.project_n1068 + "_singledish_nocont.image"
-        self.n1068_sdimage_div3             = self.project_n1068 + "_singledish_div3.image"
-        self.n1068_sdimage_div5             = self.project_n1068 + "_singledish_div5.image"
-        self.n1068_sdimage_div10            = self.project_n1068 + "_singledish_div10.image"
-        self.n1068_sdimage_div30            = self.project_n1068 + "_singledish_div30.image"
-        self.n1068_sdimage_div100           = self.project_n1068 + "_singledish_div100.image"
-        self.n1068_sdnoise_image            = self.project_n1068 + "_singledish_noise_nocont.image"
-        self.n1068_sdimage_fullspec         = self.project_n1068 + "_singledish_nocont.image"
-        self.n1068_sdimage_div3             = self.project_n1068 + "_singledish_div3.image"
-        self.n1068_sdimage_div5             = self.project_n1068 + "_singledish_div5.image"
-        self.n1068_sdimage_div10            = self.project_n1068 + "_singledish_div10.image"
-        self.n1068_sdimage_div30            = self.project_n1068 + "_singledish_div30.image"
-        self.n1068_sdimage_div100           = self.project_n1068 + "_singledish_div100.image"
+        self.n1068_sdnoise_image            = self.project_n1068 + "_aca_tp_noise_nocont.image"
+        self.n1068_sdimage_fullspec         = self.project_n1068 + "_aca_tp_nocont.image"
+        self.n1068_lstnoise_image            =self.project_n1068 + "_lst_noise_nocont.image"
+        self.n1068_lstimage_fullspec         =self.project_n1068 + "_lst_nocont.image"
 
         self.n1097_template_in_jypix        = self.project_n1097 + "_template_jypixel.image"
         self.n1097_template_clipped         = self.project_n1097 + "_template_clipped.image"
@@ -175,20 +165,10 @@ class ToolsLSTSim():
         self.n1097_template_withcont_div10  = self.project_n1097 + "_template_withcont_div10.image"
         self.n1097_template_withcont_div30  = self.project_n1097 + "_template_withcont_div30.image"
         self.n1097_template_withcont_div100 = self.project_n1097 + "_template_withcont_div100.image"
-        self.n1097_sdnoise_image            = self.project_n1097 + "_singledish_noise_nocont.image"
-        self.n1097_sdimage_fullspec         = self.project_n1097 + "_singledish_nocont.image"
-        self.n1097_sdimage_div3             = self.project_n1097 + "_singledish_div3.image"
-        self.n1097_sdimage_div5             = self.project_n1097 + "_singledish_div5.image"
-        self.n1097_sdimage_div10            = self.project_n1097 + "_singledish_div10.image"
-        self.n1097_sdimage_div30            = self.project_n1097 + "_singledish_div30.image"
-        self.n1097_sdimage_div100           = self.project_n1097 + "_singledish_div100.image"
-        self.n1097_sdnoise_image            = self.project_n1097 + "_singledish_noise_nocont.image"
-        self.n1097_sdimage_fullspec         = self.project_n1097 + "_singledish_nocont.image"
-        self.n1097_sdimage_div3             = self.project_n1097 + "_singledish_div3.image"
-        self.n1097_sdimage_div5             = self.project_n1097 + "_singledish_div5.image"
-        self.n1097_sdimage_div10            = self.project_n1097 + "_singledish_div10.image"
-        self.n1097_sdimage_div30            = self.project_n1097 + "_singledish_div30.image"
-        self.n1097_sdimage_div100           = self.project_n1097 + "_singledish_div100.image"
+        self.n1097_sdnoise_image            = self.project_n1097 + "_aca_tp_noise_nocont.image"
+        self.n1097_sdimage_fullspec         = self.project_n1097 + "_aca_tp_nocont.image"
+        self.n1097_lstnoise_image           = self.project_n1097 + "_lst_noise_nocont.image"
+        self.n1097_lstimage_fullspec        = self.project_n1097 + "_lst_nocont.image"
 
     def _set_input_param(self):
         """
@@ -229,6 +209,8 @@ class ToolsLSTSim():
         # ngc1097sim
         do_template_n1097sim = False, # create template cube for simobserve
         do_simint_n1097im    = False, # sim ACA band 8 for big ngc1097sim
+        do_simtp_n1097im     = False, # sim ACA TP
+        do_simlst_n1097im    = False, # sim LST
         do_imaging_n1097sim  = False, # imaging sim ms
         # ngc1068sim
         do_template_n1068sim = False, # create template cube for simobserve
@@ -236,6 +218,8 @@ class ToolsLSTSim():
         do_imaging_n1068sim  = False, # imaging sim ms
         # plot
         plot_config          = False,
+        # calc
+        calc_collectingarea  = True,
         ):
         """
         This method runs all the methods which will create figures in the white paper.
@@ -248,7 +232,14 @@ class ToolsLSTSim():
         if do_simint_n1097im==True:
             #self.simaca_n1097im(totaltime="2.0h",totaltimetint="2p0h")
             #self.simaca_n1097im(totaltime="8.0h",totaltimetint="8p0h")
-            self.simaca_n1097im(totaltime="48.0h",totaltimetint="48p0h")
+            self.simaca_n1097sim(totaltime="48.0h",totaltimetint="48p0h")
+
+        if do_simtp_n1097im==True:
+            # TP integration time = 48.0 * 1.7 = 81.6 (Table 7.4 of ALMA Technical Handbook 9.1.1)
+            self.simtp_n1097sim(singledish_res="11.8arcsec",totaltime="81.6h",totaltimetint="81p6h")
+
+        if do_simlst_n1097im==True:
+            self.simlst_n1097sim()
 
         if do_imaging_n1097sim==True:
             #self.phangs_pipeline_imaging(self.project_n1097,"7m",self.project_n1097+"_2p0h")
@@ -257,11 +248,11 @@ class ToolsLSTSim():
 
         # ngc1068sim
         if do_template_n1068sim==True:
-            self.simaca_n1068im(totaltime="2.0h",totaltimetint="2p0h")
-            #self.simaca_n1068im(totaltime="8.0h",totaltimetint="8p0h")
+            self.prepare_template_n1068sim()
 
         if do_simint_n1068im==True:
-            self.simaca_n1068im()
+            self.simaca_n1068sim(totaltime="2.0h",totaltimetint="2p0h")
+            #self.simaca_n1068im(totaltime="8.0h",totaltimetint="8p0h")
 
         if do_imaging_n1068sim==True:
             self.phangs_pipeline_imaging(self.project_n1068,"12m",self.project_n1068+"_2p0h")
@@ -270,6 +261,74 @@ class ToolsLSTSim():
         # plot
         if plot_config==True:
             self.plot_config()
+
+        # calc
+        if calc_collectingarea==True:
+            self.calc_collectingarea()
+
+    #######################
+    # calc_collectingarea #
+    #######################
+
+    def calc_collectingarea(self):
+        """
+        """
+
+        # alma
+        area_12m_array = 50 * (12/2.)**2 * np.pi
+        area_7m_array  = 12 * (7/2.)**2 * np.pi
+        area_tp_array  = 4 * (12/2.)**2 * np.pi
+        area_alma      = 50 * (12/2.)**2 * np.pi + 12 * (7/2.)**2 * np.pi + 4 * (12/2.)**2 * np.pi
+        area_aca       = 12 * (7/2.)**2 * np.pi + 4 * (12/2.)**2 * np.pi
+
+        # LST
+        area_lst       = (50/2.)**2 * np.pi
+
+        # ratio to LST and str
+        print_12m  = str(int(np.round(area_12m_array))) + " m^2 (this/lst = " + str(np.round(area_12m_array/area_lst,2)) + ")"
+        print_7m   = str(int(np.round(area_7m_array))) + " m^2 (this/lst = " + str(np.round(area_7m_array/area_lst,2)) + ")"
+        print_tp   = str(int(np.round(area_tp_array))) + " m^2 (this/lst = " + str(np.round(area_tp_array/area_lst,2)) + ")"
+        print_alma = str(int(np.round(area_alma))) + " m^2 (this/lst = " + str(np.round(area_alma/area_lst,2)) + ")"
+        print_aca  = str(int(np.round(area_aca))) + " m^2 (this/lst = " + str(np.round(area_aca/area_lst,2)) + ")"
+
+        print_lst  = str(int(np.round(area_lst))) + " m^2"
+        print_lst_12m  = str(int(np.round(area_lst+area_12m_array))) + " m^2 (this/12m = " + str(np.round((area_lst+area_12m_array)/area_12m_array,2)) + ")"
+        print_lst_alma = str(int(np.round(area_lst+area_alma))) + " m^2 (this/alma = " + str(np.round((area_lst+area_alma)/area_alma,2)) + ")"
+        print_lst_aca  = str(int(np.round(area_lst+area_aca))) + \
+            " m^2 (this/aca = " + str(np.round((area_lst+area_aca)/area_aca,2)) + \
+            ", this/lst = " + str(np.round((area_lst+area_aca)/area_lst,2)) + ")"
+
+        print("#################################################")
+        print("### Array collecting area and ratio")
+        print("# ALMA 12m-array     = " + print_12m)
+        print("# ALMA  7m-array     =  " + print_7m)
+        print("# ALMA  TP-array     =  " + print_tp)
+        print("# ")
+        print("# ALMA 12m+7m+TP     = " + print_alma)
+        print("# ACA 7m+TP          =  " + print_aca)
+        print("#")
+        print("# LST                = " + print_lst)
+        print("#")
+        print("# LST+ALMA 12m       = " + print_lst_12m)
+        print("# LST+ALMA 12m+7m+TP = " + print_lst_alma)
+        print("# LST+ACA 7m+TP      = " + print_lst_aca)
+        print("##################################################")
+
+        #################################################
+        ### Array collecting area and ratio
+        # ALMA 12m-array     = 5655 m^2 (this/lst = 2.88)
+        # ALMA  7m-array     =  462 m^2 (this/lst = 0.24)
+        # ALMA  TP-array     =  452 m^2 (this/lst = 0.23)
+        # 
+        # ALMA 12m+7m+TP     = 6569 m^2 (this/lst = 3.35)
+        # ACA 7m+TP          =  914 m^2 (this/lst = 0.47)
+        #
+        # LST                = 1963 m^2
+        #
+        # LST+ALMA 12m       = 7618 m^2 (this/12m = 1.35)
+        # LST+ALMA 12m+7m+TP = 8533 m^2 (this/alma = 1.3)
+        # LST+ACA 7m+TP      = 2878 m^2 (this/aca = 3.15, this/lst = 1.47)
+        ##################################################
 
     ###############
     # plot_config #
@@ -527,11 +586,63 @@ class ToolsLSTSim():
                 # feather_after_mosaic  = False,
                 )
 
+    ###################
+    # simlst_n1097sim #
+    ###################
+
+    def simlst_n1097sim(self,singledish_res="11.8arcsec",totaltime="2.0h",totaltimetint="2p0tph"):
+        """
+        The totaltime is the ACA TP integration time to calculate TP achievable sensitivity.
+        This module will calculate and map the same sensitivity (in K, not Jy/beam) using LST.
+        """
+
+        taskname = self.modname + sys._getframe().f_code.co_name
+        check_first(self.n1097_template_fullspec,taskname)
+
+        # ACA TP sim at 492.16065100 GHz
+        # 11.8 arcsec resolution
+        # sensitivity at 492.16065100 GHz based on ASC
+        singledish_noise = 3.033450239598523 / 1000. / np.sqrt(float(totaltime.replace("h",""))) * (50.**2 / 12.*2)
+
+        simtp(
+            working_dir=self.dir_ready,
+            template_fullspec=self.n1097_template_fullspec,
+            sdimage_fullspec=self.n1097_lstimage_fullspec,
+            sdnoise_image=self.n1097_lstnoise_image.replace(".image","_"+totaltimetint+".image"),
+            singledish_res=singledish_res, # resolution
+            singledish_noise=singledish_noise, # Jy/beam at final res
+            )
+
     ##################
-    # simaca_n1097im #
+    # simtp_n1097sim #
     ##################
 
-    def simaca_n1097im(self,totaltime="2.0h",totaltimetint="2p0h"):
+    def simtp_n1097sim(self,singledish_res="11.8arcsec",totaltime="2.0h",totaltimetint="2p0h"):
+        """
+        """
+
+        taskname = self.modname + sys._getframe().f_code.co_name
+        check_first(self.n1097_template_fullspec,taskname)
+
+        # ACA TP sim at 492.16065100 GHz
+        # 11.8 arcsec resolution
+        # sensitivity at 492.16065100 GHz based on ASC
+        singledish_noise = 3.033450239598523 / 1000. / np.sqrt(float(totaltime.replace("h","")))
+
+        simtp(
+            working_dir=self.dir_ready,
+            template_fullspec=self.n1097_template_fullspec,
+            sdimage_fullspec=self.n1097_sdimage_fullspec,
+            sdnoise_image=self.n1097_sdnoise_image.replace(".image","_"+totaltimetint+".image"),
+            singledish_res=singledish_res, # resolution
+            singledish_noise=singledish_noise, # Jy/beam at final res
+            )
+
+    ###################
+    # simaca_n1097sim #
+    ###################
+
+    def simaca_n1097sim(self,totaltime="2.0h",totaltimetint="2p0h"):
         """
         """
 
@@ -547,11 +658,11 @@ class ToolsLSTSim():
             incenter=self.incenter,
             )
 
-    ##################
-    # simaca_n1068im #
-    ##################
+    ###################
+    # simaca_n1068sim #
+    ###################
 
-    def simaca_n1068im(self,totaltime="2.0h",totaltimetint="2p0h"):
+    def simaca_n1068sim(self,totaltime="2.0h",totaltimetint="2p0h"):
         """
         """
 
@@ -600,16 +711,7 @@ class ToolsLSTSim():
             template_withcont_div10=self.n1097_template_withcont_div10,
             template_withcont_div30=self.n1097_template_withcont_div30,
             template_withcont_div100=self.n1097_template_withcont_div100,
-            sdnoise_image=self.n1097_sdnoise_image,
-            sdimage_fullspec=self.n1097_sdimage_fullspec,
-            sdimage_div3=self.n1097_sdimage_div3,
-            sdimage_div5=self.n1097_sdimage_div5,
-            sdimage_div10=self.n1097_sdimage_div10,
-            sdimage_div30=self.n1097_sdimage_div30,
-            sdimage_div100=self.n1097_sdimage_div100,
             pa=self.image_roration, # rotation angle
-            singledish_res=self.singledish_res, # 12m TP resolution
-            singledish_noise=self.singledish_noise, # Jy/beam at final res
             )
 
     #############################
@@ -645,16 +747,7 @@ class ToolsLSTSim():
             template_withcont_div10=self.n1068_template_withcont_div10,
             template_withcont_div30=self.n1068_template_withcont_div30,
             template_withcont_div100=self.n1068_template_withcont_div100,
-            sdnoise_image=self.n1068_sdnoise_image,
-            sdimage_fullspec=self.n1068_sdimage_fullspec,
-            sdimage_div3=self.n1068_sdimage_div3,
-            sdimage_div5=self.n1068_sdimage_div5,
-            sdimage_div10=self.n1068_sdimage_div10,
-            sdimage_div30=self.n1068_sdimage_div30,
-            sdimage_div100=self.n1068_sdimage_div100,
             pa=self.image_roration, # rotation angle
-            singledish_res=self.singledish_res, # 12m TP resolution
-            singledish_noise=self.singledish_noise, # Jy/beam at final res
             shrink=0.1,
             )
 

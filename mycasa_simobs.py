@@ -39,16 +39,7 @@ def gen_cube(
     template_withcont_div10,
     template_withcont_div30,
     template_withcont_div100,
-    sdnoise_image,
-    sdimage_fullspec,
-    sdimage_div3,
-    sdimage_div5,
-    sdimage_div10,
-    sdimage_div30,
-    sdimage_div100,
     pa="23deg", # rotation angle
-    singledish_res="28.37arcsec", # resolution
-    singledish_noise=0.102, # Jy/beam at final res
     shrink=0.5,
     ):
     """
@@ -86,13 +77,6 @@ def gen_cube(
     template_withcont_div10  = input_dir + template_withcont_div10
     template_withcont_div30  = input_dir + template_withcont_div30
     template_withcont_div100 = input_dir + template_withcont_div100
-    sdnoise_image            = input_dir + sdnoise_image
-    sdimage_fullspec         = input_dir + sdimage_fullspec
-    sdimage_div3             = input_dir + sdimage_div3
-    sdimage_div5             = input_dir + sdimage_div5
-    sdimage_div10            = input_dir + sdimage_div10
-    sdimage_div30            = input_dir + sdimage_div30
-    sdimage_div100           = input_dir + sdimage_div100
 
     ##############################################
     # Convert the template to Jansky/pixel units #
@@ -303,26 +287,60 @@ def gen_cube(
     immath(imagename = template_fullspec, expr="IM0/30.0", outfile=template_fullspec_div30)
     immath(imagename = template_fullspec, expr="IM0/100.0", outfile=template_fullspec_div100)
 
+    # Cleanup
+    os.system("rm -rf " + template_rotated+".temp2")
+    os.system("rm -rf " + template_rotated+".temp2.fits")
+
+    #######################
+    ### Drop back to FITS #
+    #######################
+
+    exportfits(imagename=template_fullspec, fitsimage=template_fullspec.replace('.image','.fits'), dropstokes=True, overwrite=True)
+    exportfits(imagename=template_withcont, fitsimage=template_withcont.replace('.image','.fits'), dropstokes=True, overwrite=True)
+
+#########
+# simtp #
+#########
+def simtp(
+    working_dir,
+    template_fullspec,
+    sdimage_fullspec,
+    sdnoise_image,
+    singledish_res="11.8arcsec", # resolution
+    singledish_noise=0.102, # Jy/beam at final res
+    ):
+    """
+    Usage:
+        Check required sensitivity (singledish_noise) using ACS
+    Reference:
+        https://almascience.nao.ac.jp/proposing/sensitivity-calculator
+    """
+
+    # cleanup directories
+    input_dir  = working_dir + "inputs/"
+    output_dir = working_dir + "outputs/"
+    ms_dir     = working_dir + "ms/"
+
+    if not glob.glob(input_dir):
+        os.mkdir(input_dir)
+    if not glob.glob(output_dir):
+        os.mkdir(output_dir)
+    if not glob.glob(ms_dir):
+        os.mkdir(ms_dir)
+
     ###############################################################
     # Make convolved versions that mimic single-dish observations #
     ###############################################################
+    template_fullspec = input_dir + template_fullspec
+    sdnoise_image     = input_dir + sdnoise_image
+    sdimage_fullspec  = input_dir + sdimage_fullspec
+    sdimage_fullspec  = output_dir + sdimage_fullspec
+    sdnoise_image     = output_dir + sdnoise_image
 
     # result should be in Jy/beam
 
     os.system("rm -rf " + sdimage_fullspec)
-    os.system("rm -rf " + sdimage_div3)
-    os.system("rm -rf " + sdimage_div5)
-    os.system("rm -rf " + sdimage_div10)
-    os.system("rm -rf " + sdimage_div30)
-    os.system("rm -rf " + sdimage_div100)
-
     os.system("rm -rf " + sdimage_fullspec+".temp")
-    os.system("rm -rf " + sdimage_div3+".temp")
-    os.system("rm -rf " + sdimage_div5+".temp")
-    os.system("rm -rf " + sdimage_div10+".temp")
-    os.system("rm -rf " + sdimage_div30+".temp")
-    os.system("rm -rf " + sdimage_div100+".temp")
-
     os.system("rm -rf " + sdnoise_image)
     os.system("rm -rf " + sdnoise_image+".temp")
     os.system("rm -rf " + sdnoise_image+".temp2")
@@ -354,82 +372,18 @@ def gen_cube(
              targetres=True, major=singledish_res, minor=singledish_res, pa='0.0deg',
              outfile=sdimage_fullspec+'.temp', overwrite=True)
 
-    imsmooth(imagename = template_fullspec_div3,  kernel='gaussian',
-             targetres=True, major=singledish_res, minor=singledish_res, pa='0.0deg',
-             outfile=sdimage_div3+'.temp', overwrite=True)
-
-    imsmooth(imagename = template_fullspec_div5,  kernel='gaussian',
-             targetres=True, major=singledish_res, minor=singledish_res, pa='0.0deg',
-             outfile=sdimage_div5+'.temp', overwrite=True)
-
-    imsmooth(imagename = template_fullspec_div10,  kernel='gaussian',
-             targetres=True, major=singledish_res, minor=singledish_res, pa='0.0deg',
-             outfile=sdimage_div10+'.temp', overwrite=True)
-
-    imsmooth(imagename = template_fullspec_div30,  kernel='gaussian',
-             targetres=True, major=singledish_res, minor=singledish_res, pa='0.0deg',
-             outfile=sdimage_div30+'.temp', overwrite=True)
-
-    imsmooth(imagename = template_fullspec_div100,  kernel='gaussian',
-             targetres=True, major=singledish_res, minor=singledish_res, pa='0.0deg',
-             outfile=sdimage_div100+'.temp', overwrite=True)
-
     # Add the noise to the convolved version
     immath(imagename = [sdimage_fullspec+'.temp', sdnoise_image], 
            expr="IM0+IM1", outfile=sdimage_fullspec)
-
-    immath(imagename = [sdimage_div3+'.temp', sdnoise_image], 
-           expr="IM0+IM1", outfile=sdimage_div3)
-
-    immath(imagename = [sdimage_div5+'.temp', sdnoise_image], 
-           expr="IM0+IM1", outfile=sdimage_div5)
-
-    immath(imagename = [sdimage_div10+'.temp', sdnoise_image], 
-           expr="IM0+IM1", outfile=sdimage_div10)
-
-    immath(imagename = [sdimage_div30+'.temp', sdnoise_image], 
-           expr="IM0+IM1", outfile=sdimage_div30)
-
-    immath(imagename = [sdimage_div100+'.temp', sdnoise_image], 
-           expr="IM0+IM1", outfile=sdimage_div100)
 
     # Export to FITS
     exportfits(imagename = sdimage_fullspec, fitsimage = sdimage_fullspec.replace('.image','.fits'),
                dropstokes=True, overwrite=True)
 
-    exportfits(imagename = sdimage_div3, fitsimage = sdimage_div3.replace('.image','.fits'),
-               dropstokes=True, overwrite=True)
-
-    exportfits(imagename = sdimage_div5, fitsimage = sdimage_div5.replace('.image','.fits'),
-               dropstokes=True, overwrite=True)
-
-    exportfits(imagename = sdimage_div10, fitsimage = sdimage_div10.replace('.image','.fits'),
-               dropstokes=True, overwrite=True)
-
-    exportfits(imagename = sdimage_div30, fitsimage = sdimage_div30.replace('.image','.fits'),
-               dropstokes=True, overwrite=True)
-
-    exportfits(imagename = sdimage_div100, fitsimage = sdimage_div100.replace('.image','.fits'),
-               dropstokes=True, overwrite=True)
-
     # Cleanup
     os.system("rm -rf " + sdimage_fullspec+".temp")
-    os.system("rm -rf " + sdimage_div3+".temp")
-    os.system("rm -rf " + sdimage_div5+".temp")
-    os.system("rm -rf " + sdimage_div10+".temp")
-    os.system("rm -rf " + sdimage_div30+".temp")
-    os.system("rm -rf " + sdimage_div100+".temp")
     os.system("rm -rf " + sdnoise_image+".temp")
     os.system("rm -rf " + sdnoise_image+".temp2")
-    os.system("rm -rf " + template_rotated+".temp2")
-    os.system("rm -rf " + template_rotated+".temp2.fits")
-
-    #######################
-    ### Drop back to FITS #
-    #######################
-
-    exportfits(imagename=template_fullspec, fitsimage=template_fullspec.replace('.image','.fits'), dropstokes=True, overwrite=True)
-    exportfits(imagename=template_withcont, fitsimage=template_withcont.replace('.image','.fits'), dropstokes=True, overwrite=True)
 
 ##############
 # simobserve #
