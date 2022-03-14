@@ -574,7 +574,7 @@ class ToolsLSTSim():
     # simlst_n1097sim #
     ###################
 
-    def simlst_n1097sim(self,singledish_res="3.04arcsec",totaltime="2.0h",totaltimetint="2p0tph"):
+    def simlst_n1097sim(self,singledish_res="3.04arcsec",totaltime="2.0h",totaltimetint="2p0tph",dryrun=True):
         """
         The totaltime is the ACA TP integration time to calculate TP achievable sensitivity.
         This module will calculate and map the same sensitivity (in K, not Jy/beam) using LST.
@@ -621,7 +621,7 @@ class ToolsLSTSim():
     # simtp_n1097sim #
     ##################
 
-    def simtp_n1097sim(self,singledish_res="11.8arcsec",totaltime="2.0h",totaltimetint="2p0h"):
+    def simtp_n1097sim(self,singledish_res="11.8arcsec",totaltime="2.0h",totaltimetint="2p0h",dryrun=True):
         """
         """
 
