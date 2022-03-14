@@ -246,7 +246,7 @@ class ToolsLSTSim():
         totaltime_n1097sim_tp  = str(np.round(tinteg_n1097sim * 1.7 * (12./7.)**2, 1))+"h"
         totaltime_n1097sim_lst = str(np.round(tinteg_n1097sim * 1.7 * (50./7.)**2, 1))+"h"
         totaltimetint_n1097sim_tp  = (str(np.round(tinteg_n1097sim, 1))+"h7m_"+totaltime_n1097sim_tp+"tp").replace(".","p")
-        totaltimetint_n1097sim_lst = (str(np.round(tinteg_n1097sim, 1))+"h7m_"+totaltime_n1097sim_lst+"lst").replace(".","p")
+        totaltimetint_n1097sim_lst = (str(np.round(tinteg_n1097sim, 1))+"h7m").replace(".","p")
 
         # ngc1097sim
         if do_template_n1097sim==True:
