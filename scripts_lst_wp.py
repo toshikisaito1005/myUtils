@@ -574,6 +574,11 @@ class ToolsLSTSim():
 
     def simlst_n1097sim(self,lst_res="3.04arcsec",tp_res="11.8arcsec",totaltimetint="2p0h",dryrun=True):
         """
+        1. measure rms_7m (= rms level of the 7m-only cleaned image)
+        2. measure tp-tinteg (= 7m-tinteg * 1.7)
+        3. provide tp-tinteg and 7m-tinteg to ASC to calculate achievable sensitivity and TP/7m sensitivity ratio (= 2.326550129182734/1.4789569480812979)
+        4. scale rms_7m to get rms_tp
+        5. rms_tp must be also scaled by LST/TP beam area ratio (to match the sensitivity in K units, not Jy/beam)
         """
 
         taskname = self.modname + sys._getframe().f_code.co_name
@@ -581,8 +586,8 @@ class ToolsLSTSim():
 
         image_7m = self.dir_ready + "outputs/imaging/"+self.project_n1097+"_"+totaltimetint + "/"+self.project_n1097+"_"+totaltimetint+"_7m_ci10.image"
         rms_7m = 0.08273 # measure_rms(image_7m, snr=3.0,rms_or_p84 = "p84")
-        rms_tp = rms_7m * 1.7 * float(lst_res.replace("arcsec",""))**2 / float(tp_res.replace("arcsec",""))**2
-        rms_tp_K = 1.222e6 * float(lst_res.replace("arcsec",""))**-2 * self.observed_freq**-2 * rms_tp
+        rms_lst = rms_7m * 2.326550129182734/1.4789569480812979 * float(lst_res.replace("arcsec",""))**2 / float(tp_res.replace("arcsec",""))**2
+        rms_lst_K = 1.222e6 * float(lst_res.replace("arcsec",""))**-2 * self.observed_freq**-2 * rms_lst
 
         # calc pointing number
         header       = imhead(self.dir_ready+"inputs/"+self.n1097_template_fullspec,mode="list")
@@ -593,8 +598,8 @@ class ToolsLSTSim():
         # ACA TP sim at 492.16065100 GHz
         print("### LST observations")
         print("# achieved 7m sensitivity (Jy/b)     = " + str(np.round(rms_7m,5)))
-        print("# required LST sensntivity (Jy/b)    = " + str(np.round(rms_tp,5)))
-        print("# sensitivity per pointing (K)       = " + str(np.round(rms_tp_K,5)))
+        print("# required LST sensntivity (Jy/b)    = " + str(np.round(rms_lst,5)))
+        print("# sensitivity per pointing (K)       = " + str(np.round(rms_lst_K,5)))
         print("# beam size (arcsec)                 = " + str(np.round(float(lst_res.replace("arcsec","")),2)))
         print("# number of pointing                 = " + str(num_pointing))
         print("# survey area (arcsec^2)             = " + str(int(area_in_as)))
@@ -607,8 +612,8 @@ class ToolsLSTSim():
                 template_fullspec=self.n1097_template_fullspec,
                 sdimage_fullspec=self.n1097_lstimage_fullspec.replace(".image","_"+totaltimetint+"7m.image"),
                 sdnoise_image=self.n1097_lstnoise_image.replace(".image","_"+totaltimetint+"7m.image"),
-                singledish_res=singledish_res,
-                singledish_noise=rms_tp, # Jy/beam at final res
+                singledish_res=lst_res,
+                singledish_noise=rms_lst, # Jy/beam at final res
                 )
         else:
             print("# skipped simtp as dryrun==True")
@@ -620,6 +625,10 @@ class ToolsLSTSim():
 
     def simtp_n1097sim(self,singledish_res="11.8arcsec",totaltimetint="2p0h",dryrun=True):
         """
+        1. measure rms_7m (= rms level of the 7m-only cleaned image)
+        2. measure tp-tinteg (= 7m-tinteg * 1.7)
+        3. provide tp-tinteg and 7m-tinteg to ASC to calculate achievable sensitivity and TP/7m sensitivity ratio (= 2.326550129182734/1.4789569480812979)
+        4. scale rms_7m to get rms_tp
         """
 
         taskname = self.modname + sys._getframe().f_code.co_name
@@ -627,7 +636,7 @@ class ToolsLSTSim():
 
         image_7m = self.dir_ready + "outputs/imaging/"+self.project_n1097+"_"+totaltimetint + "/"+self.project_n1097+"_"+totaltimetint+"_7m_ci10.image"
         rms_7m = 0.08273 # measure_rms(image_7m, snr=3.0,rms_or_p84 = "p84")
-        rms_tp = rms_7m * 1.7
+        rms_tp = rms_7m * 2.326550129182734/1.4789569480812979 # ASC TPrms/7mrms ratio
         rms_tp_K = 1.222e6 * float(singledish_res.replace("arcsec",""))**-2 * self.observed_freq**-2 * rms_tp
 
         # calc pointing number
