@@ -209,9 +209,9 @@ class ToolsLSTSim():
         # ngc1097sim
         do_template_n1097sim = False, # create template cube for simobserve
         do_simint_n1097im    = False, # sim ACA band 8 for big ngc1097sim
-        do_simtp_n1097im     = False, # sim ACA TP
-        do_simlst_n1097im    = False, # sim LST
         do_imaging_n1097sim  = False, # imaging sim ms
+        do_simTP_n1097im     = False, # sim ACA TP
+        do_simLST_n1097im    = False, # sim LST
         # ngc1068sim
         do_template_n1068sim = False, # create template cube for simobserve
         do_simint_n1068im    = False, # sim C-10 band 8 for small ngc1068sim
@@ -234,25 +234,25 @@ class ToolsLSTSim():
             #self.simaca_n1097im(totaltime="8.0h",totaltimetint="8p0h")
             self.simaca_n1097sim(totaltime="48.0h",totaltimetint="48p0h")
 
-        if do_simtp_n1097im==True:
-            # TP integration time = 48.0 * 1.7 = 81.6 (Table 7.4 of ALMA Technical Handbook 9.1.1)
-            self.simtp_n1097sim(singledish_res="3.04arcsec",totaltime="81.6h",totaltimetint="81p6h")
-
-        if do_simlst_n1097im==True:
-            self.simlst_n1097sim()
-
         if do_imaging_n1097sim==True:
             #self.phangs_pipeline_imaging(self.project_n1097,"7m",self.project_n1097+"_2p0h")
             #self.phangs_pipeline_imaging(self.project_n1097,"7m",self.project_n1097+"_8p0h")
             self.phangs_pipeline_imaging(self.project_n1097,"7m",self.project_n1097+"_48p0h")
+
+        if do_simTP_n1097im==True:
+            # TP integration time = 48.0 * 1.7 = 81.6 (Table 7.4 of ALMA Technical Handbook 9.1.1)
+            self.simtp_n1097sim(singledish_res="3.04arcsec",totaltime="81.6h",totaltimetint="81p6h")
+
+        if do_simLST_n1097im==True:
+            self.simlst_n1097sim()
 
         # ngc1068sim
         if do_template_n1068sim==True:
             self.prepare_template_n1068sim()
 
         if do_simint_n1068im==True:
-            self.simaca_n1068sim(totaltime="2.0h",totaltimetint="2p0h")
-            #self.simaca_n1068im(totaltime="8.0h",totaltimetint="8p0h")
+            self.simaca_n1068sim(totaltime="2.0h",totaltimetint="2p0h") # imsize too large! manually change it!
+            #self.simaca_n1068im(totaltime="8.0h",totaltimetint="8p0h") # imsize too large! manually change it!
 
         if do_imaging_n1068sim==True:
             self.phangs_pipeline_imaging(self.project_n1068,"12m",self.project_n1068+"_2p0h")
