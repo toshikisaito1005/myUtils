@@ -591,6 +591,7 @@ class ToolsLSTSim():
         taskname = self.modname + sys._getframe().f_code.co_name
         check_first(self.dir_ready+"inputs/"+self.n1097_template_fullspec,taskname)
 
+        """
         # ACA LST sim at 492.16065100 GHz
         # 3.04 arcsec resolution
         # "TP" sensitivity at 492.16065100 GHz based on ASC => same noise in K units (scaled by dish size when Jy/beam units)
@@ -605,6 +606,20 @@ class ToolsLSTSim():
         # calc sensitivity per pointing
         singledish_noise_per_pointing = singledish_noise * np.sqrt(num_pointing)
         singledish_noise_per_pointing_K = 1.222e6 * float(singledish_res.replace("arcsec",""))**-2 * self.observed_freq**-2 * singledish_noise_per_pointing
+        """
+
+        # calc pointing number
+        header       = imhead(self.dir_ready+"inputs/"+self.n1097_template_fullspec,mode="list")
+        area_in_as   = (header["shape"][0]*header["cdelt2"]*3600*180/np.pi) * (header["shape"][1]*header["cdelt2"]*3600*180/np.pi)
+        one_hex_as   = (float(singledish_res.replace("arcsec",""))/4.0)**2 * 6/np.sqrt(3) # hex with 1/4-beam length
+        num_pointing = int(np.ceil(area_in_as / one_hex_as))
+
+        # tinteg per pointing
+        # sensitivity at 492.16065100 GHz based on ASC (1hr = 3.033450239598523 Jy/beam)
+        tinteg_per_pointing = float(totaltime.replace("h","")) / num_pointing
+        singledish_noise_per_pointing = 3.033450239598523 / 1000. / tinteg_per_pointing**2
+        singledish_noise_per_pointing_K = 1.222e6 * float(singledish_res.replace("arcsec",""))**-2 * self.observed_freq**-2 * singledish_noise_per_pointing
+
 
         print("### LST observations with Tinteg     = use LST sensitivity calculator")
         print("# outputname = " + self.n1097_lstimage_fullspec.replace(".image","_"+totaltimetint+".image"))
@@ -640,21 +655,19 @@ class ToolsLSTSim():
         taskname = self.modname + sys._getframe().f_code.co_name
         check_first(self.dir_ready+"inputs/"+self.n1097_template_fullspec,taskname)
 
-        # ACA TP sim at 492.16065100 GHz
-        # 11.8 arcsec resolution
-        # sensitivity at 492.16065100 GHz based on ASC (1hr = 3.033450239598523 Jy/beam)
-        singledish_noise = 3.033450239598523 / 1000. / np.sqrt(float(totaltime.replace("h","")))
-
         # calc pointing number
         header       = imhead(self.dir_ready+"inputs/"+self.n1097_template_fullspec,mode="list")
         area_in_as   = (header["shape"][0]*header["cdelt2"]*3600*180/np.pi) * (header["shape"][1]*header["cdelt2"]*3600*180/np.pi)
         one_hex_as   = (float(singledish_res.replace("arcsec",""))/4.0)**2 * 6/np.sqrt(3) # hex with 1/4-beam length
         num_pointing = int(np.ceil(area_in_as / one_hex_as))
 
-        # calc sensitivity per pointing
-        singledish_noise_per_pointing = singledish_noise * np.sqrt(num_pointing)
+        # tinteg per pointing
+        # sensitivity at 492.16065100 GHz based on ASC (1hr = 3.033450239598523 Jy/beam)
+        tinteg_per_pointing = float(totaltime.replace("h","")) / num_pointing
+        singledish_noise_per_pointing = 3.033450239598523 / 1000. / tinteg_per_pointing**2
         singledish_noise_per_pointing_K = 1.222e6 * float(singledish_res.replace("arcsec",""))**-2 * self.observed_freq**-2 * singledish_noise_per_pointing
 
+        # ACA TP sim at 492.16065100 GHz
         print("### ACA TP observations with Tinteg  = " + totaltime)
         print("# outputname = " + self.n1097_sdimage_fullspec.replace(".image","_"+totaltimetint+".image"))
         print("# sensitivity per pointing (Jy/beam) = " + str(np.round(singledish_noise_per_pointing,5)))
