@@ -267,7 +267,8 @@ class ToolsLSTSim():
 
         if do_simLST_n1097im==True:
             self.simlst_n1097sim(
-                singledish_res=lst_beam_n1097sim,
+                lst_res=lst_beam_n1097sim,
+                tp_res=tp_beam_n1097sim,
                 totaltimetint=totaltimetint_n1097sim_7m,
                 dryrun=dryrun_simSD,
                 )
@@ -571,7 +572,7 @@ class ToolsLSTSim():
     # simlst_n1097sim #
     ###################
 
-    def simlst_n1097sim(self,singledish_res="3.04arcsec",totaltimetint="2p0h",dryrun=True):
+    def simlst_n1097sim(self,lst_res="3.04arcsec",tp_res="11.8arcsec",totaltimetint="2p0h",dryrun=True):
         """
         The totaltime is the ACA TP integration time to calculate TP achievable sensitivity.
         This module will calculate and map the same sensitivity (in K, not Jy/beam) using LST.
@@ -582,13 +583,13 @@ class ToolsLSTSim():
 
         image_7m = self.dir_ready + "outputs/imaging/"+self.project_n1097+"_"+totaltimetint + "/"+self.project_n1097+"_"+totaltimetint+"_7m_ci10_prev.image"
         rms_7m = 0.08273 # measure_rms(image_7m, snr=3.0,rms_or_p84 = "p84")
-        rms_tp = rms_7m * 1.7 * 12.**2 / 50.**2
-        rms_tp_K = 1.222e6 * float(singledish_res.replace("arcsec",""))**-2 * self.observed_freq**-2 * rms_tp
+        rms_tp = rms_7m * 1.7 * float(lst_res.replace("arcsec",""))**2 / float(tp_res.replace("arcsec",""))**2
+        rms_tp_K = 1.222e6 * float(lst_res.replace("arcsec",""))**-2 * self.observed_freq**-2 * rms_tp
 
         # calc pointing number
         header       = imhead(self.dir_ready+"inputs/"+self.n1097_template_fullspec,mode="list")
         area_in_as   = (header["shape"][0]*header["cdelt2"]*3600*180/np.pi) * (header["shape"][1]*header["cdelt2"]*3600*180/np.pi)
-        one_hex_as   = (float(singledish_res.replace("arcsec",""))/4.0)**2 * 6/np.sqrt(3) # hex with 1/4-beam length
+        one_hex_as   = (float(lst_res.replace("arcsec",""))/4.0)**2 * 6/np.sqrt(3) # hex with 1/4-beam length
         num_pointing = int(np.ceil(area_in_as / one_hex_as))
 
         # ACA TP sim at 492.16065100 GHz
@@ -596,7 +597,7 @@ class ToolsLSTSim():
         print("# achieved 7m sensitivity (Jy/b)     = " + str(np.round(rms_7m,5)))
         print("# required LST sensntivity (Jy/b)    = " + str(np.round(rms_tp,5)))
         print("# sensitivity per pointing (K)       = " + str(np.round(rms_tp_K,5)))
-        print("# beam size (arcsec)                 = " + str(np.round(float(singledish_res.replace("arcsec","")),2)))
+        print("# beam size (arcsec)                 = " + str(np.round(float(lst_res.replace("arcsec","")),2)))
         print("# number of pointing                 = " + str(num_pointing))
         print("# survey area (arcsec^2)             = " + str(int(area_in_as)))
         print("#")
