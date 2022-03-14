@@ -648,7 +648,7 @@ class ToolsLSTSim():
         taskname = self.modname + sys._getframe().f_code.co_name
         check_first(self.dir_ready+"inputs/"+self.n1097_template_fullspec,taskname)
 
-        image_7m = self.dir_ready + "imaging/outputs/"+self.project_n1097+"_"+totaltimetint + "/"+self.project_n1097+"_"+totaltimetint+"_7m_ci10.image"
+        image_7m = self.dir_ready + "outputs/imaging/"+self.project_n1097+"_"+totaltimetint + "/"+self.project_n1097+"_"+totaltimetint+"_7m_ci10.image"
         print(image_7m)
 
         """ failed to calculate SD sensitivity based on 7m observing time...
