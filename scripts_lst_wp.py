@@ -645,7 +645,7 @@ class ToolsLSTSim():
         check_first(self.dir_ready+"inputs/"+self.n1097_template_fullspec,taskname)
 
         image_7m = self.dir_ready + "outputs/imaging/"+self.project_n1097+"_"+totaltimetint + "/"+self.project_n1097+"_"+totaltimetint+"_7m_ci10_prev.image"
-        rms_7m = measure_rms(imagename,snr=3.0,rms_or_p84 = "p84")
+        rms_7m = measure_rms(image_7m, snr=3.0,rms_or_p84 = "p84")
         print("# rms_7m = " + str(rms_7m))
 
         """ failed to calculate SD sensitivity based on 7m observing time...
