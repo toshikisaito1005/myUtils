@@ -231,6 +231,8 @@ class ToolsLSTSim():
         self.observed_freq = observed_freq
         self.incenter      = observed_freq
 
+        tinteg_n1097sim = float(tinteg_n1097sim)
+
         # n1097sim_7m from tinteg_n1097sim
         totaltime_n1097sim_7m = str(float(tinteg_n1097sim))+"h"
         totaltimetint_n1097sim_7m = totaltime_n1097sim_7m.replace(".","p")
