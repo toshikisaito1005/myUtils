@@ -392,7 +392,7 @@ def simtp(
     # Cleanup
     os.system("rm -rf " + sdimage_fullspec+".temp")
     os.system("rm -rf " + sdimage_fullspec+".temp2")
-    os.system("rm -rf " + sdimage_fullspec+".temp3")
+    os.system("rm -rf " + sdnoise_image)
     os.system("rm -rf " + sdnoise_image+".temp")
     os.system("rm -rf " + sdnoise_image+".temp2")
 
