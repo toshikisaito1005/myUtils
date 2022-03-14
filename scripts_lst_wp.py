@@ -206,13 +206,16 @@ class ToolsLSTSim():
     def run_sim_lst_alma(
         self,
         # ngc1097sim
-        do_template_n1097sim = False, # create template cube for simobserve
+        tinteg_n1097sim      = 48,
+        observed_freq        = 492.16065100, # GHz, determine LST and TP beam sizes
+        do_template_n1097sim = False, # create "wide" template cube for mapping simobserve
         do_simint_n1097im    = False, # sim ACA band 8 for big ngc1097sim
         do_imaging_n1097sim  = False, # imaging sim ms
-        do_simTP_n1097im     = False, # sim ACA TP
-        do_simLST_n1097im    = False, # sim LST
+        do_simTP_n1097im     = False, # sim ACA TP alone
+        do_simLST_n1097im    = False, # sim LST alone
         # ngc1068sim
-        do_template_n1068sim = False, # create template cube for simobserve
+        tinteg_n1068sim      = 2,
+        do_template_n1068sim = False, # create "compact" template cube for long-baseline simobserve
         do_simint_n1068im    = False, # sim C-10 band 8 for small ngc1068sim
         do_imaging_n1068sim  = False, # imaging sim ms
         # plot
@@ -224,38 +227,71 @@ class ToolsLSTSim():
         This method runs all the methods which will create figures in the white paper.
         """
 
+        # n1097sim_7m from tinteg_n1097sim
+        totaltime_n1097sim_7m = str(float(tinteg_n1097sim))+"h"
+        totaltimetint_n1097sim_7m = totaltime_n1097sim_7m.replace(".","p")
+
+        # n1097sim_aca_tp from tinteg_n1097sim
+        # TP integration time = 7m time * 1.7 (Table 7.4 of ALMA Technical Handbook 9.1.1)
+        totaltime_n1097sim_tp = str(np.round(tinteg_n1097sim * 1.7, 1))+"h"
+        totaltimetint_n1097sim_tp  = totaltime_n1097sim_tp.replace(".","p")
+        totaltimetint_n1097sim_lst = totaltime_n1097sim_tp.replace(".","tpp")
+
+        # determine LST and TP beam sizes
+        lst_beam_n1097sim = str(12.979 * 115.27120 / observed_freq)+"arcsec"
+        tp_beam_n1097sim  = str(50.6   * 115.27120 / observed_freq)+"arcsec"
+
         # ngc1097sim
         if do_template_n1097sim==True:
             self.prepare_template_n1097sim()
 
         if do_simint_n1097im==True:
-            #self.simaca_n1097im(totaltime="2.0h",totaltimetint="2p0h")
-            #self.simaca_n1097im(totaltime="8.0h",totaltimetint="8p0h")
-            self.simaca_n1097sim(totaltime="48.0h",totaltimetint="48p0h")
+            self.simaca_n1097sim(
+                totaltime=totaltime_n1097sim_7m,
+                totaltimetint=totaltimetint_n1097sim_7m,
+                )
 
         if do_imaging_n1097sim==True:
-            #self.phangs_pipeline_imaging(self.project_n1097,"7m",self.project_n1097+"_2p0h")
-            #self.phangs_pipeline_imaging(self.project_n1097,"7m",self.project_n1097+"_8p0h")
-            self.phangs_pipeline_imaging(self.project_n1097,"7m",self.project_n1097+"_48p0h")
+            self.phangs_pipeline_imaging(
+                self.project_n1097,
+                "7m",
+                self.project_n1097+"_"+totaltimetint_n1097sim_7m,
+                )
 
         if do_simTP_n1097im==True:
-            # TP integration time = 48.0 * 1.7 = 81.6 (Table 7.4 of ALMA Technical Handbook 9.1.1)
-            self.simtp_n1097sim(singledish_res="3.04arcsec",totaltime="81.6h",totaltimetint="81p6h")
+            self.simtp_n1097sim(
+                singledish_res=tp_beam_n1097sim,
+                totaltime=totaltime_n1097sim_tp,
+                totaltimetint=totaltimetint_n1097sim_tp,
+                )
 
         if do_simLST_n1097im==True:
-            self.simlst_n1097sim(singledish_res="3.04arcsec",totaltime="81.6h",totaltimetint="81p6tph")
+            self.simlst_n1097sim(
+                singledish_res=lst_beam_n1097sim,
+                totaltime=totaltime_n1097sim_tp,
+                totaltimetint=totaltimetint_n1097sim_lst,
+                )
+
+        # n1097sim_7m from tinteg_n1097sim
+        totaltime_n1068sim_12m = str(float(tinteg_n1068sim))+"h"
+        totaltimetint_n1068sim_12m = totaltime_n1068sim_12m.replace(".","p")
 
         # ngc1068sim
         if do_template_n1068sim==True:
             self.prepare_template_n1068sim()
 
         if do_simint_n1068im==True:
-            self.simaca_n1068sim(totaltime="2.0h",totaltimetint="2p0h") # imsize too large! manually change it!
-            #self.simaca_n1068im(totaltime="8.0h",totaltimetint="8p0h") # imsize too large! manually change it!
+            self.simaca_n1068sim(
+            totaltime=totaltime_n1068sim_12m,
+            totaltimetint=totaltimetint_n1068sim_12m,
+            ) # imsize too large! manually change it!
 
         if do_imaging_n1068sim==True:
-            self.phangs_pipeline_imaging(self.project_n1068,"12m",self.project_n1068+"_2p0h")
-            #self.phangs_pipeline_imaging(self.project_n1068,"12m",self.project_n1068+"_4p0h")
+            self.phangs_pipeline_imaging(
+                self.project_n1068,
+                "12m",
+                self.project_n1068+"_"+totaltimetint_n1068sim_12m,
+                )
 
         # plot
         if plot_config==True:
@@ -427,56 +463,6 @@ class ToolsLSTSim():
         os.system("rm -rf " + self.outpng_uv_alma_lst1)
         plt.savefig(self.outpng_uv_alma_lst1, dpi=self.fig_dpi)
 
-    ##################
-    # _get_baselines #
-    ##################
-
-    def _get_baselines(self,x,y,decl=60,tinteg=0):
-        """
-        """
-        latitude = np.radians(-67.755) # degree, alma site
-
-        list_dist  = []
-        list_theta = []
-        list_phi   = []
-        combinations = itertools.product(x,y)
-        for comb in combinations:
-            this_vec = comb[0] - comb[1]
-
-            this_d = np.linalg.norm(this_vec)
-            list_dist.append(this_d)
-
-            this_a = np.degrees(np.arcsin(this_vec[2] / this_d))
-            list_theta.append(this_a)
-
-            this_h = np.degrees(np.arctan2(this_vec[0], this_vec[1]))
-            list_phi.append(this_h)
-
-        l = np.array(list_dist)
-        t = np.radians( np.array(list_theta) )
-        p = np.radians( np.array(list_phi) )
-        dec = np.radians(decl)
-
-        X = l*(np.cos(latitude)*np.sin(t) - np.sin(latitude)*np.cos(t)*np.cos(p)) # l*np.sin(t)*np.cos(p)
-        Y = l*np.cos(t)*np.sin(p)
-        Z = l*(np.sin(latitude)*np.sin(t) + np.cos(latitude)*np.cos(t)*np.cos(p)) # l*np.cos(t)
-
-        # output
-        list_u = []
-        list_v = []
-        trange = np.r_[np.arange(-tinteg/24.*360/2.0, tinteg/24.*360/2.0, 0.1), tinteg/24.*360/2.0]
-        for this_t in trange:
-            H = np.radians(this_t)
- 
-            this_u = X*np.sin(H) + Y*np.cos(H)
-            this_v = -X*np.sin(dec)*np.cos(H) + Y*np.sin(dec)*np.sin(H) + Z*np.cos(dec)
-
-            # output
-            list_u = np.r_[list_u, this_u]
-            list_v = np.r_[list_v, this_v]
-
-        return list_u, list_v
-
     ###########################
     # phangs_pipeline_imaging #
     ###########################
@@ -608,6 +594,12 @@ class ToolsLSTSim():
         # calc sensitivity per pointing
         singledish_noise_per_pointing = singledish_noise * np.sqrt(num_pointing)
 
+        print("### LST observations with Tinteg    = " + totaltime)
+        print("# achievable per pointing (Jy/beam) = " + str(singledish_noise_per_pointing))
+        print("# beam size (arcsec)                = " + singledish_res)
+        print("# number of pointing                = " + str(num_pointing))
+        print("# survey area (arcsec)              = " + str(int(area_in_as)))
+
         simtp(
             working_dir=self.dir_ready,
             template_fullspec=self.n1097_template_fullspec,
@@ -630,20 +622,23 @@ class ToolsLSTSim():
 
         # ACA TP sim at 492.16065100 GHz
         # 11.8 arcsec resolution
-        # sensitivity at 492.16065100 GHz based on ASC
+        # sensitivity at 492.16065100 GHz based on ASC (1hr = 3.033450239598523 Jy/beam)
         singledish_noise = 3.033450239598523 / 1000. / np.sqrt(float(totaltime.replace("h","")))
-        print("# singledish_noise (Jy/beam) = " + str(singledish_noise))
 
         # calc pointing number
         header       = imhead(self.dir_ready+"inputs/"+self.n1097_template_fullspec,mode="list")
         area_in_as   = (header["shape"][0]*header["cdelt2"]*3600*180/np.pi) * (header["shape"][1]*header["cdelt2"]*3600*180/np.pi)
-        one_hex_as   = (float(singledish_res.replace("arcsec",""))/4.0)**2 * 6/np.sqrt(3) # hex with half-beam length
-        num_pointing = np.ceil(area_in_as / one_hex_as)
+        one_hex_as   = (float(singledish_res.replace("arcsec",""))/4.0)**2 * 6/np.sqrt(3) # hex with 1/4-beam length
+        num_pointing = int(np.ceil(area_in_as / one_hex_as))
 
         # calc sensitivity per pointing
         singledish_noise_per_pointing = singledish_noise * np.sqrt(num_pointing)
-        print("# singledish_noise_per_pointing (Jy/beam) = " + str(singledish_noise_per_pointing))
-        print("# num_pointing = " + str(num_pointing))
+
+        print("### ACA-TP observations with Tinteg = " + totaltime)
+        print("# achievable per pointing (Jy/beam) = " + str(singledish_noise_per_pointing))
+        print("# beam size (arcsec)                = " + singledish_res)
+        print("# number of pointing                = " + str(num_pointing))
+        print("# survey area (arcsec)              = " + str(int(area_in_as)))
 
         simtp(
             working_dir=self.dir_ready,
@@ -766,6 +761,56 @@ class ToolsLSTSim():
             pa=self.image_roration, # rotation angle
             shrink=0.1,
             )
+
+    ##################
+    # _get_baselines #
+    ##################
+
+    def _get_baselines(self,x,y,decl=60,tinteg=0):
+        """
+        """
+        latitude = np.radians(-67.755) # degree, alma site
+
+        list_dist  = []
+        list_theta = []
+        list_phi   = []
+        combinations = itertools.product(x,y)
+        for comb in combinations:
+            this_vec = comb[0] - comb[1]
+
+            this_d = np.linalg.norm(this_vec)
+            list_dist.append(this_d)
+
+            this_a = np.degrees(np.arcsin(this_vec[2] / this_d))
+            list_theta.append(this_a)
+
+            this_h = np.degrees(np.arctan2(this_vec[0], this_vec[1]))
+            list_phi.append(this_h)
+
+        l = np.array(list_dist)
+        t = np.radians( np.array(list_theta) )
+        p = np.radians( np.array(list_phi) )
+        dec = np.radians(decl)
+
+        X = l*(np.cos(latitude)*np.sin(t) - np.sin(latitude)*np.cos(t)*np.cos(p)) # l*np.sin(t)*np.cos(p)
+        Y = l*np.cos(t)*np.sin(p)
+        Z = l*(np.sin(latitude)*np.sin(t) + np.cos(latitude)*np.cos(t)*np.cos(p)) # l*np.cos(t)
+
+        # output
+        list_u = []
+        list_v = []
+        trange = np.r_[np.arange(-tinteg/24.*360/2.0, tinteg/24.*360/2.0, 0.1), tinteg/24.*360/2.0]
+        for this_t in trange:
+            H = np.radians(this_t)
+ 
+            this_u = X*np.sin(H) + Y*np.cos(H)
+            this_v = -X*np.sin(dec)*np.cos(H) + Y*np.sin(dec)*np.sin(H) + Z*np.cos(dec)
+
+            # output
+            list_u = np.r_[list_u, this_u]
+            list_v = np.r_[list_v, this_v]
+
+        return list_u, list_v
 
     ###############
     # _create_dir #
