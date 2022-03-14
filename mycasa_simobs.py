@@ -378,8 +378,8 @@ def simtp(
     pix_as = imhead(sdimage_fullspec+'.temp2',mode="list")["cdelt2"]*3600*180/np.pi
     beam_per_pix = float(singledish_res.replace("arcsec","")) / pix_as
 
-    if beam_per_pix>=2.0:
-        imrebin(imagename=sdimage_fullspec+'.temp2',factor=[np.floor(beam_per_pix),np.floor(beam_per_pix),1],
+    if beam_per_pix/4.0>=2.0:
+        imrebin(imagename=sdimage_fullspec+'.temp2',factor=[np.floor(beam_per_pix/4.0),np.floor(beam_per_pix/4.0),1],
             outfile=sdimage_fullspec)
 
     # Cleanup
