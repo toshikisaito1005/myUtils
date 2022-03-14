@@ -263,7 +263,7 @@ class ToolsLSTSim():
         if do_simTP_n1097im==True:
             self.simtp_n1097sim(
                 singledish_res=tp_beam_n1097sim,
-                totaltime=totaltime_n1097sim_tp,
+                totaltime=totaltime_n1097sim_7m,
                 totaltimetint=totaltimetint_n1097sim_7m,
                 dryrun=dryrun_simSD,
                 )
@@ -271,7 +271,7 @@ class ToolsLSTSim():
         if do_simLST_n1097im==True:
             self.simlst_n1097sim(
                 singledish_res=lst_beam_n1097sim,
-                totaltime=totaltime_n1097sim_lst,
+                totaltime=totaltime_n1097sim_7m,
                 totaltimetint=totaltimetint_n1097sim_7m,
                 dryrun=dryrun_simSD,
                 )
