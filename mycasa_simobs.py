@@ -332,18 +332,16 @@ def simtp(
     # Make convolved versions that mimic single-dish observations #
     ###############################################################
     template_fullspec = input_dir + template_fullspec
-    sdnoise_image     = input_dir + sdnoise_image
-    sdimage_fullspec  = input_dir + sdimage_fullspec
     sdimage_fullspec  = output_dir + sdimage_fullspec
     sdnoise_image     = output_dir + sdnoise_image
 
     # result should be in Jy/beam
 
     os.system("rm -rf " + sdimage_fullspec)
-    os.system("rm -rf " + sdimage_fullspec+".temp")
+    os.system("rm -rf " + sdimage_fullspec + ".temp")
     os.system("rm -rf " + sdnoise_image)
-    os.system("rm -rf " + sdnoise_image+".temp")
-    os.system("rm -rf " + sdnoise_image+".temp2")
+    os.system("rm -rf " + sdnoise_image + ".temp")
+    os.system("rm -rf " + sdnoise_image + ".temp2")
 
     # Make one noise image at the appropriate resolution
     # (NB - noise is the same for all cases)
