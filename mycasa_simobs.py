@@ -308,6 +308,7 @@ def simtp(
     sdnoise_image,
     singledish_res="11.8arcsec", # resolution
     singledish_noise=0.102, # Jy/beam at final res
+    observed_freq=230538000000.0,
     ):
     """
     Usage:
@@ -380,11 +381,33 @@ def simtp(
 
     if beam_per_pix/4.0>=2.0:
         imrebin(imagename=sdimage_fullspec+'.temp2',factor=[np.floor(beam_per_pix/4.0),np.floor(beam_per_pix/4.0),1],
-            outfile=sdimage_fullspec)
+            outfile=sdimage_fullspec+'.temp3')
+    else:
+        os.system('cp -r '+sdimage_fullspec+'.temp2 '+sdimage_fullspec+'.temp3')
+
+    ##############################################
+    # Regrid to an expanded, finer velocity grid #
+    ##############################################
+    os.system("rm -rf " + sdimage_fullspec)
+
+    target = imregrid(imagename=sdimage_fullspec+'.temp3', template='get')
+
+    target['restfreq']=observed_freq
+    target['restfreqs']=np.array([observed_freq])
+    target['crval']=observed_freq
+
+    imregrid(
+        imagename=sdimage_fullspec+'.temp3',
+        template=target, 
+        output=sdimage_fullspec,
+        axes=[2],
+        overwrite=True,
+        )
 
     # Cleanup
     os.system("rm -rf " + sdimage_fullspec+".temp")
     os.system("rm -rf " + sdimage_fullspec+".temp2")
+    os.system("rm -rf " + sdimage_fullspec+".temp3")
     os.system("rm -rf " + sdnoise_image+".temp")
     os.system("rm -rf " + sdnoise_image+".temp2")
 

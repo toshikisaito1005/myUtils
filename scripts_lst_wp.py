@@ -614,6 +614,7 @@ class ToolsLSTSim():
                 sdnoise_image=self.n1097_lstnoise_image.replace(".image","_"+totaltimetint+"7m.image"),
                 singledish_res=lst_res,
                 singledish_noise=rms_lst, # Jy/beam at final res
+                observed_freq=self.observed_freq*1e9,
                 )
         else:
             print("# skipped simtp as dryrun==True")
@@ -672,6 +673,7 @@ class ToolsLSTSim():
                 sdnoise_image=self.n1097_sdnoise_image.replace(".image","_"+totaltimetint+"7m.image"),
                 singledish_res=singledish_res,
                 singledish_noise=rms_tp, # Jy/beam at final res
+                observed_freq=self.observed_freq*1e9,
                 )
         else:
             print("# skipped simtp as dryrun==True")
