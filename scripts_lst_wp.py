@@ -243,7 +243,7 @@ class ToolsLSTSim():
             self.simtp_n1097sim(singledish_res="3.04arcsec",totaltime="81.6h",totaltimetint="81p6h")
 
         if do_simLST_n1097im==True:
-            self.simlst_n1097sim()
+            self.simlst_n1097sim(singledish_res="3.04arcsec",totaltime="81.6h",totaltimetint="81p6tph")
 
         # ngc1068sim
         if do_template_n1068sim==True:
@@ -605,14 +605,15 @@ class ToolsLSTSim():
         one_hex_as   = (float(singledish_res.replace("arcsec",""))/2.0)**2 * 6/np.sqrt(3) # hex with half-beam length
         num_pointing = np.ceil(area_in_as / one_hex_as)
 
-        singledish_noise_per_pointing = singledish_noise / num_pointing
+        # calc sensitivity per pointing
+        singledish_noise_per_pointing = singledish_noise * np.sqrt(num_pointing)
 
         simtp(
             working_dir=self.dir_ready,
             template_fullspec=self.n1097_template_fullspec,
             sdimage_fullspec=self.n1097_lstimage_fullspec.replace(".image","_"+totaltimetint+".image"),
             sdnoise_image=self.n1097_lstnoise_image.replace(".image","_"+totaltimetint+".image"),
-            singledish_res=singledish_res, # resolution
+            singledish_res=singledish_res,
             singledish_noise=singledish_noise_per_pointing, # Jy/beam at final res
             )
 
@@ -631,21 +632,25 @@ class ToolsLSTSim():
         # 11.8 arcsec resolution
         # sensitivity at 492.16065100 GHz based on ASC
         singledish_noise = 3.033450239598523 / 1000. / np.sqrt(float(totaltime.replace("h","")))
+        print("# singledish_noise (Jy/beam) = " + str(singledish_noise))
 
         # calc pointing number
         header       = imhead(self.dir_ready+"inputs/"+self.n1097_template_fullspec,mode="list")
         area_in_as   = (header["shape"][0]*header["cdelt2"]*3600*180/np.pi) * (header["shape"][1]*header["cdelt2"]*3600*180/np.pi)
-        one_hex_as   = (float(singledish_res.replace("arcsec",""))/2.0)**2 * 6/np.sqrt(3) # hex with half-beam length
+        one_hex_as   = (float(singledish_res.replace("arcsec",""))/4.0)**2 * 6/np.sqrt(3) # hex with half-beam length
         num_pointing = np.ceil(area_in_as / one_hex_as)
 
-        singledish_noise_per_pointing = singledish_noise / num_pointing
+        # calc sensitivity per pointing
+        singledish_noise_per_pointing = singledish_noise * np.sqrt(num_pointing)
+        print("# singledish_noise_per_pointing (Jy/beam) = " + str(singledish_noise_per_pointing))
+        print("# num_pointing = " + str(num_pointing))
 
         simtp(
             working_dir=self.dir_ready,
             template_fullspec=self.n1097_template_fullspec,
             sdimage_fullspec=self.n1097_sdimage_fullspec.replace(".image","_"+totaltimetint+".image"),
             sdnoise_image=self.n1097_sdnoise_image.replace(".image","_"+totaltimetint+".image"),
-            singledish_res=singledish_res, # resolution
+            singledish_res=singledish_res,
             singledish_noise=singledish_noise_per_pointing, # Jy/beam at final res
             )
 
