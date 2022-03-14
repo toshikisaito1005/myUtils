@@ -273,11 +273,13 @@ class ToolsLSTSim():
                 "12m",
                 self.project_n1068+"_2p0h",
                 )
+            """
             self.phangs_pipeline_imaging(
                 self.project_n1068,
                 "12m",
                 self.project_n1068+"_8p0h",
                 )
+            """
 
         # plot
         if plot_config==True:
@@ -588,6 +590,7 @@ class ToolsLSTSim():
             incenter=self.incenter,
             )
 
+        """
         run_simobserve(
             working_dir=self.dir_ready,
             template=self.n1068_template_fullspec,
@@ -596,6 +599,7 @@ class ToolsLSTSim():
             totaltime="8.0h",
             incenter=self.incenter,
             )
+        """
 
     #############################
     # prepare_template_n1097sim #
