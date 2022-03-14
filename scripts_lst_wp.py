@@ -96,7 +96,6 @@ class ToolsLSTSim():
         self.dir_other    = self.dir_proj + self._read_key("dir_other")
         self.dir_products = self.dir_proj + self._read_key("dir_products")
         self.dir_final    = self.dir_proj + self._read_key("dir_final")
-        self.dir_final    = self.dir_proj + self._read_key("dir_final")
 
         self._create_dir(self.dir_ready)
         self._create_dir(self.dir_products)
@@ -627,6 +626,8 @@ class ToolsLSTSim():
 
         taskname = self.modname + sys._getframe().f_code.co_name
         check_first(self.dir_ready+self.n1097_template_fullspec,taskname)
+
+        print(self.dir_ready+self.n1097_template_fullspec)
 
         # ACA TP sim at 492.16065100 GHz
         # 11.8 arcsec resolution
