@@ -205,7 +205,7 @@ class ToolsLSTSim():
     def run_sim_lst_alma(
         self,
         # ngc1097sim
-        tinteg_n1097sim      = 48,
+        tinteg_n1097sim      = 48, # 7m total observing time
         observed_freq        = 492.16065100, # GHz, determine LST and TP beam sizes
         do_template_n1097sim = False, # create "wide" template cube for mapping simobserve
         do_simint_n1097im    = False, # sim ACA band 8 for big ngc1097sim
@@ -227,6 +227,7 @@ class ToolsLSTSim():
         This method runs all the methods which will create figures in the white paper.
         """
 
+        # set observe frequency
         self.observed_freq = observed_freq
         self.incenter      = observed_freq
 
@@ -234,15 +235,18 @@ class ToolsLSTSim():
         totaltime_n1097sim_7m = str(float(tinteg_n1097sim))+"h"
         totaltimetint_n1097sim_7m = totaltime_n1097sim_7m.replace(".","p")
 
+        # determine LST and TP beam sizes
+        lst_beam_n1097sim       = str(12.979 * 115.27120 / self.observed_freq)+"arcsec"
+        lst_beam_n1097sim_float = 12.979 * 115.27120 / self.observed_freq
+        tp_beam_n1097sim        = str(50.6   * 115.27120 / self.observed_freq)+"arcsec"
+        tp_beam_n1097sim_float  = 50.6 * 115.27120 / self.observed_freq
+
         # n1097sim_aca_tp from tinteg_n1097sim
         # TP integration time = 7m time * 1.7 (Table 7.4 of ALMA Technical Handbook 9.1.1)
-        totaltime_n1097sim_tp = str(np.round(tinteg_n1097sim * 1.7, 1))+"h"
-        totaltimetint_n1097sim_tp  = totaltime_n1097sim_tp.replace(".","p")
-        totaltimetint_n1097sim_lst = totaltime_n1097sim_tp.replace(".","tpp")
-
-        # determine LST and TP beam sizes
-        lst_beam_n1097sim = str(12.979 * 115.27120 / self.observed_freq)+"arcsec"
-        tp_beam_n1097sim  = str(50.6   * 115.27120 / self.observed_freq)+"arcsec"
+        totaltime_n1097sim_tp  = str(np.round(tinteg_n1097sim * 1.7 * (tp_beam_n1097sim_float/7.)**2, 1))+"h"
+        totaltime_n1097sim_lst = str(np.round(tinteg_n1097sim * 1.7 * (lst_beam_n1097sim_float/7.)**2, 1))+"h"
+        totaltimetint_n1097sim_tp  = (str(np.round(tinteg_n1097sim, 1))+"h7m_"+totaltime_n1097sim_tp+"tp").replace(".","p")
+        totaltimetint_n1097sim_lst = (str(np.round(tinteg_n1097sim, 1))+"h7m_"+totaltime_n1097sim_lst+"lst").replace(".","p")
 
         # ngc1097sim
         if do_template_n1097sim==True:
@@ -272,7 +276,7 @@ class ToolsLSTSim():
         if do_simLST_n1097im==True:
             self.simlst_n1097sim(
                 singledish_res=lst_beam_n1097sim,
-                totaltime=totaltime_n1097sim_tp,
+                totaltime=totaltime_n1097sim_lst,
                 totaltimetint=totaltimetint_n1097sim_lst,
                 dryrun=dryrun_simSD,
                 )
@@ -601,6 +605,7 @@ class ToolsLSTSim():
         singledish_noise_per_pointing_K = 1.222e6 * float(singledish_res.replace("arcsec",""))**-2 * self.observed_freq**-2 * singledish_noise_per_pointing
 
         print("### LST observations with Tinteg     = use LST sensitivity calculator")
+        print("# outputname = " + self.n1097_lstimage_fullspec.replace(".image","_"+totaltimetint+".image"))
         print("# sensitivity per pointing (Jy/beam) = " + str(np.round(singledish_noise_per_pointing,5)))
         print("# sensitivity per pointing (K)       = " + str(np.round(singledish_noise_per_pointing_K,5)))
         print("# beam size (arcsec)                 = " + str(np.round(float(singledish_res.replace("arcsec","")),2)))
@@ -649,6 +654,7 @@ class ToolsLSTSim():
         singledish_noise_per_pointing_K = 1.222e6 * float(singledish_res.replace("arcsec",""))**-2 * self.observed_freq**-2 * singledish_noise_per_pointing
 
         print("### ACA TP observations with Tinteg  = " + totaltime)
+        print("# outputname = " + self.n1097_sdimage_fullspec.replace(".image","_"+totaltimetint+".image"))
         print("# sensitivity per pointing (Jy/beam) = " + str(np.round(singledish_noise_per_pointing,5)))
         print("# sensitivity per pointing (K)       = " + str(np.round(singledish_noise_per_pointing_K,5)))
         print("# beam size (arcsec)                 = " + str(np.round(float(singledish_res.replace("arcsec","")),2)))
