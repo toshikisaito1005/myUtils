@@ -211,6 +211,7 @@ class ToolsLSTSim():
         do_template_n1097sim = False, # create "wide" template cube for mapping simobserve
         do_simint_n1097im    = False, # sim ACA band 8 for big ngc1097sim
         do_imaging_n1097sim  = False, # imaging sim ms
+        dryrun_simSD         = False, # just output SD mapping parameters
         do_simTP_n1097im     = False, # sim ACA TP alone
         do_simLST_n1097im    = False, # sim LST alone
         # ngc1068sim
@@ -263,6 +264,7 @@ class ToolsLSTSim():
                 singledish_res=tp_beam_n1097sim,
                 totaltime=totaltime_n1097sim_tp,
                 totaltimetint=totaltimetint_n1097sim_tp,
+                dryrun=dryrun_simSD,
                 )
 
         if do_simLST_n1097im==True:
@@ -270,6 +272,7 @@ class ToolsLSTSim():
                 singledish_res=lst_beam_n1097sim,
                 totaltime=totaltime_n1097sim_tp,
                 totaltimetint=totaltimetint_n1097sim_lst,
+                dryrun=dryrun_simSD,
                 )
 
         # n1097sim_7m from tinteg_n1097sim
@@ -583,31 +586,36 @@ class ToolsLSTSim():
         # ACA LST sim at 492.16065100 GHz
         # 3.04 arcsec resolution
         # "TP" sensitivity at 492.16065100 GHz based on ASC => same noise in K units (scaled by dish size when Jy/beam units)
-        singledish_noise = 3.033450239598523 / 1000. / np.sqrt(float(totaltime.replace("h",""))) * (50.**2 / 12.*2)
+        singledish_noise = 3.033450239598523 / 1000. / np.sqrt(float(totaltime.replace("h",""))) * (50.**2 / 12.**2)
 
         # calc pointing number
         header       = imhead(self.dir_ready+"inputs/"+self.n1097_template_fullspec,mode="list")
         area_in_as   = (header["shape"][0]*header["cdelt2"]*3600*180/np.pi) * (header["shape"][1]*header["cdelt2"]*3600*180/np.pi)
         one_hex_as   = (float(singledish_res.replace("arcsec",""))/2.0)**2 * 6/np.sqrt(3) # hex with half-beam length
-        num_pointing = np.ceil(area_in_as / one_hex_as)
+        num_pointing = str(np.ceil(area_in_as / one_hex_as))
 
         # calc sensitivity per pointing
         singledish_noise_per_pointing = singledish_noise * np.sqrt(num_pointing)
 
-        print("### LST observations with Tinteg    = " + totaltime)
-        print("# achievable per pointing (Jy/beam) = " + str(singledish_noise_per_pointing))
-        print("# beam size (arcsec)                = " + singledish_res)
-        print("# number of pointing                = " + str(num_pointing))
-        print("# survey area (arcsec)              = " + str(int(area_in_as)))
+        print("### LST observations with Tinteg     = " + totaltime)
+        print("# sensitivity per pointing (Jy/beam) = " + str(np.round(singledish_noise_per_pointing),5))
+        print("# beam size (arcsec)                 = " + str(np.round(float(singledish_res.replace("arcsec","")),2)))
+        print("# number of pointing                 = " + str(num_pointing))
+        print("# survey area (arcsec^2)             = " + str(int(area_in_as)))
+        print("#")
 
-        simtp(
-            working_dir=self.dir_ready,
-            template_fullspec=self.n1097_template_fullspec,
-            sdimage_fullspec=self.n1097_lstimage_fullspec.replace(".image","_"+totaltimetint+".image"),
-            sdnoise_image=self.n1097_lstnoise_image.replace(".image","_"+totaltimetint+".image"),
-            singledish_res=singledish_res,
-            singledish_noise=singledish_noise_per_pointing, # Jy/beam at final res
-            )
+        # run
+        if dryrun==False:
+            simtp(
+                working_dir=self.dir_ready,
+                template_fullspec=self.n1097_template_fullspec,
+                sdimage_fullspec=self.n1097_lstimage_fullspec.replace(".image","_"+totaltimetint+".image"),
+                sdnoise_image=self.n1097_lstnoise_image.replace(".image","_"+totaltimetint+".image"),
+                singledish_res=singledish_res,
+                singledish_noise=singledish_noise_per_pointing, # Jy/beam at final res
+                )
+        else:
+            print("# skipped simtp as dryrun==True")
 
     ##################
     # simtp_n1097sim #
@@ -634,20 +642,25 @@ class ToolsLSTSim():
         # calc sensitivity per pointing
         singledish_noise_per_pointing = singledish_noise * np.sqrt(num_pointing)
 
-        print("### ACA-TP observations with Tinteg = " + totaltime)
-        print("# achievable per pointing (Jy/beam) = " + str(singledish_noise_per_pointing))
-        print("# beam size (arcsec)                = " + singledish_res)
-        print("# number of pointing                = " + str(num_pointing))
-        print("# survey area (arcsec)              = " + str(int(area_in_as)))
+        print("### LST observations with Tinteg     = " + totaltime)
+        print("# sensitivity per pointing (Jy/beam) = " + str(np.round(singledish_noise_per_pointing),5))
+        print("# beam size (arcsec)                 = " + str(np.round(float(singledish_res.replace("arcsec","")),2)))
+        print("# number of pointing                 = " + str(num_pointing))
+        print("# survey area (arcsec^2)             = " + str(int(area_in_as)))
+        print("#")
 
-        simtp(
-            working_dir=self.dir_ready,
-            template_fullspec=self.n1097_template_fullspec,
-            sdimage_fullspec=self.n1097_sdimage_fullspec.replace(".image","_"+totaltimetint+".image"),
-            sdnoise_image=self.n1097_sdnoise_image.replace(".image","_"+totaltimetint+".image"),
-            singledish_res=singledish_res,
-            singledish_noise=singledish_noise_per_pointing, # Jy/beam at final res
-            )
+        # run
+        if dryrun==False:
+            simtp(
+                working_dir=self.dir_ready,
+                template_fullspec=self.n1097_template_fullspec,
+                sdimage_fullspec=self.n1097_sdimage_fullspec.replace(".image","_"+totaltimetint+".image"),
+                sdnoise_image=self.n1097_sdnoise_image.replace(".image","_"+totaltimetint+".image"),
+                singledish_res=singledish_res,
+                singledish_noise=singledish_noise_per_pointing, # Jy/beam at final res
+                )
+        else:
+            print("# skipped simtp as dryrun==True")
 
     ###################
     # simaca_n1097sim #
