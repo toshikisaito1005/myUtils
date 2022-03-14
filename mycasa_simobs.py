@@ -381,28 +381,13 @@ def simtp(
 
     if beam_per_pix/4.0>=2.0:
         imrebin(imagename=sdimage_fullspec+'.temp2',factor=[np.floor(beam_per_pix/4.0),np.floor(beam_per_pix/4.0),1],
-            outfile=sdimage_fullspec+'.temp3')
+            outfile=sdimage_fullspec)
     else:
-        os.system('cp -r '+sdimage_fullspec+'.temp2 '+sdimage_fullspec+'.temp3')
+        os.system('cp -r '+sdimage_fullspec+'.temp2 '+sdimage_fullspec)
 
-    ##############################################
-    # Regrid to an expanded, finer velocity grid #
-    ##############################################
-    os.system("rm -rf " + sdimage_fullspec)
-
-    target = imregrid(imagename=sdimage_fullspec+'.temp3', template='get')
-
-    target['restfreq']=observed_freq
-    target['restfreqs']=np.array([observed_freq])
-    target['crval']=observed_freq
-
-    imregrid(
-        imagename=sdimage_fullspec+'.temp3',
-        template=target, 
-        output=sdimage_fullspec,
-        axes=[2],
-        overwrite=True,
-        )
+    # put header
+    imhead(sdimage_fullspec,mode="put",hdkey="restfreq",hdvalue="4.92160651e+11")
+    imhead(sdimage_fullspec,mode="put",hdkey="crval3",hdvalue="4.92160651e+11")
 
     # Cleanup
     os.system("rm -rf " + sdimage_fullspec+".temp")
