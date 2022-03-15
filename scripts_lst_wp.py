@@ -310,7 +310,7 @@ class ToolsLSTSim():
         """
 
         taskname = self.modname + sys._getframe().f_code.co_name
-        check_first(self.n1068_template_fullspec,taskname)
+        check_first(self.torus_template_file,taskname)
 
         run_simobserve(
             working_dir=self.dir_ready,
