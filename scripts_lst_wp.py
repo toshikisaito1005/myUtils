@@ -292,7 +292,7 @@ class ToolsLSTSim():
             self.simaca_torussim(tinteg,tintegstr)
 
         if do_imaging_torussim==True:
-            ms_from = self.dir_ready + "ms/" + self.project_torus + "_12m_" + tintegstr + "/" + self.project_torus + "_12m_" + tintegstr + "."+self.config_c10+".noisy.ms"
+            ms_from = self.dir_ready + "ms/" + self.project_torus + "_12m_" + tintegstr + "/" + self.project_torus + "_12m_" + tintegstr + "."+self.config_c10.split("/")[-1]+".noisy.ms"
             ms_to   = self.dir_ready + "outputs/imaging/" + this_target + "_12m_cont.ms"
             print(ms_from)
             print(ms_to)
