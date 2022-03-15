@@ -38,6 +38,7 @@ from imhead import imhead
 from imstat import imstat
 from impbcor import impbcor
 from imrebin import imrebin
+from feather import feather
 from imregrid import imregrid
 from imsmooth import imsmooth
 from makemask import makemask
