@@ -350,27 +350,27 @@ class ToolsLSTSim():
         totalflux_in = -13.8 / 1000. / 5**2
 
         direction = "J2000 03h00m00.0s 00d00m0s" # ngc1068 decl = -00d00m47.859690204s
-        cl.done()
-        cl.addcomponent(dir=direction, flux=totalflux, fluxunit='Jy', freq='693.9640232GHz', shape="disk", 
+        mycl.done()
+        mycl.addcomponent(dir=direction, flux=totalflux, fluxunit='Jy', freq='693.9640232GHz', shape="disk", 
                         majoraxis=rmaj_out, minoraxis=rmin_out, positionangle=pa)
-        cl.addcomponent(dir=direction, flux=totalflux_in, fluxunit='Jy', freq='693.9640232GHz', shape="disk", 
+        mycl.addcomponent(dir=direction, flux=totalflux_in, fluxunit='Jy', freq='693.9640232GHz', shape="disk", 
                         majoraxis=rmaj_in, minoraxis=rmin_in, positionangle=pa)
         #
-        ia.fromshape("torus.im",[256,256,1,1],overwrite=True)
-        cs=ia.coordsys()
+        myia.fromshape("torus.im",[256,256,1,1],overwrite=True)
+        cs=myia.coordsys()
         cs.setunits(['rad','rad','','Hz'])
-        cell_rad=qa.convert(qa.quantity("0.0005arcsec"),"rad")['value']
+        cell_rad=myqa.convert(myqa.quantity("0.0005arcsec"),"rad")['value']
         cs.setincrement([-cell_rad,cell_rad],'direction')
-        cs.setreferencevalue([qa.convert("3h",'rad')['value'],qa.convert("0deg",'rad')['value']],type="direction")
+        cs.setreferencevalue([myqa.convert("3h",'rad')['value'],myqa.convert("0deg",'rad')['value']],type="direction")
         cs.setreferencevalue("693.9640232GHz",'spectral')
         cs.setincrement('1.875GHz','spectral')
-        ia.setcoordsys(cs.torecord())
-        ia.setbrightnessunit("Jy/pixel")
-        ia.modify(cl.torecord(),subtract=False)
+        myia.setcoordsys(cs.torecord())
+        myia.setbrightnessunit("Jy/pixel")
+        myia.modify(mycl.torecord(),subtract=False)
         exportfits(imagename='torus.im',fitsimage='torus.fits',overwrite=True)
 
-        ia.close()
-        cl.close()
+        myia.close()
+        mycl.close()
         os.system("rm -rf torus.im")
 
     ##########################
