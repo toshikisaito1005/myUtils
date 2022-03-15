@@ -456,9 +456,6 @@ def relabelimage(
     # https://help.almascience.org/index.php?/Knowledgebase/Article/View/352
     """
 
-    taskname = modname + sys._getframe().f_code.co_name
-    check_first(imagename, taskname)
-
     myia.open(imagename)
     mycs = myia.coordsys().torecord()
 
