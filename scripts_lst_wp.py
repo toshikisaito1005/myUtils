@@ -660,8 +660,10 @@ class ToolsLSTSim():
 
         if do_cont==False:
             set_no_cont_products = True
+            do_extract_cont      = False
         else:
             set_no_cont_products = False
+            do_extract_cont      = True
 
         # set handlers
         for this_hander in [this_uvh,this_imh,this_pph]:
@@ -677,7 +679,7 @@ class ToolsLSTSim():
                 do_remove_staging = True,
                 do_contsub        = False,
                 do_extract_line   = True,
-                do_extract_cont   = False,
+                do_extract_cont   = do_extract_cont,
                 overwrite         = False,
                 )
         this_imh.loop_imaging(\
