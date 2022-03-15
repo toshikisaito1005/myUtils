@@ -599,7 +599,7 @@ class ToolsLSTSim():
     # phangs_pipeline_imaging #
     ###########################
 
-    def phangs_pipeline_imaging(self,this_proj,this_array,this_target):
+    def phangs_pipeline_imaging(self,this_proj,this_array,this_target,do_cont=False):
         """
         """
 
@@ -658,11 +658,16 @@ class ToolsLSTSim():
         this_imh.set_dry_run(dry_run_key)
         this_pph.set_dry_run(dry_run_key)
 
+        if do_cont==False:
+            set_no_cont_products = True
+        else:
+            set_no_cont_products = False
+
         # set handlers
         for this_hander in [this_uvh,this_imh,this_pph]:
             this_hander.set_targets(only=[this_target])
             this_hander.set_line_products(only=["ci10"])
-            this_hander.set_no_cont_products(True)
+            this_hander.set_no_cont_products(set_no_cont_products)
             this_hander.set_no_line_products(False)
             this_hander.set_interf_configs(only=[this_array])
 
