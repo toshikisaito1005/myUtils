@@ -7,5 +7,5 @@ ngc1097sim_8p0h  lst_wp  all  7m   1  ngc1097sim_7m_8p0h/ngc1097sim_7m_8p0h.aca.
 ngc1097sim_48p0h lst_wp  all  7m   1  ngc1097sim_7m_48p0h/ngc1097sim_7m_48p0h.aca.cycle7.noisy.ms
 #
 # torussim
-torussim_2p0h    lst_wp  all  12m  1  torussim_12m_2p0h/torussim_12m_2p0h.alma.cycle7.10.noisy.ms
 torussim_12p0h   lst_wp  all  12m  1  torussim_12m_12p0h/torussim_12m_12p0h.alma.cycle7.10.noisy.ms
+torussim_24p0h   lst_wp  all  12m  1  torussim_12m_24p0h/torussim_12m_24p0h.alma.cycle7.10.noisy.ms

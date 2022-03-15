@@ -212,7 +212,7 @@ class ToolsLSTSim():
         # torussim #
         ############
         # prepare
-        tinteg_torussim        = 12,
+        tinteg_torussim        = 24,
         do_template_torussim   = False, # create "compact" template cube for long-baseline simobserve
         do_simint_torussim     = False, # sim C-10 band 9
         do_imaging_torussim    = False, # imaging sim ms
@@ -357,11 +357,11 @@ class ToolsLSTSim():
         rmaj_out     = str(10.  / 72.)+"arcsec" # arcsec, 10pc at ngc1068, Gamez-Rosas et al. 2022 Nature
         rmin_out     = str(1.74 / 72.)+"arcsec" # arcsec, 10pc at ngc1068, Gamez-Rosas et al. 2022 Nature
         pa           = '-50.0deg' # Gamez-Rosas et al. 2022 Nature
-        totalflux    = 13.8 / 1000. # continuum flux (mJy) at 432um (693.9640232 GHz), Garcia-Burillo et al. 2017
+        totalflux    = 13.8 / 1000. * 345**3.8 / 693.9640232**3.8　# continuum flux (mJy) at 432um (693.9640232 GHz), Garcia-Burillo et al. 2017
 
         rmaj_in      = str(10.  / 5. / 72.)+"arcsec"
         rmin_in      = str(1.74 / 5. / 72.)+"arcsec"
-        totalflux_in = -13.8 / 1000. / 5**2
+        totalflux_in = -1 * totalflux / 5**2
 
         direction = "J2000 03h00m00.0s 00d00m0s" # ngc1068 decl = -00d00m47.859690204s
         mycl.done()
@@ -376,8 +376,8 @@ class ToolsLSTSim():
         cell_rad=myqa.convert(myqa.quantity("0.0005arcsec"),"rad")['value']
         cs.setincrement([-cell_rad,cell_rad],'direction')
         cs.setreferencevalue([myqa.convert("3h",'rad')['value'],myqa.convert("0deg",'rad')['value']],type="direction")
-        cs.setreferencevalue("693.9640232GHz",'spectral')
-        cs.setincrement('1.875GHz','spectral')
+        cs.setreferencevalue("345GHz",'spectral')
+        cs.setincrement('7.5GHz','spectral')
         myia.setcoordsys(cs.torecord())
         myia.setbrightnessunit("Jy/pixel")
         myia.modify(mycl.torecord(),subtract=False)
