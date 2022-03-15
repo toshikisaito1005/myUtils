@@ -250,7 +250,7 @@ class ToolsLSTSim():
         #############################
         # observed frequency
         self.observed_freq = observed_freq
-        self.incenter      = observed_freq
+        self.incenter      = str(observed_freq)+"GHz"
 
         # n1097sim_7m from tinteg_n1097sim
         tinteg      = str(float(tinteg_n1097sim))+"h"
