@@ -151,7 +151,7 @@ class ToolsLSTSim():
         self.n1097_feather_tp_7m            = self.dir_ready + "outputs/" + self._read_key("n1097_feather_tp_7m")
         self.n1097_feather_lst_7m           = self.dir_ready + "outputs/" + self._read_key("n1097_feather_lst_7m")
 
-        self.torus_template_file            = "inputs/" + self._read_key("torus_template_file")
+        self.torus_template_file            = self._read_key("torus_template_file")
 
     def _set_input_param(self):
         """
