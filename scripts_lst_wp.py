@@ -293,7 +293,7 @@ class ToolsLSTSim():
             self.prepare_template_torussim()
 
         if do_simint_torussim==True:
-            self.simaca_torussim(tinteg,tintegstr)
+            self.sim12m_torussim(tinteg,tintegstr)
 
         if do_imaging_torussim==True:
             # stage instead of pipeline
@@ -323,10 +323,10 @@ class ToolsLSTSim():
             self.calc_collectingarea()
 
     ###################
-    # simaca_torussim #
+    # sim12m_torussim #
     ###################
 
-    def simaca_torussim(self,totaltime="2.0h",totaltimetint="2p0h"):
+    def sim12m_torussim(self,totaltime="2.0h",totaltimetint="2p0h"):
         """
         """
 

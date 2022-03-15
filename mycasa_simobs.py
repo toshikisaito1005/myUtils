@@ -228,8 +228,8 @@ def gen_cube(
 
     target = imregrid(imagename=template_shrunk, template='get')
 
-    target['shap'][2]=1100
-    target['csys']['spectral1']['wcs']['crpix'] = 550
+    target['shap'][2]=110 # 1100
+    target['csys']['spectral1']['wcs']['crpix'] = 55 # 550
     target['csys']['spectral1']['wcs']['cdelt'] = 651236.988 # Hz
 
     imregrid(
