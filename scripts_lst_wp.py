@@ -228,14 +228,14 @@ class ToolsLSTSim():
         # LST-connected 7m array
         do_simACA_LST_n1097sim = False,
         #
-        ##############
-        # ngc1068sim #
-        ##############
+        ############
+        # torussim #
+        ############
         # prepare
-        tinteg_n1068sim      = 2,
-        do_template_n1068sim = False, # create "compact" template cube for long-baseline simobserve
-        do_simint_n1068sim   = False, # sim C-10 band 8 for small ngc1068sim
-        do_imaging_n1068sim  = False, # imaging sim ms
+        tinteg_torussim      = 2,
+        do_template_torussim = False, # create "compact" template cube for long-baseline simobserve
+        #do_simint_n1068sim   = False, # sim C-10 band 8 for small ngc1068sim
+        #do_imaging_n1068sim  = False, # imaging sim ms
         # plot
         plot_config          = False,
         # calc
@@ -295,18 +295,17 @@ class ToolsLSTSim():
         if do_simACA_LST_n1097sim==True:
             self.do_simaca_lst_n1097sim(tinteg,tintegstr)
 
-        #############################
-        # set ngc1097sim parameters #
-        #############################
-        # n1068sim_7m from tinteg_n1068sim
-        totaltime_n1068sim_12m = str(float(tinteg_n1068sim))+"h"
-        totaltimetint_n1068sim_12m = totaltime_n1068sim_12m.replace(".","p")
+        ###########################
+        # set torussim parameters #
+        ###########################
+        tinteg    = str(float(tinteg_torussim))+"h"
+        tintegstr = tinteg.replace(".","p")
 
-        ##################
-        # run ngc1097sim #
-        ##################
-        if do_template_n1068sim==True:
-            self.prepare_template_n1068sim()
+        ################
+        # run torussim #
+        ################
+        if do_template_torussim==True:
+            self.prepare_template_torussim()
 
         if do_simint_n1068sim==True:
             self.simaca_n1068sim(
@@ -328,6 +327,51 @@ class ToolsLSTSim():
         # calc
         if calc_collectingarea==True:
             self.calc_collectingarea()
+
+    #############################
+    # prepare_template_torussim #
+    #############################
+
+    def prepare_template_torussim(self):
+        """
+        """
+
+        taskname = self.modname + sys._getframe().f_code.co_name
+        #check_first(self.n1097_template_fullspec,taskname)
+
+        # assume ngc1068 torus
+        rmaj_out     = str(10.  / 72.)+"arcsec" # arcsec, 10pc at ngc1068, Gamez-Rosas et al. 2022 Nature
+        rmin_out     = str(1.74 / 72.)+"arcsec" # arcsec, 10pc at ngc1068, Gamez-Rosas et al. 2022 Nature
+        pa           = '-50.0deg' # Gamez-Rosas et al. 2022 Nature
+        totalflux    = 13.8 / 1000. # continuum flux (mJy) at 432um (693.9640232 GHz), Garcia-Burillo et al. 2017
+
+        rmaj_in      = str(10.  / 5. / 72.)+"arcsec"
+        rmin_in      = str(1.74 / 5. / 72.)+"arcsec"
+        totalflux_in = -13.8 / 1000. / 5**2
+
+        direction = "J2000 03h00m00.0s 00d00m0s" # ngc1068 decl = -00d00m47.859690204s
+        cl.done()
+        cl.addcomponent(dir=direction, flux=totalflux, fluxunit='Jy', freq='693.9640232GHz', shape="disk", 
+                        majoraxis=rmaj_out, minoraxis=rmin_out, positionangle=pa)
+        cl.addcomponent(dir=direction, flux=totalflux_in, fluxunit='Jy', freq='693.9640232GHz', shape="disk", 
+                        majoraxis=rmaj_in, minoraxis=rmin_in, positionangle=pa)
+        #
+        ia.fromshape("torus.im",[256,256,1,1],overwrite=True)
+        cs=ia.coordsys()
+        cs.setunits(['rad','rad','','Hz'])
+        cell_rad=qa.convert(qa.quantity("0.0005arcsec"),"rad")['value']
+        cs.setincrement([-cell_rad,cell_rad],'direction')
+        cs.setreferencevalue([qa.convert("3h",'rad')['value'],qa.convert("0deg",'rad')['value']],type="direction")
+        cs.setreferencevalue("693.9640232GHz",'spectral')
+        cs.setincrement('1.875GHz','spectral')
+        ia.setcoordsys(cs.torecord())
+        ia.setbrightnessunit("Jy/pixel")
+        ia.modify(cl.torecord(),subtract=False)
+        exportfits(imagename='torus.im',fitsimage='torus.fits',overwrite=True)
+
+        ia.close()
+        cl.close()
+        os.system("rm -rf torus.im")
 
     ##########################
     # do_simaca_lst_n1097sim #
@@ -787,26 +831,6 @@ class ToolsLSTSim():
             incenter=self.incenter,
             )
 
-    ###################
-    # simaca_n1068sim #
-    ###################
-
-    def simaca_n1068sim(self,totaltime="2.0h",totaltimetint="2p0h"):
-        """
-        """
-
-        taskname = self.modname + sys._getframe().f_code.co_name
-        check_first(self.n1068_template_fullspec,taskname)
-
-        run_simobserve(
-            working_dir=self.dir_ready,
-            template=self.n1068_template_fullspec,
-            antennalist=self.config_c10,
-            project=self.project_n1068+"_7m_"+totaltimetint,
-            totaltime=totaltime,
-            incenter=self.incenter,
-            )
-
     #############################
     # prepare_template_n1097sim #
     #############################
@@ -841,43 +865,6 @@ class ToolsLSTSim():
             template_withcont_div30=self.n1097_template_withcont_div30,
             template_withcont_div100=self.n1097_template_withcont_div100,
             pa=self.image_rot_n1068sim, # rotation angle
-            )
-
-    #############################
-    # prepare_template_n1068sim #
-    #############################
-
-    def prepare_template_n1068sim(self):
-        """
-        """
-
-        taskname = self.modname + sys._getframe().f_code.co_name
-        check_first(self.n1068_template_file,taskname)
-
-        gen_cube(
-            template_dir=self.dir_raw,
-            template_file=self.n1068_template_file,
-            template_mask=self.n1068_template_mask,
-            working_dir=self.dir_ready,
-            template_in_jypix=self.n1068_template_in_jypix,
-            template_clipped=self.n1068_template_clipped,
-            template_mask_imported=self.n1068_template_mask_imported,
-            template_rotated=self.n1068_template_rotated,
-            template_shrunk=self.n1068_template_shrunk,
-            template_fullspec=self.n1068_template_fullspec,
-            template_fullspec_div3=self.n1068_template_fullspec_div3,
-            template_fullspec_div5=self.n1068_template_fullspec_div5,
-            template_fullspec_div10=self.n1068_template_fullspec_div10,
-            template_fullspec_div30=self.n1068_template_fullspec_div30,
-            template_fullspec_div100=self.n1068_template_fullspec_div100,
-            template_withcont=self.n1068_template_withcont,
-            template_withcont_div3=self.n1068_template_withcont_div3,
-            template_withcont_div5=self.n1068_template_withcont_div5,
-            template_withcont_div10=self.n1068_template_withcont_div10,
-            template_withcont_div30=self.n1068_template_withcont_div30,
-            template_withcont_div100=self.n1068_template_withcont_div100,
-            pa="0deg", # rotation angle
-            shrink=0.1,
             )
 
     ##################
@@ -965,6 +952,67 @@ class ToolsLSTSim():
         value    = values[np.where(keywords==key)[0][0]]
 
         return value
+
+    #########################
+    # will be decomissioned #
+    #########################
+
+    #############################
+    # prepare_template_n1068sim #
+    #############################
+
+    def prepare_template_n1068sim(self):
+        """
+        """
+
+        taskname = self.modname + sys._getframe().f_code.co_name
+        check_first(self.n1068_template_file,taskname)
+
+        gen_cube(
+            template_dir=self.dir_raw,
+            template_file=self.n1068_template_file,
+            template_mask=self.n1068_template_mask,
+            working_dir=self.dir_ready,
+            template_in_jypix=self.n1068_template_in_jypix,
+            template_clipped=self.n1068_template_clipped,
+            template_mask_imported=self.n1068_template_mask_imported,
+            template_rotated=self.n1068_template_rotated,
+            template_shrunk=self.n1068_template_shrunk,
+            template_fullspec=self.n1068_template_fullspec,
+            template_fullspec_div3=self.n1068_template_fullspec_div3,
+            template_fullspec_div5=self.n1068_template_fullspec_div5,
+            template_fullspec_div10=self.n1068_template_fullspec_div10,
+            template_fullspec_div30=self.n1068_template_fullspec_div30,
+            template_fullspec_div100=self.n1068_template_fullspec_div100,
+            template_withcont=self.n1068_template_withcont,
+            template_withcont_div3=self.n1068_template_withcont_div3,
+            template_withcont_div5=self.n1068_template_withcont_div5,
+            template_withcont_div10=self.n1068_template_withcont_div10,
+            template_withcont_div30=self.n1068_template_withcont_div30,
+            template_withcont_div100=self.n1068_template_withcont_div100,
+            pa="0deg", # rotation angle
+            shrink=0.05,
+            )
+
+    ###################
+    # simaca_n1068sim #
+    ###################
+
+    def simaca_n1068sim(self,totaltime="2.0h",totaltimetint="2p0h"):
+        """
+        """
+
+        taskname = self.modname + sys._getframe().f_code.co_name
+        check_first(self.n1068_template_fullspec,taskname)
+
+        run_simobserve(
+            working_dir=self.dir_ready,
+            template=self.n1068_template_fullspec,
+            antennalist=self.config_c10,
+            project=self.project_n1068+"_7m_"+totaltimetint,
+            totaltime=totaltime,
+            incenter=self.incenter,
+            )
 
 ######################
 # end of ToolsLSTSim #
