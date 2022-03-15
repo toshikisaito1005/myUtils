@@ -161,7 +161,7 @@ class ToolsLSTSim():
         self.singledish_noise = 0.102 # Jy/beam at final res
         self.singledish_res   = "28.37arcsec" # resolution
         self.image_rot_n1068sim = "0deg"
-        self.image_rot_n1097sim = "325deg"
+        self.image_rot_n1097sim = "35deg"
 
         # ngc1068 properties
         self.ra_agn    = float(self._read_key("ra_agn", "gal").split("deg")[0])
@@ -897,7 +897,7 @@ class ToolsLSTSim():
             template_withcont_div10=self.n1097_template_withcont_div10,
             template_withcont_div30=self.n1097_template_withcont_div30,
             template_withcont_div100=self.n1097_template_withcont_div100,
-            pa=self.image_rot_n1068sim, # rotation angle
+            pa=self.image_rot_n1097sim, # rotation angle
             )
 
     ##################
