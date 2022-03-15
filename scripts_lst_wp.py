@@ -126,28 +126,6 @@ class ToolsLSTSim():
         """
         """
 
-        self.n1068_template_in_jypix        = self.project_n1068 + "_template_jypixel.image"
-        self.n1068_template_clipped         = self.project_n1068 + "_template_clipped.image"
-        self.n1068_template_mask_imported   = self.project_n1068 + "_template_mask.image"
-        self.n1068_template_rotated         = self.project_n1068 + "_template_rotated.image"
-        self.n1068_template_shrunk          = self.project_n1068 + "_template_shrunk.image"
-        self.n1068_template_fullspec        = self.project_n1068 + "_template_fullspec.image"
-        self.n1068_template_fullspec_div3   = self.project_n1068 + "_template_fullspec_div3.image"
-        self.n1068_template_fullspec_div5   = self.project_n1068 + "_template_fullspec_div5.image"
-        self.n1068_template_fullspec_div10  = self.project_n1068 + "_template_fullspec_div10.image"
-        self.n1068_template_fullspec_div30  = self.project_n1068 + "_template_fullspec_div30.image"
-        self.n1068_template_fullspec_div100 = self.project_n1068 + "_template_fullspec_div100.image"
-        self.n1068_template_withcont        = self.project_n1068 + "_template_withcont.image"
-        self.n1068_template_withcont_div3   = self.project_n1068 + "_template_withcont_div3.image"
-        self.n1068_template_withcont_div5   = self.project_n1068 + "_template_withcont_div5.image"
-        self.n1068_template_withcont_div10  = self.project_n1068 + "_template_withcont_div10.image"
-        self.n1068_template_withcont_div30  = self.project_n1068 + "_template_withcont_div30.image"
-        self.n1068_template_withcont_div100 = self.project_n1068 + "_template_withcont_div100.image"
-        self.n1068_sdnoise_image            = self.project_n1068 + "_aca_tp_noise_nocont.image"
-        self.n1068_sdimage_fullspec         = self.project_n1068 + "_aca_tp_nocont.image"
-        self.n1068_lstnoise_image            =self.project_n1068 + "_lst_noise_nocont.image"
-        self.n1068_lstimage_fullspec         =self.project_n1068 + "_lst_nocont.image"
-
         self.n1097_template_in_jypix        = self.project_n1097 + "_template_jypixel.image"
         self.n1097_template_clipped         = self.project_n1097 + "_template_clipped.image"
         self.n1097_template_mask_imported   = self.project_n1097 + "_template_mask.image"
@@ -172,6 +150,8 @@ class ToolsLSTSim():
 
         self.n1097_feather_tp_7m            = self.dir_ready + "outputs/" + self._read_key("n1097_feather_tp_7m")
         self.n1097_feather_lst_7m           = self.dir_ready + "outputs/" + self._read_key("n1097_feather_lst_7m")
+
+        self.torus_template_file            = self.dir_ready + "inputs/" + self._read_key("torus_template_file")
 
     def _set_input_param(self):
         """
@@ -357,7 +337,7 @@ class ToolsLSTSim():
         myia.setcoordsys(cs.torecord())
         myia.setbrightnessunit("Jy/pixel")
         myia.modify(mycl.torecord(),subtract=False)
-        exportfits(imagename='torus.im',fitsimage='torus.fits',overwrite=True)
+        exportfits(imagename='torus.im',fitsimage=self.torus_template_file,overwrite=True)
 
         myia.close()
         mycl.close()
