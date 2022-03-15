@@ -295,8 +295,8 @@ class ToolsLSTSim():
             msname  = self.project_torus + "_12m_" + tintegstr + "."+self.config_c10.split("/")[-1].split(".cfg")[0]+".noisy.ms"
             ms_from = self.dir_ready + "ms/" + self.project_torus + "_12m_" + tintegstr + "/" + msname
             ms_to   = self.dir_ready + "outputs/imaging/" + this_target + "_12m_cont.ms"
-            print(ms_from)
-            print(ms_to)
+            os.system("rm -rf " + ms_to)
+            os.system("cp -r " + ms_from + " " + ms_to)
             self.phangs_pipeline_imaging(
                 this_proj=self.project_torus,
                 this_array="12m",
@@ -662,12 +662,8 @@ class ToolsLSTSim():
 
         if do_cont==False:
             set_no_cont_products = True
-            do_extract_cont      = False
-            do_extract_line      = True
         else:
             set_no_cont_products = False
-            do_extract_cont      = True
-            do_extract_line      = False
 
         # set handlers
         for this_hander in [this_uvh,this_imh,this_pph]:
@@ -678,14 +674,16 @@ class ToolsLSTSim():
             this_hander.set_interf_configs(only=[this_array])
 
         # run piepline
-        this_uvh.loop_stage_uvdata(\
-                do_copy           = True,
-                do_remove_staging = True,
-                do_contsub        = False,
-                do_extract_line   = do_extract_line,
-                do_extract_cont   = do_extract_cont,
-                overwrite         = False,
-                )
+        if do_cont==False:
+            this_uvh.loop_stage_uvdata(\
+                    do_copy           = True,
+                    do_remove_staging = True,
+                    do_contsub        = False,
+                    do_extract_line   = True,
+                    do_extract_cont   = False,
+                    overwrite         = False,
+                    )
+
         this_imh.loop_imaging(\
                 do_dirty_image          = True,
                 do_revert_to_dirty      = False,
