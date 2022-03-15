@@ -102,7 +102,7 @@ class ToolsLSTSim():
         self._create_dir(self.dir_final)
 
         # simobserve
-        self.project_n1068 = self._read_key("project_n1068")
+        self.project_torus = self._read_key("project_torus")
         self.project_n1097 = self._read_key("project_n1097")
         self.config_c1     = self.dir_keyfile + self._read_key("config_c1")
         self.config_c10    = self.dir_keyfile + self._read_key("config_c10")
@@ -214,7 +214,7 @@ class ToolsLSTSim():
         # prepare
         tinteg_torussim      = 2,
         do_template_torussim = False, # create "compact" template cube for long-baseline simobserve
-        #do_simint_n1068sim   = False, # sim C-10 band 8 for small ngc1068sim
+        do_simint_torussim   = False, # sim C-10 band 9
         #do_imaging_n1068sim  = False, # imaging sim ms
         # plot
         plot_config          = False,
@@ -287,6 +287,9 @@ class ToolsLSTSim():
         if do_template_torussim==True:
             self.prepare_template_torussim()
 
+        if do_simint_torussim==True:
+            self.simaca_torussim(tinteg,tintegstr)
+
         ########
         # plot #
         ########
@@ -297,6 +300,26 @@ class ToolsLSTSim():
         # calc
         if calc_collectingarea==True:
             self.calc_collectingarea()
+
+    ###################
+    # simaca_torussim #
+    ###################
+
+    def simaca_torussim(self,totaltime="2.0h",totaltimetint="2p0h"):
+        """
+        """
+
+        taskname = self.modname + sys._getframe().f_code.co_name
+        check_first(self.n1068_template_fullspec,taskname)
+
+        run_simobserve(
+            working_dir=self.dir_ready,
+            template=self.torus_template_file,
+            antennalist=self.config_c10,
+            project=self.project_torus+"_12m_"+totaltimetint,
+            totaltime=totaltime,
+            incenter="693.9640232GHz",
+            )
 
     #############################
     # prepare_template_torussim #
@@ -962,26 +985,6 @@ class ToolsLSTSim():
             template_withcont_div100=self.n1068_template_withcont_div100,
             pa="0deg", # rotation angle
             shrink=0.05,
-            )
-
-    ###################
-    # simaca_n1068sim #
-    ###################
-
-    def simaca_n1068sim(self,totaltime="2.0h",totaltimetint="2p0h"):
-        """
-        """
-
-        taskname = self.modname + sys._getframe().f_code.co_name
-        check_first(self.n1068_template_fullspec,taskname)
-
-        run_simobserve(
-            working_dir=self.dir_ready,
-            template=self.n1068_template_fullspec,
-            antennalist=self.config_c10,
-            project=self.project_n1068+"_7m_"+totaltimetint,
-            totaltime=totaltime,
-            incenter=self.incenter,
             )
 
 ######################
