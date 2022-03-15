@@ -299,8 +299,10 @@ class ToolsLSTSim():
             # stage instead of pipeline
             msname  = self.project_torus + "_12m_" + tintegstr + "."+self.config_c10.split("/")[-1].split(".cfg")[0]+".noisy.ms"
             ms_from = self.dir_ready + "ms/" + self.project_torus + "_12m_" + tintegstr + "/" + msname
-            ms_to   = self.dir_ready + "outputs/imaging/" + this_target + "/" + this_target + "_12m_cont.ms"
+            dir_to  = self.dir_ready + "outputs/imaging/" + this_target + "/"
+            ms_to   = dir_to + this_target + "_12m_cont.ms"
             os.system("rm -rf " + ms_to)
+            os.makedirs(dir_to)
             os.system("cp -r " + ms_from + " " + ms_to)
 
             # run
