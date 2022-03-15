@@ -325,7 +325,7 @@ class ToolsLSTSim():
         check_first(lowres,taskname)
         check_first(highres)
 
-        print(highres)
+        print(lowres)
         os.system("rm -rf " + outfile)
         feather(
             imagename = outfile,
