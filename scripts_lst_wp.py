@@ -249,8 +249,8 @@ class ToolsLSTSim():
         tp_beam  = str(50.6   * 115.27120 / self.observed_freq)+"arcsec"
 
         # define products
-        cube_tp  = self.dir_ready+self.n1097_sdimage_fullspec.replace(".image","_"+tintegstr+"7m.image")
-        cube_lst = self.dir_ready+self.n1097_lstimage_fullspec.replace(".image","_"+tintegstr+"7m.image")
+        cube_tp  = self.dir_ready+"outputs/"+self.n1097_sdimage_fullspec.replace(".image","_"+tintegstr+"7m.image")
+        cube_lst = self.dir_ready+"outputs/"+self.n1097_lstimage_fullspec.replace(".image","_"+tintegstr+"7m.image")
         cube_7m  = self.dir_ready+"outputs/postprocess/"+this_target+"/"+this_target+"_7m_ci10_pbcorr_trimmed.image"
 
         ##################
