@@ -1,8 +1,10 @@
 ##########################################################################
 # MEASUREMENT SET FILE/INPUT KEY
 ##########################################################################
-ngc1068sim_2p0h  lst_wp  all  12m  1  ngc1068sim_12m_2p0h/ngc1068sim_12m_2p0h.alma.cycle7.10.noisy.ms
-ngc1068sim_8p0h  lst_wp  all  12m  1  ngc1068sim_12m_8p0h/ngc1068sim_12m_8p0h.alma.cycle7.10.noisy.ms
+# ngc1097sim
 ngc1097sim_2p0h  lst_wp  all  7m   1  ngc1097sim_7m_2p0h/ngc1097sim_7m_2p0h.aca.cycle7.noisy.ms
 ngc1097sim_8p0h  lst_wp  all  7m   1  ngc1097sim_7m_8p0h/ngc1097sim_7m_8p0h.aca.cycle7.noisy.ms
 ngc1097sim_48p0h lst_wp  all  7m   1  ngc1097sim_7m_48p0h/ngc1097sim_7m_48p0h.aca.cycle7.noisy.ms
+#
+# torussim
+torussim_2p0h    lst_wp  all  12m  1  torussim_12m_2p0h/torussim_12m_2p0h.alma.cycle7.10.noisy.ms

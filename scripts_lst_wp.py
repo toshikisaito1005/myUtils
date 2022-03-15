@@ -215,7 +215,7 @@ class ToolsLSTSim():
         tinteg_torussim      = 2,
         do_template_torussim = False, # create "compact" template cube for long-baseline simobserve
         do_simint_torussim   = False, # sim C-10 band 9
-        #do_imaging_n1068sim  = False, # imaging sim ms
+        do_imaging_torussim  = False, # imaging sim ms
         # plot
         plot_config          = False,
         # calc
@@ -278,8 +278,9 @@ class ToolsLSTSim():
         ###########################
         # set torussim parameters #
         ###########################
-        tinteg    = str(float(tinteg_torussim))+"h"
-        tintegstr = tinteg.replace(".","p")
+        tinteg      = str(float(tinteg_torussim))+"h"
+        tintegstr   = tinteg.replace(".","p")
+        this_target = self.project_torus+"_"+tintegstr
 
         ################
         # run torussim #
@@ -289,6 +290,13 @@ class ToolsLSTSim():
 
         if do_simint_torussim==True:
             self.simaca_torussim(tinteg,tintegstr)
+
+        if do_imaging_torussim==True:
+            self.phangs_pipeline_imaging(
+                this_proj=self.project_torus,
+                this_array="12m",
+                this_target=this_target,
+                )
 
         ########
         # plot #
@@ -945,47 +953,6 @@ class ToolsLSTSim():
         value    = values[np.where(keywords==key)[0][0]]
 
         return value
-
-    #########################
-    # will be decomissioned #
-    #########################
-
-    #############################
-    # prepare_template_n1068sim #
-    #############################
-
-    def prepare_template_n1068sim(self):
-        """
-        """
-
-        taskname = self.modname + sys._getframe().f_code.co_name
-        check_first(self.n1068_template_file,taskname)
-
-        gen_cube(
-            template_dir=self.dir_raw,
-            template_file=self.n1068_template_file,
-            template_mask=self.n1068_template_mask,
-            working_dir=self.dir_ready,
-            template_in_jypix=self.n1068_template_in_jypix,
-            template_clipped=self.n1068_template_clipped,
-            template_mask_imported=self.n1068_template_mask_imported,
-            template_rotated=self.n1068_template_rotated,
-            template_shrunk=self.n1068_template_shrunk,
-            template_fullspec=self.n1068_template_fullspec,
-            template_fullspec_div3=self.n1068_template_fullspec_div3,
-            template_fullspec_div5=self.n1068_template_fullspec_div5,
-            template_fullspec_div10=self.n1068_template_fullspec_div10,
-            template_fullspec_div30=self.n1068_template_fullspec_div30,
-            template_fullspec_div100=self.n1068_template_fullspec_div100,
-            template_withcont=self.n1068_template_withcont,
-            template_withcont_div3=self.n1068_template_withcont_div3,
-            template_withcont_div5=self.n1068_template_withcont_div5,
-            template_withcont_div10=self.n1068_template_withcont_div10,
-            template_withcont_div30=self.n1068_template_withcont_div30,
-            template_withcont_div100=self.n1068_template_withcont_div100,
-            pa="0deg", # rotation angle
-            shrink=0.05,
-            )
 
 ######################
 # end of ToolsLSTSim #

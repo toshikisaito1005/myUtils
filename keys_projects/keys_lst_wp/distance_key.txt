@@ -16,5 +16,5 @@
 # N.B. the units of uncertainty are dex (i.e. log),
 # ]
 # schema: astropy-2.0
-ngc1068sim,13.97
+torussim,13.97
 ngc1097sim,13.97
