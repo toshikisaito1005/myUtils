@@ -24,6 +24,7 @@ n1097_template_mask ,,,ngc1097_12m+7m+tp_co21_11as_strictmask.fits
 ###############
 # output maps #
 ###############
+n1097_feather_tp_7m ,,,ngc1097sim_tp+7m_feather.image
 
 ###################
 # input paramters #

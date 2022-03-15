@@ -169,6 +169,9 @@ class ToolsLSTSim():
         self.n1097_lstnoise_image           = self.project_n1097 + "_lst_noise_nocont.image"
         self.n1097_lstimage_fullspec        = self.project_n1097 + "_lst_nocont.image"
 
+        self.n1097_feather_tp_7m            = self.dir_ready + "outputs/" + self._read_key("n1097_feather_tp_7m")
+        self.n1097_feather_lst_7m           = self.dir_ready + "outputs/" + self._read_key("n1097_feather_lst_7m")
+
     def _set_input_param(self):
         """
         """
@@ -176,7 +179,7 @@ class ToolsLSTSim():
         # sim properties
         self.singledish_noise = 0.102 # Jy/beam at final res
         self.singledish_res   = "28.37arcsec" # resolution
-        self.image_rot_n1068sim = "23deg"
+        self.image_rot_n1068sim = "0deg"
         self.image_rot_n1097sim = "35deg"
 
         # ngc1068 properties
@@ -214,6 +217,7 @@ class ToolsLSTSim():
         dryrun_simSD         = False, # just output SD mapping parameters
         do_simTP_n1097im     = False, # sim ACA TP alone
         do_simLST_n1097im    = False, # sim LST alone
+        do_feather           = False,
         # ngc1068sim
         tinteg_n1068sim      = 2,
         do_template_n1068sim = False, # create "compact" template cube for long-baseline simobserve
@@ -228,57 +232,63 @@ class ToolsLSTSim():
         This method runs all the methods which will create figures in the white paper.
         """
 
-        # set observe frequency
+        #############################
+        # set ngc1097sim parameters #
+        #############################
+        # observed frequency
         self.observed_freq = observed_freq
         self.incenter      = observed_freq
 
-        tinteg_n1097sim = float(tinteg_n1097sim)
-
         # n1097sim_7m from tinteg_n1097sim
-        totaltime_n1097sim_7m = str(float(tinteg_n1097sim))+"h"
-        totaltimetint_n1097sim_7m = totaltime_n1097sim_7m.replace(".","p")
+        tinteg      = str(float(tinteg_n1097sim))+"h"
+        tintegstr   = tinteg.replace(".","p")
+        this_target = self.project_n1097+"_"+tintegstr
 
         # determine LST and TP beam sizes
-        lst_beam_n1097sim       = str(12.979 * 115.27120 / self.observed_freq)+"arcsec"
-        tp_beam_n1097sim        = str(50.6   * 115.27120 / self.observed_freq)+"arcsec"
+        lst_beam = str(12.979 * 115.27120 / self.observed_freq)+"arcsec"
+        tp_beam  = str(50.6   * 115.27120 / self.observed_freq)+"arcsec"
 
-        # ngc1097sim
+        # define products
+        cube_tp  = self.dir_ready+self.n1097_sdimage_fullspec.replace(".image","_"+tintegstr+"7m.image")
+        cube_lst = self.dir_ready+self.n1097_lstimage_fullspec.replace(".image","_"+tintegstr+"7m.image")
+        cube_7m  = self.dir_ready+"postprocess/"+this_target+"/"+this_target+"_7m_ci10_pbcorr_trimmed.image"
+
+        ##################
+        # run ngc1097sim #
+        ##################
         if do_template_n1097sim==True:
             self.prepare_template_n1097sim()
 
         if do_simint_n1097im==True:
-            self.simaca_n1097sim(
-                totaltime=totaltime_n1097sim_7m,
-                totaltimetint=totaltimetint_n1097sim_7m,
-                )
+            self.simaca_n1097sim(tinteg,tintegstr)
 
         if do_imaging_n1097sim==True:
             self.phangs_pipeline_imaging(
-                self.project_n1097,
-                "7m",
-                self.project_n1097+"_"+totaltimetint_n1097sim_7m,
+                this_proj=self.project_n1097,
+                this_array="7m",
+                this_target=this_target,
                 )
 
         if do_simTP_n1097im==True:
-            self.simtp_n1097sim(
-                singledish_res=tp_beam_n1097sim,
-                totaltimetint=totaltimetint_n1097sim_7m,
-                dryrun=dryrun_simSD,
-                )
+            self.simtp_n1097sim(tp_beam,tintegstr,dryrun_simSD)
 
         if do_simLST_n1097im==True:
-            self.simlst_n1097sim(
-                lst_res=lst_beam_n1097sim,
-                tp_res=tp_beam_n1097sim,
-                totaltimetint=totaltimetint_n1097sim_7m,
-                dryrun=dryrun_simSD,
-                )
+            self.simlst_n1097sim(lst_beam,tp_beam,tintegstr,dryrun_simSD)
 
-        # n1097sim_7m from tinteg_n1097sim
+        if do_feather==True:
+            self.do_feather(cube_7m,cube_tp,self.n1097_feather_tp_7m)
+            self.do_feather(cube_7m,cube_lst,self.n1097_feather_lst_7m)
+
+        #############################
+        # set ngc1097sim parameters #
+        #############################
+        # n1068sim_7m from tinteg_n1068sim
         totaltime_n1068sim_12m = str(float(tinteg_n1068sim))+"h"
         totaltimetint_n1068sim_12m = totaltime_n1068sim_12m.replace(".","p")
 
-        # ngc1068sim
+        ##################
+        # run ngc1097sim #
+        ##################
         if do_template_n1068sim==True:
             self.prepare_template_n1068sim()
 
@@ -302,6 +312,25 @@ class ToolsLSTSim():
         # calc
         if calc_collectingarea==True:
             self.calc_collectingarea()
+
+    ##############
+    # do_feather #
+    ##############
+
+    def do_feather(self,highres,lowres,outfile):
+        """
+        """
+
+        taskname = self.modname + sys._getframe().f_code.co_name
+        check_first(lowres,taskname)
+        check_first(highres)
+
+        os.system("rm -rf " + outfile)
+        feather(
+            imagename = outfile,
+            highres = highres,
+            lowres = lowres,
+            )
 
     #######################
     # calc_collectingarea #
