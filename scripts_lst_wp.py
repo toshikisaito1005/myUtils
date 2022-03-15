@@ -292,6 +292,10 @@ class ToolsLSTSim():
             self.simaca_torussim(tinteg,tintegstr)
 
         if do_imaging_torussim==True:
+            ms_from = self.dir_ready + "ms/" + self.project_torus + "_12m_" + tintegstr + "/" + self.project_torus + "_12m_" + tintegstr + "."+self.config_c10+".noisy.ms"
+            ms_to   = self.dir_ready + "outputs/imaging/" + this_target + "_12m_cont.ms"
+            print(ms_from)
+            print(ms_to)
             self.phangs_pipeline_imaging(
                 this_proj=self.project_torus,
                 this_array="12m",
@@ -606,10 +610,6 @@ class ToolsLSTSim():
 
         taskname = self.modname + sys._getframe().f_code.co_name
         #check_first(self.template_fullspec,taskname)
-
-        # ms
-        sim_12m_ms_orig = self.dir_ready + "ms/" + this_proj + "." + self.config_c1 + ".noisy.ms"
-        sim_7m_ms_orig  = self.dir_ready + "ms/" + this_proj + "." + self.config_7m + ".noisy.ms"
 
         # prepare dir_cleanmask
         dir_cleanmask = self.dir_ready + "outputs/cleanmasks/"
