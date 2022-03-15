@@ -276,8 +276,8 @@ class ToolsLSTSim():
             self.simlst_n1097sim(lst_beam,tp_beam,tintegstr,dryrun_simSD)
 
         if do_feather==True:
-            self.do_feather(cube_7m,cube_tp,self.n1097_feather_tp_7m)
-            self.do_feather(cube_7m,cube_lst,self.n1097_feather_lst_7m)
+            self.do_feather(cube_7m,cube_tp,self.n1097_feather_tp_7m,12.0)
+            self.do_feather(cube_7m,cube_lst,self.n1097_feather_lst_7m,50.0)
 
         #############################
         # set ngc1097sim parameters #
@@ -317,7 +317,7 @@ class ToolsLSTSim():
     # do_feather #
     ##############
 
-    def do_feather(self,highres,lowres,outfile):
+    def do_feather(self,highres,lowres,outfile,effdishdiam):
         """
         """
 
@@ -325,12 +325,12 @@ class ToolsLSTSim():
         check_first(lowres,taskname)
         check_first(highres)
 
-        print(lowres)
         os.system("rm -rf " + outfile)
         feather(
             imagename = outfile,
             highres = highres,
             lowres = lowres,
+            effdishdiam = effdishdiam,
             )
 
     #######################
