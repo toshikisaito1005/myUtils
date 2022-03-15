@@ -597,12 +597,12 @@ class ToolsLSTSim():
 
         # ACA TP sim at 492.16065100 GHz
         print("### LST observations")
-        print("# achieved 7m sensitivity (Jy/b)     = " + str(np.round(rms_7m,5)))
-        print("# required LST sensntivity (Jy/b)    = " + str(np.round(rms_lst,5)))
-        print("# sensitivity per pointing (K)       = " + str(np.round(rms_lst_K,5)))
-        print("# beam size (arcsec)                 = " + str(np.round(float(lst_res.replace("arcsec","")),2)))
-        print("# number of pointing                 = " + str(num_pointing))
-        print("# survey area (arcsec^2)             = " + str(int(area_in_as)))
+        print("# achieved 7m sensitivity (Jy/b)  = " + str(np.round(rms_7m,5)))
+        print("# required LST sensntivity (Jy/b) = " + str(np.round(rms_lst,5)))
+        print("# sensitivity per pointing (K)    = " + str(np.round(rms_lst_K,5)))
+        print("# beam size (arcsec)              = " + str(np.round(float(lst_res.replace("arcsec","")),2)))
+        print("# number of pointing              = " + str(num_pointing))
+        print("# survey area (arcsec^2)          = " + str(int(area_in_as)))
         print("#")
 
         # run
@@ -656,12 +656,12 @@ class ToolsLSTSim():
 
         # ACA TP sim at 492.16065100 GHz
         print("### ACA TP observations")
-        print("# achieved 7m sensitivity (Jy/b)     = " + str(np.round(rms_7m,5)))
-        print("# required TP sensntivity (Jy/b)     = " + str(np.round(rms_tp,5)))
-        print("# sensitivity per pointing (K)       = " + str(np.round(rms_tp_K,5)))
-        print("# beam size (arcsec)                 = " + str(np.round(float(singledish_res.replace("arcsec","")),2)))
-        print("# number of pointing                 = " + str(num_pointing))
-        print("# survey area (arcsec^2)             = " + str(int(area_in_as)))
+        print("# achieved 7m sensitivity (Jy/b) = " + str(np.round(rms_7m,5)))
+        print("# required TP sensntivity (Jy/b) = " + str(np.round(rms_tp,5)))
+        print("# sensitivity per pointing (K)   = " + str(np.round(rms_tp_K,5)))
+        print("# beam size (arcsec)             = " + str(np.round(float(singledish_res.replace("arcsec","")),2)))
+        print("# number of pointing             = " + str(num_pointing))
+        print("# survey area (arcsec^2)         = " + str(int(area_in_as)))
         print("#")
 
         # run

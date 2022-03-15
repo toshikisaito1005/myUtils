@@ -389,6 +389,9 @@ def simtp(
     imhead(sdimage_fullspec,mode="put",hdkey="restfreq",hdvalue="4.92160651e+11")
     imhead(sdimage_fullspec,mode="put",hdkey="crval3",hdvalue="4.92160651e+11")
 
+    # J2000
+    relabelimage(sdimage_fullspec,icrs_to_j2000=True)
+
     # Cleanup
     os.system("rm -rf " + sdimage_fullspec+".temp")
     os.system("rm -rf " + sdimage_fullspec+".temp2")
@@ -438,6 +441,47 @@ def run_simobserve(
         )
     os.system("rm -rf " + move_ms_to_here + "/" + project)
     os.system("mv "+ project + " " + move_ms_to_here + ".")
+
+################
+# relabelimage #
+################
+def relabelimage(
+    imagename,
+    icrs_to_j2000=False,
+    j2000_to_icrs=False,
+    ):
+    """
+    # Relabel a ICRS (J2000) image to J2000 (ICRS)
+    # Modified version of relabelimagetoicrs.py by D.Petry (ESO), 2016-03-04
+    # https://help.almascience.org/index.php?/Knowledgebase/Article/View/352
+    """
+
+    taskname = modname + sys._getframe().f_code.co_name
+    check_first(imagename, taskname)
+
+    myia.open(imagename)
+    mycs = myia.coordsys().torecord()
+
+    if icrs_to_j2000==True:
+        if mycs['direction0']['conversionSystem'] == 'ICRS':
+            mycs['direction0']['conversionSystem'] = 'J2000'
+            print("Found ICRS conversion system and changed it to J2000")
+
+        if mycs['direction0']['system'] == 'ICRS':
+            mycs['direction0']['system'] = 'J2000'
+            print("Found ICRS direction system and changed it to J2000")
+    
+    if j2000_to_icrs==True:
+        if mycs['direction0']['conversionSystem'] == 'J2000':
+            mycs['direction0']['conversionSystem'] = 'ICRS'
+            print("Found J2000 conversion system and changed it to ICRS")
+
+        if mycs['direction0']['system'] == 'J2000':
+            mycs['direction0']['system'] = 'ICRS'
+            print("Found J2000 direction system and changed it to ICRS")
+
+    myia.setcoordsys(mycs)
+    myia.close()
 
 #######
 # end #
