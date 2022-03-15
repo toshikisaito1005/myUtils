@@ -353,6 +353,20 @@ class ToolsLSTSim():
         taskname = self.modname + sys._getframe().f_code.co_name
         #check_first(self.n1097_template_fullspec,taskname)
 
+        # cleanup directories
+        input_dir  = self.dir_ready + "inputs/"
+        output_dir = self.dir_ready + "outputs/"
+        ms_dir     = self.dir_ready + "ms/"
+        #os.system("rm -rf " + input_dir)
+        #os.system("rm -rf " + output_dir)
+        #os.system("rm -rf " + ms_dir)
+        if not glob.glob(input_dir):
+            os.mkdir(input_dir)
+        if not glob.glob(output_dir):
+            os.mkdir(output_dir)
+        if not glob.glob(ms_dir):
+            os.mkdir(ms_dir)
+
         # assume ngc1068 torus
         rmaj_out     = str(10.  / 72.)+"arcsec" # arcsec, 10pc at ngc1068, Gamez-Rosas et al. 2022 Nature
         rmin_out     = str(1.74 / 72.)+"arcsec" # arcsec, 10pc at ngc1068, Gamez-Rosas et al. 2022 Nature
@@ -381,7 +395,7 @@ class ToolsLSTSim():
         myia.setcoordsys(cs.torecord())
         myia.setbrightnessunit("Jy/pixel")
         myia.modify(mycl.torecord(),subtract=False)
-        exportfits(imagename='torus.im',fitsimage=self.torus_template_file,overwrite=True)
+        exportfits(imagename='torus.im',fitsimage=input_dir+self.torus_template_file,overwrite=True)
 
         myia.close()
         mycl.close()
