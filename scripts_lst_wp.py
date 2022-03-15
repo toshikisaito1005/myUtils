@@ -307,19 +307,9 @@ class ToolsLSTSim():
         if do_template_torussim==True:
             self.prepare_template_torussim()
 
-        if do_simint_n1068sim==True:
-            self.simaca_n1068sim(
-            totaltime=totaltime_n1068sim_12m,
-            totaltimetint=totaltimetint_n1068sim_12m,
-            ) # imsize too large! manually change it!
-
-        if do_imaging_n1068sim==True:
-            self.phangs_pipeline_imaging(
-                self.project_n1068,
-                "12m",
-                self.project_n1068+"_"+totaltimetint_n1068sim_12m,
-                )
-
+        ########
+        # plot #
+        ########
         # plot
         if plot_config==True:
             self.plot_config()
