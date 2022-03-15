@@ -251,7 +251,7 @@ class ToolsLSTSim():
         # define products
         cube_tp  = self.dir_ready+self.n1097_sdimage_fullspec.replace(".image","_"+tintegstr+"7m.image")
         cube_lst = self.dir_ready+self.n1097_lstimage_fullspec.replace(".image","_"+tintegstr+"7m.image")
-        cube_7m  = self.dir_ready+"postprocess/"+this_target+"/"+this_target+"_7m_ci10_pbcorr_trimmed.image"
+        cube_7m  = self.dir_ready+"outputs/postprocess/"+this_target+"/"+this_target+"_7m_ci10_pbcorr_trimmed.image"
 
         ##################
         # run ngc1097sim #
