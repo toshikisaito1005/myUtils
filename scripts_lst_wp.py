@@ -296,6 +296,7 @@ class ToolsLSTSim():
                 this_proj=self.project_torus,
                 this_array="12m",
                 this_target=this_target,
+                do_cont=True,
                 )
 
         ########
@@ -661,9 +662,11 @@ class ToolsLSTSim():
         if do_cont==False:
             set_no_cont_products = True
             do_extract_cont      = False
+            do_extract_line      = True
         else:
             set_no_cont_products = False
             do_extract_cont      = True
+            do_extract_line      = False
 
         # set handlers
         for this_hander in [this_uvh,this_imh,this_pph]:
@@ -678,7 +681,7 @@ class ToolsLSTSim():
                 do_copy           = True,
                 do_remove_staging = True,
                 do_contsub        = False,
-                do_extract_line   = True,
+                do_extract_line   = do_extract_line,
                 do_extract_cont   = do_extract_cont,
                 overwrite         = False,
                 )
