@@ -161,7 +161,7 @@ class ToolsLSTSim():
         self.singledish_noise = 0.102 # Jy/beam at final res
         self.singledish_res   = "28.37arcsec" # resolution
         self.image_rot_n1068sim = "0deg"
-        self.image_rot_n1097sim = "35deg"
+        self.image_rot_n1097sim = "-35deg"
 
         # ngc1068 properties
         self.ra_agn    = float(self._read_key("ra_agn", "gal").split("deg")[0])
