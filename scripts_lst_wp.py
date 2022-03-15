@@ -11,7 +11,7 @@ usage:
 > from scripts_sim_lst_wp import ToolsLSTSim as tools
 >
 > # key
-> tl = tools(s
+> tl = tools(
 >     refresh     = False,
 >     keyfile_gal = "/home02/saitots/myUtils/keys_sim_lst_wp/key_ngc1068.txt",
 >     keyfile_fig = "/home02/saitots/myUtils/keys_sim_lst_wp/key_figures.txt",
@@ -212,10 +212,14 @@ class ToolsLSTSim():
         # torussim #
         ############
         # prepare
-        tinteg_torussim      = 2,
-        do_template_torussim = False, # create "compact" template cube for long-baseline simobserve
-        do_simint_torussim   = False, # sim C-10 band 9
-        do_imaging_torussim  = False, # imaging sim ms
+        tinteg_torussim        = 12,
+        do_template_torussim   = False, # create "compact" template cube for long-baseline simobserve
+        do_simint_torussim     = False, # sim C-10 band 9
+        do_imaging_torussim    = False, # imaging sim ms
+        #
+        ########
+        # plot #
+        ########
         # plot
         plot_config          = False,
         # calc
@@ -292,11 +296,14 @@ class ToolsLSTSim():
             self.simaca_torussim(tinteg,tintegstr)
 
         if do_imaging_torussim==True:
+            # stage instead of pipeline
             msname  = self.project_torus + "_12m_" + tintegstr + "."+self.config_c10.split("/")[-1].split(".cfg")[0]+".noisy.ms"
             ms_from = self.dir_ready + "ms/" + self.project_torus + "_12m_" + tintegstr + "/" + msname
             ms_to   = self.dir_ready + "outputs/imaging/" + this_target + "/" + this_target + "_12m_cont.ms"
             os.system("rm -rf " + ms_to)
             os.system("cp -r " + ms_from + " " + ms_to)
+
+            # run
             self.phangs_pipeline_imaging(
                 this_proj=self.project_torus,
                 this_array="12m",
