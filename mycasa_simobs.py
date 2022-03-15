@@ -142,7 +142,8 @@ def gen_cube(
     os.system("rm -rf " + template_rotated)
 
     myia.open(template_clipped)
-    myia.rotate(outfile=template_rotated+".temp",pa=pa)
+    imr=myia.rotate(outfile=template_rotated+".temp",pa=pa)
+    imr.done()
     myia.close()
 
     print("Rotation done.")
