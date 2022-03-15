@@ -107,6 +107,7 @@ class ToolsLSTSim():
         self.config_c1     = self.dir_keyfile + self._read_key("config_c1")
         self.config_c10    = self.dir_keyfile + self._read_key("config_c10")
         self.config_7m     = self.dir_keyfile + self._read_key("config_7m")
+        self.config_7m_lst = self.dir_keyfile + self._read_key("config_7m_lst")
 
         # phangs-alma pipeline
         self.dir_pipeline = self._read_key("dir_pipeline")
@@ -208,20 +209,32 @@ class ToolsLSTSim():
 
     def run_sim_lst_alma(
         self,
-        # ngc1097sim
-        tinteg_n1097sim      = 48, # 7m total observing time
-        observed_freq        = 492.16065100, # GHz, determine LST and TP beam sizes
-        do_template_n1097sim = False, # create "wide" template cube for mapping simobserve
-        do_simint_n1097im    = False, # sim ACA band 8 for big ngc1097sim
-        do_imaging_n1097sim  = False, # imaging sim ms
-        dryrun_simSD         = False, # just output SD mapping parameters
-        do_simTP_n1097im     = False, # sim ACA TP alone
-        do_simLST_n1097im    = False, # sim LST alone
-        do_feather           = False,
-        # ngc1068sim
+        ##############
+        # ngc1097sim #
+        ##############
+        # prepare
+        tinteg_n1097sim        = 48,    # 7m total observing time
+        observed_freq          = 492.16065100, # GHz, determine LST and TP beam sizes
+        do_template_n1097sim   = False, # create "wide" template cube for mapping simobserve
+        # ACA-alone
+        do_simACA_n1097sim     = False, # sim ACA band 8 for big ngc1097sim
+        do_imaging_n1097sim    = False, # imaging sim ms
+        # SD-alone
+        dryrun_simSD           = False, # just output SD mapping parameters
+        do_simTP_n1097sim      = False, # sim ACA TP alone; after do_imaging_n1097sim
+        do_simLST_n1097sim     = False, # sim LST alone; after do_imaging_n1097sim
+        do_feather             = False,
+        do_tp2vis              = False, # not implemented yet
+        # LST-connected 7m array
+        do_simACA_LST_n1097sim = False,
+        #
+        ##############
+        # ngc1068sim #
+        ##############
+        # prepare
         tinteg_n1068sim      = 2,
         do_template_n1068sim = False, # create "compact" template cube for long-baseline simobserve
-        do_simint_n1068im    = False, # sim C-10 band 8 for small ngc1068sim
+        do_simint_n1068sim   = False, # sim C-10 band 8 for small ngc1068sim
         do_imaging_n1068sim  = False, # imaging sim ms
         # plot
         plot_config          = False,
@@ -259,7 +272,7 @@ class ToolsLSTSim():
         if do_template_n1097sim==True:
             self.prepare_template_n1097sim()
 
-        if do_simint_n1097im==True:
+        if do_simACA_n1097sim==True:
             self.simaca_n1097sim(tinteg,tintegstr)
 
         if do_imaging_n1097sim==True:
@@ -269,15 +282,18 @@ class ToolsLSTSim():
                 this_target=this_target,
                 )
 
-        if do_simTP_n1097im==True:
+        if do_simTP_n1097sim==True:
             self.simtp_n1097sim(tp_beam,tintegstr,dryrun_simSD)
 
-        if do_simLST_n1097im==True:
+        if do_simLST_n1097sim==True:
             self.simlst_n1097sim(lst_beam,tp_beam,tintegstr,dryrun_simSD)
 
         if do_feather==True:
             self.do_feather(cube_7m,cube_tp,self.n1097_feather_tp_7m,12.0)
             self.do_feather(cube_7m,cube_lst,self.n1097_feather_lst_7m,50.0)
+
+        if do_simACA_LST_n1097sim==True:
+            self.do_simaca_lst_n1097sim(tinteg,tintegstr)
 
         #############################
         # set ngc1097sim parameters #
@@ -292,7 +308,7 @@ class ToolsLSTSim():
         if do_template_n1068sim==True:
             self.prepare_template_n1068sim()
 
-        if do_simint_n1068im==True:
+        if do_simint_n1068sim==True:
             self.simaca_n1068sim(
             totaltime=totaltime_n1068sim_12m,
             totaltimetint=totaltimetint_n1068sim_12m,
@@ -312,6 +328,45 @@ class ToolsLSTSim():
         # calc
         if calc_collectingarea==True:
             self.calc_collectingarea()
+
+    ##########################
+    # do_simaca_lst_n1097sim #
+    ##########################
+
+    def do_simaca_lst_n1097sim(self,totaltime="2.0h",totaltimetint="2p0h"):
+        """
+        """
+
+        taskname = self.modname + sys._getframe().f_code.co_name
+        check_first(self.n1097_template_fullspec,taskname)
+
+        run_simobserve(
+            working_dir=self.dir_ready,
+            template=self.n1097_template_fullspec,
+            antennalist=self.config_7m_lst,
+            project=self.project_n1097+"_LSTconnected_7m_"+totaltimetint,
+            totaltime=totaltime,
+            incenter=self.incenter,
+            )
+
+    #############
+    # do_tp2vis #
+    #############
+
+    def do_tp2vis(self,sdimage,vis,outfile):
+        """
+        """
+
+        taskname = self.modname + sys._getframe().f_code.co_name
+        check_first(lowres,taskname)
+
+        # calculate hex ptg table (e.g., J2000 05h39m45.660s -70d07m57.524s)
+        # use matplotlib.hexbin?
+        print("# TBE.")
+
+        # run tp2vis
+        execfile("tp2vis.py")
+        #tp2vis('tp.im','tp.ms','12m.ptg',rms=0.67)
 
     ##############
     # do_feather #

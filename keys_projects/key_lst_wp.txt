@@ -8,6 +8,7 @@ dir_other     ,,,data_other/
 dir_products  ,,,products_png/
 dir_final     ,,,images/
 dir_pipeline  ,,,/home02/saitots/myUtils/keys_projects/keys_lst_wp/
+dir_tp2vis    ,,,/home02/saitots/scripts/analysis_scripts/
 
 ##################
 # final products #
@@ -35,6 +36,7 @@ project_n1097 ,,,ngc1097sim
 config_c1     ,,,alma-configuration-files/alma.cycle7.1.cfg
 config_c10    ,,,alma-configuration-files/alma.cycle7.10.cfg
 config_7m     ,,,alma-configuration-files/aca.cycle7.cfg
+config_7m_lst ,,,alma-configuration-files/lst_aca.cycle7.cfg
 
 ######################
 # output png and txt #
