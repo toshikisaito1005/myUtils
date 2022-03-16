@@ -461,6 +461,7 @@ def run_simobserve(
         numobs = int(np.ceil(totaltime_float/6.0))
         totaltime_indiv = str(totaltime_float / float(numobs))+"h"
 
+        vis = []
         for this_num in range(numobs):
             this_refdate = (datetime.date(2022, 1, 1)+datetime.timedelta(days=20*this_num)).strftime("%Y/%m/%d")
             # simobserve
@@ -482,6 +483,24 @@ def run_simobserve(
                 thermalnoise = 'tsys-atm', # simobserve
                 user_pwv = 0.5, # simobserve
                 )
+            vis.append(project+"_"+str(this_num)+"/"+project+"_"+str(this_num)+"."+antennalist.replace(".cfg","")+".ms")
+
+        # concat
+        os.system("rm -rf " + project)
+        os.mkdir(project)
+        concatvis = project+"/"+project+"."+antennalist.replace(".cfg","")+".ms"
+        os.system("rm -rf ")
+        concat(vis=vis,concatvis=concatvis)
+
+        proj_0_header = project+"_"+str(this_num)+"/"+project+"_"+str(this_num)+"."+antennalist.replace(".cfg","")
+        os.system("mv " + proj_0_header + ".ptg.txt " + project)
+        os.system("mv " + proj_0_header + ".simobserve.last " + project)
+        os.system("mv " + proj_0_header + ".skymodel " + project)
+        os.system("mv " + proj_0_header + ".skymodel.flat " + project)
+        os.system("rm -rf " + move_ms_to_here + "/" + project)
+        os.system("mv "+ project + " " + move_ms_to_here + ".")
+
+        os.system("rm -rf " + project + "_*/")
 
 ################
 # relabelimage #
