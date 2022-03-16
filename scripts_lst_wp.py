@@ -662,20 +662,20 @@ class ToolsLSTSim():
         for i in range(len(x_12m)):
             this_x = x_12m[i]
             this_y = y_12m[i]
-            antenna = patches.Ellipse(xy=(this_x,this_y), width=12.0,
-                height=12.0, angle=0, fill=True, color="lightgreen", edgecolor="lightgreen",
+            antenna = patches.Ellipse(xy=(this_x,this_y), width=12.0/1000.,
+                height=12.0/1000., angle=0, fill=True, color="lightgreen", edgecolor="lightgreen",
                 alpha=1.0, lw=0)
             ax1.add_patch(antenna)
 
         # LST 0
-        antenna = patches.Ellipse(xy=(-50.06162725/1000.-x_cnt/1000.,-457.2313425/1000.-y_cnt/1000.), width=50.0,
-            height=50.0, angle=0, fill=True, color="tomato", edgecolor="tomato",
+        antenna = patches.Ellipse(xy=(-50.06162725/1000.-x_cnt/1000.,-457.2313425/1000.-y_cnt/1000.), width=50.0/1000.,
+            height=50.0/1000., angle=0, fill=True, color="tomato", edgecolor="tomato",
             alpha=1.0, lw=0)
         ax1.add_patch(antenna)
 
         # LST 1
-        antenna = patches.Ellipse(xy=(6.452141-x_cnt/1000.,7.886675-y_cnt/1000.+0.09), width=50.0,
-            height=50.0, angle=0, fill=True, color="tomato", edgecolor="tomato",
+        antenna = patches.Ellipse(xy=(6.452141-x_cnt/1000.,7.886675-y_cnt/1000.+0.09), width=50.0/1000.,
+            height=50.0/1000., angle=0, fill=True, color="tomato", edgecolor="tomato",
             alpha=1.0, lw=0)
         ax1.add_patch(antenna)
 
