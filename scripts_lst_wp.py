@@ -635,13 +635,13 @@ class ToolsLSTSim():
 
         # TPx4
         antenna = patches.Ellipse(xy=(-36.00,-27.50), width=12.0,
-            height=50.0, angle=0, fill=True, color="deepskyblue", edgecolor="deepskyblue",
+            height=12.0, angle=0, fill=True, color="deepskyblue", edgecolor="deepskyblue",
             alpha=1.0, lw=3.5)
         ax1.add_patch(antenna)
 
         #
-        antenna = patches.Ellipse(xy=(2.98,4.48), width=12.0,
-            height=50.0, angle=0, fill=True, color="tomato", edgecolor="tomato",
+        antenna = patches.Ellipse(xy=(2.98,4.48), width=2.0,
+            height=2.0, angle=0, fill=True, color="tomato", edgecolor="tomato",
             alpha=1.0, lw=3.5)
         ax1.add_patch(antenna)
 
