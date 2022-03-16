@@ -649,7 +649,7 @@ class ToolsLSTSim():
         ad    = [0.215,0.83,0.10,0.90]
         xlim  = [-10,10]
         ylim  = [-10,10]
-        title = "Antenna positions"
+        title = "ALMA 12-m array and LST$_{\mathrm{sim,50m}}$ positions"
         xlabel = "East-West (km)"
         ylabel = "North-South (km)"
 
@@ -660,15 +660,15 @@ class ToolsLSTSim():
         myax_set(ax1, None, xlim, ylim, title, xlabel, ylabel, adjust=ad)
 
         # LST 0
-        antenna = patches.Ellipse(xy=(-50.06162725/1000.-x_cnt/1000.,-457.2313425/1000.-y_cnt/1000.), width=0.6,
-            height=0.6, angle=0, fill=True, color="tomato", edgecolor="tomato",
-            alpha=1.0, lw=0)
+        antenna = patches.Ellipse(xy=(-50.06162725/1000.-x_cnt/1000.,-457.2313425/1000.-y_cnt/1000.), width=0.8,
+            height=0.8, angle=0, fill=True, color="tomato", edgecolor="tomato",
+            alpha=0.7, lw=0)
         ax1.add_patch(antenna)
 
         # LST 1
-        antenna = patches.Ellipse(xy=(6.452141-x_cnt/1000.,7.886675-y_cnt/1000.+0.09), width=0.6,
-            height=0.6, angle=0, fill=True, color="tomato", edgecolor="tomato",
-            alpha=1.0, lw=0)
+        antenna = patches.Ellipse(xy=(6.452141-x_cnt/1000.,7.886675-y_cnt/1000.+0.09), width=0.8,
+            height=0.8, angle=0, fill=True, color="tomato", edgecolor="tomato",
+            alpha=0.7, lw=0)
         ax1.add_patch(antenna)
 
         for i in range(len(x_12m)):
