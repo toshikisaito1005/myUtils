@@ -603,8 +603,9 @@ class ToolsLSTSim():
         # plot: 7m antenna position #
         #############################
         ad    = [0.215,0.83,0.10,0.90]
-        xlim  = [-100,100]
-        ylim  = [-100-500,100-500]
+        dev   = 100
+        xlim  = [-dev-50,dev-50]
+        ylim  = [-dev-575,dev-575]
         title = "Antenna positions"
         xlabel = "East-West (m)"
         ylabel = "North-South (m)"
