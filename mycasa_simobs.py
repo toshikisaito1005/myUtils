@@ -433,19 +433,22 @@ def run_simobserve(
         os.mkdir(move_ms_to_here)
 
     # simobserve
-    simobserve(
-        antennalist = antennalist,
-        skymodel = input_dir+template,
+    #simobserve(
+    simalma(
         project = project,
+        dryrun = False,
+        skymodel = input_dir+template,
+        incenter = incenter,
         setpointings = True,
         integration = "10s",
+        antennalist = [antennalist],
+        totaltime = [totaltime],
+        image = False, # allow simalma to clean
         graphics = "none",
-        obsmode = "int",
-        totaltime = totaltime, 
-        thermalnoise = 'tsys-atm',
-        user_pwv = 1.0,
         overwrite = True,
-        incenter = incenter,
+        #obsmode = "int", # simobserve
+        #thermalnoise = 'tsys-atm', # simobserve
+        #user_pwv = 1.0, # simobserve
         )
     os.system("rm -rf " + move_ms_to_here + "/" + project)
     os.system("mv "+ project + " " + move_ms_to_here + ".")

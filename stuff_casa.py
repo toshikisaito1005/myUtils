@@ -42,6 +42,7 @@ from feather import feather
 from imregrid import imregrid
 from imsmooth import imsmooth
 from makemask import makemask
+from simalma import simalma
 from immoments import immoments
 from simobserve import simobserve
 from importfits import importfits

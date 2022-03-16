@@ -379,7 +379,7 @@ class ToolsLSTSim():
         rmin_in      = str(1.74 / 5. / 72.)+"arcsec"
         totalflux_in = -1 * totalflux / 5**2
 
-        direction = "J2000 03h00m00.0s 00d00m0s" # ngc1068 decl = -00d00m47.859690204s
+        direction = "J2000 02h42m40.70912s -00d00m47.9449s" # ngc1068 decl = -00d00m47.859690204s
         mycl.done()
         mycl.addcomponent(dir=direction, flux=totalflux, fluxunit='Jy', freq='693.9640232GHz', shape="disk", 
                         majoraxis=rmaj_out, minoraxis=rmin_out, positionangle=pa)
@@ -391,7 +391,7 @@ class ToolsLSTSim():
         cs.setunits(['rad','rad','','Hz'])
         cell_rad=myqa.convert(myqa.quantity("0.0005arcsec"),"rad")['value']
         cs.setincrement([-cell_rad,cell_rad],'direction')
-        cs.setreferencevalue([myqa.convert("3h",'rad')['value'],myqa.convert("0deg",'rad')['value']],type="direction")
+        cs.setreferencevalue([myqa.convert("2.7113080889h",'rad')['value'],myqa.convert("-0.01331803deg",'rad')['value']],type="direction")
         cs.setreferencevalue("345GHz",'spectral')
         cs.setincrement('7.5GHz','spectral')
         myia.setcoordsys(cs.torecord())
