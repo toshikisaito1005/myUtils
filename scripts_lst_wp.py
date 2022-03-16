@@ -669,6 +669,7 @@ class ToolsLSTSim():
         ax1.text(0.05,0.92, "ACA 7-m array", color="deepskyblue", weight="bold", transform=ax1.transAxes)
         ax1.text(0.05,0.87, "ACA TP array", color="grey", weight="bold", transform=ax1.transAxes)
         ax1.text(0.05,0.82, "LST$_{\mathrm{sim,50m}}$", color="tomato", weight="bold", transform=ax1.transAxes)
+        ax1.text(0,30, "LST$_{\mathrm{sim,50m}}$ at the ACA position", color="tomato", alpha=0.7,fontsize=17)
 
         # save
         plt.subplots_adjust(hspace=.0)
