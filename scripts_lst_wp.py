@@ -543,20 +543,23 @@ class ToolsLSTSim():
         taskname = self.modname + sys._getframe().f_code.co_name
         check_first(self.config_c10,taskname)
 
-        decl = -37.755 # 0=celestial equator, 90=north pole, -90=south pole
+        # define center as ACA
+        x_cnt = -50.06162725
+        y_cnt = -568.9553881
+        decl  = -37.755 # 0=celestial equator, 90=north pole, -90=south pole
         tinteg = 1
         #lst_position = np.array([0,0,0]) # km/s
         lst_position = np.array([6.452141+0.1, 7.886675+0.1, -0.245131]) # km/s
 
         # get data
         data  = np.loadtxt(self.config_c10,"str")
-        x_12m = data[:,0].astype(np.float32) / 1000.
-        y_12m = data[:,1].astype(np.float32) / 1000.
+        x_12m = data[:,0].astype(np.float32) / 1000. - x_cnt
+        y_12m = data[:,1].astype(np.float32) / 1000. - y_cnt
         z_12m = data[:,2].astype(np.float32) / 1000.
 
         data  = np.loadtxt(self.config_7m,"str")
-        x_7m  = data[:,0].astype(np.float32) / 1000.
-        y_7m  = data[:,1].astype(np.float32) / 1000.
+        x_7m  = data[:,0].astype(np.float32) / 1000. - x_cnt
+        y_7m  = data[:,1].astype(np.float32) / 1000. - y_cnt
         z_7m  = data[:,2].astype(np.float32) / 1000.
 
         # get dist and angle: alma-alma baselines
@@ -603,9 +606,9 @@ class ToolsLSTSim():
         # plot: 7m antenna position #
         #############################
         ad    = [0.215,0.83,0.10,0.90]
-        dev   = 70
-        xlim  = [-dev-50,dev-50]
-        ylim  = [-dev-540,dev-540]
+        dev   = 150
+        xlim  = [-dev,dev]
+        ylim  = [-dev,dev]
         title = "ACA Morita Array + LST"
         xlabel = "East-West (m)"
         ylabel = "North-South (m)"
@@ -628,7 +631,7 @@ class ToolsLSTSim():
                 alpha=1.0, lw=3.5)
             ax1.add_patch(antenna)
 
-        antenna = patches.Ellipse(xy=(-50.06162725,-457.2313425), width=50.0,
+        antenna = patches.Ellipse(xy=(-50.06162725-x_cnt,-457.2313425-y_cnt), width=50.0,
             height=50.0, angle=0, fill=True, color="tomato", edgecolor="tomato",
             alpha=1.0, lw=3.5)
         ax1.add_patch(antenna)
