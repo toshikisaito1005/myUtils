@@ -483,12 +483,12 @@ def run_simobserve(
                 thermalnoise = 'tsys-atm', # simobserve
                 user_pwv = 0.5,            # simobserve
                 )
-            vis.append(project+"_"+str(this_num)+"/"+project+"_"+str(this_num)+"."+antennalist.split("/")[-1].replace(".cfg","")+".ms")
+            vis.append(project+"_"+str(this_num)+"/"+project+"_"+str(this_num)+"."+antennalist.split("/")[-1].replace(".cfg","")+".noisy.ms")
 
         # concat
         os.system("rm -rf " + project)
         os.mkdir(project)
-        concatvis = project+"/"+project+"."+antennalist.split("/")[-1].replace(".cfg","")+".ms"
+        concatvis = project+"/"+project+"."+antennalist.split("/")[-1].replace(".cfg","")+".noisy.ms"
         os.system("rm -rf " + concatvis)
 
         print("# concat " + str(numobs) + " visibilities to " + concatvis)
