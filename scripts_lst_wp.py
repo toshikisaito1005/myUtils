@@ -544,8 +544,8 @@ class ToolsLSTSim():
         check_first(self.config_c10,taskname)
 
         # define center as ACA
-        x_cnt = -50.06162725
-        y_cnt = -568.9553881
+        x_cnt = -50.06162725-0.9
+        y_cnt = -568.9553881-0.4
         decl  = -37.755 # 0=celestial equator, 90=north pole, -90=south pole
         tinteg = 1
         #lst_position = np.array([0,0,0]) # km/s
@@ -607,9 +607,8 @@ class ToolsLSTSim():
         #############################
         ad    = [0.215,0.83,0.10,0.90]
         dev   = 100
-        #xlim  = [-dev,dev]
-        #ylim  = [-dev+50,dev+50]
-        xlim = ylim = [-10,10]
+        xlim  = [-dev,dev]
+        ylim  = [-dev+50,dev+50]
         title = "ACA Morita Array + LST"
         xlabel = "East-West (m)"
         ylabel = "North-South (m)"
@@ -641,7 +640,7 @@ class ToolsLSTSim():
         ax1.add_patch(antenna)
 
         #
-        antenna = patches.Ellipse(xy=(2.98-0.9,4.48-0.4), width=7.0,
+        antenna = patches.Ellipse(xy=(2.98,4.48), width=7.0,
             height=7.0, angle=0, fill=True, color="tomato", edgecolor="tomato",
             alpha=0.5, lw=0)
         ax1.add_patch(antenna)
