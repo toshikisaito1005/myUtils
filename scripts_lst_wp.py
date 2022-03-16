@@ -635,25 +635,30 @@ class ToolsLSTSim():
 
         # TPx4
         antenna = patches.Ellipse(xy=(-36.00,27.50), width=12.0,
-            height=12.0, angle=0, fill=True, color="black", edgecolor="black",
+            height=12.0, angle=0, fill=True, color="grey", edgecolor="grey",
             alpha=1.0, lw=0)
         ax1.add_patch(antenna)
         antenna = patches.Ellipse(xy=(-31.00,-32.00), width=12.0,
-            height=12.0, angle=0, fill=True, color="black", edgecolor="black",
+            height=12.0, angle=0, fill=True, color="grey", edgecolor="grey",
             alpha=1.0, lw=0)
         ax1.add_patch(antenna)
         antenna = patches.Ellipse(xy=(35.50,-26.00), width=12.0,
-            height=12.0, angle=0, fill=True, color="black", edgecolor="black",
+            height=12.0, angle=0, fill=True, color="grey", edgecolor="grey",
             alpha=1.0, lw=0)
         ax1.add_patch(antenna)
         antenna = patches.Ellipse(xy=(36.00,29.50), width=12.0,
-            height=12.0, angle=0, fill=True, color="black", edgecolor="black",
+            height=12.0, angle=0, fill=True, color="grey", edgecolor="grey",
             alpha=1.0, lw=0)
         ax1.add_patch(antenna)
 
+        # ann
+        ypos = (-457.2313425-y_cnt-np.max(this_y)) / 2.0
+        ax.plot([0,0],[np.max(this_y),-457.2313425-y_cnt],"-",color="black")
+        ax.text(0,ypos,"50m x cot(30$^{\circ}$)",ha="left")
+
         # text
         ax1.text(0.05,0.92, "ACA 7-m array", color="deepskyblue", weight="bold", transform=ax1.transAxes)
-        ax1.text(0.05,0.87, "ACA TP array", color="black", weight="bold", transform=ax1.transAxes)
+        ax1.text(0.05,0.87, "ACA TP array", color="grey", weight="bold", transform=ax1.transAxes)
         ax1.text(0.05,0.82, "LSTsim 50-m", color="tomato", weight="bold", transform=ax1.transAxes)
 
         # save
