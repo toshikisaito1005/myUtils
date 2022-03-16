@@ -617,8 +617,21 @@ class ToolsLSTSim():
         myax_set(ax1, None, xlim, ylim, title, xlabel, ylabel, adjust=ad)
 
         #ax1.scatter(6.452141+0.1, 7.886675+0.1, color="tomato", marker="*", lw=0, s=900)
-        ax1.scatter(x_7m*1e3, y_7m*1e3, color="deepskyblue", lw=0, s=100)
-        ax1.scatter(-50.06162725, -518.9553881, color="tomato", marker="*", lw=0, s=900)
+        #ax1.scatter(x_7m*1e3, y_7m*1e3, color="deepskyblue", lw=0, s=100)
+        #ax1.scatter(-50.06162725, -518.9553881, color="tomato", marker="*", lw=0, s=900)
+
+        for i in range(len(x_7m)):
+            this_x = x_7m[i] * 1000.
+            this_y = y_7m[i] * 1000.
+            antenna = patches.Ellipse(xy=(this_x,this_y), width=7.0,
+                height=7.0, angle=0, fill=True, color="deepskyblue", edgecolor="deepskyblue",
+                alpha=1.0, lw=3.5)
+            ax.add_patch(antenna)
+
+        antenna = patches.Ellipse(xy=(-50.06162725,-518.9553881), width=50.0,
+            height=50.0, angle=0, fill=True, color="tomato", edgecolor="tomato",
+            alpha=1.0, lw=3.5)
+        ax.add_patch(antenna)
 
         # text
         ax1.text(0.05,0.92, "ACA 7-m array", color="deepskyblue", weight="bold", transform=ax1.transAxes)
