@@ -453,7 +453,7 @@ def run_simobserve(
             refdate = this_refdate, # simobserve
             obsmode = "int", # simobserve
             thermalnoise = 'tsys-atm', # simobserve
-            user_pwv = 0.5, # simobserve
+            user_pwv = 0.658, # simobserve
             )
         os.system("rm -rf " + move_ms_to_here + "/" + project)
         os.system("mv "+ project + " " + move_ms_to_here + ".")
