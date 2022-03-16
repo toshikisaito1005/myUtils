@@ -606,8 +606,8 @@ class ToolsLSTSim():
         xlim  = [-50,50]
         ylim  = [-50,50]
         title = "Antenna positions"
-        xlabel = "East-West (km)"
-        ylabel = "North-South (km)"
+        xlabel = "East-West (m)"
+        ylabel = "North-South (m)"
 
         fig = plt.figure(figsize=(13,10))
         gs  = gridspec.GridSpec(nrows=10, ncols=10)
@@ -617,10 +617,10 @@ class ToolsLSTSim():
 
         #ax1.scatter(6.452141+0.1, 7.886675+0.1, color="tomato", marker="*", lw=0, s=900)
         ax1.scatter(x_7m*1e3, y_7m*1e3, color="deepskyblue", lw=0, s=100)
+        print(x_7m)
 
         # text
         ax1.text(0.05,0.92, "ALMA 12-m array", color="grey", weight="bold", transform=ax1.transAxes)
-        ax1.text(0.05,0.87, "ACA 7-m array", color="deepskyblue", weight="bold", transform=ax1.transAxes)
         ax1.text(0.05,0.82, "LSTsim 50-m", color="tomato", weight="bold", transform=ax1.transAxes)
 
         # save
