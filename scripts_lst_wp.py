@@ -552,7 +552,7 @@ class ToolsLSTSim():
         lst_position = np.array([6.452141+0.1, 7.886675+0.1, -0.245131]) # km/s
 
         # get data
-        data  = np.loadtxt(self.config_c10,"str")
+        data  = np.loadtxt(self.config_c1,"str")
         x_12m = data[:,0].astype(np.float32) / 1000. - x_cnt / 1000.
         y_12m = data[:,1].astype(np.float32) / 1000. - y_cnt / 1000.
         z_12m = data[:,2].astype(np.float32) / 1000.
