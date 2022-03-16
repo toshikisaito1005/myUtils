@@ -553,13 +553,13 @@ class ToolsLSTSim():
 
         # get data
         data  = np.loadtxt(self.config_c10,"str")
-        x_12m = data[:,0].astype(np.float32) / 1000. - x_cnt
-        y_12m = data[:,1].astype(np.float32) / 1000. - y_cnt
+        x_12m = data[:,0].astype(np.float32) / 1000. - x_cnt / 1000.
+        y_12m = data[:,1].astype(np.float32) / 1000. - y_cnt / 1000.
         z_12m = data[:,2].astype(np.float32) / 1000.
 
         data  = np.loadtxt(self.config_7m,"str")
-        x_7m  = data[:,0].astype(np.float32) / 1000. - x_cnt
-        y_7m  = data[:,1].astype(np.float32) / 1000. - y_cnt
+        x_7m  = data[:,0].astype(np.float32) / 1000. - x_cnt / 1000.
+        y_7m  = data[:,1].astype(np.float32) / 1000. - y_cnt / 1000.
         z_7m  = data[:,2].astype(np.float32) / 1000.
 
         # get dist and angle: alma-alma baselines
