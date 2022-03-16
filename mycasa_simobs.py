@@ -476,12 +476,12 @@ def run_simobserve(
                 totaltime = totaltime_indiv,
                 graphics = "none",
                 overwrite = True,
-                # dryrun = False, # simalma
-                # image = False, # simalma
-                refdate = this_refdate, # simobserve
-                obsmode = "int", # simobserve
+                #dryrun = False,            # simalma
+                #image = False,             # simalma
+                refdate = this_refdate,    # simobserve
+                obsmode = "int",           # simobserve
                 thermalnoise = 'tsys-atm', # simobserve
-                user_pwv = 0.5, # simobserve
+                user_pwv = 0.5,            # simobserve
                 )
             vis.append(project+"_"+str(this_num)+"/"+project+"_"+str(this_num)+"."+antennalist.split("/")[-1].replace(".cfg","")+".ms")
 
@@ -491,14 +491,16 @@ def run_simobserve(
         concatvis = project+"/"+project+"."+antennalist.split("/")[-1].replace(".cfg","")+".ms"
         os.system("rm -rf " + concatvis)
 
-        print("# concat " + str(numobs) + " visivilities to " + concatvis)
+        print("# concat " + str(numobs) + " visibilities to " + concatvis)
         concat(vis=vis,concatvis=concatvis)
 
         proj_0_header = project+"_"+str(this_num)+"/"+project+"_"+str(this_num)+"."+antennalist.split("/")[-1].replace(".cfg","")
-        os.system("mv " + proj_0_header + ".ptg.txt " + project)
-        os.system("mv " + proj_0_header + ".simobserve.last " + project)
-        os.system("mv " + proj_0_header + ".skymodel " + project)
-        os.system("mv " + proj_0_header + ".skymodel.flat " + project)
+        proj_header   = project+"."+antennalist.split("/")[-1].replace(".cfg","")
+        os.system("mv " + proj_0_header + ".ptg.txt " + project + "/" + proj_header + ".ptg.txt")
+        os.system("mv " + proj_0_header + ".simobserve.last " + project + "/" + proj_header + ".simobserve.last")
+        os.system("mv " + proj_0_header + ".skymodel " + project + "/" + proj_header + ".skymodel")
+        os.system("mv " + proj_0_header + ".skymodel.flat " + project + "/" + proj_header + ".skymodel.flat")
+        
         os.system("rm -rf " + move_ms_to_here + "/" + project)
         os.system("mv "+ project + " " + move_ms_to_here + ".")
 
