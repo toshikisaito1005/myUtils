@@ -181,6 +181,7 @@ class ToolsLSTSim():
         """
 
         self.outpng_config_12m   = self.dir_products + self._read_key("outpng_config_12m")
+        self.outpng_config_7m    = self.dir_products + self._read_key("outpng_config_7m")
         self.outpng_uv_alma_lst1 = self.dir_products + self._read_key("outpng_uv_alma_lst1")
 
     ####################
@@ -221,9 +222,9 @@ class ToolsLSTSim():
         # plot #
         ########
         # plot
-        plot_config          = False,
+        plot_config            = False,
         # calc
-        calc_collectingarea  = False,
+        calc_collectingarea    = False,
         ):
         """
         This method runs all the methods which will create figures in the white paper.
@@ -565,9 +566,9 @@ class ToolsLSTSim():
         u1_lst_center, v1_lst_center = self._get_baselines([lst_position],this_data,decl=decl,tinteg=tinteg)
         u2_lst_center, v2_lst_center = self._get_baselines(this_data,[lst_position],decl=decl,tinteg=tinteg)
 
-        ##########################
-        # plot: antenna position #
-        ##########################
+        ###############################
+        # plot: C-10 antenna position #
+        ###############################
         ad    = [0.215,0.83,0.10,0.90]
         xlim  = [-10,10]
         ylim  = [-10,10]
@@ -597,6 +598,35 @@ class ToolsLSTSim():
         plt.subplots_adjust(hspace=.0)
         os.system("rm -rf " + self.outpng_config_12m)
         plt.savefig(self.outpng_config_12m, dpi=self.fig_dpi)
+
+        #############################
+        # plot: 7m antenna position #
+        #############################
+        ad    = [0.215,0.83,0.10,0.90]
+        xlim  = [-50,50]
+        ylim  = [-50,50]
+        title = "Antenna positions"
+        xlabel = "East-West (km)"
+        ylabel = "North-South (km)"
+
+        fig = plt.figure(figsize=(13,10))
+        gs  = gridspec.GridSpec(nrows=10, ncols=10)
+        ax1 = plt.subplot(gs[0:10,0:10])
+        plt.subplots_adjust(left=ad[0], right=ad[1], bottom=ad[2], top=ad[3])
+        myax_set(ax1, None, xlim, ylim, title, xlabel, ylabel, adjust=ad)
+
+        #ax1.scatter(6.452141+0.1, 7.886675+0.1, color="tomato", marker="*", lw=0, s=900)
+        ax1.scatter(x_7m*1e3, y_7m*1e3, color="deepskyblue", lw=0, s=100)
+
+        # text
+        ax1.text(0.05,0.92, "ALMA 12-m array", color="grey", weight="bold", transform=ax1.transAxes)
+        ax1.text(0.05,0.87, "ACA 7-m array", color="deepskyblue", weight="bold", transform=ax1.transAxes)
+        ax1.text(0.05,0.82, "LSTsim 50-m", color="tomato", weight="bold", transform=ax1.transAxes)
+
+        # save
+        plt.subplots_adjust(hspace=.0)
+        os.system("rm -rf " + self.outpng_config_7m)
+        plt.savefig(self.outpng_config_7m, dpi=self.fig_dpi)
 
         ############
         # plot: uv #
@@ -638,7 +668,7 @@ class ToolsLSTSim():
         taskname = self.modname + sys._getframe().f_code.co_name
         #check_first(self.template_fullspec,taskname)
 
-        # prepare dir_cleanmask
+        # prepare dir_cleanmask = dir_singledish
         dir_cleanmask = self.dir_ready + "outputs/"
         if not glob.glob(dir_cleanmask):
             os.mkdir(dir_cleanmask)

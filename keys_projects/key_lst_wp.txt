@@ -44,6 +44,7 @@ config_7m_lst ,,,alma-configuration-files/lst_aca.cycle7.cfg
 ######################
 # png files
 outpng_config_12m   ,,,fig_config_12m.png
+outpng_config_7m    ,,,fig_config_7m.png
 outpng_uv_alma_lst1 ,,,fig_uv_alma_lst1.png
 
 # box for imagemajick
