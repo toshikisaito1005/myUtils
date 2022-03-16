@@ -638,11 +638,6 @@ class ToolsLSTSim():
         taskname = self.modname + sys._getframe().f_code.co_name
         #check_first(self.template_fullspec,taskname)
 
-        # prepare dir_cleanmask
-        dir_cleanmask = self.dir_ready + "outputs/cleanmasks/"
-        if not glob.glob(dir_cleanmask):
-            os.mkdir(dir_cleanmask)
-
         # set piepline
         master_key = self.dir_pipeline + "master_key.txt"
 
