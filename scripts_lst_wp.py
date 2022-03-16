@@ -652,10 +652,10 @@ class ToolsLSTSim():
         ax1.add_patch(antenna)
 
         # ann
-        ypos = (-457.2313425-y_cnt-np.max(this_y)) / 2.0
+        ypos = (-457.2313425-y_cnt-np.max(this_y*1000.)) / 2.0
         ax1.plot([0,0],[np.max(y_7m*1000.),-457.2313425-y_cnt],"-",color="black")
-        ax1.text(1,ypos,"90m $\simeq$ 50m x cot 30$^{\circ}$",ha="left",fontsize=16)
-        ax1.text(1,ypos-10,"No shadowing around El. $\simeq$ 30$^{\circ}$",ha="left",fontsize=16)
+        ax1.text(1,ypos,"90m $\simeq$ 50m x cot 30$^{\circ}$",ha="left",fontsize=17)
+        ax1.text(1,ypos-7,"No shadowing around El. $\simeq$ 30$^{\circ}$",ha="left",fontsize=17)
 
         # text
         ax1.text(0.05,0.92, "ACA 7-m array", color="deepskyblue", weight="bold", transform=ax1.transAxes)
