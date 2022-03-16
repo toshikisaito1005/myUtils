@@ -603,8 +603,8 @@ class ToolsLSTSim():
         # plot: 7m antenna position #
         #############################
         ad    = [0.215,0.83,0.10,0.90]
-        xlim  = [-100,100]
-        ylim  = [-100,100]
+        xlim  = [-1000,1000]
+        ylim  = [-1000,1000]
         title = "Antenna positions"
         xlabel = "East-West (m)"
         ylabel = "North-South (m)"
@@ -617,7 +617,6 @@ class ToolsLSTSim():
 
         #ax1.scatter(6.452141+0.1, 7.886675+0.1, color="tomato", marker="*", lw=0, s=900)
         ax1.scatter(x_7m*1e3, y_7m*1e3, color="deepskyblue", lw=0, s=100)
-        print(x_7m)
 
         # text
         ax1.text(0.05,0.92, "ALMA 12-m array", color="grey", weight="bold", transform=ax1.transAxes)
