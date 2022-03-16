@@ -242,8 +242,9 @@ class ToolsLSTSim():
         this_target = self.project_n1097+"_"+tintegstr
 
         # determine LST and TP beam sizes
-        lst_beam = str(12.979 * 115.27120 / self.observed_freq)+"arcsec"
-        tp_beam  = str(50.6   * 115.27120 / self.observed_freq)+"arcsec"
+        lst_beam    = str(12.979 * 115.27120 / self.observed_freq)+"arcsec"
+        tp_beam     = str(50.6   * 115.27120 / self.observed_freq)+"arcsec"
+        lst30m_beam = str(21.631 * 115.27120 / self.observed_freq)+"arcsec"
 
         # define products
         cube_tp  = self.dir_ready+"outputs/"+self.n1097_sdimage_fullspec.replace(".image","_"+tintegstr+"7m.image")
@@ -271,6 +272,7 @@ class ToolsLSTSim():
 
         if do_simLST_n1097sim==True:
             self.simlst_n1097sim(lst_beam,tp_beam,tintegstr,dryrun_simSD)
+            self.simlst_n1097sim(lst30m_beam,tp_beam,tintegstr,True)
 
         if do_feather==True:
             self.do_feather(cube_7m,cube_tp,self.n1097_feather_tp_7m,-1)
