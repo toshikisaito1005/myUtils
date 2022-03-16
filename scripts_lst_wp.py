@@ -609,7 +609,7 @@ class ToolsLSTSim():
         dev   = 100
         #xlim  = [-dev,dev]
         #ylim  = [-dev+50,dev+50]
-        xlim = ylim = [-30,30]
+        xlim = ylim = [-10,10]
         title = "ACA Morita Array + LST"
         xlabel = "East-West (m)"
         ylabel = "North-South (m)"
@@ -641,9 +641,9 @@ class ToolsLSTSim():
         ax1.add_patch(antenna)
 
         #
-        antenna = patches.Ellipse(xy=(2.98,4.48), width=7.0,
+        antenna = patches.Ellipse(xy=(2.98-1.0,4.48-0.5), width=7.0,
             height=7.0, angle=0, fill=True, color="tomato", edgecolor="tomato",
-            alpha=1.0, lw=3.5)
+            alpha=0.5, lw=3.5)
         ax1.add_patch(antenna)
 
         # text
