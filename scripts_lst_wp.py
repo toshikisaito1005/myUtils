@@ -273,8 +273,8 @@ class ToolsLSTSim():
             self.simlst_n1097sim(lst_beam,tp_beam,tintegstr,dryrun_simSD)
 
         if do_feather==True:
-            self.do_feather(cube_7m,cube_tp,self.n1097_feather_tp_7m,-1)#12.0)
-            self.do_feather(cube_7m,cube_lst,self.n1097_feather_lst_7m,-1)#50.0)
+            self.do_feather(cube_7m,cube_tp,self.n1097_feather_tp_7m,-1)
+            self.do_feather(cube_7m,cube_lst,self.n1097_feather_lst_7m,-1)
 
         if do_simACA_LST_n1097sim==True:
             self.do_simaca_lst_n1097sim(tinteg,tintegstr)
@@ -768,7 +768,7 @@ class ToolsLSTSim():
         print("# sensitivity per pointing (K)    = " + str(np.round(rms_lst_K,5)))
         print("# beam size (arcsec)              = " + str(np.round(float(lst_res.replace("arcsec","")),2)))
         print("# number of pointing              = " + str(num_pointing))
-        print("# survey area (arcsec^2)          = " + str(int(area_in_as)))
+        print("# survey area (degree^2)          = " + str(int(area_in_as/3600.**2)))
         print("#")
 
         # run
@@ -827,7 +827,7 @@ class ToolsLSTSim():
         print("# sensitivity per pointing (K)   = " + str(np.round(rms_tp_K,5)))
         print("# beam size (arcsec)             = " + str(np.round(float(singledish_res.replace("arcsec","")),2)))
         print("# number of pointing             = " + str(num_pointing))
-        print("# survey area (arcsec^2)         = " + str(int(area_in_as)))
+        print("# survey area (degree^2)         = " + str(int(area_in_as/3600.**2)))
         print("#")
 
         # run
