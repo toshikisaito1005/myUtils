@@ -552,7 +552,7 @@ class ToolsLSTSim():
         lst_position = np.array([6.452141+0.1, 7.886675+0.1, -0.245131]) # km/s
 
         # get data
-        data  = np.loadtxt(self.config_c1,"str")
+        data  = np.loadtxt(self.config_c10,"str")
         x_12m = data[:,0].astype(np.float32) / 1000. - x_cnt / 1000.
         y_12m = data[:,1].astype(np.float32) / 1000. - y_cnt / 1000.
         z_12m = data[:,2].astype(np.float32) / 1000.
@@ -606,9 +606,9 @@ class ToolsLSTSim():
         # plot: 7m antenna position #
         #############################
         ad    = [0.215,0.83,0.10,0.90]
-        dev   = 150
+        dev   = 100
         xlim  = [-dev,dev]
-        ylim  = [-dev,dev]
+        ylim  = [-dev+50,dev+50]
         title = "ACA Morita Array + LST"
         xlabel = "East-West (m)"
         ylabel = "North-South (m)"
@@ -618,10 +618,6 @@ class ToolsLSTSim():
         ax1 = plt.subplot(gs[0:10,0:10])
         plt.subplots_adjust(left=ad[0], right=ad[1], bottom=ad[2], top=ad[3])
         myax_set(ax1, None, xlim, ylim, title, xlabel, ylabel, adjust=ad)
-
-        #ax1.scatter(6.452141+0.1, 7.886675+0.1, color="tomato", marker="*", lw=0, s=900)
-        #ax1.scatter(x_7m*1e3, y_7m*1e3, color="deepskyblue", lw=0, s=100)
-        #ax1.scatter(-50.06162725, -518.9553881, color="tomato", marker="*", lw=0, s=900)
 
         for i in range(len(x_7m)):
             this_x = x_7m[i] * 1000.
