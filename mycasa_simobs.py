@@ -466,7 +466,6 @@ def run_simobserve(
             this_refdate = (datetime.date(2022, 1, 1)+datetime.timedelta(days=20*this_num)).strftime("%Y/%m/%d")
             # simobserve
             print("# run simobserve on " + this_refdate + " with tinteg = " + totaltime_indiv)
-            """
             simobserve(
                 project = project+"_"+str(this_num),
                 skymodel = input_dir+template,
@@ -484,8 +483,7 @@ def run_simobserve(
                 thermalnoise = 'tsys-atm', # simobserve
                 user_pwv = 0.5, # simobserve
                 )
-            """
-            vis.append(project+"_"+str(this_num)+"/"+project+"_"+str(this_num)+"."+antennalist.replace(".cfg","")+".ms")
+            vis.append(project+"_"+str(this_num)+"/"+project+"_"+str(this_num)+"."+antennalist.split("/")[-1].replace(".cfg","")+".ms")
 
         # concat
         os.system("rm -rf " + project)
@@ -496,7 +494,7 @@ def run_simobserve(
         print("# concat " + str(numobs) + " visivilities to " + concatvis)
         concat(vis=vis,concatvis=concatvis)
 
-        proj_0_header = project+"_"+str(this_num)+"/"+project+"_"+str(this_num)+"."+antennalist.replace(".cfg","")
+        proj_0_header = project+"_"+str(this_num)+"/"+project+"_"+str(this_num)+"."+antennalist.split("/")[-1].replace(".cfg","")
         os.system("mv " + proj_0_header + ".ptg.txt " + project)
         os.system("mv " + proj_0_header + ".simobserve.last " + project)
         os.system("mv " + proj_0_header + ".skymodel " + project)
