@@ -668,14 +668,14 @@ class ToolsLSTSim():
             ax1.add_patch(antenna)
 
         # LST 0
-        antenna = patches.Ellipse(xy=(-50.06162725/1000.-x_cnt/1000.,-457.2313425/1000.-y_cnt/1000.), width=1,
-            height=1, angle=0, fill=True, color="tomato", edgecolor="tomato",
+        antenna = patches.Ellipse(xy=(-50.06162725/1000.-x_cnt/1000.,-457.2313425/1000.-y_cnt/1000.), width=0.3,
+            height=0.3, angle=0, fill=True, color="tomato", edgecolor="tomato",
             alpha=1.0, lw=0)
         ax1.add_patch(antenna)
 
         # LST 1
-        antenna = patches.Ellipse(xy=(6.452141-x_cnt/1000.,7.886675-y_cnt/1000.+0.09), width=1,
-            height=1, angle=0, fill=True, color="tomato", edgecolor="tomato",
+        antenna = patches.Ellipse(xy=(6.452141-x_cnt/1000.,7.886675-y_cnt/1000.+0.09), width=0.3,
+            height=0.3, angle=0, fill=True, color="tomato", edgecolor="tomato",
             alpha=1.0, lw=0)
         ax1.add_patch(antenna)
 
