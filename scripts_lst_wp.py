@@ -273,8 +273,8 @@ class ToolsLSTSim():
             self.simlst_n1097sim(lst_beam,tp_beam,tintegstr,dryrun_simSD)
 
         if do_feather==True:
-            self.do_feather(cube_7m,cube_tp,self.n1097_feather_tp_7m,12.0)
-            self.do_feather(cube_7m,cube_lst,self.n1097_feather_lst_7m,50.0)
+            self.do_feather(cube_7m,cube_tp,self.n1097_feather_tp_7m,-1)#12.0)
+            self.do_feather(cube_7m,cube_lst,self.n1097_feather_lst_7m,-1)#50.0)
 
         if do_simACA_LST_n1097sim==True:
             self.do_simaca_lst_n1097sim(tinteg,tintegstr)
