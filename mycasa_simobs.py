@@ -432,26 +432,56 @@ def run_simobserve(
     if not done:
         os.mkdir(move_ms_to_here)
 
-    # simobserve
-    #simobserve(
-    simalma(
-        project = project,
-        dryrun = False,
-        skymodel = input_dir+template,
-        incenter = incenter,
-        setpointings = True,
-        integration = "10s",
-        antennalist = [antennalist],
-        totaltime = [totaltime],
-        image = False, # allow simalma to clean
-        graphics = "none",
-        overwrite = True,
-        #obsmode = "int", # simobserve
-        #thermalnoise = 'tsys-atm', # simobserve
-        #user_pwv = 1.0, # simobserve
-        )
-    os.system("rm -rf " + move_ms_to_here + "/" + project)
-    os.system("mv "+ project + " " + move_ms_to_here + ".")
+    totaltime_float = float(totaltime.replace("h",""))
+
+    if totaltime_float<=6.0:
+        this_refdate = datetime.date(2022, 1, 1).strftime("%Y/%m/%d")
+        # simobserve
+        print("# run simobserve on " + this_refdate + " with tinteg = " + totaltime)
+        simobserve(
+            project = project,
+            dryrun = False,
+            skymodel = input_dir+template,
+            incenter = incenter,
+            setpointings = True,
+            integration = "10s",
+            antennalist = antennalist,
+            totaltime = totaltime,
+            graphics = "none",
+            overwrite = True,
+            #image = False, # simalma
+            refdate = this_refdate, # simobserve
+            obsmode = "int", # simobserve
+            thermalnoise = 'tsys-atm', # simobserve
+            user_pwv = 0.5, # simobserve
+            )
+        os.system("rm -rf " + move_ms_to_here + "/" + project)
+        os.system("mv "+ project + " " + move_ms_to_here + ".")
+    else:
+        numobs = int(np.ceil(totaltime_float/6.0))
+        totaltime_indiv = str(totaltime_float / float(numobs))+"h"
+
+        for this_num in range(numobs):
+            this_refdate = (datetime.date(2022, 1, 1)+datetime.timedelta(days=20*this_num)).strftime("%Y/%m/%d")
+            # simobserve
+            print("# run simobserve on " + this_refdate + " with tinteg = " + totaltime_indiv)
+            simobserve(
+                project = project+"_"+str(this_num),
+                dryrun = False,
+                skymodel = input_dir+template,
+                incenter = incenter,
+                setpointings = True,
+                integration = "10s",
+                antennalist = antennalist,
+                totaltime = totaltime_indiv,
+                graphics = "none",
+                overwrite = True,
+                #image = False, # simalma
+                refdate = this_refdate, # simobserve
+                obsmode = "int", # simobserve
+                thermalnoise = 'tsys-atm', # simobserve
+                user_pwv = 0.5, # simobserve
+                )
 
 ################
 # relabelimage #
