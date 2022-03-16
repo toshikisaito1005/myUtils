@@ -616,6 +616,7 @@ class ToolsLSTSim():
         fig = plt.figure(figsize=(13,10))
         gs  = gridspec.GridSpec(nrows=10, ncols=10)
         ax1 = plt.subplot(gs[0:10,0:10])
+        plt.rcParams["font.family"] = "Calibri"
         plt.subplots_adjust(left=ad[0], right=ad[1], bottom=ad[2], top=ad[3])
         myax_set(ax1, None, xlim, ylim, title, xlabel, ylabel, adjust=ad)
 
