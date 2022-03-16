@@ -675,12 +675,12 @@ class ToolsLSTSim():
             this_x = x_12m[i]
             this_y = y_12m[i]
             antenna = patches.Ellipse(xy=(this_x,this_y), width=0.3,
-                height=0.3, angle=0, fill=True, color="lightgreen", edgecolor="lightgreen",
+                height=0.3, angle=0, fill=True, color="forestgreen", edgecolor="forestgreen",
                 alpha=1.0, lw=0)
             ax1.add_patch(antenna)
 
         # text
-        ax1.text(0.05,0.92, "ALMA 12-m array", color="lightgreen", weight="bold", transform=ax1.transAxes)
+        ax1.text(0.05,0.92, "ALMA 12-m array", color="forestgreen", weight="bold", transform=ax1.transAxes)
         ax1.text(0.05,0.87, "two LST$_{\mathrm{sim,50m}}$ positions", color="tomato", weight="bold", transform=ax1.transAxes)
 
         # save
