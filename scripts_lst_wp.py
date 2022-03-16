@@ -655,7 +655,7 @@ class ToolsLSTSim():
         # LST at the center
         antenna = patches.Ellipse(xy=(0,0), width=50.0,
             height=50.0, angle=0, fill=False, color="tomato", edgecolor="tomato",
-            alpha=0.7, lw=2, ls="--")
+            alpha=0.7, lw=2, ls="dashed")
         ax1.add_patch(antenna)
 
         # ann
