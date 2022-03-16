@@ -302,6 +302,7 @@ class ToolsLSTSim():
             dir_to  = self.dir_ready + "outputs/imaging/" + this_target + "/"
             ms_to   = dir_to + this_target + "_12m_cont.ms"
             os.system("rm -rf " + ms_to)
+             os.system("rm -rf " + dir_to)
             os.makedirs(dir_to)
             os.system("cp -r " + ms_from + " " + ms_to)
 
