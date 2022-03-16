@@ -603,7 +603,7 @@ class ToolsLSTSim():
         # plot: 7m antenna position #
         #############################
         ad    = [0.215,0.83,0.10,0.90]
-        dev   = 50
+        dev   = 70
         xlim  = [-dev-50,dev-50]
         ylim  = [-dev-550,dev-550]
         title = "Antenna positions"
@@ -628,7 +628,7 @@ class ToolsLSTSim():
                 alpha=1.0, lw=3.5)
             ax1.add_patch(antenna)
 
-        antenna = patches.Ellipse(xy=(-50.06162725,-518.9553881), width=50.0,
+        antenna = patches.Ellipse(xy=(-50.06162725,-498.9553881), width=50.0,
             height=50.0, angle=0, fill=True, color="tomato", edgecolor="tomato",
             alpha=1.0, lw=3.5)
         ax1.add_patch(antenna)
