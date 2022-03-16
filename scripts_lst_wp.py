@@ -627,7 +627,20 @@ class ToolsLSTSim():
                 alpha=1.0, lw=3.5)
             ax1.add_patch(antenna)
 
+        # LST
         antenna = patches.Ellipse(xy=(-50.06162725-x_cnt,-457.2313425-y_cnt), width=50.0,
+            height=50.0, angle=0, fill=True, color="tomato", edgecolor="tomato",
+            alpha=1.0, lw=3.5)
+        ax1.add_patch(antenna)
+
+        # TPx4
+        antenna = patches.Ellipse(xy=(-36.00,-27.50), width=12.0,
+            height=50.0, angle=0, fill=True, color="deepskyblue", edgecolor="deepskyblue",
+            alpha=1.0, lw=3.5)
+        ax1.add_patch(antenna)
+
+        #
+        antenna = patches.Ellipse(xy=(2.98,4.48), width=12.0,
             height=50.0, angle=0, fill=True, color="tomato", edgecolor="tomato",
             alpha=1.0, lw=3.5)
         ax1.add_patch(antenna)
