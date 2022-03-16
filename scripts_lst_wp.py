@@ -662,26 +662,26 @@ class ToolsLSTSim():
         for i in range(len(x_12m)):
             this_x = x_12m[i]
             this_y = y_12m[i]
-            antenna = patches.Ellipse(xy=(this_x,this_y), width=1,
-                height=1, angle=0, fill=True, color="green", edgecolor="green",
+            antenna = patches.Ellipse(xy=(this_x,this_y), width=0.3,
+                height=0.3, angle=0, fill=True, color="green", edgecolor="green",
                 alpha=1.0, lw=0)
             ax1.add_patch(antenna)
 
         # LST 0
-        antenna = patches.Ellipse(xy=(-50.06162725/1000.-x_cnt/1000.,-457.2313425/1000.-y_cnt/1000.), width=3,
-            height=3, angle=0, fill=True, color="tomato", edgecolor="tomato",
+        antenna = patches.Ellipse(xy=(-50.06162725/1000.-x_cnt/1000.,-457.2313425/1000.-y_cnt/1000.), width=1,
+            height=1, angle=0, fill=True, color="tomato", edgecolor="tomato",
             alpha=1.0, lw=0)
         ax1.add_patch(antenna)
 
         # LST 1
-        antenna = patches.Ellipse(xy=(6.452141-x_cnt/1000.,7.886675-y_cnt/1000.+0.09), width=3,
-            height=3, angle=0, fill=True, color="tomato", edgecolor="tomato",
+        antenna = patches.Ellipse(xy=(6.452141-x_cnt/1000.,7.886675-y_cnt/1000.+0.09), width=1,
+            height=1, angle=0, fill=True, color="tomato", edgecolor="tomato",
             alpha=1.0, lw=0)
         ax1.add_patch(antenna)
 
         # text
         ax1.text(0.05,0.92, "ALMA 12-m array", color="green", weight="bold", transform=ax1.transAxes)
-        ax1.text(0.05,0.82, "two LST$_{\mathrm{sim,50m}}$ positions", color="tomato", weight="bold", transform=ax1.transAxes)
+        ax1.text(0.05,0.87, "two LST$_{\mathrm{sim,50m}}$ positions", color="tomato", weight="bold", transform=ax1.transAxes)
 
         # save
         plt.subplots_adjust(hspace=.0)
