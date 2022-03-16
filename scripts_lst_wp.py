@@ -609,7 +609,7 @@ class ToolsLSTSim():
         dev   = 100
         xlim  = [-dev,dev]
         ylim  = [-dev+50,dev+50]
-        title = "Morita Array (7m+TP) + LST$_{\mathrm{sim,50m}}$" # $\\Sigma_{\mathrm{H_2}}$
+        title = "Morita Array (7m+TP) and LST$_{\mathrm{sim,50m}}$ positions" # $\\Sigma_{\mathrm{H_2}}$
         xlabel = "East-West (m)"
         ylabel = "North-South (m)"
 
