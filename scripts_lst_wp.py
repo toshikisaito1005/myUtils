@@ -662,8 +662,8 @@ class ToolsLSTSim():
         xpos = x_7m[np.argmax(y_7m*1000.)] * 1000.
         print(xpos)
         ax1.plot([xpos,xpos],[np.max(y_7m*1000.),-457.2313425-y_cnt],"-",color="black",lw=2)
-        ax1.text(xpos+1,77,"90m $\simeq$ 50m x cot 30$^{\circ}$",ha="left",fontsize=17)
-        ax1.text(xpos+1,70,"(No shadowing until El. $\simeq$ 30$^{\circ}$)",ha="left",fontsize=17)
+        ax1.text(xpos+1.5,67,"90m distance $\simeq$ 50m x cot 30$^{\circ}$",ha="left",fontsize=17)
+        ax1.text(xpos+1.5,60,"(No shadowing until El. $\simeq$ 30$^{\circ}$)",ha="left",fontsize=17)
 
         # text
         ax1.text(0.05,0.92, "ACA 7-m array", color="deepskyblue", weight="bold", transform=ax1.transAxes)
