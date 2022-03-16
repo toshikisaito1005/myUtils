@@ -489,7 +489,9 @@ def run_simobserve(
         os.system("rm -rf " + project)
         os.mkdir(project)
         concatvis = project+"/"+project+"."+antennalist.replace(".cfg","")+".ms"
-        os.system("rm -rf ")
+        os.system("rm -rf " + concatvis)
+
+        print("# concat " + str(numobs) + " visivilities to " + concatvis)
         concat(vis=vis,concatvis=concatvis)
 
         proj_0_header = project+"_"+str(this_num)+"/"+project+"_"+str(this_num)+"."+antennalist.replace(".cfg","")
