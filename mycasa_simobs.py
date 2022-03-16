@@ -466,6 +466,7 @@ def run_simobserve(
             this_refdate = (datetime.date(2022, 1, 1)+datetime.timedelta(days=20*this_num)).strftime("%Y/%m/%d")
             # simobserve
             print("# run simobserve on " + this_refdate + " with tinteg = " + totaltime_indiv)
+            """
             simobserve(
                 project = project+"_"+str(this_num),
                 skymodel = input_dir+template,
@@ -477,18 +478,19 @@ def run_simobserve(
                 graphics = "none",
                 overwrite = True,
                 # dryrun = False, # simalma
-                #image = False, # simalma
+                # image = False, # simalma
                 refdate = this_refdate, # simobserve
                 obsmode = "int", # simobserve
                 thermalnoise = 'tsys-atm', # simobserve
                 user_pwv = 0.5, # simobserve
                 )
+            """
             vis.append(project+"_"+str(this_num)+"/"+project+"_"+str(this_num)+"."+antennalist.split("/")[-1].replace(".cfg","")+".ms")
 
         # concat
         os.system("rm -rf " + project)
         os.mkdir(project)
-        concatvis = project+"/"+project+"."+antennalist.replace(".cfg","")+".ms"
+        concatvis = project+"/"+project+"."+antennalist.split("/")[-1].replace(".cfg","")+".ms"
         os.system("rm -rf " + concatvis)
 
         print("# concat " + str(numobs) + " visivilities to " + concatvis)
