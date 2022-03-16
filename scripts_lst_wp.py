@@ -607,8 +607,9 @@ class ToolsLSTSim():
         #############################
         ad    = [0.215,0.83,0.10,0.90]
         dev   = 100
-        xlim  = [-dev,dev]
-        ylim  = [-dev+50,dev+50]
+        #xlim  = [-dev,dev]
+        #ylim  = [-dev+50,dev+50]
+        xlim = ylim = [-30,30]
         title = "ACA Morita Array + LST"
         xlabel = "East-West (m)"
         ylabel = "North-South (m)"
