@@ -605,7 +605,7 @@ class ToolsLSTSim():
         ad    = [0.215,0.83,0.10,0.90]
         dev   = 70
         xlim  = [-dev-50,dev-50]
-        ylim  = [-dev-550,dev-550]
+        ylim  = [-dev-540,dev-540]
         title = "Antenna positions"
         xlabel = "East-West (m)"
         ylabel = "North-South (m)"
