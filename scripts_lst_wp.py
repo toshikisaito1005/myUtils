@@ -618,10 +618,11 @@ class ToolsLSTSim():
 
         #ax1.scatter(6.452141+0.1, 7.886675+0.1, color="tomato", marker="*", lw=0, s=900)
         ax1.scatter(x_7m*1e3, y_7m*1e3, color="deepskyblue", lw=0, s=100)
+        ax1.scatter(-50.06162725, -518.9553881, color="tomato", marker="*", lw=0, s=900)
 
         # text
-        ax1.text(0.05,0.92, "ALMA 12-m array", color="grey", weight="bold", transform=ax1.transAxes)
-        ax1.text(0.05,0.82, "LSTsim 50-m", color="tomato", weight="bold", transform=ax1.transAxes)
+        ax1.text(0.05,0.92, "ACA 7-m array", color="deepskyblue", weight="bold", transform=ax1.transAxes)
+        ax1.text(0.05,0.87, "LSTsim 50-m", color="tomato", weight="bold", transform=ax1.transAxes)
 
         # save
         plt.subplots_adjust(hspace=.0)
