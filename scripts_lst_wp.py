@@ -768,7 +768,7 @@ class ToolsLSTSim():
         print("# sensitivity per pointing (K)    = " + str(np.round(rms_lst_K,5)))
         print("# beam size (arcsec)              = " + str(np.round(float(lst_res.replace("arcsec","")),2)))
         print("# number of pointing              = " + str(num_pointing))
-        print("# survey area (degree^2)          = " + str(int(area_in_as/3600.**2)))
+        print("# survey area (degree^2)          = " + str(np.round(area_in_as/3600.**2,8)))
         print("#")
 
         # run
@@ -827,7 +827,7 @@ class ToolsLSTSim():
         print("# sensitivity per pointing (K)   = " + str(np.round(rms_tp_K,5)))
         print("# beam size (arcsec)             = " + str(np.round(float(singledish_res.replace("arcsec","")),2)))
         print("# number of pointing             = " + str(num_pointing))
-        print("# survey area (degree^2)         = " + str(int(area_in_as/3600.**2)))
+        print("# survey area (degree^2)         = " + str(np.round(area_in_as/3600.**2,8)))
         print("#")
 
         # run
