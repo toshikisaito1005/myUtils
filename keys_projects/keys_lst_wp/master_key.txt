@@ -3,7 +3,7 @@
 ##########################################################################
 key_dir              /home02/saitots/myUtils/keys_projects/keys_lst_wp/
 ms_root              /lfs13/saitots/proj_lst_wp/data_ready/ms/
-cleanmask_root       /lfs13/saitots/proj_lst_wp/data_ready/outputs/cleanmasks/
+cleanmask_root       /lfs13/saitots/proj_lst_wp/data_ready/outputs/
 singledish_root      /lfs13/saitots/proj_lst_wp/data_ready/outputs/
 imaging_root         /lfs13/saitots/proj_lst_wp/data_ready/outputs/imaging/
 postprocess_root     /lfs13/saitots/proj_lst_wp/data_ready/outputs/postprocess/
