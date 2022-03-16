@@ -481,7 +481,7 @@ def run_simobserve(
                 refdate = this_refdate,    # simobserve
                 obsmode = "int",           # simobserve
                 thermalnoise = 'tsys-atm', # simobserve
-                user_pwv = 0.5,            # simobserve
+                user_pwv = 0.658,          # simobserve
                 )
             vis.append(project+"_"+str(this_num)+"/"+project+"_"+str(this_num)+"."+antennalist.split("/")[-1].replace(".cfg","")+".noisy.ms")
 

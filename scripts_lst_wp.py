@@ -627,7 +627,6 @@ class ToolsLSTSim():
 
         # ann
         xpos = x_7m[np.argmax(y_7m*1000.)] * 1000.
-        print(xpos)
         ax1.plot([xpos,-50.06162725-x_cnt],[np.max(y_7m*1000.),-457.2313425-y_cnt],"-",color="black",lw=2)
         ax1.text(xpos+1.5,67,"90m distance $\simeq$ 50m x cot 30$^{\circ}$",ha="left",fontsize=17)
         ax1.text(xpos+1.5,60,"(No shadowing until El. $\simeq$ 30$^{\circ}$)",ha="left",fontsize=17)
