@@ -609,7 +609,7 @@ class ToolsLSTSim():
         dev   = 100
         xlim  = [-dev,dev]
         ylim  = [-dev+50,dev+50]
-        title = "ACA Morita Array + LST"
+        title = "Full Morita Array (7m+TP) + LST"
         xlabel = "East-West (m)"
         ylabel = "North-South (m)"
 
