@@ -653,8 +653,8 @@ class ToolsLSTSim():
 
         # ann
         ypos = (-457.2313425-y_cnt-np.max(this_y)) / 2.0
-        ax.plot([0,0],[np.max(this_y),-457.2313425-y_cnt],"-",color="black")
-        ax.text(0,ypos,"50m x cot(30$^{\circ}$)",ha="left")
+        ax1.plot([0,0],[np.max(this_y),-457.2313425-y_cnt],"-",color="black")
+        ax1.text(0,ypos,"50m x cot(30$^{\circ}$)",ha="left")
 
         # text
         ax1.text(0.05,0.92, "ACA 7-m array", color="deepskyblue", weight="bold", transform=ax1.transAxes)
