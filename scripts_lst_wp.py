@@ -654,7 +654,7 @@ class ToolsLSTSim():
         # ann
         ax1.plot([0,0],[np.max(y_7m*1000.),-457.2313425-y_cnt],"-",color="black",lw=2)
         ax1.text(1,77,"90m $\simeq$ 50m x cot 30$^{\circ}$",ha="left",fontsize=17)
-        ax1.text(1,70,"No shadowing around El. $\simeq$ 30$^{\circ}$",ha="left",fontsize=17)
+        ax1.text(1,70,"(No shadowing until El. $\simeq$ 30$^{\circ}$)",ha="left",fontsize=17)
 
         # text
         ax1.text(0.05,0.92, "ACA 7-m array", color="deepskyblue", weight="bold", transform=ax1.transAxes)
