@@ -626,12 +626,12 @@ class ToolsLSTSim():
             antenna = patches.Ellipse(xy=(this_x,this_y), width=7.0,
                 height=7.0, angle=0, fill=True, color="deepskyblue", edgecolor="deepskyblue",
                 alpha=1.0, lw=3.5)
-            ax.add_patch(antenna)
+            ax1.add_patch(antenna)
 
         antenna = patches.Ellipse(xy=(-50.06162725,-518.9553881), width=50.0,
             height=50.0, angle=0, fill=True, color="tomato", edgecolor="tomato",
             alpha=1.0, lw=3.5)
-        ax.add_patch(antenna)
+        ax1.add_patch(antenna)
 
         # text
         ax1.text(0.05,0.92, "ACA 7-m array", color="deepskyblue", weight="bold", transform=ax1.transAxes)
