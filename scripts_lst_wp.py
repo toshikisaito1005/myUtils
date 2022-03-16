@@ -653,7 +653,8 @@ class ToolsLSTSim():
         ax1.add_patch(antenna)
 
         # ann
-        ax1.plot([0,0],[np.max(y_7m*1000.),-457.2313425-y_cnt],"-",color="black",lw=2)
+        xpos = x_7m[np.argmax(np.max(y_7m*1000.))]
+        ax1.plot([xpos,xpos],[np.max(y_7m*1000.),-457.2313425-y_cnt],"-",color="black",lw=2)
         ax1.text(1,77,"90m $\simeq$ 50m x cot 30$^{\circ}$",ha="left",fontsize=17)
         ax1.text(1,70,"(No shadowing until El. $\simeq$ 30$^{\circ}$)",ha="left",fontsize=17)
 
