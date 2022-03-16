@@ -606,7 +606,7 @@ class ToolsLSTSim():
         # plot: 7m antenna position #
         #############################
         ad    = [0.215,0.83,0.10,0.90]
-        dev   = 100
+        dev   = 99
         xlim  = [-dev,dev]
         ylim  = [-dev+50,dev+50]
         title = "Morita Array (7m+TP) and LST$_{\mathrm{sim,50m}}$ positions" # $\\Sigma_{\mathrm{H_2}}$
