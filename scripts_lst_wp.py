@@ -652,6 +652,12 @@ class ToolsLSTSim():
             alpha=1.0, lw=0)
         ax1.add_patch(antenna)
 
+        # LST at the center
+        antenna = patches.Ellipse(xy=(0,0), width=50.0,
+            height=50.0, angle=0, fill=False, color="tomato", edgecolor="tomato",
+            alpha=0.7, lw=2, ls="--")
+        ax1.add_patch(antenna)
+
         # ann
         xpos = x_7m[np.argmax(y_7m*1000.)] * 1000.
         print(xpos)
