@@ -440,7 +440,6 @@ def run_simobserve(
         print("# run simobserve on " + this_refdate + " with tinteg = " + totaltime)
         simobserve(
             project = project,
-            dryrun = False,
             skymodel = input_dir+template,
             incenter = incenter,
             setpointings = True,
@@ -449,6 +448,7 @@ def run_simobserve(
             totaltime = totaltime,
             graphics = "none",
             overwrite = True,
+            # dryrun = False, # simalma
             #image = False, # simalma
             refdate = this_refdate, # simobserve
             obsmode = "int", # simobserve
@@ -467,7 +467,6 @@ def run_simobserve(
             print("# run simobserve on " + this_refdate + " with tinteg = " + totaltime_indiv)
             simobserve(
                 project = project+"_"+str(this_num),
-                dryrun = False,
                 skymodel = input_dir+template,
                 incenter = incenter,
                 setpointings = True,
@@ -476,6 +475,7 @@ def run_simobserve(
                 totaltime = totaltime_indiv,
                 graphics = "none",
                 overwrite = True,
+                # dryrun = False, # simalma
                 #image = False, # simalma
                 refdate = this_refdate, # simobserve
                 obsmode = "int", # simobserve
