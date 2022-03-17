@@ -224,6 +224,7 @@ class ToolsLSTSim():
         ########
         # plot
         plot_config            = False,
+        plot_mosaic            = False,
         # calc
         calc_collectingarea    = False,
         ):
@@ -336,6 +337,27 @@ class ToolsLSTSim():
         # calc
         if calc_collectingarea==True:
             self.calc_collectingarea()
+
+    ###############
+    # plot_mosaic #
+    ###############
+
+    def plot_mosaic(self,tintegstr):
+        """
+        """
+
+        taskname = self.modname + sys._getframe().f_code.co_name
+        #check_first(self.torus_template_file,taskname)
+
+        # 7m-only ms
+        target    = self.project_n1097 + "_7m_" + tintegstr
+        ms_7m     = self.dir_ready + "ms/" + target + "/" + target + "." + self.config_7m.split("/")[-1] + ".noisy.ms"
+        # 7mxLST ms
+        target    = self.project_n1097 + "_LSTconnected_7m_" + tintegstr
+        ms_7mxLST = self.dir_ready + "ms/" + target + "/" + target + "." + self.config_7m.split("/")[-1] + ".noisy.ms"
+
+        print(ms_7m)
+        print(ms_7mxLST)
 
     ###################
     # sim12m_torussim #
