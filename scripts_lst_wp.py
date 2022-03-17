@@ -368,6 +368,9 @@ class ToolsLSTSim():
             ra_7m.append(pointings_7m[this]["m0"]["value"]*180/np.pi)
             dec_7m.append(pointings_7m[this]["m1"]["value"]*180/np.pi)
 
+        ra_7m  = np.array(ra_7m) - np.mean(ra_7m)
+        dec_7m = np.array(dec_7m) - np.mean(dec_7m)
+
         # 7mxLST ms
         target    = self.project_n1097 + "_LSTconnected_7m_" + tintegstr
         ms_7mxLST = self.dir_ready + "ms/" + target + "/" + target + "." + self.config_7m_lst.split("/")[-1].split(".cfg")[0] + ".noisy.ms"
@@ -381,6 +384,9 @@ class ToolsLSTSim():
         for this in pointings_7mxLST.keys():
             ra_7mxLST.append(pointings_7mxLST[this]["m0"]["value"]*180/np.pi)
             dec_7mxLST.append(pointings_7mxLST[this]["m1"]["value"]*180/np.pi)
+
+        ra_7mxLST  = np.array(ra_7mxLST) - np.mean(ra_7mxLST)
+        dec_7mxLST = np.array(dec_7mxLST) - np.mean(dec_7mxLST)
 
         ###################
         # plot 7m-only ms #
@@ -404,8 +410,8 @@ class ToolsLSTSim():
             this_y = dec_7m[i]
             print(this_x,this_y)
             fov    = patches.Ellipse(xy=(this_x,this_y), width=fov_7m,
-                height=fov_7m, angle=0, fill=True, color="forestgreen", edgecolor="black",
-                alpha=1.0, lw=1, ls="dashed")
+                height=fov_7m, angle=0, fill=False, color="forestgreen", edgecolor="black",
+                alpha=1.0, lw=5)
             ax1.add_patch(fov)
 
         # text
