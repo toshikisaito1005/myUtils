@@ -366,7 +366,6 @@ class ToolsLSTSim():
         ra_7m  = []
         dec_7m = []
         for this in pointings_7m.keys():
-            print(pointings_7m[this]["m0"]["value"]*180/np.pi)
             ra_7m.append(pointings_7m[this]["m0"]["value"]*180/np.pi)
             dec_7m.append(pointings_7m[this]["m1"]["value"]*180/np.pi)
 
@@ -403,6 +402,7 @@ class ToolsLSTSim():
         for i in range(len(ra_7m)):
             this_x = ra_7m[i]
             this_y = dec_7m[i]
+            print(this_x,this_y)
             fov    = patches.Ellipse(xy=(this_x,this_y), width=fov_7m,
                 height=fov_7m, angle=0, fill=False, color="forestgreen", edgecolor="black",
                 alpha=1.0, lw=1, ls="dashed")
