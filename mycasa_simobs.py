@@ -418,6 +418,7 @@ def run_simobserve(
     project,
     totaltime="1.5h",
     incenter="230GHz",
+    pointingspacing="",
     ):
     """
     """
@@ -455,6 +456,7 @@ def run_simobserve(
             thermalnoise = 'tsys-atm', # simobserve
             user_pwv = 0.658, # simobserve
             maptype = "hexagonal",
+            pointingspacing = pointingspacing,
             )
         os.system("rm -rf " + move_ms_to_here + "/" + project)
         os.system("mv "+ project + " " + move_ms_to_here + ".")
@@ -484,6 +486,7 @@ def run_simobserve(
                 thermalnoise = 'tsys-atm', # simobserve
                 user_pwv = 0.658,          # simobserve
                 maptype = "hexagonal",
+                pointingspacing = pointingspacing,
                 )
             vis.append(project+"_"+str(this_num)+"/"+project+"_"+str(this_num)+"."+antennalist.split("/")[-1].replace(".cfg","")+".noisy.ms")
 
