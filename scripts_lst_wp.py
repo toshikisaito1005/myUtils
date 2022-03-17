@@ -365,8 +365,8 @@ class ToolsLSTSim():
         ra_7m  = []
         dec_7m = []
         for this in pointings_7m.keys():
-            ra_7m.append(pointings_7m[this]["m0"]["value"])
-            dec_7m.append(pointings_7m[this]["m1"]["value"])
+            ra_7m.append(pointings_7m[this]["m0"]["value"]*180/np.pi)
+            dec_7m.append(pointings_7m[this]["m1"]["value"]*180/np.pi)
 
         # 7mxLST ms
         target    = self.project_n1097 + "_LSTconnected_7m_" + tintegstr
@@ -379,8 +379,8 @@ class ToolsLSTSim():
         ra_7mxLST  = []
         dec_7mxLST = []
         for this in pointings_7mxLST.keys():
-            ra_7mxLST.append(pointings_7mxLST[this]["m0"]["value"])
-            dec_7mxLST.append(pointings_7mxLST[this]["m1"]["value"])
+            ra_7mxLST.append(pointings_7mxLST[this]["m0"]["value"]*180/np.pi)
+            dec_7mxLST.append(pointings_7mxLST[this]["m1"]["value"]*180/np.pi)
 
         ###################
         # plot 7m-only ms #
@@ -403,7 +403,7 @@ class ToolsLSTSim():
             this_y = dec_7m[i]
             fov    = patches.Ellipse(xy=(this_x,this_y), width=fov_7m,
                 height=fov_7m, angle=0, fill=False, color="forestgreen", edgecolor="black",
-                alpha=1.0, lw=0, ls="dashed")
+                alpha=1.0, lw=1, ls="dashed")
             ax1.add_patch(fov)
 
         # text
