@@ -435,7 +435,7 @@ class ToolsLSTSim():
             os.mkdir(ms_dir)
 
         # assume ngc1068 torus
-        rmaj_out     = "8arcsec" # arcsec, 10pc at ngc1068, Gamez-Rosas et al. 2022 Nature
+        rmaj_out     = "13arcsec" # arcsec, 10pc at ngc1068, Gamez-Rosas et al. 2022 Nature
         rmin_out     = "2arcsec" # arcsec, 10pc at ngc1068, Gamez-Rosas et al. 2022 Nature
         pa           = '-50.0deg' # Gamez-Rosas et al. 2022 Nature
         totalflux    = 5 # continuum flux (mJy) at 432um (693.9640232 GHz), Garcia-Burillo et al. 2017
