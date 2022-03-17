@@ -315,7 +315,7 @@ class ToolsLSTSim():
         lst_nyquist  = str(12.979/2.0 * 115.27120 / 693.9640232)+"arcsec"
 
         ################
-        # run checksim #
+        # run checksim # 
         ################
         if do_template_checksim==True:
             self.prepare_template_checksim()
