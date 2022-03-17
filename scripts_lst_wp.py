@@ -700,7 +700,7 @@ class ToolsLSTSim():
         dev   = 65
         xlim  = [-dev,dev]
         ylim  = [-dev,dev]
-        title = "Morita Array (7m+TP) and LST$_{\mathrm{sim,50m}}$ positions" # $\\Sigma_{\mathrm{H_2}}$
+        title = "Morita Array (7m+TP) antenna positions"
         xlabel = "East-West (m)"
         ylabel = "North-South (m)"
 
@@ -740,7 +740,7 @@ class ToolsLSTSim():
         # LST at the center
         antenna = patches.Ellipse(xy=(0,0), width=50.0,
             height=50.0, angle=0, fill=False, color="tomato", edgecolor="tomato",
-            alpha=0.7, lw=2, ls="dashed")
+            alpha=0.7, lw=3, ls="dashed")
         ax1.add_patch(antenna)
 
         # ann
