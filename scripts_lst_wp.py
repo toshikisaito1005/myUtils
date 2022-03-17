@@ -221,6 +221,7 @@ class ToolsLSTSim():
         tinteg_checksim        = 1,
         do_template_checksim   = False,
         do_simint_checksim     = False,
+        do_imaging_checksim    = False,
         #
         ############
         # torussim #
