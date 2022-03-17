@@ -394,7 +394,7 @@ class ToolsLSTSim():
         ad    = [0.215,0.83,0.10,0.90]
         xlim  = [-0.022,0.022]
         ylim  = [-0.022,0.022]
-        title = "ACA 7-m mosaic"
+        title = "7-m mosaic"
         xlabel = "R.A (degree)"
         ylabel = "Decl. (degree)"
 
@@ -410,7 +410,7 @@ class ToolsLSTSim():
             this_y = dec_7m[i]
             fov    = patches.Ellipse(xy=(this_x,this_y), width=fov_7m,
                 height=fov_7m, angle=0, fill=False, color="black", edgecolor="black",
-                alpha=1.0, lw=2)
+                alpha=1.0, lw=1)
             ax1.add_patch(fov)
 
         # text
@@ -420,6 +420,39 @@ class ToolsLSTSim():
         plt.subplots_adjust(hspace=.0)
         os.system("rm -rf " + self.outpng_mosaic_7m)
         plt.savefig(self.outpng_mosaic_7m, dpi=self.fig_dpi)
+
+        ##################
+        # plot 7mxLST ms #
+        ##################
+        ad    = [0.215,0.83,0.10,0.90]
+        xlim  = [-0.022,0.022]
+        ylim  = [-0.022,0.022]
+        title = "LSTx7-m mosaic"
+        xlabel = "R.A (degree)"
+        ylabel = "Decl. (degree)"
+
+        fig = plt.figure(figsize=(13,10))
+        gs  = gridspec.GridSpec(nrows=10, ncols=10)
+        ax1 = plt.subplot(gs[0:10,0:10])
+        plt.subplots_adjust(left=ad[0], right=ad[1], bottom=ad[2], top=ad[3])
+        myax_set(ax1, "both", xlim, ylim, title, xlabel, ylabel, adjust=ad)
+
+        ax1.scatter(ra_7mxLST,dec_7mxLST)
+        for i in range(len(ra_7mxLST)):
+            this_x = ra_7mxLST[i]
+            this_y = dec_7mxLST[i]
+            fov    = patches.Ellipse(xy=(this_x,this_y), width=fov_7mxLST,
+                height=fov_7mxLST, angle=0, fill=False, color="black", edgecolor="black",
+                alpha=1.0, lw=1)
+            ax1.add_patch(fov)
+
+        # text
+        #ax1.text(0.05,0.92, "ALMA 12-m array", color="forestgreen", weight="bold", transform=ax1.transAxes)
+
+        # save
+        plt.subplots_adjust(hspace=.0)
+        os.system("rm -rf " + self.outpng_mosaic_7m_lst)
+        plt.savefig(self.outpng_mosaic_7m_lst, dpi=self.fig_dpi)
 
     ###################
     # sim12m_torussim #
