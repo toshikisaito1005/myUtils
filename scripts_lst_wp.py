@@ -180,9 +180,11 @@ class ToolsLSTSim():
         """
         """
 
-        self.outpng_config_12m   = self.dir_products + self._read_key("outpng_config_12m")
-        self.outpng_config_7m    = self.dir_products + self._read_key("outpng_config_7m")
-        self.outpng_uv_alma_lst1 = self.dir_products + self._read_key("outpng_uv_alma_lst1")
+        self.outpng_config_12m    = self.dir_products + self._read_key("outpng_config_12m")
+        self.outpng_config_7m     = self.dir_products + self._read_key("outpng_config_7m")
+        self.outpng_uv_alma_lst1  = self.dir_products + self._read_key("outpng_uv_alma_lst1")
+        self.outpng_mosaic_7m     = self.dir_products + self._read_key("outpng_mosaic_7m")
+        self.outpng_mosaic_7m_lst = self.dir_products + self._read_key("outpng_mosaic_7m_lst")
 
     ####################
     # run_sim_lst_alma #
@@ -335,7 +337,7 @@ class ToolsLSTSim():
             self.plot_config()
 
         if plot_mosaic==True:
-            self.plot_mosaic(tintegstr_7m)
+            self.plot_mosaic(tintegstr_7m,self.observed_freq)
 
         # calc
         if calc_collectingarea==True:
@@ -345,7 +347,7 @@ class ToolsLSTSim():
     # plot_mosaic #
     ###############
 
-    def plot_mosaic(self,tintegstr):
+    def plot_mosaic(self,tintegstr,freq):
         """
         """
 
@@ -353,14 +355,64 @@ class ToolsLSTSim():
         #check_first(self.torus_template_file,taskname)
 
         # 7m-only ms
-        target    = self.project_n1097 + "_7m_" + tintegstr
-        ms_7m     = self.dir_ready + "ms/" + target + "/" + target + "." + self.config_7m.split("/")[-1].split(".cfg")[0] + ".noisy.ms"
+        target = self.project_n1097 + "_7m_" + tintegstr
+        ms_7m  = self.dir_ready + "ms/" + target + "/" + target + "." + self.config_7m.split("/")[-1].split(".cfg")[0] + ".noisy.ms"
+        mymsmd.open(ms_7m)
+        pointings_7m = mymsmd.sourcedirs()
+        mymsmd.done()
+        fov_7m = 21 * 300 / freq * (12./7.) / 3600.
+
+        ra_7m  = []
+        dec_7m = []
+        for this in pointings_7m.keys():
+            ra_7m.append(pointings_7m[this]["m0"]["value"])
+            dec_7m.append(pointings_7m[this]["m1"]["value"])
+
         # 7mxLST ms
         target    = self.project_n1097 + "_LSTconnected_7m_" + tintegstr
-        ms_7mxLST = self.dir_ready + "ms/" + target + "/" + target + "." + self.config_7m.split("/")[-1].split(".cfg")[0] + ".noisy.ms"
+        ms_7mxLST = self.dir_ready + "ms/" + target + "/" + target + "." + self.config_7m_lst.split("/")[-1].split(".cfg")[0] + ".noisy.ms"
+        mymsmd.open(ms_7mxLST)
+        pointings_7mxLST = mymsmd.sourcedirs()
+        mymsmd.done()
+        fov_7mxLST = 21 * 300 / freq * (12./50.) / 3600.
 
-        print(ms_7m)
-        print(ms_7mxLST)
+        ra_7mxLST  = []
+        dec_7mxLST = []
+        for this in pointings_7mxLST.keys():
+            ra_7mxLST.append(pointings_7m[this]["m0"]["value"])
+            dec_7mxLST.append(pointings_7m[this]["m1"]["value"])
+
+        ###################
+        # plot 7m-only ms #
+        ###################
+        ad    = [0.215,0.83,0.10,0.90]
+        xlim  = None # [-10,10]
+        ylim  = None # [-10,10]
+        title = "ACA 7-m mosaic"
+        xlabel = "R.A (degree)"
+        ylabel = "Decl. (degree)"
+
+        fig = plt.figure(figsize=(13,10))
+        gs  = gridspec.GridSpec(nrows=10, ncols=10)
+        ax1 = plt.subplot(gs[0:10,0:10])
+        plt.subplots_adjust(left=ad[0], right=ad[1], bottom=ad[2], top=ad[3])
+        myax_set(ax1, "both", xlim, ylim, title, xlabel, ylabel, adjust=ad)
+
+        for i in range(len(ra_7m)):
+            this_x = ra_7m[i]
+            this_y = dec_7m[i]
+            fov    = patches.Ellipse(xy=(this_x,this_y), width=fov_7m,
+                height=fov_7m, angle=0, fill=False, color="forestgreen", edgecolor="black",
+                alpha=1.0, lw=0, ls="dashed")
+            ax1.add_patch(fov)
+
+        # text
+        #ax1.text(0.05,0.92, "ALMA 12-m array", color="forestgreen", weight="bold", transform=ax1.transAxes)
+
+        # save
+        plt.subplots_adjust(hspace=.0)
+        os.system("rm -rf " + self.outpng_mosaic_7m)
+        plt.savefig(self.outpng_mosaic_7m, dpi=self.fig_dpi)
 
     ###################
     # sim12m_torussim #
