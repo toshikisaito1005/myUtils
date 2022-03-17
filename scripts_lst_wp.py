@@ -286,7 +286,7 @@ class ToolsLSTSim():
 
         if do_imaging_simACA_LST==True:
             self.phangs_pipeline_imaging(
-                this_proj=self.project_n1097+"_LSTconnected_7m_"+totaltimetint,
+                this_proj=self.project_n1097+"_LSTconnected_7m_"+tintegstr,
                 this_array="7m",
                 this_target=this_target_connected,
                 )
