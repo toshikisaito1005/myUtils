@@ -211,14 +211,16 @@ class ToolsLSTSim():
         do_feather             = False,
         do_tp2vis              = False, # not implemented yet
         # LST-connected 7m array (decomissioned)
+        # unrearistic observing time due to too small FoV of 50m!
         #do_simACA_LST_n1097sim = False,
         #do_imaging_simACA_LST  = False,
         #
         ############
         # checksim #
+        ############
         tinteg_checksim        = 1,
         do_template_checksim   = False,
-        ############
+        do_simint_checksim     = False,
         #
         ############
         # torussim #
@@ -315,6 +317,9 @@ class ToolsLSTSim():
         if do_template_checksim==True:
             self.prepare_template_checksim()
 
+        if do_simint_checksim==True:
+            self.sim12m_checksim(tinteg_ch,tintegstr_ch)
+
         ###########################
         # set torussim parameters #
         ###########################
@@ -363,6 +368,26 @@ class ToolsLSTSim():
         # calc
         if calc_collectingarea==True:
             self.calc_collectingarea()
+
+    ###################
+    # sim12m_checksim #
+    ###################
+
+    def sim12m_checksim(self,totaltime="2.0h",totaltimetint="2p0h"):
+        """
+        """
+
+        taskname = self.modname + sys._getframe().f_code.co_name
+        check_first(self.torus_template_file,taskname)
+
+        run_simobserve(
+            working_dir=self.dir_ready,
+            template=self.check_template_file,
+            antennalist=self.config_c1,
+            project=self.project_check+"_12m_"+totaltimetint,
+            totaltime=totaltime,
+            incenter="693.9640232GHz",
+            )
 
     #############################
     # prepare_template_checksim #
