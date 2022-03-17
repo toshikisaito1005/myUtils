@@ -361,10 +361,12 @@ class ToolsLSTSim():
         pointings_7m = mymsmd.sourcedirs()
         mymsmd.done()
         fov_7m = 21 * 300 / freq * (12./7.) / 3600.
+        print(fov_7m)
 
         ra_7m  = []
         dec_7m = []
         for this in pointings_7m.keys():
+            print(pointings_7m[this]["m0"]["value"]*180/np.pi)
             ra_7m.append(pointings_7m[this]["m0"]["value"]*180/np.pi)
             dec_7m.append(pointings_7m[this]["m1"]["value"]*180/np.pi)
 
