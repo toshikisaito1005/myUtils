@@ -361,7 +361,6 @@ class ToolsLSTSim():
         pointings_7m = mymsmd.sourcedirs()
         mymsmd.done()
         fov_7m = 21 * 300 / freq * (12./7.) / 3600.
-        print(fov_7m)
 
         ra_7m  = []
         dec_7m = []
@@ -404,7 +403,7 @@ class ToolsLSTSim():
             this_y = dec_7m[i]
             print(this_x,this_y)
             fov    = patches.Ellipse(xy=(this_x,this_y), width=fov_7m,
-                height=fov_7m, angle=0, fill=False, color="forestgreen", edgecolor="black",
+                height=fov_7m, angle=0, fill=True, color="forestgreen", edgecolor="black",
                 alpha=1.0, lw=1, ls="dashed")
             ax1.add_patch(fov)
 
