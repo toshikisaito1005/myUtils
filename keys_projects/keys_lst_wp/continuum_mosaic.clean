@@ -41,6 +41,7 @@ cfcache            =  ""
 usepointing        =  False
 computepastep      =  360.0
 rotatepastep       =  360.0
+pointingoffsetsigdev    =  []
 pblimit            =  0.25
 normtype           =  "flatnoise"
 deconvolver        =  "mtmfs"
