@@ -392,8 +392,8 @@ class ToolsLSTSim():
         # plot 7m-only ms #
         ###################
         ad    = [0.215,0.83,0.10,0.90]
-        xlim  = None # [-10,10]
-        ylim  = None # [-10,10]
+        xlim  = [-0.022,0.022]
+        ylim  = [-0.022,0.022]
         title = "ACA 7-m mosaic"
         xlabel = "R.A (degree)"
         ylabel = "Decl. (degree)"
@@ -408,10 +408,9 @@ class ToolsLSTSim():
         for i in range(len(ra_7m)):
             this_x = ra_7m[i]
             this_y = dec_7m[i]
-            print(this_x,this_y)
             fov    = patches.Ellipse(xy=(this_x,this_y), width=fov_7m,
-                height=fov_7m, angle=0, fill=False, color="forestgreen", edgecolor="black",
-                alpha=1.0, lw=5)
+                height=fov_7m, angle=0, fill=False, color="black", edgecolor="black",
+                alpha=1.0, lw=2)
             ax1.add_patch(fov)
 
         # text
