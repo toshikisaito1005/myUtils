@@ -320,6 +320,25 @@ class ToolsLSTSim():
         if do_simint_checksim==True:
             self.sim12m_checksim(tinteg_ch,tintegstr_ch)
 
+        if do_imaging_checksim==True:
+            # stage instead of pipeline
+            msname  = self.project_check + "_12m_" + tintegstr + "."+self.config_c1.split("/")[-1].split(".cfg")[0]+".noisy.ms"
+            ms_from = self.dir_ready + "ms/" + self.project_check + "_12m_" + tintegstr + "/" + msname
+            dir_to  = self.dir_ready + "outputs/imaging/" + this_target + "/"
+            ms_to   = dir_to + this_target + "_12m_cont.ms"
+            os.system("rm -rf " + ms_to)
+            os.system("rm -rf " + dir_to)
+            os.makedirs(dir_to)
+            os.system("cp -r " + ms_from + " " + ms_to)
+
+            # run
+            self.phangs_pipeline_imaging(
+                this_proj=self.project_check,
+                this_array="12m",
+                this_target=this_target,
+                do_cont=True,
+                )
+
         ###########################
         # set torussim parameters #
         ###########################
