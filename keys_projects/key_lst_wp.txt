@@ -22,6 +22,7 @@ n1068_template_mask ,,,ngc1068_b3_12m_co10_strictmask.fits
 n1097_template_file ,,,ngc1097_12m+7m+tp_co21.fits
 n1097_template_mask ,,,ngc1097_12m+7m+tp_co21_11as_strictmask.fits
 torus_template_file ,,,ngc1068sim_b9_cont_torus.fits
+check_template_file ,,,ngc1068sim_b9_cont_check.fits
 
 ###############
 # output maps #

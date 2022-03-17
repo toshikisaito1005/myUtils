@@ -104,6 +104,7 @@ class ToolsLSTSim():
         # simobserve
         self.project_torus = self._read_key("project_torus")
         self.project_n1097 = self._read_key("project_n1097")
+        self.project_check = "checksim"
         self.config_c1     = self.dir_keyfile + self._read_key("config_c1")
         self.config_c10    = self.dir_keyfile + self._read_key("config_c10")
         self.config_7m     = self.dir_keyfile + self._read_key("config_7m")
@@ -152,6 +153,7 @@ class ToolsLSTSim():
         self.n1097_feather_lst_7m           = self.dir_ready + "outputs/" + self._read_key("n1097_feather_lst_7m")
 
         self.torus_template_file            = self._read_key("torus_template_file")
+        self.check_template_file            = self._read_key("check_template_file")
 
     def _set_input_param(self):
         """
@@ -208,9 +210,15 @@ class ToolsLSTSim():
         do_simLST_n1097sim     = False, # sim LST alone; after do_imaging_n1097sim
         do_feather             = False,
         do_tp2vis              = False, # not implemented yet
-        # LST-connected 7m array
-        do_simACA_LST_n1097sim = False,
-        do_imaging_simACA_LST  = False,
+        # LST-connected 7m array (decomissioned)
+        #do_simACA_LST_n1097sim = False,
+        #do_imaging_simACA_LST  = False,
+        #
+        ############
+        # checksim #
+        tinteg_checksim        = 1,
+        do_template_checksim   = False,
+        ############
         #
         ############
         # torussim #
@@ -284,15 +292,28 @@ class ToolsLSTSim():
             self.do_feather(cube_7m,cube_tp,self.n1097_feather_tp_7m,-1)
             self.do_feather(cube_7m,cube_lst,self.n1097_feather_lst_7m,-1)
 
-        if do_simACA_LST_n1097sim==True:
-            self.do_simaca_lst_n1097sim(tinteg_7m,tintegstr_7m)
+        #if do_simACA_LST_n1097sim==True:
+        #    self.do_simaca_lst_n1097sim(tinteg_7m,tintegstr_7m)
+        #
+        #if do_imaging_simACA_LST==True:
+        #    self.phangs_pipeline_imaging(
+        #        this_proj=self.project_n1097+"_LSTconnected_7m_"+tintegstr_7m,
+        #        this_array="7m",
+        #        this_target=this_target_connected,
+        #        )
 
-        if do_imaging_simACA_LST==True:
-            self.phangs_pipeline_imaging(
-                this_proj=self.project_n1097+"_LSTconnected_7m_"+tintegstr_7m,
-                this_array="7m",
-                this_target=this_target_connected,
-                )
+        ###########################
+        # set checksim parameters #
+        ###########################
+        tinteg_ch    = str(float(tinteg_checksim))+"h"
+        tintegstr_ch = tinteg_ch.replace(".","p")
+        this_target  = self.project_check+"_"+tintegstr_ch
+
+        ################
+        # run checksim #
+        ################
+        if do_template_checksim==True:
+            self.prepare_template_checksim()
 
         ###########################
         # set torussim parameters #
@@ -342,6 +363,59 @@ class ToolsLSTSim():
         # calc
         if calc_collectingarea==True:
             self.calc_collectingarea()
+
+    #############################
+    # prepare_template_checksim #
+    #############################
+
+    def prepare_template_checksim(self):
+        """
+        """
+
+        taskname = self.modname + sys._getframe().f_code.co_name
+        #check_first(self.n1097_template_fullspec,taskname)
+
+        # cleanup directories
+        input_dir  = self.dir_ready + "inputs/"
+        output_dir = self.dir_ready + "outputs/"
+        ms_dir     = self.dir_ready + "ms/"
+        #os.system("rm -rf " + input_dir)
+        #os.system("rm -rf " + output_dir)
+        #os.system("rm -rf " + ms_dir)
+        if not glob.glob(input_dir):
+            os.mkdir(input_dir)
+        if not glob.glob(output_dir):
+            os.mkdir(output_dir)
+        if not glob.glob(ms_dir):
+            os.mkdir(ms_dir)
+
+        # assume ngc1068 torus
+        rmaj_out     = "2arcsec" # arcsec, 10pc at ngc1068, Gamez-Rosas et al. 2022 Nature
+        rmin_out     = "0.3arcsec" # arcsec, 10pc at ngc1068, Gamez-Rosas et al. 2022 Nature
+        pa           = '-50.0deg' # Gamez-Rosas et al. 2022 Nature
+        totalflux    = 1 # continuum flux (mJy) at 432um (693.9640232 GHz), Garcia-Burillo et al. 2017
+
+        direction = "J2000 02h42m40.70912s -00d00m47.9449s" # ngc1068 decl = -00d00m47.859690204s
+        mycl.done()
+        mycl.addcomponent(dir=direction, flux=totalflux, fluxunit='Jy', freq='693.9640232GHz', shape="disk", 
+                        majoraxis=rmaj_out, minoraxis=rmin_out, positionangle=pa)
+        #
+        myia.fromshape("torus.im",[128,128,1,1],overwrite=True)
+        cs=myia.coordsys()
+        cs.setunits(['rad','rad','','Hz'])
+        cell_rad=myqa.convert(myqa.quantity("0.05arcsec"),"rad")['value']
+        cs.setincrement([-cell_rad,cell_rad],'direction')
+        cs.setreferencevalue([myqa.convert("2.7113080889h",'rad')['value'],myqa.convert("-0.01331803deg",'rad')['value']],type="direction")
+        cs.setreferencevalue("345GHz",'spectral')
+        cs.setincrement('7.5GHz','spectral')
+        myia.setcoordsys(cs.torecord())
+        myia.setbrightnessunit("Jy/pixel")
+        myia.modify(mycl.torecord(),subtract=False)
+        exportfits(imagename='torus.im',fitsimage=input_dir+self.check_template_file,overwrite=True)
+
+        myia.close()
+        mycl.close()
+        os.system("rm -rf torus.im")
 
     ###############
     # plot_mosaic #
