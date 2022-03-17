@@ -379,8 +379,8 @@ class ToolsLSTSim():
         ra_7mxLST  = []
         dec_7mxLST = []
         for this in pointings_7mxLST.keys():
-            ra_7mxLST.append(pointings_7m[this]["m0"]["value"])
-            dec_7mxLST.append(pointings_7m[this]["m1"]["value"])
+            ra_7mxLST.append(pointings_7mxLST[this]["m0"]["value"])
+            dec_7mxLST.append(pointings_7mxLST[this]["m1"]["value"])
 
         ###################
         # plot 7m-only ms #
