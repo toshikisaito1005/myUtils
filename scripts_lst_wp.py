@@ -208,6 +208,7 @@ class ToolsLSTSim():
         do_tp2vis              = False, # not implemented yet
         # LST-connected 7m array
         do_simACA_LST_n1097sim = False,
+        do_imaging_simACA_LST  = False,
         #
         ############
         # torussim #
@@ -241,6 +242,7 @@ class ToolsLSTSim():
         tinteg      = str(float(tinteg_n1097sim))+"h"
         tintegstr   = tinteg.replace(".","p")
         this_target = self.project_n1097+"_"+tintegstr
+        this_target_connected = self.project_n1097+"xLST_"+tintegstr
 
         # determine LST and TP beam sizes
         lst_beam    = str(12.979 * 115.27120 / self.observed_freq)+"arcsec"
@@ -281,6 +283,13 @@ class ToolsLSTSim():
 
         if do_simACA_LST_n1097sim==True:
             self.do_simaca_lst_n1097sim(tinteg,tintegstr)
+
+        if do_imaging_simACA_LST==True:
+            self.phangs_pipeline_imaging(
+                this_proj=self.project_n1097+"_LSTconnected_7m_"+totaltimetint,
+                this_array="7m",
+                this_target=this_target_connected,
+                )
 
         ###########################
         # set torussim parameters #
