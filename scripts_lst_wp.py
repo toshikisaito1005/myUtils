@@ -240,10 +240,10 @@ class ToolsLSTSim():
         self.incenter      = str(observed_freq)+"GHz"
 
         # n1097sim_7m from tinteg_n1097sim
-        tinteg      = str(float(tinteg_n1097sim))+"h"
-        tintegstr   = tinteg.replace(".","p")
-        this_target = self.project_n1097+"_"+tintegstr
-        this_target_connected = self.project_n1097+"xLST_"+tintegstr
+        tinteg_7m    = str(float(tinteg_n1097sim))+"h"
+        tintegstr_7m = tinteg_7m.replace(".","p")
+        this_target  = self.project_n1097+"_"+tintegstr_7m
+        this_target_connected = self.project_n1097+"xLST_"+tintegstr_7m
 
         # determine LST and TP beam sizes
         lst_beam    = str(12.979 * 115.27120 / self.observed_freq)+"arcsec"
@@ -251,8 +251,8 @@ class ToolsLSTSim():
         lst30m_beam = str(21.631 * 115.27120 / self.observed_freq)+"arcsec"
 
         # define products
-        cube_tp  = self.dir_ready+"outputs/"+self.n1097_sdimage_fullspec.replace(".image","_"+tintegstr+"7m.image")
-        cube_lst = self.dir_ready+"outputs/"+self.n1097_lstimage_fullspec.replace(".image","_"+tintegstr+"7m.image")
+        cube_tp  = self.dir_ready+"outputs/"+self.n1097_sdimage_fullspec.replace(".image","_"+tintegstr_7m+"7m.image")
+        cube_lst = self.dir_ready+"outputs/"+self.n1097_lstimage_fullspec.replace(".image","_"+tintegstr_7m+"7m.image")
         cube_7m  = self.dir_ready+"outputs/postprocess/"+this_target+"/"+this_target+"_7m_ci10_pbcorr_trimmed.image"
 
         ##################
@@ -262,7 +262,7 @@ class ToolsLSTSim():
             self.prepare_template_n1097sim()
 
         if do_simACA_n1097sim==True:
-            self.simaca_n1097sim(tinteg,tintegstr)
+            self.simaca_n1097sim(tinteg_7m,tintegstr_7m)
 
         if do_imaging_n1097sim==True:
             self.phangs_pipeline_imaging(
@@ -272,22 +272,22 @@ class ToolsLSTSim():
                 )
 
         if do_simTP_n1097sim==True:
-            self.simtp_n1097sim(tp_beam,tintegstr,dryrun_simSD)
+            self.simtp_n1097sim(tp_beam,tintegstr_7m,dryrun_simSD)
 
         if do_simLST_n1097sim==True:
-            self.simlst_n1097sim(lst_beam,tp_beam,tintegstr,dryrun_simSD)
-            self.simlst_n1097sim(lst30m_beam,tp_beam,tintegstr,True)
+            self.simlst_n1097sim(lst_beam,tp_beam,tintegstr_7m,dryrun_simSD)
+            self.simlst_n1097sim(lst30m_beam,tp_beam,tintegstr_7m,True)
 
         if do_feather==True:
             self.do_feather(cube_7m,cube_tp,self.n1097_feather_tp_7m,-1)
             self.do_feather(cube_7m,cube_lst,self.n1097_feather_lst_7m,-1)
 
         if do_simACA_LST_n1097sim==True:
-            self.do_simaca_lst_n1097sim(tinteg,tintegstr)
+            self.do_simaca_lst_n1097sim(tinteg_7m,tintegstr_7m)
 
         if do_imaging_simACA_LST==True:
             self.phangs_pipeline_imaging(
-                this_proj=self.project_n1097+"_LSTconnected_7m_"+tintegstr,
+                this_proj=self.project_n1097+"_LSTconnected_7m_"+tintegstr_7m,
                 this_array="7m",
                 this_target=this_target_connected,
                 )
@@ -295,9 +295,9 @@ class ToolsLSTSim():
         ###########################
         # set torussim parameters #
         ###########################
-        tinteg      = str(float(tinteg_torussim))+"h"
-        tintegstr   = tinteg.replace(".","p")
-        this_target = self.project_torus+"_"+tintegstr
+        tinteg_12m    = str(float(tinteg_torussim))+"h"
+        tintegstr_12m = tinteg_12m.replace(".","p")
+        this_target   = self.project_torus+"_"+tintegstr_12m
 
         ################
         # run torussim #
@@ -306,7 +306,7 @@ class ToolsLSTSim():
             self.prepare_template_torussim()
 
         if do_simint_torussim==True:
-            self.sim12m_torussim(tinteg,tintegstr)
+            self.sim12m_torussim(tinteg_12m,tintegstr_12m)
 
         if do_imaging_torussim==True:
             # stage instead of pipeline
@@ -335,7 +335,7 @@ class ToolsLSTSim():
             self.plot_config()
 
         if plot_mosaic==True:
-            self.plot_mosaic(tintegstr)
+            self.plot_mosaic(tintegstr_7m)
 
         # calc
         if calc_collectingarea==True:
@@ -354,10 +354,10 @@ class ToolsLSTSim():
 
         # 7m-only ms
         target    = self.project_n1097 + "_7m_" + tintegstr
-        ms_7m     = self.dir_ready + "ms/" + target + "/" + target + "." + self.config_7m.split("/")[-1] + ".noisy.ms"
+        ms_7m     = self.dir_ready + "ms/" + target + "/" + target + "." + self.config_7m.split("/")[-1].split(".cfg")[0] + ".noisy.ms"
         # 7mxLST ms
         target    = self.project_n1097 + "_LSTconnected_7m_" + tintegstr
-        ms_7mxLST = self.dir_ready + "ms/" + target + "/" + target + "." + self.config_7m.split("/")[-1] + ".noisy.ms"
+        ms_7mxLST = self.dir_ready + "ms/" + target + "/" + target + "." + self.config_7m.split("/")[-1].split(".cfg")[0] + ".noisy.ms"
 
         print(ms_7m)
         print(ms_7mxLST)
