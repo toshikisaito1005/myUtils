@@ -699,7 +699,7 @@ class ToolsLSTSim():
         ad    = [0.215,0.83,0.10,0.90]
         dev   = 99
         xlim  = [-dev,dev]
-        ylim  = [-dev+50,dev+50]
+        ylim  = [-dev,dev]
         title = "Morita Array (7m+TP) and LST$_{\mathrm{sim,50m}}$ positions" # $\\Sigma_{\mathrm{H_2}}$
         xlabel = "East-West (m)"
         ylabel = "North-South (m)"
@@ -718,12 +718,6 @@ class ToolsLSTSim():
                 height=7.0, angle=0, fill=True, color="deepskyblue", edgecolor="deepskyblue",
                 alpha=1.0, lw=0)
             ax1.add_patch(antenna)
-
-        # LST
-        antenna = patches.Ellipse(xy=(-50.06162725-x_cnt,-457.2313425-y_cnt), width=50.0,
-            height=50.0, angle=0, fill=True, color="tomato", edgecolor="tomato",
-            alpha=1.0, lw=0)
-        ax1.add_patch(antenna)
 
         # TPx4
         antenna = patches.Ellipse(xy=(-36.00,27.50), width=12.0,
@@ -750,16 +744,16 @@ class ToolsLSTSim():
         ax1.add_patch(antenna)
 
         # ann
-        xpos = x_7m[np.argmax(y_7m*1000.)] * 1000.
-        ax1.plot([xpos,-50.06162725-x_cnt],[np.max(y_7m*1000.),-457.2313425-y_cnt],"-",color="black",lw=2)
-        ax1.text(xpos+1.5,67,"90m distance $\simeq$ 50m x cot 30$^{\circ}$",ha="left",fontsize=17)
-        ax1.text(xpos+1.5,60,"(No shadowing until El. $\simeq$ 30$^{\circ}$)",ha="left",fontsize=17)
+        #xpos = x_7m[np.argmax(y_7m*1000.)] * 1000.
+        #ax1.plot([xpos,-50.06162725-x_cnt],[np.max(y_7m*1000.),-457.2313425-y_cnt],"-",color="black",lw=2)
+        #ax1.text(xpos+1.5,67,"90m distance $\simeq$ 50m x cot 30$^{\circ}$",ha="left",fontsize=17)
+        #ax1.text(xpos+1.5,60,"(No shadowing until El. $\simeq$ 30$^{\circ}$)",ha="left",fontsize=17)
 
         # text
         ax1.text(0.05,0.92, "ACA 7-m array", color="deepskyblue", weight="bold", transform=ax1.transAxes)
         ax1.text(0.05,0.87, "ACA TP array", color="grey", weight="bold", transform=ax1.transAxes)
         ax1.text(0.05,0.82, "LST$_{\mathrm{sim,50m}}$", color="tomato", weight="bold", transform=ax1.transAxes)
-        ax1.text(30,0, "LST$_{\mathrm{sim,50m}}$ dish size", color="tomato", alpha=0.7,fontsize=17)
+        #ax1.text(30,0, "LST$_{\mathrm{sim,50m}}$ dish size", color="tomato", alpha=0.7,fontsize=17)
 
         # save
         plt.subplots_adjust(hspace=.0)
