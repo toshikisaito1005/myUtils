@@ -334,6 +334,9 @@ class ToolsLSTSim():
         if plot_config==True:
             self.plot_config()
 
+        if plot_mosaic==True:
+            self.plot_mosaic()
+
         # calc
         if calc_collectingarea==True:
             self.calc_collectingarea()
