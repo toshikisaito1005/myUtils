@@ -841,7 +841,7 @@ class ToolsLSTSim():
         check_first(self.dir_ready+"inputs/"+self.n1097_template_fullspec,taskname)
 
         image_7m = self.dir_ready + "outputs/imaging/"+self.project_n1097+"_"+totaltimetint + "/"+self.project_n1097+"_"+totaltimetint+"_7m_ci10.image"
-        rms_7m = 0.08273 # measure_rms(image_7m, snr=3.0,rms_or_p84 = "p84")
+        rms_7m = measure_rms(image_7m, snr=3.0,rms_or_p84 = "p84")
         rms_lst = rms_7m * 2.326550129182734/1.4789569480812979 * float(lst_res.replace("arcsec",""))**2 / float(tp_res.replace("arcsec",""))**2
         rms_lst = rms_lst * float(tp_res.replace("arcsec","")) / float(lst_res.replace("arcsec",""))
         rms_lst_K = 1.222e6 * float(lst_res.replace("arcsec",""))**-2 * self.observed_freq**-2 * rms_lst
@@ -893,7 +893,7 @@ class ToolsLSTSim():
         check_first(self.dir_ready+"inputs/"+self.n1097_template_fullspec,taskname)
 
         image_7m = self.dir_ready + "outputs/imaging/"+self.project_n1097+"_"+totaltimetint + "/"+self.project_n1097+"_"+totaltimetint+"_7m_ci10.image"
-        rms_7m = 0.08273 # measure_rms(image_7m, snr=3.0,rms_or_p84 = "p84")
+        rms_7m = measure_rms(image_7m, snr=3.0,rms_or_p84 = "p84")
         rms_tp = rms_7m * 2.326550129182734/1.4789569480812979 # ASC TPrms/7mrms ratio
         rms_tp_K = 1.222e6 * float(singledish_res.replace("arcsec",""))**-2 * self.observed_freq**-2 * rms_tp
 
