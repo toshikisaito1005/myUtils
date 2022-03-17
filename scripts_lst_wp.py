@@ -335,7 +335,7 @@ class ToolsLSTSim():
             self.plot_config()
 
         if plot_mosaic==True:
-            self.plot_mosaic()
+            self.plot_mosaic(tintegstr)
 
         # calc
         if calc_collectingarea==True:
