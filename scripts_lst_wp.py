@@ -404,7 +404,6 @@ class ToolsLSTSim():
         plt.subplots_adjust(left=ad[0], right=ad[1], bottom=ad[2], top=ad[3])
         myax_set(ax1, "both", xlim, ylim, title, xlabel, ylabel, adjust=ad)
 
-        ax1.scatter(ra_7m,dec_7m)
         for i in range(len(ra_7m)):
             this_x = ra_7m[i]
             this_y = dec_7m[i]
@@ -437,7 +436,6 @@ class ToolsLSTSim():
         plt.subplots_adjust(left=ad[0], right=ad[1], bottom=ad[2], top=ad[3])
         myax_set(ax1, "both", xlim, ylim, title, xlabel, ylabel, adjust=ad)
 
-        ax1.scatter(ra_7mxLST,dec_7mxLST)
         for i in range(len(ra_7mxLST)):
             this_x = ra_7mxLST[i]
             this_y = dec_7mxLST[i]
