@@ -747,7 +747,7 @@ class ToolsLSTSim():
         # text
         ax1.text(0.05,0.92, "ACA 7-m array", color="deepskyblue", weight="bold", transform=ax1.transAxes)
         ax1.text(0.05,0.87, "ACA TP array", color="grey", weight="bold", transform=ax1.transAxes)
-        ax1.text(0.05,0.82, "LST$_{\mathrm{sim,50m}}$", color="tomato", weight="bold", transform=ax1.transAxes)
+        ax1.text(0.05,0.82, "LST 50m", color="tomato", weight="bold", transform=ax1.transAxes)
         # save
         plt.subplots_adjust(hspace=.0)
         os.system("rm -rf " + self.outpng_config_7m)
