@@ -312,6 +312,7 @@ class ToolsLSTSim():
         tintegstr_ch = tinteg_ch.replace(".","p")
         this_target  = self.project_check+"_"+tintegstr_ch
         lst_beam     = str(12.979 * 115.27120 / 693.9640232)+"arcsec"
+        lst_nyquist  = str(12.979/2.0 * 115.27120 / 693.9640232)+"arcsec"
 
         ################
         # run checksim #
@@ -320,7 +321,7 @@ class ToolsLSTSim():
             self.prepare_template_checksim()
 
         if do_simint_checksim==True:
-            self.sim12m_checksim(tinteg_ch,tintegstr_ch,lst_beam/2.0)
+            self.sim12m_checksim(tinteg_ch,tintegstr_ch,lst_nyquist)
 
         if do_imaging_checksim==True:
             # stage instead of pipeline
