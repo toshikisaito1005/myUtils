@@ -340,7 +340,8 @@ def measure_rms(
     
     #imval
     data,_ = imval_all(imagename)
-    data = data["data"].flatten()
+    data = data["data"]*data["mask"]
+    data = data.flatten()
     data = data[abs(data)!=0]
     p84  = np.nanpercentile(data, 16) * -1
     data = data[data<p84*snr]
