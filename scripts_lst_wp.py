@@ -435,8 +435,8 @@ class ToolsLSTSim():
             os.mkdir(ms_dir)
 
         # assume ngc1068 torus
-        rmaj_out     = "2arcsec" # arcsec, 10pc at ngc1068, Gamez-Rosas et al. 2022 Nature
-        rmin_out     = "0.3arcsec" # arcsec, 10pc at ngc1068, Gamez-Rosas et al. 2022 Nature
+        rmaj_out     = "4arcsec" # arcsec, 10pc at ngc1068, Gamez-Rosas et al. 2022 Nature
+        rmin_out     = "0.6arcsec" # arcsec, 10pc at ngc1068, Gamez-Rosas et al. 2022 Nature
         pa           = '-50.0deg' # Gamez-Rosas et al. 2022 Nature
         totalflux    = 1 # continuum flux (mJy) at 432um (693.9640232 GHz), Garcia-Burillo et al. 2017
 
@@ -445,7 +445,7 @@ class ToolsLSTSim():
         mycl.addcomponent(dir=direction, flux=totalflux, fluxunit='Jy', freq='693.9640232GHz', shape="disk", 
                         majoraxis=rmaj_out, minoraxis=rmin_out, positionangle=pa)
         #
-        myia.fromshape("torus.im",[128,128,1,1],overwrite=True)
+        myia.fromshape("torus.im",[256,256,1,1],overwrite=True)
         cs=myia.coordsys()
         cs.setunits(['rad','rad','','Hz'])
         cell_rad=myqa.convert(myqa.quantity("0.05arcsec"),"rad")['value']
