@@ -578,9 +578,10 @@ class ToolsLSTSim():
         # plot LSTx12m ms #
         ###################
         ad    = [0.215,0.83,0.10,0.90]
-        xlim  = [-0.022,0.022]
-        ylim  = [-0.022,0.022]
-        title = "LSTx12-m mosaic"
+        offset = 0.02
+        xlim  = [-offset,offset]
+        ylim  = [-offset,offset]
+        title = "LSTx12-m mosaic (checksim)"
         xlabel = "R.A (degree)"
         ylabel = "Decl. (degree)"
 
