@@ -426,7 +426,6 @@ class ToolsLSTSim():
         os.system("rm -rf test.ms")
         mysm.open("test.ms")
 
-        myvp.reset()
         myvp.setpbgauss(
             telescope="ALMAxLST",
             halfwidth='15.0arcsec',
@@ -437,7 +436,6 @@ class ToolsLSTSim():
         myvp.saveastable("ALMAxLST.vptable")
         mysm.setvp(dovp=True,usedefaultvp=False,vptable="ALMAxLST.vptable")
 
-        #
         mysm.setoptions(
             cache=10000000,
             tile=32,
@@ -455,7 +453,7 @@ class ToolsLSTSim():
             z=np.append(z,z2),
             dishdiameter=np.append(d,d2),
             mount=['alt-az'],
-            padname=np.append(padnames,padnames2).tolist(),
+            antname=np.append(padnames,padnames2).tolist(),
             coordsystem='global',
             referencelocation=posobs,
             )
