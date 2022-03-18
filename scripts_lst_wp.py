@@ -445,7 +445,7 @@ class ToolsLSTSim():
 
         mysm.open("test.ms")
         mysm.setconfig(
-            telescopename="ALMA",
+            telescopename="ALMAxLST",
             x=np.append(x,x2),
             y=np.append(y,y2),
             z=np.append(z,z2),
