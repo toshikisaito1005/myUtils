@@ -413,6 +413,7 @@ class ToolsLSTSim():
         u = simutil()
         direction  = "J2000 02h42m40.70912s -00d00m47.9449s"
         direction2 = "J2000 02h42m40.70912s -00d00m57.9449s"
+        os.system("rm -rf ALMAxLST.vptable")
 
         # importfits
         run_importfits(
@@ -430,7 +431,8 @@ class ToolsLSTSim():
             dopb=True,
             )
         myvp.summarizevps()
-        mysm.setvp(dovp=True,usedefaultvp=False)
+        myvp.saveastable("ALMAxLST.vptable")
+        mysm.setvp(dovp=True,usedefaultvp=False,vptable="ALMAxLST.vptable")
 
         #
         mysm.setoptions(
