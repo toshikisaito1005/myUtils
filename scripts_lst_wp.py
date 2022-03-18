@@ -411,7 +411,7 @@ class ToolsLSTSim():
 
         """
         u = simutil()
-        direction = "ICRS 10:00:00.00 -23.01.22" # "J2000 02h42m40.70912s -00d00m47.9449s"
+        direction = "J2000 02h42m40.70912s -00d00m47.9449s"
 
         # importfits
         run_importfits(
@@ -523,7 +523,7 @@ class ToolsLSTSim():
         pa           = '-50.0deg' # Gamez-Rosas et al. 2022 Nature
         totalflux    = 500 # continuum flux (mJy) at 432um (693.9640232 GHz), Garcia-Burillo et al. 2017
 
-        direction = "ICRS 10:00:00.00 -23.01.22" # "J2000 02h42m40.70912s -00d00m47.9449s" # ngc1068 decl = -00d00m47.859690204s
+        direction = "J2000 02h42m40.70912s -00d00m47.9449s" # ngc1068 decl = -00d00m47.859690204s
         mycl.done()
         mycl.addcomponent(dir=direction, flux=totalflux, fluxunit='Jy', freq='693.9640232GHz', shape="disk", 
                         majoraxis=rmaj_out, minoraxis=rmin_out, positionangle=pa)
