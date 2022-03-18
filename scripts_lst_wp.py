@@ -477,6 +477,8 @@ class ToolsLSTSim():
         mysm.done()
         mysm.close()
 
+        tclean(vis="test.ms",imagename="test2")
+
         """
         run_simobserve(
             working_dir=self.dir_ready,
