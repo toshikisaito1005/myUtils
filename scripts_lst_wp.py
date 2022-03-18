@@ -186,7 +186,7 @@ class ToolsLSTSim():
         self.outpng_config_7m     = self.dir_products + self._read_key("outpng_config_7m")
         self.outpng_uv_alma_lst1  = self.dir_products + self._read_key("outpng_uv_alma_lst1")
         self.outpng_mosaic_7m     = self.dir_products + self._read_key("outpng_mosaic_7m")
-        self.outpng_mosaic_7m_lst = self.dir_products + self._read_key("outpng_mosaic_7m_lst")
+        self.outpng_mosaic_c1     = self.dir_products + self._read_key("outpng_mosaic_c1")
 
     ####################
     # run_sim_lst_alma #
@@ -385,7 +385,8 @@ class ToolsLSTSim():
             self.plot_config()
 
         if plot_mosaic==True:
-            self.plot_mosaic(tintegstr_7m,self.observed_freq)
+            self.plot_mosaic_7m(tintegstr_7m,self.observed_freq)
+            self.plot_mosaic_C1(tintegstr_ch,693.9640232)
 
         # calc
         if calc_collectingarea==True:
@@ -545,11 +546,71 @@ class ToolsLSTSim():
         mycl.close()
         os.system("rm -rf torus.im")
 
-    ###############
-    # plot_mosaic #
-    ###############
+    ##################
+    # plot_mosaic_C1 #
+    ##################
 
-    def plot_mosaic(self,tintegstr,freq):
+    def plot_mosaic_C1(self,tintegstr,freq):
+        """
+        """
+
+        taskname = self.modname + sys._getframe().f_code.co_name
+        #check_first(self.torus_template_file,taskname)
+
+        # LSTx12m ms
+        target = self.project_check + "_12m_" + tintegstr
+        ms_7m  = self.dir_ready + "ms/" + target + "/" + target + "." + self.config_c1.split("/")[-1].split(".cfg")[0] + ".noisy.ms"
+        mymsmd.open(ms_7m)
+        pointings_7m = mymsmd.sourcedirs()
+        mymsmd.done()
+        fov_7m = 21 * 300 / freq * (12./50.) / 3600.
+
+        ra_7m  = []
+        dec_7m = []
+        for this in pointings_7m.keys():
+            ra_7m.append(pointings_7m[this]["m0"]["value"]*180/np.pi)
+            dec_7m.append(pointings_7m[this]["m1"]["value"]*180/np.pi)
+
+        ra_7m  = np.array(ra_7m) - np.mean(ra_7m)
+        dec_7m = np.array(dec_7m) - np.mean(dec_7m)
+
+        ###################
+        # plot LSTx12m ms #
+        ###################
+        ad    = [0.215,0.83,0.10,0.90]
+        xlim  = [-0.022,0.022]
+        ylim  = [-0.022,0.022]
+        title = "LSTx12-m mosaic"
+        xlabel = "R.A (degree)"
+        ylabel = "Decl. (degree)"
+
+        fig = plt.figure(figsize=(13,10))
+        gs  = gridspec.GridSpec(nrows=10, ncols=10)
+        ax1 = plt.subplot(gs[0:10,0:10])
+        plt.subplots_adjust(left=ad[0], right=ad[1], bottom=ad[2], top=ad[3])
+        myax_set(ax1, "both", xlim, ylim, title, xlabel, ylabel, adjust=ad)
+
+        for i in range(len(ra_7m)):
+            this_x = ra_7m[i]
+            this_y = dec_7m[i]
+            fov    = patches.Ellipse(xy=(this_x,this_y), width=fov_7m,
+                height=fov_7m, angle=0, fill=False, color="black", edgecolor="black",
+                alpha=1.0, lw=1)
+            ax1.add_patch(fov)
+
+        # text
+        #ax1.text(0.05,0.92, "ALMA 12-m array", color="forestgreen", weight="bold", transform=ax1.transAxes)
+
+        # save
+        plt.subplots_adjust(hspace=.0)
+        os.system("rm -rf " + self.outpng_mosaic_c1)
+        plt.savefig(self.outpng_mosaic_c1, dpi=self.fig_dpi)
+
+    ##################
+    # plot_mosaic_7m #
+    ##################
+
+    def plot_mosaic_7m(self,tintegstr,freq):
         """
         """
 
@@ -572,23 +633,6 @@ class ToolsLSTSim():
 
         ra_7m  = np.array(ra_7m) - np.mean(ra_7m)
         dec_7m = np.array(dec_7m) - np.mean(dec_7m)
-
-        # 7mxLST ms
-        target    = self.project_n1097 + "_LSTconnected_7m_" + tintegstr
-        ms_7mxLST = self.dir_ready + "ms/" + target + "/" + target + "." + self.config_7m_lst.split("/")[-1].split(".cfg")[0] + ".noisy.ms"
-        mymsmd.open(ms_7mxLST)
-        pointings_7mxLST = mymsmd.sourcedirs()
-        mymsmd.done()
-        fov_7mxLST = 21 * 300 / freq * (12./50.) / 3600.
-
-        ra_7mxLST  = []
-        dec_7mxLST = []
-        for this in pointings_7mxLST.keys():
-            ra_7mxLST.append(pointings_7mxLST[this]["m0"]["value"]*180/np.pi)
-            dec_7mxLST.append(pointings_7mxLST[this]["m1"]["value"]*180/np.pi)
-
-        ra_7mxLST  = np.array(ra_7mxLST) - np.mean(ra_7mxLST)
-        dec_7mxLST = np.array(dec_7mxLST) - np.mean(dec_7mxLST)
 
         ###################
         # plot 7m-only ms #
@@ -621,38 +665,6 @@ class ToolsLSTSim():
         plt.subplots_adjust(hspace=.0)
         os.system("rm -rf " + self.outpng_mosaic_7m)
         plt.savefig(self.outpng_mosaic_7m, dpi=self.fig_dpi)
-
-        ##################
-        # plot 7mxLST ms #
-        ##################
-        ad    = [0.215,0.83,0.10,0.90]
-        xlim  = [-0.022,0.022]
-        ylim  = [-0.022,0.022]
-        title = "LSTx7-m mosaic"
-        xlabel = "R.A (degree)"
-        ylabel = "Decl. (degree)"
-
-        fig = plt.figure(figsize=(13,10))
-        gs  = gridspec.GridSpec(nrows=10, ncols=10)
-        ax1 = plt.subplot(gs[0:10,0:10])
-        plt.subplots_adjust(left=ad[0], right=ad[1], bottom=ad[2], top=ad[3])
-        myax_set(ax1, "both", xlim, ylim, title, xlabel, ylabel, adjust=ad)
-
-        for i in range(len(ra_7mxLST)):
-            this_x = ra_7mxLST[i]
-            this_y = dec_7mxLST[i]
-            fov    = patches.Ellipse(xy=(this_x,this_y), width=fov_7mxLST,
-                height=fov_7mxLST, angle=0, fill=False, color="black", edgecolor="black",
-                alpha=1.0, lw=1)
-            ax1.add_patch(fov)
-
-        # text
-        #ax1.text(0.05,0.92, "ALMA 12-m array", color="forestgreen", weight="bold", transform=ax1.transAxes)
-
-        # save
-        plt.subplots_adjust(hspace=.0)
-        os.system("rm -rf " + self.outpng_mosaic_7m_lst)
-        plt.savefig(self.outpng_mosaic_7m_lst, dpi=self.fig_dpi)
 
     ###################
     # sim12m_torussim #
