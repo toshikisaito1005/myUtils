@@ -409,6 +409,7 @@ class ToolsLSTSim():
         taskname = self.modname + sys._getframe().f_code.co_name
         check_first(self.torus_template_file,taskname)
 
+        """
         u = simutil()
         direction = "ICRS 10:00:00.00 -23.01.22" # "J2000 02h42m40.70912s -00d00m47.9449s"
 
@@ -419,17 +420,15 @@ class ToolsLSTSim():
             )
 
         # set LST voltage pattern as "ACA"
-        """
-        myvp.reset()
-        myvp.setpbgauss(
-            telescope="ALMA",
-            halfwidth='15.0arcsec',
-            maxrad='999.0arcsec',
-            reffreq='100.0GHz',
-            dopb=True,
-            )
-        mysm.setvp(dovp=True,usedefaultvp=False)
-        """
+        #myvp.reset()
+        #myvp.setpbgauss(
+        #    telescope="ALMA",
+        #    halfwidth='15.0arcsec',
+        #    maxrad='999.0arcsec',
+        #    reffreq='100.0GHz',
+        #    dopb=True,
+        #    )
+        #mysm.setvp(dovp=True,usedefaultvp=False)
 
         #
         mysm.setoptions(
@@ -481,8 +480,9 @@ class ToolsLSTSim():
 
         os.system("rm -rf test2.*")
         tclean(vis="test.ms",imagename="test2",gridder="mosaic")
-
         """
+
+        sm.setoptions(ftmachine="mosaic")
         run_simobserve(
             working_dir=self.dir_ready,
             template=self.check_template_file,
