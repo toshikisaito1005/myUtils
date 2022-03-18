@@ -422,19 +422,13 @@ class ToolsLSTSim():
 
         # set LST voltage pattern as "ACA"
         myvp.reset()
-        #myvp.setpbgauss(
-        #    telescope="ALMA",
-        #    halfwidth='15.0arcsec',
-        #    maxrad='999.0arcsec',
-        #    reffreq='100.0GHz',
-        #    dopb=True,
-        #    )
-        myvp.setpbairy(telescope="LST",
-                     dishdiam="50.0m",
-                     blockagediam="0.75m",
-                     maxrad="999.0deg",
-                     reffreq="100.0GHz",
-                     dopb=True)
+        myvp.setpbgauss(
+            telescope="LST",
+            halfwidth='15.0arcsec',
+            maxrad='999.0arcsec',
+            reffreq='100.0GHz',
+            dopb=True,
+            )
         myvp.summarizevps()
         mysm.setvp(dovp=True,usedefaultvp=False)
 
