@@ -480,7 +480,7 @@ class ToolsLSTSim():
         mysm.close()
 
         os.system("rm -rf test2.*")
-        tclean(vis="test.ms",imagename="test2")
+        tclean(vis="test.ms",imagename="test2",gridder="mosaic")
 
         """
         run_simobserve(
