@@ -412,6 +412,12 @@ class ToolsLSTSim():
         u = simutil()
         direction = "J2000 02h42m40.70912s -00d00m47.9449s"
 
+        # importfits
+        run_importfits(
+            fitsimage=self.dir_ready+"inputs/"+self.check_template_file,
+            imagename="image.image",
+            )
+
         # set LST voltage pattern as "ACA"
         myvp.reset()
         myvp.setpbgauss(
@@ -460,7 +466,7 @@ class ToolsLSTSim():
         etime="600s"
 
         mysm.setoptions(ftmachine="mosaic")
-        mysm.predict(imagename=self.dir_ready+"inputs/"+self.check_template_file)
+        mysm.predict(imagename="image.image")
         mysm.done()
 
         """
