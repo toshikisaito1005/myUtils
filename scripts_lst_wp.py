@@ -536,7 +536,7 @@ class ToolsLSTSim():
         cell_rad=myqa.convert(myqa.quantity("0.05arcsec"),"rad")['value']
         cs.setincrement([-cell_rad,cell_rad],'direction')
         cs.setreferencevalue([myqa.convert("2.7113080889h",'rad')['value'],myqa.convert("-0.01331803deg",'rad')['value']],type="direction")
-        cs.setreferencevalue("345GHz",'spectral')
+        cs.setreferencevalue("693.9640232GHz",'spectral')
         cs.setincrement('1.0GHz','spectral')
         myia.setcoordsys(cs.torecord())
         myia.setbrightnessunit("Jy/pixel")
