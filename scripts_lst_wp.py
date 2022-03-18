@@ -518,6 +518,8 @@ class ToolsLSTSim():
 
         #mysm.setoptions(ftmachine="mosaic")
         mysm.predict(imagename="image.image")
+        mysm.summary()
+
         mysm.done()
         mysm.close()
 
