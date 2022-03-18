@@ -419,6 +419,7 @@ class ToolsLSTSim():
             )
 
         # set LST voltage pattern as "ACA"
+        """
         myvp.reset()
         myvp.setpbgauss(
             telescope="ALMA",
@@ -428,6 +429,7 @@ class ToolsLSTSim():
             dopb=True,
             )
         mysm.setvp(dovp=True,usedefaultvp=False)
+        """
 
         #
         mysm.setoptions(
