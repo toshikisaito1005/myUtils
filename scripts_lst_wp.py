@@ -460,7 +460,7 @@ class ToolsLSTSim():
         mysm.setlimits(shadowlimit=0.01, elevationlimit='10deg')
         mysm.setauto(0.0)
 
-        sm.setfield(sourcename="src1", 
+        mysm.setfield(sourcename="src1", 
           sourcedirection=direction,
           calcode="OBJ", distance='0m')
 
@@ -468,7 +468,7 @@ class ToolsLSTSim():
           referencetime=myme.epoch('TAI', "2012/01/01/00:00:00"))
 
         etime="600s"
-        sm.observe(sourcename="src1", spwname="spw1",
+        mysm.observe(sourcename="src1", spwname="spw1",
           starttime=myqa.mul(-1,qa.quantity(etime)),
           stoptime=myqa.quantity(0,"s"))
 
