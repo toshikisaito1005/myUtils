@@ -430,7 +430,6 @@ class ToolsLSTSim():
             reffreq='100.0GHz',
             dopb=True,
             )
-        myvp.summarizevps()
         myvp.saveastable("ALMAxLST.vptable")
         mysm.setvp(dovp=True,usedefaultvp=False,vptable="ALMAxLST.vptable")
 
@@ -439,7 +438,7 @@ class ToolsLSTSim():
             cache=10000000,
             tile=32,
             gridfunction="BOX",
-            location=myme.observatory("ALMA"),
+            location=myme.observatory("ALMAxLST"),
             )
 
         x,y,z,d,padnames,telescope,posobs = u.readantenna(self.config_c1)
