@@ -456,7 +456,7 @@ class ToolsLSTSim():
             )
 
         mysm.setspwindow(spwname="spw1", freq="693.9640232GHz",
-          deltafreq="1GHz",freqresolution="1GHz",nchannels=1,stokes='XX YY')
+          deltafreq="7.5GHz",freqresolution="1GHz",nchannels=1,stokes='XX YY')
 
         mysm.setfeed(mode='perfect X Y',pol=[''])
         mysm.setlimits(shadowlimit=0.01, elevationlimit='10deg')
