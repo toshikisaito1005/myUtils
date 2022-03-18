@@ -482,7 +482,6 @@ class ToolsLSTSim():
         tclean(vis="test.ms",imagename="test2",gridder="mosaic")
         """
 
-        mysm.setoptions(ftmachine="mosaic")
         run_simobserve(
             working_dir=self.dir_ready,
             template=self.check_template_file,
