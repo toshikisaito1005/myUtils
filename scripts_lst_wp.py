@@ -460,7 +460,7 @@ class ToolsLSTSim():
         etime="600s"
 
         mysm.setoptions(ftmachine="mosaic")
-        mysm.predict(imagename=input_dir+self.check_template_file)
+        mysm.predict(imagename=self.dir_ready+"inputs/"+self.check_template_file)
         mysm.done()
 
         """
