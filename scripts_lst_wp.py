@@ -454,8 +454,16 @@ class ToolsLSTSim():
             referencelocation=posobs,
             )
 
-        mysm.setspwindow(spwname="spw1", freq="693.9640232GHz",
-          deltafreq="7.5GHz",freqresolution="1GHz",nchannels=1,stokes='XX YY')
+        mysm.setspwindow(spwname="spw1", freq="690.9640232GHz",
+          deltafreq="1.0GHz",freqresolution="1GHz",nchannels=1,stokes='XX YY')
+        mysm.setspwindow(spwname="spw2", freq="691.9640232GHz",
+          deltafreq="1.0GHz",freqresolution="1GHz",nchannels=1,stokes='XX YY')
+        mysm.setspwindow(spwname="spw3", freq="692.9640232GHz",
+          deltafreq="1.0GHz",freqresolution="1GHz",nchannels=1,stokes='XX YY')
+        mysm.setspwindow(spwname="spw4", freq="693.9640232GHz",
+          deltafreq="1.0GHz",freqresolution="1GHz",nchannels=1,stokes='XX YY')
+        mysm.setspwindow(spwname="spw5", freq="694.9640232GHz",
+          deltafreq="1.0GHz",freqresolution="1GHz",nchannels=1,stokes='XX YY')
 
         mysm.setfeed(mode='perfect X Y',pol=[''])
         mysm.setlimits(shadowlimit=0.01, elevationlimit='10deg')
@@ -472,6 +480,18 @@ class ToolsLSTSim():
         mysm.observe(sourcename="src1", spwname="spw1",
           starttime=myqa.mul(-1,qa.quantity(etime)),
           stoptime=myqa.quantity(0,"s"))
+        mysm.observe(sourcename="src1", spwname="spw2",
+          starttime=myqa.mul(-1,qa.quantity(etime)),
+          stoptime=myqa.quantity(0,"s"))
+        mysm.observe(sourcename="src1", spwname="spw3",
+          starttime=myqa.mul(-1,qa.quantity(etime)),
+          stoptime=myqa.quantity(0,"s"))
+        mysm.observe(sourcename="src1", spwname="spw4",
+          starttime=myqa.mul(-1,qa.quantity(etime)),
+          stoptime=myqa.quantity(0,"s"))
+        mysm.observe(sourcename="src1", spwname="spw5",
+          starttime=myqa.mul(-1,qa.quantity(etime)),
+          stoptime=myqa.quantity(0,"s"))
 
         mysm.setoptions(ftmachine="mosaic")
         mysm.predict(imagename="image.image")
@@ -480,7 +500,7 @@ class ToolsLSTSim():
 
         os.system("rm -rf test2.*")
         tclean(vis="test.ms",imagename="test2",gridder="mosaic")
-        
+
         """
         run_simobserve(
             working_dir=self.dir_ready,
