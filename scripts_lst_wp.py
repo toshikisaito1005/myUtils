@@ -477,6 +477,7 @@ class ToolsLSTSim():
         mysm.done()
         mysm.close()
 
+        os.system("rm -rf test2.*")
         tclean(vis="test.ms",imagename="test2")
 
         """
