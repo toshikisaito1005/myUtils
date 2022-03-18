@@ -518,7 +518,7 @@ class ToolsLSTSim():
         rmaj_out     = "13arcsec" # arcsec, 10pc at ngc1068, Gamez-Rosas et al. 2022 Nature
         rmin_out     = "2arcsec" # arcsec, 10pc at ngc1068, Gamez-Rosas et al. 2022 Nature
         pa           = '-50.0deg' # Gamez-Rosas et al. 2022 Nature
-        totalflux    = 5 # continuum flux (mJy) at 432um (693.9640232 GHz), Garcia-Burillo et al. 2017
+        totalflux    = 500 # continuum flux (mJy) at 432um (693.9640232 GHz), Garcia-Burillo et al. 2017
 
         direction = "J2000 02h42m40.70912s -00d00m47.9449s" # ngc1068 decl = -00d00m47.859690204s
         mycl.done()
