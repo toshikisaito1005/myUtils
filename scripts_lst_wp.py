@@ -412,7 +412,7 @@ class ToolsLSTSim():
 
         u = simutil()
         direction  = "J2000 02h42m40.70912s -00d00m47.9449s"
-        direction2 = "J2000 02h42m40.70912s -00d00m52.9449s"
+        direction2 = "J2000 02h42m40.70912s -00d00m57.9449s"
 
         # importfits
         run_importfits(
@@ -437,7 +437,6 @@ class ToolsLSTSim():
             tile=32,
             gridfunction="BOX",
             location=myme.observatory("ALMA"),
-            ftmachine="mosaic",
             )
 
         x,y,z,d,padnames,telescope,posobs = u.readantenna(self.config_c1)
