@@ -395,13 +395,60 @@ class ToolsLSTSim():
     # sim12m_checksim #
     ###################
 
-    def sim12m_checksim(self,totaltime="2.0h",totaltimetint="2p0h",pointingspacing=""):
+    def sim12m_checksim(
+        self,
+        totaltime="2.0h",
+        totaltimetint="2p0h",
+        pointingspacing="",
+        ):
         """
+        References:
+        https://casa.nrao.edu/casadocs/casa-5.4.0/global-tool-list/tool_simulator/methods
         """
 
         taskname = self.modname + sys._getframe().f_code.co_name
         check_first(self.torus_template_file,taskname)
 
+        u=simutil()
+
+        # set voltage pattern
+        apara = {'observatory':'LST',   # a primary beam of 
+                 'antList':    ['LST'], # virtual interferometer
+                 'dish':        50.0,   # should be defined here.
+                 'fwhm100':     15.0,
+                 'maxRad':     999.0}
+        myvp.reset()
+        myvp.setpbgauss(
+            telescope=apara['antList'][0],# set PB of VI in vpmanager
+            halfwidth=str(apara['fwhm100'])+'arcsec',
+            maxrad=str(apara['maxRad'])+'arcsec',
+            reffreq='100.0GHz',
+            dopb=True,
+            )
+
+        myvp.summarizevps(verbose=True)
+        os.system("rm -rf lstxalma_vp.table")
+        myvp.saveastable("lstxalma_vp.table")
+
+        # 
+        sm.setvp(
+            dovp=True,
+            usedefaultvp=False,
+            vptable="lstxalma_vp.table",
+            dosquint=F,
+            )
+
+        #
+        sm.setoptions(
+            cache=10000000,
+            tile=32,
+            gridfunction="BOX",
+            location=me.location("ALMA"),
+            )
+
+        # self.config_c1
+
+        """
         run_simobserve(
             working_dir=self.dir_ready,
             template=self.check_template_file,
@@ -411,6 +458,7 @@ class ToolsLSTSim():
             incenter="693.9640232GHz",
             pointingspacing=pointingspacing,
             )
+        """
 
     #############################
     # prepare_template_checksim #

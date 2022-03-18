@@ -38,6 +38,7 @@ from immath import immath
 from imhead import imhead
 from imstat import imstat
 from impbcor import impbcor
+from simutil import simutil
 from imrebin import imrebin
 from feather import feather
 from imregrid import imregrid
@@ -53,4 +54,6 @@ mycs = aU.createCasaTool(cstool)
 myia = aU.createCasaTool(iatool)
 myrg = aU.createCasaTool(rgtool)
 myqa = aU.createCasaTool(qatool)
+myvp = aU.createCasaTool(vptool)
+mysm = aU.createCasaTool(smtool)
 mymsmd = aU.createCasaTool(msmdtool)
