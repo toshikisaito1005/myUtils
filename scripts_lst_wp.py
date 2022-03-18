@@ -440,7 +440,7 @@ class ToolsLSTSim():
             )
 
         x,y,z,d,padnames,telescope,posobs = u.readantenna(self.config_c1)
-        x2,y2,z2,d2,padnames2,telescope2,posobs2 = u.readantenna(self.config_7m)#lst)
+        x2,y2,z2,d2,padnames2,telescope2,posobs2 = u.readantenna(self.config_lst)
 
         mysm.open("test.ms")
         mysm.setconfig(
@@ -454,6 +454,7 @@ class ToolsLSTSim():
             coordsystem='global',
             referencelocation=posobs,
             )
+        mysm.setoptions(ftmachine="mosaic")
 
         mysm.setspwindow(spwname="spw1", freq="690.9640232GHz",
           deltafreq="1.0GHz",freqresolution="1GHz",nchannels=1,stokes='XX YY')
@@ -514,7 +515,7 @@ class ToolsLSTSim():
           starttime=myqa.mul(-1,qa.quantity(etime)),
           stoptime=myqa.quantity(0,"s"))
 
-        mysm.setoptions(ftmachine="mosaic")
+        #mysm.setoptions(ftmachine="mosaic")
         mysm.predict(imagename="image.image")
         mysm.done()
         mysm.close()
