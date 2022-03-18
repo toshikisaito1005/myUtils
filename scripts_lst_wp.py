@@ -515,7 +515,7 @@ class ToolsLSTSim():
           starttime=myqa.mul(-1,qa.quantity(etime)),
           stoptime=myqa.quantity(0,"s"))
 
-        #mysm.setoptions(ftmachine="mosaic")
+        mysm.setoptions(ftmachine="mosaic")
         mysm.predict(imagename="image.image")
         mysm.done()
         mysm.close()
