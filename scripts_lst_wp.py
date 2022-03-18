@@ -429,7 +429,7 @@ class ToolsLSTSim():
         #    reffreq='100.0GHz',
         #    dopb=True,
         #    )
-        vp.setpbairy(telescope="LST",
+        myvp.setpbairy(telescope="LST",
                      dishdiam="50.0m",
                      blockagediam="0.75m",
                      maxrad="999.0deg",
