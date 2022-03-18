@@ -422,6 +422,8 @@ class ToolsLSTSim():
             )
 
         # set LST voltage pattern as "ACA"
+        mysm.open("test.ms")
+        
         myvp.reset()
         myvp.setpbgauss(
             telescope="ALMAxLST",
@@ -444,7 +446,6 @@ class ToolsLSTSim():
         x,y,z,d,padnames,telescope,posobs = u.readantenna(self.config_c1)
         x2,y2,z2,d2,padnames2,telescope2,posobs2 = u.readantenna(self.config_lst)
 
-        mysm.open("test.ms")
         mysm.setconfig(
             telescopename="ALMAxLST",
             x=np.append(x,x2),
