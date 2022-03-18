@@ -428,7 +428,7 @@ class ToolsLSTSim():
             cache=10000000,
             tile=32,
             gridfunction="BOX",
-            location=myme.location("ALMA"),
+            location=myme.observatory("ALMA"),
             )
 
         x,y,z,d,padnames,telescope,posobs = u.readantenna(self.config_c1)
