@@ -405,6 +405,7 @@ class ToolsLSTSim():
         """
         References:
         https://casa.nrao.edu/casadocs/casa-5.4.0/global-tool-list/tool_simulator/methods
+        http://ska-sdp.org/sites/default/files/attachments/ska-tel-sdp-img-memo-001.pdf (P.28~)
         """
 
         taskname = self.modname + sys._getframe().f_code.co_name
@@ -423,7 +424,7 @@ class ToolsLSTSim():
 
         # set LST voltage pattern as "ACA"
         mysm.open("test.ms")
-        
+
         myvp.reset()
         myvp.setpbgauss(
             telescope="ALMAxLST",
