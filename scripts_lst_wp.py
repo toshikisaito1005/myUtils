@@ -492,7 +492,6 @@ class ToolsLSTSim():
             incenter="693.9640232GHz",
             pointingspacing=pointingspacing,
             )
-        """
 
     #############################
     # prepare_template_checksim #
