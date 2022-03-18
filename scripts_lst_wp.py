@@ -453,17 +453,24 @@ class ToolsLSTSim():
             referencelocation=posobs,
             )
 
-        mysm.setspwindow(spwname="spw0", freq="693.9640232GHz",
+        mysm.setspwindow(spwname="spw1", freq="693.9640232GHz",
           deltafreq="1GHz",freqresolution="1GHz",nchannels=1,stokes='XX YY')
 
         mysm.setfeed(mode='perfect X Y',pol=[''])
         mysm.setlimits(shadowlimit=0.01, elevationlimit='10deg')
         mysm.setauto(0.0)
 
+        sm.setfield(sourcename="src1", 
+          sourcedirection=direction,
+          calcode="OBJ", distance='0m')
+
         mysm.settimes(integrationtime="10s", usehourangle=True, 
           referencetime=myme.epoch('TAI', "2012/01/01/00:00:00"))
 
         etime="600s"
+        sm.observe(sourcename="src1", spwname="spw1",
+          starttime=myqa.mul(-1,qa.quantity(etime)),
+          stoptime=myqa.quantity(0,"s"))
 
         mysm.setoptions(ftmachine="mosaic")
         mysm.predict(imagename="image.image")
