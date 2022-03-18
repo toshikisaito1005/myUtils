@@ -499,7 +499,7 @@ class ToolsLSTSim():
         mysm.close()
 
         os.system("rm -rf test2.*")
-        tclean(vis="test.ms",imagename="test2",gridder="mosaic")
+        tclean(vis="test.ms",imagename="test2",gridder="mosaic",cell="0.3arcsec",imsize=[128,128])
 
         """
         run_simobserve(
