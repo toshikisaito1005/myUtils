@@ -38,7 +38,7 @@ project_n1097 ,,,ngc1097sim
 config_c1     ,,,alma-configuration-files/alma.cycle7.1.cfg
 config_c10    ,,,alma-configuration-files/alma.cycle7.10.cfg
 config_7m     ,,,alma-configuration-files/aca.cycle7.cfg
-config_7m_lst ,,,alma-configuration-files/lst_aca.cycle7.cfg
+config_lst    ,,,alma-configuration-files/lst.cfg
 
 ######################
 # output png and txt #

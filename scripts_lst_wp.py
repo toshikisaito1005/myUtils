@@ -108,7 +108,7 @@ class ToolsLSTSim():
         self.config_c1     = self.dir_keyfile + self._read_key("config_c1")
         self.config_c10    = self.dir_keyfile + self._read_key("config_c10")
         self.config_7m     = self.dir_keyfile + self._read_key("config_7m")
-        self.config_7m_lst = self.dir_keyfile + self._read_key("config_7m_lst")
+        self.config_lst    = self.dir_keyfile + self._read_key("config_lst")
 
         # phangs-alma pipeline
         self.dir_pipeline = self._read_key("dir_pipeline")
@@ -409,44 +409,59 @@ class ToolsLSTSim():
         taskname = self.modname + sys._getframe().f_code.co_name
         check_first(self.torus_template_file,taskname)
 
-        u=simutil()
+        u = simutil()
+        direction = "J2000 02h42m40.70912s -00d00m47.9449s"
 
-        # set voltage pattern
-        apara = {'observatory':'LST',   # a primary beam of 
-                 'antList':    ['LST'], # virtual interferometer
-                 'dish':        50.0,   # should be defined here.
-                 'fwhm100':     15.0,
-                 'maxRad':     999.0}
+        # set LST voltage pattern as "ACA"
         myvp.reset()
         myvp.setpbgauss(
-            telescope=apara['antList'][0],# set PB of VI in vpmanager
-            halfwidth=str(apara['fwhm100'])+'arcsec',
-            maxrad=str(apara['maxRad'])+'arcsec',
+            telescope="ACA",
+            halfwidth='15.0arcsec',
+            maxrad='999.0arcsec',
             reffreq='100.0GHz',
             dopb=True,
             )
-
-        myvp.summarizevps(verbose=True)
-        os.system("rm -rf lstxalma_vp.table")
-        myvp.saveastable("lstxalma_vp.table")
-
-        # 
-        sm.setvp(
-            dovp=True,
-            usedefaultvp=False,
-            vptable="lstxalma_vp.table",
-            dosquint=F,
-            )
+        mysm.setvp(dovp=True,usedefaultvp=False)
 
         #
-        sm.setoptions(
+        mysm.setoptions(
             cache=10000000,
             tile=32,
             gridfunction="BOX",
-            location=me.location("ALMA"),
+            location=myme.location("ALMA"),
             )
 
-        # self.config_c1
+        x,y,z,d,padnames,telescope,posobs = u.readantenna(self.config_c1)
+        x2,y2,z2,d2,padnames2,telescope2,posobs2 = u.readantenna(self.config_lst)
+
+        mysm.open("test.ms")
+        mysm.setconfig(
+            telescopename="ALMA",
+            x=np.append(x,x2),
+            y=np.append(y,y2),
+            z=np.append(z,z2),
+            dishdiameter=np.append(d,d2),
+            mount=['alt-az'],
+            padname=np.append(padnames,padnames2).tolist(),
+            coordsystem='global',
+            referencelocation=posobs,
+            )
+
+        mysm.setspwindow(spwname="spw0", freq="693.9640232GHz",
+          deltafreq="1GHz",freqresolution="1GHz",nchannels=1,stokes='XX YY')
+
+        mysm.setfeed(mode='perfect X Y',pol=[''])
+        mysm.setlimits(shadowlimit=0.01, elevationlimit='10deg')
+        mysm.setauto(0.0)
+
+        mysm.settimes(integrationtime="10s", usehourangle=True, 
+          referencetime=myme.epoch('TAI', "2012/01/01/00:00:00"))
+
+        etime="600s"
+
+        mysm.setoptions(ftmachine="mosaic")
+        mysm.predict(imagename=input_dir+self.check_template_file)
+        mysm.done()
 
         """
         run_simobserve(

@@ -50,6 +50,7 @@ from simobserve import simobserve
 from importfits import importfits
 from exportfits import exportfits
 mycl = aU.createCasaTool(cltool)
+myme = aU.createCasaTool(metool)
 mycs = aU.createCasaTool(cstool)
 myia = aU.createCasaTool(iatool)
 myrg = aU.createCasaTool(rgtool)
