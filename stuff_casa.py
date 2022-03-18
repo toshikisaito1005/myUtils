@@ -33,6 +33,7 @@ from specsmooth import specsmooth
 from imsubimage import imsubimage
 from imval import imval
 from impv import impv
+from tclean import tclean
 from concat import concat
 from immath import immath
 from imhead import imhead
