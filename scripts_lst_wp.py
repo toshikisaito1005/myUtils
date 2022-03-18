@@ -578,7 +578,7 @@ class ToolsLSTSim():
         # plot LSTx12m ms #
         ###################
         ad    = [0.215,0.83,0.10,0.90]
-        offset = 0.02
+        offset = 0.002
         xlim  = [-offset,offset]
         ylim  = [-offset,offset]
         title = "LSTx12-m mosaic (checksim)"
