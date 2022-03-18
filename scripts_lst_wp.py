@@ -433,8 +433,8 @@ class ToolsLSTSim():
             reffreq='100.0GHz',
             dopb=True,
             )
-        myvp.saveastable("ALMAxLST.vptable")
         mysm.setvp(dovp=True,usedefaultvp=False,vptable="ALMAxLST.vptable")
+        myvp.saveastable("ALMAxLST.vptable")
 
         mysm.setoptions(
             cache=10000000,
