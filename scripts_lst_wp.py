@@ -423,6 +423,7 @@ class ToolsLSTSim():
             )
 
         # set LST voltage pattern as "ACA"
+        os.system("rm -rf test.ms")
         mysm.open("test.ms")
 
         myvp.reset()
