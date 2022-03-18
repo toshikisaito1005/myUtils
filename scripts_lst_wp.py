@@ -411,7 +411,8 @@ class ToolsLSTSim():
         check_first(self.torus_template_file,taskname)
 
         u = simutil()
-        direction = "J2000 02h42m40.70912s -00d00m47.9449s"
+        direction  = "J2000 02h42m40.70912s -00d00m47.9449s"
+        direction2 = "J2000 02h42m40.70912s -00d00m52.9449s"
 
         # importfits
         run_importfits(
@@ -473,6 +474,10 @@ class ToolsLSTSim():
           sourcedirection=direction,
           calcode="OBJ", distance='0m')
 
+        mysm.setfield(sourcename="src2", 
+          sourcedirection=direction,
+          calcode="OBJ", distance='0m')
+
         mysm.settimes(integrationtime="10s", usehourangle=True, 
           referencetime=myme.epoch('TAI', "2012/01/01/00:00:00"))
 
@@ -490,6 +495,22 @@ class ToolsLSTSim():
           starttime=myqa.mul(-1,qa.quantity(etime)),
           stoptime=myqa.quantity(0,"s"))
         mysm.observe(sourcename="src1", spwname="spw5",
+          starttime=myqa.mul(-1,qa.quantity(etime)),
+          stoptime=myqa.quantity(0,"s"))
+
+        mysm.observe(sourcename="src2", spwname="spw1",
+          starttime=myqa.mul(-1,qa.quantity(etime)),
+          stoptime=myqa.quantity(0,"s"))
+        mysm.observe(sourcename="src2", spwname="spw2",
+          starttime=myqa.mul(-1,qa.quantity(etime)),
+          stoptime=myqa.quantity(0,"s"))
+        mysm.observe(sourcename="src2", spwname="spw3",
+          starttime=myqa.mul(-1,qa.quantity(etime)),
+          stoptime=myqa.quantity(0,"s"))
+        mysm.observe(sourcename="src2", spwname="spw4",
+          starttime=myqa.mul(-1,qa.quantity(etime)),
+          stoptime=myqa.quantity(0,"s"))
+        mysm.observe(sourcename="src2", spwname="spw5",
           starttime=myqa.mul(-1,qa.quantity(etime)),
           stoptime=myqa.quantity(0,"s"))
 
