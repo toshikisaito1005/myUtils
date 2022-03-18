@@ -475,6 +475,7 @@ class ToolsLSTSim():
         mysm.setoptions(ftmachine="mosaic")
         mysm.predict(imagename="image.image")
         mysm.done()
+        mysm.close()
 
         """
         run_simobserve(
