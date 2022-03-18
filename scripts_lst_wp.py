@@ -415,6 +415,7 @@ class ToolsLSTSim():
         direction  = "J2000 02h42m40.70912s -00d00m47.9449s"
         direction2 = "J2000 02h42m40.70912s -00d00m57.9449s"
         os.system("rm -rf ALMAxLST.vptable")
+        os.system("rm -rf test.ms")
 
         # importfits
         run_importfits(
@@ -423,7 +424,6 @@ class ToolsLSTSim():
             )
 
         # set LST voltage pattern as "ACA"
-        os.system("rm -rf test.ms")
         mysm.open("test.ms")
 
         myvp.setpbgauss(
