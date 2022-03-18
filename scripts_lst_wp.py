@@ -441,7 +441,7 @@ class ToolsLSTSim():
             )
 
         x,y,z,d,padnames,telescope,posobs = u.readantenna(self.config_c1)
-        x2,y2,z2,d2,padnames2,telescope2,posobs2 = u.readantenna(self.config_lst)
+        x2,y2,z2,d2,padnames2,telescope2,posobs2 = u.readantenna(self.config_7m)#lst)
 
         mysm.open("test.ms")
         mysm.setconfig(
