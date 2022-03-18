@@ -423,7 +423,7 @@ class ToolsLSTSim():
         # set LST voltage pattern as "ACA"
         myvp.reset()
         myvp.setpbgauss(
-            telescope="LST",
+            telescope="ALMAxLST",
             halfwidth='15.0arcsec',
             maxrad='999.0arcsec',
             reffreq='100.0GHz',
