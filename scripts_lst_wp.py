@@ -500,10 +500,6 @@ class ToolsLSTSim():
           sourcedirection=direction,
           calcode="OBJ", distance='0m')
 
-        mysm.setfield(sourcename="src2", 
-          sourcedirection=direction2,
-          calcode="OBJ", distance='0m')
-
         mysm.settimes(integrationtime="10s", usehourangle=True, 
           referencetime=myme.epoch('TAI', "2012/01/01/00:00:00"))
 
@@ -524,23 +520,7 @@ class ToolsLSTSim():
           starttime=myqa.mul(-1,qa.quantity(etime)),
           stoptime=myqa.quantity(0,"s"))
 
-        mysm.observe(sourcename="src2", spwname="spw1",
-          starttime=myqa.quantity(0,"s"),
-          stoptime=myqa.quantity(600,"s"))
-        mysm.observe(sourcename="src2", spwname="spw2",
-          starttime=myqa.quantity(0,"s"),
-          stoptime=myqa.quantity(600,"s"))
-        mysm.observe(sourcename="src2", spwname="spw3",
-          starttime=myqa.quantity(0,"s"),
-          stoptime=myqa.quantity(600,"s"))
-        mysm.observe(sourcename="src2", spwname="spw4",
-          starttime=myqa.quantity(0,"s"),
-          stoptime=myqa.quantity(600,"s"))
-        mysm.observe(sourcename="src2", spwname="spw5",
-          starttime=myqa.quantity(0,"s"),
-          stoptime=myqa.quantity(600,"s"))
-
-        #mysm.setoptions(ftmachine="mosaic")
+        mysm.setoptions(ftmachine="mosaic")
         mysm.predict(imagename="image.image")
 
         mysm.summary()
