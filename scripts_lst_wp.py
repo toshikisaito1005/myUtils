@@ -443,7 +443,7 @@ class ToolsLSTSim():
             reffreq='100.0GHz',
             dopb=True,
             )
-        myid1 = myvp.getuserdefault("ALMAxLST")
+        myid2 = myvp.getuserdefault("ALMAxLST")
 
         myvp.setuserdefault(myid1, "ALMAxLST", "DV")
         myvp.setuserdefault(myid1, "ALMAxLST", "DA")
