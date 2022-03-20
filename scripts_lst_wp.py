@@ -434,6 +434,22 @@ class ToolsLSTSim():
             reffreq='100.0GHz',
             dopb=True,
             )
+        myid1 = myvp.getuserdefault("ALMAxLST")
+        myvp.setpbgauss(
+            telescope="LST",
+            halfwidth='15.0arcsec',
+            maxrad='999.0arcsec',
+            reffreq='100.0GHz',
+            dopb=True,
+            )
+        myid2 = myvp.getuserdefault("ALMAxLST")
+
+        myvp.setuserdefault(myid1, "ALMAxLST", "DV")
+        myvp.setuserdefault(myid1, "ALMAxLST", "DA")
+        myvp.setuserdefault(myid1, "ALMAxLST", "PM")
+        myvp.setuserdefault(myid1, "ALMAxLST", "CM")
+        myvp.setuserdefault(myid2, "ALMAxLST", "")
+
         myvp.summarizevps()
         myvp.saveastable("ALMAxLST.vptable")
         mysm.setvp(dovp=True,usedefaultvp=False,vptable="ALMAxLST.vptable")
