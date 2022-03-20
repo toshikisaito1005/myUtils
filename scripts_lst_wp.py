@@ -453,7 +453,7 @@ class ToolsLSTSim():
 
         myvp.summarizevps()
         myvp.saveastable("ALMAxLST.vptable")
-        mysm.setvp(dovp=True,usedefaultvp=False)#,vptable="ALMAxLST.vptable")
+        mysm.setvp(dovp=True,usedefaultvp=True)#,vptable="ALMAxLST.vptable")
 
         mysm.setoptions(
             cache=10000000,
@@ -497,7 +497,7 @@ class ToolsLSTSim():
           sourcedirection=direction,
           calcode="OBJ", distance='0m')
 
-        mysm.setfield(sourcename="src1", 
+        mysm.setfield(sourcename="src2", 
           sourcedirection=direction2,
           calcode="OBJ", distance='0m')
 
@@ -521,10 +521,26 @@ class ToolsLSTSim():
           starttime=myqa.mul(-1,qa.quantity(etime)),
           stoptime=myqa.quantity(0,"s"))
 
+        mysm.observe(sourcename="src2", spwname="spw1",
+          starttime=myqa.mul(-1,qa.quantity(etime)),
+          stoptime=myqa.quantity(0,"s"))
+        mysm.observe(sourcename="src2", spwname="spw2",
+          starttime=myqa.mul(-1,qa.quantity(etime)),
+          stoptime=myqa.quantity(0,"s"))
+        mysm.observe(sourcename="src2", spwname="spw3",
+          starttime=myqa.mul(-1,qa.quantity(etime)),
+          stoptime=myqa.quantity(0,"s"))
+        mysm.observe(sourcename="src2", spwname="spw4",
+          starttime=myqa.mul(-1,qa.quantity(etime)),
+          stoptime=myqa.quantity(0,"s"))
+        mysm.observe(sourcename="src2", spwname="spw5",
+          starttime=myqa.mul(-1,qa.quantity(etime)),
+          stoptime=myqa.quantity(0,"s"))
+
         #mysm.setoptions(ftmachine="mosaic")
         mysm.predict(imagename="image.image")
-        mysm.summary()
 
+        mysm.summary()
         mysm.done()
         mysm.close()
 
