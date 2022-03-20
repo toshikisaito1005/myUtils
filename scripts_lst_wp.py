@@ -497,7 +497,7 @@ class ToolsLSTSim():
           sourcedirection=direction,
           calcode="OBJ", distance='0m')
 
-        mysm.setfield(sourcename="src2", 
+        mysm.setfield(sourcename="src1", 
           sourcedirection=direction2,
           calcode="OBJ", distance='0m')
 
