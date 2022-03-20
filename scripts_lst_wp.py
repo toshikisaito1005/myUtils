@@ -428,32 +428,32 @@ class ToolsLSTSim():
         mysm.open("test.ms")
 
         myvp.setpbgauss(
-            telescope="ALMAxLST",
+            telescope="ALMA",
             halfwidth='62.5arcsec',
             maxrad='999.0arcsec',
             reffreq='100.0GHz',
             dopb=True,
             )
-        myid1 = myvp.getuserdefault("ALMAxLST")
+        myid1 = myvp.getuserdefault("ALMA")
 
         myvp.setpbgauss(
-            telescope="ALMAxLST",
+            telescope="ALMA",
             halfwidth='15.0arcsec',
             maxrad='999.0arcsec',
             reffreq='100.0GHz',
             dopb=True,
             )
-        myid2 = myvp.getuserdefault("ALMAxLST")
+        myid2 = myvp.getuserdefault("ALMA")
 
-        myvp.setuserdefault(myid1, "ALMAxLST", "DV")
-        myvp.setuserdefault(myid1, "ALMAxLST", "DA")
-        myvp.setuserdefault(myid1, "ALMAxLST", "PM")
-        myvp.setuserdefault(myid1, "ALMAxLST", "CM")
-        myvp.setuserdefault(myid2, "ALMAxLST", "")
+        myvp.setuserdefault(myid1, "ALMA", "DV")
+        myvp.setuserdefault(myid1, "ALMA", "DA")
+        myvp.setuserdefault(myid1, "ALMA", "PM")
+        myvp.setuserdefault(myid1, "ALMA", "CM")
+        myvp.setuserdefault(myid2, "ALMA", "")
 
         myvp.summarizevps()
         myvp.saveastable("ALMAxLST.vptable")
-        mysm.setvp(dovp=True,usedefaultvp=True)#,vptable="ALMAxLST.vptable")
+        mysm.setvp(dovp=True,usedefaultvp=False)#,vptable="ALMAxLST.vptable")
 
         mysm.setoptions(
             cache=10000000,
@@ -466,7 +466,7 @@ class ToolsLSTSim():
         x2,y2,z2,d2,padnames2,telescope2,posobs2 = u.readantenna(self.config_lst)
 
         mysm.setconfig(
-            telescopename="ALMAxLST",
+            telescopename="ALMA",
             x=np.append(x,x2),
             y=np.append(y,y2),
             z=np.append(z,z2),
