@@ -507,21 +507,20 @@ class ToolsLSTSim():
           starttime=myqa.mul(-1,qa.quantity(etime)),
           stoptime=myqa.quantity(0,"s"))
 
-        etime="1200s"
         mysm.observe(sourcename="src2", spwname="spw1",
-          starttime=myqa.mul(-1,qa.quantity(etime)),
+          starttime=myqa.quantity(0,"s"),
           stoptime=myqa.quantity(600,"s"))
         mysm.observe(sourcename="src2", spwname="spw2",
-          starttime=myqa.mul(-1,qa.quantity(etime)),
+          starttime=myqa.quantity(0,"s"),
           stoptime=myqa.quantity(600,"s"))
         mysm.observe(sourcename="src2", spwname="spw3",
-          starttime=myqa.mul(-1,qa.quantity(etime)),
+          starttime=myqa.quantity(0,"s"),
           stoptime=myqa.quantity(600,"s"))
         mysm.observe(sourcename="src2", spwname="spw4",
-          starttime=myqa.mul(-1,qa.quantity(etime)),
+          starttime=myqa.quantity(0,"s"),
           stoptime=myqa.quantity(600,"s"))
         mysm.observe(sourcename="src2", spwname="spw5",
-          starttime=myqa.mul(-1,qa.quantity(etime)),
+          starttime=myqa.quantity(0,"s"),
           stoptime=myqa.quantity(600,"s"))
 
         #mysm.setoptions(ftmachine="mosaic")
@@ -531,7 +530,7 @@ class ToolsLSTSim():
         mysm.done()
         mysm.close()
 
-        os.system("rm -rf test_all.* test_all_src?.* test_onlyLST.* test_onlyLST_src?.* test_noLST.*")
+        os.system("rm -rf test_all.* test_all_src?.* test_onlyLST.* test_onlyLST_src?.* test_noLST.* test_noLST_src?.*")
         tclean(vis="test.ms",imagename="test_all",gridder="mosaic",cell="0.1arcsec",imsize=[256,256])
         tclean(vis="test.ms",imagename="test_all_src1",field="src1",gridder="mosaic",cell="0.1arcsec",imsize=[256,256])
         tclean(vis="test.ms",imagename="test_all_src2",field="src2",gridder="mosaic",cell="0.1arcsec",imsize=[256,256])
