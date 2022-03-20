@@ -59,6 +59,7 @@ history:
 2022-01-30   created
 2022-02-04   add simualtion and evaluation on the methods for moment map creation
 2022-02-04   add simualtion and evaluation on the fitting method
+2022-02-04   writing
 Toshiki Saito@Nichidai/NAOJ
 """
 

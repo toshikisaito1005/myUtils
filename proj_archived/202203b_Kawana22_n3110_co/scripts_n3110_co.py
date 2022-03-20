@@ -55,6 +55,8 @@ Date         Action
 2021-10-19   bug fix in the rotation diagram part (refactor equation, Snu2)
 2021-11-28   use eq1 of Nakajima et al. 2018
 2022-01-31   circulate the revised draft and the reply to the whole team
+2022-02-17   2nd submit to ApJ!
+2022-03-19   accepted!
 Toshiki Saito@Nichidai/NAOJ
 """
 

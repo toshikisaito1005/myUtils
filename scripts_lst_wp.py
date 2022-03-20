@@ -31,6 +31,7 @@ Date         Filename                To
 
 history:
 2022-03-08   created
+2022-03-19   CASA tools sm and vp for heterogenous array sim
 Toshiki Saito@Nichidai/NAOJ
 """
 

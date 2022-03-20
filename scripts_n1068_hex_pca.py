@@ -64,6 +64,8 @@ history:
 2021-12-21   circulate v0 draft to the paper team
 2022-01-25   replace radial plot with line graph
 2022-02-18   send to Editage (English proofreading)
+2022-03-03   circulate v1 draf to all co-Is
+2022-03-31   submit to ApJ
 Toshiki Saito@Nichidai/NAOJ
 """
 
