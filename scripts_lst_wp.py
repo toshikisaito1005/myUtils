@@ -429,27 +429,13 @@ class ToolsLSTSim():
 
         myvp.setpbgauss(
             telescope="ALMA",
-            halfwidth='62.5arcsec',
-            maxrad='999.0arcsec',
-            reffreq='100.0GHz',
-            dopb=True,
-            )
-        myid1 = myvp.getuserdefault("ALMA")
-
-        myvp.setpbgauss(
-            telescope="ALMA",
             halfwidth='15.0arcsec',
             maxrad='999.0arcsec',
             reffreq='100.0GHz',
             dopb=True,
             )
-        myid2 = myvp.getuserdefault("ALMA")
-
-        myvp.setuserdefault(myid1, "ALMA", "DV")
-        myvp.setuserdefault(myid1, "ALMA", "DA")
-        myvp.setuserdefault(myid1, "ALMA", "PM")
-        myvp.setuserdefault(myid1, "ALMA", "CM")
-        myvp.setuserdefault(myid2, "ALMA", "")
+        myid1 = myvp.getuserdefault("ALMA")
+        myvp.setuserdefault(myid1, "ALMA", "")
 
         myvp.summarizevps()
         myvp.saveastable("ALMAxLST.vptable")
