@@ -507,21 +507,22 @@ class ToolsLSTSim():
           starttime=myqa.mul(-1,qa.quantity(etime)),
           stoptime=myqa.quantity(0,"s"))
 
+        etime="1200s"
         mysm.observe(sourcename="src2", spwname="spw1",
           starttime=myqa.mul(-1,qa.quantity(etime)),
-          stoptime=myqa.quantity(0,"s"))
+          stoptime=myqa.quantity(600,"s"))
         mysm.observe(sourcename="src2", spwname="spw2",
           starttime=myqa.mul(-1,qa.quantity(etime)),
-          stoptime=myqa.quantity(0,"s"))
+          stoptime=myqa.quantity(600,"s"))
         mysm.observe(sourcename="src2", spwname="spw3",
           starttime=myqa.mul(-1,qa.quantity(etime)),
-          stoptime=myqa.quantity(0,"s"))
+          stoptime=myqa.quantity(600,"s"))
         mysm.observe(sourcename="src2", spwname="spw4",
           starttime=myqa.mul(-1,qa.quantity(etime)),
-          stoptime=myqa.quantity(0,"s"))
+          stoptime=myqa.quantity(600,"s"))
         mysm.observe(sourcename="src2", spwname="spw5",
           starttime=myqa.mul(-1,qa.quantity(etime)),
-          stoptime=myqa.quantity(0,"s"))
+          stoptime=myqa.quantity(600,"s"))
 
         #mysm.setoptions(ftmachine="mosaic")
         mysm.predict(imagename="image.image")
