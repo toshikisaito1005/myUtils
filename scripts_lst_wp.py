@@ -429,6 +429,15 @@ class ToolsLSTSim():
 
         myvp.setpbgauss(
             telescope="ALMAxLST",
+            halfwidth='62.5arcsec',
+            maxrad='999.0arcsec',
+            reffreq='100.0GHz',
+            dopb=True,
+            )
+        myid1 = myvp.getuserdefault("ALMAxLST")
+
+        myvp.setpbgauss(
+            telescope="ALMAxLST",
             halfwidth='15.0arcsec',
             maxrad='999.0arcsec',
             reffreq='100.0GHz',
