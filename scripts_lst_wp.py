@@ -464,15 +464,19 @@ class ToolsLSTSim():
             )
         mysm.setoptions(ftmachine="mosaic")
 
-        mysm.setspwindow(spwname="spw1", freq="690.9640232GHz",
+        mysm.setspwindow(spwname="spw1", freq="690.4640232GHz",
           deltafreq="1.0GHz",freqresolution="1GHz",nchannels=1,stokes='XX YY')
-        mysm.setspwindow(spwname="spw2", freq="691.9640232GHz",
+        mysm.setspwindow(spwname="spw2", freq="691.4640232GHz",
           deltafreq="1.0GHz",freqresolution="1GHz",nchannels=1,stokes='XX YY')
-        mysm.setspwindow(spwname="spw3", freq="692.9640232GHz",
+        mysm.setspwindow(spwname="spw3", freq="692.4640232GHz",
           deltafreq="1.0GHz",freqresolution="1GHz",nchannels=1,stokes='XX YY')
-        mysm.setspwindow(spwname="spw4", freq="693.9640232GHz",
+        mysm.setspwindow(spwname="spw4", freq="693.4640232GHz",
           deltafreq="1.0GHz",freqresolution="1GHz",nchannels=1,stokes='XX YY')
-        mysm.setspwindow(spwname="spw5", freq="694.9640232GHz",
+        mysm.setspwindow(spwname="spw5", freq="694.4640232GHz",
+          deltafreq="1.0GHz",freqresolution="1GHz",nchannels=1,stokes='XX YY')
+        mysm.setspwindow(spwname="spw6", freq="695.4640232GHz",
+          deltafreq="1.0GHz",freqresolution="1GHz",nchannels=1,stokes='XX YY')
+        mysm.setspwindow(spwname="spw7", freq="696.4640232GHz",
           deltafreq="1.0GHz",freqresolution="1GHz",nchannels=1,stokes='XX YY')
 
         mysm.setfeed(mode='perfect X Y',pol=[''])
