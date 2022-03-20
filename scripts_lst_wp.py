@@ -530,8 +530,10 @@ class ToolsLSTSim():
         mysm.done()
         mysm.close()
 
-        os.system("rm -rf test2.*")
-        tclean(vis="test.ms",imagename="test2",gridder="mosaic",cell="0.1arcsec",imsize=[256,256])
+        os.system("rm -rf test_all.* test_onlyLST.* test_noLST.*")
+        tclean(vis="test.ms",imagename="test_all",gridder="mosaic",cell="0.1arcsec",imsize=[256,256])
+        tclean(vis="test.ms",imagename="test_onlyLST",gridder="mosaic",cell="0.1arcsec",imsize=[256,256],antenna="LST")
+        tclean(vis="test.ms",imagename="test_noLST",gridder="mosaic",cell="0.1arcsec",imsize=[256,256],antenna="!LST")
 
         """
         run_simobserve(
