@@ -412,6 +412,7 @@ class ToolsLSTSim():
         taskname = self.modname + sys._getframe().f_code.co_name
         check_first(self.torus_template_file,taskname)
 
+        """
         u = simutil()
         direction  = "J2000 02h42m40.70912s -00d00m47.9449s"
         direction2 = "J2000 02h42m40.70912s -00d00m57.9449s"
@@ -531,8 +532,9 @@ class ToolsLSTSim():
         tclean(vis="test.ms",imagename="test_all",gridder="mosaic",cell="0.1arcsec",imsize=[256,256])
         tclean(vis="test.ms",imagename="test_onlyLST",gridder="mosaic",cell="0.1arcsec",imsize=[256,256],antenna="test")
         tclean(vis="test.ms",imagename="test_noLST",gridder="mosaic",cell="0.1arcsec",imsize=[256,256],antenna="!LST")
-
         """
+
+        #"""
         run_simobserve(
             working_dir=self.dir_ready,
             template=self.check_template_file,
@@ -542,7 +544,7 @@ class ToolsLSTSim():
             incenter="693.9640232GHz",
             pointingspacing=pointingspacing,
             )
-        """
+        #"""
 
     #############################
     # prepare_template_checksim #
