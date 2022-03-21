@@ -1185,7 +1185,7 @@ class ToolsLSTSim():
                 do_multiscale_clean     = False,
                 do_revert_to_multiscale = False,
                 do_singlescale_mask     = False,
-                do_singlescale_clean    = True,
+                do_singlescale_clean    = False, # True,
                 do_export_to_fits       = False,
                 extra_ext_in            = '',
                 extra_ext_out           = '',
