@@ -782,14 +782,14 @@ class ToolsLSTSim():
         mycl.addcomponent(dir=direction, flux=totalflux_in, fluxunit='Jy', freq='693.9640232GHz', shape="disk", 
                         majoraxis=rmaj_in, minoraxis=rmin_in, positionangle=pa)
         #
-        myia.fromshape("torus.im",[256,256,1,1],overwrite=True)
+        myia.fromshape("torus.im",[256,256,1,7],overwrite=True)
         cs=myia.coordsys()
         cs.setunits(['rad','rad','','Hz'])
         cell_rad=myqa.convert(myqa.quantity("0.0005arcsec"),"rad")['value']
         cs.setincrement([-cell_rad,cell_rad],'direction')
         cs.setreferencevalue([myqa.convert("2.7113080889h",'rad')['value'],myqa.convert("-0.01331803deg",'rad')['value']],type="direction")
-        cs.setreferencevalue("345GHz",'spectral')
-        cs.setincrement('7.5GHz','spectral')
+        cs.setreferencevalue("693.9640232GHz",'spectral')
+        cs.setincrement('1.0GHz','spectral')
         myia.setcoordsys(cs.torecord())
         myia.setbrightnessunit("Jy/pixel")
         myia.modify(mycl.torecord(),subtract=False)
