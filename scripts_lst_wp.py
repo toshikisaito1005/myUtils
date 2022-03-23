@@ -386,6 +386,11 @@ class ToolsLSTSim():
         if plot_config==True:
             self.plot_config()
 
+            this_target  = self.project_n1097+"_"+tintegstr_7m
+            dir_ms  = self.dir_ready + "outputs/imaging/" + this_target + "/"
+            this_ms = dir_ms + this_target + "_7m_ci10.ms"
+            self.plot_uv(this_ms,self.outpng_mosaic_7m,[-60,-60,60,60])
+
         if plot_mosaic==True:
             self.plot_mosaic_7m(tintegstr_7m,self.observed_freq)
             self.plot_mosaic_C1(tintegstr_ch,693.9640232)
@@ -927,6 +932,21 @@ class ToolsLSTSim():
         # LST+ACA 7m+TP      = 2878 m^2 (this/aca = 3.15, this/lst = 1.47)
         ##################################################
 
+    ###########
+    # plot_uv #
+    ###########
+
+    def plot_uv(self,vis,outpng,plotrange):
+        """
+        Reference:
+        https://safe.nrao.edu/wiki/bin/view/ALMA/Uvplt
+        """
+
+        taskname = self.modname + sys._getframe().f_code.co_name
+        check_first(self.config_c10,taskname)
+
+        uvplot(vis, field='', plotrange=plotrange, figfile=outpng, markersize=2, density=self.fig_dpi, units='m', mirrorPoints=True)
+
     ###############
     # plot_config #
     ###############
@@ -960,14 +980,13 @@ class ToolsLSTSim():
         z_7m  = data[:,2].astype(np.float32) / 1000.
 
         # get dist and angle: alma-alma baselines
-        this_data = np.c_[x_12m.flatten(),y_12m.flatten(),z_12m.flatten()]
-        #this_data = np.c_[x_12m.flatten()+[lst_position[0]],y_12m.flatten()+[lst_position[1]],z_12m.flatten()+[lst_position[2]]]
-        u_alma, v_alma = self._get_baselines(this_data,this_data,decl=decl,tinteg=tinteg)
-        u1_lst_center, v1_lst_center = self._get_baselines([lst_position],this_data,decl=decl,tinteg=tinteg)
-        u2_lst_center, v2_lst_center = self._get_baselines(this_data,[lst_position],decl=decl,tinteg=tinteg)
-
-        this_data = np.c_[x_7m.flatten(),y_7m.flatten(),z_7m.flatten()]
-        u_7m, v_7m = self._get_baselines(this_data,this_data,decl=decl,tinteg=tinteg)
+        #this_data = np.c_[x_12m.flatten(),y_12m.flatten(),z_12m.flatten()]
+        ##this_data = np.c_[x_12m.flatten()+[lst_position[0]],y_12m.flatten()+[lst_position[1]],z_12m.flatten()+[lst_position[2]]]
+        #u_alma, v_alma = self._get_baselines(this_data,this_data,decl=decl,tinteg=tinteg)
+        #u1_lst_center, v1_lst_center = self._get_baselines([lst_position],this_data,decl=decl,tinteg=tinteg)
+        #u2_lst_center, v2_lst_center = self._get_baselines(this_data,[lst_position],decl=decl,tinteg=tinteg)
+        #this_data = np.c_[x_7m.flatten(),y_7m.flatten(),z_7m.flatten()]
+        #u_7m, v_7m = self._get_baselines(this_data,this_data,decl=decl,tinteg=tinteg)
 
         #############################
         # plot: 7m antenna position #
@@ -1073,64 +1092,6 @@ class ToolsLSTSim():
         plt.subplots_adjust(hspace=.0)
         os.system("rm -rf " + self.outpng_config_12m)
         plt.savefig(self.outpng_config_12m, dpi=self.fig_dpi)
-
-        ###############
-        # plot: 7m uv #
-        ###############
-        ad    = [0.215,0.83,0.10,0.90]
-        xlim  = [-60,60]
-        ylim  = [-60,60]
-        title = "$u-v$ coverage"
-        xlabel = "East-West (m)"
-        ylabel = "North-South (m)"
-
-        fig = plt.figure(figsize=(13,10))
-        gs  = gridspec.GridSpec(nrows=10, ncols=10)
-        ax1 = plt.subplot(gs[0:10,0:10])
-        plt.subplots_adjust(left=ad[0], right=ad[1], bottom=ad[2], top=ad[3])
-        myax_set(ax1, "both", xlim, ylim, title, xlabel, ylabel, adjust=ad)
-
-        ax1.scatter(np.array(u_7m)*1000, np.array(v_7m)*1000, color="grey", lw=0, s=5, alpha=0.5)
-        #ax1.scatter(u1_lst_center, v1_lst_center, color="tomato", lw=0, s=5, alpha=0.5)
-        #ax1.scatter(u2_lst_center, v2_lst_center, color="tomato", lw=0, s=5, alpha=0.5)
-
-        # text
-        ax1.text(0.05,0.92, "Baselines: 7m array", color="grey", weight="bold", transform=ax1.transAxes)
-        #ax1.text(0.05,0.87, "Baselines: ALMA - LSTsim", color="tomato", weight="bold", transform=ax1.transAxes)
-
-        # save
-        plt.subplots_adjust(hspace=.0)
-        os.system("rm -rf " + self.outpng_uv_aca)
-        plt.savefig(self.outpng_uv_aca, dpi=self.fig_dpi)
-
-        #################
-        # plot: C-10 uv #
-        #################
-        ad    = [0.215,0.83,0.10,0.90]
-        xlim  = [-20,20]
-        ylim  = [-20,20]
-        title = "$u-v$ coverage"
-        xlabel = "East-West (km)"
-        ylabel = "North-South (km)"
-
-        fig = plt.figure(figsize=(13,10))
-        gs  = gridspec.GridSpec(nrows=10, ncols=10)
-        ax1 = plt.subplot(gs[0:10,0:10])
-        plt.subplots_adjust(left=ad[0], right=ad[1], bottom=ad[2], top=ad[3])
-        myax_set(ax1, "both", xlim, ylim, title, xlabel, ylabel, adjust=ad)
-
-        ax1.scatter(u_alma, v_alma, color="grey", lw=0, s=5, alpha=0.5)
-        ax1.scatter(u1_lst_center, v1_lst_center, color="tomato", lw=0, s=5, alpha=0.5)
-        ax1.scatter(u2_lst_center, v2_lst_center, color="tomato", lw=0, s=5, alpha=0.5)
-
-        # text
-        ax1.text(0.05,0.92, "Baselines: ALMA - ALMA", color="grey", weight="bold", transform=ax1.transAxes)
-        ax1.text(0.05,0.87, "Baselines: ALMA - LSTsim", color="tomato", weight="bold", transform=ax1.transAxes)
-
-        # save
-        plt.subplots_adjust(hspace=.0)
-        os.system("rm -rf " + self.outpng_uv_alma_lst1)
-        plt.savefig(self.outpng_uv_alma_lst1, dpi=self.fig_dpi)
 
     ###########################
     # phangs_pipeline_imaging #
@@ -1421,7 +1382,9 @@ class ToolsLSTSim():
 
     def _get_baselines(self,x,y,decl=60,tinteg=0):
         """
+        some calculation (both u and v) is wrong apparently!
         """
+
         latitude = np.radians(-67.755) # degree, alma site
 
         list_dist  = []
