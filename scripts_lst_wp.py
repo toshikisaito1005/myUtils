@@ -525,7 +525,7 @@ class ToolsLSTSim():
 
         # regrid
         run_importfits(
-            self.mom0_tp,
+            self.mom0_input,
             "template.image",
             )
         run_imregrid(
