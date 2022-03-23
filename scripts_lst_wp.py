@@ -501,8 +501,6 @@ class ToolsLSTSim():
         bmin = imhead(imagename=this_cube,mode="get",hdkey="beamminor")["value"]
         expr = "iif(IM1>0,IM0*"+str(1.222e6/bmaj/bmin/self.observed_freq**2)+",0)"
 
-        print(imhead(this_cube)["shape"])
-        print(imhead("mask.cube")["shape"])
         # reshape mask
         run_imregrid(
             "mask.cube",
@@ -565,7 +563,7 @@ class ToolsLSTSim():
             )
         run_imregrid(
             self.mom0_7m_tp+"_tmp1",
-            "template.image",
+            self.mom0_input,#"template.image",
             self.mom0_7m_tp+"_tmp2",
             axes=[0,1],
             delin=True,
@@ -602,10 +600,7 @@ class ToolsLSTSim():
         expr = "iif(IM1>0,IM0*"+str(1.222e6/bmaj/bmin/self.observed_freq**2)+",0)"
 
         # reshape mask
-        run_importfits(
-            this_cube,
-            "template.image",
-            )
+        os.system("cp -r "+this_cube+" template.image")
         run_imregrid(
             "mask.cube",
             "template.image",
