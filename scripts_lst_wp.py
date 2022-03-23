@@ -502,6 +502,8 @@ class ToolsLSTSim():
         bmin = imhead(imagename=this_cube,mode="get",hdkey="beamminor")["value"]
         expr = "iif(IM1>0,IM0*"+str(1.222e6/bmaj/bmin/self.observed_freq**2)+",0)"
 
+        print(imhead(this_cube)["shape"])
+        print(imhead("mask.cube")["shape"])
         # reshape mask
         run_imregrid(
             "mask.cube",
@@ -509,8 +511,6 @@ class ToolsLSTSim():
             "mask.cube.regrid",
             axes=[-1],
             )
-        print(imhead(this_cube)["shape"])
-        print(imhead("mask.cube.regrid")["shape"])
 
         # convert to K
         run_immath_two(this_cube,"mask.cube.regrid",self.mom0_tp+"_tmp1",expr)
