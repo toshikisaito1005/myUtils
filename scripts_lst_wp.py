@@ -190,6 +190,8 @@ class ToolsLSTSim():
         self.outpng_mosaic_c1     = self.dir_products + self._read_key("outpng_mosaic_c1")
         self.outpng_uv_aca        = self.dir_products + self._read_key("outpng_uv_aca")
 
+        self.outpng_mom0_input    = self.dir_products + self._read_key("outpng_mom0_input")
+
     ####################
     # run_sim_lst_alma #
     ####################
@@ -430,8 +432,8 @@ class ToolsLSTSim():
             )
         myfig_fits2png(
             # general
-            imcolor=mom0_input,
-            outfile,
+            mom0_input,
+            self.outpng_mom0_input,
             imcontour1=mom0_input,
             imsize_as=50,
             ra_cnt=None,
