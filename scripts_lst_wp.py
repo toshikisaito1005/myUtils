@@ -401,7 +401,7 @@ class ToolsLSTSim():
             self.plot_mosaic_C1(tintegstr_ch,693.9640232)
 
         if plot_mom0==True:
-            self.plot_mom0(tinteg_7m)
+            self.plot_mom0(tintegstr_7m)
 
         # calc
         if calc_collectingarea==True:
