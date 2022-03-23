@@ -428,22 +428,22 @@ class ToolsLSTSim():
         # plot input #
         ##############
         mom0_input = self.dir_ready + "outputs/ngc1097sim_mom0_input.fits"
-        os.system("rm -rf " + mom0_input+"_tmp1")
         run_roundsmooth(
             self.dir_ready + "inputs/" + self.n1097_template_fullspec,
             mom0_input+"_tmp1",
             3.0,
             inputbeam=0.001,
-            delin=True,
             )
         bmaj = imhead(imagename=mom0_input+"_tmp1",mode="get",hdkey="beammajor")["value"]
         bmin = imhead(imagename=mom0_input+"_tmp1",mode="get",hdkey="beamminor")["value"]
         expr = "IM0*"+str(1.222e6/bmaj/bmin/self.observed_freq**2)
+        os,system("rm -rf " + mom0_input+"_tmp2")
         immoments(
             imagename = mom0_input+"_tmp1",
             includepix = [0,100000],
             outfile = mom0_input+"_tmp2",
             )
+        os,system("rm -rf " + mom0_input+"_tmp1")
         run_immath_one(
             mom0_input+"_tmp2",
             mom0_input+"_tmp3",
@@ -493,7 +493,6 @@ class ToolsLSTSim():
         ###########
         mom0_tp = self.dir_ready + "outputs/ngc1097sim_mom0_TP12m.fits"
         thres = 0.147 * 1.0
-        os.system("rm -rf " + mom0_tp+"_tmp1")
         bmaj = imhead(imagename=self.dir_ready+"outputs/"+self.n1097_sdimage_fullspec.replace(".image","_"+totaltimetint+"7m.image"),mode="get",hdkey="beammajor")["value"]
         bmin = imhead(imagename=self.dir_ready+"outputs/"+self.n1097_sdimage_fullspec.replace(".image","_"+totaltimetint+"7m.image"),mode="get",hdkey="beamminor")["value"]
         expr = "IM0*"+str(1.222e6/bmaj/bmin/self.observed_freq**2)
@@ -501,13 +500,13 @@ class ToolsLSTSim():
             self.dir_ready + "outputs/" + self.n1097_sdimage_fullspec.replace(".image","_"+totaltimetint+"7m.image"),
             mom0_tp+"_tmp1",
             expr,
-            delin=True,
             )
         immoments(
             imagename = mom0_tp+"_tmp1",
             #includepix = [thres,100000],
             outfile = mom0_tp+"_tmp2",
             )
+        os.system("rm -rf " + mom0_tp+"_tmp1")
         run_exportfits(
             imagename = mom0_tp+"_tmp2",
             fitsimage = mom0_tp,
@@ -1511,7 +1510,7 @@ class ToolsLSTSim():
         if dryrun==False:
             simtp(
                 working_dir=self.dir_ready,
-                template_fullspec=self.n1097_template_fullspec,
+                template_fullspec=self.n1097_template_fullspec.replace(".image",".fits"),
                 sdimage_fullspec=self.n1097_lstimage_fullspec.replace(".image","_"+totaltimetint+"7m.image"),
                 sdnoise_image=self.n1097_lstnoise_image.replace(".image","_"+totaltimetint+"7m.image"),
                 singledish_res=lst_res,
@@ -1576,7 +1575,7 @@ class ToolsLSTSim():
         if dryrun==False:
             simtp(
                 working_dir=self.dir_ready,
-                template_fullspec=self.n1097_template_fullspec,
+                template_fullspec=self.n1097_template_fullspec.replace(".image",".fits"),
                 sdimage_fullspec=self.n1097_sdimage_fullspec.replace(".image","_"+totaltimetint+"7m.image"),
                 sdnoise_image=self.n1097_sdnoise_image.replace(".image","_"+totaltimetint+"7m.image"),
                 singledish_res=singledish_res,
