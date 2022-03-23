@@ -777,9 +777,9 @@ class ToolsLSTSim():
 
         direction = "J2000 02h42m40.70912s -00d00m47.9449s" # ngc1068 decl = -00d00m47.859690204s
         mycl.done()
-        mycl.addcomponent(dir=direction, flux=totalflux, fluxunit='Jy', freq='693.9640232GHz', shape="disk", 
+        mycl.addcomponent(dir=direction, flux=totalflux, fluxunit='Jy', freq='693.9640232GHz', shape="Gaussian", 
                         majoraxis=rmaj_out, minoraxis=rmin_out, positionangle=pa)
-        mycl.addcomponent(dir=direction, flux=totalflux_in, fluxunit='Jy', freq='693.9640232GHz', shape="disk", 
+        mycl.addcomponent(dir=direction, flux=totalflux_in, fluxunit='Jy', freq='693.9640232GHz', shape="Gaussian", 
                         majoraxis=rmaj_in, minoraxis=rmin_in, positionangle=pa)
         #
         myia.fromshape("torus.im",[256,256,1,7],overwrite=True)
