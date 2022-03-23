@@ -389,7 +389,7 @@ class ToolsLSTSim():
             this_target  = self.project_n1097+"_"+tintegstr_7m
             dir_ms  = self.dir_ready + "outputs/imaging/" + this_target + "/"
             this_ms = dir_ms + this_target + "_7m_ci10.ms"
-            self.plot_uv(this_ms,self.outpng_uv_aca,[-60,-60,60,60])
+            self.plot_uv(this_ms,self.outpng_uv_aca,[-60,60,-60,60])
 
         if plot_mosaic==True:
             self.plot_mosaic_7m(tintegstr_7m,self.observed_freq)
@@ -945,7 +945,7 @@ class ToolsLSTSim():
         taskname = self.modname + sys._getframe().f_code.co_name
         check_first(self.config_c10,taskname)
 
-        aU.uvplot(vis, field='', plotrange=plotrange, figfile=outpng, markersize=2, density=self.fig_dpi, units='m', mirrorPoints=True)
+        aU.uvplot(vis, field='0', plotrange=plotrange, figfile=outpng, markersize=2, density=self.fig_dpi, units='m', mirrorPoints=True)
 
     ###############
     # plot_config #
