@@ -523,18 +523,27 @@ class ToolsLSTSim():
         # convert to K
         run_immath_one(this_cube,self.mom0_7m_tp+"_tmp1",expr)
 
-        # moment 0 creation
-        os.system("rm -rf " + self.mom0_7m_tp+"_tmp2")
-        immoments(
-            imagename = self.mom0_7m_tp+"_tmp1",
-            #includepix = [thres,100000],
-            outfile = self.mom0_7m_tp+"_tmp2",
+        # regrid
+        run_imregrid(
+            self.mom0_7m_tp+"_tmp1",
+            self.mom0_tp,
+            self.mom0_7m_tp+"_tmp2",
+            axes=[0,1],
+            delin=True,
             )
-        os.system("rm -rf " + self.mom0_7m_tp+"_tmp1")
+
+        # moment 0 creation
+        os.system("rm -rf " + self.mom0_7m_tp+"_tmp3")
+        immoments(
+            imagename = self.mom0_7m_tp+"_tmp2",
+            #includepix = [thres,100000],
+            outfile = self.mom0_7m_tp+"_tmp3",
+            )
+        os.system("rm -rf " + self.mom0_7m_tp+"_tmp2")
 
         # exportfits
         run_exportfits(
-            imagename = self.mom0_7m_tp+"_tmp2",
+            imagename = self.mom0_7m_tp+"_tmp3",
             fitsimage = self.mom0_7m_tp,
             delin = True,
             dropdeg = True,
