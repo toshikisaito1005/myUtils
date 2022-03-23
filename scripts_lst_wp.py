@@ -945,7 +945,7 @@ class ToolsLSTSim():
         taskname = self.modname + sys._getframe().f_code.co_name
         check_first(self.config_c10,taskname)
 
-        au.uvplot(vis, field='', plotrange=plotrange, figfile=outpng, markersize=2, density=self.fig_dpi, units='m', mirrorPoints=True)
+        aU.uvplot(vis, field='', plotrange=plotrange, figfile=outpng, markersize=2, density=self.fig_dpi, units='m', mirrorPoints=True)
 
     ###############
     # plot_config #
