@@ -521,7 +521,7 @@ class ToolsLSTSim():
         ################
         # plot LST 30m #
         ################
-        mom0_tp = "lst30m.mom0.fits"
+        mom0_tp = "lst50m.mom0.fits"
         thres = 0.147 * 2.5
         os.system("rm -rf " + mom0_tp+"_tmp1")
         immoments(
@@ -539,7 +539,7 @@ class ToolsLSTSim():
         myfig_fits2png(
             # general
             mom0_tp,
-            self.outpng_mom0_tp,
+            self.outpng_mom0_lst50m,
             imcontour1=mom0_tp,
             imsize_as=150,
             ra_cnt="41.5763deg",
