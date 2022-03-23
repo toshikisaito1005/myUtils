@@ -482,7 +482,7 @@ class ToolsLSTSim():
             "mask.cube",
             self.mom0_input+"_tmp2",
             "mask.cube.regrid",
-            axes=[0,1],
+            axes=-1,
             )
 
         # convert to K
