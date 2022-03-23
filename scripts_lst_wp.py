@@ -454,7 +454,7 @@ class ToolsLSTSim():
             includepix = [0,100000],
             outfile = self.mom0_input+"_tmp2",
             )
-        os,system("rm -rf " + self.mom0_input+"_tmp1")
+        os.system("rm -rf " + self.mom0_input+"_tmp1")
 
         # convert to K
         run_immath_one(
