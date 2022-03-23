@@ -422,7 +422,7 @@ class ToolsLSTSim():
         mom0_input = "input.mom0.fits"
         os.system("rm -rf " + mom0_input+"_tmp1")
         immoments(
-            imagename = self.dir_ready + "outputs/" + self.n1097_template_fullspec,
+            imagename = self.dir_ready + "inputs/" + self.n1097_template_fullspec,
             includepix = [0,100000],
             outfile = mom0_input+"_tmp1",
             )
