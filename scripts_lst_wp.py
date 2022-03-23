@@ -473,7 +473,7 @@ class ToolsLSTSim():
         # plot TP #
         ###########
         mom0_tp = "tp.mom0.fits"
-        thres = 0.147 * 2.5
+        thres = 0.147 * 1.0
         os.system("rm -rf " + mom0_tp+"_tmp1")
         immoments(
             imagename = self.dir_ready + "outputs/" + self.n1097_sdimage_fullspec.replace(".image","_"+totaltimetint+"7m.image"),
@@ -522,7 +522,7 @@ class ToolsLSTSim():
         # plot LST 30m #
         ################
         mom0_tp = "lst50m.mom0.fits"
-        thres = 0.147 * 2.5
+        thres = 0.147 * 1.0
         os.system("rm -rf " + mom0_tp+"_tmp1")
         immoments(
             imagename = self.dir_ready + "outputs/" + self.n1097_lstimage_fullspec.replace(".image","_"+totaltimetint+"7m.image"),
