@@ -466,25 +466,15 @@ class ToolsLSTSim():
         # determine Jy/beam to K factor
         bmaj = imhead(imagename=self.mom0_input+"_tmp1",mode="get",hdkey="beammajor")["value"]
         bmin = imhead(imagename=self.mom0_input+"_tmp1",mode="get",hdkey="beamminor")["value"]
-        expr = "iif(IM1>0,IM0*"+str(1.222e6/bmaj/bmin/self.observed_freq**2)+",0)"
-
-        # reshape mask
-        run_imregrid(
-            "mask.cube",
-            self.mom0_input+"_tmp1",
-            "mask.cube.regrid",
-            axes=-1,
-            )
+        expr = "IM0*"+str(1.222e6/bmaj/bmin/self.observed_freq**2)
 
         # convert to K
-        run_immath_two(
+        run_immath_one(
             self.mom0_input+"_tmp1",
-            "mask.cube.regrid",
             self.mom0_input+"_tmp2",
             expr,
-            delin=False,
+            delin=True,
             )
-        os.system("rm -rf " + self.mom0_input+"_tmp1")
 
         # moment 0 creation
         os.system("rm -rf " + self.mom0_input+"_tmp3")
