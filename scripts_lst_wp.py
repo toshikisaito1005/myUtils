@@ -311,7 +311,7 @@ class ToolsLSTSim():
             self.do_feather(cube_7m,cube_lst,self.n1097_feather_lst_7m,-1)
 
         if do_mom0_n1097sim==True:
-            self.create_mom0()
+            self.create_mom0(tintegstr_7m)
 
         #if do_simACA_LST_n1097sim==True:
         #    self.do_simaca_lst_n1097sim(tinteg_7m,tintegstr_7m)
@@ -424,6 +424,7 @@ class ToolsLSTSim():
 
     def create_mom0(
         self,
+        totaltimetint,
         ):
         """
         """
