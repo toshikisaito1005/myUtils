@@ -524,13 +524,18 @@ class ToolsLSTSim():
         run_immath_one(this_cube,self.mom0_7m_tp+"_tmp1",expr)
 
         # regrid
+        run_importfits(
+            self.mom0_tp,
+            "template.image",
+            )
         run_imregrid(
             self.mom0_7m_tp+"_tmp1",
-            self.mom0_tp,
+            "template.image",
             self.mom0_7m_tp+"_tmp2",
             axes=[0,1],
             delin=True,
             )
+        os.system("rm -rf template.image")
 
         # moment 0 creation
         os.system("rm -rf " + self.mom0_7m_tp+"_tmp3")
