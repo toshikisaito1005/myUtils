@@ -306,9 +306,6 @@ class ToolsLSTSim():
             self.simlst_n1097sim(lst_beam,tp_beam,tintegstr_7m,dryrun_simSD)
             self.simlst_n1097sim(lst30m_beam,tp_beam,tintegstr_7m,True)
 
-        print(cube_7m)
-        print(cube_tp)
-
         if do_feather==True:
             self.do_feather(cube_7m,cube_tp,self.n1097_feather_tp_7m,-1)
             self.do_feather(cube_7m,cube_lst,self.n1097_feather_lst_7m,-1)
@@ -512,6 +509,8 @@ class ToolsLSTSim():
             "mask.cube.regrid",
             axes=[-1],
             )
+        print(imhead(this_cube)["shape"])
+        print(imhead("mask.cube.regrid")["shape"])
 
         # convert to K
         run_immath_two(this_cube,"mask.cube.regrid",self.mom0_tp+"_tmp1",expr)
