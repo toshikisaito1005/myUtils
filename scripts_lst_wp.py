@@ -665,7 +665,7 @@ class ToolsLSTSim():
             dec_cnt="-30.2771deg",
             # contour 1
             unit_cont1=None,
-            levels_cont1=[0.005,0.01,0.02,0.04,0.08,0.16,0.32,0.64,0.96],
+            levels_cont1=[0.02,0.04,0.08,0.16,0.32,0.64,0.96],
             width_cont1=[1.0],
             color_cont1="black",
             # imshow
@@ -699,7 +699,7 @@ class ToolsLSTSim():
             dec_cnt="-30.2771deg",
             # contour 1
             unit_cont1=None,
-            levels_cont1=[0.005,0.01,0.02,0.04,0.08,0.16,0.32,0.64,0.96],
+            levels_cont1=[0.01,0.02,0.04,0.08,0.16,0.32,0.64,0.96],
             width_cont1=[1.0],
             color_cont1="black",
             # imshow
