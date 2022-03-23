@@ -555,6 +555,7 @@ class ToolsLSTSim():
             "mask.cube.regrid",
             axes=-1,
             )
+        os.system("rm -rf template.image")
 
         # convert to K
         run_immath_two(this_cube,"mask.cube.regrid",self.mom0_7m_tp+"_tmp1",expr)
@@ -597,6 +598,7 @@ class ToolsLSTSim():
             "mask.cube.regrid",
             axes=-1,
             )
+        os.system("rm -rf template.image")
 
         # convert to K
         run_immath_two(this_cube,"mask.cube.regrid",self.mom0_lst+"_tmp1",expr)
