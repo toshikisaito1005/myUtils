@@ -300,6 +300,8 @@ class ToolsLSTSim():
             self.simlst_n1097sim(lst30m_beam,tp_beam,tintegstr_7m,True)
 
         if do_feather==True:
+            print(cube_7m)
+            print(cube_tp)
             self.do_feather(cube_7m,cube_tp,self.n1097_feather_tp_7m,-1)
             self.do_feather(cube_7m,cube_lst,self.n1097_feather_lst_7m,-1)
 
