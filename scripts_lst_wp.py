@@ -188,6 +188,7 @@ class ToolsLSTSim():
         self.outpng_uv_alma_lst1  = self.dir_products + self._read_key("outpng_uv_alma_lst1")
         self.outpng_mosaic_7m     = self.dir_products + self._read_key("outpng_mosaic_7m")
         self.outpng_mosaic_c1     = self.dir_products + self._read_key("outpng_mosaic_c1")
+        self.outpng_uv_aca        = self.dir_products + self._read_key("outpng_uv_aca")
 
     ####################
     # run_sim_lst_alma #
@@ -1099,8 +1100,8 @@ class ToolsLSTSim():
 
         # save
         plt.subplots_adjust(hspace=.0)
-        os.system("rm -rf " + self.outpng_uv_alma_lst1)
-        plt.savefig(self.outpng_uv_alma_lst1, dpi=self.fig_dpi)
+        os.system("rm -rf " + self.outpng_uv_aca)
+        plt.savefig(self.outpng_uv_aca, dpi=self.fig_dpi)
 
         #################
         # plot: C-10 uv #
