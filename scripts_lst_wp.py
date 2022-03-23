@@ -505,7 +505,7 @@ class ToolsLSTSim():
         # determine Jy/beam to K factor
         bmaj = imhead(imagename=this_cube,mode="get",hdkey="beammajor")["value"]
         bmin = imhead(imagename=this_cube,mode="get",hdkey="beamminor")["value"]
-        expr = "iif(IM1>1,IM0*"+str(1.222e6/bmaj/bmin/self.observed_freq**2)+",0)"
+        expr = "iif(IM1>0.1,IM0*"+str(1.222e6/bmaj/bmin/self.observed_freq**2)+",0)"
 
         # reshape mask
         run_imregrid(
@@ -548,7 +548,7 @@ class ToolsLSTSim():
         # determine Jy/beam to K factor
         bmaj = imhead(imagename=this_cube,mode="get",hdkey="beammajor")["value"]
         bmin = imhead(imagename=this_cube,mode="get",hdkey="beamminor")["value"]
-        expr = "iif(IM1>1,IM0*"+str(1.222e6/bmaj/bmin/self.observed_freq**2)+",0)"
+        expr = "iif(IM1>0.1,IM0*"+str(1.222e6/bmaj/bmin/self.observed_freq**2)+",0)"
 
         # reshape mask
         run_importfits(
@@ -596,7 +596,7 @@ class ToolsLSTSim():
         # determine Jy/beam to K factor
         bmaj = imhead(imagename=this_cube,mode="get",hdkey="beammajor")["value"]
         bmin = imhead(imagename=this_cube,mode="get",hdkey="beamminor")["value"]
-        expr = "iif(IM1>1,IM0*"+str(1.222e6/bmaj/bmin/self.observed_freq**2)+",0)"
+        expr = "iif(IM1>0.1,IM0*"+str(1.222e6/bmaj/bmin/self.observed_freq**2)+",0)"
 
         # reshape mask
         os.system("cp -r "+this_cube+" template.image")
