@@ -622,7 +622,7 @@ class ToolsLSTSim():
             delin=True,
             )
         run_exportfits(
-            imagename = mom0_tp+"_tmp1",
+            imagename = mom0_tp+"_tmp2",
             fitsimage = mom0_tp,
             delin = True,
             dropdeg = True,
