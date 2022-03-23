@@ -550,7 +550,7 @@ class ToolsLSTSim():
         thres = 0.147 * 1.0
         os.system("rm -rf " + mom0_tp+"_tmp1")
         immoments(
-            imagename = self.dir_ready + "outputs/" + self.n1097_feather_tp_7m,
+            imagename = self.dir_ready + "outputs/" + self.n1097_feather_tp_7m
             includepix = [thres,100000],
             outfile = mom0_tp+"_tmp1",
             )
