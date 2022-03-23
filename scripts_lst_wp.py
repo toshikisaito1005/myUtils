@@ -1184,13 +1184,21 @@ class ToolsLSTSim():
         check_first(lowres,taskname)
         check_first(highres)
 
-        os.system("rm -rf " + outfile)
+        os.system("rm -rf " + outfile+"_tmp1")
         feather(
-            imagename = outfile,
+            imagename = outfile+"_tmp1",
             highres = highres,
             lowres = lowres,
             effdishdiam = effdishdiam,
             )
+        run_exportfits(
+            imagename = outfile+"_tmp1",
+            fitsimage = outfile,
+            delin = True,
+            dropdeg = True,
+            dropstokes = True,
+            )
+
 
     #######################
     # calc_collectingarea #
@@ -1631,7 +1639,6 @@ class ToolsLSTSim():
         print("# 7m input  = " + image_7m.split("/")[-1])
         print("# TP output = " + self.n1097_sdimage_fullspec.replace(".image","_"+totaltimetint+"7m.image"))
         print("#")
-
 
         # run
         if dryrun==False:

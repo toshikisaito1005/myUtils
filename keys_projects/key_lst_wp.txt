@@ -27,8 +27,8 @@ check_template_file ,,,ngc1068sim_b9_cont_check.fits
 ###############
 # output maps #
 ###############
-n1097_feather_tp_7m  ,,,ngc1097sim_feather_tp+7m.image
-n1097_feather_lst_7m ,,,ngc1097sim_feather_lst+7m.image
+n1097_feather_tp_7m  ,,,ngc1097sim_feather_tp+7m.fits
+n1097_feather_lst_7m ,,,ngc1097sim_feather_lst+7m.fits
 
 ###################
 # input paramters #
