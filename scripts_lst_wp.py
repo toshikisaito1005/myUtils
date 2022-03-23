@@ -1090,7 +1090,7 @@ class ToolsLSTSim():
         plt.subplots_adjust(left=ad[0], right=ad[1], bottom=ad[2], top=ad[3])
         myax_set(ax1, "both", xlim, ylim, title, xlabel, ylabel, adjust=ad)
 
-        ax1.scatter(u_7m, v_7m, color="grey", lw=0, s=5, alpha=0.5)
+        ax1.scatter(np.array(u_7m)*1000, np.array(v_7m)*1000, color="grey", lw=0, s=5, alpha=0.5)
         #ax1.scatter(u1_lst_center, v1_lst_center, color="tomato", lw=0, s=5, alpha=0.5)
         #ax1.scatter(u2_lst_center, v2_lst_center, color="tomato", lw=0, s=5, alpha=0.5)
 
