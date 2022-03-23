@@ -448,7 +448,7 @@ class ToolsLSTSim():
             color_cont1="black",
             # imshow
             set_title="Input n1097sim [CI] mom0",
-            colorlog=False,
+            colorlog=True,
             set_cmap="rainbow",
             set_bg_color=cm.rainbow(0),
             showbeam=False,
