@@ -1199,7 +1199,6 @@ class ToolsLSTSim():
             dropstokes = True,
             )
 
-
     #######################
     # calc_collectingarea #
     #######################
