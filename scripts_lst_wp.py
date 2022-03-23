@@ -460,7 +460,7 @@ class ToolsLSTSim():
             clim=None,
             label_cbar="(K km s$^{-1}$)",
             # annotation
-            numann=None,
+            numann="lst_n1097sim",
             textann=True,
             )
 
