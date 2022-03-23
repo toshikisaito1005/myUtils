@@ -775,6 +775,10 @@ class ToolsLSTSim():
         rmin_in      = str(1.74 / 5. / 72.)+"arcsec"
         totalflux_in = -1 * totalflux / 5**2
 
+        scale = float(totalflux) / float(totalflux-totalflux_in)
+        totalflux = totalflux * scale
+        totalflux_in = totalflux_in * scale
+
         direction = "J2000 02h42m40.70912s -00d00m47.9449s" # ngc1068 decl = -00d00m47.859690204s
         mycl.done()
         mycl.addcomponent(dir=direction, flux=totalflux, fluxunit='Jy', freq='693.9640232GHz', shape="Gaussian", 
@@ -782,7 +786,7 @@ class ToolsLSTSim():
         mycl.addcomponent(dir=direction, flux=totalflux_in, fluxunit='Jy', freq='693.9640232GHz', shape="Gaussian", 
                         majoraxis=rmaj_in, minoraxis=rmin_in, positionangle=pa)
         #
-        myia.fromshape("torus.im",[256,256,1,7],overwrite=True)
+        myia.fromshape("torus.im",[512,512,1,7],overwrite=True)
         cs=myia.coordsys()
         cs.setunits(['rad','rad','','Hz'])
         cell_rad=myqa.convert(myqa.quantity("0.0005arcsec"),"rad")['value']
@@ -1182,9 +1186,9 @@ class ToolsLSTSim():
                 do_dirty_image          = True,
                 do_revert_to_dirty      = False,
                 do_read_clean_mask      = False,
-                do_multiscale_clean     = True,
+                do_multiscale_clean     = False,
                 do_revert_to_multiscale = False,
-                do_singlescale_mask     = True,
+                do_singlescale_mask     = False,
                 do_singlescale_clean    = True,
                 do_export_to_fits       = False,
                 extra_ext_in            = '',
