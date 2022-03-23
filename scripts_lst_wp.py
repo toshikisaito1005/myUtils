@@ -608,7 +608,7 @@ class ToolsLSTSim():
             colorlog=False,
             set_cmap="rainbow",
             set_bg_color=cm.rainbow(0),
-            showbeam=False,
+            showbeam=True,
             color_beam="black",
             scalebar=None,
             label_scalebar=None,
