@@ -475,9 +475,57 @@ class ToolsLSTSim():
         mom0_tp = "tp.mom0.fits"
         thres = 0.147 * 2.5
         os.system("rm -rf " + mom0_tp+"_tmp1")
-        print(self.dir_ready + "outputs/" + self.n1097_sdimage_fullspec.replace(".image","_"+totaltimetint+"7m.image"))
         immoments(
             imagename = self.dir_ready + "outputs/" + self.n1097_sdimage_fullspec.replace(".image","_"+totaltimetint+"7m.image"),
+            includepix = [thres,100000],
+            outfile = mom0_tp+"_tmp1",
+            )
+        run_exportfits(
+            imagename = mom0_tp+"_tmp1",
+            fitsimage = mom0_tp,
+            delin = True,
+            dropdeg = True,
+            dropstokes = True,
+            )
+        myfig_fits2png(
+            # general
+            mom0_tp,
+            self.outpng_mom0_tp,
+            imcontour1=mom0_tp,
+            imsize_as=150,
+            ra_cnt="41.5763deg",
+            dec_cnt="-30.2771deg",
+            # contour 1
+            unit_cont1=None,
+            levels_cont1=[0.005,0.01,0.02,0.04,0.08,0.16,0.32,0.64,0.96],
+            width_cont1=[1.0],
+            color_cont1="black",
+            # imshow
+            set_title="TP 12m: n1097sim [CI] mom0",
+            colorlog=False,
+            set_cmap="rainbow",
+            set_bg_color=cm.rainbow(0),
+            showbeam=True,
+            color_beam="black",
+            scalebar=None,
+            label_scalebar=None,
+            comment=None,
+            # imshow colorbar
+            clim=None,
+            label_cbar="(K km s$^{-1}$)",
+            # annotation
+            numann="lst_n1097sim",
+            textann=True,
+            )
+
+        ################
+        # plot LST 30m #
+        ################
+        mom0_tp = "lst30m.mom0.fits"
+        thres = 0.147 * 2.5
+        os.system("rm -rf " + mom0_tp+"_tmp1")
+        immoments(
+            imagename = self.dir_ready + "outputs/" + self.n1097_lstimage_fullspec.replace(".image","_"+totaltimetint+"7m.image"),
             includepix = [thres,100000],
             outfile = mom0_tp+"_tmp1",
             )
