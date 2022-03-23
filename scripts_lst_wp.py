@@ -522,7 +522,7 @@ class ToolsLSTSim():
         os.system("rm -rf " + self.mom0_tp+"_tmp2")
         immoments(
             imagename = self.mom0_tp+"_tmp1",
-            #includepix = [thres,100000],
+            includepix = [0,100000],
             outfile = self.mom0_tp+"_tmp2",
             )
         #os.system("rm -rf " + self.mom0_tp+"_tmp1")
@@ -570,7 +570,7 @@ class ToolsLSTSim():
         os.system("rm -rf " + self.mom0_7m_tp+"_tmp2")
         immoments(
             imagename = self.mom0_7m_tp+"_tmp1",
-            #includepix = [thres,100000],
+            includepix = [0,100000],
             outfile = self.mom0_7m_tp+"_tmp2",
             )
         #os.system("rm -rf " + self.mom0_7m_tp+"_tmp1")
@@ -615,7 +615,7 @@ class ToolsLSTSim():
         os.system("rm -rf " + self.mom0_lst+"_tmp2")
         immoments(
             imagename = self.mom0_lst+"_tmp1",
-            #includepix = [thres,100000],
+            includepix = [0,100000],
             outfile = self.mom0_lst+"_tmp2",
             )
         #os.system("rm -rf " + self.mom0_lst+"_tmp1")
