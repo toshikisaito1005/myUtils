@@ -51,6 +51,8 @@ outpng_uv_aca        ,,,fig_uv_aca.png
 outpng_mosaic_7m     ,,,fig_mosaic_7m.png
 outpng_mosaic_c1     ,,,fig_mosaic_c1.png
 outpng_mom0_input    ,,,fig_mom0_input.png
+outpng_mom0_tp       ,,,fig_mom0_tp.png
+outpng_mom0_lst50m   ,,,fig_mom0_lst50m.png
 
 # box for imagemajick
 box_map ,,,2245x1870+325+80
