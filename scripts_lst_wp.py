@@ -586,7 +586,7 @@ class ToolsLSTSim():
         expr = "iif(IM1>0,IM0*"+str(1.222e6/bmaj/bmin/self.observed_freq**2)+",0)"
 
         # reshape mask
-        os.system("cp -r "+this_cube+" template.image")
+        os.system("cp -r "+this_cube+" template.image") 
         run_imregrid(
             "mask.cube",
             "template.image",
