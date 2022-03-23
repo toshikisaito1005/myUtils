@@ -462,7 +462,7 @@ class ToolsLSTSim():
             label_scalebar=None,
             comment=None,
             # imshow colorbar
-            clim=[0,7],
+            clim=None,
             label_cbar="(K km s$^{-1}$)",
             # annotation
             numann="lst_n1097sim",
@@ -506,13 +506,13 @@ class ToolsLSTSim():
             colorlog=False,
             set_cmap="rainbow",
             set_bg_color=cm.rainbow(0),
-            showbeam=False,
+            showbeam=True,
             color_beam="black",
             scalebar=None,
             label_scalebar=None,
             comment=None,
             # imshow colorbar
-            clim=[0,7],
+            clim=None,
             label_cbar="(K km s$^{-1}$)",
             # annotation
             numann="lst_n1097sim",
