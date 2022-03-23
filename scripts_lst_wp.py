@@ -440,7 +440,7 @@ class ToolsLSTSim():
             )
         bmaj = imhead(imagename=mom0_input+"_tmp2",mode="get",hdkey="beammajor")["value"]
         bmin = imhead(imagename=mom0_input+"_tmp2",mode="get",hdkey="beamminor")["value"]
-        expr = "IM0/"+str(1.222e6/bmaj/bmin/self.observed_freq**2)
+        expr = "IM0*"+str(1.222e6/bmaj/bmin/self.observed_freq**2)
         run_immath_one(
             mom0_input+"_tmp2",
             mom0_input+"_tmp3",
@@ -498,7 +498,7 @@ class ToolsLSTSim():
             )
         bmaj = imhead(imagename=mom0_tp+"_tmp1",mode="get",hdkey="beammajor")["value"]
         bmin = imhead(imagename=mom0_tp+"_tmp1",mode="get",hdkey="beamminor")["value"]
-        expr = "IM0/"+str(1.222e6/bmaj/bmin/self.observed_freq**2)
+        expr = "IM0*"+str(1.222e6/bmaj/bmin/self.observed_freq**2)
         run_immath_one(
             mom0_tp+"_tmp1",
             mom0_tp+"_tmp2",
@@ -550,13 +550,13 @@ class ToolsLSTSim():
         thres = 0.147 * 1.0
         os.system("rm -rf " + mom0_tp+"_tmp1")
         immoments(
-            imagename = self.dir_ready + "outputs/" + self.n1097_sdimage_fullspec.replace(".image","_"+totaltimetint+"7m.image"),
+            imagename = self.dir_ready + "outputs/" + self.n1097_feather_tp_7m,
             includepix = [thres,100000],
             outfile = mom0_tp+"_tmp1",
             )
         bmaj = imhead(imagename=mom0_tp+"_tmp1",mode="get",hdkey="beammajor")["value"]
         bmin = imhead(imagename=mom0_tp+"_tmp1",mode="get",hdkey="beamminor")["value"]
-        expr = "IM0/"+str(1.222e6/bmaj/bmin/self.observed_freq**2)
+        expr = "IM0*"+str(1.222e6/bmaj/bmin/self.observed_freq**2)
         run_immath_one(
             mom0_tp+"_tmp1",
             mom0_tp+"_tmp2",
@@ -564,7 +564,7 @@ class ToolsLSTSim():
             delin=True,
             )
         run_exportfits(
-            imagename = mom0_tp+"_tmp1",
+            imagename = mom0_tp+"_tmp2",
             fitsimage = mom0_tp,
             delin = True,
             dropdeg = True,
@@ -614,7 +614,7 @@ class ToolsLSTSim():
             )
         bmaj = imhead(imagename=mom0_tp+"_tmp1",mode="get",hdkey="beammajor")["value"]
         bmin = imhead(imagename=mom0_tp+"_tmp1",mode="get",hdkey="beamminor")["value"]
-        expr = "IM0/"+str(1.222e6/bmaj/bmin/self.observed_freq**2)
+        expr = "IM0*"+str(1.222e6/bmaj/bmin/self.observed_freq**2)
         run_immath_one(
             mom0_tp+"_tmp1",
             mom0_tp+"_tmp2",
