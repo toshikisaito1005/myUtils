@@ -943,7 +943,7 @@ class ToolsLSTSim():
         x_cnt = -50.06162725-0.9
         y_cnt = -568.9553881-0.4
         decl  = -37.755 # 0=celestial equator, 90=north pole, -90=south pole
-        tinteg = 1
+        tinteg = 5.7
         #lst_position = np.array([0,0,0]) # km/s
         lst_position = np.array([6.452141+0.1, 7.886675+0.1, -0.245131]) # km/s
 
@@ -964,6 +964,9 @@ class ToolsLSTSim():
         u_alma, v_alma = self._get_baselines(this_data,this_data,decl=decl,tinteg=tinteg)
         u1_lst_center, v1_lst_center = self._get_baselines([lst_position],this_data,decl=decl,tinteg=tinteg)
         u2_lst_center, v2_lst_center = self._get_baselines(this_data,[lst_position],decl=decl,tinteg=tinteg)
+
+        this_data = np.c_[x_7m.flatten(),y_7m.flatten(),z_7m.flatten()]
+        u_7m, v_7m = self._get_baselines(this_data,this_data,decl=decl,tinteg=tinteg)
 
         #############################
         # plot: 7m antenna position #
@@ -1070,9 +1073,38 @@ class ToolsLSTSim():
         os.system("rm -rf " + self.outpng_config_12m)
         plt.savefig(self.outpng_config_12m, dpi=self.fig_dpi)
 
-        ############
-        # plot: uv #
-        ############
+        ###############
+        # plot: 7m uv #
+        ###############
+        ad    = [0.215,0.83,0.10,0.90]
+        xlim  = [-60,60]
+        ylim  = [-60,60]
+        title = "$u-v$ coverage"
+        xlabel = "East-West (m)"
+        ylabel = "North-South (m)"
+
+        fig = plt.figure(figsize=(13,10))
+        gs  = gridspec.GridSpec(nrows=10, ncols=10)
+        ax1 = plt.subplot(gs[0:10,0:10])
+        plt.subplots_adjust(left=ad[0], right=ad[1], bottom=ad[2], top=ad[3])
+        myax_set(ax1, "both", xlim, ylim, title, xlabel, ylabel, adjust=ad)
+
+        ax1.scatter(u_7m, v_7m, color="grey", lw=0, s=5, alpha=0.5)
+        #ax1.scatter(u1_lst_center, v1_lst_center, color="tomato", lw=0, s=5, alpha=0.5)
+        #ax1.scatter(u2_lst_center, v2_lst_center, color="tomato", lw=0, s=5, alpha=0.5)
+
+        # text
+        ax1.text(0.05,0.92, "Baselines: 7m array", color="grey", weight="bold", transform=ax1.transAxes)
+        #ax1.text(0.05,0.87, "Baselines: ALMA - LSTsim", color="tomato", weight="bold", transform=ax1.transAxes)
+
+        # save
+        plt.subplots_adjust(hspace=.0)
+        os.system("rm -rf " + self.outpng_uv_alma_lst1)
+        plt.savefig(self.outpng_uv_alma_lst1, dpi=self.fig_dpi)
+
+        #################
+        # plot: C-10 uv #
+        #################
         ad    = [0.215,0.83,0.10,0.90]
         xlim  = [-20,20]
         ylim  = [-20,20]
