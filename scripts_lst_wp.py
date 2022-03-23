@@ -436,7 +436,7 @@ class ToolsLSTSim():
             fitsimage = mom0_input,
             delin = True,
             defaultaxes=True,
-            defaultaxesvalues=["RA","Dec","1GHz","Stokes"],
+            defaultaxesvalues=["RA","Dec","Stokes","1GHz"],
             )
         run_exportfits(
             imagename = mom0_input+"_tmp1",
