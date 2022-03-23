@@ -193,6 +193,7 @@ class ToolsLSTSim():
         self.outpng_mom0_input    = self.dir_products + self._read_key("outpng_mom0_input")
         self.outpng_mom0_tp       = self.dir_products + self._read_key("outpng_mom0_tp")
         self.outpng_mom0_lst50m   = self.dir_products + self._read_key("outpng_mom0_lst50m")
+        self.outpng_mom0_tp_7m    = self.dir_products + self._read_key("outpng_mom0_tp_7m")
 
     ####################
     # run_sim_lst_alma #
@@ -573,7 +574,7 @@ class ToolsLSTSim():
         myfig_fits2png(
             # general
             mom0_tp,
-            self.outpng_mom0_tp,
+            self.outpng_mom0_tp_7m,
             imcontour1=mom0_tp,
             imsize_as=150,
             ra_cnt="41.5763deg",
