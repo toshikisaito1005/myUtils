@@ -468,30 +468,30 @@ class ToolsLSTSim():
         bmin = imhead(imagename=self.mom0_input+"_tmp1",mode="get",hdkey="beamminor")["value"]
         expr = "iif(IM1>0,IM0*"+str(1.222e6/bmaj/bmin/self.observed_freq**2)+",0)"
 
-        # moment 0 creation
-        os.system("rm -rf " + self.mom0_input+"_tmp2")
-        immoments(
-            imagename = self.mom0_input+"_tmp1",
-            includepix = [0,100000],
-            outfile = self.mom0_input+"_tmp2",
-            )
-        os.system("rm -rf " + self.mom0_input+"_tmp1")
-
         # reshape mask
         run_imregrid(
             "mask.cube",
-            self.mom0_input+"_tmp2",
+            self.mom0_input+"_tmp1",
             "mask.cube.regrid",
             axes=-1,
             )
 
         # convert to K
         run_immath_two(
-            self.mom0_input+"_tmp2",
+            self.mom0_input+"_tmp1",
             "mask.cube.regrid",
-            self.mom0_input+"_tmp3",
+            self.mom0_input+"_tmp2",
             expr,
             delin=False,
+            )
+        os.system("rm -rf " + self.mom0_input+"_tmp1")
+
+        # moment 0 creation
+        os.system("rm -rf " + self.mom0_input+"_tmp3")
+        immoments(
+            imagename = self.mom0_input+"_tmp2",
+            includepix = [0,100000],
+            outfile = self.mom0_input+"_tmp3",
             )
         os.system("rm -rf " + self.mom0_input+"_tmp2")
 
