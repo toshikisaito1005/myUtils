@@ -1477,8 +1477,10 @@ class ToolsLSTSim():
         6. then, scale to match sensitivity "after" convolution a common TP beam.
         """
 
+        inputcube = self.dir_ready+"inputs/"+self.n1097_template_fullspec.replace(".image",".fits")
+
         taskname = self.modname + sys._getframe().f_code.co_name
-        check_first(self.dir_ready+"inputs/"+self.n1097_template_fullspec,taskname)
+        check_first(inputcube,taskname)
 
         image_7m = self.dir_ready + "outputs/imaging/"+self.project_n1097+"_"+totaltimetint + "/"+self.project_n1097+"_"+totaltimetint+"_7m_ci10.image"
         rms_7m = measure_rms(image_7m, snr=3.0,rms_or_p84 = "p84")
@@ -1487,7 +1489,7 @@ class ToolsLSTSim():
         rms_lst_K = 1.222e6 * float(lst_res.replace("arcsec",""))**-2 * self.observed_freq**-2 * rms_lst
 
         # calc pointing number
-        header       = imhead(self.dir_ready+"inputs/"+self.n1097_template_fullspec,mode="list")
+        header       = imhead(inputcube,mode="list")
         area_in_as   = (header["shape"][0]*header["cdelt2"]*3600*180/np.pi) * (header["shape"][1]*header["cdelt2"]*3600*180/np.pi)
         one_hex_as   = (float(lst_res.replace("arcsec",""))/4.0)**2 * 6/np.sqrt(3) # hex with 1/4-beam length
         num_pointing = int(np.ceil(area_in_as / one_hex_as))
@@ -1532,10 +1534,10 @@ class ToolsLSTSim():
         4. scale rms_7m to get rms_tp
         """
 
-        print(self.dir_ready+"inputs/"+self.n1097_template_fullspec)
+        inputcube = self.dir_ready+"inputs/"+self.n1097_template_fullspec.replace(".image",".fits")
 
         taskname = self.modname + sys._getframe().f_code.co_name
-        check_first(self.dir_ready+"inputs/"+self.n1097_template_fullspec,taskname)
+        check_first(inputcube,taskname)
 
         image_7m = self.dir_ready + "outputs/imaging/"+self.project_n1097+"_"+totaltimetint + "/"+self.project_n1097+"_"+totaltimetint+"_7m_ci10.image"
         rms_7m = measure_rms(image_7m, snr=3.0,rms_or_p84="rms")
@@ -1543,7 +1545,7 @@ class ToolsLSTSim():
         rms_tp_K = 1.222e6 * float(singledish_res.replace("arcsec",""))**-2 * self.observed_freq**-2 * rms_tp
 
         # calc pointing number
-        header       = imhead(self.dir_ready+"inputs/"+self.n1097_template_fullspec,mode="list")
+        header       = imhead(inputcube,mode="list")
         area_in_as   = (header["shape"][0]*header["cdelt2"]*3600*180/np.pi) * (header["shape"][1]*header["cdelt2"]*3600*180/np.pi)
         one_hex_as   = (float(singledish_res.replace("arcsec",""))/4.0)**2 * 6/np.sqrt(3) # hex with 1/4-beam length
         num_pointing = int(np.ceil(area_in_as / one_hex_as))
