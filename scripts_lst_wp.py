@@ -427,21 +427,21 @@ class ToolsLSTSim():
         ##############
         mom0_input = self.dir_ready + "outputs/ngc1097sim_mom0_input.fits"
         os.system("rm -rf " + mom0_input+"_tmp1")
-        immoments(
-            imagename = self.dir_ready + "inputs/" + self.n1097_template_fullspec,
-            includepix = [0,100000],
-            outfile = mom0_input+"_tmp1",
-            )
         run_roundsmooth(
+            imagename = self.dir_ready + "inputs/" + self.n1097_template_fullspec,
             mom0_input+"_tmp1",
-            mom0_input+"_tmp2",
             3.0,
             inputbeam=0.001,
             delin=True,
             )
-        bmaj = imhead(imagename=mom0_input+"_tmp2",mode="get",hdkey="beammajor")["value"]
-        bmin = imhead(imagename=mom0_input+"_tmp2",mode="get",hdkey="beamminor")["value"]
+        bmaj = imhead(imagename=mom0_input+"_tmp1",mode="get",hdkey="beammajor")["value"]
+        bmin = imhead(imagename=mom0_input+"_tmp1",mode="get",hdkey="beamminor")["value"]
         expr = "IM0*"+str(1.222e6/bmaj/bmin/self.observed_freq**2)
+        immoments(
+            imagename = mom0_input+"_tmp1",
+            includepix = [0,100000],
+            outfile = mom0_input+"_tmp2",
+            )
         run_immath_one(
             mom0_input+"_tmp2",
             mom0_input+"_tmp3",
@@ -492,19 +492,19 @@ class ToolsLSTSim():
         mom0_tp = self.dir_ready + "outputs/ngc1097sim_mom0_TP12m.fits"
         thres = 0.147 * 1.0
         os.system("rm -rf " + mom0_tp+"_tmp1")
-        immoments(
-            imagename = self.dir_ready + "outputs/" + self.n1097_sdimage_fullspec.replace(".image","_"+totaltimetint+"7m.image"),
-            includepix = [thres,100000],
-            outfile = mom0_tp+"_tmp1",
-            )
-        bmaj = imhead(imagename=mom0_tp+"_tmp1",mode="get",hdkey="beammajor")["value"]
-        bmin = imhead(imagename=mom0_tp+"_tmp1",mode="get",hdkey="beamminor")["value"]
+        bmaj = imhead(imagename=self.dir_ready+"outputs/"+self.n1097_sdimage_fullspec.replace(".image","_"+totaltimetint+"7m.image"),mode="get",hdkey="beammajor")["value"]
+        bmin = imhead(imagename=self.dir_ready+"outputs/"+self.n1097_sdimage_fullspec.replace(".image","_"+totaltimetint+"7m.image"),mode="get",hdkey="beamminor")["value"]
         expr = "IM0*"+str(1.222e6/bmaj/bmin/self.observed_freq**2)
         run_immath_one(
+            self.dir_ready + "outputs/" + self.n1097_sdimage_fullspec.replace(".image","_"+totaltimetint+"7m.image"),
             mom0_tp+"_tmp1",
-            mom0_tp+"_tmp2",
             expr,
             delin=True,
+            )
+        immoments(
+            imagename = mom0_tp+"_tmp1",
+            #includepix = [thres,100000],
+            outfile = mom0_tp+"_tmp2",
             )
         run_exportfits(
             imagename = mom0_tp+"_tmp2",
@@ -550,19 +550,19 @@ class ToolsLSTSim():
         mom0_tp = self.dir_ready + "outputs/ngc1097sim_mom0_7m+TP.fits"
         thres = 0.147 * 1.0
         os.system("rm -rf " + mom0_tp+"_tmp1")
-        immoments(
-            imagename = self.n1097_feather_tp_7m,
-            includepix = [thres,100000],
-            outfile = mom0_tp+"_tmp1",
-            )
-        bmaj = imhead(imagename=mom0_tp+"_tmp1",mode="get",hdkey="beammajor")["value"]
-        bmin = imhead(imagename=mom0_tp+"_tmp1",mode="get",hdkey="beamminor")["value"]
+        bmaj = imhead(imagename=self.n1097_feather_tp_7m,mode="get",hdkey="beammajor")["value"]
+        bmin = imhead(imagename=self.n1097_feather_tp_7m,mode="get",hdkey="beamminor")["value"]
         expr = "IM0*"+str(1.222e6/bmaj/bmin/self.observed_freq**2)
         run_immath_one(
+            self.n1097_feather_tp_7m,
             mom0_tp+"_tmp1",
-            mom0_tp+"_tmp2",
             expr,
             delin=True,
+            )
+        immoments(
+            imagename = mom0_tp+"_tmp1",
+            #includepix = [thres,100000],
+            outfile = mom0_tp+"_tmp2",
             )
         run_exportfits(
             imagename = mom0_tp+"_tmp2",
@@ -585,7 +585,7 @@ class ToolsLSTSim():
             width_cont1=[1.0],
             color_cont1="black",
             # imshow
-            set_title="TP 12m: n1097sim [CI] mom0",
+            set_title="7m+TP: n1097sim [CI] mom0",
             colorlog=False,
             set_cmap="rainbow",
             set_bg_color=cm.rainbow(0),
@@ -603,24 +603,24 @@ class ToolsLSTSim():
             )
 
         ################
-        # plot LST 30m #
+        # plot LST 50m #
         ################
         mom0_tp = self.dir_ready + "outputs/ngc1097sim_mom0_LST50m.fits"
         thres = 0.147 * 1.0
         os.system("rm -rf " + mom0_tp+"_tmp1")
-        immoments(
-            imagename = self.dir_ready + "outputs/" + self.n1097_lstimage_fullspec.replace(".image","_"+totaltimetint+"7m.image"),
-            includepix = [thres,100000],
-            outfile = mom0_tp+"_tmp1",
-            )
-        bmaj = imhead(imagename=mom0_tp+"_tmp1",mode="get",hdkey="beammajor")["value"]
-        bmin = imhead(imagename=mom0_tp+"_tmp1",mode="get",hdkey="beamminor")["value"]
+        bmaj = imhead(imagename=self.dir_ready+"outputs/"+self.n1097_lstimage_fullspec.replace(".image","_"+totaltimetint+"7m.image"),mode="get",hdkey="beammajor")["value"]
+        bmin = imhead(imagename=self.dir_ready+"outputs/"+self.n1097_lstimage_fullspec.replace(".image","_"+totaltimetint+"7m.image"),mode="get",hdkey="beamminor")["value"]
         expr = "IM0*"+str(1.222e6/bmaj/bmin/self.observed_freq**2)
         run_immath_one(
+            self.dir_ready+"outputs/"+self.n1097_lstimage_fullspec.replace(".image","_"+totaltimetint+"7m.image"),
             mom0_tp+"_tmp1",
-            mom0_tp+"_tmp2",
             expr,
             delin=True,
+            )
+        immoments(
+            imagename = mom0_tp+"_tmp1",
+            #includepix = [thres,100000],
+            outfile = mom0_tp+"_tmp2",
             )
         run_exportfits(
             imagename = mom0_tp+"_tmp2",
