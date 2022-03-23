@@ -240,6 +240,7 @@ class ToolsLSTSim():
         # plot
         plot_config            = False,
         plot_mosaic            = False,
+        plot_mom0              = False,
         # calc
         calc_collectingarea    = False,
         ):
@@ -395,9 +396,67 @@ class ToolsLSTSim():
             self.plot_mosaic_7m(tintegstr_7m,self.observed_freq)
             self.plot_mosaic_C1(tintegstr_ch,693.9640232)
 
+        if plot_mom0==True:
+            self.plot_mom0()
+
         # calc
         if calc_collectingarea==True:
             self.calc_collectingarea()
+
+    #############
+    # plot_mom0 #
+    #############
+
+    def plot_mom0(
+        self,
+        ):
+        """
+        """
+
+        taskname = self.modname + sys._getframe().f_code.co_name
+        check_first(self.n1097_template_fullspec,taskname)
+
+        # plot input
+        mom0_input = "input.mom0.fits"
+        immoments(
+            imagename = self.n1097_template_fullspec,
+            includpix = [0,100000],
+            outfile = mom0_input+"_tmp1",
+            )
+        run_exportfits(
+            imagename = mom0_input+"_tmp1",
+            fitsimage = mom0_input,
+            delin = True,
+            )
+        myfig_fits2png(
+            # general
+            imcolor=mom0_input,
+            outfile,
+            imcontour1=mom0_input,
+            imsize_as=50,
+            ra_cnt=None,
+            dec_cnt=None,
+            # contour 1
+            unit_cont1=None,
+            levels_cont1=[0.01,0.02,0.04,0.08,0.16,0.32,0.64,0.96],
+            width_cont1=[1.0],
+            color_cont1="black",
+            # imshow
+            set_title="Input n1097sim [CI] mom0",
+            colorlog=False,
+            set_cmap="rainbow",
+            showbeam=False,
+            color_beam="black",
+            scalebar=None,
+            label_scalebar=None,
+            comment=None,
+            # imshow colorbar
+            clim=None,
+            label_cbar="(K km s$^{-1}$)",
+            # annotation
+            numann=None,
+            textann=True,
+            )
 
     ###################
     # sim12m_checksim #
