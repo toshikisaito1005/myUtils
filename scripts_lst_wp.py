@@ -451,6 +451,7 @@ class ToolsLSTSim():
         ##############
         # plot input #
         ##############
+        print("# mom0 input")
         # convolve to 3.0arcsec
         run_roundsmooth(
             self.dir_ready+"inputs/"+self.n1097_template_fullspec,
@@ -493,6 +494,7 @@ class ToolsLSTSim():
         ###########
         # plot TP #
         ###########
+        print("# mom0 TP 12m")
         this_cube = self.dir_ready+"outputs/"+self.n1097_sdimage_fullspec.replace(".image","_"+totaltimetint+"7m.image")
         thres = 0.147 * 1.0
 
@@ -533,6 +535,7 @@ class ToolsLSTSim():
         ##############
         # plot 7m+TP #
         ##############
+        print("# mom0 7m+TP")
         this_cube = self.n1097_feather_tp_7m
         thres = 0.147 * 1.0
 
@@ -577,6 +580,7 @@ class ToolsLSTSim():
         ################
         # plot LST 50m #
         ################
+        print("# mom0 LST 50m")
         this_cube = self.dir_ready+"outputs/"+self.n1097_lstimage_fullspec.replace(".image","_"+totaltimetint+"7m.image")
         thres = 0.147 * 1.0
 
@@ -586,7 +590,7 @@ class ToolsLSTSim():
         expr = "iif(IM1>0,IM0*"+str(1.222e6/bmaj/bmin/self.observed_freq**2)+",0)"
 
         # reshape mask
-        os.system("cp -r "+this_cube+" template.image") 
+        os.system("cp -r "+this_cube+" template.image")
         run_imregrid(
             "mask.cube",
             "template.image",
