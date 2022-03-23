@@ -437,10 +437,9 @@ class ToolsLSTSim():
         ####################
         # convolve to 14.0arcsec
         run_roundsmooth(
-            self.dir_ready+"inputs/"+self.n1097_template_fullspec,
+            self.dir_ready+"outputs/"+self.n1097_sdimage_fullspec.replace(".image","_"+totaltimetint+"7m.image"),
             "mask.cube_tmp1",
             14.0,
-            0.001,
             )
         run_immath_one(
             "mask.cube_tmp1",
