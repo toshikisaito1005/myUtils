@@ -451,7 +451,9 @@ class ToolsLSTSim():
         ##############
         # plot input #
         ##############
-        print("# mom0 input")
+        print("##############")
+        print("# mom0 input #")
+        print("##############")
         # convolve to 3.0arcsec
         run_roundsmooth(
             self.dir_ready+"inputs/"+self.n1097_template_fullspec,
@@ -494,14 +496,16 @@ class ToolsLSTSim():
         ###########
         # plot TP #
         ###########
-        print("# mom0 TP 12m")
+        print("###############")
+        print("# mom0 TP 12m #")
+        print("###############")
         this_cube = self.dir_ready+"outputs/"+self.n1097_sdimage_fullspec.replace(".image","_"+totaltimetint+"7m.image")
         thres = 0.147 * 1.0
 
         # determine Jy/beam to K factor
         bmaj = imhead(imagename=this_cube,mode="get",hdkey="beammajor")["value"]
         bmin = imhead(imagename=this_cube,mode="get",hdkey="beamminor")["value"]
-        expr = "iif(IM1>0,IM0*"+str(1.222e6/bmaj/bmin/self.observed_freq**2)+",0)"
+        expr = "iif(IM1>1,IM0*"+str(1.222e6/bmaj/bmin/self.observed_freq**2)+",0)"
 
         # reshape mask
         run_imregrid(
@@ -535,14 +539,16 @@ class ToolsLSTSim():
         ##############
         # plot 7m+TP #
         ##############
-        print("# mom0 7m+TP")
+        print("##############")
+        print("# mom0 7m+TP #")
+        print("##############")
         this_cube = self.n1097_feather_tp_7m
         thres = 0.147 * 1.0
 
         # determine Jy/beam to K factor
         bmaj = imhead(imagename=this_cube,mode="get",hdkey="beammajor")["value"]
         bmin = imhead(imagename=this_cube,mode="get",hdkey="beamminor")["value"]
-        expr = "iif(IM1>0,IM0*"+str(1.222e6/bmaj/bmin/self.observed_freq**2)+",0)"
+        expr = "iif(IM1>1,IM0*"+str(1.222e6/bmaj/bmin/self.observed_freq**2)+",0)"
 
         # reshape mask
         run_importfits(
@@ -581,14 +587,16 @@ class ToolsLSTSim():
         ################
         # plot LST 50m #
         ################
-        print("# mom0 LST 50m")
+        print("################")
+        print("# mom0 LST 50m #")
+        print("################")
         this_cube = self.dir_ready+"outputs/"+self.n1097_lstimage_fullspec.replace(".image","_"+totaltimetint+"7m.image")
         thres = 0.147 * 1.0
 
         # determine Jy/beam to K factor
         bmaj = imhead(imagename=this_cube,mode="get",hdkey="beammajor")["value"]
         bmin = imhead(imagename=this_cube,mode="get",hdkey="beamminor")["value"]
-        expr = "iif(IM1>0,IM0*"+str(1.222e6/bmaj/bmin/self.observed_freq**2)+",0)"
+        expr = "iif(IM1>1,IM0*"+str(1.222e6/bmaj/bmin/self.observed_freq**2)+",0)"
 
         # reshape mask
         os.system("cp -r "+this_cube+" template.image")
