@@ -843,7 +843,7 @@ def myax_fig2png_ann(ax,number,ra_cnt,dec_cnt,add_text=True,txtfiles=None):
         width = 333*1.21203420e-06*3600*180/np.pi
         height = 579*1.21203420e-06*3600*180/np.pi
         rec = patches.Rectangle(xy=(-0,0), width=width,
-            height=height, angle=0, fill=False, edgecolor="white",
+            height=height, fill=False, edgecolor="white",
             alpha=1.0, lw=3.5, ls="dashed")
         ax.add_patch(rec)
 
