@@ -424,15 +424,31 @@ class ToolsLSTSim():
         ##############
         # plot input #
         ##############
-        mom0_input = "input.mom0.fits"
+        mom0_input = self.dir_ready + "outputs/ngc1097sim_mom0_input.fits"
         os.system("rm -rf " + mom0_input+"_tmp1")
         immoments(
             imagename = self.dir_ready + "inputs/" + self.n1097_template_fullspec,
             includepix = [0,100000],
             outfile = mom0_input+"_tmp1",
             )
+        run_roundsmooth(
+            mom0_input+"_tmp1",
+            mom0_input+"_tmp2",
+            3.0,
+            inputbeam=0.001,
+            delin=True,
+            )
+        bmaj = imhead(imagename=mom0_input+"_tmp2",mode="get",hdkey="beammajor")["value"]
+        bmin = imhead(imagename=mom0_input+"_tmp2",mode="get",hdkey="beamminor")["value"]
+        expr = "IM0/"+str(1.222e6/bmaj/bmin/self.observed_freq**2)
+        run_immath_one(
+            mom0_input+"_tmp2",
+            mom0_input+"_tmp3",
+            expr,
+            delin=True,
+            )
         run_exportfits(
-            imagename = mom0_input+"_tmp1",
+            imagename = mom0_input+"_tmp3",
             fitsimage = mom0_input,
             delin = True,
             dropdeg = True,
@@ -452,7 +468,7 @@ class ToolsLSTSim():
             width_cont1=[1.0],
             color_cont1="black",
             # imshow
-            set_title="Input: n1097sim [CI] mom0",
+            set_title="Input (convolved): n1097sim [CI] mom0",
             colorlog=False,
             set_cmap="rainbow",
             set_bg_color=cm.rainbow(0),
@@ -472,13 +488,80 @@ class ToolsLSTSim():
         ###########
         # plot TP #
         ###########
-        mom0_tp = "tp.mom0.fits"
+        mom0_tp = self.dir_ready + "outputs/ngc1097sim_mom0_TP12m.fits"
         thres = 0.147 * 1.0
         os.system("rm -rf " + mom0_tp+"_tmp1")
         immoments(
             imagename = self.dir_ready + "outputs/" + self.n1097_sdimage_fullspec.replace(".image","_"+totaltimetint+"7m.image"),
             includepix = [thres,100000],
             outfile = mom0_tp+"_tmp1",
+            )
+        bmaj = imhead(imagename=mom0_tp+"_tmp1",mode="get",hdkey="beammajor")["value"]
+        bmin = imhead(imagename=mom0_tp+"_tmp1",mode="get",hdkey="beamminor")["value"]
+        expr = "IM0/"+str(1.222e6/bmaj/bmin/self.observed_freq**2)
+        run_immath_one(
+            mom0_tp+"_tmp1",
+            mom0_tp+"_tmp2",
+            expr,
+            delin=True,
+            )
+        run_exportfits(
+            imagename = mom0_tp+"_tmp2",
+            fitsimage = mom0_tp,
+            delin = True,
+            dropdeg = True,
+            dropstokes = True,
+            )
+        myfig_fits2png(
+            # general
+            mom0_tp,
+            self.outpng_mom0_tp,
+            imcontour1=mom0_tp,
+            imsize_as=150,
+            ra_cnt="41.5763deg",
+            dec_cnt="-30.2771deg",
+            # contour 1
+            unit_cont1=None,
+            levels_cont1=[0.005,0.01,0.02,0.04,0.08,0.16,0.32,0.64,0.96],
+            width_cont1=[1.0],
+            color_cont1="black",
+            # imshow
+            set_title="TP 12m: n1097sim [CI] mom0",
+            colorlog=False,
+            set_cmap="rainbow",
+            set_bg_color=cm.rainbow(0),
+            showbeam=True,
+            color_beam="black",
+            scalebar=None,
+            label_scalebar=None,
+            comment=None,
+            # imshow colorbar
+            clim=None,
+            label_cbar="(K km s$^{-1}$)",
+            # annotation
+            numann="lst_n1097sim",
+            textann=True,
+            )
+
+        ##############
+        # plot 7m+TP #
+        ##############
+        mom0_tp = self.dir_ready + "outputs/ngc1097sim_mom0_7m+TP.fits"
+        thres = 0.147 * 1.0
+        os.system("rm -rf " + mom0_tp+"_tmp1")
+        immoments(
+            imagename = self.dir_ready + "outputs/" + self.n1097_sdimage_fullspec.replace(".image","_"+totaltimetint+"7m.image"),
+            includepix = [thres,100000],
+            outfile = mom0_tp+"_tmp1",
+            )
+        bmaj = imhead(imagename=mom0_tp+"_tmp1",mode="get",hdkey="beammajor")["value"]
+        bmin = imhead(imagename=mom0_tp+"_tmp1",mode="get",hdkey="beamminor")["value"]
+        expr = "IM0/"+str(1.222e6/bmaj/bmin/self.observed_freq**2)
+        run_immath_one(
+            mom0_tp+"_tmp1",
+            mom0_tp+"_tmp2",
+            expr,
+            delin=True,
             )
         run_exportfits(
             imagename = mom0_tp+"_tmp1",
@@ -521,13 +604,22 @@ class ToolsLSTSim():
         ################
         # plot LST 30m #
         ################
-        mom0_tp = "lst50m.mom0.fits"
+        mom0_tp = self.dir_ready + "outputs/ngc1097sim_mom0_LST50m.fits"
         thres = 0.147 * 1.0
         os.system("rm -rf " + mom0_tp+"_tmp1")
         immoments(
             imagename = self.dir_ready + "outputs/" + self.n1097_lstimage_fullspec.replace(".image","_"+totaltimetint+"7m.image"),
             includepix = [thres,100000],
             outfile = mom0_tp+"_tmp1",
+            )
+        bmaj = imhead(imagename=mom0_tp+"_tmp1",mode="get",hdkey="beammajor")["value"]
+        bmin = imhead(imagename=mom0_tp+"_tmp1",mode="get",hdkey="beamminor")["value"]
+        expr = "IM0/"+str(1.222e6/bmaj/bmin/self.observed_freq**2)
+        run_immath_one(
+            mom0_tp+"_tmp1",
+            mom0_tp+"_tmp2",
+            expr,
+            delin=True,
             )
         run_exportfits(
             imagename = mom0_tp+"_tmp1",
@@ -550,7 +642,7 @@ class ToolsLSTSim():
             width_cont1=[1.0],
             color_cont1="black",
             # imshow
-            set_title="TP 12m: n1097sim [CI] mom0",
+            set_title="LST 50m: n1097sim [CI] mom0",
             colorlog=False,
             set_cmap="rainbow",
             set_bg_color=cm.rainbow(0),
