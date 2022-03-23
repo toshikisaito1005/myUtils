@@ -684,7 +684,7 @@ class ToolsLSTSim():
             # general
             self.mom0_tp,
             self.outpng_mom0_tp,
-            imcontour1=self.mom0_input,
+            imcontour1=self.mom0_tp,
             imsize_as=150,
             ra_cnt="41.5763deg",
             dec_cnt="-30.2771deg",
@@ -718,7 +718,7 @@ class ToolsLSTSim():
             # general
             self.mom0_7m_tp,
             self.outpng_mom0_tp_7m,
-            imcontour1=self.mom0_input,
+            imcontour1=self.mom0_7m_tp,
             imsize_as=150,
             ra_cnt="41.5763deg",
             dec_cnt="-30.2771deg",
@@ -752,7 +752,7 @@ class ToolsLSTSim():
             # general
             self.mom0_lst,
             self.outpng_mom0_lst50m,
-            imcontour1=self.mom0_input,
+            imcontour1=self.mom0_lst,
             imsize_as=150,
             ra_cnt="41.5763deg",
             dec_cnt="-30.2771deg",
