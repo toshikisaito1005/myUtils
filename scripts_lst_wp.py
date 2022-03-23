@@ -422,7 +422,7 @@ class ToolsLSTSim():
         mom0_input = "input.mom0.fits"
         immoments(
             imagename = self.n1097_template_fullspec,
-            includpix = [0,100000],
+            includepix = [0,100000],
             outfile = mom0_input+"_tmp1",
             )
         run_exportfits(
