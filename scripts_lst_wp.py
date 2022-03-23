@@ -439,8 +439,8 @@ class ToolsLSTSim():
             self.outpng_mom0_input,
             imcontour1=mom0_input,
             imsize_as=124,
-            ra_cnt="41.579375deg",
-            dec_cnt="-30.274889deg",
+            ra_cnt="41.5763deg",
+            dec_cnt="-30.2771deg",
             # contour 1
             unit_cont1=None,
             levels_cont1=[0.005,0.01,0.02,0.04,0.08,0.16,0.32,0.64,0.96],
