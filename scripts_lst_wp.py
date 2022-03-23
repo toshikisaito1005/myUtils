@@ -483,8 +483,9 @@ class ToolsLSTSim():
             "mask.cube",
             self.mom0_input+"_tmp3",
             expr,
-            delin=True,
+            delin=False,
             )
+        os.system("rm -rf " + self.mom0_input+"_tmp2")
 
         # exportfits
         run_exportfits(
@@ -539,7 +540,7 @@ class ToolsLSTSim():
         expr = "IM0*IM1*"+str(1.222e6/bmaj/bmin/self.observed_freq**2)
 
         # convert to K
-        run_immath_one(this_cube,"mask.cube",self.mom0_7m_tp+"_tmp1",expr)
+        run_immath_two(this_cube,"mask.cube",self.mom0_7m_tp+"_tmp1",expr)
 
         # regrid
         run_importfits(
@@ -585,7 +586,7 @@ class ToolsLSTSim():
         expr = "IM0*IM1*"+str(1.222e6/bmaj/bmin/self.observed_freq**2)
 
         # convert to K
-        run_immath_one(this_cube,"mask.cube",self.mom0_lst+"_tmp1",expr)
+        run_immath_two(this_cube,"mask.cube",self.mom0_lst+"_tmp1",expr)
 
         # moment 0 creation
         os.system("rm -rf " + self.mom0_lst+"_tmp2")
@@ -594,7 +595,7 @@ class ToolsLSTSim():
             #includepix = [thres,100000],
             outfile = self.mom0_lst+"_tmp2",
             )
-        os.system("rm -rf " + self.mom0_7m_tp+"_tmp1")
+        os.system("rm -rf " + self.mom0_lst+"_tmp1")
 
         # exportfits
         run_exportfits(
