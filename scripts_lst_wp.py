@@ -544,9 +544,13 @@ class ToolsLSTSim():
         expr = "iif(IM1>0,IM0*"+str(1.222e6/bmaj/bmin/self.observed_freq**2)+",0)"
 
         # reshape mask
+        run_importfits(
+            this_cube,
+            "template.image",
+            )
         run_imregrid(
             "mask.cube",
-            this_cube,
+            "template.image",
             "mask.cube.regrid",
             axes=-1,
             )
@@ -598,9 +602,13 @@ class ToolsLSTSim():
         expr = "iif(IM1>0,IM0*"+str(1.222e6/bmaj/bmin/self.observed_freq**2)+",0)"
 
         # reshape mask
+        run_importfits(
+            this_cube,
+            "template.image",
+            )
         run_imregrid(
             "mask.cube",
-            this_cube,
+            "template.image",
             "mask.cube.regrid",
             axes=-1,
             )
