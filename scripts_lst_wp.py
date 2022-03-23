@@ -1532,6 +1532,8 @@ class ToolsLSTSim():
         4. scale rms_7m to get rms_tp
         """
 
+        print(self.dir_ready+"inputs/"+self.n1097_template_fullspec)
+
         taskname = self.modname + sys._getframe().f_code.co_name
         check_first(self.dir_ready+"inputs/"+self.n1097_template_fullspec,taskname)
 
