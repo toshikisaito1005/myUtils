@@ -475,6 +475,7 @@ class ToolsLSTSim():
         mom0_tp = "tp.mom0.fits"
         thres = 0.147 * 2.5
         os.system("rm -rf " + mom0_tp+"_tmp1")
+        print(self.dir_ready + "outputs/" + self.n1097_sdimage_fullspec.replace(".image","_"+totaltimetint+"7m.image"))
         immoments(
             imagename = self.dir_ready + "outputs/" + self.n1097_sdimage_fullspec.replace(".image","_"+totaltimetint+"7m.image"),
             includepix = [thres,100000],
