@@ -525,7 +525,7 @@ class ToolsLSTSim():
             #includepix = [thres,100000],
             outfile = self.mom0_tp+"_tmp2",
             )
-        os.system("rm -rf " + self.mom0_tp+"_tmp1")
+        #os.system("rm -rf " + self.mom0_tp+"_tmp1")
 
         # exportfits
         run_exportfits(
@@ -573,7 +573,7 @@ class ToolsLSTSim():
             #includepix = [thres,100000],
             outfile = self.mom0_7m_tp+"_tmp2",
             )
-        os.system("rm -rf " + self.mom0_7m_tp+"_tmp1")
+        #os.system("rm -rf " + self.mom0_7m_tp+"_tmp1")
 
         # exportfits
         run_exportfits(
@@ -618,7 +618,7 @@ class ToolsLSTSim():
             #includepix = [thres,100000],
             outfile = self.mom0_lst+"_tmp2",
             )
-        os.system("rm -rf " + self.mom0_lst+"_tmp1")
+        #os.system("rm -rf " + self.mom0_lst+"_tmp1")
 
         # exportfits
         run_exportfits(
