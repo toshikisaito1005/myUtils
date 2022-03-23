@@ -420,6 +420,7 @@ class ToolsLSTSim():
 
         # plot input
         mom0_input = "input.mom0.fits"
+        os.system("rm -rf " + mom0_input+"_tmp1")
         immoments(
             imagename = self.n1097_template_fullspec,
             includepix = [0,100000],
