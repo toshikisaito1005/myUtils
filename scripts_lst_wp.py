@@ -549,8 +549,9 @@ class ToolsLSTSim():
         mom0_tp = self.dir_ready + "outputs/ngc1097sim_mom0_7m+TP.fits"
         thres = 0.147 * 1.0
         os.system("rm -rf " + mom0_tp+"_tmp1")
+        print(self.dir_ready + "outputs/" + self.n1097_feather_tp_7m)
         immoments(
-            imagename = self.dir_ready + "outputs/" + self.n1097_feather_tp_7m
+            imagename = self.dir_ready + "outputs/" + self.n1097_feather_tp_7m,
             includepix = [thres,100000],
             outfile = mom0_tp+"_tmp1",
             )
