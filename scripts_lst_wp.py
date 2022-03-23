@@ -428,7 +428,7 @@ class ToolsLSTSim():
         mom0_input = self.dir_ready + "outputs/ngc1097sim_mom0_input.fits"
         os.system("rm -rf " + mom0_input+"_tmp1")
         run_roundsmooth(
-            imagename = self.dir_ready + "inputs/" + self.n1097_template_fullspec,
+            self.dir_ready + "inputs/" + self.n1097_template_fullspec,
             mom0_input+"_tmp1",
             3.0,
             inputbeam=0.001,
