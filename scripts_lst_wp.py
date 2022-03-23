@@ -156,6 +156,11 @@ class ToolsLSTSim():
         self.torus_template_file            = self._read_key("torus_template_file")
         self.check_template_file            = self._read_key("check_template_file")
 
+        self.mom0_input                     = self.dir_ready + "outputs/" + "ngc1097sim_mom0_input.fits"
+        self.mom0_tp                        = self.dir_ready + "outputs/" + "ngc1097sim_mom0_TP12m.fits"
+        self.mom0_7m_tp                     = self.dir_ready + "outputs/" + "ngc1097sim_mom0_7m+TP.fits"
+        self.mom0_lst                       = self.dir_ready + "outputs/" + "ngc1097sim_mom0_LST50m.fits"
+
     def _set_input_param(self):
         """
         """
@@ -217,18 +222,12 @@ class ToolsLSTSim():
         do_simLST_n1097sim     = False, # sim LST alone; after do_imaging_n1097sim
         do_feather             = False,
         do_tp2vis              = False, # not implemented yet
+        # postprocess
+        do_mom0_n1097sim       = False,
         # LST-connected 7m array (decomissioned)
         # unrearistic observing time due to too small FoV of 50m!
         #do_simACA_LST_n1097sim = False,
         #do_imaging_simACA_LST  = False,
-        #
-        ############
-        # checksim #
-        ############
-        tinteg_checksim        = 1,
-        do_template_checksim   = False,
-        do_simint_checksim     = False,
-        do_imaging_checksim    = False,
         #
         ############
         # torussim #
@@ -248,6 +247,14 @@ class ToolsLSTSim():
         plot_mom0              = False,
         # calc
         calc_collectingarea    = False,
+        #
+        ############
+        # checksim #
+        ############
+        tinteg_checksim        = 1,
+        do_template_checksim   = False,
+        do_simint_checksim     = False,
+        do_imaging_checksim    = False,
         ):
         """
         This method runs all the methods which will create figures in the white paper.
@@ -300,10 +307,11 @@ class ToolsLSTSim():
             self.simlst_n1097sim(lst30m_beam,tp_beam,tintegstr_7m,True)
 
         if do_feather==True:
-            print(cube_7m)
-            print(cube_tp)
             self.do_feather(cube_7m,cube_tp,self.n1097_feather_tp_7m,-1)
             self.do_feather(cube_7m,cube_lst,self.n1097_feather_lst_7m,-1)
+
+        if do_mom0_n1097sim==True:
+            self.create_mom0()
 
         #if do_simACA_LST_n1097sim==True:
         #    self.do_simaca_lst_n1097sim(tinteg_7m,tintegstr_7m)
@@ -314,43 +322,6 @@ class ToolsLSTSim():
         #        this_array="7m",
         #        this_target=this_target_connected,
         #        )
-
-        ###########################
-        # set checksim parameters #
-        ###########################
-        tinteg_ch    = str(float(tinteg_checksim))+"h"
-        tintegstr_ch = tinteg_ch.replace(".","p")
-        this_target  = self.project_check+"_"+tintegstr_ch
-        lst_beam     = str(12.979 * 115.27120 / 693.9640232)+"arcsec"
-        lst_nyquist  = str(12.979/2.0 * 115.27120 / 693.9640232)+"arcsec"
-
-        ################
-        # run checksim #
-        ################
-        if do_template_checksim==True:
-            self.prepare_template_checksim()
-
-        if do_simint_checksim==True:
-            self.sim12m_checksim(tinteg_ch,tintegstr_ch,lst_nyquist)
-
-        if do_imaging_checksim==True:
-            # stage instead of pipeline
-            msname  = self.project_check + "_12m_" + tintegstr_ch + "."+self.config_c1.split("/")[-1].split(".cfg")[0]+".noisy.ms"
-            ms_from = self.dir_ready + "ms/" + self.project_check + "_12m_" + tintegstr_ch + "/" + msname
-            dir_to  = self.dir_ready + "outputs/imaging/" + this_target + "/"
-            ms_to   = dir_to + this_target + "_12m_cont.ms"
-            os.system("rm -rf " + ms_to)
-            os.system("rm -rf " + dir_to)
-            os.makedirs(dir_to)
-            os.system("cp -r " + ms_from + " " + ms_to)
-
-            # run
-            self.phangs_pipeline_imaging(
-                this_proj=self.project_check,
-                this_array="12m",
-                this_target=this_target,
-                do_cont=True,
-                )
 
         ###########################
         # set torussim parameters #
@@ -410,6 +381,194 @@ class ToolsLSTSim():
         if calc_collectingarea==True:
             self.calc_collectingarea()
 
+        ###########################
+        # set checksim parameters #
+        ###########################
+        tinteg_ch    = str(float(tinteg_checksim))+"h"
+        tintegstr_ch = tinteg_ch.replace(".","p")
+        this_target  = self.project_check+"_"+tintegstr_ch
+        lst_beam     = str(12.979 * 115.27120 / 693.9640232)+"arcsec"
+        lst_nyquist  = str(12.979/2.0 * 115.27120 / 693.9640232)+"arcsec"
+
+        ################
+        # run checksim #
+        ################
+        if do_template_checksim==True:
+            self.prepare_template_checksim()
+
+        if do_simint_checksim==True:
+            self.sim12m_checksim(tinteg_ch,tintegstr_ch,lst_nyquist)
+
+        if do_imaging_checksim==True:
+            # stage instead of pipeline
+            msname  = self.project_check + "_12m_" + tintegstr_ch + "."+self.config_c1.split("/")[-1].split(".cfg")[0]+".noisy.ms"
+            ms_from = self.dir_ready + "ms/" + self.project_check + "_12m_" + tintegstr_ch + "/" + msname
+            dir_to  = self.dir_ready + "outputs/imaging/" + this_target + "/"
+            ms_to   = dir_to + this_target + "_12m_cont.ms"
+            os.system("rm -rf " + ms_to)
+            os.system("rm -rf " + dir_to)
+            os.makedirs(dir_to)
+            os.system("cp -r " + ms_from + " " + ms_to)
+
+            # run
+            self.phangs_pipeline_imaging(
+                this_proj=self.project_check,
+                this_array="12m",
+                this_target=this_target,
+                do_cont=True,
+                )
+
+    ###############
+    # create_mom0 #
+    ###############
+
+    def create_mom0(
+        self,
+        ):
+        """
+        """
+
+        taskname = self.modname + sys._getframe().f_code.co_name
+        check_first(self.dir_ready+"inputs/"+self.n1097_template_fullspec,taskname)
+
+        ##############
+        # plot input #
+        ##############
+        # convolve to 3.0arcsec
+        run_roundsmooth(
+            self.dir_ready+"inputs/"+self.n1097_template_fullspec,
+            self.mom0_input+"_tmp1",
+            3.0,
+            0.001,
+            )
+
+        # determine Jy/beam to K factor
+        bmaj = imhead(imagename=self.mom0_input+"_tmp1",mode="get",hdkey="beammajor")["value"]
+        bmin = imhead(imagename=self.mom0_input+"_tmp1",mode="get",hdkey="beamminor")["value"]
+        expr = "IM0*"+str(1.222e6/bmaj/bmin/self.observed_freq**2)
+
+        # moment 0 creation
+        os,system("rm -rf " + self.mom0_input+"_tmp2")
+        immoments(
+            imagename = self.mom0_input+"_tmp1",
+            includepix = [0,100000],
+            outfile = self.mom0_input+"_tmp2",
+            )
+        os,system("rm -rf " + self.mom0_input+"_tmp1")
+
+        # convert to K
+        run_immath_one(
+            self.mom0_input+"_tmp2",
+            self.mom0_input+"_tmp3",
+            expr,
+            delin=True,
+            )
+
+        # exportfits
+        run_exportfits(
+            imagename = self.mom0_input+"_tmp3",
+            fitsimage = self.mom0_input,
+            delin = True,
+            dropdeg = True,
+            dropstokes = True,
+            )
+
+        ###########
+        # plot TP #
+        ###########
+        this_cube = self.dir_ready+"outputs/"+self.n1097_sdimage_fullspec.replace(".image","_"+totaltimetint+"7m.image")
+        thres = 0.147 * 1.0
+
+        # determine Jy/beam to K factor
+        bmaj = imhead(imagename=this_cube,mode="get",hdkey="beammajor")["value"]
+        bmin = imhead(imagename=this_cube,mode="get",hdkey="beamminor")["value"]
+        expr = "IM0*"+str(1.222e6/bmaj/bmin/self.observed_freq**2)
+
+        # convert to K
+        run_immath_one(this_cube,self.mom0_tp+"_tmp1",expr)
+
+        # moment 0 creation
+        os.system("rm -rf " + self.mom0_tp+"_tmp2")
+        immoments(
+            imagename = self.mom0_tp+"_tmp1",
+            #includepix = [thres,100000],
+            outfile = self.mom0_tp+"_tmp2",
+            )
+        os.system("rm -rf " + self.mom0_tp+"_tmp1")
+
+        # exportfits
+        run_exportfits(
+            imagename = self.mom0_tp+"_tmp2",
+            fitsimage = self.mom0_tp,
+            delin = True,
+            dropdeg = True,
+            dropstokes = True,
+            )
+
+        ##############
+        # plot 7m+TP #
+        ##############
+        this_cube = self.n1097_feather_tp_7m
+        thres = 0.147 * 1.0
+
+        # determine Jy/beam to K factor
+        bmaj = imhead(imagename=this_cube,mode="get",hdkey="beammajor")["value"]
+        bmin = imhead(imagename=this_cube,mode="get",hdkey="beamminor")["value"]
+        expr = "IM0*"+str(1.222e6/bmaj/bmin/self.observed_freq**2)
+
+        # convert to K
+        run_immath_one(this_cube,self.mom0_7m_tp+"_tmp1",expr)
+
+        # moment 0 creation
+        os.system("rm -rf " + self.mom0_7m_tp+"_tmp2")
+        immoments(
+            imagename = self.mom0_7m_tp+"_tmp1",
+            #includepix = [thres,100000],
+            outfile = self.mom0_7m_tp+"_tmp2",
+            )
+        os.system("rm -rf " + self.mom0_7m_tp+"_tmp1")
+
+        # exportfits
+        run_exportfits(
+            imagename = self.mom0_7m_tp+"_tmp2",
+            fitsimage = self.mom0_7m_tp,
+            delin = True,
+            dropdeg = True,
+            dropstokes = True,
+            )
+
+        ################
+        # plot LST 50m #
+        ################
+        this_cube = self.dir_ready+"outputs/"+self.n1097_lstimage_fullspec.replace(".image","_"+totaltimetint+"7m.image")
+        thres = 0.147 * 1.0
+
+        # determine Jy/beam to K factor
+        bmaj = imhead(imagename=this_cube,mode="get",hdkey="beammajor")["value"]
+        bmin = imhead(imagename=this_cube,mode="get",hdkey="beamminor")["value"]
+        expr = "IM0*"+str(1.222e6/bmaj/bmin/self.observed_freq**2)
+
+        # convert to K
+        run_immath_one(this_cube,self.mom0_lst+"_tmp1",expr)
+
+        # moment 0 creation
+        os.system("rm -rf " + self.mom0_lst+"_tmp2")
+        immoments(
+            imagename = self.mom0_lst+"_tmp1",
+            #includepix = [thres,100000],
+            outfile = self.mom0_lst+"_tmp2",
+            )
+        os.system("rm -rf " + self.mom0_7m_tp+"_tmp1")
+
+        # exportfits
+        run_exportfits(
+            imagename = self.mom0_lst+"_tmp2",
+            fitsimage = self.mom0_lst,
+            delin = True,
+            dropdeg = True,
+            dropstokes = True,
+            )
+
     #############
     # plot_mom0 #
     #############
@@ -427,41 +586,11 @@ class ToolsLSTSim():
         ##############
         # plot input #
         ##############
-        mom0_input = self.dir_ready + "outputs/ngc1097sim_mom0_input.fits"
-        run_roundsmooth(
-            self.dir_ready + "inputs/" + self.n1097_template_fullspec,
-            mom0_input+"_tmp1",
-            3.0,
-            inputbeam=0.001,
-            )
-        bmaj = imhead(imagename=mom0_input+"_tmp1",mode="get",hdkey="beammajor")["value"]
-        bmin = imhead(imagename=mom0_input+"_tmp1",mode="get",hdkey="beamminor")["value"]
-        expr = "IM0*"+str(1.222e6/bmaj/bmin/self.observed_freq**2)
-        os,system("rm -rf " + mom0_input+"_tmp2")
-        immoments(
-            imagename = mom0_input+"_tmp1",
-            includepix = [0,100000],
-            outfile = mom0_input+"_tmp2",
-            )
-        os,system("rm -rf " + mom0_input+"_tmp1")
-        run_immath_one(
-            mom0_input+"_tmp2",
-            mom0_input+"_tmp3",
-            expr,
-            delin=True,
-            )
-        run_exportfits(
-            imagename = mom0_input+"_tmp3",
-            fitsimage = mom0_input,
-            delin = True,
-            dropdeg = True,
-            dropstokes = True,
-            )
         myfig_fits2png(
             # general
-            mom0_input,
+            self.mom0_input,
             self.outpng_mom0_input,
-            imcontour1=mom0_input,
+            imcontour1=self.mom0_input,
             imsize_as=150,
             ra_cnt="41.5763deg",
             dec_cnt="-30.2771deg",
@@ -491,34 +620,11 @@ class ToolsLSTSim():
         ###########
         # plot TP #
         ###########
-        mom0_tp = self.dir_ready + "outputs/ngc1097sim_mom0_TP12m.fits"
-        thres = 0.147 * 1.0
-        bmaj = imhead(imagename=self.dir_ready+"outputs/"+self.n1097_sdimage_fullspec.replace(".image","_"+totaltimetint+"7m.image"),mode="get",hdkey="beammajor")["value"]
-        bmin = imhead(imagename=self.dir_ready+"outputs/"+self.n1097_sdimage_fullspec.replace(".image","_"+totaltimetint+"7m.image"),mode="get",hdkey="beamminor")["value"]
-        expr = "IM0*"+str(1.222e6/bmaj/bmin/self.observed_freq**2)
-        run_immath_one(
-            self.dir_ready + "outputs/" + self.n1097_sdimage_fullspec.replace(".image","_"+totaltimetint+"7m.image"),
-            mom0_tp+"_tmp1",
-            expr,
-            )
-        immoments(
-            imagename = mom0_tp+"_tmp1",
-            #includepix = [thres,100000],
-            outfile = mom0_tp+"_tmp2",
-            )
-        os.system("rm -rf " + mom0_tp+"_tmp1")
-        run_exportfits(
-            imagename = mom0_tp+"_tmp2",
-            fitsimage = mom0_tp,
-            delin = True,
-            dropdeg = True,
-            dropstokes = True,
-            )
         myfig_fits2png(
             # general
-            mom0_tp,
+            self.mom0_tp,
             self.outpng_mom0_tp,
-            imcontour1=mom0_tp,
+            imcontour1=self.mom0_tp,
             imsize_as=150,
             ra_cnt="41.5763deg",
             dec_cnt="-30.2771deg",
@@ -548,35 +654,11 @@ class ToolsLSTSim():
         ##############
         # plot 7m+TP #
         ##############
-        mom0_tp = self.dir_ready + "outputs/ngc1097sim_mom0_7m+TP.fits"
-        thres = 0.147 * 1.0
-        os.system("rm -rf " + mom0_tp+"_tmp1")
-        bmaj = imhead(imagename=self.n1097_feather_tp_7m,mode="get",hdkey="beammajor")["value"]
-        bmin = imhead(imagename=self.n1097_feather_tp_7m,mode="get",hdkey="beamminor")["value"]
-        expr = "IM0*"+str(1.222e6/bmaj/bmin/self.observed_freq**2)
-        run_immath_one(
-            self.n1097_feather_tp_7m,
-            mom0_tp+"_tmp1",
-            expr,
-            delin=True,
-            )
-        immoments(
-            imagename = mom0_tp+"_tmp1",
-            #includepix = [thres,100000],
-            outfile = mom0_tp+"_tmp2",
-            )
-        run_exportfits(
-            imagename = mom0_tp+"_tmp2",
-            fitsimage = mom0_tp,
-            delin = True,
-            dropdeg = True,
-            dropstokes = True,
-            )
         myfig_fits2png(
             # general
-            mom0_tp,
+            self.mom0_7m_tp,
             self.outpng_mom0_tp_7m,
-            imcontour1=mom0_tp,
+            imcontour1=self.mom0_7m_tp,
             imsize_as=150,
             ra_cnt="41.5763deg",
             dec_cnt="-30.2771deg",
@@ -606,35 +688,11 @@ class ToolsLSTSim():
         ################
         # plot LST 50m #
         ################
-        mom0_tp = self.dir_ready + "outputs/ngc1097sim_mom0_LST50m.fits"
-        thres = 0.147 * 1.0
-        os.system("rm -rf " + mom0_tp+"_tmp1")
-        bmaj = imhead(imagename=self.dir_ready+"outputs/"+self.n1097_lstimage_fullspec.replace(".image","_"+totaltimetint+"7m.image"),mode="get",hdkey="beammajor")["value"]
-        bmin = imhead(imagename=self.dir_ready+"outputs/"+self.n1097_lstimage_fullspec.replace(".image","_"+totaltimetint+"7m.image"),mode="get",hdkey="beamminor")["value"]
-        expr = "IM0*"+str(1.222e6/bmaj/bmin/self.observed_freq**2)
-        run_immath_one(
-            self.dir_ready+"outputs/"+self.n1097_lstimage_fullspec.replace(".image","_"+totaltimetint+"7m.image"),
-            mom0_tp+"_tmp1",
-            expr,
-            delin=True,
-            )
-        immoments(
-            imagename = mom0_tp+"_tmp1",
-            #includepix = [thres,100000],
-            outfile = mom0_tp+"_tmp2",
-            )
-        run_exportfits(
-            imagename = mom0_tp+"_tmp2",
-            fitsimage = mom0_tp,
-            delin = True,
-            dropdeg = True,
-            dropstokes = True,
-            )
         myfig_fits2png(
             # general
-            mom0_tp,
+            self.mom0_lst,
             self.outpng_mom0_lst50m,
-            imcontour1=mom0_tp,
+            imcontour1=self.mom0_lst,
             imsize_as=150,
             ra_cnt="41.5763deg",
             dec_cnt="-30.2771deg",
