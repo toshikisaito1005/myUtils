@@ -580,6 +580,8 @@ class ToolsLSTSim():
         taskname = self.modname + sys._getframe().f_code.co_name
         check_first(self.n1097_template_fullspec,taskname)
 
+        levels_cont1 = [0.01,0.02,0.04,0.08,0.16,0.32,0.64,0.96]
+
         ##############
         # plot input #
         ##############
@@ -593,9 +595,9 @@ class ToolsLSTSim():
             dec_cnt="-30.2771deg",
             # contour 1
             unit_cont1=None,
-            levels_cont1=[0.005,0.01,0.02,0.04,0.08,0.16,0.32,0.64,0.96],
+            levels_cont1=levels_cont1,
             width_cont1=[1.0],
-            color_cont1="black",
+            color_cont1="white",
             # imshow
             set_title="Input (convolved): n1097sim [CI] mom0",
             colorlog=False,
@@ -627,9 +629,9 @@ class ToolsLSTSim():
             dec_cnt="-30.2771deg",
             # contour 1
             unit_cont1=None,
-            levels_cont1=[0.005,0.01,0.02,0.04,0.08,0.16,0.32,0.64,0.96],
+            levels_cont1=levels_cont1,
             width_cont1=[1.0],
-            color_cont1="black",
+            color_cont1="white",
             # imshow
             set_title="TP 12m: n1097sim [CI] mom0",
             colorlog=False,
@@ -661,9 +663,9 @@ class ToolsLSTSim():
             dec_cnt="-30.2771deg",
             # contour 1
             unit_cont1=None,
-            levels_cont1=[0.005,0.01,0.02,0.04,0.08,0.16,0.32,0.64,0.96],
+            levels_cont1=levels_cont1,
             width_cont1=[1.0],
-            color_cont1="black",
+            color_cont1="white",
             # imshow
             set_title="7m+TP: n1097sim [CI] mom0",
             colorlog=False,
@@ -695,9 +697,9 @@ class ToolsLSTSim():
             dec_cnt="-30.2771deg",
             # contour 1
             unit_cont1=None,
-            levels_cont1=[0.005,0.01,0.02,0.04,0.08,0.16,0.32,0.64,0.96],
+            levels_cont1=levels_cont1,
             width_cont1=[1.0],
-            color_cont1="black",
+            color_cont1="white",
             # imshow
             set_title="LST 50m: n1097sim [CI] mom0",
             colorlog=False,
