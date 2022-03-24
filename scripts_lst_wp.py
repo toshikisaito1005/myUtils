@@ -549,22 +549,22 @@ class ToolsLSTSim():
         os.system("rm -rf " + self.cube_input+"_tmp4")
         immoments(imagename=cube_input+"_tmp3",includepix=[0,100000],outfile=cube_input+"_tmp4")
         os.system("rm -rf " + self.cube_input+"_tmp3")
-        run_exportfits(imagename=self.cube_input+"_tmp3",fitsimage=self.cube_input,True,True,True)
+        run_exportfits(self.cube_input+"_tmp3",self.cube_input,True,True,True)
 
         os.system("rm -rf " + self.cube_tp+"_tmp4")
         immoments(imagename=cube_tp+"_tmp3",includepix=[0,100000],outfile=cube_tp+"_tmp4")
         os.system("rm -rf " + self.cube_tp+"_tmp3")
-        run_exportfits(imagename=self.cube_tp+"_tmp3",fitsimage=self.cube_tp,True,True,True)
+        run_exportfits(self.cube_tp+"_tmp3",self.cube_tp,True,True,True)
 
         os.system("rm -rf " + self.cube_7m_tp+"_tmp4")
         immoments(imagename=cube_7m_tp+"_tmp3",includepix=[0,100000],outfile=cube_7m_tp+"_tmp4")
         os.system("rm -rf " + self.cube_7m_tp+"_tmp3")
-        run_exportfits(imagename=self.cube_7m_tp+"_tmp3",fitsimage=self.cube_7m_tp,True,True,True)
+        run_exportfits(self.cube_7m_tp+"_tmp3",self.cube_7m_tp,True,True,True)
 
         os.system("rm -rf " + self.cube_7m_lst+"_tmp4")
         immoments(imagename=cube_7m_lst+"_tmp3",includepix=[0,100000],outfile=cube_7m_lst+"_tmp4")
         os.system("rm -rf " + self.cube_7m_lst+"_tmp3")
-        run_exportfits(imagename=self.cube_7m_lst+"_tmp3",fitsimage=self.cube_7m_lst,True,True,True)
+        run_exportfits(self.cube_7m_lst+"_tmp3",self.cube_7m_lst,True,True,True)
 
     #############
     # plot_mom0 #
