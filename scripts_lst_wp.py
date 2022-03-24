@@ -108,6 +108,7 @@ class ToolsLSTSim():
         self.project_check = "checksim"
         self.config_c1     = self.dir_keyfile + self._read_key("config_c1")
         self.config_c9     = self.dir_keyfile + self._read_key("config_c9")
+        self.config_c9_lst = self.dir_keyfile + self._read_key("config_c9_lst")
         self.config_c10    = self.dir_keyfile + self._read_key("config_c10")
         self.config_7m     = self.dir_keyfile + self._read_key("config_7m")
         self.config_lst    = self.dir_keyfile + self._read_key("config_lst")
@@ -327,9 +328,10 @@ class ToolsLSTSim():
         ###########################
         # set torussim parameters #
         ###########################
-        tinteg_12m    = str(float(tinteg_torussim))+"h"
-        tintegstr_12m = tinteg_12m.replace(".","p")
-        this_target   = self.project_torus+"_"+tintegstr_12m
+        tinteg_12m      = str(float(tinteg_torussim))+"h"
+        tintegstr_12m   = tinteg_12m.replace(".","p")
+        this_target     = self.project_torus+"_"+tintegstr_12m
+        this_target_lst = self.project_torus+"_lst_"+tintegstr_12m
 
         ################
         # run torussim #
@@ -341,6 +343,9 @@ class ToolsLSTSim():
             self.sim12m_torussim(tinteg_12m,tintegstr_12m)
 
         if do_imaging_torussim==True:
+            #############
+            # config_c9 #
+            #############
             # stage instead of pipeline
             msname  = self.project_torus + "_12m_" + tintegstr_12m + "."+self.config_c9.split("/")[-1].split(".cfg")[0]+".noisy.ms"
             ms_from = self.dir_ready + "ms/" + self.project_torus + "_12m_" + tintegstr_12m + "/" + msname
@@ -357,6 +362,29 @@ class ToolsLSTSim():
                 this_array="12m",
                 this_target=this_target,
                 do_cont=True,
+                only_dirty=True,
+                )
+
+            #################
+            # config_c9_lst #
+            #################
+            # stage instead of pipeline
+            msname  = self.project_torus + "_12m_" + tintegstr_12m + "."+self.config_c9_lst.split("/")[-1].split(".cfg")[0]+".noisy.ms"
+            ms_from = self.dir_ready + "ms/" + self.project_torus + "_12m_" + tintegstr_12m + "/" + msname
+            dir_to  = self.dir_ready + "outputs/imaging/" + this_target_lst + "/"
+            ms_to   = dir_to + this_target_lst + "_12m_cont.ms"
+            os.system("rm -rf " + ms_to)
+            os.system("rm -rf " + dir_to)
+            os.makedirs(dir_to)
+            os.system("cp -r " + ms_from + " " + ms_to)
+
+            # run
+            self.phangs_pipeline_imaging(
+                this_proj=self.project_torus,
+                this_array="12m",
+                this_target=this_target_lst,
+                do_cont=True,
+                only_dirty=True,
                 )
 
         ########
@@ -1089,6 +1117,15 @@ class ToolsLSTSim():
         run_simobserve(
             working_dir=self.dir_ready,
             template=self.torus_template_file,
+            antennalist=self.config_c9_lst,
+            project=self.project_torus+"_12m_"+totaltimetint,
+            totaltime=totaltime,
+            incenter="693.9640232GHz",
+            )
+
+        run_simobserve(
+            working_dir=self.dir_ready,
+            template=self.torus_template_file,
             antennalist=self.config_c9,
             project=self.project_torus+"_12m_"+totaltimetint,
             totaltime=totaltime,
@@ -1453,7 +1490,7 @@ class ToolsLSTSim():
     # phangs_pipeline_imaging #
     ###########################
 
-    def phangs_pipeline_imaging(self,this_proj,this_array,this_target,do_cont=False):
+    def phangs_pipeline_imaging(self,this_proj,this_array,this_target,do_cont=False,only_dirty=False):
         """
         """
 
@@ -1532,6 +1569,10 @@ class ToolsLSTSim():
                     overwrite         = False,
                     )
 
+        if only_dirty==True:
+            do_singlescale_clean = False
+        else:
+            do_singlescale_clean = True
         this_imh.loop_imaging(\
                 do_dirty_image          = True,
                 do_revert_to_dirty      = False,
@@ -1539,7 +1580,7 @@ class ToolsLSTSim():
                 do_multiscale_clean     = False,
                 do_revert_to_multiscale = False,
                 do_singlescale_mask     = False,
-                do_singlescale_clean    = True,
+                do_singlescale_clean    = do_singlescale_clean,
                 do_export_to_fits       = False,
                 extra_ext_in            = '',
                 extra_ext_out           = '',

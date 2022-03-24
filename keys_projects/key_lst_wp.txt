@@ -37,6 +37,7 @@ project_torus ,,,torussim
 project_n1097 ,,,ngc1097sim
 config_c1     ,,,alma-configuration-files/alma.cycle7.1.cfg
 config_c9     ,,,alma-configuration-files/alma.cycle7.9.cfg
+config_c9_lst ,,,alma-configuration-files/alma.cycle7.9_lst.cfg
 config_c10    ,,,alma-configuration-files/alma.cycle7.10.cfg
 config_7m     ,,,alma-configuration-files/aca.cycle7.cfg
 config_lst    ,,,alma-configuration-files/lst.cfg
