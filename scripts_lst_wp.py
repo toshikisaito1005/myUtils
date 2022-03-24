@@ -342,7 +342,7 @@ class ToolsLSTSim():
 
         if do_imaging_torussim==True:
             # stage instead of pipeline
-            msname  = self.project_torus + "_12m_" + tintegstr_12m + "."+self.config_c10.split("/")[-1].split(".cfg")[0]+".noisy.ms"
+            msname  = self.project_torus + "_12m_" + tintegstr_12m + "."+self.config_c9.split("/")[-1].split(".cfg")[0]+".noisy.ms"
             ms_from = self.dir_ready + "ms/" + self.project_torus + "_12m_" + tintegstr_12m + "/" + msname
             dir_to  = self.dir_ready + "outputs/imaging/" + this_target + "/"
             ms_to   = dir_to + this_target + "_12m_cont.ms"
