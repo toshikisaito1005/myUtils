@@ -452,6 +452,8 @@ class ToolsLSTSim():
         #################
         imhead(cube_input,mode="del",hdkey="beammajor")
         run_roundsmooth(cube_input,cube_input+"_tmp2",3.0,0.001,targetres=False)
+        imhead(cube_input+"_tmp2",mode="put",hdkey="restfreq",hdvalue=self.observed_freq)
+        imhead(cube_input+"_tmp2",mode="put",hdkey="crval3",hdvalue=self.observed_freq)
 
         ############################
         # regrid to common xy grid #
@@ -543,10 +545,9 @@ class ToolsLSTSim():
         #################
         os.system("rm -rf " + cube_input+"_tmp4")
         immoments(imagename=cube_input+"_tmp3",includepix=[0,100000],outfile=cube_input+"_tmp4")
-        #os.system("rm -rf " + cube_input+"_tmp3")
+        os.system("rm -rf " + cube_input+"_tmp3")
         run_exportfits(cube_input+"_tmp4",self.mom0_input,True,True,True)
 
-        """
         os.system("rm -rf " + cube_tp+"_tmp4")
         immoments(imagename=cube_tp+"_tmp3",includepix=[0,100000],outfile=cube_tp+"_tmp4")
         os.system("rm -rf " + cube_tp+"_tmp3")
@@ -561,7 +562,6 @@ class ToolsLSTSim():
         immoments(imagename=cube_lst+"_tmp3",includepix=[0,100000],outfile=cube_lst+"_tmp4")
         os.system("rm -rf " + cube_lst+"_tmp3")
         run_exportfits(cube_lst+"_tmp4",self.mom0_lst,True,True,True)
-        """
 
     #############
     # plot_mom0 #
