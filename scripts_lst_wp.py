@@ -452,8 +452,8 @@ class ToolsLSTSim():
         ################################################
         imhead(cube_input,mode="del",hdkey="beammajor")
         run_roundsmooth(cube_input,cube_input+"_tmp2",3.0,0.001,targetres=False)
-        imhead(cube_input+"_tmp2",mode="put",hdkey="restfreq",hdvalue=str(self.observed_freq))
-        imhead(cube_input+"_tmp2",mode="put",hdkey="crval3",hdvalue=str(self.observed_freq))
+        imhead(cube_input+"_tmp2",mode="put",hdkey="restfreq",hdvalue=str(self.observed_freq*1e9))
+        imhead(cube_input+"_tmp2",mode="put",hdkey="crval3",hdvalue=str(self.observed_freq*1e9))
 
         ############################
         # regrid to common xy grid #
