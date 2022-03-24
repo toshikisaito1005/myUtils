@@ -450,7 +450,7 @@ class ToolsLSTSim():
         #################
         # convolve beam #
         #################
-        run_roundsmooth(cube_input,self.mom0_input+"_tmp0",3.0,0.001)
+        run_roundsmooth(cube_input,cube_input+"_tmp1",3.0,0.001)
 
         ############################
         # regrid to common xy grid #
@@ -459,33 +459,25 @@ class ToolsLSTSim():
         imhead("xytemplate.image",mode="del",hdkey="beamminor")
         imhead("xytemplate.image",mode="del",hdkey="beammajor")
 
+        run_imregrid(cube_tp,"xytemplate.image",cube_tp+"_tmp1",axes=[0,1])
+        run_imregrid(cube_7m_tp,"xytemplate.image",cube_7m_tp+"_tmp1",axes=[0,1])
+        run_imregrid(cube_7m_lst,"xytemplate.image",cube_7m_lst+"_tmp1",axes=[0,1])
+
+        ###########
+        # masking #
+        ###########
+        run_immath_one("xytemplate.image","mask.image","iif(IM0==0,0,1)",delin=True)
+        run_immath_two(cube_input+"_tmp1","mask.cube",cube_input+"_tmp2","iif(IM1>0,IM0,0)")
+        run_immath_two(cube_tp+"_tmp1","mask.cube",cube_tp+"_tmp2","iif(IM1>0,IM0,0)")
+        run_immath_two(cube_7m_tp+"_tmp1","mask.cube",cube_7m_tp+"_tmp2","iif(IM1>0,IM0,0)")
+        run_immath_two(cube_7m_lst+"_tmp1","mask.cube",cube_7m_lst+"_tmp2","iif(IM1>0,IM0,0)")
+
+
+
         #bmaj = imhead(cube_tp,mode="get",hdkey="beammajor")["value"]
         #bmin = imhead(cube_tp,mode="get",hdkey="beamminor")["value"]
-        #bpa  = imhead(cube_tp,mode="get",hdkey="beampa")["value"]
-        #imhead(cube_tp+"_tmp1",mode="add",hdkey="beammajor",hdvalue=str(bmaj)+"arcsec")
-        #imhead(cube_tp+"_tmp1",mode="add",hdkey="beamminor",hdvalue=str(bmin)+"arcsec")
-        #imhead(cube_tp+"_tmp1",mode="add",hdkey="beampa",hdvalue=str(bpa)+"degree")
-        run_imregrid(cube_tp,"xytemplate.image",cube_tp+"_tmp1",axes=[0,1])
-
-
 
         """
-        ####################
-        # create mask cube #
-        ####################
-        # convolve to 14.0arcsec
-        run_roundsmooth(
-            self.dir_ready+"outputs/"+self.n1097_sdimage_fullspec.replace(".image","_"+totaltimetint+"7m.image"),
-            "mask.cube_tmp1",
-            14.0,
-            )
-        run_immath_one(
-            "mask.cube_tmp1",
-            "mask.cube",
-            "iif(IM0>0.3,1,0)",
-            delin=True,
-            )
-
         ##############
         # plot input #
         ##############
