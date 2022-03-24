@@ -519,28 +519,28 @@ class ToolsLSTSim():
         bmaj = imhead(imagename=cube_input+"_tmp2",mode="get",hdkey="beammajor")["value"]
         bmin = imhead(imagename=cube_input+"_tmp2",mode="get",hdkey="beamminor")["value"]
         expr = "IM0*"+str(1.222e6/bmaj/bmin/self.observed_freq**2)
-        run_immath_one(cube_input+"_tmp2",cube_input+"_tmp3",expr)#,delin=True)
+        run_immath_one(cube_input+"_tmp2",cube_input+"_tmp3",expr,delin=True)
         imhead(cube_input+"_tmp3",mode="del",hdkey="bunit")
         imhead(cube_input+"_tmp3",mode="add",hdkey="bunit",hdvalue="K")
 
         bmaj = imhead(imagename=cube_tp+"_tmp2",mode="get",hdkey="beammajor")["value"]
         bmin = imhead(imagename=cube_tp+"_tmp2",mode="get",hdkey="beamminor")["value"]
         expr = "IM0*"+str(1.222e6/bmaj/bmin/self.observed_freq**2)
-        run_immath_one(cube_tp+"_tmp2",cube_tp+"_tmp3",expr)#,delin=True)
+        run_immath_one(cube_tp+"_tmp2",cube_tp+"_tmp3",expr,delin=True)
         imhead(cube_tp+"_tmp3",mode="del",hdkey="bunit")
         imhead(cube_tp+"_tmp3",mode="add",hdkey="bunit",hdvalue="K")
 
         bmaj = imhead(imagename=cube_7m_tp+"_tmp2",mode="get",hdkey="beammajor")["value"]
         bmin = imhead(imagename=cube_7m_tp+"_tmp2",mode="get",hdkey="beamminor")["value"]
         expr = "IM0*"+str(1.222e6/bmaj/bmin/self.observed_freq**2)
-        run_immath_one(cube_7m_tp+"_tmp2",cube_7m_tp+"_tmp3",expr)#,delin=True)
+        run_immath_one(cube_7m_tp+"_tmp2",cube_7m_tp+"_tmp3",expr,delin=True)
         imhead(cube_7m_tp+"_tmp3",mode="del",hdkey="bunit")
         imhead(cube_7m_tp+"_tmp3",mode="add",hdkey="bunit",hdvalue="K")
 
         bmaj = imhead(imagename=cube_lst+"_tmp2",mode="get",hdkey="beammajor")["value"]
         bmin = imhead(imagename=cube_lst+"_tmp2",mode="get",hdkey="beamminor")["value"]
         expr = "IM0*"+str(1.222e6/bmaj/bmin/self.observed_freq**2)
-        run_immath_one(cube_lst+"_tmp2",cube_lst+"_tmp3",expr)#,delin=True)
+        run_immath_one(cube_lst+"_tmp2",cube_lst+"_tmp3",expr,delin=True)
         imhead(cube_lst+"_tmp3",mode="del",hdkey="bunit")
         imhead(cube_lst+"_tmp3",mode="add",hdkey="bunit",hdvalue="K")
 
@@ -554,17 +554,17 @@ class ToolsLSTSim():
 
         os.system("rm -rf " + cube_tp+"_tmp4")
         immoments(imagename=cube_tp+"_tmp3",includepix=[0,100000],outfile=cube_tp+"_tmp4")
-        os.system("rm -rf " + cube_tp+"_tmp3")
+        #os.system("rm -rf " + cube_tp+"_tmp3")
         run_exportfits(cube_tp+"_tmp4",self.mom0_tp,True,True,True)
 
         os.system("rm -rf " + cube_7m_tp+"_tmp4")
         immoments(imagename=cube_7m_tp+"_tmp3",includepix=[0,100000],outfile=cube_7m_tp+"_tmp4")
-        os.system("rm -rf " + cube_7m_tp+"_tmp3")
+        #os.system("rm -rf " + cube_7m_tp+"_tmp3")
         run_exportfits(cube_7m_tp+"_tmp4",self.mom0_7m_tp,True,True,True)
 
         os.system("rm -rf " + cube_lst+"_tmp4")
         immoments(imagename=cube_lst+"_tmp3",includepix=[0,100000],outfile=cube_lst+"_tmp4")
-        os.system("rm -rf " + cube_lst+"_tmp3")
+        #os.system("rm -rf " + cube_lst+"_tmp3")
         run_exportfits(cube_lst+"_tmp4",self.mom0_lst,True,True,True)
 
     #############
