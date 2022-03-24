@@ -451,7 +451,7 @@ class ToolsLSTSim():
         # convolve beam and regrid velocity resolution #
         ################################################
         imhead(cube_input,mode="del",hdkey="beammajor")
-        run_roundsmooth(cube_input,cube_input+"_tmp2",3.0,0.001,targetres=False)
+        run_roundsmooth(cube_input,cube_input+"_tmp2",3.5,0.001,targetres=False)
         imhead(cube_input+"_tmp2",mode="put",hdkey="restfreq",hdvalue=str(self.observed_freq*1e9))
         imhead(cube_input+"_tmp2",mode="put",hdkey="crval3",hdvalue=str(self.observed_freq*1e9))
 
@@ -462,9 +462,13 @@ class ToolsLSTSim():
         imhead("xytemplate.image",mode="del",hdkey="beamminor")
         imhead("xytemplate.image",mode="del",hdkey="beammajor")
 
-        run_imregrid(cube_tp,"xytemplate.image",cube_tp+"_tmp1",axes=[0,1])
-        run_imregrid(cube_7m_tp,"xytemplate.image",cube_7m_tp+"_tmp1",axes=[0,1])
-        run_imregrid(cube_lst,"xytemplate.image",cube_lst+"_tmp1",axes=[0,1])
+        run_imregrid(cube_tp,"xytemplate.image",cube_tp+"_tmp0",axes=[0,1])
+        run_imregrid(cube_7m_tp,"xytemplate.image",cube_7m_tp+"_tmp0",axes=[0,1])
+        run_imregrid(cube_lst,"xytemplate.image",cube_lst+"_tmp0",axes=[0,1])
+
+        run_roundsmooth(cube_tp+"_tmp0",cube_tp+"_tmp1",3.5,delin=True)
+        run_roundsmooth(cube_7m_tp+"_tmp0",cube_7m_tp+"_tmp1",3.5,delin=True)
+        run_roundsmooth(cube_lst+"_tmp0",cube_lst+"_tmp1",3.5,delin=True)
 
         ###########
         # masking #
@@ -640,7 +644,7 @@ class ToolsLSTSim():
             label_scalebar=None,
             comment=None,
             # imshow colorbar
-            clim=[0,120],
+            clim=None,
             label_cbar="(K km s$^{-1}$)",
             # annotation
             numann="lst_n1097sim",
