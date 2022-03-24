@@ -545,22 +545,22 @@ class ToolsLSTSim():
         #################
         os.system("rm -rf " + cube_input+"_tmp4")
         immoments(imagename=cube_input+"_tmp3",includepix=[0,100000],outfile=cube_input+"_tmp4")
-        #os.system("rm -rf " + cube_input+"_tmp3")
+        os.system("rm -rf " + cube_input+"_tmp3")
         run_exportfits(cube_input+"_tmp4",self.mom0_input,True,True,True)
 
         os.system("rm -rf " + cube_tp+"_tmp4")
         immoments(imagename=cube_tp+"_tmp3",includepix=[0,100000],outfile=cube_tp+"_tmp4")
-        #os.system("rm -rf " + cube_tp+"_tmp3")
+        os.system("rm -rf " + cube_tp+"_tmp3")
         run_exportfits(cube_tp+"_tmp4",self.mom0_tp,True,True,True)
 
         os.system("rm -rf " + cube_7m_tp+"_tmp4")
         immoments(imagename=cube_7m_tp+"_tmp3",includepix=[0,100000],outfile=cube_7m_tp+"_tmp4")
-        #os.system("rm -rf " + cube_7m_tp+"_tmp3")
+        os.system("rm -rf " + cube_7m_tp+"_tmp3")
         run_exportfits(cube_7m_tp+"_tmp4",self.mom0_7m_tp,True,True,True)
 
         os.system("rm -rf " + cube_lst+"_tmp4")
         immoments(imagename=cube_lst+"_tmp3",includepix=[0,100000],outfile=cube_lst+"_tmp4")
-        #os.system("rm -rf " + cube_lst+"_tmp3")
+        os.system("rm -rf " + cube_lst+"_tmp3")
         run_exportfits(cube_lst+"_tmp4",self.mom0_lst,True,True,True)
 
     #############
@@ -606,7 +606,7 @@ class ToolsLSTSim():
             label_scalebar=None,
             comment=None,
             # imshow colorbar
-            clim=None,
+            clim=[0,120],
             label_cbar="(K km s$^{-1}$)",
             # annotation
             numann="lst_n1097sim",
@@ -640,7 +640,7 @@ class ToolsLSTSim():
             label_scalebar=None,
             comment=None,
             # imshow colorbar
-            clim=None,
+            clim=[0,120],
             label_cbar="(K km s$^{-1}$)",
             # annotation
             numann="lst_n1097sim",
@@ -674,7 +674,7 @@ class ToolsLSTSim():
             label_scalebar=None,
             comment=None,
             # imshow colorbar
-            clim=None,
+            clim=[0,120],
             label_cbar="(K km s$^{-1}$)",
             # annotation
             numann="lst_n1097sim",
@@ -708,7 +708,7 @@ class ToolsLSTSim():
             label_scalebar=None,
             comment=None,
             # imshow colorbar
-            clim=None,
+            clim=[0,120],
             label_cbar="(K km s$^{-1}$)",
             # annotation
             numann="lst_n1097sim",
