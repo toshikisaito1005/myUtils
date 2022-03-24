@@ -512,10 +512,36 @@ class ToolsLSTSim():
 
         os.system("rm -rf mask.image mask.image2 this_temp.image xytemplate.image")
 
+        #####################
+        # convert to Kelvin #
+        #####################
+        bmaj = imhead(imagename=cube_input+"_tmp2",mode="get",hdkey="beammajor")["value"]
+        bmin = imhead(imagename=cube_input+"_tmp2",mode="get",hdkey="beamminor")["value"]
+        expr = "IM0*"+str(1.222e6/bmaj/bmin/self.observed_freq**2)
+        run_immath_one(cube_input+"_tmp2",cube_input+"_tmp3",expr,delin=True)
+        imhead(cube_input+"_tmp3",mode="del",hdkey="bunit")
+        imhead(cube_input+"_tmp3",mode="add",hdkey="bunit",hdvalue="K")
 
+        bmaj = imhead(imagename=cube_tp+"_tmp2",mode="get",hdkey="beammajor")["value"]
+        bmin = imhead(imagename=cube_tp+"_tmp2",mode="get",hdkey="beamminor")["value"]
+        expr = "IM0*"+str(1.222e6/bmaj/bmin/self.observed_freq**2)
+        run_immath_one(cube_tp+"_tmp2",cube_tp+"_tmp3",expr,delin=True)
+        imhead(cube_tp+"_tmp3",mode="del",hdkey="bunit")
+        imhead(cube_tp+"_tmp3",mode="add",hdkey="bunit",hdvalue="K")
 
-        #bmaj = imhead(cube_tp,mode="get",hdkey="beammajor")["value"]
-        #bmin = imhead(cube_tp,mode="get",hdkey="beamminor")["value"]
+        bmaj = imhead(imagename=cube_7m_tp+"_tmp2",mode="get",hdkey="beammajor")["value"]
+        bmin = imhead(imagename=cube_7m_tp+"_tmp2",mode="get",hdkey="beamminor")["value"]
+        expr = "IM0*"+str(1.222e6/bmaj/bmin/self.observed_freq**2)
+        run_immath_one(cube_7m_tp+"_tmp2",cube_7m_tp+"_tmp3",expr,delin=True)
+        imhead(cube_7m_tp+"_tmp3",mode="del",hdkey="bunit")
+        imhead(cube_7m_tp+"_tmp3",mode="add",hdkey="bunit",hdvalue="K")
+
+        bmaj = imhead(imagename=cube_7m_lst+"_tmp2",mode="get",hdkey="beammajor")["value"]
+        bmin = imhead(imagename=cube_7m_lst+"_tmp2",mode="get",hdkey="beamminor")["value"]
+        expr = "IM0*"+str(1.222e6/bmaj/bmin/self.observed_freq**2)
+        run_immath_one(cube_7m_lst+"_tmp2",cube_7m_lst+"_tmp3",expr,delin=True)
+        imhead(cube_7m_lst+"_tmp3",mode="del",hdkey="bunit")
+        imhead(cube_7m_lst+"_tmp3",mode="add",hdkey="bunit",hdvalue="K")
 
         """
         ##############
