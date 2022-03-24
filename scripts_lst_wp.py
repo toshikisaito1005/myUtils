@@ -463,9 +463,9 @@ class ToolsLSTSim():
         bmin = imhead(cube_tp,mode="get",hdkey="beamminor")["value"]
         bpa  = imhead(cube_tp,mode="get",hdkey="beampa")["value"]
         run_imregrid(cube_tp,"xytemplate.image",cube_tp+"_tmp1",axes=[0,1])
-        imhead(cube_tp+"_tmp1",mode="add",hdkey="beammajor",hdkey=str(bmaj)+"arcsec")
-        imhead(cube_tp+"_tmp1",mode="add",hdkey="beamminor",hdkey=str(bmin)+"arcsec")
-        imhead(cube_tp+"_tmp1",mode="add",hdkey="beampa",hdkey=str(bpa)+"degree")
+        imhead(cube_tp+"_tmp1",mode="add",hdkey="beammajor",hdvalue=str(bmaj)+"arcsec")
+        imhead(cube_tp+"_tmp1",mode="add",hdkey="beamminor",hdvalue=str(bmin)+"arcsec")
+        imhead(cube_tp+"_tmp1",mode="add",hdkey="beampa",hdvalue=str(bpa)+"degree")
 
 
 
