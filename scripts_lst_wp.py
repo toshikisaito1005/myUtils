@@ -468,13 +468,19 @@ class ToolsLSTSim():
         ###########
         run_immath_one(cube_tp+"_tmp1","mask.image","iif(IM0>=0.3,1,0)",delin=True)
 
-        run_imregrid("mask.image",cube_tp+"_tmp1","mask.image2",axes=[2])
+        os.system("rm -rf this_temp.image")
+        os.system("cp -r " + cube_tp+"_tmp1 this_temp.image")
+        run_imregrid("mask.image","this_temp.image","mask.image2",axes=[2])
         run_immath_two(cube_tp+"_tmp1","mask.image2",cube_tp+"_tmp2","iif(IM1>0,IM0,0)")
 
-        run_imregrid("mask.image",cube_7m_tp+"_tmp1","mask.image2",axes=[2])
+        os.system("rm -rf this_temp.image")
+        os.system("cp -r " + cube_7m_tp+"_tmp1 this_temp.image")
+        run_imregrid("mask.image","this_temp.image","mask.image2",axes=[2])
         run_immath_two(cube_7m_tp+"_tmp1","mask.image2",cube_7m_tp+"_tmp2","iif(IM1>0,IM0,0)")
 
-        run_imregrid("mask.image",cube_7m_lst+"_tmp1","mask.image2",axes=[2])
+        os.system("rm -rf this_temp.image")
+        os.system("cp -r " + cube_7m_lst+"_tmp1 this_temp.image")
+        run_imregrid("mask.image","this_temp.image","mask.image2",axes=[2])
         run_immath_two(cube_7m_lst+"_tmp1","mask.image2",cube_7m_lst+"_tmp2","iif(IM1>0,IM0,0)")
 
 
