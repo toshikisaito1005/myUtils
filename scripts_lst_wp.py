@@ -471,17 +471,19 @@ class ToolsLSTSim():
         os.system("rm -rf this_temp.image")
         os.system("cp -r " + cube_tp+"_tmp1 this_temp.image")
         run_imregrid("mask.image","this_temp.image","mask.image2",axes=[2])
-        run_immath_two(cube_tp+"_tmp1","mask.image2",cube_tp+"_tmp2","iif(IM1>0,IM0,0)")
+        run_immath_two(cube_tp+"_tmp1","mask.image2",cube_tp+"_tmp2","iif(IM1>0,IM0,0)",delin=True)
 
         os.system("rm -rf this_temp.image")
         os.system("cp -r " + cube_7m_tp+"_tmp1 this_temp.image")
         run_imregrid("mask.image","this_temp.image","mask.image2",axes=[2])
-        run_immath_two(cube_7m_tp+"_tmp1","mask.image2",cube_7m_tp+"_tmp2","iif(IM1>0,IM0,0)")
+        run_immath_two(cube_7m_tp+"_tmp1","mask.image2",cube_7m_tp+"_tmp2","iif(IM1>0,IM0,0)",delin=True)
 
         os.system("rm -rf this_temp.image")
         os.system("cp -r " + cube_7m_lst+"_tmp1 this_temp.image")
         run_imregrid("mask.image","this_temp.image","mask.image2",axes=[2])
-        run_immath_two(cube_7m_lst+"_tmp1","mask.image2",cube_7m_lst+"_tmp2","iif(IM1>0,IM0,0)")
+        run_immath_two(cube_7m_lst+"_tmp1","mask.image2",cube_7m_lst+"_tmp2","iif(IM1>0,IM0,0)",delin=True)
+
+        os.system("rm -rf mask.image mask.image2 this_temp.image xytemplate.image")
 
 
 
