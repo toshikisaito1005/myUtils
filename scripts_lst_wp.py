@@ -594,7 +594,7 @@ class ToolsLSTSim():
         os.system("rm -rf " + imagename + "_tmp1")
 
         run_immath_one(imagename+"_tmp2",imagename+"_tmp3",str(rms)+"*"+chanwidth+"*sqrt(IM0/"+chanwidth+")",delin=True)
-        run_exportfits(imagename+"_tmp3",self.outfile,True,True,True)
+        run_exportfits(imagename+"_tmp3",outfile,True,True,True)
 
     #############
     # plot_mom0 #
