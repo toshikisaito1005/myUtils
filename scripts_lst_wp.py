@@ -543,182 +543,28 @@ class ToolsLSTSim():
         imhead(cube_7m_lst+"_tmp3",mode="del",hdkey="bunit")
         imhead(cube_7m_lst+"_tmp3",mode="add",hdkey="bunit",hdvalue="K")
 
-        """
-        ##############
-        # plot input #
-        ##############
-        print("##############")
-        print("# mom0 input #")
-        print("##############")
-        # convolve to 3.0arcsec
+        #################
+        # mom0 creation #
+        #################
+        os.system("rm -rf " + self.cube_input+"_tmp4")
+        immoments(imagename=cube_input+"_tmp3",includepix=[0,100000],outfile=cube_input+"_tmp4")
+        os.system("rm -rf " + self.cube_input+"_tmp3")
+        run_exportfits(imagename=self.cube_input+"_tmp3",fitsimage=self.cube_input,True,True,True)
 
-        # determine Jy/beam to K factor
-        bmaj = imhead(imagename=self.mom0_input+"_tmp1",mode="get",hdkey="beammajor")["value"]
-        bmin = imhead(imagename=self.mom0_input+"_tmp1",mode="get",hdkey="beamminor")["value"]
-        expr = "IM0*"+str(1.222e6/bmaj/bmin/self.observed_freq**2)
+        os.system("rm -rf " + self.cube_tp+"_tmp4")
+        immoments(imagename=cube_tp+"_tmp3",includepix=[0,100000],outfile=cube_tp+"_tmp4")
+        os.system("rm -rf " + self.cube_tp+"_tmp3")
+        run_exportfits(imagename=self.cube_tp+"_tmp3",fitsimage=self.cube_tp,True,True,True)
 
-        # convert to K
-        run_immath_one(
-            self.mom0_input+"_tmp1",
-            self.mom0_input+"_tmp2",
-            expr,
-            delin=True,
-            )
+        os.system("rm -rf " + self.cube_7m_tp+"_tmp4")
+        immoments(imagename=cube_7m_tp+"_tmp3",includepix=[0,100000],outfile=cube_7m_tp+"_tmp4")
+        os.system("rm -rf " + self.cube_7m_tp+"_tmp3")
+        run_exportfits(imagename=self.cube_7m_tp+"_tmp3",fitsimage=self.cube_7m_tp,True,True,True)
 
-        # moment 0 creation
-        os.system("rm -rf " + self.mom0_input+"_tmp3")
-        immoments(
-            imagename = self.mom0_input+"_tmp2",
-            includepix = [0,100000],
-            outfile = self.mom0_input+"_tmp3",
-            )
-        os.system("rm -rf " + self.mom0_input+"_tmp2")
-
-        # exportfits
-        run_exportfits(
-            imagename = self.mom0_input+"_tmp3",
-            fitsimage = self.mom0_input,
-            delin = True,
-            dropdeg = True,
-            dropstokes = True,
-            )
-
-        ###########
-        # plot TP #
-        ###########
-        print("###############")
-        print("# mom0 TP 12m #")
-        print("###############")
-        this_cube = self.dir_ready+"outputs/"+self.n1097_sdimage_fullspec.replace(".image","_"+totaltimetint+"7m.image")
-        thres = 0.147 * 1.0
-
-        # determine Jy/beam to K factor
-        bmaj = imhead(imagename=this_cube,mode="get",hdkey="beammajor")["value"]
-        bmin = imhead(imagename=this_cube,mode="get",hdkey="beamminor")["value"]
-        expr = "iif(IM1>0.1,IM0*"+str(1.222e6/bmaj/bmin/self.observed_freq**2)+",0)"
-
-        # reshape mask
-        run_imregrid(
-            "mask.cube",
-            this_cube,
-            "mask.cube.regrid",
-            axes=[-1],
-            )
-
-        # convert to K
-        run_immath_two(this_cube,"mask.cube.regrid",self.mom0_tp+"_tmp1",expr)
-
-        # moment 0 creation
-        os.system("rm -rf " + self.mom0_tp+"_tmp2")
-        immoments(
-            imagename = self.mom0_tp+"_tmp1",
-            includepix = [0,100000],
-            outfile = self.mom0_tp+"_tmp2",
-            )
-        #os.system("rm -rf " + self.mom0_tp+"_tmp1")
-
-        # exportfits
-        run_exportfits(
-            imagename = self.mom0_tp+"_tmp2",
-            fitsimage = self.mom0_tp,
-            delin = True,
-            dropdeg = True,
-            dropstokes = True,
-            )
-
-        ##############
-        # plot 7m+TP #
-        ##############
-        print("##############")
-        print("# mom0 7m+TP #")
-        print("##############")
-        this_cube = self.n1097_feather_tp_7m
-        thres = 0.147 * 1.0
-
-        # determine Jy/beam to K factor
-        bmaj = imhead(imagename=this_cube,mode="get",hdkey="beammajor")["value"]
-        bmin = imhead(imagename=this_cube,mode="get",hdkey="beamminor")["value"]
-        expr = "iif(IM1>0.1,IM0*"+str(1.222e6/bmaj/bmin/self.observed_freq**2)+",0)"
-
-        # reshape mask
-        run_importfits(
-            this_cube,
-            "template.image",
-            )
-        run_imregrid(
-            "mask.cube",
-            "template.image",
-            "mask.cube.regrid",
-            axes=-1,
-            )
-        os.system("rm -rf template.image")
-
-        # convert to K
-        run_immath_two(this_cube,"mask.cube.regrid",self.mom0_7m_tp+"_tmp1",expr)
-
-        # moment 0 creation
-        os.system("rm -rf " + self.mom0_7m_tp+"_tmp2")
-        immoments(
-            imagename = self.mom0_7m_tp+"_tmp1",
-            includepix = [0,100000],
-            outfile = self.mom0_7m_tp+"_tmp2",
-            )
-        #os.system("rm -rf " + self.mom0_7m_tp+"_tmp1")
-
-        # exportfits
-        run_exportfits(
-            imagename = self.mom0_7m_tp+"_tmp2",
-            fitsimage = self.mom0_7m_tp,
-            delin = True,
-            dropdeg = True,
-            dropstokes = True,
-            )
-
-        ################
-        # plot LST 50m #
-        ################
-        print("################")
-        print("# mom0 LST 50m #")
-        print("################")
-        this_cube = self.dir_ready+"outputs/"+self.n1097_lstimage_fullspec.replace(".image","_"+totaltimetint+"7m.image")
-        thres = 0.147 * 1.0
-
-        # determine Jy/beam to K factor
-        bmaj = imhead(imagename=this_cube,mode="get",hdkey="beammajor")["value"]
-        bmin = imhead(imagename=this_cube,mode="get",hdkey="beamminor")["value"]
-        expr = "iif(IM1>0.1,IM0*"+str(1.222e6/bmaj/bmin/self.observed_freq**2)+",0)"
-
-        # reshape mask
-        os.system("cp -r "+this_cube+" template.image")
-        run_imregrid(
-            "mask.cube",
-            "template.image",
-            "mask.cube.regrid",
-            axes=-1,
-            )
-        os.system("rm -rf template.image")
-
-        # convert to K
-        run_immath_two(this_cube,"mask.cube.regrid",self.mom0_lst+"_tmp1",expr)
-
-        # moment 0 creation
-        os.system("rm -rf " + self.mom0_lst+"_tmp2")
-        immoments(
-            imagename = self.mom0_lst+"_tmp1",
-            includepix = [0,100000],
-            outfile = self.mom0_lst+"_tmp2",
-            )
-        #os.system("rm -rf " + self.mom0_lst+"_tmp1")
-
-        # exportfits
-        run_exportfits(
-            imagename = self.mom0_lst+"_tmp2",
-            fitsimage = self.mom0_lst,
-            delin = True,
-            dropdeg = True,
-            dropstokes = True,
-            )
-        """
+        os.system("rm -rf " + self.cube_7m_lst+"_tmp4")
+        immoments(imagename=cube_7m_lst+"_tmp3",includepix=[0,100000],outfile=cube_7m_lst+"_tmp4")
+        os.system("rm -rf " + self.cube_7m_lst+"_tmp3")
+        run_exportfits(imagename=self.cube_7m_lst+"_tmp3",fitsimage=self.cube_7m_lst,True,True,True)
 
     #############
     # plot_mom0 #
