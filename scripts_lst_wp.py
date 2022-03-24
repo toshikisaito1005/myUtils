@@ -469,6 +469,7 @@ class ToolsLSTSim():
         ###########
         run_immath_one(cube_tp+"_tmp1","mask.image","iif(IM0>=0.3,1,0)")
 
+        """
         bmaj = imhead(cube_tp+"_tmp1",mode="get",hdkey="beammajor")["value"]
         bmin = imhead(cube_tp+"_tmp1",mode="get",hdkey="beamminor")["value"]
         bpa  = imhead(cube_tp+"_tmp1",mode="get",hdkey="beampa")["value"]
@@ -476,7 +477,6 @@ class ToolsLSTSim():
         os.system("cp -r " + cube_tp+"_tmp1 this_temp.image")
         run_imregrid("mask.image","this_temp.image","mask.image2",axes=[2])
         run_immath_two(cube_tp+"_tmp1","mask.image2",cube_tp+"_tmp2","iif(IM1>0,IM0,0)",delin=True)
-        """
         imhead(cube_tp+"_tmp2",mode="del",hdkey="beammajor")
         imhead(cube_tp+"_tmp2",mode="del",hdkey="beamminor")
         imhead(cube_tp+"_tmp2",mode="del",hdkey="beampa")
