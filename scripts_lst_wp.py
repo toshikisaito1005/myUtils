@@ -466,7 +466,7 @@ class ToolsLSTSim():
         ###########
         # masking #
         ###########
-        run_immath_one(cube_tp+"_tmp1","mask.image","iif(IM0>=0.3,1,0)",delin=True)
+        run_immath_one(cube_tp+"_tmp1","mask.image","iif(IM0>=0.3,1,0)")
 
         os.system("rm -rf this_temp.image")
         os.system("cp -r " + cube_tp+"_tmp1 this_temp.image")
