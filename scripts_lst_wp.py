@@ -554,18 +554,46 @@ class ToolsLSTSim():
 
         os.system("rm -rf " + cube_tp+"_tmp4")
         immoments(imagename=cube_tp+"_tmp3",includepix=[0,100000],outfile=cube_tp+"_tmp4")
+        rms=measure_rms(cube_tp+"_tmp3",snr=3.0)
+        self._immoments_err(cube_tp+"_tmp3",,self.mom0_tp.replace(".fits","_err.fits"))
         os.system("rm -rf " + cube_tp+"_tmp3")
         run_exportfits(cube_tp+"_tmp4",self.mom0_tp,True,True,True)
 
         os.system("rm -rf " + cube_7m_tp+"_tmp4")
         immoments(imagename=cube_7m_tp+"_tmp3",includepix=[0,100000],outfile=cube_7m_tp+"_tmp4")
+        rms=measure_rms(cube_7m_tp+"_tmp3",snr=3.0)
+        self._immoments_err(cube_tp+"_tmp3",,self.mom0_7m_tp.replace(".fits","_err.fits"))
         os.system("rm -rf " + cube_7m_tp+"_tmp3")
         run_exportfits(cube_7m_tp+"_tmp4",self.mom0_7m_tp,True,True,True)
 
         os.system("rm -rf " + cube_lst+"_tmp4")
         immoments(imagename=cube_lst+"_tmp3",includepix=[0,100000],outfile=cube_lst+"_tmp4")
+        rms=measure_rms(cube_lst+"_tmp3",snr=3.0)
+        self._immoments_err(cube_lst+"_tmp3",,self.mom0_lst.replace(".fits","_err.fits"))
         os.system("rm -rf " + cube_lst+"_tmp3")
         run_exportfits(cube_lst+"_tmp4",self.mom0_lst,True,True,True)
+
+    ##################
+    # _immoments_err #
+    ##################
+
+    def _immoments_err(
+        self,
+        imagename,
+        rms,
+        outfile,
+        ):
+        """
+        """
+
+        run_immath_one(imagename,imagename+"_tmp1","iif(IM0==0,0,1)",delin=False)
+        immoments(imagename=imagename+"_tmp1",moments=[0],outfile=imagename+"_tmp2")
+        os.system("rm -fr " + imagename + "_tmp1")
+        data = imval(imagename+"_tmp2")["coords"][:,vdim]
+        restfreq = imhead(imagename+"_tmp2",mode="list")["restfreq"][0]
+        chanwidth = str(np.round(abs(data[1]-data[0])/restfreq * 299792.458, 2))
+        run_immath_one(imagename+"_tmp2",imagename+"_tmp3",str(rms)+"*"+chanwidth+"*sqrt(IM0/"+chanwidth+")",delin=True)
+        run_exportfits(imagename+"_tmp3",self.outfile,True,True,True)
 
     #############
     # plot_mom0 #
