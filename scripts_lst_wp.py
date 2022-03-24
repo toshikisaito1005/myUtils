@@ -433,6 +433,38 @@ class ToolsLSTSim():
         taskname = self.modname + sys._getframe().f_code.co_name
         check_first(self.dir_ready+"inputs/"+self.n1097_template_fullspec,taskname)
 
+        ################
+        # define input #
+        ################
+        cube_input  = self.dir_ready+"inputs/"+self.n1097_template_fullspec
+        cube_tp     = self.dir_ready+"outputs/"+self.n1097_sdimage_fullspec.replace(".image","_"+totaltimetint+"7m.image")
+        cube_7m_tp  = self.n1097_feather_tp_7m
+        cube_7m_lst = self.dir_ready+"outputs/"+self.n1097_lstimage_fullspec.replace(".image","_"+totaltimetint+"7m.image")
+
+        ##############
+        # importfits #
+        ##############
+        run_importfits(cube_7m_tp,cube_7m_tp.replace(".fits",".image"))
+        cube_7m_tp = cube_7m_tp.replace(".fits",".image")
+
+        #################
+        # convolve beam #
+        #################
+        run_roundsmooth(cube_input,self.mom0_input+"_tmp0",3.0,0.001)
+
+        ############################
+        # regrid to common xy grid #
+        ############################
+        os.system("cp -r " + cube_input + " xytemplate.image")
+        imhead("xytemplate.image",mode="del",hdkey="beamminor")
+        imhead("xytemplate.image",mode="del",hdkey="beammajor")
+
+
+
+
+
+
+        """
         ####################
         # create mask cube #
         ####################
@@ -456,12 +488,6 @@ class ToolsLSTSim():
         print("# mom0 input #")
         print("##############")
         # convolve to 3.0arcsec
-        run_roundsmooth(
-            self.dir_ready+"inputs/"+self.n1097_template_fullspec,
-            self.mom0_input+"_tmp1",
-            3.0,
-            0.001,
-            )
 
         # determine Jy/beam to K factor
         bmaj = imhead(imagename=self.mom0_input+"_tmp1",mode="get",hdkey="beammajor")["value"]
@@ -629,6 +655,7 @@ class ToolsLSTSim():
             dropdeg = True,
             dropstokes = True,
             )
+        """
 
     #############
     # plot_mom0 #
