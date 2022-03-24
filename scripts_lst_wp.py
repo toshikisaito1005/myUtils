@@ -546,20 +546,22 @@ class ToolsLSTSim():
         #os.system("rm -rf " + cube_input+"_tmp3")
         run_exportfits(cube_input+"_tmp4",self.mom0_input,True,True,True)
 
+        """
         os.system("rm -rf " + cube_tp+"_tmp4")
         immoments(imagename=cube_tp+"_tmp3",includepix=[0,100000],outfile=cube_tp+"_tmp4")
-        #os.system("rm -rf " + cube_tp+"_tmp3")
+        os.system("rm -rf " + cube_tp+"_tmp3")
         run_exportfits(cube_tp+"_tmp4",self.mom0_tp,True,True,True)
 
         os.system("rm -rf " + cube_7m_tp+"_tmp4")
         immoments(imagename=cube_7m_tp+"_tmp3",includepix=[0,100000],outfile=cube_7m_tp+"_tmp4")
-        #os.system("rm -rf " + cube_7m_tp+"_tmp3")
+        os.system("rm -rf " + cube_7m_tp+"_tmp3")
         run_exportfits(cube_7m_tp+"_tmp4",self.mom0_7m_tp,True,True,True)
 
         os.system("rm -rf " + cube_lst+"_tmp4")
         immoments(imagename=cube_lst+"_tmp3",includepix=[0,100000],outfile=cube_lst+"_tmp4")
-        #os.system("rm -rf " + cube_lst+"_tmp3")
+        os.system("rm -rf " + cube_lst+"_tmp3")
         run_exportfits(cube_lst+"_tmp4",self.mom0_lst,True,True,True)
+        """
 
     #############
     # plot_mom0 #
