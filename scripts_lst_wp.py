@@ -476,6 +476,7 @@ class ToolsLSTSim():
         os.system("cp -r " + cube_tp+"_tmp1 this_temp.image")
         run_imregrid("mask.image","this_temp.image","mask.image2",axes=[2])
         run_immath_two(cube_tp+"_tmp1","mask.image2",cube_tp+"_tmp2","iif(IM1>0,IM0,0)",delin=True)
+        """
         imhead(cube_tp+"_tmp2",mode="del",hdkey="beammajor")
         imhead(cube_tp+"_tmp2",mode="del",hdkey="beamminor")
         imhead(cube_tp+"_tmp2",mode="del",hdkey="beampa")
@@ -566,6 +567,7 @@ class ToolsLSTSim():
         immoments(imagename=cube_lst+"_tmp3",includepix=[0,100000],outfile=cube_lst+"_tmp4")
         #os.system("rm -rf " + cube_lst+"_tmp3")
         run_exportfits(cube_lst+"_tmp4",self.mom0_lst,True,True,True)
+        """
 
     #############
     # plot_mom0 #
