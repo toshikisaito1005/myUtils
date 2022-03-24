@@ -450,7 +450,7 @@ class ToolsLSTSim():
         #################
         # convolve beam #
         #################
-        run_roundsmooth(cube_input,cube_input+"_tmp1",3.0,0.001)
+        run_roundsmooth(cube_input,cube_input+"_tmp2",3.0,0.001)
 
         ############################
         # regrid to common xy grid #
@@ -468,10 +468,19 @@ class ToolsLSTSim():
         ###########
         run_immath_one(cube_tp+"_tmp1","mask.image","iif(IM0>=0.3,1,0)")
 
+        bmaj = imhead(cube_tp+"_tmp1",mode="get",hdkey="beammajor")["value"]
+        bmin = imhead(cube_tp+"_tmp1",mode="get",hdkey="beamminor")["value"]
+        bpa  = imhead(cube_tp+"_tmp1",mode="get",hdkey="beampa")["value"]
         os.system("rm -rf this_temp.image")
         os.system("cp -r " + cube_tp+"_tmp1 this_temp.image")
         run_imregrid("mask.image","this_temp.image","mask.image2",axes=[2])
         run_immath_two(cube_tp+"_tmp1","mask.image2",cube_tp+"_tmp2","iif(IM1>0,IM0,0)",delin=True)
+        imhead(cube_tp+"_tmp2",mode="del",hdkey="beammajor")
+        imhead(cube_tp+"_tmp2",mode="del",hdkey="beamminor")
+        imhead(cube_tp+"_tmp2",mode="del",hdkey="beampa")
+        imhead(cube_tp+"_tmp2",mode="add",hdkey="beammajor",hdvalue=str(bmaj)+"arcsec")
+        imhead(cube_tp+"_tmp2",mode="add",hdkey="beamminor",hdvalue=str(bmin)+"arcsec")
+        imhead(cube_tp+"_tmp2",mode="add",hdkey="beampa",hdvalue=str(bpa)+"deg")
 
         os.system("rm -rf this_temp.image")
         os.system("cp -r " + cube_7m_tp+"_tmp1 this_temp.image")
