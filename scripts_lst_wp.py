@@ -459,13 +459,13 @@ class ToolsLSTSim():
         imhead("xytemplate.image",mode="del",hdkey="beamminor")
         imhead("xytemplate.image",mode="del",hdkey="beammajor")
 
-        bmaj = imhead(cube_tp,mode="get",hdkey="beammajor")["value"]
-        bmin = imhead(cube_tp,mode="get",hdkey="beamminor")["value"]
-        bpa  = imhead(cube_tp,mode="get",hdkey="beampa")["value"]
+        #bmaj = imhead(cube_tp,mode="get",hdkey="beammajor")["value"]
+        #bmin = imhead(cube_tp,mode="get",hdkey="beamminor")["value"]
+        #bpa  = imhead(cube_tp,mode="get",hdkey="beampa")["value"]
+        #imhead(cube_tp+"_tmp1",mode="add",hdkey="beammajor",hdvalue=str(bmaj)+"arcsec")
+        #imhead(cube_tp+"_tmp1",mode="add",hdkey="beamminor",hdvalue=str(bmin)+"arcsec")
+        #imhead(cube_tp+"_tmp1",mode="add",hdkey="beampa",hdvalue=str(bpa)+"degree")
         run_imregrid(cube_tp,"xytemplate.image",cube_tp+"_tmp1",axes=[0,1])
-        imhead(cube_tp+"_tmp1",mode="add",hdkey="beammajor",hdvalue=str(bmaj)+"arcsec")
-        imhead(cube_tp+"_tmp1",mode="add",hdkey="beamminor",hdvalue=str(bmin)+"arcsec")
-        imhead(cube_tp+"_tmp1",mode="add",hdkey="beampa",hdvalue=str(bpa)+"degree")
 
 
 
