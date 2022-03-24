@@ -835,6 +835,7 @@ def run_roundsmooth(
     targetbeam, # float, arcsec unit
     inputbeam=None,
     delin=False,
+    targetres=True,
     ):
     """
     input : imagename, targetbeam
@@ -858,7 +859,7 @@ def run_roundsmooth(
         print("# run_roundsmooth")
         imsmooth(
             imagename = imagename,
-            targetres = True,
+            targetres = targetres,
             major     = str(targetbeam)+"arcsec",
             minor     = str(targetbeam)+"arcsec",
             pa        = "0deg",

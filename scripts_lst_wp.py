@@ -451,7 +451,7 @@ class ToolsLSTSim():
         # convolve beam #
         #################
         imhead(cube_input,mode="del",hdkey="beammajor")
-        run_roundsmooth(cube_input,cube_input+"_tmp2",3.0,0.001)
+        run_roundsmooth(cube_input,cube_input+"_tmp2",3.0,0.001,targetres=False)
 
         ############################
         # regrid to common xy grid #
