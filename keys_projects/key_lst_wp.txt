@@ -36,6 +36,7 @@ n1097_feather_lst_7m ,,,ngc1097sim_feather_lst+7m.fits
 project_torus ,,,torussim
 project_n1097 ,,,ngc1097sim
 config_c1     ,,,alma-configuration-files/alma.cycle7.1.cfg
+config_c9     ,,,alma-configuration-files/alma.cycle7.9.cfg
 config_c10    ,,,alma-configuration-files/alma.cycle7.10.cfg
 config_7m     ,,,alma-configuration-files/aca.cycle7.cfg
 config_lst    ,,,alma-configuration-files/lst.cfg

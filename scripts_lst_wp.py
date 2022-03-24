@@ -107,6 +107,7 @@ class ToolsLSTSim():
         self.project_n1097 = self._read_key("project_n1097")
         self.project_check = "checksim"
         self.config_c1     = self.dir_keyfile + self._read_key("config_c1")
+        self.config_c9     = self.dir_keyfile + self._read_key("config_c9")
         self.config_c10    = self.dir_keyfile + self._read_key("config_c10")
         self.config_7m     = self.dir_keyfile + self._read_key("config_7m")
         self.config_lst    = self.dir_keyfile + self._read_key("config_lst")
@@ -1120,7 +1121,7 @@ class ToolsLSTSim():
         run_simobserve(
             working_dir=self.dir_ready,
             template=self.torus_template_file,
-            antennalist=self.config_c10,
+            antennalist=self.config_c9,
             project=self.project_torus+"_12m_"+totaltimetint,
             totaltime=totaltime,
             incenter="693.9640232GHz",
