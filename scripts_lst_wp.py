@@ -447,13 +447,13 @@ class ToolsLSTSim():
         run_importfits(cube_7m_tp,cube_7m_tp.replace(".fits",".image"))
         cube_7m_tp = cube_7m_tp.replace(".fits",".image")
 
-        #################
-        # convolve beam #
-        #################
+        ################################################
+        # convolve beam and regrid velocity resolution #
+        ################################################
         imhead(cube_input,mode="del",hdkey="beammajor")
         run_roundsmooth(cube_input,cube_input+"_tmp2",3.0,0.001,targetres=False)
-        imhead(cube_input+"_tmp2",mode="put",hdkey="restfreq",hdvalue=self.observed_freq)
-        imhead(cube_input+"_tmp2",mode="put",hdkey="crval3",hdvalue=self.observed_freq)
+        imhead(cube_input+"_tmp2",mode="put",hdkey="restfreq",hdvalue=str(self.observed_freq))
+        imhead(cube_input+"_tmp2",mode="put",hdkey="crval3",hdvalue=str(self.observed_freq))
 
         ############################
         # regrid to common xy grid #
