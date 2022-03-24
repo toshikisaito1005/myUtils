@@ -469,7 +469,6 @@ class ToolsLSTSim():
         ###########
         run_immath_one(cube_tp+"_tmp1","mask.image","iif(IM0>=0.3,1,0)")
 
-        """
         bmaj = imhead(cube_tp+"_tmp1",mode="get",hdkey="beammajor")["value"]
         bmin = imhead(cube_tp+"_tmp1",mode="get",hdkey="beamminor")["value"]
         bpa  = imhead(cube_tp+"_tmp1",mode="get",hdkey="beampa")["value"]
@@ -478,11 +477,9 @@ class ToolsLSTSim():
         run_imregrid("mask.image","this_temp.image","mask.image2",axes=[2])
         run_immath_two(cube_tp+"_tmp1","mask.image2",cube_tp+"_tmp2","iif(IM1>0,IM0,0)",delin=True)
         imhead(cube_tp+"_tmp2",mode="del",hdkey="beammajor")
-        imhead(cube_tp+"_tmp2",mode="del",hdkey="beamminor")
-        imhead(cube_tp+"_tmp2",mode="del",hdkey="beampa")
-        imhead(cube_tp+"_tmp2",mode="add",hdkey="beammajor",hdvalue=str(bmaj)+"arcsec")
-        imhead(cube_tp+"_tmp2",mode="add",hdkey="beamminor",hdvalue=str(bmin)+"arcsec")
-        imhead(cube_tp+"_tmp2",mode="add",hdkey="beampa",hdvalue=str(bpa)+"deg")
+        imhead(cube_tp+"_tmp2",mode="put",hdkey="beammajor",hdvalue=str(bmaj)+"arcsec")
+        imhead(cube_tp+"_tmp2",mode="put",hdkey="beamminor",hdvalue=str(bmin)+"arcsec")
+        imhead(cube_tp+"_tmp2",mode="put",hdkey="beampa",hdvalue=str(bpa)+"deg")
 
         bmaj = imhead(cube_7m_tp+"_tmp1",mode="get",hdkey="beammajor")["value"]
         bmin = imhead(cube_7m_tp+"_tmp1",mode="get",hdkey="beamminor")["value"]
@@ -492,11 +489,9 @@ class ToolsLSTSim():
         run_imregrid("mask.image","this_temp.image","mask.image2",axes=[2])
         run_immath_two(cube_7m_tp+"_tmp1","mask.image2",cube_7m_tp+"_tmp2","iif(IM1>0,IM0,0)",delin=True)
         imhead(cube_7m_tp+"_tmp2",mode="del",hdkey="beammajor")
-        imhead(cube_7m_tp+"_tmp2",mode="del",hdkey="beamminor")
-        imhead(cube_7m_tp+"_tmp2",mode="del",hdkey="beampa")
-        imhead(cube_7m_tp+"_tmp2",mode="add",hdkey="beammajor",hdvalue=str(bmaj)+"arcsec")
-        imhead(cube_7m_tp+"_tmp2",mode="add",hdkey="beamminor",hdvalue=str(bmin)+"arcsec")
-        imhead(cube_7m_tp+"_tmp2",mode="add",hdkey="beampa",hdvalue=str(bpa)+"deg")
+        imhead(cube_7m_tp+"_tmp2",mode="put",hdkey="beammajor",hdvalue=str(bmaj)+"arcsec")
+        imhead(cube_7m_tp+"_tmp2",mode="put",hdkey="beamminor",hdvalue=str(bmin)+"arcsec")
+        imhead(cube_7m_tp+"_tmp2",mode="put",hdkey="beampa",hdvalue=str(bpa)+"deg")
 
         bmaj = imhead(cube_lst+"_tmp1",mode="get",hdkey="beammajor")["value"]
         bmin = imhead(cube_lst+"_tmp1",mode="get",hdkey="beamminor")["value"]
@@ -506,11 +501,9 @@ class ToolsLSTSim():
         run_imregrid("mask.image","this_temp.image","mask.image2",axes=[2])
         run_immath_two(cube_lst+"_tmp1","mask.image2",cube_lst+"_tmp2","iif(IM1>0,IM0,0)",delin=True)
         imhead(cube_lst+"_tmp2",mode="del",hdkey="beammajor")
-        imhead(cube_lst+"_tmp2",mode="del",hdkey="beamminor")
-        imhead(cube_lst+"_tmp2",mode="del",hdkey="beampa")
-        imhead(cube_lst+"_tmp2",mode="add",hdkey="beammajor",hdvalue=str(bmaj)+"arcsec")
-        imhead(cube_lst+"_tmp2",mode="add",hdkey="beamminor",hdvalue=str(bmin)+"arcsec")
-        imhead(cube_lst+"_tmp2",mode="add",hdkey="beampa",hdvalue=str(bpa)+"deg")
+        imhead(cube_lst+"_tmp2",mode="put",hdkey="beammajor",hdvalue=str(bmaj)+"arcsec")
+        imhead(cube_lst+"_tmp2",mode="put",hdkey="beamminor",hdvalue=str(bmin)+"arcsec")
+        imhead(cube_lst+"_tmp2",mode="put",hdkey="beampa",hdvalue=str(bpa)+"deg")
 
         os.system("rm -rf mask.image mask.image2 this_temp.image xytemplate.image")
 
@@ -522,28 +515,28 @@ class ToolsLSTSim():
         expr = "IM0*"+str(1.222e6/bmaj/bmin/self.observed_freq**2)
         run_immath_one(cube_input+"_tmp2",cube_input+"_tmp3",expr,delin=True)
         imhead(cube_input+"_tmp3",mode="del",hdkey="bunit")
-        imhead(cube_input+"_tmp3",mode="add",hdkey="bunit",hdvalue="K")
+        imhead(cube_input+"_tmp3",mode="put",hdkey="bunit",hdvalue="K")
 
         bmaj = imhead(imagename=cube_tp+"_tmp2",mode="get",hdkey="beammajor")["value"]
         bmin = imhead(imagename=cube_tp+"_tmp2",mode="get",hdkey="beamminor")["value"]
         expr = "IM0*"+str(1.222e6/bmaj/bmin/self.observed_freq**2)
         run_immath_one(cube_tp+"_tmp2",cube_tp+"_tmp3",expr,delin=True)
         imhead(cube_tp+"_tmp3",mode="del",hdkey="bunit")
-        imhead(cube_tp+"_tmp3",mode="add",hdkey="bunit",hdvalue="K")
+        imhead(cube_tp+"_tmp3",mode="put",hdkey="bunit",hdvalue="K")
 
         bmaj = imhead(imagename=cube_7m_tp+"_tmp2",mode="get",hdkey="beammajor")["value"]
         bmin = imhead(imagename=cube_7m_tp+"_tmp2",mode="get",hdkey="beamminor")["value"]
         expr = "IM0*"+str(1.222e6/bmaj/bmin/self.observed_freq**2)
         run_immath_one(cube_7m_tp+"_tmp2",cube_7m_tp+"_tmp3",expr,delin=True)
         imhead(cube_7m_tp+"_tmp3",mode="del",hdkey="bunit")
-        imhead(cube_7m_tp+"_tmp3",mode="add",hdkey="bunit",hdvalue="K")
+        imhead(cube_7m_tp+"_tmp3",mode="put",hdkey="bunit",hdvalue="K")
 
         bmaj = imhead(imagename=cube_lst+"_tmp2",mode="get",hdkey="beammajor")["value"]
         bmin = imhead(imagename=cube_lst+"_tmp2",mode="get",hdkey="beamminor")["value"]
         expr = "IM0*"+str(1.222e6/bmaj/bmin/self.observed_freq**2)
         run_immath_one(cube_lst+"_tmp2",cube_lst+"_tmp3",expr,delin=True)
         imhead(cube_lst+"_tmp3",mode="del",hdkey="bunit")
-        imhead(cube_lst+"_tmp3",mode="add",hdkey="bunit",hdvalue="K")
+        imhead(cube_lst+"_tmp3",mode="put",hdkey="bunit",hdvalue="K")
 
         #################
         # mom0 creation #
@@ -567,7 +560,6 @@ class ToolsLSTSim():
         immoments(imagename=cube_lst+"_tmp3",includepix=[0,100000],outfile=cube_lst+"_tmp4")
         #os.system("rm -rf " + cube_lst+"_tmp3")
         run_exportfits(cube_lst+"_tmp4",self.mom0_lst,True,True,True)
-        """
 
     #############
     # plot_mom0 #
