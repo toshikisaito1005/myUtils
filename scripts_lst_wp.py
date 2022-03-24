@@ -589,9 +589,10 @@ class ToolsLSTSim():
         run_immath_one(imagename,imagename+"_tmp1","iif(IM0==0,0,1)",delin=False)
         immoments(imagename=imagename+"_tmp1",moments=[0],outfile=imagename+"_tmp2")
         os.system("rm -fr " + imagename + "_tmp1")
-        data = imval(imagename+"_tmp2")["coords"][:,2]
-        restfreq = imhead(imagename+"_tmp2",mode="list")["restfreq"][0]
+        data = imval(imagename+"_tmp1")["coords"][:,2]
+        restfreq = imhead(imagename+"_tmp1",mode="list")["restfreq"][0]
         chanwidth = str(np.round(abs(data[1]-data[0])/restfreq * 299792.458, 2))
+
         run_immath_one(imagename+"_tmp2",imagename+"_tmp3",str(rms)+"*"+chanwidth+"*sqrt(IM0/"+chanwidth+")",delin=True)
         run_exportfits(imagename+"_tmp3",self.outfile,True,True,True)
 
