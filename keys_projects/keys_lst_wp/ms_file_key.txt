@@ -11,4 +11,4 @@ checksim_1p0h        lst_wp  all  12m  1  checksim_12m_1p0h/checksim_12m_1p0h.al
 torussim_12p0h       lst_wp  all  12m  1  torussim_12m_12p0h/torussim_12m_12p0h.alma.cycle7.10.noisy.ms
 torussim_24p0h       lst_wp  all  12m  1  torussim_12m_24p0h/torussim_12m_24p0h.alma.cycle7.10.noisy.ms
 torussim_48p0h       lst_wp  all  12m  1  torussim_12m_48p0h/torussim_12m_48p0h.alma.cycle7.9.noisy.ms
-torussim_lst_48p0h   lst_wp  all  12m  1  torussim_12m_48p0h/torussim_12m_48p0h.alma.cycle7.9_lst.noisy.ms
+torussim_lst_48p0h   lst_wp  all  12m  1  torussim_12m_lst_48p0h/torussim_12m_lst_48p0h.alma.cycle7.9_lst.noisy.ms
