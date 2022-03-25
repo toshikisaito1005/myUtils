@@ -724,7 +724,7 @@ class ToolsLSTSim():
         #################
         imhead(map_input,mode="del",hdkey="beammajor")
         run_roundsmooth(map_input,map_input+"_tmp1",0.015,0.000001,targetres=False)
-        run_immath_one(map_input+"_tmp1",map_input+"_tmp2","IM0",chans="0",delin=True)
+        run_immath_one(map_input+"_tmp1",map_input+"_tmp2","iif(IM0>0,IM0*1000.,0)",chans="0",delin=True)
 
         ##############
         # exportfits #
@@ -754,7 +754,7 @@ class ToolsLSTSim():
             self.dust_input,
             self.outpng_dust_input,
             imcontour1=self.dust_input,
-            imsize_as=0.25,
+            imsize_as=0.20,
             ra_cnt="40.669625deg",
             dec_cnt="-0.01331667deg",
             # contour 1
@@ -774,7 +774,7 @@ class ToolsLSTSim():
             comment=None,
             # imshow colorbar
             clim=None,#[0,120],
-            label_cbar="(Jy beam$^{-1}$)",
+            label_cbar="(mJy beam$^{-1}$)",
             # annotation
             numann=None,
             textann=True,
