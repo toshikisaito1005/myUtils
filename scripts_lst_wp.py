@@ -469,6 +469,7 @@ class ToolsLSTSim():
         cube_input  = self.dir_ready+"inputs/"+self.n1097_template_fullspec
         cube_tp     = self.dir_ready+"outputs/"+self.n1097_sdimage_fullspec.replace(".image","_"+totaltimetint+"7m.image")
         cube_7m_tp  = self.n1097_feather_tp_7m
+        cube_7m_lst = self.n1097_feather_lst_7m
         cube_lst    = self.dir_ready+"outputs/"+self.n1097_lstimage_fullspec.replace(".image","_"+totaltimetint+"7m.image")
 
         ##############
@@ -476,6 +477,9 @@ class ToolsLSTSim():
         ##############
         run_importfits(cube_7m_tp,cube_7m_tp.replace(".fits",".image"))
         cube_7m_tp = cube_7m_tp.replace(".fits",".image")
+
+        run_importfits(cube_7m_lst,cube_7m_lst.replace(".fits",".image"))
+        cube_7m_lst = cube_7m_lst.replace(".fits",".image")
 
         ################################################
         # convolve beam and regrid velocity resolution #
@@ -494,10 +498,12 @@ class ToolsLSTSim():
 
         run_imregrid(cube_tp,"xytemplate.image",cube_tp+"_tmp0",axes=[0,1])
         run_imregrid(cube_7m_tp,"xytemplate.image",cube_7m_tp+"_tmp0",axes=[0,1])
+        run_imregrid(cube_7m_lst,"xytemplate.image",cube_7m_lst+"_tmp0",axes=[0,1])
         run_imregrid(cube_lst,"xytemplate.image",cube_lst+"_tmp0",axes=[0,1])
 
         run_roundsmooth(cube_tp+"_tmp0",cube_tp+"_tmp1",3.5,delin=True)
         run_roundsmooth(cube_7m_tp+"_tmp0",cube_7m_tp+"_tmp1",3.5,delin=True)
+        run_roundsmooth(cube_7m_lst+"_tmp0",cube_7m_lst+"_tmp1",3.5,delin=True)
         run_roundsmooth(cube_lst+"_tmp0",cube_lst+"_tmp1",3.5,delin=True)
 
         ###########
@@ -528,6 +534,18 @@ class ToolsLSTSim():
         imhead(cube_7m_tp+"_tmp2",mode="put",hdkey="beammajor",hdvalue=str(bmaj)+"arcsec")
         imhead(cube_7m_tp+"_tmp2",mode="put",hdkey="beamminor",hdvalue=str(bmin)+"arcsec")
         imhead(cube_7m_tp+"_tmp2",mode="put",hdkey="beampa",hdvalue=str(bpa)+"deg")
+
+        bmaj = imhead(cube_7m_lst+"_tmp1",mode="get",hdkey="beammajor")["value"]
+        bmin = imhead(cube_7m_lst+"_tmp1",mode="get",hdkey="beamminor")["value"]
+        bpa  = imhead(cube_7m_lst+"_tmp1",mode="get",hdkey="beampa")["value"]
+        os.system("rm -rf this_temp.image")
+        os.system("cp -r " + cube_7m_lst+"_tmp1 this_temp.image")
+        run_imregrid("mask.image","this_temp.image","mask.image2",axes=[2])
+        run_immath_two(cube_7m_lst+"_tmp1","mask.image2",cube_7m_lst+"_tmp2","iif(IM1>0,IM0,0)",delin=True)
+        imhead(cube_7m_lst+"_tmp2",mode="del",hdkey="beammajor")
+        imhead(cube_7m_lst+"_tmp2",mode="put",hdkey="beammajor",hdvalue=str(bmaj)+"arcsec")
+        imhead(cube_7m_lst+"_tmp2",mode="put",hdkey="beamminor",hdvalue=str(bmin)+"arcsec")
+        imhead(cube_7m_lst+"_tmp2",mode="put",hdkey="beampa",hdvalue=str(bpa)+"deg")
 
         bmaj = imhead(cube_lst+"_tmp1",mode="get",hdkey="beammajor")["value"]
         bmin = imhead(cube_lst+"_tmp1",mode="get",hdkey="beamminor")["value"]
@@ -567,6 +585,13 @@ class ToolsLSTSim():
         imhead(cube_7m_tp+"_tmp3",mode="del",hdkey="bunit")
         imhead(cube_7m_tp+"_tmp3",mode="put",hdkey="bunit",hdvalue="K")
 
+        bmaj = imhead(imagename=cube_7m_lst+"_tmp2",mode="get",hdkey="beammajor")["value"]
+        bmin = imhead(imagename=cube_7m_lst+"_tmp2",mode="get",hdkey="beamminor")["value"]
+        expr = "IM0*"+str(1.222e6/bmaj/bmin/self.observed_freq**2)
+        run_immath_one(cube_7m_lst+"_tmp2",cube_7m_lst+"_tmp3",expr,delin=True)
+        imhead(cube_7m_lst+"_tmp3",mode="del",hdkey="bunit")
+        imhead(cube_7m_lst+"_tmp3",mode="put",hdkey="bunit",hdvalue="K")
+
         bmaj = imhead(imagename=cube_lst+"_tmp2",mode="get",hdkey="beammajor")["value"]
         bmin = imhead(imagename=cube_lst+"_tmp2",mode="get",hdkey="beamminor")["value"]
         expr = "IM0*"+str(1.222e6/bmaj/bmin/self.observed_freq**2)
@@ -595,6 +620,13 @@ class ToolsLSTSim():
         self._immoments_err(cube_7m_tp+"_tmp3",rms,self.mom0_7m_tp.replace(".fits","_err.fits"))
         #os.system("rm -rf " + cube_7m_tp+"_tmp3")
         run_exportfits(cube_7m_tp+"_tmp4",self.mom0_7m_tp,True,True,True)
+
+        os.system("rm -rf " + cube_7m_lst+"_tmp4")
+        immoments(imagename=cube_7m_lst+"_tmp3",includepix=[0,100000],outfile=cube_7m_lst+"_tmp4")
+        rms=abs(measure_rms(cube_7m_lst+"_tmp3",snr=3.0))
+        self._immoments_err(cube_7m_lst+"_tmp3",rms,self.mom0_7m_tp.replace(".fits","_err.fits"))
+        #os.system("rm -rf " + cube_7m_lst+"_tmp3")
+        run_exportfits(cube_7m_lst+"_tmp4",self.mom0_7m_tp,True,True,True)
 
         os.system("rm -rf " + cube_lst+"_tmp4")
         immoments(imagename=cube_lst+"_tmp3",includepix=[0,100000],outfile=cube_lst+"_tmp4")
