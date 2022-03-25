@@ -725,6 +725,8 @@ class ToolsLSTSim():
         imhead(map_input,mode="del",hdkey="beammajor")
         run_roundsmooth(map_input,map_input+"_tmp1",0.015,0.000001,targetres=False)
         run_immath_one(map_input+"_tmp1",map_input+"_tmp2","iif(IM0>0,IM0*1000.,0)",chans="0",delin=True)
+        imrebin(map_input+"_tmp2",map_input+"_tmp3",factor=[4,4,1,1])
+        os.system("rm -rf "+map_input+"_tmp3")
 
         ##############
         # exportfits #
