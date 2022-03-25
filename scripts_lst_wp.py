@@ -162,6 +162,7 @@ class ToolsLSTSim():
         self.mom0_tp                        = self.dir_ready + "outputs/" + "ngc1097sim_mom0_TP12m.fits"
         self.mom0_7m_tp                     = self.dir_ready + "outputs/" + "ngc1097sim_mom0_7m+TP.fits"
         self.mom0_lst                       = self.dir_ready + "outputs/" + "ngc1097sim_mom0_LST50m.fits"
+        self.mom0_7m_lst                    = self.dir_ready + "outputs/" + "ngc1097sim_mom0_7m+LST.fits"
 
     def _set_input_param(self):
         """
@@ -624,9 +625,9 @@ class ToolsLSTSim():
         os.system("rm -rf " + cube_7m_lst+"_tmp4")
         immoments(imagename=cube_7m_lst+"_tmp3",includepix=[0,100000],outfile=cube_7m_lst+"_tmp4")
         rms=abs(measure_rms(cube_7m_lst+"_tmp3",snr=3.0))
-        self._immoments_err(cube_7m_lst+"_tmp3",rms,self.mom0_7m_tp.replace(".fits","_err.fits"))
+        self._immoments_err(cube_7m_lst+"_tmp3",rms,self.mom0_7m_lst.replace(".fits","_err.fits"))
         #os.system("rm -rf " + cube_7m_lst+"_tmp3")
-        run_exportfits(cube_7m_lst+"_tmp4",self.mom0_7m_tp,True,True,True)
+        run_exportfits(cube_7m_lst+"_tmp4",self.mom0_7m_lst,True,True,True)
 
         os.system("rm -rf " + cube_lst+"_tmp4")
         immoments(imagename=cube_lst+"_tmp3",includepix=[0,100000],outfile=cube_lst+"_tmp4")
