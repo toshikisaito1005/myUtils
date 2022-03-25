@@ -1497,8 +1497,8 @@ class ToolsLSTSim():
         # plot: C-9 antenna position #
         ##############################
         ad    = [0.215,0.83,0.10,0.90]
-        xlim  = [-10,10]
-        ylim  = [-10,10]
+        xlim  = [-8,8]
+        ylim  = [-8,8]
         title = "ALMA 12-m array and LST$_{\mathrm{sim,50m}}$ positions"
         xlabel = "East-West (km)"
         ylabel = "North-South (km)"
