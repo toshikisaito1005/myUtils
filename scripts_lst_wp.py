@@ -772,7 +772,7 @@ class ToolsLSTSim():
             label_scalebar=None,
             comment=None,
             # imshow colorbar
-            clim=NOne,#[0,120],
+            clim=None,#[0,120],
             label_cbar="(Jy beam$^{-1}$)",
             # annotation
             numann=None,
