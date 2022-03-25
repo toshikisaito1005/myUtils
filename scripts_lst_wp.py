@@ -701,7 +701,6 @@ class ToolsLSTSim():
 
     def create_map_torussim(
         self,
-        totaltimetint,
         ):
         """
         """
