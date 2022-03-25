@@ -164,6 +164,8 @@ class ToolsLSTSim():
         self.mom0_lst                       = self.dir_ready + "outputs/" + "ngc1097sim_mom0_LST50m.fits"
         self.mom0_7m_lst                    = self.dir_ready + "outputs/" + "ngc1097sim_mom0_7m+LST.fits"
 
+        self.dust_input                     = self.dir_ready + "outputs/" + "torussim_dust_input.fits"
+
     def _set_input_param(self):
         """
         """
@@ -202,6 +204,8 @@ class ToolsLSTSim():
         self.outpng_mom0_tp       = self.dir_products + self._read_key("outpng_mom0_tp")
         self.outpng_mom0_lst50m   = self.dir_products + self._read_key("outpng_mom0_lst50m")
         self.outpng_mom0_tp_7m    = self.dir_products + self._read_key("outpng_mom0_tp_7m")
+
+        self.outpng_dust_input    = self.dir_products + self._read_key("outpng_dust_input")
 
     ####################
     # run_sim_lst_alma #
@@ -247,7 +251,8 @@ class ToolsLSTSim():
         # plot
         plot_config            = False,
         plot_mosaic            = False,
-        plot_mom0              = False,
+        plot_mom0_n1097sim     = False,
+        plot_mom0_torussim     = False,
         # calc
         calc_collectingarea    = False,
         #
@@ -426,8 +431,11 @@ class ToolsLSTSim():
                 self.plot_mosaic_7m(tintegstr_7m,self.observed_freq)
                 self.plot_mosaic_C1(tintegstr_ch,693.9640232)
 
-            if plot_mom0==True:
+            if plot_mom0_n1097sim==True:
                 self.plot_mom0(tintegstr_7m)
+
+            if plot_mom0_torussim==True:
+                self.plot_mom0_torussim(tintegstr_7m)
 
             # calc
             if calc_collectingarea==True:
@@ -682,6 +690,92 @@ class ToolsLSTSim():
 
         run_immath_one(imagename+"_tmp2",imagename+"_tmp3",str(rms)+"*"+chanwidth+"*sqrt(IM0/"+chanwidth+")",delin=True)
         run_exportfits(imagename+"_tmp3",outfile,True,True,True)
+
+    ########################
+    # create_mom0_torussim #
+    ########################
+
+    def create_mom0_torussim(
+        self,
+        totaltimetint,
+        ):
+        """
+        """
+
+        taskname = self.modname + sys._getframe().f_code.co_name
+        check_first(self.dir_ready+"inputs/"+self.torus_template_file,taskname)
+
+        ################
+        # define input #
+        ################
+        map_input  = self.dir_ready+"inputs/"+self.torus_template_file
+
+        ##############
+        # importfits #
+        ##############
+        run_importfits(map_input,map_input.replace(".fits",".image"))
+        map_input = map_input.replace(".fits",".image")
+
+        #################
+        # convolve beam #
+        #################
+        imhead(map_input,mode="del",hdkey="beammajor")
+        run_roundsmooth(map_input,map_input+"_tmp2",0.0013,0.000001,targetres=False)
+
+        ##############
+        # exportfits #
+        ##############
+        run_exportfits(map_input+"_tmp2",self.dust_input,True,True,True)
+
+    ######################
+    # plot_mom0_torussim #
+    ######################
+
+    def plot_mom0_torussim(
+        self,
+        totaltimetint="2p0h",
+        ):
+        """
+        """
+
+        taskname = self.modname + sys._getframe().f_code.co_name
+        check_first(self.dust_input,taskname)
+
+        levels_cont1 = [0.01,0.02,0.04,0.08,0.16,0.32,0.64,0.96]
+
+        ##############
+        # plot input #
+        ##############
+        myfig_fits2png(
+            # general
+            self.dust_input,
+            self.outpng_dust_input,
+            imcontour1=self.dust_input,
+            imsize_as=0.25,
+            ra_cnt="40.669625deg",
+            dec_cnt="-0.01331667deg",
+            # contour 1
+            unit_cont1=None,
+            levels_cont1=levels_cont1,
+            width_cont1=[1.0],
+            color_cont1="white",
+            # imshow
+            set_title="Input (convolved): torussim continuum",
+            colorlog=False,
+            set_cmap="rainbow",
+            set_bg_color=cm.rainbow(0),
+            showbeam=True,
+            color_beam="black",
+            scalebar=None,
+            label_scalebar=None,
+            comment=None,
+            # imshow colorbar
+            clim=NOne,#[0,120],
+            label_cbar="(Jy beam$^{-1}$)",
+            # annotation
+            numann=None,
+            textann=True,
+            )
 
     #############
     # plot_mom0 #
