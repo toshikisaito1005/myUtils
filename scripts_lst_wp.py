@@ -1423,7 +1423,7 @@ class ToolsLSTSim():
         lst_position = np.array([6.452141+0.1, 7.886675+0.1, -0.245131]) # km/s
 
         # get data
-        data  = np.loadtxt(self.config_c10,"str")
+        data  = np.loadtxt(self.config_c9,"str")
         x_12m = data[:,0].astype(np.float32) / 1000. - x_cnt / 1000.
         y_12m = data[:,1].astype(np.float32) / 1000. - y_cnt / 1000.
         z_12m = data[:,2].astype(np.float32) / 1000.
@@ -1493,9 +1493,9 @@ class ToolsLSTSim():
         os.system("rm -rf " + self.outpng_config_7m)
         plt.savefig(self.outpng_config_7m, dpi=self.fig_dpi)
 
-        ###############################
-        # plot: C-10 antenna position #
-        ###############################
+        ##############################
+        # plot: C-9 antenna position #
+        ##############################
         ad    = [0.215,0.83,0.10,0.90]
         xlim  = [-10,10]
         ylim  = [-10,10]
