@@ -344,7 +344,6 @@ class ToolsLSTSim():
             self.sim12m_torussim(tinteg_12m,tintegstr_12m)
 
         if do_imaging_torussim==True:
-            """
             #############
             # config_c9 #
             #############
@@ -366,8 +365,8 @@ class ToolsLSTSim():
                 do_cont=True,
                 only_dirty=True,
                 )
-            """
 
+            """
             #################
             # config_c9_lst #
             #################
@@ -389,6 +388,7 @@ class ToolsLSTSim():
                 do_cont=True,
                 only_dirty=True,
                 )
+            """
 
         ########
         # plot #
@@ -1149,6 +1149,7 @@ class ToolsLSTSim():
         taskname = self.modname + sys._getframe().f_code.co_name
         check_first(self.torus_template_file,taskname)
 
+        """
         run_simobserve(
             working_dir=self.dir_ready,
             template=self.torus_template_file,
@@ -1157,6 +1158,7 @@ class ToolsLSTSim():
             totaltime=totaltime,
             incenter="693.9640232GHz",
             )
+        """
 
         run_simobserve(
             working_dir=self.dir_ready,
