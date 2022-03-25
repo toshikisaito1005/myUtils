@@ -263,192 +263,216 @@ class ToolsLSTSim():
         This method runs all the methods which will create figures in the white paper.
         """
 
-        #############################
-        # set ngc1097sim parameters #
-        #############################
-        # observed frequency
-        self.observed_freq = observed_freq
-        self.incenter      = str(observed_freq)+"GHz"
+        # keep these toggles on (for code-readability purpose)
+        toggle_ngc1097sim = True
+        toggle_torussim   = True
+        toggle_plot       = True
+        toggle_checksim   = True
 
-        # n1097sim_7m from tinteg_n1097sim
-        tinteg_7m    = str(float(tinteg_n1097sim))+"h"
-        tintegstr_7m = tinteg_7m.replace(".","p")
-        this_target  = self.project_n1097+"_"+tintegstr_7m
-        this_target_connected = self.project_n1097+"xLST_"+tintegstr_7m
+        ##############
+        # ngc1097sim #
+        ##############
+        if toggle_ngc1097sim==True:
+            #############################
+            # set ngc1097sim parameters #
+            #############################
+            # observed frequency
+            self.observed_freq = observed_freq
+            self.incenter      = str(observed_freq)+"GHz"
 
-        # determine LST and TP beam sizes
-        lst_beam    = str(12.979 * 115.27120 / self.observed_freq)+"arcsec"
-        tp_beam     = str(50.6   * 115.27120 / self.observed_freq)+"arcsec"
-        lst30m_beam = str(21.631 * 115.27120 / self.observed_freq)+"arcsec"
+            # n1097sim_7m from tinteg_n1097sim
+            tinteg_7m    = str(float(tinteg_n1097sim))+"h"
+            tintegstr_7m = tinteg_7m.replace(".","p")
+            this_target  = self.project_n1097+"_"+tintegstr_7m
+            this_target_connected = self.project_n1097+"xLST_"+tintegstr_7m
 
-        # define products
-        cube_tp  = self.dir_ready+"outputs/"+self.n1097_sdimage_fullspec.replace(".image","_"+tintegstr_7m+"7m.image")
-        cube_lst = self.dir_ready+"outputs/"+self.n1097_lstimage_fullspec.replace(".image","_"+tintegstr_7m+"7m.image")
-        cube_7m  = self.dir_ready+"outputs/postprocess/"+this_target+"/"+this_target+"_7m_ci10_pbcorr_trimmed.image"
+            # determine LST and TP beam sizes
+            lst_beam    = str(12.979 * 115.27120 / self.observed_freq)+"arcsec"
+            tp_beam     = str(50.6   * 115.27120 / self.observed_freq)+"arcsec"
+            lst30m_beam = str(21.631 * 115.27120 / self.observed_freq)+"arcsec"
 
-        ##################
-        # run ngc1097sim #
-        ##################
-        if do_template_n1097sim==True:
-            self.prepare_template_n1097sim()
+            # define products
+            cube_tp  = self.dir_ready+"outputs/"+self.n1097_sdimage_fullspec.replace(".image","_"+tintegstr_7m+"7m.image")
+            cube_lst = self.dir_ready+"outputs/"+self.n1097_lstimage_fullspec.replace(".image","_"+tintegstr_7m+"7m.image")
+            cube_7m  = self.dir_ready+"outputs/postprocess/"+this_target+"/"+this_target+"_7m_ci10_pbcorr_trimmed.image"
 
-        if do_simACA_n1097sim==True:
-            self.simaca_n1097sim(tinteg_7m,tintegstr_7m)
+            ##################
+            # run ngc1097sim #
+            ##################
+            if do_template_n1097sim==True:
+                self.prepare_template_n1097sim()
 
-        if do_imaging_n1097sim==True:
-            self.phangs_pipeline_imaging(
-                this_proj=self.project_n1097,
-                this_array="7m",
-                this_target=this_target,
-                )
+            if do_simACA_n1097sim==True:
+                self.simaca_n1097sim(tinteg_7m,tintegstr_7m)
 
-        if do_simTP_n1097sim==True:
-            self.simtp_n1097sim(tp_beam,tintegstr_7m,dryrun_simSD)
+            if do_imaging_n1097sim==True:
+                self.phangs_pipeline_imaging(
+                    this_proj=self.project_n1097,
+                    this_array="7m",
+                    this_target=this_target,
+                    )
 
-        if do_simLST_n1097sim==True:
-            self.simlst_n1097sim(lst_beam,tp_beam,tintegstr_7m,dryrun_simSD)
-            self.simlst_n1097sim(lst30m_beam,tp_beam,tintegstr_7m,True)
+            if do_simTP_n1097sim==True:
+                self.simtp_n1097sim(tp_beam,tintegstr_7m,dryrun_simSD)
 
-        if do_feather==True:
-            self.do_feather(cube_7m,cube_tp,self.n1097_feather_tp_7m,-1)
-            self.do_feather(cube_7m,cube_lst,self.n1097_feather_lst_7m,-1)
+            if do_simLST_n1097sim==True:
+                self.simlst_n1097sim(lst_beam,tp_beam,tintegstr_7m,dryrun_simSD)
+                self.simlst_n1097sim(lst30m_beam,tp_beam,tintegstr_7m,True)
 
-        if do_mom0_n1097sim==True:
-            self.create_mom0(tintegstr_7m)
+            if do_feather==True:
+                self.do_feather(cube_7m,cube_tp,self.n1097_feather_tp_7m,-1)
+                self.do_feather(cube_7m,cube_lst,self.n1097_feather_lst_7m,-1)
 
-        #if do_simACA_LST_n1097sim==True:
-        #    self.do_simaca_lst_n1097sim(tinteg_7m,tintegstr_7m)
-        #
-        #if do_imaging_simACA_LST==True:
-        #    self.phangs_pipeline_imaging(
-        #        this_proj=self.project_n1097+"_LSTconnected_7m_"+tintegstr_7m,
-        #        this_array="7m",
-        #        this_target=this_target_connected,
-        #        )
+            if do_mom0_n1097sim==True:
+                self.create_mom0(tintegstr_7m)
 
-        ###########################
-        # set torussim parameters #
-        ###########################
-        tinteg_12m      = str(float(tinteg_torussim))+"h"
-        tintegstr_12m   = tinteg_12m.replace(".","p")
-        this_target     = self.project_torus+"_"+tintegstr_12m
-        this_target_lst = self.project_torus+"_lst_"+tintegstr_12m
+            #if do_simACA_LST_n1097sim==True:
+            #    self.do_simaca_lst_n1097sim(tinteg_7m,tintegstr_7m)
+            #
+            #if do_imaging_simACA_LST==True:
+            #    self.phangs_pipeline_imaging(
+            #        this_proj=self.project_n1097+"_LSTconnected_7m_"+tintegstr_7m,
+            #        this_array="7m",
+            #        this_target=this_target_connected,
+            #        )
 
-        ################
-        # run torussim #
-        ################
-        if do_template_torussim==True:
-            self.prepare_template_torussim()
+        ############
+        # torussim #
+        ############
+        if toggle_torussim==True:
+            ###########################
+            # set torussim parameters #
+            ###########################
+            tinteg_12m      = str(float(tinteg_torussim))+"h"
+            tintegstr_12m   = tinteg_12m.replace(".","p")
+            this_target     = self.project_torus+"_"+tintegstr_12m
+            this_target_lst = self.project_torus+"_lst_"+tintegstr_12m
 
-        if do_simint_torussim==True:
-            self.sim12m_torussim(tinteg_12m,tintegstr_12m)
+            ################
+            # run torussim #
+            ################
+            if do_template_torussim==True:
+                self.prepare_template_torussim()
 
-        if do_imaging_torussim==True:
-            #############
-            # config_c9 #
-            #############
-            # stage instead of pipeline
-            msname  = self.project_torus + "_12m_" + tintegstr_12m + "."+self.config_c9.split("/")[-1].split(".cfg")[0]+".noisy.ms"
-            ms_from = self.dir_ready + "ms/" + self.project_torus + "_12m_" + tintegstr_12m + "/" + msname
-            dir_to  = self.dir_ready + "outputs/imaging/" + this_target + "/"
-            ms_to   = dir_to + this_target + "_12m_cont.ms"
-            os.system("rm -rf " + ms_to)
-            os.system("rm -rf " + dir_to)
-            os.makedirs(dir_to)
-            os.system("cp -r " + ms_from + " " + ms_to)
+            if do_simint_torussim==True:
+                self.sim12m_torussim(tinteg_12m,tintegstr_12m)
 
-            # run
-            self.phangs_pipeline_imaging(
-                this_proj=self.project_torus,
-                this_array="12m",
-                this_target=this_target,
-                do_cont=True,
-                only_dirty=True,
-                )
+            if do_imaging_torussim==True:
+                #############
+                # config_c9 #
+                #############
+                # stage instead of pipeline
+                msname  = self.project_torus + "_12m_" + tintegstr_12m + "."+self.config_c9.split("/")[-1].split(".cfg")[0]+".noisy.ms"
+                ms_from = self.dir_ready + "ms/" + self.project_torus + "_12m_" + tintegstr_12m + "/" + msname
+                dir_to  = self.dir_ready + "outputs/imaging/" + this_target + "/"
+                ms_to   = dir_to + this_target + "_12m_cont.ms"
+                os.system("rm -rf " + ms_to)
+                os.system("rm -rf " + dir_to)
+                os.makedirs(dir_to)
+                os.system("cp -r " + ms_from + " " + ms_to)
 
-            """
-            #################
-            # config_c9_lst #
-            #################
-            # stage instead of pipeline
-            msname  = self.project_torus + "_12m_lst_" + tintegstr_12m + "."+self.config_c9_lst.split("/")[-1].split(".cfg")[0]+".noisy.ms"
-            ms_from = self.dir_ready + "ms/" + self.project_torus + "_12m_lst_" + tintegstr_12m + "/" + msname
-            dir_to  = self.dir_ready + "outputs/imaging/" + this_target_lst + "/"
-            ms_to   = dir_to + this_target_lst + "_12m_cont.ms"
-            os.system("rm -rf " + ms_to)
-            os.system("rm -rf " + dir_to)
-            os.makedirs(dir_to)
-            os.system("cp -r " + ms_from + " " + ms_to)
+                # run
+                self.phangs_pipeline_imaging(
+                    this_proj=self.project_torus,
+                    this_array="12m",
+                    this_target=this_target,
+                    do_cont=True,
+                    only_dirty=True,
+                    )
 
-            # run
-            self.phangs_pipeline_imaging(
-                this_proj=self.project_torus,
-                this_array="12m",
-                this_target=this_target_lst,
-                do_cont=True,
-                only_dirty=True,
-                )
-            """
+                """
+                #################
+                # config_c9_lst #
+                #################
+                # stage instead of pipeline
+                msname  = self.project_torus + "_12m_lst_" + tintegstr_12m + "."+self.config_c9_lst.split("/")[-1].split(".cfg")[0]+".noisy.ms"
+                ms_from = self.dir_ready + "ms/" + self.project_torus + "_12m_lst_" + tintegstr_12m + "/" + msname
+                dir_to  = self.dir_ready + "outputs/imaging/" + this_target_lst + "/"
+                ms_to   = dir_to + this_target_lst + "_12m_cont.ms"
+                os.system("rm -rf " + ms_to)
+                os.system("rm -rf " + dir_to)
+                os.makedirs(dir_to)
+                os.system("cp -r " + ms_from + " " + ms_to)
+
+                # run
+                self.phangs_pipeline_imaging(
+                    this_proj=self.project_torus,
+                    this_array="12m",
+                    this_target=this_target_lst,
+                    do_cont=True,
+                    only_dirty=True,
+                    )
+                """
 
         ########
         # plot #
         ########
-        # plot
-        if plot_config==True:
-            self.plot_config()
+        if toggle_plot==True:
+            # plot
+            if plot_config==True:
+                self.plot_config()
 
-            this_target  = self.project_n1097+"_"+tintegstr_7m
-            dir_ms  = self.dir_ready + "outputs/imaging/" + this_target + "/"
-            this_ms = dir_ms + this_target + "_7m_ci10.ms"
-            self.plot_uv(this_ms,self.outpng_uv_aca,[-50,50,-50,50])
+                this_target = self.project_n1097+"_"+tintegstr_7m
+                dir_ms  = self.dir_ready + "outputs/imaging/" + this_target + "/"
+                this_ms = dir_ms + this_target + "_7m_ci10.ms"
+                self.plot_uv(this_ms,self.outpng_uv_aca,[-50,50,-50,50])
 
-        if plot_mosaic==True:
-            self.plot_mosaic_7m(tintegstr_7m,self.observed_freq)
-            self.plot_mosaic_C1(tintegstr_ch,693.9640232)
+                this_target = self.project_n1097+"_"+tintegstr_12m
+                dir_ms  = self.dir_ready + "outputs/imaging/" + this_target + "/"
+                this_ms = dir_ms + this_target + "_12m_cont.ms"
+                self.plot_uv(this_ms,self.outpng_uv_aca,[-20,20,-20,20],unit="km")
 
-        if plot_mom0==True:
-            self.plot_mom0(tintegstr_7m)
+            if plot_mosaic==True:
+                self.plot_mosaic_7m(tintegstr_7m,self.observed_freq)
+                self.plot_mosaic_C1(tintegstr_ch,693.9640232)
 
-        # calc
-        if calc_collectingarea==True:
-            self.calc_collectingarea()
+            if plot_mom0==True:
+                self.plot_mom0(tintegstr_7m)
 
-        ###########################
-        # set checksim parameters #
-        ###########################
-        tinteg_ch    = str(float(tinteg_checksim))+"h"
-        tintegstr_ch = tinteg_ch.replace(".","p")
-        this_target  = self.project_check+"_"+tintegstr_ch
-        lst_beam     = str(12.979 * 115.27120 / 693.9640232)+"arcsec"
-        lst_nyquist  = str(12.979/2.0 * 115.27120 / 693.9640232)+"arcsec"
+            # calc
+            if calc_collectingarea==True:
+                self.calc_collectingarea()
 
-        ################
-        # run checksim #
-        ################
-        if do_template_checksim==True:
-            self.prepare_template_checksim()
+        ############
+        # checksim #
+        ############
+        if toggle_checksim==True:
+            ###########################
+            # set checksim parameters #
+            ###########################
+            tinteg_ch    = str(float(tinteg_checksim))+"h"
+            tintegstr_ch = tinteg_ch.replace(".","p")
+            this_target  = self.project_check+"_"+tintegstr_ch
+            lst_beam     = str(12.979 * 115.27120 / 693.9640232)+"arcsec"
+            lst_nyquist  = str(12.979/2.0 * 115.27120 / 693.9640232)+"arcsec"
 
-        if do_simint_checksim==True:
-            self.sim12m_checksim(tinteg_ch,tintegstr_ch,lst_nyquist)
+            ################
+            # run checksim #
+            ################
+            if do_template_checksim==True:
+                self.prepare_template_checksim()
 
-        if do_imaging_checksim==True:
-            # stage instead of pipeline
-            msname  = self.project_check + "_12m_" + tintegstr_ch + "."+self.config_c1.split("/")[-1].split(".cfg")[0]+".noisy.ms"
-            ms_from = self.dir_ready + "ms/" + self.project_check + "_12m_" + tintegstr_ch + "/" + msname
-            dir_to  = self.dir_ready + "outputs/imaging/" + this_target + "/"
-            ms_to   = dir_to + this_target + "_12m_cont.ms"
-            os.system("rm -rf " + ms_to)
-            os.system("rm -rf " + dir_to)
-            os.makedirs(dir_to)
-            os.system("cp -r " + ms_from + " " + ms_to)
+            if do_simint_checksim==True:
+                self.sim12m_checksim(tinteg_ch,tintegstr_ch,lst_nyquist)
 
-            # run
-            self.phangs_pipeline_imaging(
-                this_proj=self.project_check,
-                this_array="12m",
-                this_target=this_target,
-                do_cont=True,
-                )
+            if do_imaging_checksim==True:
+                # stage instead of pipeline
+                msname  = self.project_check + "_12m_" + tintegstr_ch + "."+self.config_c1.split("/")[-1].split(".cfg")[0]+".noisy.ms"
+                ms_from = self.dir_ready + "ms/" + self.project_check + "_12m_" + tintegstr_ch + "/" + msname
+                dir_to  = self.dir_ready + "outputs/imaging/" + this_target + "/"
+                ms_to   = dir_to + this_target + "_12m_cont.ms"
+                os.system("rm -rf " + ms_to)
+                os.system("rm -rf " + dir_to)
+                os.makedirs(dir_to)
+                os.system("cp -r " + ms_from + " " + ms_to)
+
+                # run
+                self.phangs_pipeline_imaging(
+                    this_proj=self.project_check,
+                    this_array="12m",
+                    this_target=this_target,
+                    do_cont=True,
+                    )
 
     ###############
     # create_mom0 #
@@ -1366,16 +1390,16 @@ class ToolsLSTSim():
     # plot_uv #
     ###########
 
-    def plot_uv(self,vis,outpng,plotrange):
+    def plot_uv(self,vis,outpng,plotrange,unit="m"):
         """
         Reference:
         https://safe.nrao.edu/wiki/bin/view/ALMA/Uvplt
         """
 
         taskname = self.modname + sys._getframe().f_code.co_name
-        check_first(self.config_c10,taskname)
+        check_first(vis,taskname)
 
-        aU.uvplot(vis, field='0', plotrange=plotrange, figfile=outpng, markersize=10, density=self.fig_dpi, units='m', mirrorPoints=True)
+        aU.uvplot(vis, field='0', plotrange=plotrange, figfile=outpng, markersize=10, density=self.fig_dpi, units=unit, mirrorPoints=True)
 
     ###############
     # plot_config #
@@ -1408,15 +1432,6 @@ class ToolsLSTSim():
         x_7m  = data[:,0].astype(np.float32) / 1000. - x_cnt / 1000.
         y_7m  = data[:,1].astype(np.float32) / 1000. - y_cnt / 1000.
         z_7m  = data[:,2].astype(np.float32) / 1000.
-
-        # get dist and angle: alma-alma baselines
-        #this_data = np.c_[x_12m.flatten(),y_12m.flatten(),z_12m.flatten()]
-        ##this_data = np.c_[x_12m.flatten()+[lst_position[0]],y_12m.flatten()+[lst_position[1]],z_12m.flatten()+[lst_position[2]]]
-        #u_alma, v_alma = self._get_baselines(this_data,this_data,decl=decl,tinteg=tinteg)
-        #u1_lst_center, v1_lst_center = self._get_baselines([lst_position],this_data,decl=decl,tinteg=tinteg)
-        #u2_lst_center, v2_lst_center = self._get_baselines(this_data,[lst_position],decl=decl,tinteg=tinteg)
-        #this_data = np.c_[x_7m.flatten(),y_7m.flatten(),z_7m.flatten()]
-        #u_7m, v_7m = self._get_baselines(this_data,this_data,decl=decl,tinteg=tinteg)
 
         #############################
         # plot: 7m antenna position #
@@ -1510,12 +1525,12 @@ class ToolsLSTSim():
             this_x = x_12m[i]
             this_y = y_12m[i]
             antenna = patches.Ellipse(xy=(this_x,this_y), width=0.3,
-                height=0.3, angle=0, fill=True, color="forestgreen", edgecolor="forestgreen",
+                height=0.3, angle=0, fill=True, color="deepskyblue", edgecolor="deepskyblue",
                 alpha=1.0, lw=0)
             ax1.add_patch(antenna)
 
         # text
-        ax1.text(0.05,0.92, "ALMA 12-m array", color="forestgreen", weight="bold", transform=ax1.transAxes)
+        ax1.text(0.05,0.92, "ALMA 12-m array", color="deepskyblue", weight="bold", transform=ax1.transAxes)
         ax1.text(0.05,0.87, "two LST$_{\mathrm{sim,50m}}$ positions", color="tomato", weight="bold", transform=ax1.transAxes)
 
         # save
