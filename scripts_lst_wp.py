@@ -723,7 +723,8 @@ class ToolsLSTSim():
         # convolve beam #
         #################
         imhead(map_input,mode="del",hdkey="beammajor")
-        run_roundsmooth(map_input,map_input+"_tmp2",0.0013,0.000001,targetres=False)
+        run_roundsmooth(map_input,map_input+"_tmp1",0.0013,0.000001,targetres=False)
+        run_immath_one(map_input,map_input+"_tmp1",map_input,map_input+"_tmp2","IM0",delin=True,chans="0")
 
         ##############
         # exportfits #
