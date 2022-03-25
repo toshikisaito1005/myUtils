@@ -244,6 +244,7 @@ class ToolsLSTSim():
         do_template_torussim   = False, # create "compact" template cube for long-baseline simobserve
         do_simint_torussim     = False, # sim C-10 band 9
         do_imaging_torussim    = False, # imaging sim ms
+        do_process_torussim    = False,
         #
         ########
         # plot #
@@ -409,6 +410,9 @@ class ToolsLSTSim():
                     )
                 """
 
+            if do_process_torussim==True:
+                self.create_map_torussim()
+
         ########
         # plot #
         ########
@@ -432,10 +436,10 @@ class ToolsLSTSim():
                 self.plot_mosaic_C1(tintegstr_ch,693.9640232)
 
             if plot_mom0_n1097sim==True:
-                self.plot_mom0(tintegstr_7m)
+                self.plot_mom0()
 
             if plot_mom0_torussim==True:
-                self.plot_mom0_torussim(tintegstr_7m)
+                self.plot_mom0_torussim()
 
             # calc
             if calc_collectingarea==True:
@@ -691,11 +695,11 @@ class ToolsLSTSim():
         run_immath_one(imagename+"_tmp2",imagename+"_tmp3",str(rms)+"*"+chanwidth+"*sqrt(IM0/"+chanwidth+")",delin=True)
         run_exportfits(imagename+"_tmp3",outfile,True,True,True)
 
-    ########################
-    # create_mom0_torussim #
-    ########################
+    #######################
+    # create_map_torussim #
+    #######################
 
-    def create_mom0_torussim(
+    def create_map_torussim(
         self,
         totaltimetint,
         ):
@@ -733,7 +737,6 @@ class ToolsLSTSim():
 
     def plot_mom0_torussim(
         self,
-        totaltimetint="2p0h",
         ):
         """
         """
@@ -783,7 +786,6 @@ class ToolsLSTSim():
 
     def plot_mom0(
         self,
-        totaltimetint="2p0h",
         ):
         """
         """
