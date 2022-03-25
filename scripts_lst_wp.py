@@ -1323,7 +1323,7 @@ class ToolsLSTSim():
 
         rmaj_in      = str(10.  / 5. / 72.)+"arcsec"
         rmin_in      = str(1.74 / 5. / 72. * 2)+"arcsec"
-        totalflux_in = -1 * totalflux / (5.*5./2.)
+        totalflux_in = -1 * totalflux / 5.
 
         scale = float(totalflux) / float(totalflux-totalflux_in)
         totalflux = totalflux * scale
@@ -1347,11 +1347,12 @@ class ToolsLSTSim():
         myia.setcoordsys(cs.torecord())
         myia.setbrightnessunit("Jy/pixel")
         myia.modify(mycl.torecord(),subtract=False)
-        exportfits(imagename='torus.im',fitsimage=input_dir+self.torus_template_file,overwrite=True)
+        immath(imagename='torus.im',outfile="torus.im2",expr="iif(IM0>0,IM0,0)")
+        exportfits(imagename='torus.im2',fitsimage=input_dir+self.torus_template_file,overwrite=True)
 
         myia.close()
         mycl.close()
-        os.system("rm -rf torus.im")
+        os.system("rm -rf torus.im torus.im2")
 
     ##########################
     # do_simaca_lst_n1097sim #
