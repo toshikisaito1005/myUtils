@@ -723,7 +723,7 @@ class ToolsLSTSim():
         # convolve beam #
         #################
         imhead(map_input,mode="del",hdkey="beammajor")
-        run_roundsmooth(map_input,map_input+"_tmp1",0.0013,0.000001,targetres=False)
+        run_roundsmooth(map_input,map_input+"_tmp1",0.0015,0.000001,targetres=False)
         run_immath_one(map_input+"_tmp1",map_input+"_tmp2","IM0",chans="0",delin=True)
 
         ##############
@@ -1323,7 +1323,7 @@ class ToolsLSTSim():
 
         rmaj_in      = str(10.  / 5. / 72.)+"arcsec"
         rmin_in      = str(1.74 / 5. / 72.)+"arcsec"
-        totalflux_in = -1 * totalflux / (5*5.)
+        totalflux_in = -1 * totalflux / (2.5*2.5.)
 
         scale = float(totalflux) / float(totalflux-totalflux_in)
         totalflux = totalflux * scale
