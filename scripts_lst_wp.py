@@ -1323,7 +1323,7 @@ class ToolsLSTSim():
 
         rmaj_in      = str(10.  / 5. / 72.)+"arcsec"
         rmin_in      = str(1.74 / 5. / 72.)+"arcsec"
-        totalflux_in = -1 * totalflux / (2.5*2.5.)
+        totalflux_in = -1 * totalflux / (2.5*2.5)
 
         scale = float(totalflux) / float(totalflux-totalflux_in)
         totalflux = totalflux * scale
