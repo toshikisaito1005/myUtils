@@ -794,7 +794,7 @@ class ToolsLSTSim():
         check_first(self.n1097_template_fullspec,taskname)
 
         levels_cont1 = [0.01,0.02,0.04,0.08,0.16,0.32,0.64,0.96]
-        levels_cont2 = [0.02,0.04,0.08,0.16,0.32,0.64,0.96]
+        levels_cont2 = [0.04,0.08,0.16,0.32,0.64,0.96]
 
         ##############
         # plot input #
