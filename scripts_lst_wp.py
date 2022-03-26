@@ -744,6 +744,8 @@ class ToolsLSTSim():
         taskname = self.modname + sys._getframe().f_code.co_name
         check_first(self.dust_input,taskname)
 
+        ra_cnt       = "40.66962133deg"
+        dec_cnt      = "-0.01331803deg"
         levels_cont1 = [0.01,0.02,0.04,0.08,0.16,0.32,0.64,0.96]
 
         ##############
@@ -755,8 +757,8 @@ class ToolsLSTSim():
             self.outpng_dust_input,
             imcontour1=self.dust_input,
             imsize_as=0.20,
-            ra_cnt="40.669625deg",
-            dec_cnt="-0.01331667deg",
+            ra_cnt=ra_cnt,
+            dec_cnt=dec_cnt,
             # contour 1
             unit_cont1=None,
             levels_cont1=levels_cont1,
