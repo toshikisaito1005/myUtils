@@ -80,7 +80,7 @@ class ToolsLSTSim():
 
         # import parameters
         if keyfile_fig is not None:
-            self.modname = "ToolsPCA."
+            self.modname = "ToolsLSTSim."
             self._set_dir()            # directories
             self._set_input_fits()     # input maps
             self._set_output_fits()    # output maps
@@ -364,7 +364,6 @@ class ToolsLSTSim():
                 self.sim12m_torussim(tinteg_12m,tintegstr_12m)
 
             if do_imaging_torussim==True:
-                """
                 #############
                 # config_c9 #
                 #############
@@ -386,7 +385,6 @@ class ToolsLSTSim():
                     do_cont=True,
                     only_dirty=True,
                     )
-                """
 
                 #################
                 # config_c9_lst #
@@ -1710,6 +1708,7 @@ class ToolsLSTSim():
             this_hander.set_no_line_products(False)
             this_hander.set_interf_configs(only=[this_array])
 
+        """
         # run piepline
         if do_cont==False:
             this_uvh.loop_stage_uvdata(\
@@ -1725,6 +1724,7 @@ class ToolsLSTSim():
             do_singlescale_clean = False
         else:
             do_singlescale_clean = True
+
         this_imh.loop_imaging(\
                 do_dirty_image          = True,
                 do_revert_to_dirty      = False,
@@ -1737,6 +1737,7 @@ class ToolsLSTSim():
                 extra_ext_in            = '',
                 extra_ext_out           = '',
                 )
+        """
         this_pph.loop_postprocess(\
                 do_prep               = True,
                 do_feather            = False,
