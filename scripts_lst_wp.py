@@ -545,9 +545,15 @@ class ToolsLSTSim():
         ygrid  = np.linspace(kdelim[0], kdelim[1], num=1000)
         l = gaussian_kde(y_7m_tp - x_7m_tp)
         kde_7m_tp = np.array(l(ygrid))
+        p16_7m_tp = str(np.round(np.percentile(y_7m_tp - x_7m_tp, 16),2))
+        p50_7m_tp = str(np.round(np.percentile(y_7m_tp - x_7m_tp, 50),2))
+        p84_7m_tp = str(np.round(np.percentile(y_7m_tp - x_7m_tp, 84),2))
 
         l = gaussian_kde(y_lst - x_lst)
         kde_lst = np.array(l(ygrid))
+        p16_lst = np.percentile(y_lst - x_lst, 16)
+        p50_lst = np.percentile(y_lst - x_lst, 50)
+        p84_lst = np.percentile(y_lst - x_lst, 84)
 
         ########
         # plot #
@@ -613,6 +619,13 @@ class ToolsLSTSim():
         ax2.text(0.95,0.87, "LST/input ratio", color="tomato", weight="bold", ha="right", transform=ax2.transAxes)
 
         # ann
+        ax1.plot(0.75,0.77, "16$^{th}$ = " + p16_7m_tp, ha="left", transform=ax1.transAxes)
+        ax1.plot(0.75,0.67, "50$^{th}$ = " + p50_7m_tp, ha="left", transform=ax1.transAxes)
+        ax1.plot(0.75,0.57, "84$^{th}$ = " + p84_7m_tp, ha="left", transform=ax1.transAxes)
+
+        ax2.plot(0.75,0.77, "16$^{th}$ = " + p16_lst, ha="left", transform=ax2.transAxes)
+        ax2.plot(0.75,0.67, "50$^{th}$ = " + p50_lst, ha="left", transform=ax2.transAxes)
+        ax2.plot(0.75,0.57, "84$^{th}$ = " + p84_lst, ha="left", transform=ax2.transAxes)
 
         # save
         plt.subplots_adjust(hspace=.0)
