@@ -570,10 +570,10 @@ class ToolsLSTSim():
         myax_set(ax1, "both", xlim, ylim, "pixel-by-pixel scatter", "Convolved input (K km s$^{^1}$)", "Convolved output (K km s$^{^1}$)", adjust=ad)
 
         # plot
-        ax1.scatter(x_7m_tp, y_7m_tp, c="tomato", lw=0, s=20, zorder=1e9)
+        ax1.scatter(x_7m_tp, y_7m_tp, c="deepskyblue", lw=0, s=20, zorder=1e9)
         ax1.errorbar(x_7m_tp, y_7m_tp, yerr=yerr_7m_tp, lw=0.5, capsize=0, color="grey", linestyle="None")
 
-        ax1.scatter(x_lst, y_lst, c="deepskyblue", lw=0, s=20, zorder=1e9)
+        ax1.scatter(x_lst, y_lst, c="tomato", lw=0, s=20, zorder=1e9)
         ax1.errorbar(x_lst, y_lst, yerr=yerr_lst, lw=0.5, capsize=0, color="grey", linestyle="None")
 
         # text
