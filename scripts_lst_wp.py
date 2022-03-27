@@ -496,6 +496,7 @@ class ToolsLSTSim():
 
     def plot_scatter_n1097sim(
         self,
+        snr=3.0,
         ):
         """
         """
@@ -503,18 +504,36 @@ class ToolsLSTSim():
         taskname = self.modname + sys._getframe().f_code.co_name
         check_first(self.mom0_input,taskname)
 
+        # import mom0
         l,_ = imval_all(self.mom0_input)
-        data_input = l["data"]
+        l = l["data"]
+        data_input = np.array(l.flatten())
 
         l,_ = imval_all(self.mom0_7m_tp)
-        data_7m_tp = l["data"]
+        l = l["data"]
+        data_7m_tp = np.array(l.flatten())
 
         l,_ = imval_all(self.mom0_lst)
-        data_lst = l["data"]
+        l = l["data"]
+        data_lst = np.array(l.flatten())
 
-        print(np.shape(data_input))
-        print(np.shape(data_7m_tp))
-        print(np.shape(data_lst))
+        # import emom0
+        l,_ = imval_all(self.mom0_7m_tp.replace(".fits","_err.fits"))
+        l = l["data"]
+        err_7m_tp = np.array(l.flatten())
+
+        l,_ = imval_all(self.mom0_lst.replace(".fits","_err.fits"))
+        l = l["data"]
+        err_lst = np.array(l.flatten())
+
+        # process data
+        cut = np.where(data_7m_tp>abs(err_7m_tp)*snr)
+        x_7m_tp = np.log10(data_input[cut])
+        y_7m_tp = np.log10(data_7m_tp[cut])
+
+        cut = np.where(data_lst>abs(err_lst)*snr)
+        x_lst = np.log10(data_input[cut])
+        y_lst = np.log10(data_lst[cut])
 
         """
         ########
