@@ -619,13 +619,13 @@ class ToolsLSTSim():
         ax2.text(0.95,0.87, "LST/input ratio", color="tomato", weight="bold", ha="right", transform=ax2.transAxes)
 
         # ann
-        ax1.plot(0.75,0.77, "16$^{th}$ = " + p16_7m_tp, ha="left", transform=ax1.transAxes)
-        ax1.plot(0.75,0.67, "50$^{th}$ = " + p50_7m_tp, ha="left", transform=ax1.transAxes)
-        ax1.plot(0.75,0.57, "84$^{th}$ = " + p84_7m_tp, ha="left", transform=ax1.transAxes)
+        ax1.text(0.75,0.77, "16$^{th}$ = " + p16_7m_tp, ha="left", transform=ax1.transAxes)
+        ax1.text(0.75,0.67, "50$^{th}$ = " + p50_7m_tp, ha="left", transform=ax1.transAxes)
+        ax1.text(0.75,0.57, "84$^{th}$ = " + p84_7m_tp, ha="left", transform=ax1.transAxes)
 
-        ax2.plot(0.75,0.77, "16$^{th}$ = " + p16_lst, ha="left", transform=ax2.transAxes)
-        ax2.plot(0.75,0.67, "50$^{th}$ = " + p50_lst, ha="left", transform=ax2.transAxes)
-        ax2.plot(0.75,0.57, "84$^{th}$ = " + p84_lst, ha="left", transform=ax2.transAxes)
+        ax2.text(0.75,0.77, "16$^{th}$ = " + p16_lst, ha="left", transform=ax2.transAxes)
+        ax2.text(0.75,0.67, "50$^{th}$ = " + p50_lst, ha="left", transform=ax2.transAxes)
+        ax2.text(0.75,0.57, "84$^{th}$ = " + p84_lst, ha="left", transform=ax2.transAxes)
 
         # save
         plt.subplots_adjust(hspace=.0)
