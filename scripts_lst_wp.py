@@ -540,8 +540,8 @@ class ToolsLSTSim():
         yerr_lst   = abs(err_lst[cut]) / data_lst[cut]
 
         # histogram
-        tlim  = [-1.0,2.0]
-        ygrid = np.linspace(tlim[0], tlim[1], num=1000)
+        kdelim = [-1.0,2.0]
+        ygrid  = np.linspace(kdelim[0], kdelim[1], num=1000)
         l = gaussian_kde(y_7m_tp - x_7m_tp)
         kde_7m_tp = np.array(l(ygrid) / np.sum(l(ygrid)))
 
@@ -580,31 +580,29 @@ class ToolsLSTSim():
         os.system("rm -rf " + self.outpng_scatter_n1097sim)
         plt.savefig(self.outpng_scatter_n1097sim, dpi=self.fig_dpi)
 
-        """
         ##################
         # plot histogram #
         ##################
         ad   = [0.215,0.83,0.10,0.90]
-        xlim = None #[-1.2,2.2]
+        xlim = kdelim
         ylim = None #[-1.2,2.2]
 
         # prepare
         fig = plt.figure(figsize=(13,10))
         gs  = gridspec.GridSpec(nrows=10, ncols=10)
-        ax1 = plt.subplot(gs[0:10,0:10])
+        ax1 = plt.subplot(gs[0:5,0:10])
+        ax2 = plt.subplot(gs[5:10,0:10])
         plt.subplots_adjust(left=ad[0], right=ad[1], bottom=ad[2], top=ad[3])
-        myax_set(ax1, "both", xlim, ylim, "pixel-by-pixel scatter", "Convolved input (K km s$^{^1}$)", "Convolved output (K km s$^{^1}$)", adjust=ad)
+        myax_set(ax1, "x", xlim, ylim, "Output/input KDE", None, None, adjust=ad)
+        myax_set(ax2, "x", xlim, ylim, None, "Ratio", "Density", adjust=ad)
 
         # plot
-        ax1.scatter(x_7m_tp, y_7m_tp, c="red", lw=0, s=20, zorder=1e9)
-        ax1.errorbar(x_7m_tp, y_7m_tp, yerr=yerr_7m_tp, lw=0.5, capsize=0, color="tomato", linestyle="None")
-
-        ax1.scatter(x_lst, y_lst, c="blue", lw=0, s=20, zorder=1e9)
-        ax1.errorbar(x_lst, y_lst, yerr=yerr_lst, lw=0.5, capsize=0, color="deepskyblue", linestyle="None")
+        ax.plot(ygrid, kde_7m_tp, lw=2, color="grey")
+        ax.fill_betweenx(ygrid, 0, kde_7m_tp, facecolor="tomato", alpha=0.5, lw=0)
 
         # text
         ax1.text(0.05,0.92, "7m+TP map", color="tomato", weight="bold", transform=ax1.transAxes)
-        ax1.text(0.05,0.87, "LST map", color="deepskyblue", weight="bold", transform=ax1.transAxes)
+        ax2.text(0.05,0.92, "LST map", color="deepskyblue", weight="bold", transform=ax1.transAxes)
 
         # ann
         ax1.plot(xlim, ylim, "--", color="black", lw=2,zorder=1e10)
@@ -615,7 +613,6 @@ class ToolsLSTSim():
         plt.subplots_adjust(hspace=.0)
         os.system("rm -rf " + self.outpng_scatter_n1097sim)
         plt.savefig(self.outpng_scatter_n1097sim, dpi=self.fig_dpi)
-        """
 
     ###############
     # create_mom0 #
