@@ -506,7 +506,7 @@ class ToolsLSTSim():
         l,_ = imval_all(self.mom0_input)
         data_input = l["data"]
 
-        l,_ = imval_all(self.outpng_mom0_tp_7m)
+        l,_ = imval_all(self.mom0_7m_tp)
         data_7m_tp = l["data"]
 
         l,_ = imval_all(self.mom0_lst)
