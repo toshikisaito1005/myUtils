@@ -545,6 +545,9 @@ class ToolsLSTSim():
         l = gaussian_kde(y_7m_tp - x_7m_tp)
         kde_7m_tp = np.array(l(ygrid))
 
+        l = gaussian_kde(y_lst - x_lst)
+        kde_lst = np.array(l(ygrid))
+
         ########
         # plot #
         ########
@@ -560,15 +563,15 @@ class ToolsLSTSim():
         myax_set(ax1, "both", xlim, ylim, "pixel-by-pixel scatter", "Convolved input (K km s$^{^1}$)", "Convolved output (K km s$^{^1}$)", adjust=ad)
 
         # plot
-        ax1.scatter(x_7m_tp, y_7m_tp, c="red", lw=0, s=20, zorder=1e9)
-        ax1.errorbar(x_7m_tp, y_7m_tp, yerr=yerr_7m_tp, lw=0.5, capsize=0, color="tomato", linestyle="None")
+        ax1.scatter(x_7m_tp, y_7m_tp, c="tomato", lw=0, s=20, zorder=1e9)
+        ax1.errorbar(x_7m_tp, y_7m_tp, yerr=yerr_7m_tp, lw=0.5, capsize=0, color="grey", linestyle="None")
 
-        ax1.scatter(x_lst, y_lst, c="blue", lw=0, s=20, zorder=1e9)
-        ax1.errorbar(x_lst, y_lst, yerr=yerr_lst, lw=0.5, capsize=0, color="deepskyblue", linestyle="None")
+        ax1.scatter(x_lst, y_lst, c="deepskyblue", lw=0, s=20, zorder=1e9)
+        ax1.errorbar(x_lst, y_lst, yerr=yerr_lst, lw=0.5, capsize=0, color="grey", linestyle="None")
 
         # text
-        ax1.text(0.05,0.92, "7m+TP map", color="tomato", weight="bold", transform=ax1.transAxes)
-        ax1.text(0.05,0.87, "LST map", color="deepskyblue", weight="bold", transform=ax1.transAxes)
+        ax1.text(0.05,0.92, "7m+TP map", color="deepskyblue", weight="bold", transform=ax1.transAxes)
+        ax1.text(0.05,0.87, "LST map", color="tomato", weight="bold", transform=ax1.transAxes)
 
         # ann
         ax1.plot(xlim, ylim, "--", color="black", lw=2,zorder=1e10)
@@ -598,11 +601,14 @@ class ToolsLSTSim():
 
         # plot
         ax1.plot(ygrid, kde_7m_tp, lw=2, color="grey")
-        ax1.fill_betweenx(ygrid, 0, kde_7m_tp, facecolor="tomato", alpha=0.5, lw=0)
+        ax1.fill_between(ygrid, 0, kde_7m_tp, facecolor="deepskyblue", alpha=0.5, lw=0)
+
+        ax1.plot(ygrid, kde_lst, lw=2, color="grey")
+        ax1.fill_between(ygrid, 0, kde_lst, facecolor="tomato", alpha=0.5, lw=0)
 
         # text
-        ax1.text(0.05,0.87, "7m+TP map", color="tomato", weight="bold", transform=ax1.transAxes)
-        ax2.text(0.05,0.87, "LST map", color="deepskyblue", weight="bold", transform=ax2.transAxes)
+        ax1.text(0.05,0.87, "7m+TP map", color="deepskyblue", weight="bold", transform=ax1.transAxes)
+        ax2.text(0.05,0.87, "LST map", color="tomato", weight="bold", transform=ax2.transAxes)
 
         # ann
 
