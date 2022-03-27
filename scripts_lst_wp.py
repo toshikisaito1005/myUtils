@@ -609,8 +609,8 @@ class ToolsLSTSim():
         ax2.fill_between(ygrid, 0, kde_lst, facecolor="tomato", alpha=0.5, lw=0)
 
         # text
-        ax1.text(0.05,0.87, "7m+TP/input ratio", color="deepskyblue", weight="bold", transform=ax1.transAxes)
-        ax2.text(0.05,0.87, "LST/input ratio", color="tomato", weight="bold", transform=ax2.transAxes)
+        ax1.text(0.95,0.87, "7m+TP/input ratio", color="deepskyblue", weight="bold", ha="right", transform=ax1.transAxes)
+        ax2.text(0.95,0.87, "LST/input ratio", color="tomato", weight="bold", ha="right", transform=ax2.transAxes)
 
         # ann
 
