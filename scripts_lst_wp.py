@@ -393,7 +393,7 @@ class ToolsLSTSim():
                     this_array="12m",
                     this_target=this_target,
                     do_cont=True,
-                    only_dirty=True,
+                    only_dirty=False,
                     )
 
                 #################
@@ -415,7 +415,7 @@ class ToolsLSTSim():
                     this_array="12m",
                     this_target=this_target_lst,
                     do_cont=True,
-                    only_dirty=True,
+                    only_dirty=False,
                     )
 
             if do_process_torussim==True:
