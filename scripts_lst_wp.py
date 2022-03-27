@@ -529,12 +529,12 @@ class ToolsLSTSim():
         err_lst = np.array(l.flatten())
 
         # process data
-        cut        = np.where(data_7m_tp>abs(err_7m_tp)*snr)
+        cut        = np.where((data_7m_tp>abs(err_7m_tp)*snr)&(data_input>0))
         x_7m_tp    = np.log10(data_input[cut])
         y_7m_tp    = np.log10(data_7m_tp[cut])
         yerr_7m_tp = abs(err_7m_tp[cut]) / data_7m_tp[cut]
 
-        cut        = np.where(data_lst>abs(err_lst)*snr)
+        cut        = np.where((data_lst>abs(err_lst)*snr)&(data_input>0))
         x_lst      = np.log10(data_input[cut])
         y_lst      = np.log10(data_lst[cut])
         yerr_lst   = abs(err_lst[cut]) / data_lst[cut]
