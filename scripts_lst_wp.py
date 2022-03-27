@@ -213,6 +213,8 @@ class ToolsLSTSim():
 
         self.outpng_dust_input    = self.dir_products + self._read_key("outpng_dust_input")
         self.outpng_dust_input_original = self.dir_products + self._read_key("outpng_dust_input_original")
+        self.outpng_dust_c9_lst   = self.dir_products + self._read_key("outpng_dust_c9_lst")
+        self.outpng_dust_c9       = self.dir_products + self._read_key("outpng_dust_c9")
 
     ####################
     # run_sim_lst_alma #
@@ -975,7 +977,69 @@ class ToolsLSTSim():
             label_scalebar=None,
             comment=None,
             # imshow colorbar
-            clim=None,#[0,120],
+            clim=[0,1.25],
+            label_cbar="(mJy beam$^{-1}$)",
+            # annotation
+            numann=None,
+            textann=True,
+            )
+
+        myfig_fits2png(
+            # general
+            self.dust_c9,
+            self.outpng_dust_c9,
+            imcontour1=self.dust_c9,
+            imsize_as=0.20,
+            ra_cnt=ra_cnt,
+            dec_cnt=dec_cnt,
+            # contour 1
+            unit_cont1=None,
+            levels_cont1=levels_cont1,
+            width_cont1=[1.0],
+            color_cont1="white",
+            # imshow
+            set_title="C-9 (convolved): torussim continuum",
+            colorlog=False,
+            set_cmap="rainbow",
+            set_bg_color=cm.rainbow(0),
+            showbeam=True,
+            color_beam="black",
+            scalebar=None,
+            label_scalebar=None,
+            comment=None,
+            # imshow colorbar
+            clim=[0,1.25],
+            label_cbar="(mJy beam$^{-1}$)",
+            # annotation
+            numann=None,
+            textann=True,
+            )
+
+        myfig_fits2png(
+            # general
+            self.dust_c9_lst,
+            self.outpng_dust_c9_lst,
+            imcontour1=self.dust_c9_lst,
+            imsize_as=0.20,
+            ra_cnt=ra_cnt,
+            dec_cnt=dec_cnt,
+            # contour 1
+            unit_cont1=None,
+            levels_cont1=levels_cont1,
+            width_cont1=[1.0],
+            color_cont1="white",
+            # imshow
+            set_title="C-9 (convolved): torussim continuum",
+            colorlog=False,
+            set_cmap="rainbow",
+            set_bg_color=cm.rainbow(0),
+            showbeam=True,
+            color_beam="black",
+            scalebar=None,
+            label_scalebar=None,
+            comment=None,
+            # imshow colorbar
+            clim=[0,1.25],
             label_cbar="(mJy beam$^{-1}$)",
             # annotation
             numann=None,
