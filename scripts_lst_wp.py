@@ -207,6 +207,7 @@ class ToolsLSTSim():
         self.outpng_mom0_tp_7m     = self.dir_products + self._read_key("outpng_mom0_tp_7m")
         self.outpng_mom0_7m_lst50m = self.dir_products + self._read_key("outpng_mom0_7m_lst50m")
         self.outpng_scatter_n1097sim = self.dir_products + self._read_key("outpng_scatter_n1097sim")
+        self.outpng_hist_n1097sim  = 
 
         self.outpng_dust_input    = self.dir_products + self._read_key("outpng_dust_input")
 
@@ -586,9 +587,10 @@ class ToolsLSTSim():
         ##################
         # plot histogram #
         ##################
-        ad   = [0.215,0.83,0.10,0.90]
-        xlim = kdelim
-        ylim = [0,np.max(kde_7m_tp)*1.1]
+        ad    = [0.215,0.83,0.10,0.90]
+        xlim  = kdelim
+        ylim  = [0,np.max(kde_7m_tp)*1.1]
+        ylim2 = [0,np.max(kde_lst)*1.1]
 
         # prepare
         fig = plt.figure(figsize=(13,10))
@@ -597,7 +599,7 @@ class ToolsLSTSim():
         ax2 = plt.subplot(gs[5:10,0:10])
         plt.subplots_adjust(left=ad[0], right=ad[1], bottom=ad[2], top=ad[3])
         myax_set(ax1, "x", xlim, ylim, "Output/input KDE", None, None, adjust=ad)
-        myax_set(ax2, "x", xlim, ylim, None, "Ratio", "Density", adjust=ad)
+        myax_set(ax2, "x", xlim, ylim2, None, "Ratio", "Density", adjust=ad)
 
         # plot
         ax1.plot(ygrid, kde_7m_tp, lw=2, color="grey")
@@ -607,15 +609,15 @@ class ToolsLSTSim():
         ax1.fill_between(ygrid, 0, kde_lst, facecolor="tomato", alpha=0.5, lw=0)
 
         # text
-        ax1.text(0.05,0.87, "7m+TP map", color="deepskyblue", weight="bold", transform=ax1.transAxes)
-        ax2.text(0.05,0.87, "LST map", color="tomato", weight="bold", transform=ax2.transAxes)
+        ax1.text(0.05,0.87, "7m+TP/input ratio", color="deepskyblue", weight="bold", transform=ax1.transAxes)
+        ax2.text(0.05,0.87, "LST/input ratio", color="tomato", weight="bold", transform=ax2.transAxes)
 
         # ann
 
         # save
         plt.subplots_adjust(hspace=.0)
-        os.system("rm -rf " + self.outpng_scatter_n1097sim)
-        plt.savefig(self.outpng_scatter_n1097sim, dpi=self.fig_dpi)
+        os.system("rm -rf " + self.outpng_hist_n1097sim)
+        plt.savefig(self.outpng_hist_n1097sim, dpi=self.fig_dpi)
 
     ###############
     # create_mom0 #
