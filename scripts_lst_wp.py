@@ -542,8 +542,8 @@ class ToolsLSTSim():
         # plot #
         ########
         ad   = [0.215,0.83,0.10,0.90]
-        xlim = None#[-0.180,1.800]
-        ylim = None#[-0.180,1.800]
+        xlim = [-1.5,2.2]
+        ylim = [-1.5,2.2]
 
         # prepare
         fig = plt.figure(figsize=(13,10))
