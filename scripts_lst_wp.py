@@ -254,6 +254,7 @@ class ToolsLSTSim():
         plot_config            = False,
         plot_mosaic            = False,
         plot_mom0_n1097sim     = False,
+        plot_scatter_n1097sim  = False,
         plot_mom0_torussim     = False,
         # calc
         calc_collectingarea    = False,
@@ -437,6 +438,9 @@ class ToolsLSTSim():
             if plot_mom0_n1097sim==True:
                 self.plot_mom0()
 
+            if plot_scatter_n1097sim==True:
+                self.plot_scatter_n1097sim()
+
             if plot_mom0_torussim==True:
                 self.plot_mom0_torussim()
 
@@ -484,6 +488,70 @@ class ToolsLSTSim():
                     this_target=this_target,
                     do_cont=True,
                     )
+
+
+    ###############
+    # plot_scatter_n1097sim #
+    ###############
+
+    def plot_scatter_n1097sim(
+        self,
+        ):
+        """
+        """
+
+        taskname = self.modname + sys._getframe().f_code.co_name
+        check_first(self.mom0_input,taskname)
+
+        l = imval_all(self.mom0_input)
+        data_input = l["data"]
+
+        l = imval_all(self.outpng_mom0_tp_7m)
+        data_7m_tp = l["data"]
+
+        l = imval_all(self.mom0_lst)
+        data_lst = l["data"]
+
+        print(np.shape(data_input))
+        print(np.shape(data_7m_tp))
+        print(np.shape(data_lst))
+
+        """
+        ########
+        # plot #
+        ########
+        ad       = [0.215,0.83,0.10,0.90]
+        ylim_ax1 = [-0.180,1.800]
+        ylim_ax2 = [-0.069,0.690]
+
+        # prepare
+        fig = plt.figure(figsize=(13,10))
+        gs  = gridspec.GridSpec(nrows=10, ncols=10)
+        ax1 = plt.subplot(gs[0:5,0:10])
+        ax2 = plt.subplot(gs[5:10,0:10], sharex=ax1)
+        plt.subplots_adjust(left=ad[0], right=ad[1], bottom=ad[2], top=ad[3])
+        myax_set(ax1, "both", [-300,300], ylim_ax1, "(f) Spectra", None, "$T_{mb}$ (K)", adjust=ad)
+        myax_set(ax2, "both", [-300,300], ylim_ax2, None, "Velocity (km s$^{-1}$)", "$T_{mb}$ (K)", adjust=ad)
+        ax1.tick_params(labelbottom=False)
+
+        # plot
+        ax1.plot([np.min(vel),np.max(vel)], [0,0], "-",  lw=2, c="black")
+        ax1.plot(vel, spec_co_cone, "-", lw=4, c="tomato")
+        ax1.plot(vel, spec_ci_cone, "-", lw=4, c="deepskyblue")
+        ax2.plot([np.min(vel),np.max(vel)], [0,0], "-",  lw=2, c="black")
+        ax2.plot(vel, spec_co_fov1, "-", lw=4, c="tomato")
+        ax2.plot(vel, spec_ci_fov1, "-", lw=4, c="deepskyblue")
+
+        ax1.text(0.05,0.90, "Spectra (bicone)", color="black", weight="bold", transform=ax1.transAxes)
+        ax1.text(0.05,0.82, "CO(1-0)", color="tomato", transform=ax1.transAxes)
+        ax1.text(0.05,0.74, "[CI](1-0)", color="deepskyblue", transform=ax1.transAxes)
+        ax2.text(0.05,0.90, "Spectra (all FoV-1)", color="black", weight="bold", transform=ax2.transAxes)
+
+        # save
+        plt.subplots_adjust(hspace=.0)
+        os.system("rm -rf " + self.png_spectra)
+        plt.savefig(self.png_spectra, dpi=self.fig_dpi)
+        """
 
     ###############
     # create_mom0 #
