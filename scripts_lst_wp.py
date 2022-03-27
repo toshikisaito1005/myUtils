@@ -561,7 +561,12 @@ class ToolsLSTSim():
 
         # text
         ax1.text(0.05,0.92, "7m+TP map", color="tomato", weight="bold", transform=ax1.transAxes)
-        ax1.text(0.05,0.87, "LST map", color="tomato", weight="bold", transform=ax1.transAxes)
+        ax1.text(0.05,0.87, "LST map", color="deepskyblue", weight="bold", transform=ax1.transAxes)
+
+        # ann
+        ax1.plot(xlim, ylim, "--", color="black", lw=2)
+        ax1.plot(xlim, [ylim+1.0,ylim+1.0], "--", color="black", lw=2)
+        ax1.plot(xlim, [ylim-1.0,ylim-1.0], "--", color="black", lw=2)
 
         # save
         plt.subplots_adjust(hspace=.0)
