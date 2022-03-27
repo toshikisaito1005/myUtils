@@ -543,7 +543,8 @@ class ToolsLSTSim():
         kdelim = [-1.0,2.0]
         ygrid  = np.linspace(kdelim[0], kdelim[1], num=1000)
         l = gaussian_kde(y_7m_tp - x_7m_tp)
-        kde_7m_tp = np.array(l(ygrid) / np.sum(l(ygrid)))
+        kde_7m_tp = np.array(l(ygrid) / np.float(np.sum(l(ygrid))))
+        print(kde_7m_tp)
 
         ########
         # plot #
@@ -601,8 +602,8 @@ class ToolsLSTSim():
         ax1.fill_betweenx(ygrid, 0, kde_7m_tp, facecolor="tomato", alpha=0.5, lw=0)
 
         # text
-        ax1.text(0.05,0.92, "7m+TP map", color="tomato", weight="bold", transform=ax1.transAxes)
-        ax2.text(0.05,0.92, "LST map", color="deepskyblue", weight="bold", transform=ax1.transAxes)
+        ax1.text(0.05,0.87, "7m+TP map", color="tomato", weight="bold", transform=ax1.transAxes)
+        ax2.text(0.05,0.87, "LST map", color="deepskyblue", weight="bold", transform=ax2.transAxes)
 
         # ann
 
