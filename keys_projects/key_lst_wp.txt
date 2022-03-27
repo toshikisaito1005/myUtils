@@ -60,6 +60,7 @@ outpng_mom0_7m_lst50m ,,,fig_n1097sim_mom0_7m+lst50m.png
 outpng_scatter_n1097sim ,,,fig_n1097sim_scatter.png
 outpng_hist_n1097sim  ,,,fig_n1097sim_hist.png
 #
+outpng_dust_input_original ,,,fig_torussim_dust_input_original.png
 outpng_dust_input    ,,,fig_torussim_dust_input.png
 
 # box for imagemajick

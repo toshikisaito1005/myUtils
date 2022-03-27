@@ -210,6 +210,7 @@ class ToolsLSTSim():
         self.outpng_hist_n1097sim  = self.dir_products + self._read_key("outpng_hist_n1097sim")
 
         self.outpng_dust_input    = self.dir_products + self._read_key("outpng_dust_input")
+        self.outpng_dust_input_original = self.dir_products + self._read_key("outpng_dust_input_original")
 
     ####################
     # run_sim_lst_alma #
@@ -491,7 +492,6 @@ class ToolsLSTSim():
                     this_target=this_target,
                     do_cont=True,
                     )
-
 
     #########################
     # plot_scatter_n1097sim #
@@ -900,6 +900,37 @@ class ToolsLSTSim():
         ##############
         # plot input #
         ##############
+        myfig_fits2png(
+            # general
+            self.dir_ready+"inputs/"+self.torus_template_file,
+            self.outpng_dust_input_original,
+            imcontour1=self.dir_ready+"inputs/"+self.torus_template_file,
+            imsize_as=0.20,
+            ra_cnt=ra_cnt,
+            dec_cnt=dec_cnt,
+            # contour 1
+            unit_cont1=None,
+            levels_cont1=levels_cont1,
+            width_cont1=[1.0],
+            color_cont1="white",
+            # imshow
+            set_title="Input: torussim continuum",
+            colorlog=False,
+            set_cmap="rainbow",
+            set_bg_color=cm.rainbow(0),
+            showbeam=True,
+            color_beam="black",
+            scalebar=None,
+            label_scalebar=None,
+            comment=None,
+            # imshow colorbar
+            clim=None,#[0,120],
+            label_cbar="(mJy pixel$^{-1}$)",
+            # annotation
+            numann=None,
+            textann=True,
+            )
+
         myfig_fits2png(
             # general
             self.dust_input,
