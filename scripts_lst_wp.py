@@ -597,8 +597,8 @@ class ToolsLSTSim():
         myax_set(ax2, "x", xlim, ylim, None, "Ratio", "Density", adjust=ad)
 
         # plot
-        ax.plot(ygrid, kde_7m_tp, lw=2, color="grey")
-        ax.fill_betweenx(ygrid, 0, kde_7m_tp, facecolor="tomato", alpha=0.5, lw=0)
+        ax1.plot(ygrid, kde_7m_tp, lw=2, color="grey")
+        ax1.fill_betweenx(ygrid, 0, kde_7m_tp, facecolor="tomato", alpha=0.5, lw=0)
 
         # text
         ax1.text(0.05,0.92, "7m+TP map", color="tomato", weight="bold", transform=ax1.transAxes)
