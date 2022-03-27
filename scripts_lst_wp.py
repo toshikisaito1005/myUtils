@@ -131,6 +131,43 @@ class ToolsLSTSim():
         """
         """
 
+        self.n1097_template_in_jypix        = self.project_n1097 + "_template_jypixel.image"
+        self.n1097_template_clipped         = self.project_n1097 + "_template_clipped.image"
+        self.n1097_template_mask_imported   = self.project_n1097 + "_template_mask.image"
+        self.n1097_template_rotated         = self.project_n1097 + "_template_rotated.image"
+        self.n1097_template_shrunk          = self.project_n1097 + "_template_shrunk.image"
+        self.n1097_template_fullspec        = self.project_n1097 + "_template_fullspec.image"
+        self.n1097_template_fullspec_div3   = self.project_n1097 + "_template_fullspec_div3.image"
+        self.n1097_template_fullspec_div5   = self.project_n1097 + "_template_fullspec_div5.image"
+        self.n1097_template_fullspec_div10  = self.project_n1097 + "_template_fullspec_div10.image"
+        self.n1097_template_fullspec_div30  = self.project_n1097 + "_template_fullspec_div30.image"
+        self.n1097_template_fullspec_div100 = self.project_n1097 + "_template_fullspec_div100.image"
+        self.n1097_template_withcont        = self.project_n1097 + "_template_withcont.image"
+        self.n1097_template_withcont_div3   = self.project_n1097 + "_template_withcont_div3.image"
+        self.n1097_template_withcont_div5   = self.project_n1097 + "_template_withcont_div5.image"
+        self.n1097_template_withcont_div10  = self.project_n1097 + "_template_withcont_div10.image"
+        self.n1097_template_withcont_div30  = self.project_n1097 + "_template_withcont_div30.image"
+        self.n1097_template_withcont_div100 = self.project_n1097 + "_template_withcont_div100.image"
+        self.n1097_sdnoise_image            = self.project_n1097 + "_aca_tp_noise_nocont.image"
+        self.n1097_sdimage_fullspec         = self.project_n1097 + "_aca_tp_nocont.image"
+        self.n1097_lstnoise_image           = self.project_n1097 + "_lst_noise_nocont.image"
+        self.n1097_lstimage_fullspec        = self.project_n1097 + "_lst_nocont.image"
+
+        self.n1097_feather_tp_7m            = self.dir_ready + "outputs/" + self._read_key("n1097_feather_tp_7m")
+        self.n1097_feather_lst_7m           = self.dir_ready + "outputs/" + self._read_key("n1097_feather_lst_7m")
+
+        self.torus_template_file            = self._read_key("torus_template_file")
+        self.check_template_file            = self._read_key("check_template_file")
+
+        self.mom0_input                     = self.dir_ready + "outputs/" + "ngc1097sim_mom0_input.fits"
+        self.mom0_tp                        = self.dir_ready + "outputs/" + "ngc1097sim_mom0_TP12m.fits"
+        self.mom0_7m_tp                     = self.dir_ready + "outputs/" + "ngc1097sim_mom0_7m+TP.fits"
+        self.mom0_lst                       = self.dir_ready + "outputs/" + "ngc1097sim_mom0_LST50m.fits"
+        self.mom0_7m_lst                    = self.dir_ready + "outputs/" + "ngc1097sim_mom0_7m+LST.fits"
+
+        self.dust_input                     = self.dir_ready + "outputs/" + "torussim_dust_input.fits"
+        self.dust_c9                        = self.dir_ready + "outputs/" + "torussim_dust_c9.fits"
+        self.dust_c9_lst                    = self.dir_ready + "outputs/" + "torussim_dust_c9_lst.fits"
 
     def _set_input_param(self):
         """
@@ -158,24 +195,6 @@ class ToolsLSTSim():
     def _set_output_txt_png(self):
         """
         """
-
-        self.outpng_config_12m    = self.dir_products + self._read_key("outpng_config_12m")
-        self.outpng_config_7m     = self.dir_products + self._read_key("outpng_config_7m")
-        self.outpng_uv_alma_lst1  = self.dir_products + self._read_key("outpng_uv_alma_lst1")
-        self.outpng_mosaic_7m     = self.dir_products + self._read_key("outpng_mosaic_7m")
-        self.outpng_mosaic_c1     = self.dir_products + self._read_key("outpng_mosaic_c1")
-        self.outpng_uv_aca        = self.dir_products + self._read_key("outpng_uv_aca")
-
-        self.outpng_mom0_input     = self.dir_products + self._read_key("outpng_mom0_input")
-        self.outpng_mom0_tp        = self.dir_products + self._read_key("outpng_mom0_tp")
-        self.outpng_mom0_lst50m    = self.dir_products + self._read_key("outpng_mom0_lst50m")
-        self.outpng_mom0_tp_7m     = self.dir_products + self._read_key("outpng_mom0_tp_7m")
-        self.outpng_mom0_7m_lst50m = self.dir_products + self._read_key("outpng_mom0_7m_lst50m")
-        self.outpng_scatter_n1097sim = self.dir_products + self._read_key("outpng_scatter_n1097sim")
-        self.outpng_hist_n1097sim  = self.dir_products + self._read_key("outpng_hist_n1097sim")
-
-        self.outpng_dust_input    = self.dir_products + self._read_key("outpng_dust_input")
-        self.outpng_dust_input_original = self.dir_products + self._read_key("outpng_dust_input_original")
 
     ####################
     # run_sim_lst_alma #
