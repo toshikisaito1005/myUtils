@@ -913,7 +913,6 @@ class ToolsLSTSim():
         ra_cnt       = "40.66962133deg"
         dec_cnt      = "-0.01331803deg"
         levels_cont1 = [0.04,0.08,0.16,0.32,0.64,0.96]
-        levels_cont1 = [0.04,0.08,0.16,0.32,0.64,0.96]
 
         ##############
         # plot input #
@@ -1032,7 +1031,7 @@ class ToolsLSTSim():
             width_cont1=[1.0],
             color_cont1="white",
             # imshow
-            set_title="C-9 (convolved): torussim continuum",
+            set_title="C-9+LST (convolved): torussim continuum",
             colorlog=False,
             set_cmap="rainbow",
             set_bg_color=cm.rainbow(0),
