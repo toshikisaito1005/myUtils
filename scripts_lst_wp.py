@@ -543,7 +543,7 @@ class ToolsLSTSim():
         kdelim = [-1.0,2.0]
         ygrid  = np.linspace(kdelim[0], kdelim[1], num=1000)
         l = gaussian_kde(y_7m_tp - x_7m_tp)
-        kde_7m_tp = np.array(l(ygrid) / np.float(np.sum(l(ygrid))))
+        kde_7m_tp = np.array(l(ygrid))
         print(kde_7m_tp)
 
         ########
