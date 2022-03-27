@@ -166,6 +166,8 @@ class ToolsLSTSim():
         self.mom0_7m_lst                    = self.dir_ready + "outputs/" + "ngc1097sim_mom0_7m+LST.fits"
 
         self.dust_input                     = self.dir_ready + "outputs/" + "torussim_dust_input.fits"
+        self.dust_c9                        = self.dir_ready + "outputs/" + "torussim_dust_c9.fits"
+        self.dust_c9_lst                    = self.dir_ready + "outputs/" + "torussim_dust_c9_lst.fits"
 
     def _set_input_param(self):
         """
@@ -875,12 +877,21 @@ class ToolsLSTSim():
         run_roundsmooth(map_input,map_input+"_tmp1",0.015,0.000001,targetres=False)
         run_immath_one(map_input+"_tmp1",map_input+"_tmp2","iif(IM0>0,IM0*1000.,0)",chans="0",delin=True)
         imrebin(map_input+"_tmp2",map_input+"_tmp3",factor=[8,8,1,1])
-        os.system("rm -rf "+map_input+"_tmp2")
+        os.system("rm -rf "+map_input+"_tmp2 template.image")
+        os.system("cp -r " + map_input+"_tmp3 template.image")
+
+        run_roundsmooth(map_c9,map_c9+"_tmp1",0.015)
+        run_imregrid(map_c9+"_tmp1","template.image",map_c9+"_tmp2",delin=True)
+
+        run_roundsmooth(map_c9_lst,map_c9_lst+"_tmp1",0.015)
+        run_imregrid(map_c9_lst+"_tmp1","template.image",map_c9_lst+"_tmp2",delin=True)
 
         ##############
         # exportfits #
         ##############
         run_exportfits(map_input+"_tmp3",self.dust_input,True,True,True)
+        run_exportfits(map_c9+"_tmp2",self.dust_c9,True,True,True)
+        run_exportfits(map_c9_lst+"_tmp2",self.dust_c9_lst,True,True,True)
 
     ######################
     # plot_mom0_torussim #
