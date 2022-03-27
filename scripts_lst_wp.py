@@ -854,44 +854,6 @@ class ToolsLSTSim():
         """
         """
 
-        taskname = self.modname + sys._getframe().f_code.co_name
-        check_first(self.dir_ready+"inputs/"+self.torus_template_file,taskname)
-
-        ################
-        # define input #
-        ################
-        map_input  = self.dir_ready+"inputs/"+self.torus_template_file
-        map_c9     = self.dir_ready+"outputs/imaging/torussim_12p0h/torussim_12p0h_12m_cont.image.tt0"
-        map_c9_lst = self.dir_ready+"outputs/imaging/torussim_lst_12p0h/torussim_lst_12p0h_12m_cont.image.tt0"
-
-        ##############
-        # importfits #
-        ##############
-        run_importfits(map_input,map_input.replace(".fits",".image"))
-        map_input = map_input.replace(".fits",".image")
-
-        #################
-        # convolve beam #
-        #################
-        imhead(map_input,mode="del",hdkey="beammajor")
-        run_roundsmooth(map_input,map_input+"_tmp1",0.015,0.000001,targetres=False)
-        run_immath_one(map_input+"_tmp1",map_input+"_tmp2","iif(IM0>0,IM0*1000.,0)",chans="0",delin=True)
-        imrebin(map_input+"_tmp2",map_input+"_tmp3",factor=[8,8,1,1])
-        os.system("rm -rf "+map_input+"_tmp2 template.image")
-        os.system("cp -r " + map_input + "_tmp3 template.image")
-
-        run_roundsmooth(map_c9,map_c9+"_tmp1",0.015)
-        run_imregrid(map_c9+"_tmp1","template.image",map_c9+"_tmp2",delin=True)
-
-        run_roundsmooth(map_c9_lst,map_c9_lst+"_tmp1",0.015)
-        run_imregrid(map_c9_lst+"_tmp1","template.image",map_c9_lst+"_tmp2",delin=True)
-
-        ##############
-        # exportfits #
-        ##############
-        run_exportfits(map_input+"_tmp3",self.dust_input,True,True,True)
-        run_exportfits(map_c9+"_tmp2",self.dust_c9,True,True,True)
-        run_exportfits(map_c9_lst+"_tmp2",self.dust_c9_lst,True,True,True)
 
     ######################
     # plot_mom0_torussim #
