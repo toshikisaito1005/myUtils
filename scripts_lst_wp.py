@@ -902,15 +902,15 @@ class ToolsLSTSim():
         ##############
         run_importfits(
             self.dir_ready+"inputs/"+self.torus_template_file,
-            original+"_tmp1",
+            "original_tmp1",
             )
-        run_immath_one(original+"_tmp1",original+"_tmp2","iif(IM0>0,IM0*1000.,0)",chans="0",delin=True)
-        run_exportfits(original+"_tmp3",original,True,True,True)
+        run_immath_one("original_tmp1","original_tmp2","iif(IM0>0,IM0*1000.,0)",chans="0",delin=True)
+        run_exportfits("original_tmp3","original.fits",True,True,True)
         myfig_fits2png(
             # general
-            original,
+            "original.fits",
             self.outpng_dust_input_original,
-            imcontour1=original,
+            imcontour1="original.fits",
             imsize_as=0.20,
             ra_cnt=ra_cnt,
             dec_cnt=dec_cnt,
@@ -936,6 +936,7 @@ class ToolsLSTSim():
             numann=None,
             textann=True,
             )
+        os.system("rm -rf original.fits")
 
         myfig_fits2png(
             # general
