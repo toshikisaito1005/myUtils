@@ -544,7 +544,6 @@ class ToolsLSTSim():
         ygrid  = np.linspace(kdelim[0], kdelim[1], num=1000)
         l = gaussian_kde(y_7m_tp - x_7m_tp)
         kde_7m_tp = np.array(l(ygrid))
-        print(kde_7m_tp)
 
         ########
         # plot #
@@ -586,7 +585,7 @@ class ToolsLSTSim():
         ##################
         ad   = [0.215,0.83,0.10,0.90]
         xlim = kdelim
-        ylim = None #[-1.2,2.2]
+        ylim = [0,np.max(kde_7m_tp)*1.1]
 
         # prepare
         fig = plt.figure(figsize=(13,10))
