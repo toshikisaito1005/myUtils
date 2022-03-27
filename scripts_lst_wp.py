@@ -565,8 +565,8 @@ class ToolsLSTSim():
 
         # ann
         ax1.plot(xlim, ylim, "--", color="black", lw=2)
-        ax1.plot(xlim, [ylim+1.0,ylim+1.0], "--", color="black", lw=2)
-        ax1.plot(xlim, [ylim-1.0,ylim-1.0], "--", color="black", lw=2)
+        ax1.plot(xlim, [ylim[0]+1.0,ylim[1]+1.0], "--", color="black", lw=2)
+        ax1.plot(xlim, [ylim[0]-1.0,ylim[1]-1.0], "--", color="black", lw=2)
 
         # save
         plt.subplots_adjust(hspace=.0)
