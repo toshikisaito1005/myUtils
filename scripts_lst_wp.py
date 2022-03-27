@@ -551,9 +551,9 @@ class ToolsLSTSim():
 
         l = gaussian_kde(y_lst - x_lst)
         kde_lst = np.array(l(ygrid))
-        p16_lst = np.percentile(y_lst - x_lst, 16)
-        p50_lst = np.percentile(y_lst - x_lst, 50)
-        p84_lst = np.percentile(y_lst - x_lst, 84)
+        p16_lst = str(np.round(np.percentile(np.percentile(y_lst - x_lst, 16),2))
+        p50_lst = str(np.round(np.percentile(np.percentile(y_lst - x_lst, 50),2))
+        p84_lst = str(np.round(np.percentile(np.percentile(y_lst - x_lst, 84),2))
 
         ########
         # plot #
