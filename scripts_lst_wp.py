@@ -43,6 +43,11 @@ from mycasa_tasks import *
 from mycasa_plots import *
 from mycasa_simobs import *
 
+import codecs, sys
+
+sys.stdout = codecs.getwriter('utf_8')(sys.stdout)
+sys.stdin = codecs.getreader('utf_8')(sys.stdin)
+
 ###############
 # ToolsLSTSim #
 ###############
@@ -195,6 +200,24 @@ class ToolsLSTSim():
     def _set_output_txt_png(self):
         """
         """
+
+        self.outpng_config_12m    = self.dir_products + self._read_key("outpng_config_12m")
+        self.outpng_config_7m     = self.dir_products + self._read_key("outpng_config_7m")
+        self.outpng_uv_alma_lst1  = self.dir_products + self._read_key("outpng_uv_alma_lst1")
+        self.outpng_mosaic_7m     = self.dir_products + self._read_key("outpng_mosaic_7m")
+        self.outpng_mosaic_c1     = self.dir_products + self._read_key("outpng_mosaic_c1")
+        self.outpng_uv_aca        = self.dir_products + self._read_key("outpng_uv_aca")
+
+        self.outpng_mom0_input     = self.dir_products + self._read_key("outpng_mom0_input")
+        self.outpng_mom0_tp        = self.dir_products + self._read_key("outpng_mom0_tp")
+        self.outpng_mom0_lst50m    = self.dir_products + self._read_key("outpng_mom0_lst50m")
+        self.outpng_mom0_tp_7m     = self.dir_products + self._read_key("outpng_mom0_tp_7m")
+        self.outpng_mom0_7m_lst50m = self.dir_products + self._read_key("outpng_mom0_7m_lst50m")
+        self.outpng_scatter_n1097sim = self.dir_products + self._read_key("outpng_scatter_n1097sim")
+        self.outpng_hist_n1097sim  = self.dir_products + self._read_key("outpng_hist_n1097sim")
+
+        self.outpng_dust_input    = self.dir_products + self._read_key("outpng_dust_input")
+        self.outpng_dust_input_original = self.dir_products + self._read_key("outpng_dust_input_original")
 
     ####################
     # run_sim_lst_alma #
