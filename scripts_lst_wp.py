@@ -905,7 +905,7 @@ class ToolsLSTSim():
             "original_tmp1",
             )
         run_immath_one("original_tmp1","original_tmp2","iif(IM0>0,IM0*1000.,0)",chans="0",delin=True)
-        run_exportfits("original_tmp3","original.fits",True,True,True)
+        run_exportfits("original_tmp2","original.fits",True,True,True)
         myfig_fits2png(
             # general
             "original.fits",
