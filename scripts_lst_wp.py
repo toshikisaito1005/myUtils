@@ -542,8 +542,8 @@ class ToolsLSTSim():
         # plot #
         ########
         ad   = [0.215,0.83,0.10,0.90]
-        xlim = [-1.5,2.2]
-        ylim = [-1.5,2.2]
+        xlim = [-1.2,2.2]
+        ylim = [-1.2,2.2]
 
         # prepare
         fig = plt.figure(figsize=(13,10))
@@ -553,11 +553,15 @@ class ToolsLSTSim():
         myax_set(ax1, "both", xlim, ylim, "pixel-by-pixel scatter", "Convolved input (K km s$^{^1}$)", "Convolved output (K km s$^{^1}$)", adjust=ad)
 
         # plot
-        ax1.scatter(x_7m_tp, y_7m_tp, c="tomato", lw=0, s=20, zorder=1e9)
+        ax1.scatter(x_7m_tp, y_7m_tp, c="red", lw=0, s=20, zorder=1e9)
         ax1.errorbar(x_7m_tp, y_7m_tp, yerr=yerr_7m_tp, lw=0.5, capsize=0, color="tomato", linestyle="None")
 
-        ax1.scatter(x_lst, y_lst, c="deepskyblue", lw=0, s=20, zorder=1e9)
+        ax1.scatter(x_lst, y_lst, c="blue", lw=0, s=20, zorder=1e9)
         ax1.errorbar(x_lst, y_lst, yerr=yerr_lst, lw=0.5, capsize=0, color="deepskyblue", linestyle="None")
+
+        # text
+        ax1.text(0.05,0.92, "7m+TP map", color="tomato", weight="bold", transform=ax1.transAxes)
+        ax1.text(0.05,0.87, "LST map", color="tomato", weight="bold", transform=ax1.transAxes)
 
         # save
         plt.subplots_adjust(hspace=.0)
