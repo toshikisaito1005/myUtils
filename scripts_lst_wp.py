@@ -900,11 +900,17 @@ class ToolsLSTSim():
         ##############
         # plot input #
         ##############
+        run_importfits(
+            self.dir_ready+"inputs/"+self.torus_template_file,
+            original+"_tmp1",
+            )
+        run_immath_one(original+"_tmp1",original+"_tmp2","iif(IM0>0,IM0*1000.,0)",chans="0",delin=True)
+        run_exportfits(original+"_tmp3",original,True,True,True)
         myfig_fits2png(
             # general
-            self.dir_ready+"inputs/"+self.torus_template_file,
+            original,
             self.outpng_dust_input_original,
-            imcontour1=self.dir_ready+"inputs/"+self.torus_template_file,
+            imcontour1=original,
             imsize_as=0.20,
             ra_cnt=ra_cnt,
             dec_cnt=dec_cnt,
