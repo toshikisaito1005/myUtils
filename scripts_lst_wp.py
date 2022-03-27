@@ -854,6 +854,8 @@ class ToolsLSTSim():
         """
         """
 
+        taskname = self.modname + sys._getframe().f_code.co_name
+        check_first(self.dir_ready+"inputs/"+self.torus_template_file,taskname)
 
     ######################
     # plot_mom0_torussim #
