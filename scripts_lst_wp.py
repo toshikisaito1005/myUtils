@@ -894,8 +894,8 @@ class ToolsLSTSim():
         # exportfits #
         ##############
         run_exportfits(map_input+"_tmp3",self.dust_input,True,True,True)
-        run_exportfits(map_c9+"_tmp2",self.dust_c9,True,True,True)
-        run_exportfits(map_c9_lst+"_tmp2",self.dust_c9_lst,True,True,True)
+        run_exportfits(map_c9+"_tmp3",self.dust_c9,True,True,True)
+        run_exportfits(map_c9_lst+"_tmp3",self.dust_c9_lst,True,True,True)
 
     ######################
     # plot_mom0_torussim #
