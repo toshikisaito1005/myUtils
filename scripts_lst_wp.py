@@ -490,9 +490,9 @@ class ToolsLSTSim():
                     )
 
 
-    ###############
+    #########################
     # plot_scatter_n1097sim #
-    ###############
+    #########################
 
     def plot_scatter_n1097sim(
         self,
@@ -503,13 +503,13 @@ class ToolsLSTSim():
         taskname = self.modname + sys._getframe().f_code.co_name
         check_first(self.mom0_input,taskname)
 
-        l = imval_all(self.mom0_input)
+        l,_ = imval_all(self.mom0_input)
         data_input = l["data"]
 
-        l = imval_all(self.outpng_mom0_tp_7m)
+        l,_ = imval_all(self.outpng_mom0_tp_7m)
         data_7m_tp = l["data"]
 
-        l = imval_all(self.mom0_lst)
+        l,_ = imval_all(self.mom0_lst)
         data_lst = l["data"]
 
         print(np.shape(data_input))
