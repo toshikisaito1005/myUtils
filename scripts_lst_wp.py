@@ -207,7 +207,7 @@ class ToolsLSTSim():
         self.outpng_mom0_tp_7m     = self.dir_products + self._read_key("outpng_mom0_tp_7m")
         self.outpng_mom0_7m_lst50m = self.dir_products + self._read_key("outpng_mom0_7m_lst50m")
         self.outpng_scatter_n1097sim = self.dir_products + self._read_key("outpng_scatter_n1097sim")
-        self.outpng_hist_n1097sim  = 
+        self.outpng_hist_n1097sim  = self.dir_products + self._read_key("outpng_scatter_n1097sim")
 
         self.outpng_dust_input    = self.dir_products + self._read_key("outpng_dust_input")
 
