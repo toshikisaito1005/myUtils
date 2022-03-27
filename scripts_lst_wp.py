@@ -606,7 +606,7 @@ class ToolsLSTSim():
         plt.subplots_adjust(left=ad[0], right=ad[1], bottom=ad[2], top=ad[3])
         myax_set(ax1, "x", xlim, ylim, "Output/input KDE", None, None, adjust=ad)
         myax_set(ax2, "x", xlim, ylim2, None, "log Ratio", "Density", adjust=ad)
-        ax2.tick_params(labelbottom=False)
+        ax1.tick_params(labelbottom=False)
 
         # plot
         ax1.plot(ygrid, kde_7m_tp, lw=2, color="grey")
