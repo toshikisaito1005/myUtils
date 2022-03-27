@@ -605,8 +605,8 @@ class ToolsLSTSim():
         ax1.plot(ygrid, kde_7m_tp, lw=2, color="grey")
         ax1.fill_between(ygrid, 0, kde_7m_tp, facecolor="deepskyblue", alpha=0.5, lw=0)
 
-        ax1.plot(ygrid, kde_lst, lw=2, color="grey")
-        ax1.fill_between(ygrid, 0, kde_lst, facecolor="tomato", alpha=0.5, lw=0)
+        ax2.plot(ygrid, kde_lst, lw=2, color="grey")
+        ax2.fill_between(ygrid, 0, kde_lst, facecolor="tomato", alpha=0.5, lw=0)
 
         # text
         ax1.text(0.05,0.87, "7m+TP/input ratio", color="deepskyblue", weight="bold", transform=ax1.transAxes)
