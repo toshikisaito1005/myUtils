@@ -859,6 +859,8 @@ class ToolsLSTSim():
         # define input #
         ################
         map_input  = self.dir_ready+"inputs/"+self.torus_template_file
+        map_c9     = self.dir_ready+"outputs/imaging/torussim_12p0h/torussim_12p0h_12m_cont.image.tt0"
+        map_c9_lst = self.dir_ready+"outputs/imaging/torussim_lst_12p0h/torussim_lst_12p0h_12m_cont.image.tt0"
 
         ##############
         # importfits #
