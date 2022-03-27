@@ -200,10 +200,11 @@ class ToolsLSTSim():
         self.outpng_mosaic_c1     = self.dir_products + self._read_key("outpng_mosaic_c1")
         self.outpng_uv_aca        = self.dir_products + self._read_key("outpng_uv_aca")
 
-        self.outpng_mom0_input    = self.dir_products + self._read_key("outpng_mom0_input")
-        self.outpng_mom0_tp       = self.dir_products + self._read_key("outpng_mom0_tp")
-        self.outpng_mom0_lst50m   = self.dir_products + self._read_key("outpng_mom0_lst50m")
-        self.outpng_mom0_tp_7m    = self.dir_products + self._read_key("outpng_mom0_tp_7m")
+        self.outpng_mom0_input     = self.dir_products + self._read_key("outpng_mom0_input")
+        self.outpng_mom0_tp        = self.dir_products + self._read_key("outpng_mom0_tp")
+        self.outpng_mom0_lst50m    = self.dir_products + self._read_key("outpng_mom0_lst50m")
+        self.outpng_mom0_tp_7m     = self.dir_products + self._read_key("outpng_mom0_tp_7m")
+        self.outpng_mom0_7m_lst50m = self.dir_products + self._read_key("outpng_mom0_7m_lst50m")
 
         self.outpng_dust_input    = self.dir_products + self._read_key("outpng_dust_input")
 
@@ -918,6 +919,40 @@ class ToolsLSTSim():
             color_cont1="white",
             # imshow
             set_title="LST 50m: n1097sim [CI] mom0",
+            colorlog=False,
+            set_cmap="rainbow",
+            set_bg_color=cm.rainbow(0),
+            showbeam=True,
+            color_beam="black",
+            scalebar=None,
+            label_scalebar=None,
+            comment=None,
+            # imshow colorbar
+            clim=[0,120],
+            label_cbar="(K km s$^{-1}$)",
+            # annotation
+            numann="lst_n1097sim",
+            textann=True,
+            )
+
+        ###################
+        # plot 7m+LST 50m #
+        ###################
+        myfig_fits2png(
+            # general
+            self.mom0_7m_lst,
+            self.outpng_mom0_7m_lst50m,
+            imcontour1=self.mom0_7m_lst,
+            imsize_as=150,
+            ra_cnt="41.5763deg",
+            dec_cnt="-30.2771deg",
+            # contour 1
+            unit_cont1=None,
+            levels_cont1=levels_cont1,
+            width_cont1=[1.0],
+            color_cont1="white",
+            # imshow
+            set_title="7m+LST 50m: n1097sim [CI] mom0",
             colorlog=False,
             set_cmap="rainbow",
             set_bg_color=cm.rainbow(0),

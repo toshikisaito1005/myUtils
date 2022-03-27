@@ -46,16 +46,18 @@ config_lst    ,,,alma-configuration-files/lst.cfg
 # output png and txt #
 ######################
 # png files
-outpng_config_12m    ,,,fig_config_12m.png
-outpng_config_7m     ,,,fig_config_7m.png
-outpng_uv_alma_lst1  ,,,fig_uv_alma_lst1.png
-outpng_uv_aca        ,,,fig_uv_aca.png
-outpng_mosaic_7m     ,,,fig_mosaic_7m.png
-outpng_mosaic_c1     ,,,fig_mosaic_c1.png
-outpng_mom0_input    ,,,fig_n1097sim_mom0_input.png
-outpng_mom0_tp       ,,,fig_n1097sim_mom0_tp.png
-outpng_mom0_lst50m   ,,,fig_n1097sim_mom0_lst50m.png
-outpng_mom0_tp_7m    ,,,fig_n1097sim_mom0_7m+tp.png
+outpng_config_12m     ,,,fig_config_12m.png
+outpng_config_7m      ,,,fig_config_7m.png
+outpng_uv_alma_lst1   ,,,fig_uv_alma_lst1.png
+outpng_uv_aca         ,,,fig_uv_aca.png
+outpng_mosaic_7m      ,,,fig_mosaic_7m.png
+outpng_mosaic_c1      ,,,fig_mosaic_c1.png
+outpng_mom0_input     ,,,fig_n1097sim_mom0_input.png
+outpng_mom0_tp        ,,,fig_n1097sim_mom0_tp.png
+outpng_mom0_lst50m    ,,,fig_n1097sim_mom0_lst50m.png
+outpng_mom0_tp_7m     ,,,fig_n1097sim_mom0_7m+tp.png
+outpng_mom0_7m_lst50m ,,,fig_n1097sim_mom0_7m+lst50m.png
+#
 outpng_dust_input    ,,,fig_torussim_dust_input.png
 
 # box for imagemajick
