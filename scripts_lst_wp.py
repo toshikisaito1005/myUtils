@@ -131,43 +131,6 @@ class ToolsLSTSim():
         """
         """
 
-        self.n1097_template_in_jypix        = self.project_n1097 + "_template_jypixel.image"
-        self.n1097_template_clipped         = self.project_n1097 + "_template_clipped.image"
-        self.n1097_template_mask_imported   = self.project_n1097 + "_template_mask.image"
-        self.n1097_template_rotated         = self.project_n1097 + "_template_rotated.image"
-        self.n1097_template_shrunk          = self.project_n1097 + "_template_shrunk.image"
-        self.n1097_template_fullspec        = self.project_n1097 + "_template_fullspec.image"
-        self.n1097_template_fullspec_div3   = self.project_n1097 + "_template_fullspec_div3.image"
-        self.n1097_template_fullspec_div5   = self.project_n1097 + "_template_fullspec_div5.image"
-        self.n1097_template_fullspec_div10  = self.project_n1097 + "_template_fullspec_div10.image"
-        self.n1097_template_fullspec_div30  = self.project_n1097 + "_template_fullspec_div30.image"
-        self.n1097_template_fullspec_div100 = self.project_n1097 + "_template_fullspec_div100.image"
-        self.n1097_template_withcont        = self.project_n1097 + "_template_withcont.image"
-        self.n1097_template_withcont_div3   = self.project_n1097 + "_template_withcont_div3.image"
-        self.n1097_template_withcont_div5   = self.project_n1097 + "_template_withcont_div5.image"
-        self.n1097_template_withcont_div10  = self.project_n1097 + "_template_withcont_div10.image"
-        self.n1097_template_withcont_div30  = self.project_n1097 + "_template_withcont_div30.image"
-        self.n1097_template_withcont_div100 = self.project_n1097 + "_template_withcont_div100.image"
-        self.n1097_sdnoise_image            = self.project_n1097 + "_aca_tp_noise_nocont.image"
-        self.n1097_sdimage_fullspec         = self.project_n1097 + "_aca_tp_nocont.image"
-        self.n1097_lstnoise_image           = self.project_n1097 + "_lst_noise_nocont.image"
-        self.n1097_lstimage_fullspec        = self.project_n1097 + "_lst_nocont.image"
-
-        self.n1097_feather_tp_7m            = self.dir_ready + "outputs/" + self._read_key("n1097_feather_tp_7m")
-        self.n1097_feather_lst_7m           = self.dir_ready + "outputs/" + self._read_key("n1097_feather_lst_7m")
-
-        self.torus_template_file            = self._read_key("torus_template_file")
-        self.check_template_file            = self._read_key("check_template_file")
-
-        self.mom0_input                     = self.dir_ready + "outputs/" + "ngc1097sim_mom0_input.fits"
-        self.mom0_tp                        = self.dir_ready + "outputs/" + "ngc1097sim_mom0_TP12m.fits"
-        self.mom0_7m_tp                     = self.dir_ready + "outputs/" + "ngc1097sim_mom0_7m+TP.fits"
-        self.mom0_lst                       = self.dir_ready + "outputs/" + "ngc1097sim_mom0_LST50m.fits"
-        self.mom0_7m_lst                    = self.dir_ready + "outputs/" + "ngc1097sim_mom0_7m+LST.fits"
-
-        self.dust_input                     = self.dir_ready + "outputs/" + "torussim_dust_input.fits"
-        self.dust_c9                        = self.dir_ready + "outputs/" + "torussim_dust_c9.fits"
-        self.dust_c9_lst                    = self.dir_ready + "outputs/" + "torussim_dust_c9_lst.fits"
 
     def _set_input_param(self):
         """
@@ -856,6 +819,42 @@ class ToolsLSTSim():
 
         taskname = self.modname + sys._getframe().f_code.co_name
         check_first(self.dir_ready+"inputs/"+self.torus_template_file,taskname)
+
+        ################
+        # define input #
+        ################
+        map_input  = self.dir_ready+"inputs/"+self.torus_template_file
+        map_c9     = self.dir_ready+"outputs/imaging/torussim_12p0h/torussim_12p0h_12m_cont.image.tt0"
+        map_c9_lst = self.dir_ready+"outputs/imaging/torussim_lst_12p0h/torussim_lst_12p0h_12m_cont.image.tt0"
+
+        ##############
+        # importfits #
+        ##############
+        run_importfits(map_input,map_input.replace(".fits",".image"))
+        map_input = map_input.replace(".fits",".image")
+
+        #################
+        # convolve beam #
+        #################
+        imhead(map_input,mode="del",hdkey="beammajor")
+        run_roundsmooth(map_input,map_input+"_tmp1",0.015,0.000001,targetres=False)
+        run_immath_one(map_input+"_tmp1",map_input+"_tmp2","iif(IM0>0,IM0*1000.,0)",chans="0",delin=True)
+        imrebin(map_input+"_tmp2",map_input+"_tmp3",factor=[8,8,1,1])
+        os.system("rm -rf "+map_input+"_tmp2 template.image")
+        os.system("cp -r " + map_input + "_tmp3 template.image")
+
+        run_roundsmooth(map_c9,map_c9+"_tmp1",0.015)
+        run_imregrid(map_c9+"_tmp1","template.image",map_c9+"_tmp2",delin=True)
+
+        run_roundsmooth(map_c9_lst,map_c9_lst+"_tmp1",0.015)
+        run_imregrid(map_c9_lst+"_tmp1","template.image",map_c9_lst+"_tmp2",delin=True)
+
+        ##############
+        # exportfits #
+        ##############
+        run_exportfits(map_input+"_tmp3",self.dust_input,True,True,True)
+        run_exportfits(map_c9+"_tmp2",self.dust_c9,True,True,True)
+        run_exportfits(map_c9_lst+"_tmp2",self.dust_c9_lst,True,True,True)
 
     ######################
     # plot_mom0_torussim #
