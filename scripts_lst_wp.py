@@ -884,11 +884,11 @@ class ToolsLSTSim():
 
         run_roundsmooth(map_c9,map_c9+"_tmp1",0.015)
         run_imregrid(map_c9+"_tmp1","template.image",map_c9+"_tmp2",delin=True)
-        run_immath_one(map_c9+"_tmp2",map_c9+"_tmp3","iif(IM0>0,IM0*1000.,0)",chans="0",delin=True)
+        run_immath_one(map_c9+"_tmp2",map_c9+"_tmp3","IM0*1000.",chans="0",delin=True)
 
         run_roundsmooth(map_c9_lst,map_c9_lst+"_tmp1",0.015)
         run_imregrid(map_c9_lst+"_tmp1","template.image",map_c9_lst+"_tmp2",delin=True)
-        run_immath_one(map_c9_lst+"_tmp2",map_c9_lst+"_tmp3","iif(IM0>0,IM0*1000.,0)",chans="0",delin=True)
+        run_immath_one(map_c9_lst+"_tmp2",map_c9_lst+"_tmp3","IM0*1000.",chans="0",delin=True)
 
         ##############
         # exportfits #
