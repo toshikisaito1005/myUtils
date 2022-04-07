@@ -189,6 +189,48 @@ class ToolsN6240Contin():
         b4_sum     = np.sum(data_in) / b4_beam
         b4_rms     = np.sqrt(np.mean(np.square(data_out)))
 
+        # measure b6 stats
+        this_map = self.map_b6
+        run_imregrid(inmask,this_map,inmask+"_b6")
+        run_imregrid(outmask,this_map,outmask+"_b6")
+        #
+        run_immath_two(this_map,inmask+"_b6",this_map+"_in","IM0*IM1")
+        run_immath_two(this_map,outmask+"_b6",this_map+"_out","IM0*IM1")
+        data_in,_  = imval_all(this_map+"_in")
+        data_in    = data_in["data"] * data_in["mask"]
+        data_in    = data_in.flatten()
+        data_in    = data_in[data_in!=0]
+        data_out,_ = imval_all(this_map+"_out")
+        data_out   = data_out["data"] * data_out["mask"]
+        data_out   = data_out.flatten()
+        data_out   = data_out[data_out!=0]
+        #
+        b6_beam    = beam_area(this_map)
+        b6_max     = np.max(data_in)
+        b6_sum     = np.sum(data_in) / b6_beam
+        b6_rms     = np.sqrt(np.mean(np.square(data_out)))
+
+        # measure b7 stats
+        this_map = self.map_b7
+        run_imregrid(inmask,this_map,inmask+"_b7")
+        run_imregrid(outmask,this_map,outmask+"_b7")
+        #
+        run_immath_two(this_map,inmask+"_b6",this_map+"_in","IM0*IM1")
+        run_immath_two(this_map,outmask+"_b6",this_map+"_out","IM0*IM1")
+        data_in,_  = imval_all(this_map+"_in")
+        data_in    = data_in["data"] * data_in["mask"]
+        data_in    = data_in.flatten()
+        data_in    = data_in[data_in!=0]
+        data_out,_ = imval_all(this_map+"_out")
+        data_out   = data_out["data"] * data_out["mask"]
+        data_out   = data_out.flatten()
+        data_out   = data_out[data_out!=0]
+        #
+        b7_beam    = beam_area(this_map)
+        b7_max     = np.max(data_in)
+        b7_sum     = np.sum(data_in) / b7_beam
+        b7_rms     = np.sqrt(np.mean(np.square(data_out)))
+
     ###############
     # _create_dir #
     ###############
