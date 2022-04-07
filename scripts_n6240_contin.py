@@ -100,6 +100,42 @@ class ToolsN6240Contin():
         """
         """
 
+    ###############
+    # _create_dir #
+    ###############
+
+    def _create_dir(self, this_dir):
+
+        if self.refresh==True:
+            print("## refresh " + this_dir)
+            os.system("rm -rf " + this_dir)
+
+        if not glob.glob(this_dir):
+            print("## create " + this_dir)
+            os.mkdir(this_dir)
+
+        else:
+            print("## not refresh " + this_dir)
+
+    #############
+    # _read_key #
+    #############
+
+    def _read_key(self, key, keyfile="fig", delimiter=",,,"):
+
+        if keyfile=="gal":
+            keyfile = self.keyfile_gal
+        elif keyfile=="fig":
+            keyfile = self.keyfile_fig
+
+        keydata  = np.loadtxt(keyfile,dtype="str",delimiter=delimiter)
+        keywords =\
+             np.array([s.replace(" ","") for s in keydata[:,0]])
+        values   = keydata[:,1]
+        value    = values[np.where(keywords==key)[0][0]]
+
+        return value
+
 ###################
 # end of ToolsPCA #
 ###################
