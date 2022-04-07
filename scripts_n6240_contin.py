@@ -188,11 +188,113 @@ class ToolsN6240Contin():
         check_first(self.map_b3,taskname)
 
         # create central mask for rms measurement
-        this_mask = "mask.image"
-        run_immath_one(self.map_b3,this_mask,"iif(IM0>=0.99,1,0)")
+        inmask = "mask.image"
+        run_immath_one(self.map_b3,inmask,"iif(IM0>=0.99,1,0)")
+        outmask = "mask.image2"
+        run_immath_one(self.map_b3,outmask,"iif(IM0<0.99,1,0)")
 
-        # clip center and measure rms
-        print(imstat(self.map_b3))
+        # measure diameter of the mask
+        data,_ = imval_all(inmask)
+        data   = data["data"] * data["mask"]
+        data   = np.array(data.flatten())
+        numpix = len(data[data>0])
+        pix    = abs(imhead(inmask)["incr"][0]) * 3600 * 180/np.pi
+        #
+        fov_as = numpix * pix**2
+
+        # measure b3 stats
+        this_map = self.map_b3
+        run_immath_two(this_map,inmask,this_map+"_in","IM0*IM1")
+        run_immath_two(this_map,outmask,this_map+"_out","IM0*IM1")
+        data_in,_  = imval_all(this_map+"_in")
+        data_in    = data_in["data"] * data_in["mask"]
+        data_in    = data_in.flatten()
+        data_in    = data_in[data_in!=0]
+        data_out,_ = imval_all(this_map+"_out")
+        data_out   = data_out["data"] * data_out["mask"]
+        data_out   = data_out.flatten()
+        data_out   = data_out[data_out!=0]
+        #
+        b3_beam    = beam_area(this_map)
+        b3_max     = np.max(data_in)
+        b3_sum     = np.sum(data_in) / b3_beam
+        b3_rms     = np.sqrt(np.mean(np.square(data_out)))
+
+        # measure b4 stats
+        this_map = self.map_b3
+        run_imregrid(inmask,this_map,inmask+"_b4")
+        run_imregrid(outmask,this_map,outmask+"_b4")
+        #
+        run_immath_two(this_map,inmask+"_b4",this_map+"_in","IM0*IM1")
+        run_immath_two(this_map,outmask+"_b4",this_map+"_out","IM0*IM1")
+        data_in,_  = imval_all(this_map+"_in")
+        data_in    = data_in["data"] * data_in["mask"]
+        data_in    = data_in.flatten()
+        data_in    = data_in[data_in!=0]
+        data_out,_ = imval_all(this_map+"_out")
+        data_out   = data_out["data"] * data_out["mask"]
+        data_out   = data_out.flatten()
+        data_out   = data_out[data_out!=0]
+        #
+        b4_beam    = beam_area(this_map)
+        b4_max     = np.max(data_in)
+        b4_sum     = np.sum(data_in) / b4_beam
+        b4_rms     = np.sqrt(np.mean(np.square(data_out)))
+
+        # measure b6 stats
+        this_map = self.map_b6
+        run_imregrid(inmask,this_map,inmask+"_b6")
+        run_imregrid(outmask,this_map,outmask+"_b6")
+        #
+        run_immath_two(this_map,inmask+"_b6",this_map+"_in","IM0*IM1")
+        run_immath_two(this_map,outmask+"_b6",this_map+"_out","IM0*IM1")
+        data_in,_  = imval_all(this_map+"_in")
+        data_in    = data_in["data"] * data_in["mask"]
+        data_in    = data_in.flatten()
+        data_in    = data_in[data_in!=0]
+        data_out,_ = imval_all(this_map+"_out")
+        data_out   = data_out["data"] * data_out["mask"]
+        data_out   = data_out.flatten()
+        data_out   = data_out[data_out!=0]
+        #
+        b6_beam    = beam_area(this_map)
+        b6_max     = np.max(data_in)
+        b6_sum     = np.sum(data_in) / b6_beam
+        b6_rms     = np.sqrt(np.mean(np.square(data_out)))
+
+        # measure b6 stats
+        this_map = self.map_b6
+        run_imregrid(inmask,this_map,inmask+"_b6")
+        run_imregrid(outmask,this_map,outmask+"_b6")
+        #
+        run_immath_two(this_map,inmask+"_b6",this_map+"_in","IM0*IM1")
+        run_immath_two(this_map,outmask+"_b6",this_map+"_out","IM0*IM1")
+        data_in,_  = imval_all(this_map+"_in")
+        data_in    = data_in["data"] * data_in["mask"]
+        data_in    = data_in.flatten()
+        data_in    = data_in[data_in!=0]
+        data_out,_ = imval_all(this_map+"_out")
+        data_out   = data_out["data"] * data_out["mask"]
+        data_out   = data_out.flatten()
+        data_out   = data_out[data_out!=0]
+        #
+        b6_beam    = beam_area(this_map)
+        b6_max     = np.max(data_in)
+        b6_sum     = np.sum(data_in) / b6_beam
+        b6_rms     = np.sqrt(np.mean(np.square(data_out)))
+
+        # print calc
+        print("fov_as = ",fov_as,"arcsec^2")
+        print("#")
+        print("B3 max = ",b3_max,"Jy/b")
+        print("B3 tot = ",b3_sum,"Jy")
+        print("B3 rms = ",b3_rms,"Jy/b")
+        print("B3 peak S/N = ",b3_max/b3_rms,"Jy/b")
+        print("#")
+        print("B4 max = ",b4_max,"Jy/b")
+        print("B4 tot = ",b4_sum,"Jy")
+        print("B4 rms = ",b4_rms,"Jy/b")
+        print("B4 peak S/N = ",b4_max/b4_rms,"Jy/b")
 
     ##############
     # align_maps #
