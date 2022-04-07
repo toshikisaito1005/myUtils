@@ -1,0 +1,49 @@
+###############
+# directories #
+###############
+dir_proj                  ,,,/lfs13/saitots/proj_n6240_contin/
+dir_raw                   ,,,data_raw/
+dir_ready                 ,,,data_ready/
+dir_other                 ,,,data_other/
+dir_products              ,,,products_png/
+dir_final                 ,,,images/
+
+##################
+# final products #
+##################
+
+############
+# raw maps #
+############
+map_b3 ,,,ngc6240_b3_12m+7m_cont.image.tt0
+map_b4 ,,,ngc6240_b4_12m_cont.image.tt0
+map_b6 ,,,ngc6240_b6_12m+7m_cont.image.tt0
+map_b7 ,,,ngc6240_b7_12m_cont.image.tt0
+map_b8 ,,,ngc6240_b8_12m+7m_cont.image.tt0
+map_b9 ,,,ngc6240_b9_12m_cont.image.tt0
+pb_b3  ,,,ngc6240_b3_12m+7m_cont.pb.tt0
+pb_b4  ,,,ngc6240_b4_12m_cont.pb.tt0
+pb_b6  ,,,ngc6240_b6_12m+7m_cont.pb.tt0
+pb_b7  ,,,ngc6240_b7_12m_cont.pb.tt0
+pb_b8  ,,,ngc6240_b8_12m+7m_cont.pb.tt0
+pb_b9  ,,,ngc6240_b9_12m_cont.pb.tt0
+
+###############
+# output maps #
+###############
+outfits_b3 ,,,n6240_b3_???.fits
+outfits_b4 ,,,n6240_b4_???.fits
+outfits_b6 ,,,n6240_b6_???.fits
+outfits_b7 ,,,n6240_b7_???.fits
+outfits_b8 ,,,n6240_b8_???.fits
+outfits_b9 ,,,n6240_b9_???.fits
+
+######################
+# output png and txt #
+######################
+# text files
+# png files
+
+#######
+# end #
+#######
