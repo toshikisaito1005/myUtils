@@ -100,6 +100,30 @@ class ToolsN6240Contin():
         """
         """
 
+    ######################
+    # run_ngc6240_contin #
+    ######################
+
+    def run_ngc6240_contin(
+        self,
+        # analysis
+        do_prepare       = False,
+        # plot figures in paper
+        # calc
+        calc_image_stats = True,
+        ):
+        """
+        This method runs all the methods which will create figures in the paper.
+        """
+
+        # analysis
+        if do_prepare==True:
+            self.align_maps()
+
+        # calc
+        if calc_image_stats==True:
+            self.calc_image_stats()
+
     ###############
     # _create_dir #
     ###############
