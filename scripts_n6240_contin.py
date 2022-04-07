@@ -85,12 +85,12 @@ class ToolsN6240Contin():
         """
         """
 
-        self.outfits_b3 = self.dir_raw + self._read_key("outfits_b3")
-        self.outfits_b4 = self.dir_raw + self._read_key("outfits_b4")
-        self.outfits_b6 = self.dir_raw + self._read_key("outfits_b6")
-        self.outfits_b7 = self.dir_raw + self._read_key("outfits_b7")
-        self.outfits_b8 = self.dir_raw + self._read_key("outfits_b8")
-        self.outfits_b9 = self.dir_raw + self._read_key("outfits_b9")
+        self.outfits_b3 = self.dir_ready + self._read_key("outfits_b3")
+        self.outfits_b4 = self.dir_ready + self._read_key("outfits_b4")
+        self.outfits_b6 = self.dir_ready + self._read_key("outfits_b6")
+        self.outfits_b7 = self.dir_ready + self._read_key("outfits_b7")
+        self.outfits_b8 = self.dir_ready + self._read_key("outfits_b8")
+        self.outfits_b9 = self.dir_ready + self._read_key("outfits_b9")
 
     def _set_input_param(self):
         """
@@ -328,14 +328,74 @@ class ToolsN6240Contin():
     # align_maps #
     ##############
 
-    def align_maps(self):
+    def align_maps(self,targetbeam=0.7):
         """
         """
 
-        template = "template.image"
+        template = self.map_b3
+        beamstr  = str(targetbeam).replace(".","p") + "as"
 
         taskname = self.modname + sys._getframe().f_code.co_name
         check_first(self.map_b3,taskname)
+
+        # process b3
+        this_in  = self.map_b3
+        this_pb  = self.pb_b3
+        this_out = self.outfits_b3.replace("???",beamstr)
+        os.system("rm -rf " + this_in + "_pbcor")
+        impbcor(this_in,this_pb,this_in+"_pbcor")
+        run_roundsmooth(this_in+"_pbcor",this_in+"_pbcor2",targetbeam,targetres=True,delin=True)
+        run_exportfits(this_in+"_pbcor2",this_out,True,True,True)
+
+        # process b4
+        this_in  = self.map_b4
+        this_pb  = self.pb_b4
+        this_out = self.outfits_b4.replace("???",beamstr)
+        os.system("rm -rf " + this_in + "_pbcor")
+        impbcor(this_in,this_pb,this_in+"_pbcor")
+        run_roundsmooth(this_in+"_pbcor",this_in+"_pbcor2",targetbeam,targetres=True,delin=True)
+        run_imregrid(this_in+"_pbcor2",self.map_b3,this_in+"_pbcor3",delin=True)
+        run_exportfits(this_in+"_pbcor3",this_out,True,True,True)
+
+        # process b6
+        this_in  = self.map_b6
+        this_pb  = self.pb_b6
+        this_out = self.outfits_b6.replace("???",beamstr)
+        os.system("rm -rf " + this_in + "_pbcor")
+        impbcor(this_in,this_pb,this_in+"_pbcor")
+        run_roundsmooth(this_in+"_pbcor",this_in+"_pbcor2",targetbeam,targetres=True,delin=True)
+        run_imregrid(this_in+"_pbcor2",self.map_b3,this_in+"_pbcor3",delin=True)
+        run_exportfits(this_in+"_pbcor3",this_out,True,True,True)
+
+        # process b7
+        this_in  = self.map_b7
+        this_pb  = self.pb_b7
+        this_out = self.outfits_b7.replace("???",beamstr)
+        os.system("rm -rf " + this_in + "_pbcor")
+        impbcor(this_in,this_pb,this_in+"_pbcor")
+        run_roundsmooth(this_in+"_pbcor",this_in+"_pbcor2",targetbeam,targetres=True,delin=True)
+        run_imregrid(this_in+"_pbcor2",self.map_b3,this_in+"_pbcor3",delin=True)
+        run_exportfits(this_in+"_pbcor3",this_out,True,True,True)
+
+        # process b8
+        this_in  = self.map_b8
+        this_pb  = self.pb_b8
+        this_out = self.outfits_b8.replace("???",beamstr)
+        os.system("rm -rf " + this_in + "_pbcor")
+        impbcor(this_in,this_pb,this_in+"_pbcor")
+        run_roundsmooth(this_in+"_pbcor",this_in+"_pbcor2",targetbeam,targetres=True,delin=True)
+        run_imregrid(this_in+"_pbcor2",self.map_b3,this_in+"_pbcor3",delin=True)
+        run_exportfits(this_in+"_pbcor3",this_out,True,True,True)
+
+        # process b9
+        this_in  = self.map_b9
+        this_pb  = self.pb_b9
+        this_out = self.outfits_b9.replace("???",beamstr)
+        os.system("rm -rf " + this_in + "_pbcor")
+        impbcor(this_in,this_pb,this_in+"_pbcor")
+        run_roundsmooth(this_in+"_pbcor",this_in+"_pbcor2",targetbeam,targetres=True,delin=True)
+        run_imregrid(this_in+"_pbcor2",self.map_b3,this_in+"_pbcor3",delin=True)
+        run_exportfits(this_in+"_pbcor3",this_out,True,True,True)
 
     ###############
     # _create_dir #
