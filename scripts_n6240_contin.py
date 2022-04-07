@@ -124,6 +124,32 @@ class ToolsN6240Contin():
         if calc_image_stats==True:
             self.calc_image_stats()
 
+    ####################
+    # calc_image_stats #
+    ####################
+
+    def calc_image_stats(self):
+        """
+        """
+
+        taskname = self.modname + sys._getframe().f_code.co_name
+        check_first(self.map_b3,taskname)
+
+        # create central mask for rms measurement
+        inmask = "mask.image"
+        run_immath_one(self.map_b3,inmask,"iif(IM0>=0.99,1,0)")
+        outmask = "mask.image2"
+        run_immath_one(self.map_b3,outmask,"iif(IM0<0.99,1,0)")
+
+        # measure diameter of the mask
+        data,_ = imval_all(inmask)
+        data   = data["data"] * data["mask"]
+        data   = np.array(data.flatten())
+        numpix = len(data[data>0])
+        pix    = abs(imhead(inmask)["incr"][0]) * 3600 * 180/np.pi
+        #
+        fov_as = numpix * pix**2
+
     ###############
     # _create_dir #
     ###############
