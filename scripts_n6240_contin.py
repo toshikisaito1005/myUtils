@@ -137,9 +137,9 @@ class ToolsN6240Contin():
 
         # create central mask for rms measurement
         inmask = "mask.image"
-        run_immath_one(self.map_b3,inmask,"iif(IM0>=0.99,1,0)")
+        run_immath_one(self.pb_b3,inmask,"iif(IM0>=0.99,1,0)")
         outmask = "mask.image2"
-        run_immath_one(self.map_b3,outmask,"iif(IM0<0.99,1,0)")
+        run_immath_one(self.pb_b3,outmask,"iif(IM0<0.99,1,0)")
 
         # measure diameter of the mask
         data,_ = imval_all(inmask)
@@ -167,6 +167,27 @@ class ToolsN6240Contin():
         b3_max     = np.max(data_in)
         b3_sum     = np.sum(data_in) / b3_beam
         b3_rms     = np.sqrt(np.mean(np.square(data_out)))
+
+        # measure b4 stats
+        this_map = self.map_b4
+        run_imregrid(inmask,this_map,inmask+"_b4")
+        run_imregrid(outmask,this_map,outmask+"_b4")
+        #
+        run_immath_two(this_map,inmask+"_b4",this_map+"_in","IM0*IM1")
+        run_immath_two(this_map,outmask+"_b4",this_map+"_out","IM0*IM1")
+        data_in,_  = imval_all(this_map+"_in")
+        data_in    = data_in["data"] * data_in["mask"]
+        data_in    = data_in.flatten()
+        data_in    = data_in[data_in!=0]
+        data_out,_ = imval_all(this_map+"_out")
+        data_out   = data_out["data"] * data_out["mask"]
+        data_out   = data_out.flatten()
+        data_out   = data_out[data_out!=0]
+        #
+        b4_beam    = beam_area(this_map)
+        b4_max     = np.max(data_in)
+        b4_sum     = np.sum(data_in) / b4_beam
+        b4_rms     = np.sqrt(np.mean(np.square(data_out)))
 
     ###############
     # _create_dir #
