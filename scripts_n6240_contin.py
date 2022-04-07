@@ -134,20 +134,6 @@ class ToolsN6240Contin():
         """
         """
 
-        # ngc1068 properties
-        self.ra_agn    = float(self._read_key("ra_agn", "gal").split("deg")[0])
-        self.dec_agn   = float(self._read_key("dec_agn", "gal").split("deg")[0])
-        self.scale_pc  = float(self._read_key("scale", "gal"))
-        self.scale_kpc = self.scale_pc / 1000.
-
-        self.beam      = 2.14859173174056 # 150pc in arcsec
-        self.snr_mom   = 4.0
-        self.r_cnd     = 3.0 * self.scale_pc / 1000. # kpc
-        self.r_cnd_as  = 3.0
-        self.r_sbr     = 10.0 * self.scale_pc / 1000. # kpc
-        self.r_sbr_as  = 10.0
-        self.gridsize  = 27 # int(np.ceil(self.r_sbr_as*2/self.beam))
-
     def _set_output_txt_png(self):
         """
         """
@@ -262,10 +248,10 @@ class ToolsN6240Contin():
         b6_sum     = np.sum(data_in) / b6_beam
         b6_rms     = np.sqrt(np.mean(np.square(data_out)))
 
-        # measure b6 stats
-        this_map = self.map_b6
-        run_imregrid(inmask,this_map,inmask+"_b6")
-        run_imregrid(outmask,this_map,outmask+"_b6")
+        # measure b7 stats
+        this_map = self.map_b7
+        run_imregrid(inmask,this_map,inmask+"_b7")
+        run_imregrid(outmask,this_map,outmask+"_b7")
         #
         run_immath_two(this_map,inmask+"_b6",this_map+"_in","IM0*IM1")
         run_immath_two(this_map,outmask+"_b6",this_map+"_out","IM0*IM1")
@@ -278,10 +264,10 @@ class ToolsN6240Contin():
         data_out   = data_out.flatten()
         data_out   = data_out[data_out!=0]
         #
-        b6_beam    = beam_area(this_map)
-        b6_max     = np.max(data_in)
-        b6_sum     = np.sum(data_in) / b6_beam
-        b6_rms     = np.sqrt(np.mean(np.square(data_out)))
+        b7_beam    = beam_area(this_map)
+        b7_max     = np.max(data_in)
+        b7_sum     = np.sum(data_in) / b7_beam
+        b7_rms     = np.sqrt(np.mean(np.square(data_out)))
 
         # print calc
         print("fov_as = ",fov_as,"arcsec^2")
