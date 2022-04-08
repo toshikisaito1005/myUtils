@@ -108,7 +108,7 @@ class ToolsN6240Contin():
         self.ra_str    = str(self.ra) + "deg"
         self.dec_str   = str(self.dec) + "deg"
 
-        self.imsize    = 20.0
+        self.imsize    = 30.0
 
     def _set_output_txt_png(self):
         """
@@ -168,14 +168,14 @@ class ToolsN6240Contin():
         scalebar = 500. / self.scale_pc
         label_scalebar = "500 pc"
 
-        levels_cont1 = [-3,3,6,12,24,48,96]
+        levels_cont1 = [-2,2,4,8,16,32,64,96]
         width_cont1  = [1.0]
         set_bg_color = "white" # cm.rainbow(0)
 
         # plot b3
         this_map   = self.outfits_b3.replace("???",beamstr)
         this_out   = self.outpng_b3
-        unit_cont1 = 2.30e-5
+        unit_cont1 = 2.3e-5
         myfig_fits2png(
             imcolor=this_map,
             outfile=this_out,
