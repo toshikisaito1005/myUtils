@@ -224,6 +224,32 @@ class ToolsN6240Contin():
             #numann="13co",
             )
 
+        # plot b4
+        this_map   = self.outfits_b6.replace("???",beamstr)
+        this_out   = self.outpng_b6
+        unit_cont1 = 9.39e-6
+        myfig_fits2png(
+            imcolor=this_map,
+            outfile=this_out,
+            imcontour1=this_map,
+            imsize_as=self.imsize,
+            ra_cnt=self.ra_str,
+            dec_cnt=self.dec_str,
+            unit_cont1=unit_cont1,
+            levels_cont1=levels_cont1,
+            width_cont1=width_cont1,
+            color_cont1="white",
+            set_title="231 GHz continuum (Band 6)",
+            colorlog=False,
+            scalebar=scalebar,
+            label_scalebar=label_scalebar,
+            set_cbar=True,
+            label_cbar="Jy beam$^{-1}$",
+            clim=None,
+            set_bg_color=None,
+            #numann="13co",
+            )
+
     ####################
     # calc_image_stats #
     ####################
