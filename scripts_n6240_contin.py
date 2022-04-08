@@ -108,7 +108,7 @@ class ToolsN6240Contin():
         self.ra_str    = str(self.ra) + "deg"
         self.dec_str   = str(self.dec) + "deg"
 
-        self.imsize    = 85.0
+        self.imsize    = 40.0
 
     def _set_output_txt_png(self):
         """
@@ -184,6 +184,7 @@ class ToolsN6240Contin():
             dec_cnt=self.dec_str,
             levels_cont1=levels_cont1,
             width_cont1=width_cont1,
+            color_cont1="white",
             set_title="110 GHz continuum (Band 3)",
             colorlog=False,
             scalebar=scalebar,
