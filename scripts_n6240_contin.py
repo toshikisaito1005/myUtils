@@ -168,9 +168,35 @@ class ToolsN6240Contin():
         scalebar = 500. / self.scale_pc
         label_scalebar = "500 pc"
 
-        levels_cont1 = [0.01, 0.02, 0.04, 0.08, 0.16, 0.32, 0.64, 0.96]
+        levels_cont1 = [-3,3,6,12,24,48,96]
         width_cont1  = [1.0]
         set_bg_color = "white" # cm.rainbow(0)
+
+        # plot b3
+        this_map   = self.outfits_b3.replace("???",beamstr)
+        this_out   = self.outpng_b3
+        unit_cont1 = 1.72e-5
+        myfig_fits2png(
+            imcolor=this_map,
+            outfile=this_out,
+            imcontour1=this_map,
+            imsize_as=self.imsize,
+            ra_cnt=self.ra_str,
+            dec_cnt=self.dec_str,
+            unit_cont1=unit_cont1,
+            levels_cont1=levels_cont1,
+            width_cont1=width_cont1,
+            color_cont1="white",
+            set_title="110 GHz continuum (Band 3)",
+            colorlog=False,
+            scalebar=scalebar,
+            label_scalebar=label_scalebar,
+            set_cbar=True,
+            label_cbar="Jy beam$^{-1}$",
+            clim=None,
+            set_bg_color=None,
+            #numann="13co",
+            )
 
         # plot b3
         this_map = self.outfits_b3.replace("???",beamstr)
