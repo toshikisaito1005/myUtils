@@ -415,7 +415,7 @@ class ToolsN6240Contin():
             imcolor=this_map,
             outfile=this_out,
             imcontour1=this_map,
-            imsize_as=self.imsize,
+            imsize_as=self.imsize2,
             ra_cnt=self.ra_str,
             dec_cnt=self.dec_str,
             unit_cont1=unit_cont1,
