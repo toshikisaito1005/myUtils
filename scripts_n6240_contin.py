@@ -1,5 +1,6 @@
 import os, sys, glob
 import numpy as np
+from astropy.coordinates import SkyCoord
 
 from mycasa_sampling import *
 from mycasa_lowess import *
