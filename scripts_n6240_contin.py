@@ -168,7 +168,7 @@ class ToolsN6240Contin():
         scalebar = 500. / self.scale_pc
         label_scalebar = "500 pc"
 
-        levels_cont1 = [0.05, 0.1, 0.2, 0.4, 0.8, 0.96]
+        levels_cont1 = [0.01, 0.02, 0.04, 0.08, 0.16, 0.32, 0.64, 0.96]
         width_cont1  = [1.0]
         set_bg_color = "white" # cm.rainbow(0)
 
