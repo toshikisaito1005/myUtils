@@ -198,9 +198,10 @@ class ToolsN6240Contin():
             #numann="13co",
             )
 
-        # plot b3
-        this_map = self.outfits_b3.replace("???",beamstr)
-        this_out = self.outpng_b3
+        # plot b4
+        this_map   = self.outfits_b4.replace("???",beamstr)
+        this_out   = self.outpng_b4
+        unit_cont1 = 1.63e-5
         myfig_fits2png(
             imcolor=this_map,
             outfile=this_out,
@@ -208,10 +209,11 @@ class ToolsN6240Contin():
             imsize_as=self.imsize,
             ra_cnt=self.ra_str,
             dec_cnt=self.dec_str,
+            unit_cont1=unit_cont1,
             levels_cont1=levels_cont1,
             width_cont1=width_cont1,
             color_cont1="white",
-            set_title="110 GHz continuum (Band 3)",
+            set_title="130 GHz continuum (Band 4)",
             colorlog=False,
             scalebar=scalebar,
             label_scalebar=label_scalebar,
