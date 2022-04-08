@@ -109,6 +109,7 @@ class ToolsN6240Contin():
         self.dec_str   = str(self.dec) + "deg"
 
         self.imsize    = 35.0
+        self.imsize2   = 10.0
 
     def _set_output_txt_png(self):
         """
@@ -199,6 +200,31 @@ class ToolsN6240Contin():
             numann="n6240_cont",
             )
 
+        this_map   = self.outfits_b3.replace("???",beamstr)
+        this_out   = self.outpng_b3.replace(".png","_zoom.png")
+        unit_cont1 = 2.3e-5
+        myfig_fits2png(
+            imcolor=this_map,
+            outfile=this_out,
+            imcontour1=this_map,
+            imsize_as=self.imsize2,
+            ra_cnt=self.ra_str,
+            dec_cnt=self.dec_str,
+            unit_cont1=unit_cont1,
+            levels_cont1=levels_cont1,
+            width_cont1=width_cont1,
+            color_cont1="white",
+            set_title="110 GHz continuum (Band 3)",
+            colorlog=False,
+            scalebar=scalebar,
+            label_scalebar=label_scalebar,
+            set_cbar=True,
+            label_cbar="Jy beam$^{-1}$",
+            clim=None,
+            set_bg_color=None,
+            comment="rms = 0.023 mJy beam$^{-1}$",
+            )
+
         # plot b4
         this_map   = self.outfits_b4.replace("???",beamstr)
         this_out   = self.outpng_b4
@@ -224,6 +250,31 @@ class ToolsN6240Contin():
             set_bg_color=None,
             comment="rms = 0.025 mJy beam$^{-1}$",
             numann="n6240_cont",
+            )
+
+        this_map   = self.outfits_b4.replace("???",beamstr)
+        this_out   = self.outpng_b4.replace(".png","_zoom.png")
+        unit_cont1 = 2.51e-5
+        myfig_fits2png(
+            imcolor=this_map,
+            outfile=this_out,
+            imcontour1=this_map,
+            imsize_as=self.imsize2,
+            ra_cnt=self.ra_str,
+            dec_cnt=self.dec_str,
+            unit_cont1=unit_cont1,
+            levels_cont1=levels_cont1,
+            width_cont1=width_cont1,
+            color_cont1="white",
+            set_title="130 GHz continuum (Band 4)",
+            colorlog=False,
+            scalebar=scalebar,
+            label_scalebar=label_scalebar,
+            set_cbar=True,
+            label_cbar="Jy beam$^{-1}$",
+            clim=None,
+            set_bg_color=None,
+            comment="rms = 0.025 mJy beam$^{-1}$",
             )
 
         # plot b6
@@ -253,6 +304,31 @@ class ToolsN6240Contin():
             numann="n6240_cont",
             )
 
+        this_map   = self.outfits_b6.replace("???",beamstr)
+        this_out   = self.outpng_b6.replace(".png","_zoom.png")
+        unit_cont1 = 1.11e-4
+        myfig_fits2png(
+            imcolor=this_map,
+            outfile=this_out,
+            imcontour1=this_map,
+            imsize_as=self.imsize2,
+            ra_cnt=self.ra_str,
+            dec_cnt=self.dec_str,
+            unit_cont1=unit_cont1,
+            levels_cont1=levels_cont1,
+            width_cont1=width_cont1,
+            color_cont1="white",
+            set_title="231 GHz continuum (Band 6)",
+            colorlog=False,
+            scalebar=scalebar,
+            label_scalebar=label_scalebar,
+            set_cbar=True,
+            label_cbar="Jy beam$^{-1}$",
+            clim=None,
+            set_bg_color=None,
+            comment="rms = 0.111 mJy beam$^{-1}$",
+            )
+
         # plot b7
         this_map   = self.outfits_b7.replace("???",beamstr)
         this_out   = self.outpng_b7
@@ -278,6 +354,31 @@ class ToolsN6240Contin():
             set_bg_color=None,
             comment="rms = 0.165 mJy beam$^{-1}$",
             numann="n6240_cont",
+            )
+
+        this_map   = self.outfits_b7.replace("???",beamstr)
+        this_out   = self.outpng_b7.replace(".png","_zoom.png")
+        unit_cont1 = 1.65e-4
+        myfig_fits2png(
+            imcolor=this_map,
+            outfile=this_out,
+            imcontour1=this_map,
+            imsize_as=self.imsize2,
+            ra_cnt=self.ra_str,
+            dec_cnt=self.dec_str,
+            unit_cont1=unit_cont1,
+            levels_cont1=levels_cont1,
+            width_cont1=width_cont1,
+            color_cont1="white",
+            set_title="358 GHz continuum (Band 7)",
+            colorlog=False,
+            scalebar=scalebar,
+            label_scalebar=label_scalebar,
+            set_cbar=True,
+            label_cbar="Jy beam$^{-1}$",
+            clim=None,
+            set_bg_color=None,
+            comment="rms = 0.165 mJy beam$^{-1}$",
             )
 
         # plot b8
@@ -307,6 +408,31 @@ class ToolsN6240Contin():
             numann="n6240_cont",
             )
 
+        this_map   = self.outfits_b8.replace("???",beamstr)
+        this_out   = self.outpng_b8.replace(".png","_zoom.png")
+        unit_cont1 = 1.85e-3
+        myfig_fits2png(
+            imcolor=this_map,
+            outfile=this_out,
+            imcontour1=this_map,
+            imsize_as=self.imsize,
+            ra_cnt=self.ra_str,
+            dec_cnt=self.dec_str,
+            unit_cont1=unit_cont1,
+            levels_cont1=levels_cont1,
+            width_cont1=width_cont1,
+            color_cont1="white",
+            set_title="481 GHz continuum (Band 8)",
+            colorlog=False,
+            scalebar=scalebar,
+            label_scalebar=label_scalebar,
+            set_cbar=True,
+            label_cbar="Jy beam$^{-1}$",
+            clim=None,
+            set_bg_color=None,
+            comment="rms = 1.850 mJy beam$^{-1}$",
+            )
+
         # plot b9
         this_map   = self.outfits_b9.replace("???",beamstr)
         this_out   = self.outpng_b9
@@ -332,6 +458,31 @@ class ToolsN6240Contin():
             set_bg_color=None,
             comment="rms = 5.350 mJy beam$^{-1}$",
             numann="n6240_cont",
+            )
+
+        this_map   = self.outfits_b9.replace("???",beamstr)
+        this_out   = self.outpng_b9.replace(".png","_zoom.png")
+        unit_cont1 = 5.35e-3
+        myfig_fits2png(
+            imcolor=this_map,
+            outfile=this_out,
+            imcontour1=this_map,
+            imsize_as=self.imsize2,
+            ra_cnt=self.ra_str,
+            dec_cnt=self.dec_str,
+            unit_cont1=unit_cont1,
+            levels_cont1=levels_cont1,
+            width_cont1=width_cont1,
+            color_cont1="white",
+            set_title="692 GHz continuum (Band 9)",
+            colorlog=False,
+            scalebar=scalebar,
+            label_scalebar=label_scalebar,
+            set_cbar=True,
+            label_cbar="Jy beam$^{-1}$",
+            clim=None,
+            set_bg_color=None,
+            comment="rms = 5.350 mJy beam$^{-1}$",
             )
 
     ####################
