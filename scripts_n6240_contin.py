@@ -330,7 +330,7 @@ class ToolsN6240Contin():
             label_cbar="Jy beam$^{-1}$",
             clim=None,
             set_bg_color=None,
-            comment="rms = 5350 uJy beam$^{-1}$",
+            comment="rms = 5.350 mJy beam$^{-1}$",
             numann="n6240_cont",
             )
 
