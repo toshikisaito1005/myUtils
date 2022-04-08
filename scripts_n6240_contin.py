@@ -96,6 +96,16 @@ class ToolsN6240Contin():
         """
         """
 
+        self.scale_pc  = float(self._read_key("scale", "gal"))
+        self.scale_kpc = self.scale_pc / 1000.
+        self.redshift  = float(self._read_key("redshift", "gal"))
+
+        self.ra        = self._read_key("ra", "gal")
+        self.dec       = self._read_key("dec", "gal")
+        c = Skycoord(self.ra+" "+self.dec,unit=(u.hourangle, u.deg))
+        self.ra        = c.ra.degree
+        self.dec       = c.dec.degree
+
     def _set_output_txt_png(self):
         """
         """
@@ -109,8 +119,9 @@ class ToolsN6240Contin():
         # analysis
         do_prepare       = False,
         # plot figures in paper
+        plot_showcase    = False,
         # calc
-        calc_image_stats = True,
+        calc_image_stats = False,
         ):
         """
         This method runs all the methods which will create figures in the paper.
@@ -120,9 +131,56 @@ class ToolsN6240Contin():
         if do_prepare==True:
             self.align_maps()
 
+        # plot
+        if plot_showcase==True:
+            self.showcase()
+
         # calc
         if calc_image_stats==True:
             self.calc_image_stats()
+
+    ############
+    # showcase #
+    ############
+
+    def showcase(self):
+        """
+        """
+
+        beamstr="0p7as"
+
+        taskname = self.modname + sys._getframe().f_code.co_name
+        check_first(self.outfits_b3.replace("???",beamstr),taskname)
+
+        #self.outfits_b3.replace("???",beamstr)
+
+        scalebar = 100. / self.scale_pc
+        label_scalebar = "100 pc"
+
+        levels_cont1 = [0.05, 0.1, 0.2, 0.4, 0.8, 0.96]
+        width_cont1  = [1.0]
+        set_bg_color = "white" # cm.rainbow(0)
+
+        # plot
+        myfig_fits2png(
+            imcolor=imcolor,
+            outfile=outfile,
+            imcontour1=imcontour1,
+            imsize_as=self.imsize,
+            ra_cnt=self.ra_agn_str,
+            dec_cnt=self.dec_agn_str,
+            levels_cont1=levels_cont1,
+            width_cont1=width_cont1,
+            set_title=set_title,
+            colorlog=False,
+            scalebar=scalebar,
+            label_scalebar=label_scalebar,
+            set_cbar=True,
+            label_cbar=label_cbar,
+            clim=clim,
+            set_bg_color=set_bg_color,
+            numann="13co",
+            )
 
     ####################
     # calc_image_stats #
@@ -339,6 +397,9 @@ class ToolsN6240Contin():
         check_first(self.map_b3,taskname)
 
         # process b3
+        print("################")
+        print("# align B3 map #")
+        print("################")
         this_in  = self.map_b3
         this_pb  = self.pb_b3
         this_out = self.outfits_b3.replace("???",beamstr)
@@ -348,6 +409,9 @@ class ToolsN6240Contin():
         run_exportfits(this_in+"_pbcor2",this_out,True,True,True)
 
         # process b4
+        print("################")
+        print("# align B4 map #")
+        print("################")
         this_in  = self.map_b4
         this_pb  = self.pb_b4
         this_out = self.outfits_b4.replace("???",beamstr)
@@ -358,6 +422,9 @@ class ToolsN6240Contin():
         run_exportfits(this_in+"_pbcor3",this_out,True,True,True)
 
         # process b6
+        print("################")
+        print("# align B6 map #")
+        print("################")
         this_in  = self.map_b6
         this_pb  = self.pb_b6
         this_out = self.outfits_b6.replace("???",beamstr)
@@ -368,6 +435,9 @@ class ToolsN6240Contin():
         run_exportfits(this_in+"_pbcor3",this_out,True,True,True)
 
         # process b7
+        print("################")
+        print("# align B7 map #")
+        print("################")
         this_in  = self.map_b7
         this_pb  = self.pb_b7
         this_out = self.outfits_b7.replace("???",beamstr)
@@ -378,6 +448,9 @@ class ToolsN6240Contin():
         run_exportfits(this_in+"_pbcor3",this_out,True,True,True)
 
         # process b8
+        print("################")
+        print("# align B8 map #")
+        print("################")
         this_in  = self.map_b8
         this_pb  = self.pb_b8
         this_out = self.outfits_b8.replace("???",beamstr)
@@ -388,6 +461,9 @@ class ToolsN6240Contin():
         run_exportfits(this_in+"_pbcor3",this_out,True,True,True)
 
         # process b9
+        print("################")
+        print("# align B9 map #")
+        print("################")
         this_in  = self.map_b9
         this_pb  = self.pb_b9
         this_out = self.outfits_b9.replace("???",beamstr)
