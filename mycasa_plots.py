@@ -834,8 +834,9 @@ def myax_fig2png_ann(ax,number,ra_cnt,dec_cnt,add_text=True,txtfiles=None):
     number==1 is used for Figure 1 of the NGC 1068 CI outflow paper.
     number==2 is used for Figure 1 of the NGC 3110 CO paper.
     """
-    if number="n6240_cont":
-        ax.plot(4,9,marker="+",lw=0.5,s=40)
+    if number=="n6240_cont":
+        ax.plot(4.0,9.0,marker="+",lw=0.5,s=40)
+        ax.plot(5.5,7.0,marker="+",lw=0.5,s=40)
 
     #####################
     # Figures of LST WP #
