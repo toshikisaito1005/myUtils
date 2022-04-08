@@ -105,6 +105,10 @@ class ToolsN6240Contin():
         c = Skycoord(self.ra+" "+self.dec,unit=(u.hourangle, u.deg))
         self.ra        = c.ra.degree
         self.dec       = c.dec.degree
+        self.ra_str    = str(self.ra) + "deg"
+        self.dec_str   = str(self.dec) + "deg"
+
+        self.imsize    = 85.0
 
     def _set_output_txt_png(self):
         """
@@ -154,32 +158,33 @@ class ToolsN6240Contin():
 
         #self.outfits_b3.replace("???",beamstr)
 
-        scalebar = 100. / self.scale_pc
-        label_scalebar = "100 pc"
+        scalebar = 500. / self.scale_pc
+        label_scalebar = "500 pc"
 
         levels_cont1 = [0.05, 0.1, 0.2, 0.4, 0.8, 0.96]
         width_cont1  = [1.0]
         set_bg_color = "white" # cm.rainbow(0)
 
-        # plot
+        # plot b3
+        this_map = self.outfits_b3.replace("???",beamstr)
         myfig_fits2png(
-            imcolor=imcolor,
+            imcolor=this_map,
             outfile=outfile,
-            imcontour1=imcontour1,
+            imcontour1=this_map,
             imsize_as=self.imsize,
-            ra_cnt=self.ra_agn_str,
-            dec_cnt=self.dec_agn_str,
+            ra_cnt=self.ra_str,
+            dec_cnt=self.dec_str,
             levels_cont1=levels_cont1,
             width_cont1=width_cont1,
-            set_title=set_title,
+            set_title="Band 3 continuum",
             colorlog=False,
             scalebar=scalebar,
             label_scalebar=label_scalebar,
             set_cbar=True,
-            label_cbar=label_cbar,
-            clim=clim,
-            set_bg_color=set_bg_color,
-            numann="13co",
+            label_cbar="Jy beam$^{-1}$",
+            clim=None,
+            set_bg_color=None,
+            #numann="13co",
             )
 
     ####################
