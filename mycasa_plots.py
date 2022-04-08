@@ -835,12 +835,12 @@ def myax_fig2png_ann(ax,number,ra_cnt,dec_cnt,add_text=True,txtfiles=None):
     number==2 is used for Figure 1 of the NGC 3110 CO paper.
     """
     if number=="n6240_cont":
-        ax.plot(3.9,9.2,marker="+",lw=2.0,markersize=20,color="tomato")
-        ax.plot(5.5,8.2,marker="+",lw=2.0,markersize=20,color="tomato")
-        arc = patches.Arc(xy=(0,0), width=15,
-            height=4, angle=0, theta1=0, theta2=180,
+        ax.plot(3.9,9.2,marker="+",markeredgewidth=1.0,markersize=20,color="tomato")
+        ax.plot(5.5,8.2,marker="+",markeredgewidth=1.0,markersize=20,color="tomato")
+        arc = patches.Arc(xy=(0,0), width=30,
+            height=12, angle=0, theta1=90, theta2=270,
             fill=False, edgecolor="tomato",
-            alpha=2.0, lw=3.5, ls="dashed")
+            alpha=2.0, lw=1.0, ls="dashed")
         ax.add_patch(arc)
 
     #####################
