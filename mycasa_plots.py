@@ -746,7 +746,7 @@ def myfig_fits2png(
     # set lim
     xlim = [imsize_as/2.0, -imsize_as/2.0]
     if float(dec_cnt.replace("deg",""))>0:
-        ylim = [imsize_as/2.0, -imsize_as/2.0]
+        ylim = [-imsize_as/2.0, imsize_as/2.0]
     else:
         ylim = [-imsize_as/2.0, imsize_as/2.0]
 
