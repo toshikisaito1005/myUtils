@@ -1,6 +1,5 @@
 import os, sys, glob
 import numpy as np
-from astropy.coordinates import SkyCoord
 
 from mycasa_sampling import *
 from mycasa_lowess import *
@@ -103,7 +102,7 @@ class ToolsN6240Contin():
 
         self.ra        = self._read_key("ra", "gal")
         self.dec       = self._read_key("dec", "gal")
-        c = Skycoord(self.ra+" "+self.dec,unit=(u.hourangle, u.deg))
+        c = SkyCoord(self.ra+" "+self.dec,unit=(u.hourangle, u.deg))
         self.ra        = c.ra.degree
         self.dec       = c.dec.degree
         self.ra_str    = str(self.ra) + "deg"
