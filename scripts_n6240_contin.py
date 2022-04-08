@@ -195,6 +195,7 @@ class ToolsN6240Contin():
             label_cbar="Jy beam$^{-1}$",
             clim=None,
             set_bg_color=None,
+            comment="rms = 23 uJy beam$^{-1}$",
             #numann="13co",
             )
 
@@ -221,6 +222,7 @@ class ToolsN6240Contin():
             label_cbar="Jy beam$^{-1}$",
             clim=None,
             set_bg_color=None,
+            comment="rms = 25 uJy beam$^{-1}$",
             #numann="13co",
             )
 
@@ -247,6 +249,7 @@ class ToolsN6240Contin():
             label_cbar="Jy beam$^{-1}$",
             clim=None,
             set_bg_color=None,
+            comment="rms = 111 uJy beam$^{-1}$",
             #numann="13co",
             )
 
@@ -273,6 +276,7 @@ class ToolsN6240Contin():
             label_cbar="Jy beam$^{-1}$",
             clim=None,
             set_bg_color=None,
+            comment="rms = 165 uJy beam$^{-1}$",
             #numann="13co",
             )
 
@@ -299,6 +303,7 @@ class ToolsN6240Contin():
             label_cbar="Jy beam$^{-1}$",
             clim=None,
             set_bg_color=None,
+            comment="rms = 1850 uJy beam$^{-1}$",
             #numann="13co",
             )
 
@@ -325,6 +330,7 @@ class ToolsN6240Contin():
             label_cbar="Jy beam$^{-1}$",
             clim=None,
             set_bg_color=None,
+            comment="rms = 5350 uJy beam$^{-1}$",
             #numann="13co",
             )
 
