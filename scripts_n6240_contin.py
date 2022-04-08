@@ -108,7 +108,7 @@ class ToolsN6240Contin():
         self.ra_str    = str(self.ra) + "deg"
         self.dec_str   = str(self.dec) + "deg"
 
-        self.imsize    = 30.0
+        self.imsize    = 35.0
 
     def _set_output_txt_png(self):
         """
