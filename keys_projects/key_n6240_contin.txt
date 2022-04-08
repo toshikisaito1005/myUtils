@@ -43,6 +43,12 @@ outfits_b9 ,,,n6240_b9_???.fits
 ######################
 # text files
 # png files
+outpng_b3 ,,,fig_map_b3.png
+outpng_b4 ,,,fig_map_b4.png
+outpng_b6 ,,,fig_map_b6.png
+outpng_b7 ,,,fig_map_b7.png
+outpng_b8 ,,,fig_map_b8.png
+outpng_b9 ,,,fig_map_b9.png
 
 #######
 # end #

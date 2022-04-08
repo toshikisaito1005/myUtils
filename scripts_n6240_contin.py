@@ -114,6 +114,13 @@ class ToolsN6240Contin():
         """
         """
 
+        self.outpng_b3 = self.dir_products + self._read_key("outpng_b3")
+        self.outpng_b4 = self.dir_products + self._read_key("outpng_b4")
+        self.outpng_b6 = self.dir_products + self._read_key("outpng_b6")
+        self.outpng_b7 = self.dir_products + self._read_key("outpng_b7")
+        self.outpng_b8 = self.dir_products + self._read_key("outpng_b8")
+        self.outpng_b9 = self.dir_products + self._read_key("outpng_b9")
+
     ######################
     # run_ngc6240_contin #
     ######################
@@ -167,16 +174,17 @@ class ToolsN6240Contin():
 
         # plot b3
         this_map = self.outfits_b3.replace("???",beamstr)
+        this_out = self.outpng_b3
         myfig_fits2png(
             imcolor=this_map,
-            outfile=outfile,
+            outfile=this_out,
             imcontour1=this_map,
             imsize_as=self.imsize,
             ra_cnt=self.ra_str,
             dec_cnt=self.dec_str,
             levels_cont1=levels_cont1,
             width_cont1=width_cont1,
-            set_title="Band 3 continuum",
+            set_title="110 GHz continuum (Band 3)",
             colorlog=False,
             scalebar=scalebar,
             label_scalebar=label_scalebar,
