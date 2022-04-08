@@ -175,7 +175,7 @@ class ToolsN6240Contin():
         # plot b3
         this_map   = self.outfits_b3.replace("???",beamstr)
         this_out   = self.outpng_b3
-        unit_cont1 = 2.74e-5
+        unit_cont1 = 2.30e-5
         myfig_fits2png(
             imcolor=this_map,
             outfile=this_out,
