@@ -195,8 +195,8 @@ class ToolsN6240Contin():
             label_cbar="Jy beam$^{-1}$",
             clim=None,
             set_bg_color=None,
-            comment="rms = 23 uJy beam$^{-1}$",
-            #numann="13co",
+            comment="rms = 0.023 mJy beam$^{-1}$",
+            numann="n6240_cont",
             )
 
         # plot b4
@@ -222,8 +222,8 @@ class ToolsN6240Contin():
             label_cbar="Jy beam$^{-1}$",
             clim=None,
             set_bg_color=None,
-            comment="rms = 25 uJy beam$^{-1}$",
-            #numann="13co",
+            comment="rms = 0.025 mJy beam$^{-1}$",
+            numann="n6240_cont",
             )
 
         # plot b6
@@ -249,8 +249,8 @@ class ToolsN6240Contin():
             label_cbar="Jy beam$^{-1}$",
             clim=None,
             set_bg_color=None,
-            comment="rms = 111 uJy beam$^{-1}$",
-            #numann="13co",
+            comment="rms = 0.111 mJy beam$^{-1}$",
+            numann="n6240_cont",
             )
 
         # plot b7
@@ -276,8 +276,8 @@ class ToolsN6240Contin():
             label_cbar="Jy beam$^{-1}$",
             clim=None,
             set_bg_color=None,
-            comment="rms = 165 uJy beam$^{-1}$",
-            #numann="13co",
+            comment="rms = 0.165 mJy beam$^{-1}$",
+            numann="n6240_cont",
             )
 
         # plot b8
@@ -303,8 +303,8 @@ class ToolsN6240Contin():
             label_cbar="Jy beam$^{-1}$",
             clim=None,
             set_bg_color=None,
-            comment="rms = 1850 uJy beam$^{-1}$",
-            #numann="13co",
+            comment="rms = 1.850 mJy beam$^{-1}$",
+            numann="n6240_cont",
             )
 
         # plot b9
@@ -331,7 +331,7 @@ class ToolsN6240Contin():
             clim=None,
             set_bg_color=None,
             comment="rms = 5350 uJy beam$^{-1}$",
-            #numann="13co",
+            numann="n6240_cont",
             )
 
     ####################
