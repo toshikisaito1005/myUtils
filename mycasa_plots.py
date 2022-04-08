@@ -835,8 +835,8 @@ def myax_fig2png_ann(ax,number,ra_cnt,dec_cnt,add_text=True,txtfiles=None):
     number==2 is used for Figure 1 of the NGC 3110 CO paper.
     """
     if number=="n6240_cont":
-        ax.plot(4.0,9.0,marker="+",lw=0.5,markersize=40)
-        ax.plot(5.5,7.0,marker="+",lw=0.5,markersize=40)
+        ax.plot(3.8,9.2,marker="+",lw=1.0,markersize=20)
+        ax.plot(5.5,8.0,marker="+",lw=1.0,markersize=20)
 
     #####################
     # Figures of LST WP #
