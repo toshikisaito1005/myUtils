@@ -226,12 +226,8 @@ class ToolsN6240Contin():
         ad  = [0.215,0.83,0.10,0.90]
         myax_set(ax1, "both", xlim, ylim, None, None, None, adjust=ad)
 
-        ax1.plot(list_x,list_output[0],"-o",lw=2,color=cm.rainbow(0/5.),markerfacecolor=cm.rainbow(0/5.),markersize=20,markeredgewidth=0)
-        ax1.plot(list_x,list_output[1],"-o",lw=2,color=cm.rainbow(1/5.),markerfacecolor=cm.rainbow(1/5.),markersize=20,markeredgewidth=0)
-        ax1.plot(list_x,list_output[2],"-o",lw=2,color=cm.rainbow(2/5.),markerfacecolor=cm.rainbow(2/5.),markersize=20,markeredgewidth=0)
-        ax1.plot(list_x,list_output[3],"-o",lw=2,color=cm.rainbow(3/5.),markerfacecolor=cm.rainbow(3/5.),markersize=20,markeredgewidth=0)
-        ax1.plot(list_x,list_output[4],"-o",lw=2,color=cm.rainbow(4/5.),markerfacecolor=cm.rainbow(4/5.),markersize=20,markeredgewidth=0)
-        ax1.plot(list_x,list_output[5],"-o",lw=2,color=cm.rainbow(5/5.),markerfacecolor=cm.rainbow(5/5.),markersize=20,markeredgewidth=0)
+        for i in range(len(array_x)):
+            ax1.plot(list_x,list_output[i],"-o",lw=2,color=cm.rainbow(i/5.),markerfacecolor=cm.rainbow(i/5.),markersize=20,markeredgewidth=0)
 
         # save
         os.system("rm -rf " + self.outpng_sed)
