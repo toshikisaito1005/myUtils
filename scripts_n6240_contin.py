@@ -184,7 +184,6 @@ class ToolsN6240Contin():
         #ra_deg      = ra_deg.flatten()
         dec_deg     = data_coords[:,:,1] * 180/np.pi
         #dec_deg     = dec_deg.flatten()
-        print(np.shape(ra_deg))
 
         # get pixel positions to measure SED
         array_x = np.linspace(self.ra_n,self.ra_s,5)
@@ -192,7 +191,7 @@ class ToolsN6240Contin():
 
         n = np.sqrt( (ra_deg-array_x[0])**2 + (dec_deg-array_y[0])**2 )
         print(np.shape(n))
-        print(np.argmin(n))
+        print(np.unravel_index(np.argin(n), n.shape))
 
         # band 3
         this_map = self.outfits_b3.replace("???",beamstr)
