@@ -100,13 +100,21 @@ class ToolsN6240Contin():
         self.scale_kpc = self.scale_pc / 1000.
         self.redshift  = float(self._read_key("redshift", "gal"))
 
-        self.ra        = self._read_key("ra", "gal")
-        self.dec       = self._read_key("dec", "gal")
+        self.ra        = self._read_key("ra_north", "gal")
+        self.dec       = self._read_key("dec_north", "gal")
         c = SkyCoord(self.ra+" "+self.dec,unit=(u.hourangle, u.deg))
-        self.ra        = c.ra.degree
-        self.dec       = c.dec.degree
-        self.ra_str    = str(self.ra) + "deg"
-        self.dec_str   = str(self.dec) + "deg"
+        self.ra_n      = c.ra.degree
+        self.dec_n     = c.dec.degree
+        self.ra_n_str  = str(self.ra_n) + "deg"
+        self.dec_n_str = str(self.dec_n) + "deg"
+
+        self.ra        = self._read_key("ra_south", "gal")
+        self.dec       = self._read_key("dec_south", "gal")
+        c = SkyCoord(self.ra+" "+self.dec,unit=(u.hourangle, u.deg))
+        self.ra_s      = c.ra.degree
+        self.dec_s     = c.dec.degree
+        self.ra_s_str  = str(self.ra_s) + "deg"
+        self.dec_s_str = str(self.dec_s) + "deg"
 
         self.imsize    = 35.0
         self.imsize2   = 10.0
@@ -130,6 +138,7 @@ class ToolsN6240Contin():
         self,
         # analysis
         do_prepare       = False,
+        do_resolved_SED  = False,
         # plot figures in paper
         plot_showcase    = False,
         # calc
@@ -143,6 +152,9 @@ class ToolsN6240Contin():
         if do_prepare==True:
             self.align_maps()
 
+        if do_resolved_SED==True:
+            self.resolved_SED()
+
         # plot
         if plot_showcase==True:
             self.showcase()
@@ -150,6 +162,39 @@ class ToolsN6240Contin():
         # calc
         if calc_image_stats==True:
             self.calc_image_stats()
+
+    ################
+    # resolved_SED #
+    ################
+
+    def resolved_SED(self):
+        """
+        """
+
+        beamstr="0p7as"
+
+        taskname = self.modname + sys._getframe().f_code.co_name
+        check_first(self.outfits_b3.replace("???",beamstr),taskname)
+
+        # coords
+        this_map = self.outfits_b3.replace("???",beamstr)
+        _,box       = imval_all(this_map)
+        data_coords = imval(this_map,box=box)["coords"]
+        ra_deg      = data_coords[:,:,0] * 180/np.pi
+        ra_deg      = ra_deg.flatten()
+        dec_deg     = data_coords[:,:,1] * 180/np.pi
+        dec_deg     = dec_deg.flatten()
+
+        # get pixel positions to measure SED
+        array_x = np.linspace(self.ra_n,self.ra_s,5)
+        array_y = np.linspace(self.dec_n,self.dec_s,5)
+
+        print( np.abs(ra_deg - array_x[0]).argmin() )
+
+        # band 3
+        this_map = self.outfits_b3.replace("???",beamstr)
+        data = imval(this_map,box=box)
+        data = data["data"] * data["mask"]
 
     ############
     # showcase #
@@ -182,8 +227,8 @@ class ToolsN6240Contin():
             outfile=this_out,
             imcontour1=this_map,
             imsize_as=self.imsize,
-            ra_cnt=self.ra_str,
-            dec_cnt=self.dec_str,
+            ra_cnt=self.ra_s_str,
+            dec_cnt=self.dec_s_str,
             unit_cont1=unit_cont1,
             levels_cont1=levels_cont1,
             width_cont1=width_cont1,
@@ -208,8 +253,8 @@ class ToolsN6240Contin():
             outfile=this_out,
             imcontour1=this_map,
             imsize_as=self.imsize2,
-            ra_cnt=self.ra_str,
-            dec_cnt=self.dec_str,
+            ra_cnt=self.ra_s_str,
+            dec_cnt=self.dec_s_str,
             unit_cont1=unit_cont1,
             levels_cont1=levels_cont1,
             width_cont1=width_cont1,
@@ -234,8 +279,8 @@ class ToolsN6240Contin():
             outfile=this_out,
             imcontour1=this_map,
             imsize_as=self.imsize,
-            ra_cnt=self.ra_str,
-            dec_cnt=self.dec_str,
+            ra_cnt=self.ra_s_str,
+            dec_cnt=self.dec_s_str,
             unit_cont1=unit_cont1,
             levels_cont1=levels_cont1,
             width_cont1=width_cont1,
@@ -260,8 +305,8 @@ class ToolsN6240Contin():
             outfile=this_out,
             imcontour1=this_map,
             imsize_as=self.imsize2,
-            ra_cnt=self.ra_str,
-            dec_cnt=self.dec_str,
+            ra_cnt=self.ra_s_str,
+            dec_cnt=self.dec_s_str,
             unit_cont1=unit_cont1,
             levels_cont1=levels_cont1,
             width_cont1=width_cont1,
@@ -286,8 +331,8 @@ class ToolsN6240Contin():
             outfile=this_out,
             imcontour1=this_map,
             imsize_as=self.imsize,
-            ra_cnt=self.ra_str,
-            dec_cnt=self.dec_str,
+            ra_cnt=self.ra_s_str,
+            dec_cnt=self.dec_s_str,
             unit_cont1=unit_cont1,
             levels_cont1=levels_cont1,
             width_cont1=width_cont1,
@@ -312,8 +357,8 @@ class ToolsN6240Contin():
             outfile=this_out,
             imcontour1=this_map,
             imsize_as=self.imsize2,
-            ra_cnt=self.ra_str,
-            dec_cnt=self.dec_str,
+            ra_cnt=self.ra_s_str,
+            dec_cnt=self.dec_s_str,
             unit_cont1=unit_cont1,
             levels_cont1=levels_cont1,
             width_cont1=width_cont1,
@@ -338,8 +383,8 @@ class ToolsN6240Contin():
             outfile=this_out,
             imcontour1=this_map,
             imsize_as=self.imsize,
-            ra_cnt=self.ra_str,
-            dec_cnt=self.dec_str,
+            ra_cnt=self.ra_s_str,
+            dec_cnt=self.dec_s_str,
             unit_cont1=unit_cont1,
             levels_cont1=levels_cont1,
             width_cont1=width_cont1,
@@ -364,8 +409,8 @@ class ToolsN6240Contin():
             outfile=this_out,
             imcontour1=this_map,
             imsize_as=self.imsize2,
-            ra_cnt=self.ra_str,
-            dec_cnt=self.dec_str,
+            ra_cnt=self.ra_s_str,
+            dec_cnt=self.dec_s_str,
             unit_cont1=unit_cont1,
             levels_cont1=levels_cont1,
             width_cont1=width_cont1,
@@ -390,8 +435,8 @@ class ToolsN6240Contin():
             outfile=this_out,
             imcontour1=this_map,
             imsize_as=self.imsize,
-            ra_cnt=self.ra_str,
-            dec_cnt=self.dec_str,
+            ra_cnt=self.ra_s_str,
+            dec_cnt=self.dec_s_str,
             unit_cont1=unit_cont1,
             levels_cont1=levels_cont1,
             width_cont1=width_cont1,
@@ -416,8 +461,8 @@ class ToolsN6240Contin():
             outfile=this_out,
             imcontour1=this_map,
             imsize_as=self.imsize2,
-            ra_cnt=self.ra_str,
-            dec_cnt=self.dec_str,
+            ra_cnt=self.ra_s_str,
+            dec_cnt=self.dec_s_str,
             unit_cont1=unit_cont1,
             levels_cont1=levels_cont1,
             width_cont1=width_cont1,
@@ -442,8 +487,8 @@ class ToolsN6240Contin():
             outfile=this_out,
             imcontour1=this_map,
             imsize_as=self.imsize,
-            ra_cnt=self.ra_str,
-            dec_cnt=self.dec_str,
+            ra_cnt=self.ra_s_str,
+            dec_cnt=self.dec_s_str,
             unit_cont1=unit_cont1,
             levels_cont1=levels_cont1,
             width_cont1=width_cont1,
@@ -468,8 +513,8 @@ class ToolsN6240Contin():
             outfile=this_out,
             imcontour1=this_map,
             imsize_as=self.imsize2,
-            ra_cnt=self.ra_str,
-            dec_cnt=self.dec_str,
+            ra_cnt=self.ra_s_str,
+            dec_cnt=self.dec_s_str,
             unit_cont1=unit_cont1,
             levels_cont1=levels_cont1,
             width_cont1=width_cont1,
