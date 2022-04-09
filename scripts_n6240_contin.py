@@ -189,6 +189,12 @@ class ToolsN6240Contin():
         array_x = np.linspace(self.ra_n,self.ra_s,5)
         array_y = np.linspace(self.dec_n,self.dec_s,5)
 
+        list_band3 = []
+        list_band4 = []
+        list_band6 = []
+        list_band7 = []
+        list_band8 = []
+        list_band9 = []
         # positions
         for i in range(len(array_x)):
             grid    = np.sqrt( (ra_deg-array_x[i])**2 + (dec_deg-array_y[i])**2 )
@@ -197,11 +203,16 @@ class ToolsN6240Contin():
             this_y2 = str(np.unravel_index(np.argmin(grid), grid.shape)[1]+1)
             box     = this_x+","+this_y+","+this_x+","+this_y2
 
-            # band 3
-            this_map = self.outfits_b3.replace("???",beamstr)
-            data = imval(this_map,box=box)["data"]
+            # get flux
+            list_band3.append(imval(self.outfits_b3.replace("???",beamstr),box=box)["data"][0])
+            list_band4.append(imval(self.outfits_b4.replace("???",beamstr),box=box)["data"][0])
+            list_band6.append(imval(self.outfits_b6.replace("???",beamstr),box=box)["data"][0])
+            list_band7.append(imval(self.outfits_b7.replace("???",beamstr),box=box)["data"][0])
+            list_band8.append(imval(self.outfits_b8.replace("???",beamstr),box=box)["data"][0])
+            list_band9.append(imval(self.outfits_b9.replace("???",beamstr),box=box)["data"][0])
 
-            print(data)
+        list_output = np.c[list_band3,list_band4,list_band6,list_band7,list_band8,list_band9]
+        print(list_output)
 
     ############
     # showcase #
