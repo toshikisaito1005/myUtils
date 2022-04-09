@@ -211,7 +211,7 @@ class ToolsN6240Contin():
             list_band8.append(imval(self.outfits_b8.replace("???",beamstr),box=box)["data"][0])
             list_band9.append(imval(self.outfits_b9.replace("???",beamstr),box=box)["data"][0])
 
-        list_output = np.c[list_band3,list_band4,list_band6,list_band7,list_band8,list_band9]
+        list_output = np.c_[list_band3,list_band4,list_band6,list_band7,list_band8,list_band9]
         print(list_output)
 
     ############
