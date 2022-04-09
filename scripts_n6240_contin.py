@@ -191,6 +191,7 @@ class ToolsN6240Contin():
         array_y = np.linspace(self.dec_n,self.dec_s,5)
 
         n = np.sqrt( (ra_deg-array_x[0])**2 + (dec_deg-array_y[0])**2 )
+        print(np.shape(n))
         print(np.argmin(n))
 
         # band 3
