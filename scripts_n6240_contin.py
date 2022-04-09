@@ -155,7 +155,7 @@ class ToolsN6240Contin():
             self.align_maps()
 
         if do_resolved_SED==True:
-            self.resolved_SED()
+            self.plot_resolved_SED()
 
         # plot
         if plot_showcase==True:
@@ -165,11 +165,11 @@ class ToolsN6240Contin():
         if calc_image_stats==True:
             self.calc_image_stats()
 
-    ################
-    # resolved_SED #
-    ################
+    #####################
+    # plot_resolved_SED #
+    #####################
 
-    def resolved_SED(self):
+    def plot_resolved_SED(self):
         """
         """
 
@@ -227,7 +227,7 @@ class ToolsN6240Contin():
         myax_set(ax1, "both", xlim, ylim, None, None, None, adjust=ad)
 
         for i in range(len(array_x)):
-            ax1.plot(list_x,list_output[i],"-o",lw=2,color=cm.rainbow(i/5.),markerfacecolor=cm.rainbow(i/5.),markersize=20,markeredgewidth=0)
+            ax1.plot(list_x,np.log10(list_output[i]),"-o",lw=2,color=cm.rainbow(i/5.),markerfacecolor=cm.rainbow(i/5.),markersize=15,markeredgewidth=0)
 
         # save
         os.system("rm -rf " + self.outpng_sed)
