@@ -191,7 +191,7 @@ class ToolsN6240Contin():
 
         n = np.sqrt( (ra_deg-array_x[0])**2 + (dec_deg-array_y[0])**2 )
         print(np.shape(n))
-        print(np.unravel_index(np.argin(n), n.shape))
+        print(np.unravel_index(np.argmin(n), n.shape))
 
         # band 3
         this_map = self.outfits_b3.replace("???",beamstr)
