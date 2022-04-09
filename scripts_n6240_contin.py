@@ -191,13 +191,15 @@ class ToolsN6240Contin():
 
         # positions
         for i in range(len(array_x)):
-            grid   = np.sqrt( (ra_deg-array_x[i])**2 + (dec_deg-array_y[i])**2 )
-            this_x = str(np.unravel_index(np.argmin(grid), grid.shape)[0])
-            this_y = str(np.unravel_index(np.argmin(grid), grid.shape)[1])
+            grid    = np.sqrt( (ra_deg-array_x[i])**2 + (dec_deg-array_y[i])**2 )
+            this_x  = str(np.unravel_index(np.argmin(grid), grid.shape)[0])
+            this_y  = str(np.unravel_index(np.argmin(grid), grid.shape)[1])
+            this_y2 = str(np.unravel_index(np.argmin(grid), grid.shape)[1]+1)
+            box     = this_x+","+this_y+","+this_x+","+this_y2
 
             # band 3
             this_map = self.outfits_b3.replace("???",beamstr)
-            data = imval(this_map,box=this_x+","+this_y)["data"]
+            data = imval(this_map,box=box)["data"]
 
             print(data)
 
