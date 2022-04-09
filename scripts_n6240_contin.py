@@ -181,15 +181,16 @@ class ToolsN6240Contin():
         _,box       = imval_all(this_map)
         data_coords = imval(this_map,box=box)["coords"]
         ra_deg      = data_coords[:,:,0] * 180/np.pi
-        ra_deg      = ra_deg.flatten()
+        #ra_deg      = ra_deg.flatten()
         dec_deg     = data_coords[:,:,1] * 180/np.pi
-        dec_deg     = dec_deg.flatten()
+        #dec_deg     = dec_deg.flatten()
 
         # get pixel positions to measure SED
         array_x = np.linspace(self.ra_n,self.ra_s,5)
         array_y = np.linspace(self.dec_n,self.dec_s,5)
 
-        print( np.abs(ra_deg - array_x[0]).argmin() )
+        n = np.array( (ra_deg-array_x[0])**2 + (dec_deg-array_y[0])**2 )
+        print(np.argmin(n))
 
         # band 3
         this_map = self.outfits_b3.replace("???",beamstr)
