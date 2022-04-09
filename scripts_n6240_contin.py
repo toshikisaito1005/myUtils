@@ -130,7 +130,7 @@ class ToolsN6240Contin():
         self.outpng_b8  = self.dir_products + self._read_key("outpng_b8")
         self.outpng_b9  = self.dir_products + self._read_key("outpng_b9")
 
-        self.outpng_sed = self.dir_products + self._read_key("outpng_sed ")
+        self.outpng_sed = self.dir_products + self._read_key("outpng_sed")
 
     ######################
     # run_ngc6240_contin #
