@@ -189,14 +189,17 @@ class ToolsN6240Contin():
         array_x = np.linspace(self.ra_n,self.ra_s,5)
         array_y = np.linspace(self.dec_n,self.dec_s,5)
 
-        n = np.sqrt( (ra_deg-array_x[0])**2 + (dec_deg-array_y[0])**2 )
-        print(np.shape(n))
-        print(np.unravel_index(np.argmin(n), n.shape))
+        # positions
+        for i in range(len(array_x)):
+            grid   = np.sqrt( (ra_deg-array_x[i])**2 + (dec_deg-array_y[i])**2 )
+            this_x = str(np.unravel_index(np.argmin(grid), grid.shape)[0])
+            this_y = str(np.unravel_index(np.argmin(grid), grid.shape)[1])
 
-        # band 3
-        this_map = self.outfits_b3.replace("???",beamstr)
-        data = imval(this_map,box=box)
-        data = data["data"] * data["mask"]
+            # band 3
+            this_map = self.outfits_b3.replace("???",beamstr)
+            data = imval(this_map,box=this_x+","+this_y)["data"]
+
+            print(data)
 
     ############
     # showcase #
