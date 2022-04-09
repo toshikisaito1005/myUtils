@@ -184,12 +184,13 @@ class ToolsN6240Contin():
         #ra_deg      = ra_deg.flatten()
         dec_deg     = data_coords[:,:,1] * 180/np.pi
         #dec_deg     = dec_deg.flatten()
+        print(np.shape(ra_deg))
 
         # get pixel positions to measure SED
         array_x = np.linspace(self.ra_n,self.ra_s,5)
         array_y = np.linspace(self.dec_n,self.dec_s,5)
 
-        n = np.array( (ra_deg-array_x[0])**2 + (dec_deg-array_y[0])**2 )
+        n = np.sqrt( (ra_deg-array_x[0])**2 + (dec_deg-array_y[0])**2 )
         print(np.argmin(n))
 
         # band 3
