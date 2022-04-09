@@ -123,12 +123,14 @@ class ToolsN6240Contin():
         """
         """
 
-        self.outpng_b3 = self.dir_products + self._read_key("outpng_b3")
-        self.outpng_b4 = self.dir_products + self._read_key("outpng_b4")
-        self.outpng_b6 = self.dir_products + self._read_key("outpng_b6")
-        self.outpng_b7 = self.dir_products + self._read_key("outpng_b7")
-        self.outpng_b8 = self.dir_products + self._read_key("outpng_b8")
-        self.outpng_b9 = self.dir_products + self._read_key("outpng_b9")
+        self.outpng_b3  = self.dir_products + self._read_key("outpng_b3")
+        self.outpng_b4  = self.dir_products + self._read_key("outpng_b4")
+        self.outpng_b6  = self.dir_products + self._read_key("outpng_b6")
+        self.outpng_b7  = self.dir_products + self._read_key("outpng_b7")
+        self.outpng_b8  = self.dir_products + self._read_key("outpng_b8")
+        self.outpng_b9  = self.dir_products + self._read_key("outpng_b9")
+
+        self.outpng_sed = self.dir_products + self._read_key("outpng_sed ")
 
     ######################
     # run_ngc6240_contin #
@@ -211,8 +213,29 @@ class ToolsN6240Contin():
             list_band8.append(imval(self.outfits_b8.replace("???",beamstr),box=box)["data"][0])
             list_band9.append(imval(self.outfits_b9.replace("???",beamstr),box=box)["data"][0])
 
+        list_x      = [110,130,231,358,481,692]
         list_output = np.c_[list_band3,list_band4,list_band6,list_band7,list_band8,list_band9]
-        print(list_output)
+
+
+        # plot
+        xlim = None
+        ylim = None
+        fig = plt.figure(figsize=(13,10))
+        gs  = gridspec.GridSpec(nrows=10, ncols=10)
+        ax1 = plt.subplot(gs[0:10,0:10])
+        ad  = [0.215,0.83,0.10,0.90]
+        myax_set(ax1, "both", xlim, ylim, None, None, None, adjust=ad)
+
+        ax1.plot(list_x,list_output[0],"-o",lw=2,color=cm.rainbow(0/5.),markercolor=cm.rainbow(0/5.),markersize=20,markeredgewidth=0)
+        ax1.plot(list_x,list_output[1],"-o",lw=2,color=cm.rainbow(1/5.),markercolor=cm.rainbow(1/5.),markersize=20,markeredgewidth=0)
+        ax1.plot(list_x,list_output[2],"-o",lw=2,color=cm.rainbow(2/5.),markercolor=cm.rainbow(2/5.),markersize=20,markeredgewidth=0)
+        ax1.plot(list_x,list_output[3],"-o",lw=2,color=cm.rainbow(3/5.),markercolor=cm.rainbow(3/5.),markersize=20,markeredgewidth=0)
+        ax1.plot(list_x,list_output[4],"-o",lw=2,color=cm.rainbow(4/5.),markercolor=cm.rainbow(4/5.),markersize=20,markeredgewidth=0)
+        ax1.plot(list_x,list_output[5],"-o",lw=2,color=cm.rainbow(5/5.),markercolor=cm.rainbow(5/5.),markersize=20,markeredgewidth=0)
+
+        # save
+        os.system("rm -rf " + self.outpng_sed)
+        plt.savefig(self.outpng_sed, dpi=self.fig_dpi)
 
     ############
     # showcase #
