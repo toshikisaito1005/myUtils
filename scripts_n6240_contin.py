@@ -188,8 +188,8 @@ class ToolsN6240Contin():
         #dec_deg     = dec_deg.flatten()
 
         # get pixel positions to measure SED
-        array_x = np.linspace(self.ra_n,self.ra_s,5)
-        array_y = np.linspace(self.dec_n,self.dec_s,5)
+        array_x = np.linspace(self.ra_n,self.ra_s,3)
+        array_y = np.linspace(self.dec_n,self.dec_s,3)
 
         list_band3 = []
         list_band4 = []
