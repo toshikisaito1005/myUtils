@@ -188,8 +188,9 @@ class ToolsN6240Contin():
         #dec_deg     = dec_deg.flatten()
 
         # get pixel positions to measure SED
-        array_x = np.linspace(self.ra_n,self.ra_s,3)
-        array_y = np.linspace(self.dec_n,self.dec_s,3)
+        numdata = 3
+        array_x = np.linspace(self.ra_n,self.ra_s,numdata)
+        array_y = np.linspace(self.dec_n,self.dec_s,numdata)
 
         list_band3 = []
         list_band4 = []
@@ -227,7 +228,7 @@ class ToolsN6240Contin():
         myax_set(ax1, "both", xlim, ylim, None, None, None, adjust=ad)
 
         for i in range(len(array_x)):
-            ax1.plot(list_x,np.log10(list_output[i]),"-o",lw=2,color=cm.rainbow(i/5.),markerfacecolor=cm.rainbow(i/5.),markersize=15,markeredgewidth=0)
+            ax1.plot(list_x,np.log10(list_output[i]),"-o",lw=2,color=cm.rainbow(i/float(numdata)),markerfacecolor=cm.rainbow(i/5.),markersize=15,markeredgewidth=0)
 
         # save
         os.system("rm -rf " + self.outpng_sed)
