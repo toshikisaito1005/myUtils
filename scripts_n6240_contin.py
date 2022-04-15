@@ -233,9 +233,9 @@ class ToolsN6240Contin():
 
         # ann
         ax1.axvspan(np.log10(787), np.log10(950), color="coral")
+        ax1.plot([2.5,2.7], [np.log10(0.02),np.log10(0.02*(10**2.7/10**2.5)**1.8)], "--", color="black", lw=3)
 
-
-        ax1.set_xlabel("log $\nu_{obs}$ (GHz)")
+        ax1.set_xlabel("log Observed Frequency (GHz)")
         ax1.set_ylabel("log Flux (Jy)")
 
         # save
