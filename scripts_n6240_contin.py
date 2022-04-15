@@ -229,7 +229,7 @@ class ToolsN6240Contin():
 
         for i in range(len(array_x)):
             ax1.plot(list_x,np.log10(list_output[i]),"-o",lw=2,color=cm.rainbow(i/float(numdata-1)),markerfacecolor=cm.rainbow(i/float(numdata-1)),markersize=15,markeredgewidth=0)
-            ax1.errorbar(list_x,np.log10(list_output[i]),yerr=np.array([0.05,0.05,0.10,0.10,0.10,0.20]),capsize=0,lw=2)
+            ax1.errorbar(list_x,np.log10(list_output[i]),yerr=np.array([0.05,0.05,0.10,0.10,0.10,0.20]),capsize=0,lw=2,color=cm.rainbow(i/float(numdata-1)),markersize=0)
 
         # ann
         ax1.axvspan(np.log10(787), np.log10(950), color="coral")
