@@ -232,7 +232,7 @@ class ToolsN6240Contin():
             ax1.errorbar(list_x,np.log10(list_output[i]),yerr=np.array([0.05,0.05,0.10,0.10,0.10,0.20]),capsize=0,lw=2)
 
         # ann
-        ax1.axvspan(np.lgo10(787), np.lgo10(950), color="coral")
+        ax1.axvspan(np.log10(787), np.log10(950), color="coral")
 
 
         ax1.set_xlabel("log $\nu_{obs}$ (GHz)")
