@@ -228,7 +228,7 @@ class ToolsN6240Contin():
         myax_set(ax1, "both", xlim, ylim, None, None, None, adjust=ad)
 
         for i in range(len(array_x)):
-            ax1.plot(list_x,np.log10(list_output[i]),"-o",lw=2,color=cm.rainbow(i/float(numdata)),markerfacecolor=cm.rainbow(i/5.),markersize=15,markeredgewidth=0)
+            ax1.plot(list_x,np.log10(list_output[i]),"-o",lw=2,color=cm.rainbow(i/float(numdata-1)),markerfacecolor=cm.rainbow(i/float(numdata-1)),markersize=15,markeredgewidth=0)
 
         # save
         os.system("rm -rf " + self.outpng_sed)
