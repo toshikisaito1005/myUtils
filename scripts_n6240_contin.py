@@ -214,7 +214,7 @@ class ToolsN6240Contin():
             list_band8.append(imval(self.outfits_b8.replace("???",beamstr),box=box)["data"][0])
             list_band9.append(imval(self.outfits_b9.replace("???",beamstr),box=box)["data"][0])
 
-        list_x      = [110,130,231,358,481,692]
+        list_x      = np.log10(np.array([110,130,231,358,481,692]))
         list_output = np.c_[list_band3,list_band4,list_band6,list_band7,list_band8,list_band9]
 
 
