@@ -233,7 +233,7 @@ class ToolsN6240Contin():
 
         # ann
         ax1.axvspan(np.log10(787), np.log10(950), color="coral")
-        ax1.plot([2.05,2.45], [np.log10(0.02),np.log10(0.02*(10**2.45/10**2.05)**-0.8)], "-", color="black", lw=3)
+        ax1.plot([2.05,2.25], [np.log10(0.02),np.log10(0.02*(10**2.25/10**2.05)**-0.8)], "-", color="black", lw=3)
         ax1.plot([2.5,2.8], [np.log10(0.03),np.log10(0.03*(10**2.8/10**2.5)**2.0)], "-", color="black", lw=3)
 
 
