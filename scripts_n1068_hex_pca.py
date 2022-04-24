@@ -1741,10 +1741,11 @@ class ToolsPCA():
         cbar = plt.colorbar(im)
         if plot_cbar==True:
             cax = fig.add_axes([0.19, 0.12, 0.025, 0.35])
-            cb  = fig.colorbar(im, cax=cax, color=textcolor)
+            cb  = fig.colorbar(im, cax=cax)
             cb.set_label(label, color=textcolor)
             cb.ax.yaxis.set_tick_params(color=textcolor)
             cb.outline.set_color(textcolor)
+            plt.setp(plt.getp(cb.ax.axes, 'yticklabels'), color=textcolor)
 
         # scale bar
         if scalebar=="100pc":
