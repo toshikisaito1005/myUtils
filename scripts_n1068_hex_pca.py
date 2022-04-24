@@ -1702,6 +1702,7 @@ class ToolsPCA():
         label="",
         bgcolor="white",
         scalebar="100pc",
+        textcolor="black",
         ):
         """
         """
@@ -1737,23 +1738,26 @@ class ToolsPCA():
         # cbar
         cbar = plt.colorbar(im)
         if plot_cbar==True:
-            cax  = fig.add_axes([0.19, 0.12, 0.025, 0.35])
-            fig.colorbar(im, cax=cax).set_label(label)
+            cax = fig.add_axes([0.19, 0.12, 0.025, 0.35])
+            cb  = fig.colorbar(im, cax=cax)
+            cb.set_label(label, color=textcolor)
+            cb.ax.yaxis.set_tick_params(color=textcolor)
+            cb.outline.set_edgecolor(textcolor)
 
         # scale bar
         if scalebar=="100pc":
             bar = 100 / self.scale_pc
-            ax.plot([-10,-10+bar],[-10,-10],"-",color="black",lw=4)
-            ax.text(-10, -10.5, "100 pc",
+            ax.plot([-10,-10+bar],[-10,-10],"-",color=textcolor,lw=4)
+            ax.text(-10, -10.5, "100 pc", color=textcolor,
                     horizontalalignment="right", verticalalignment="top")
         elif scalebar=="500pc":
             bar = 500 / self.scale_pc
-            ax.plot([-22,-22+bar],[-22,-22],"-",color="black",lw=4)
-            ax.text(-22, -22.5, "500 pc",
+            ax.plot([-22,-22+bar],[-22,-22],"-",color=textcolor,lw=4)
+            ax.text(-22, -22.5, "500 pc", color=textcolor,
                     horizontalalignment="right", verticalalignment="top")
 
         # text
-        ax.text(0.03, 0.93, title, color="black", transform=ax.transAxes, weight="bold", fontsize=32)
+        ax.text(0.03, 0.93, title, color=textcolor, transform=ax.transAxes, weight="bold", fontsize=32)
 
         # ann
         if ann==True:
