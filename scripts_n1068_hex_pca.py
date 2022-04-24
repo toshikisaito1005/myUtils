@@ -1742,7 +1742,7 @@ class ToolsPCA():
             cb  = fig.colorbar(im, cax=cax)
             cb.set_label(label, color=textcolor)
             cb.ax.yaxis.set_tick_params(color=textcolor)
-            cb.outline.set_edgecolor(textcolor)
+            #cb.outline.set_edgecolor(textcolor)
 
         # scale bar
         if scalebar=="100pc":
