@@ -65,7 +65,8 @@ history:
 2022-01-25   replace radial plot with line graph
 2022-02-18   send to Editage (English proofreading)
 2022-03-03   circulate v1 draf to all co-Is
-2022-03-31   submit to ApJ
+2022-04-24   revise figures
+2022-04-??   submit to ApJ
 Toshiki Saito@Nichidai/NAOJ
 """
 
@@ -1395,12 +1396,12 @@ class ToolsPCA():
                     dec,
                     co10,
                     "(a) $^{12}$CO(1-0)",
-                    ann      = True,
-                    add_text = False,
-                    lim      = 28,
-                    size     = 780,
-                    label    = "(K km s$^{-1}$)",
-                    scalebar = "500pc",
+                    ann       = True,
+                    add_text  = False,
+                    lim       = 28,
+                    size      = 780,
+                    label     = "(K km s$^{-1}$)",
+                    scalebar  = "500pc",
                     textcolor = "white",
                     )
 
@@ -1740,10 +1741,10 @@ class ToolsPCA():
         cbar = plt.colorbar(im)
         if plot_cbar==True:
             cax = fig.add_axes([0.19, 0.12, 0.025, 0.35])
-            cb  = fig.colorbar(im, cax=cax)
+            cb  = fig.colorbar(im, cax=cax, color=textcolor)
             cb.set_label(label, color=textcolor)
             cb.ax.yaxis.set_tick_params(color=textcolor)
-            #cb.outline.set_edgecolor(textcolor)
+            cb.outline.set_color(textcolor)
 
         # scale bar
         if scalebar=="100pc":
