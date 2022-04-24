@@ -1401,6 +1401,7 @@ class ToolsPCA():
                     size     = 780,
                     label    = "(K km s$^{-1}$)",
                     scalebar = "500pc",
+                    textcolor = "white",
                     )
 
             if len(this_c[this_c!=0])>=10:
