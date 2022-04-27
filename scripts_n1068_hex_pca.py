@@ -876,7 +876,7 @@ class ToolsPCA():
         xlim=[-0.5,15.5],
         ylim=ylim,
         xlabel=None,
-        ylabel="log Ratio relative to $^{12}$CO(1-0)",
+        ylabel="log ratio relative to $^{12}$CO(1-0)",
         adjust=[0.1,0.963,0.25,0.93],
         )
         myax_set(
