@@ -1281,9 +1281,9 @@ class ToolsPCA():
         #################
         # plot PCA maps #
         #################
-        anntexts = [True,False]
-        cmaps    = ["Reds","PuBu"]
-        headers  = ["b","c"]
+        anntexts = [True,False,False,False,False]
+        cmaps    = ["Reds","PuBu","PuBu","PuBu","PuBu"]
+        headers  = ["b","c","a","b","c"]
         print(data_pca[0])
         for i in range(len(data_pca[0])):
             this_c    = data_pca[:,i]
