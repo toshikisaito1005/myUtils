@@ -239,6 +239,8 @@ class ToolsPCA():
         self.final_hex_radial         = self.dir_final + self._read_key("final_hex_radial")
         self.final_line_graph         = self.dir_final + self._read_key("final_line_graph")
 
+        self.appendix_pca_mom0        = self.dir_final + self._read_key("appendix_pca_mom0")
+
         self.box_map                  = self._read_key("box_map")
         self.box_map_noxlabel         = self._read_key("box_map_noxlabel")
         self.box_map_noylabel         = self._read_key("box_map_noylabel")
@@ -323,7 +325,8 @@ class ToolsPCA():
         do_final_mom0              = False, # Figure 2
         do_final_pca_mom0          = False, # Figure 3
         do_final_pca1_ratio_podium = False, # Figure 4
-        do_final_line_graph        = True, # Figure 5
+        do_final_line_graph        = False, # Figure 5
+        do_appendix_pcs            = True, # Figure A
         ):
         """
         """
@@ -626,6 +629,28 @@ class ToolsPCA():
                 axis="column",
                 )
             """
+
+        if do_appendix_pcs==True:
+            print("##########################")
+            print("# create do_appendix_pcs #")
+            print("##########################")
+
+            combine_two_png(
+                self.outpng_pca_hexmap.replace("???","3"),
+                self.outpng_pca_hexmap.replace("???","4"),
+                self.appendix_pca_mom0+"_tmp1.png",
+                self.box_map,
+                self.box_map,
+                delin=delin,
+                )
+            combine_two_png(
+                self.appendix_pca_mom0+"_tmp1.png",
+                self.outpng_pca_hexmap.replace("???","5"),
+                self.appendix_pca_mom0,
+                "100000x100000+0+0",
+                self.box_map,
+                delin=delin,
+                )
 
     ########################
     # immagick_figures_sub #

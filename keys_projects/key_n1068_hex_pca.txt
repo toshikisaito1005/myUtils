@@ -19,6 +19,7 @@ final_pca_mom0            ,,,fig_pca_mom0.png
 final_pca_ratio_podium    ,,,fig_pca_ratio_podium.png
 final_line_graph          ,,,fig_line_graph.png
 # appendix
+appendix_pca_mom0         ,,,addpendix_pca_mom0.png
 # supplement
 final_hex_radial          ,,,fig_hex_radial.png
 final_pca_r13co           ,,,fig_pca_r13co.png
