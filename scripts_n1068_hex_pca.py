@@ -1284,6 +1284,7 @@ class ToolsPCA():
         anntexts = [True,False]
         cmaps    = ["Reds","PuBu"]
         headers  = ["b","c"]
+        print(data_pca[0])
         for i in range(len(data_pca[0])):
             this_c    = data_pca[:,i]
             this_x    = x[this_c!=0]
