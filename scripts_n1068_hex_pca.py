@@ -1299,7 +1299,6 @@ class ToolsPCA():
 
             output = self.outpng_pca_hexmap.replace("???",str(i+1))
 
-            print(np.min(this_c),np.max(this_c))
             print("# plot " + output)
             self._plot_hexmap(
                 output,
@@ -1731,7 +1730,7 @@ class ToolsPCA():
 
         # plot
         if add_text!="env":
-            im = ax.scatter(x, y, s=size, c=c, cmap=cmap, marker="h", linewidths=0, vmin=0)
+            im = ax.scatter(x, y, s=size, c=c, cmap=cmap, marker="h", linewidths=0)#, vmin=0)
         else:
             ax.scatter(x[c==3], y[c==3], s=size, c="tomato", marker="h", linewidths=0)
             ax.scatter(x[c==2], y[c==2], s=size, c="deepskyblue", marker="h", linewidths=0)
