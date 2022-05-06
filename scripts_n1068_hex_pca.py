@@ -1284,7 +1284,6 @@ class ToolsPCA():
         anntexts = [True,False,False,False,False]
         cmaps    = ["Reds","PuBu","PuBu","PuBu","PuBu"]
         headers  = ["b","c","a","b","c"]
-        print(data_pca[0])
         for i in range(len(data_pca[0])):
             this_c    = data_pca[:,i]
             this_x    = x[this_c!=0]
@@ -1300,6 +1299,7 @@ class ToolsPCA():
 
             output = self.outpng_pca_hexmap.replace("???",str(i+1))
 
+            print(np.min(this_c),np.max(this_c))
             print("# plot " + output)
             self._plot_hexmap(
                 output,
