@@ -1736,7 +1736,6 @@ class ToolsPCA():
 
         # set plt, ax
         fig = plt.figure(figsize=(13,10))
-        plt.rcParams["font.size"] = 20 # 16
         gs = gridspec.GridSpec(nrows=10, ncols=10)
         ax = plt.subplot(gs[0:10,0:10])
         fig.patch.set_facecolor(bgcolor)
@@ -1750,6 +1749,7 @@ class ToolsPCA():
         xlabel="R.A. offset (arcsec)",
         ylabel="Decl. offset (arcsec)",
         adjust=[0.10,0.99,0.10,0.93],
+        fsize=25,
         )
         ax.set_aspect('equal', adjustable='box')
 
