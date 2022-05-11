@@ -1736,7 +1736,7 @@ class ToolsPCA():
 
         # set plt, ax
         fig = plt.figure(figsize=(13,10))
-        plt.rcParams["font.size"] = 16
+        plt.rcParams["font.size"] = 20 # 16
         gs = gridspec.GridSpec(nrows=10, ncols=10)
         ax = plt.subplot(gs[0:10,0:10])
         fig.patch.set_facecolor(bgcolor)
