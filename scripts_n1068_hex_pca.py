@@ -52,9 +52,10 @@ usage:
 > os.system("rm -rf *.last")
 
 paper drafts:
-Date         Filename                To
-2021-12-21   draft_v0_211221.zip     Takano-san,Nakajima-san,Harada-san,Tamura-san
-2022-02-18   draft_v1_220218.zip     Editage (English proofreading)
+Date         Filename                        To
+2021-12-21   draft_v0_211221.zip             Takano-san,Nakajima-san,Harada-san,Tamura-san
+2022-02-18   draft_v1_220218.zip             Editage (English proofreading)
+2022-05-12   draft_v2_submitted_220512.zip   ApJ
 
 history:
 2021-11-10   created
@@ -66,7 +67,7 @@ history:
 2022-02-18   send to Editage (English proofreading)
 2022-03-03   circulate v1 draf to all co-Is
 2022-04-24   revise figures
-2022-04-??   submit to ApJ
+2022-05-12   submit to ApJ
 Toshiki Saito@Nichidai/NAOJ
 """
 
@@ -322,7 +323,7 @@ class ToolsPCA():
         delin                      = False,
         do_all                     = False,
         do_final_overall           = False, # Figure 1
-        do_final_mom0              = True, # Figure 2
+        do_final_mom0              = False, # Figure 2
         do_final_pca_mom0          = False, # Figure 3
         do_final_pca1_ratio_podium = False, # Figure 4
         do_final_line_graph        = False, # Figure 5
