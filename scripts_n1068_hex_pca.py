@@ -798,7 +798,7 @@ class ToolsPCA():
         for this_line in header:
             mom0         = np.array(data_mom0[:,np.where(header==this_line)].flatten())
             emom0        = np.array(data_emom0[:,np.where(header==this_line)].flatten())
-            cut          = np.where((mom0!=0) & (emom0!=0))
+            cut          = np.where((mom0!=0) & (emom0!=0) & (r<=self.r_sbr_as))
             mom0         = mom0[cut]
             emom0        = emom0[cut]
             snr          = mom0/emom0
