@@ -805,7 +805,7 @@ class ToolsPCA():
 
             median_emom0 = np.median(emom0)
             median_snr   = np.median(snr[snr>=self.snr_mom])
-            print(this_line, median_emom0, median_snr)
+            print(this_line, median_emom0, median_snr, len(mom0))
 
     #######################
     # plot_max_line_graph # Figure 5
