@@ -805,11 +805,11 @@ class ToolsPCA():
 
             if len(mom0)>10:
                 median_emom0 = np.median(emom0)
-                p16_snr      = np.round(np.percentile(snr[snr>=self.snr_mom],16),1)
-                median_snr   = np.round(np.median(snr[snr>=self.snr_mom]),1)
-                p84_snr      = np.round(np.percentile(snr[snr>=self.snr_mom],84),1)
-                peak_snr     = np.round(np.max(snr[snr>=self.snr_mom]),1)
-                print(this_line, median_emom0, p16_snr, median_snr, p84_snr, peak_snr, len(mom0))
+                p16_snr      = str(np.round(np.percentile(snr[snr>=self.snr_mom],16),1))
+                median_snr   = str(np.round(np.median(snr[snr>=self.snr_mom]),1))
+                p84_snr      = str(np.round(np.percentile(snr[snr>=self.snr_mom],84),1))
+                peak_snr     = str(np.round(np.max(snr[snr>=self.snr_mom]),1))
+                print(this_line, median_emom0, p16_snr+"-"+median_snr+"-"+p84_snr+"-"+peak_snr, len(mom0))
 
     #######################
     # plot_max_line_graph # Figure 5
