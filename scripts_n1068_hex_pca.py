@@ -803,11 +803,12 @@ class ToolsPCA():
             emom0        = emom0[cut]
             snr          = mom0/emom0
 
-            median_emom0 = np.median(emom0)
-            median_snr   = np.median(snr[snr>=self.snr_mom])
-            #p84_snr      = np.percentile(snr[snr>=self.snr_mom],84)
-            peak_snr     = np.max(snr[snr>=self.snr_mom])
-            print(this_line, median_emom0, median_snr, peak_snr, len(mom0))
+            if len(mom0)>10:
+                median_emom0 = np.median(emom0)
+                median_snr   = np.median(snr[snr>=self.snr_mom])
+                p84_snr      = np.percentile(snr[snr>=self.snr_mom],84)
+                peak_snr     = np.max(snr[snr>=self.snr_mom])
+                print(this_line, median_emom0, median_snr, peak_snr, len(mom0))
 
     #######################
     # plot_max_line_graph # Figure 5
