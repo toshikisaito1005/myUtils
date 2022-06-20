@@ -42,9 +42,9 @@ def hexbin_sampling(
         image center Decl. (e.g., AGN position).
     beam : float [arcsec]
         diameter of hexagons.
-        independent sampling when hexagon size > synthesized beam size.
+        (nearly) independent sampling when hexagon size > synthesized beam size.
     gridsize : integer
-        number of hex in one direction.
+        number of hex in x/y direction.
 
     CASA tasks
     ----------
@@ -87,11 +87,15 @@ def hexbin_sampling(
     hexdata = ax.hexbin(X, Y, C=Y, gridsize=gridsize, extent=extent)
     hexy    = np.array(hexdata.get_array())
     hexdata = ax.hexbin(X, Y, gridsize=gridsize, extent=extent)
-    num     = np.array(hexdata.get_array())
 
+    # error case
     if err==True:
-        hexc = np.sqrt(hexc)
-    
+        cdelt1 = imhead(imagename,mode="list")["cdelt1"]
+        s      = np.sqrt(3.0)/2.0 * beam**2.0
+        pix    = abs(float(cdelt1)) * (3600.0*180.0)/np.pi
+        n      = s / pix**2.0
+        hexc   = np.sqrt(hexc)*(1.0/np.sqrt(n))
+
     plt.clf()
 
     return hexx, hexy, hexc

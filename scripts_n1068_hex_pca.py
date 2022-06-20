@@ -68,6 +68,7 @@ history:
 2022-03-03   circulate v1 draf to all co-Is
 2022-04-24   revise figures
 2022-05-12   submit to ApJ
+2022-06-20   add measurements of rms in K, typical S/N ratio in hex_sampling
 Toshiki Saito@Nichidai/NAOJ
 """
 
@@ -267,6 +268,8 @@ class ToolsPCA():
         # supplement
         plot_supplements       = False,
         do_imagemagick_sub     = False,
+        # referee comments
+        referee_meas_rms_snr   = False,
         ):
         """
         This method runs all the methods which will create figures in the paper.
@@ -313,6 +316,9 @@ class ToolsPCA():
 
         if do_imagemagick_sub==True:
             self.immagick_figures_sub()
+
+        if referee_meas_rms_snr==True:
+            self.referee_meas_rms_snr()
 
     ####################
     # immagick_figures #
@@ -774,6 +780,31 @@ class ToolsPCA():
                 self.box_map,
                 delin=delin,
                 )
+
+    ########################
+    # referee_meas_rms_snr #
+    ########################
+
+    def referee_meas_rms_snr(self):
+        """
+        """
+
+        taskname = self.modname + sys._getframe().f_code.co_name
+        check_first(self.table_hex_obs,taskname)
+
+        # extract mom0 data
+        header,data_mom0,data_emom0,x,y,r = self._read_table(self.table_hex_obs)
+
+        for this_line in header:
+            mom0         = np.array(data_mom0[:,np.where(header==this_line)].flatten())
+            emom0        = np.array(data_emom0[:,np.where(header==this_line)].flatten())
+            cut          = np.where((mom0!=0) & (emom0!=0))
+            mom0         = mom0[cut]
+            emom0        = emom0[cut]
+
+            median_emom0 = np.median(emom0)
+            median_snr   = np.median(mom0/emom0)
+            print(this_line, median_emom0, median_snr)
 
     #######################
     # plot_max_line_graph # Figure 5
