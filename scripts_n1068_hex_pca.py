@@ -801,9 +801,10 @@ class ToolsPCA():
             cut          = np.where((mom0!=0) & (emom0!=0))
             mom0         = mom0[cut]
             emom0        = emom0[cut]
+            snr          = mom0/emom0
 
             median_emom0 = np.median(emom0)
-            median_snr   = np.median(mom0/emom0)
+            median_snr   = np.median(snr[snr>=self.snr_mom])
             print(this_line, median_emom0, median_snr)
 
     #######################
