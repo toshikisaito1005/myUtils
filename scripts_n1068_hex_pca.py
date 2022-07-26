@@ -69,6 +69,8 @@ history:
 2022-04-24   revise figures
 2022-05-12   submit to ApJ
 2022-06-20   add measurements of rms in K, typical S/N ratio in hex_sampling
+2022-07-14   accepted!
+2022-07-26   create molecular richness map
 Toshiki Saito@Nichidai/NAOJ
 """
 
@@ -248,6 +250,9 @@ class ToolsPCA():
         self.box_map_noylabel         = self._read_key("box_map_noylabel")
         self.box_map_noxylabel        = self._read_key("box_map_noxylabel")
 
+        # extra
+        self.outpng_extra_richness    = self.dir_products + self._read_key("outpng_extra_richness")
+
     ###################
     # run_ngc1068_pca #
     ###################
@@ -270,6 +275,8 @@ class ToolsPCA():
         do_imagemagick_sub     = False,
         # referee comments
         referee_meas_rms_snr   = False,
+        # extra
+        plot_mol_richness      = False,
         ):
         """
         This method runs all the methods which will create figures in the paper.
@@ -319,6 +326,10 @@ class ToolsPCA():
 
         if referee_meas_rms_snr==True:
             self.referee_meas_rms_snr()
+
+        # extra
+        if plot_mol_richness==True:
+            self.plot_mol_richness()
 
     ####################
     # immagick_figures #
@@ -780,6 +791,42 @@ class ToolsPCA():
                 self.box_map,
                 delin=delin,
                 )
+
+    #####################
+    # plot_mol_richness #
+    #####################
+
+    def plot_mol_richness(self):
+        """
+        """
+
+        taskname = self.modname + sys._getframe().f_code.co_name
+        check_first(self.table_hex_obs,taskname)
+
+        # extract mom0 data
+        header,data_mom0,data_err,ra,dec,r = self._read_table(self.table_hex_obs)
+
+        total_c = data_mom0[:,0] * 0
+        for i in range(len(header)):
+            this_c    = data_mom0[:,i]
+            this_cerr = data_err[:,i]
+            this_c    = np.where(this_c>=this_cerr*self.snr_mom,1,0)
+            total_c   = total_c + this_c
+
+        self._plot_hexmap(
+            self.outpng_extra_richness,
+            ra,
+            dec,
+            total_c,
+            "Molecular richness",
+            ann       = True,
+            add_text  = False,
+            lim       = 28,
+            size      = 780,
+            label     = "Number of lines",
+            scalebar  = "500pc",
+            textcolor = "black",
+            )
 
     ########################
     # referee_meas_rms_snr #

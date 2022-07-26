@@ -72,8 +72,6 @@ box_map                   ,,,2870x2750+350+150
 box_map_noxlabel          ,,,2550x2750+670+150
 box_map_noylabel          ,,,2870x2560+350+150
 box_map_noxylabel         ,,,2550x2560+670+150
-# extra png
-outpng_extra_richness     ,,,fig_hexmap_richness.png
 
 #######
 # end #

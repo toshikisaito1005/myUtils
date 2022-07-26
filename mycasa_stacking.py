@@ -45,9 +45,9 @@ def cube_stacking(
     cubeimage : str
         3D CASA or FITS datacube used for stacking.
     velimage : str
-        2D CASA or FITS map used for velocity prior.
+        2D CASA or FITS map used for velocity prior, e.g., momemnt-1 map.
     binimage : str
-        2D CASA or FITS map used for stacking axis.
+        2D CASA or FITS map used for stacking axis, e.g., moment-0 map.
     maskimage : str
         2D CASA or FITS map used for masking cubeimage.
 
