@@ -819,6 +819,7 @@ class ToolsPCA():
             dec,
             total_c,
             "Molecular richness",
+            cmap      = "Set3",
             ann       = True,
             add_text  = False,
             lim       = 28,
