@@ -826,7 +826,7 @@ class ToolsPCA():
             size      = 780,
             label     = "Number of lines",
             scalebar  = "500pc",
-            textcolor = "black",
+            textcolor = "white",
             )
 
     ########################
