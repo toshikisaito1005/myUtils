@@ -6,7 +6,8 @@ contents:
 
 history:
 2021-07-21   created by TS
-Toshiki Saito@Nichidai/NAOJ
+2022-07-26   minor bug fix: import casa task issue
+Toshiki Saito@NAOJ
 """
 
 import os, sys, glob, copy, inspect
