@@ -16,7 +16,8 @@ import matplotlib.pyplot as plt
 import matplotlib.gridspec as gridspec
 plt.ioff()
 
-from mycasa_tasks import check_first,imval_all
+#from mycasa_tasks import check_first,imval_all
+from mycasa_tasks import *
 
 #
 
