@@ -819,7 +819,7 @@ class ToolsPCA():
             dec,
             total_c,
             "Molecular richness",
-            cmap      = "cube_helix",
+            cmap      = "gnuplot",
             ann       = True,
             add_text  = False,
             lim       = 28,
