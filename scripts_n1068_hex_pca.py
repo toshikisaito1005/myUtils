@@ -819,7 +819,7 @@ class ToolsPCA():
             dec,
             total_c,
             "Molecular richness",
-            cmap      = "hsv",
+            cmap      = "cube_helix",
             ann       = True,
             add_text  = False,
             lim       = 28,
