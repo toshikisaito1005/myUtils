@@ -277,7 +277,7 @@ class ToolsR21():
         """
 
         taskname = self.modname + sys._getframe().f_code.co_name
-        check_first(incube,taskname)
+        check_first(incube1,taskname)
 
         # staging cubes
         self._stage_cube(incube1,outcube1+"_tmp1",beam,imsize,ra,dec)
