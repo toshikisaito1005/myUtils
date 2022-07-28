@@ -247,7 +247,11 @@ class ToolsR21():
         taskname = self.modname + sys._getframe().f_code.co_name
         check_first(self.cube_co10_n0628,taskname)
 
-        #imrebin2(self.cube_co10_n0628,self.outcube_co10_n0628+"_tmp1",self.imsize_n0628,self.ra_n0628,self.dec_n0628)
+        run_importfits(self.cube_co10_n0628,self.outcube_co10_n0628+"_tmp1")
+        run_roundsmooth(self.outcube_co10_n0628+"_tmp1",self.outcube_co10_n0628+"_tmp2",self.basebeam_n0628,delin=True)
+        unitconv_Jyb_K(self.outcube_co10_n0628+"_tmp2",self.outcube_co10_n0628+"_tmp3",115.27120,delin=True)
+
+        #imrebin2(self.cube_co10_n0628,self.outcube_co10_n0628+"_tmp?",self.imsize_n0628,self.ra_n0628,self.dec_n0628)
 
     ###############
     # _create_dir #
