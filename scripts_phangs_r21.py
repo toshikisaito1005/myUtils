@@ -286,10 +286,9 @@ class ToolsR21():
         # align cubes
         imrebin2(outcube1+"_tmp1",outcube1+"_tmp2",imsize,ra,dec,delin=True)
         run_imregrid(outcube2+"_tmp1",outcube1+"_tmp2",outcube2+"_tmp1p5",
-            axes=[0,1],delin=False)
+            axes=[0,1])
         os.system("rm -rf " + outcube2 + "_tmp1")
-        run_imregrid(outcube2+"_tmp1p5",outcube1+"_tmp2",outcube2+"_tmp2",
-            delin=False)
+        run_imregrid(outcube2+"_tmp1p5",outcube1+"_tmp2",outcube2+"_tmp2")
         os.system("rm -rf " + outcube2 + "_tmp1p5")
 
         # from line 801 of scripts_phangs_r21_tasks.py
