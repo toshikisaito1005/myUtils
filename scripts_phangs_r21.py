@@ -174,15 +174,15 @@ class ToolsR21():
         """
         """
 
-        self.ra_n0628  = float(self._read_key("ra_n0628", "gal").split("deg")[0])
-        self.ra_n3627  = float(self._read_key("ra_n3627", "gal").split("deg")[0])
-        self.ra_n4254  = float(self._read_key("ra_n4254", "gal").split("deg")[0])
-        self.ra_n4321  = float(self._read_key("ra_n4321", "gal").split("deg")[0])
+        self.ra_n0628  = self._read_key("ra_n0628", "gal").split("deg")[0]
+        self.ra_n3627  = self._read_key("ra_n3627", "gal").split("deg")[0]
+        self.ra_n4254  = self._read_key("ra_n4254", "gal").split("deg")[0]
+        self.ra_n4321  = self._read_key("ra_n4321", "gal").split("deg")[0]
 
-        self.dec_n0628 = float(self._read_key("dec_n0628", "gal").split("deg")[0])
-        self.dec_n3627 = float(self._read_key("dec_n3627", "gal").split("deg")[0])
-        self.dec_n4254 = float(self._read_key("dec_n4254", "gal").split("deg")[0])
-        self.dec_n4321 = float(self._read_key("dec_n4321", "gal").split("deg")[0])
+        self.dec_n0628 = self._read_key("dec_n0628", "gal").split("deg")[0]
+        self.dec_n3627 = self._read_key("dec_n3627", "gal").split("deg")[0]
+        self.dec_n4254 = self._read_key("dec_n4254", "gal").split("deg")[0]
+        self.dec_n4321 = self._read_key("dec_n4321", "gal").split("deg")[0]
 
         self.basebeam_n0628 = float(self._read_key("basebeam_n0628"))
         self.basebeam_n3627 = float(self._read_key("basebeam_n3627"))
@@ -194,10 +194,10 @@ class ToolsR21():
         self.imsize_n4254 = float(self._read_key("imsize_n4254"))
         self.imsize_n4321 = float(self._read_key("imsize_n4321"))
 
-        self.chans_n0628 = float(self._read_key("chans_n0628"))
-        self.chans_n3627 = float(self._read_key("chans_n3627"))
-        self.chans_n4254 = float(self._read_key("chans_n4254"))
-        self.chans_n4321 = float(self._read_key("chans_n4321"))
+        self.chans_n0628 = self._read_key("chans_n0628")
+        self.chans_n3627 = self._read_key("chans_n3627")
+        self.chans_n4254 = self._read_key("chans_n4254")
+        self.chans_n4321 = self._read_key("chans_n4321")
 
     def _set_output_txt_png(self):
         """
