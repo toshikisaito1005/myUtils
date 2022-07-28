@@ -247,11 +247,46 @@ class ToolsR21():
         taskname = self.modname + sys._getframe().f_code.co_name
         check_first(self.cube_co10_n0628,taskname)
 
-        run_importfits(self.cube_co10_n0628,self.outcube_co10_n0628+"_tmp1")
-        run_roundsmooth(self.outcube_co10_n0628+"_tmp1",self.outcube_co10_n0628+"_tmp2",self.basebeam_n0628,delin=True)
-        unitconv_Jyb_K(self.outcube_co10_n0628+"_tmp2",self.outcube_co10_n0628+"_tmp3",115.27120,delin=True)
+        incube  = self.cube_co10_n0628
+        outcube = self.outcube_co10_n0628
+        run_importfits(incube,outcube+"_tmp1")
+        run_roundsmooth(outcube+"_tmp1",outcube+"_tmp2",
+            self.basebeam_n0628,delin=True)
+        unitconv_Jyb_K(outcube+"_tmp2",outcube+"_tmp3",115.27120,delin=True)
+        self._mask_fov_edges(outcube+"_tmp3",outcube+"_fovmask")
+        run_immath_two(outcube+"_tmp3",outcube+"_fovmask",outcube,
+            "iif(IM1>0,IM0,0)",delin=True)
+        imhead(outcube,mode="put",hdkey="beamminor",hdvalue=str(self.basebeam_n0628)+"arcsec")
+        imhead(outcube,mode="put",hdkey="beammajor",hdvalue=str(self.basebeam_n0628)+"arcsec")
 
         #imrebin2(self.cube_co10_n0628,self.outcube_co10_n0628+"_tmp?",self.imsize_n0628,self.ra_n0628,self.dec_n0628)
+
+    ###################
+    # _mask_fov_edges #
+    ###################
+
+    def _mask_fov_edges(
+        self,
+        imagename,
+        outfile,
+        delin=False,
+        ):
+        """
+        """
+
+        taskname = self.modname + sys._getframe().f_code.co_name
+        check_first(imagename,taskname)
+
+        expr1 = "iif(IM0>=-100000000., 1, 0)"
+        run_immath_one(imagename,imagename+"_mask_fov_edges_tmp1",expr1,"")
+        run_roundsmooth(imagename+"_mask_fov_edges_tmp1",
+            imagename+"_mask_fov_edges_tmp2",55.0,delin=True)
+
+        maxval = imstat(imagename+"_mask_fov_edges_tmp2")["max"][0]
+        expr2 = "iif(IM0>=" + str(maxval*0.6) + ", 1, 0)"
+        run_immath_one(imagename+"_mask_fov_edges_tmp2",
+            imagename+"_mask_fov_edges_tmp3",expr2,"",delin=True)
+        boolean_masking(imagename+"_mask_fov_edges_tmp3",outfile,delin=True)
 
     ###############
     # _create_dir #
