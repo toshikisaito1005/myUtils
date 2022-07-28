@@ -285,9 +285,14 @@ class ToolsR21():
 
         # align cubes
         imrebin2(outcube1+"_tmp1",outcube1+"_tmp2",imsize,ra,dec,delin=True)
-        run_imregrid(outcube2+"_tmp1",outcube1+"_tmp2",outcube2+"_tmp2",
+        run_imregrid(outcube2+"_tmp1",outcube1+"_tmp2",outcube2+"_tmp1p5",
             axes=[0,1],delin=False)
         os.system("rm -rf " + outcube2 + "_tmp1")
+        run_imregrid(outcube2+"_tmp1p5",outcube1+"_tmp2",outcube2+"_tmp2",
+            delin=False)
+        os.system("rm -rf " + outcube2 + "_tmp1p5")
+
+        # from line 801 of scripts_phangs_r21_tasks.py
 
     ###############
     # _stage_cube #
@@ -342,8 +347,8 @@ class ToolsR21():
         maxval = imstat(imagename+"_mask_fov_edges_tmp2")["max"][0]
         expr2 = "iif(IM0>=" + str(maxval*0.6) + ", 1, 0)"
         run_immath_one(imagename+"_mask_fov_edges_tmp2",
-            imagename+"_mask_fov_edges_tmp3",expr2,"",delin=True)
-        boolean_masking(imagename+"_mask_fov_edges_tmp3",outfile,delin=True)
+            outfile,expr2,"",delin=True)
+        #boolean_masking(imagename+"_mask_fov_edges_tmp3",outfile,delin=True)
 
     ###############
     # _create_dir #
