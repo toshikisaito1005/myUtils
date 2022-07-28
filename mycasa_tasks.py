@@ -198,6 +198,9 @@ def imrebin2(
 
     os.system("rm -rf template.image")
 
+    if delin==False:
+        os.system("rm -rf " + imagename)
+
 ################
 # relabelimage #
 ################

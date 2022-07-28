@@ -247,19 +247,76 @@ class ToolsR21():
         taskname = self.modname + sys._getframe().f_code.co_name
         check_first(self.cube_co10_n0628,taskname)
 
-        incube  = self.cube_co10_n0628
-        outcube = self.outcube_co10_n0628
+        self._align_cube_gal(
+            self.cube_co10_n0628,
+            self.cube_co21_n0628,
+            self.outcube_co10_n0628,
+            self.outcube_co21_n0628,
+            self.basebeam_n0628,
+            self.imsize_n0628,
+            self.ra_n0628,
+            self.dec_n0628,
+            )
+
+    ###################
+    # _align_cube_gal #
+    ###################
+
+    def _align_cube_gal(
+        self,
+        incube1,
+        incube2,
+        outcube1,
+        outcube2,
+        beam,
+        imsize,
+        ra,
+        dec,
+        ):
+        """
+        """
+
+        taskname = self.modname + sys._getframe().f_code.co_name
+        check_first(incube,taskname)
+
+        # staging cubes
+        self._stage_cube(incube1,outcube1+"_tmp1",beam,imsize,ra,dec)
+        self._stage_cube(incube2,outcube2+"_tmp1",beam,imsize,ra,dec)
+
+        # align cubes
+        imrebin2(outcube1+"_tmp1",outcube1+"_tmp2",imsize,ra,dec,delin=True)
+        run_imregrid(outcube2+"_tmp1",outcube1+"_tmp2",outcube2+"_tmp2",
+            axes=[0,1],delin=False)
+        os.system("rm -rf " + outcube2 + "_tmp1")
+
+    ###############
+    # _stage_cube #
+    ###############
+
+    def _stage_cube(
+        self,
+        incube,
+        outcube,
+        beam,
+        imsize,
+        ra,
+        dec,
+        ):
+        """
+        """
+
+        taskname = self.modname + sys._getframe().f_code.co_name
+        check_first(incube,taskname)
+
         run_importfits(incube,outcube+"_tmp1")
         run_roundsmooth(outcube+"_tmp1",outcube+"_tmp2",
-            self.basebeam_n0628,delin=True)
+            beam,delin=True)
         unitconv_Jyb_K(outcube+"_tmp2",outcube+"_tmp3",115.27120,delin=True)
         self._mask_fov_edges(outcube+"_tmp3",outcube+"_fovmask")
-        run_immath_two(outcube+"_tmp3",outcube+"_fovmask",outcube,
+        run_immath_two(outcube+"_tmp3",outcube+"_fovmask",outcube+"_tmp4",
             "iif(IM1>0,IM0,0)",delin=True)
-        imhead(outcube,mode="put",hdkey="beamminor",hdvalue=str(self.basebeam_n0628)+"arcsec")
-        imhead(outcube,mode="put",hdkey="beammajor",hdvalue=str(self.basebeam_n0628)+"arcsec")
-
-        #imrebin2(self.cube_co10_n0628,self.outcube_co10_n0628+"_tmp?",self.imsize_n0628,self.ra_n0628,self.dec_n0628)
+        imhead(outcube+"_tmp4",mode="put",hdkey="beamminor",hdvalue=str(beam)+"arcsec")
+        imhead(outcube+"_tmp4",mode="put",hdkey="beammajor",hdvalue=str(beam)+"arcsec")
 
     ###################
     # _mask_fov_edges #
