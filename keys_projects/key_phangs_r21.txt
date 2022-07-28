@@ -1,0 +1,103 @@
+###############
+# directories #
+###############
+dir_proj            ,,,/lfs13/saitots/proj_phangs_r21/
+dir_raw             ,,,data_raw/
+dir_cprops          ,,,data_other/cprops/
+dir_env             ,,,data_other/env_masks/
+dir_piechart        ,,,data_other/mask_piechart/
+dir_wise            ,,,data_other/wis/
+dir_ready           ,,,data_ready/
+dir_products        ,,,products_png/
+dir_final           ,,,images/
+
+##################
+# final products #
+##################
+
+############
+# raw maps #
+############
+cube_co10_n0628     ,,,ngc0628_co10_3p5as_k.fits
+cube_co10_n3627     ,,,ngc3627_co10_8as_k.fits
+cube_co10_n4254     ,,,ngc4254_co10_8as_k.fits
+cube_co10_n4321     ,,,ngc4321_co10_4as_k.fits
+cube_co21_n0628     ,,,ngc0628_12m+7m+tp_co21_pbcorr_round_k.fits
+cube_co21_n3627     ,,,ngc3627_12m+7m+tp_co21_pbcorr_round_k.fits
+cube_co21_n4254     ,,,ngc4254_12m+7m+tp_co21_pbcorr_round_k.fits
+cube_co21_n4321     ,,,ngc4321_12m+7m+tp_co21_pbcorr_round_k.fits
+wise1_n0628         ,,,ngc0628_w1_gauss7p5.fits
+wise1_n3627         ,,,ngc3627_w1_gauss7p5.fits
+wise1_n4254         ,,,ngc4254_w1_gauss7p5.fits
+wise1_n4321         ,,,ngc4321_w1_gauss7p5.fits
+wise2_n0628         ,,,ngc0628_w2_gauss7p5.fits
+wise2_n3627         ,,,ngc3627_w2_gauss7p5.fits
+wise2_n4254         ,,,ngc4254_w2_gauss7p5.fits
+wise2_n4321         ,,,ngc4321_w2_gauss7p5.fits
+wise3_n0628         ,,,ngc0628_w3_gauss7p5.fits
+wise3_n3627         ,,,ngc3627_w3_gauss7p5.fits
+wise3_n4254         ,,,ngc4254_w3_gauss7p5.fits
+wise3_n4321         ,,,ngc4321_w3_gauss7p5.fits
+
+##############
+# parameters #
+##############
+basebeam_n0628      ,,,4.0
+basebeam_n3627      ,,,8.0
+basebeam_n4254      ,,,8.0
+basebeam_n4321      ,,,4.0
+imsize_n0628        ,,,280
+imsize_n3627        ,,,300
+imsize_n4254        ,,,250
+imsize_n4321        ,,,230
+chans_n0628         ,,,14~36
+chans_n3627         ,,,25~74
+chans_n4254         ,,,39~64
+chans_n4321         ,,,0~69
+beams_n0628         ,,,4.0,6.0,8.0,10.0,11.5,12.0,14.0,16.0,18.0,20.0,22.0,33.0
+beams_n3627         ,,,8.0,10.0,12.0,14.0,16.0,18.0,20.0,22.0,24.0,26.0,33.0
+beams_n4254         ,,,8.0,8.7,10.0,12.0,14.0,16.0,18.0,20.0,22.0,24.0,26.0,33.0
+beams_n4321         ,,,4.0,6.0,7.5,8.0,10.0,12.0,14.0,16.0,18.0,20.0,22.0,33.0
+nchan_n0628         ,,,2
+nchan_n3627         ,,,3
+nchan_n4254         ,,,3
+nchan_n4321         ,,,2
+wisebeam_n0628      ,,,11.5
+wisebeam_n3627      ,,,10.0
+wisebeam_n4254      ,,,8.7
+wisebeam_n4321      ,,,7.5
+
+###############
+# output maps #
+###############
+outcube_co10_n0628  ,,,ngc0628_co10_04p0.image
+outcube_co10_n3627  ,,,ngc3627_co10_08p0.image
+outcube_co10_n4254  ,,,ngc4254_co10_08p0.image
+outcube_co10_n4321  ,,,ngc4321_co10_04p0.image
+outcube_co21_n0628  ,,,ngc0628_co21_04p0.image
+outcube_co21_n3627  ,,,ngc3627_co21_08p0.image
+outcube_co21_n4254  ,,,ngc4254_co21_08p0.image
+outcube_co21_n4321  ,,,ngc4321_co21_04p0.image
+outfits_wise1_n0628 ,,,ngc0628_wise1.image
+outfits_wise1_n3627 ,,,ngc3627_wise1.image
+outfits_wise1_n4254 ,,,ngc4254_wise1.image
+outfits_wise1_n4321 ,,,ngc4321_wise1.image
+outfits_wise2_n0628 ,,,ngc0628_wise2.image
+outfits_wise2_n3627 ,,,ngc3627_wise2.image
+outfits_wise2_n4254 ,,,ngc4254_wise2.image
+outfits_wise2_n4321 ,,,ngc4321_wise2.image
+outfits_wise3_n0628 ,,,ngc0628_wise3.image
+outfits_wise3_n3627 ,,,ngc3627_wise3.image
+outfits_wise3_n4254 ,,,ngc4254_wise3.image
+outfits_wise3_n4321 ,,,ngc4321_wise3.image
+
+######################
+# output png and txt #
+######################
+# text files
+# png files
+outpng_b3  ,,,fig_map_b3.png
+
+#######
+# end #
+#######

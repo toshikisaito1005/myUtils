@@ -1,0 +1,51 @@
+###########
+# ngc0628 # phangs_sample_table_v1p5.fits
+###########
+ra_n0628         ,,,24.173855deg
+dec_n0628        ,,,15.783643deg
+scale_n0628      ,,,47.7
+incl_n0628       ,,,8.9
+pa_n0628         ,,,20.7
+morphology_n0628 ,,,Sc-A
+distance_n0628   ,,,9.84
+reff_kpc_n0628   ,,,4.6
+
+###########
+# ngc3627 # phangs_sample_table_v1p5.fits
+###########
+ra_n3627         ,,,170.06252deg
+dec_n3627        ,,,12.9915deg
+scale_n3627      ,,,54.9
+incl_n3627       ,,,57.3
+pa_n3627         ,,,173.1
+morphology_n3627 ,,,Sb-AB
+distance_n3627   ,,,11.32
+reff_kpc_n3627   ,,,5.2
+
+###########
+# ngc4254 # phangs_sample_table_v1p5.fits
+###########
+ra_n4254         ,,,184.7068deg
+dec_n4254        ,,,14.416412deg
+scale_n4254      ,,,63.5
+incl_n4254       ,,,34.4
+pa_n4254         ,,,68.1
+morphology_n4254 ,,,Sc-A
+distance_n4254   ,,,13.10
+reff_kpc_n4254   ,,,3.6
+
+###########
+# ngc4321 # phangs_sample_table_v1p5.fits
+###########
+ra_n4321         ,,,185.72887deg
+dec_n4321        ,,,15.822304deg
+scale_n4321      ,,,73.7
+incl_n4321       ,,,38.5
+pa_n4321         ,,,156.2
+morphology_n4321 ,,,Sbc-AB
+distance_n4321   ,,,15.21
+reff_kpc_n4321   ,,,6.2
+
+#######
+# end #
+#######
