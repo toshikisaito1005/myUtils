@@ -161,7 +161,7 @@ def imrebin2(
     mycl.done()
     mycl.addcomponent(dir=direction,
                       flux=1.0,
-                      fluxunit="Jy",
+                      fluxunit="K",
                       freq=str(obsfreq)+"GHz",
                       shape="Gaussian",
                       majoraxis="0.1arcmin",
