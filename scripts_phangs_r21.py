@@ -229,10 +229,27 @@ class ToolsR21():
         # analysis
         if do_prepare==True:
             self.align_cubes()
+            self.multismooth()
 
         # plot figures in paper
         #if plot_showcase==True:
         #    self.showcase()
+
+    ###############
+    # multismooth #
+    ###############
+
+    def multismooth(
+        self,
+        ):
+        """
+        """
+
+        taskname = self.modname + sys._getframe().f_code.co_name
+        check_first(self.outcube_co10_n0628,taskname)
+
+        # line 710 of scripts_phangs_r21_tasks.py
+        outcube_template = self.outcube_co10_n0628.replace("04p0","????")
 
     ###############
     # align_cubes #
@@ -247,17 +264,21 @@ class ToolsR21():
         taskname = self.modname + sys._getframe().f_code.co_name
         check_first(self.cube_co10_n0628,taskname)
 
-        self._align_cube_gal(
-            self.cube_co10_n0628,
-            self.cube_co21_n0628,
-            self.outcube_co10_n0628,
-            self.outcube_co21_n0628,
-            self.basebeam_n0628,
-            self.imsize_n0628,
-            self.ra_n0628,
-            self.dec_n0628,
-            self.chans_n0628,
-            )
+        self._align_cube_gal(self.cube_co10_n0628,self.cube_co21_n0628,
+            self.outcube_co10_n0628,self.outcube_co21_n0628,self.basebeam_n0628,
+            self.imsize_n0628,self.ra_n0628,self.dec_n0628,self.chans_n0628)
+
+        self._align_cube_gal(self.cube_co10_n3627,self.cube_co21_n3627,
+            self.outcube_co10_n3627,self.outcube_co21_n3627,self.basebeam_n3627,
+            self.imsize_n3627,self.ra_n3627,self.dec_n3627,self.chans_n3627)
+
+        self._align_cube_gal(self.cube_co10_n4254,self.cube_co21_n4254,
+            self.outcube_co10_n4254,self.outcube_co21_n4254,self.basebeam_n4254,
+            self.imsize_n4254,self.ra_n4254,self.dec_n4254,self.chans_n4254)
+
+        self._align_cube_gal(self.cube_co10_n4321,self.cube_co21_n4321,
+            self.outcube_co10_n4321,self.outcube_co21_n4321,self.basebeam_n4321,
+            self.imsize_n4321,self.ra_n4321,self.dec_n4321,self.chans_n4321)
 
     ###################
     # _align_cube_gal #
@@ -276,6 +297,7 @@ class ToolsR21():
         chans,
         ):
         """
+        align_cubes
         """
 
         taskname = self.modname + sys._getframe().f_code.co_name
@@ -286,7 +308,6 @@ class ToolsR21():
         self._stage_cube(incube2,outcube2+"_tmp1",beam,imsize,ra,dec,230.53800)
 
         # align cubes
-        print(outcube1+"_tmp1")
         imrebin2(outcube1+"_tmp1",outcube1+"_tmp2",imsize,ra,dec)
         run_imregrid(outcube2+"_tmp1",outcube1+"_tmp2",outcube2+"_tmp1p5",
             axes=[0,1])
@@ -304,17 +325,17 @@ class ToolsR21():
         run_immath_two(outcube1+"_tmp4",outcube2+"_tmp4",outcube1+"_combined_mask",
             "IM0*IM1",delin=True)
 
-        run_immath_two(outcube1+"_tmp3",outcube1+"_combined_mask",outcube1,"iif(IM1>0,IM0,0)")
-        run_immath_two(outcube2+"_tmp3",outcube1+"_combined_mask",outcube2,"iif(IM1>0,IM0,0)",
+        run_immath_two(outcube1+"_tmp3",outcube1+"_combined_mask",outcube1+"_tmp4","iif(IM1>0,IM0,0)")
+        run_immath_two(outcube2+"_tmp3",outcube1+"_combined_mask",outcube2+"_tmp4","iif(IM1>0,IM0,0)",
             delin=True)
 
-        imhead(outcube1,mode="put",hdkey="beamminor",hdvalue=str(beam)+"arcsec")
-        imhead(outcube1,mode="put",hdkey="beammajor",hdvalue=str(beam)+"arcsec")
-        imhead(outcube2,mode="put",hdkey="beamminor",hdvalue=str(beam)+"arcsec")
-        imhead(outcube2,mode="put",hdkey="beammajor",hdvalue=str(beam)+"arcsec")
+        imhead(outcube1+"_tmp4",mode="put",hdkey="beamminor",hdvalue=str(beam)+"arcsec")
+        imhead(outcube1+"_tmp4",mode="put",hdkey="beammajor",hdvalue=str(beam)+"arcsec")
+        imhead(outcube2+"_tmp4",mode="put",hdkey="beamminor",hdvalue=str(beam)+"arcsec")
+        imhead(outcube2+"_tmp4",mode="put",hdkey="beammajor",hdvalue=str(beam)+"arcsec")
 
-        unitconv_Jyb_K(outcube1,outcube1.replace(".image","_k.image"),115.27120,unitto="Jy/beam",delin=True)
-        unitconv_Jyb_K(outcube2,outcube2.replace(".image","_k.image"),230.53800,unitto="Jy/beam",delin=True)
+        unitconv_Jyb_K(outcube1+"_tmp4",outcube1,115.27120,unitto="Jy/beam",delin=True)
+        unitconv_Jyb_K(outcube2+"_tmp4",outcube2,230.53800,unitto="Jy/beam",delin=True)
 
     ###############
     # _stage_cube #
@@ -331,6 +352,7 @@ class ToolsR21():
         restfreq=115.27120,
         ):
         """
+        _align_cube_gal
         """
 
         taskname = self.modname + sys._getframe().f_code.co_name
@@ -357,6 +379,7 @@ class ToolsR21():
         delin=False,
         ):
         """
+        _stage_cube
         """
 
         taskname = self.modname + sys._getframe().f_code.co_name
