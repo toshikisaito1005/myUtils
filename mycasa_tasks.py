@@ -146,6 +146,7 @@ def imrebin2(
     obsfreq = 115.27120
 
     # create tempalte image
+    print(imstat(imagename))
     blc_ra_tmp  = imstat(imagename)["blcf"].split(", ")[0]
     blc_dec_tmp = imstat(imagename)["blcf"].split(", ")[1]
     blc_ra      = blc_ra_tmp.replace(":","h",1).replace(":","m",1)+"s"

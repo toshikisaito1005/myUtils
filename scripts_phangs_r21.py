@@ -256,6 +256,7 @@ class ToolsR21():
             self.imsize_n0628,
             self.ra_n0628,
             self.dec_n0628,
+            self.chans_n0628,
             )
 
     ###################
@@ -272,6 +273,7 @@ class ToolsR21():
         imsize,
         ra,
         dec,
+        chans,
         ):
         """
         """
@@ -280,8 +282,8 @@ class ToolsR21():
         check_first(incube1,taskname)
 
         # staging cubes
-        self._stage_cube(incube1,outcube1+"_tmp1",beam,imsize,ra,dec)
-        self._stage_cube(incube2,outcube2+"_tmp1",beam,imsize,ra,dec)
+        self._stage_cube(incube1,outcube1+"_tmp1",beam,imsize,ra,dec,115.27120)
+        self._stage_cube(incube2,outcube2+"_tmp1",beam,imsize,ra,dec,230.53800)
 
         # align cubes
         imrebin2(outcube1+"_tmp1",outcube1+"_tmp2",imsize,ra,dec)
@@ -292,6 +294,28 @@ class ToolsR21():
         os.system("rm -rf " + outcube2 + "_tmp1p5")
 
         # from line 801 of scripts_phangs_r21_tasks.py
+
+        # clip edge channels
+        run_immath_one(outcube1+"_tmp2",outcube1+"_tmp3","IM0",chans,delin=True)
+        run_immath_one(outcube2+"_tmp2",outcube2+"_tmp3","IM0",chans,delin=True)
+
+        # masking
+        run_immath_one(outcube1+"_tmp3",outcube1+"_tmp4","iif(IM0>-10000000.0,1,0)", "")
+        run_immath_one(outcube2+"_tmp3",outcube2+"_tmp4","iif(IM0>-10000000.0,1,0)", "")
+        run_immath_two(outcube1+"_tmp4",outcube2+"_tmp4",outcube1+"_combined_mask",
+            "IM0*IM1",delin=True)
+
+        run_immath_two(outcube1+"_tmp3",outcube1+"_combined_mask",outcube1,"iif(IM1>0,IM0,0)")
+        run_immath_two(outcube2+"_tmp3",outcube1+"_combined_mask",outcube2,"iif(IM1>0,IM0,0)",
+            delin=True)
+
+        imhead(outcube1,mode="put",hdkey="beamminor",hdvalue=str(beam)+"arcsec")
+        imhead(outcube1,mode="put",hdkey="beammajor",hdvalue=str(beam)+"arcsec")
+        imhead(outcube2,mode="put",hdkey="beamminor",hdvalue=str(beam)+"arcsec")
+        imhead(outcube2,mode="put",hdkey="beammajor",hdvalue=str(beam)+"arcsec")
+
+        unitconv_Jyb_K(outcube1,outcube1.replace(".image","_k.image"),115.27120,unitto="Jy/beam",delin=True)
+        unitconv_Jyb_K(outcube2,outcube2.replace(".image","_k.image"),230.53800,unitto="Jy/beam",delin=True)
 
     ###############
     # _stage_cube #
@@ -305,6 +329,7 @@ class ToolsR21():
         imsize,
         ra,
         dec,
+        restfreq=115.27120,
         ):
         """
         """
@@ -315,7 +340,7 @@ class ToolsR21():
         run_importfits(incube,outcube+"_tmp1")
         run_roundsmooth(outcube+"_tmp1",outcube+"_tmp2",
             beam,delin=True)
-        unitconv_Jyb_K(outcube+"_tmp2",outcube+"_tmp3",115.27120,delin=True)
+        unitconv_Jyb_K(outcube+"_tmp2",outcube+"_tmp3",restfreq,delin=True)
         self._mask_fov_edges(outcube+"_tmp3",outcube+"_fovmask")
         run_immath_two(outcube+"_tmp3",outcube+"_fovmask",outcube+"_tmp4",
             "iif(IM1>0,IM0,0)",delin=True)
