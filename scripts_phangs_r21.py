@@ -294,8 +294,6 @@ class ToolsR21():
         run_imregrid(outcube2+"_tmp1p5",outcube1+"_tmp2",outcube2+"_tmp2")
         os.system("rm -rf " + outcube2 + "_tmp1p5")
 
-        # from line 801 of scripts_phangs_r21_tasks.py
-
         # clip edge channels
         run_immath_one(outcube1+"_tmp2",outcube1+"_tmp3","IM0",chans,delin=True)
         run_immath_one(outcube2+"_tmp2",outcube2+"_tmp3","IM0",chans,delin=True)
@@ -343,10 +341,10 @@ class ToolsR21():
             beam,delin=True)
         unitconv_Jyb_K(outcube+"_tmp2",outcube+"_tmp3",restfreq,delin=True)
         self._mask_fov_edges(outcube+"_tmp3",outcube+"_fovmask")
-        run_immath_two(outcube+"_tmp3",outcube+"_fovmask",outcube+"_tmp4",
+        run_immath_two(outcube+"_tmp3",outcube+"_fovmask",outcube,
             "iif(IM1>0,IM0,0)",delin=True)
-        imhead(outcube+"_tmp4",mode="put",hdkey="beamminor",hdvalue=str(beam)+"arcsec")
-        imhead(outcube+"_tmp4",mode="put",hdkey="beammajor",hdvalue=str(beam)+"arcsec")
+        imhead(outcube,mode="put",hdkey="beamminor",hdvalue=str(beam)+"arcsec")
+        imhead(outcube,mode="put",hdkey="beammajor",hdvalue=str(beam)+"arcsec")
 
     ###################
     # _mask_fov_edges #
