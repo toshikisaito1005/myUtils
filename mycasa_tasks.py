@@ -130,6 +130,7 @@ def imrebin2(
     direction_ra,
     direction_dec,
     oversamplingfactor=4.0,
+    imrebin=False,
     ):
     """
     input : imagename, imsize, direction_ra, direction_dec
