@@ -157,7 +157,7 @@ def imrebin2(
     size_y      = size_x
 
     direction   = "J2000 " + direction_ra + " " + direction_dec
-    print(direction)
+    direction   = "J2000 " + blc_ra + " " + blc_dec
     mycl.done()
     #mycl.addcomponent(dir=direction,
     #                  flux=1.0,
