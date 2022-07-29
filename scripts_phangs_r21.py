@@ -284,7 +284,7 @@ class ToolsR21():
         self._stage_cube(incube2,outcube2+"_tmp1",beam,imsize,ra,dec)
 
         # align cubes
-        imrebin2(outcube1+"_tmp1",outcube1+"_tmp2",imsize,ra,dec,delin=True)
+        imrebin2(outcube1+"_tmp1",outcube1+"_tmp2",imsize,ra,dec)
         run_imregrid(outcube2+"_tmp1",outcube1+"_tmp2",outcube2+"_tmp1p5",
             axes=[0,1])
         os.system("rm -rf " + outcube2 + "_tmp1")

@@ -56,6 +56,10 @@ band3                     ,,,ngc1068_b3_12m+7m_cont_prev.image.tt0.fits
 band8_fov1                ,,,ngc1068_b8_1_12m+7m_cont.fits
 band8_fov2                ,,,ngc1068_b8_2_12m+7m_cont.fits
 band8_fov3                ,,,ngc1068_b8_3_12m+7m_cont.fits
+cube_cn10h                ,,,ngc1068_b3_12m_cn10h_60pc.fits
+ecube_cn10h               ,,,ngc1068_b3_12m_cn10h_60pc_noise.fits
+cube_cn10l                ,,,ngc1068_b3_12m_cn10l_60pc.fits
+ecube_cn10l               ,,,ngc1068_b3_12m_cn10l_60pc_noise.fits
 
 ###############
 # output maps #
