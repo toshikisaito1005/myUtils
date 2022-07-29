@@ -159,14 +159,14 @@ def imrebin2(
     direction   = "J2000 " + direction_ra + " " + direction_dec
     direction   = "J2000 " + blc_ra + " " + blc_dec
     mycl.done()
-    #mycl.addcomponent(dir=direction,
-    #                  flux=1.0,
-    #                  fluxunit="Jy",
-    #                  freq=str(obsfreq)+"GHz",
-    #                  shape="Gaussian",
-    #                  majoraxis="0.1arcmin",
-    #                  minoraxis="0.05arcmin",
-    #                  positionangle="45.0deg")
+    mycl.addcomponent(dir=direction,
+                      flux=1.0,
+                      fluxunit="Jy",
+                      freq=str(obsfreq)+"GHz",
+                      shape="Gaussian",
+                      majoraxis="0.1arcmin",
+                      minoraxis="0.05arcmin",
+                      positionangle="45.0deg")
 
     myia.fromshape("template.im",[size_x,size_y,1,1],overwrite=True)
     mycs        = myia.coordsys()
