@@ -130,7 +130,7 @@ def imrebin2(
     direction_ra,
     direction_dec,
     beam=None,
-    oversamplingfactor=4.0,
+    oversamplingfactor=2.0,
     delin=False,
     ):
     """
