@@ -246,7 +246,12 @@ def make_gridtemplate(
     c = SkyCoord(blc_ra, blc_dec)
     ra_dgr = str(c.ra.degree)
     dec_dgr = str(c.dec.degree)
-    direction="J2000 "+direction_ra+"deg "+direction_dec+"deg"
+
+    c = SkyCoord(float(direction_ra.replace("deg","")), float(direction_dec.replace("deg","")), unit="deg")
+    direction = c.to_string('hmsdms')
+    direction_ra = direction.split(" ")[0]
+    direction_dec = direction.split(" ")[1]
+    direction="J2000 "+direction_ra+" "+direction_dec
     print(direction)
     mycl.done()
     mycl.addcomponent(dir=direction,
