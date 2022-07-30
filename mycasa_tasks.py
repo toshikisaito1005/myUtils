@@ -219,6 +219,7 @@ def make_gridtemplate(
     imsize,
     direction_ra,
     direction_dec,
+    beam=4.0,
     ):
     """
     input : imagename, imsize, direction_ra, direction_dec
@@ -243,9 +244,9 @@ def make_gridtemplate(
     pix_size=round(beamsize/4.53, 2)
     size_x = int(imsize / pix_size)
     size_y = size_x
-    c = SkyCoord(blc_ra, blc_dec)
-    ra_dgr = str(c.ra.degree)
-    dec_dgr = str(c.dec.degree)
+    #c = SkyCoord(blc_ra, blc_dec)
+    #ra_dgr = str(c.ra.degree)
+    #dec_dgr = str(c.dec.degree)
 
     c = SkyCoord(float(direction_ra.replace("deg","")), float(direction_dec.replace("deg","")), unit="deg")
     direction = c.to_string('hmsdms')
