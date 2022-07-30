@@ -208,7 +208,7 @@ def imrebin2(
     print(imhead(imagename))
     run_imregrid(imagename,"template.image",outfile,axes=[0,1])
 
-    os.system("rm -rf template.image")
+    #os.system("rm -rf template.image")
 
     if delin==False:
         os.system("rm -rf " + imagename)
