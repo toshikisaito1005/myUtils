@@ -153,6 +153,9 @@ def imrebin2(
     blc_ra      = blc_ra_tmp.replace(":","h",1).replace(":","m",1)+"s"
     blc_dec     = blc_dec_tmp.replace(".","d",1).replace(".","m",1)+"s"
 
+    c = SkyCoord(float(direction_ra.replace("deg","")), float(direction_dec.replace("deg","")))
+    direction = c.to_string('hmsdms')
+
     if beam!=None:
         beamsize = round(imhead(imagename,"list")["beamminor"]["value"], 2)
     else:
@@ -163,7 +166,7 @@ def imrebin2(
     size_y      = size_x
 
     direction   = "J2000 " + direction_ra + " " + direction_dec
-    direction   = "J2000 " + blc_ra + " " + blc_dec
+    direction   = "J2000 " + direction # blc_ra + " " + blc_dec
     mycl.done()
     mycl.addcomponent(dir=direction,
                       flux=1.0,
@@ -179,8 +182,8 @@ def imrebin2(
     mycs.setunits(["rad","rad","","Hz"])
     cell_rad    = myqa.convert(myqa.quantity(str(pix_size) + "arcsec"),"rad")["value"]
     mycs.setincrement([-cell_rad,cell_rad],"direction")
-    mycs.setreferencevalue([myqa.convert(blc_ra,"rad")["value"],
-                            myqa.convert(blc_dec,"rad")["value"]],
+    mycs.setreferencevalue([myqa.convert(direction.split(" ")[0],"rad")["value"],
+                            myqa.convert(direction.split(" ")[1],"rad")["value"]],
                            type = "direction")
     mycs.setreferencevalue(str(obsfreq)+"GHz","spectral")
     mycs.setincrement("1GHz","spectral")
@@ -205,7 +208,7 @@ def imrebin2(
     print(imhead(imagename))
     run_imregrid(imagename,"template.image",outfile,axes=[0,1])
 
-    #os.system("rm -rf template.image")
+    os.system("rm -rf template.image")
 
     if delin==False:
         os.system("rm -rf " + imagename)
