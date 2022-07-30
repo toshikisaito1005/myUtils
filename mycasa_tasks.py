@@ -161,6 +161,11 @@ def imrebin2(
     pix_size    = round(beamsize/oversamplingfactor, 2)
     size_x      = int(imsize / pix_size)
     size_y      = size_x
+    
+    print("print test")
+    print("print test")
+    print("print test")
+    print(pix_size, size_x)
 
     direction   = "J2000 " + direction_ra + " " + direction_dec
     direction   = "J2000 " + blc_ra + " " + blc_dec
