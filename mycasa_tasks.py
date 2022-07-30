@@ -153,7 +153,7 @@ def imrebin2(
     blc_ra      = blc_ra_tmp.replace(":","h",1).replace(":","m",1)+"s"
     blc_dec     = blc_dec_tmp.replace(".","d",1).replace(".","m",1)+"s"
 
-    c = SkyCoord(float(direction_ra.replace("deg","")), float(direction_dec.replace("deg","")))
+    c = SkyCoord(float(direction_ra.replace("deg","")), float(direction_dec.replace("deg","")), unit="deg")
     direction = c.to_string('hmsdms')
 
     if beam!=None:
