@@ -213,6 +213,78 @@ def imrebin2(
     if delin==False:
         os.system("rm -rf " + imagename)
 
+def make_gridtemplate(
+    imagename,
+    outfile,
+    imsize,
+    direction_ra,
+    direction_dec,
+    ):
+    """
+    input : imagename, imsize, direction_ra, direction_dec
+    output: ./template.image
+    """
+
+    ###
+    os.system("rm -rf template.im template.fits template.image")
+    # get native grid information
+    num_x_pix = imhead(imagename,mode="list")["shape"][0]
+    num_y_pix = imhead(imagename,mode="list")["shape"][1]
+    pix_radian = imhead(imagename,mode="list")["cdelt2"]
+    obsfreq = 115.27120 # imhead(imagename,mode="list")["restfreq"][0]/1e9
+    pix_arcsec = round(pix_radian * 3600 * 180 / np.pi, 3)
+
+    # create tempalte image
+    blc_ra_tmp=imstat(imagename)["blcf"].split(", ")[0]
+    blc_dec_tmp=imstat(imagename)["blcf"].split(", ")[1]
+    blc_ra = blc_ra_tmp.replace(":","h",1).replace(":","m",1)+"s"
+    blc_dec = blc_dec_tmp.replace(".","d",1).replace(".","m",1)+"s"
+    beamsize=round(imhead(imagename,"list")["beammajor"]["value"], 2)
+    pix_size=round(beamsize/4.53, 2)
+    size_x = int(imsize / pix_size)
+    size_y = size_x
+    c = SkyCoord(blc_ra, blc_dec)
+    ra_dgr = str(c.ra.degree)
+    dec_dgr = str(c.dec.degree)
+    direction="J2000 "+direction_ra+" "+direction_dec
+    mycl.done()
+    mycl.addcomponent(dir=direction,
+                      flux=1.0,
+                      fluxunit="Jy",
+                      freq="230.0GHz",
+                      shape="Gaussian",
+                      majoraxis="0.1arcmin",
+                      minoraxis="0.05arcmin",
+                      positionangle="45.0deg")
+
+    myia.fromshape("template.im",[size_x,size_y,1,1],overwrite=True)
+    mycs=myia.coordsys()
+    mycs.setunits(["rad","rad","","Hz"])
+    cell_rad=myqa.convert(myqa.quantity(str(pix_size)+"arcsec"),"rad")["value"]
+    mycs.setincrement([-cell_rad,cell_rad],"direction")
+    mycs.setreferencevalue([myqa.convert(direction_ra,"rad")["value"],
+                            myqa.convert(direction_dec,"rad")["value"]],
+                           type="direction")
+    mycs.setreferencevalue(str(obsfreq)+"GHz","spectral")
+    mycs.setincrement("1GHz","spectral")
+    myia.setcoordsys(mycs.torecord())
+    myia.setbrightnessunit("Jy/pixel")
+    myia.modify(mycl.torecord(),subtract=False)
+    exportfits(imagename="template.im",
+               fitsimage="template.fits",
+               overwrite=True)
+
+    os.system("rm -rf template.image")
+    importfits(fitsimage="template.fits",
+               imagename="template.image")
+
+    myia.close()
+    mycl.close()
+    #
+    os.system("rm -rf template.im template.fits")
+
+    run_imregrid(imagename,"template.image",outfile,axes=[0,1])
+
 ################
 # relabelimage #
 ################
