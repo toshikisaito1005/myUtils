@@ -252,6 +252,10 @@ def make_gridtemplate(
     direction = c.to_string('hmsdms')
     direction_ra = direction.split(" ")[0].split("s")[0]
     direction_dec = direction.split(" ")[1].split("s")[0]
+    c = SkyCoord(direction_ra, direction_dec)
+    ra_dgr = str(c.ra.degree)
+    dec_dgr = str(c.dec.degree)
+
     direction="J2000 "+direction_ra+" "+direction_dec
     print(direction)
     mycl.done()
@@ -269,8 +273,8 @@ def make_gridtemplate(
     mycs.setunits(["rad","rad","","Hz"])
     cell_rad=myqa.convert(myqa.quantity(str(pix_size)+"arcsec"),"rad")["value"]
     mycs.setincrement([-cell_rad,cell_rad],"direction")
-    mycs.setreferencevalue([myqa.convert(direction_ra,"rad")["value"],
-                            myqa.convert(direction_dec,"rad")["value"]],
+    mycs.setreferencevalue([myqa.convert(ra_dgr,"rad")["value"],
+                            myqa.convert(dec_dgr,"rad")["value"]],
                            type="direction")
     mycs.setreferencevalue(str(obsfreq)+"GHz","spectral")
     mycs.setincrement("1GHz","spectral")
