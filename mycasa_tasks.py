@@ -255,6 +255,7 @@ def make_gridtemplate(
     c = SkyCoord(direction_ra, direction_dec)
     ra_dgr = c.ra.degree
     dec_dgr = c.dec.degree
+    print(ra_dgr)
 
     direction="J2000 "+direction_ra+" "+direction_dec
     print(direction)
