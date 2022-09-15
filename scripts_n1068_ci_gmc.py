@@ -130,14 +130,8 @@ class ToolsCIGMC():
         """
         """
 
-        self.outfits_mom0_co10_agn = self.dir_ready + self._read_key("outfits_mom0_co10_agn")
-        self.outfits_mom0_ci10_agn = self.dir_ready + self._read_key("outfits_mom0_ci10_agn")
-
-        self.outfits_mom0_co10_fov2 = self.dir_ready + self._read_key("outfits_mom0_co10_fov2")
-        self.outfits_mom0_ci10_fov2 = self.dir_ready + self._read_key("outfits_mom0_ci10_fov2")
-
-        self.outfits_mom0_co10_fov3 = self.dir_ready + self._read_key("outfits_mom0_co10_fov3")
-        self.outfits_mom0_ci10_fov3 = self.dir_ready + self._read_key("outfits_mom0_ci10_fov3")
+        self.outfits_mom0_co10 = self.dir_ready + self._read_key("outfits_mom0_co10")
+        self.outfits_mom0_ci10 = self.dir_ready + self._read_key("outfits_mom0_ci10")
 
     def _set_input_param(self):
         """
@@ -165,8 +159,14 @@ class ToolsCIGMC():
         """
 
         # output png
-        self.outpng_cprops_co10 = self.dir_products + self._read_key("outpng_cprops_co10")
-        self.outpng_cprops_ci10 = self.dir_products + self._read_key("outpng_cprops_ci10")
+        self.outpng_cprops_co10_agn = self.dir_products + self._read_key("outpng_cprops_co10_agn")
+        self.outpng_cprops_ci10_agn = self.dir_products + self._read_key("outpng_cprops_ci10_agn")
+
+        self.outpng_cprops_co10_fov2 = self.dir_products + self._read_key("outpng_cprops_co10_fov2")
+        self.outpng_cprops_ci10_fov2 = self.dir_products + self._read_key("outpng_cprops_ci10_fov2")
+
+        self.outpng_cprops_co10_fov3 = self.dir_products + self._read_key("outpng_cprops_co10_fov3")
+        self.outpng_cprops_ci10_fov3 = self.dir_products + self._read_key("outpng_cprops_ci10_fov3")
 
         # final
         print("TBE.")
