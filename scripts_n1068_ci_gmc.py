@@ -264,6 +264,58 @@ class ToolsCIGMC():
             )
         """
 
+    ###################
+    # _plot_all_param #
+    ###################
+
+    def _plot_all_param(
+        self,
+        this_tb,
+        linename,
+        outpng_header,
+        snr=4,
+        ):
+        """
+        # CLOUDNUM
+        # XCTR_DEG
+        # YCTR_DEG
+        # VCTR_KMS
+        # RAD_PC
+        # SIGV_KMS
+        # FLUX_KKMS_PC2
+        # MVIR_MSUN
+        # S2N
+        """
+
+        radlimit = 72.*0.8/2.
+
+        # FLUX_KKMS_PC2
+        params = ["FLUX_KKMS_PC2","RAD_PC","SIGV_KMS"]
+        footers = ["flux","radius","disp"]
+        for i in range(len(params)):
+            this_param  = params[i]
+            this_footer = footers[i]
+            cut         = np.where((this_tb["S2N"]>=snr) & (this_tb["RAD_PC"]>=radlimit) & (this_tb["RAD_PC"]<=radlimit*10))
+            this_x      = (this_tb["XCTR_DEG"][cut] - self.ra_agn) * 3600.  
+            this_y      = (this_tb["YCTR_DEG"][cut] - self.dec_agn) * 3600.  
+            this_c      = this_tb[this_param][cut]
+            this_outpng = outpng_header.replace(".png","_"+this_footer+".png")
+
+            if this_param=="FLUX_KKMS_PC2":
+                this_c = np.log(this_c)
+
+            self._plot_cpropsmap(
+                this_outpng,
+                this_x,
+                this_y,
+                this_c,
+                linename + " (" + this_param + ")",
+                title_cbar="(K km s$^{-1}$)",
+                cmap="rainbow",
+                add_text=False,
+                label="",
+                )
+
     #####################
     # plot_stats_cprops #
     #####################
@@ -318,7 +370,7 @@ class ToolsCIGMC():
         myfig_fits2png(
             imagename,
             outpng,
-            imsize_as = 18.0,
+            imsize_as = 18.0*3,
             ra_cnt    = str(self.ra_agn) + "deg",
             dec_cnt   = str(self.dec_agn) + "deg",
             numann    = "ci-gmc",
@@ -327,58 +379,6 @@ class ToolsCIGMC():
             scalebar  = scalebar,
             label_scalebar = label_scalebar,
             )
-
-    ###################
-    # _plot_all_param #
-    ###################
-
-    def _plot_all_param(
-        self,
-        this_tb,
-        linename,
-        outpng_header,
-        snr=4,
-        ):
-        """
-        # CLOUDNUM
-        # XCTR_DEG
-        # YCTR_DEG
-        # VCTR_KMS
-        # RAD_PC
-        # SIGV_KMS
-        # FLUX_KKMS_PC2
-        # MVIR_MSUN
-        # S2N
-        """
-
-        radlimit = 72.*0.8/2.
-
-        # FLUX_KKMS_PC2
-        params = ["FLUX_KKMS_PC2","RAD_PC","SIGV_KMS"]
-        footers = ["flux","radius","disp"]
-        for i in range(len(params)):
-            this_param  = params[i]
-            this_footer = footers[i]
-            cut         = np.where((this_tb["S2N"]>=snr) & (this_tb["RAD_PC"]>=radlimit) & (this_tb["RAD_PC"]<=radlimit*10))
-            this_x      = (this_tb["XCTR_DEG"][cut] - self.ra_agn) * 3600.  
-            this_y      = (this_tb["YCTR_DEG"][cut] - self.dec_agn) * 3600.  
-            this_c      = this_tb[this_param][cut]
-            this_outpng = outpng_header.replace(".png","_"+this_footer+".png")
-
-            if this_param=="FLUX_KKMS_PC2":
-                this_c = np.log(this_c)
-
-            self._plot_cpropsmap(
-                this_outpng,
-                this_x,
-                this_y,
-                this_c,
-                linename + " (" + this_param + ")",
-                title_cbar="(K km s$^{-1}$)",
-                cmap="rainbow",
-                add_text=False,
-                label="",
-                )
 
     ###################
     # _plot_cpropsmap #
