@@ -49,8 +49,12 @@ outfits_mom0_ci10  ,,,n1068_ci10_mom0.fits
 # text files
 
 # png files
-outpng_cprops_co10 ,,,fig_co10_mom0_gmc.png
-outpng_cprops_ci10 ,,,fig_ci10_mom0_gmc.png
+outpng_cprops_co10_agn  ,,,fig_co10_mom0_gmc_fov1.png
+outpng_cprops_ci10_agn  ,,,fig_ci10_mom0_gmc_fov1.png
+outpng_cprops_co10_fov2 ,,,fig_co10_mom0_gmc_fov2.png
+outpng_cprops_ci10_fov2 ,,,fig_ci10_mom0_gmc_fov2.png
+outpng_cprops_co10_fov3 ,,,fig_co10_mom0_gmc_fov3.png
+outpng_cprops_ci10_fov3 ,,,fig_ci10_mom0_gmc_fov3.png
 
 # box for imagemajick
 

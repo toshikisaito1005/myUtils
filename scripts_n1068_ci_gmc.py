@@ -130,8 +130,14 @@ class ToolsCIGMC():
         """
         """
 
-        self.outfits_mom0_co10 = self.dir_ready + self._read_key("outfits_mom0_co10")
-        self.outfits_mom0_ci10 = self.dir_ready + self._read_key("outfits_mom0_ci10")
+        self.outfits_mom0_co10_agn = self.dir_ready + self._read_key("outfits_mom0_co10_agn")
+        self.outfits_mom0_ci10_agn = self.dir_ready + self._read_key("outfits_mom0_ci10_agn")
+
+        self.outfits_mom0_co10_fov2 = self.dir_ready + self._read_key("outfits_mom0_co10_fov2")
+        self.outfits_mom0_ci10_fov2 = self.dir_ready + self._read_key("outfits_mom0_ci10_fov2")
+
+        self.outfits_mom0_co10_fov3 = self.dir_ready + self._read_key("outfits_mom0_co10_fov3")
+        self.outfits_mom0_ci10_fov3 = self.dir_ready + self._read_key("outfits_mom0_ci10_fov3")
 
     def _set_input_param(self):
         """
@@ -140,6 +146,10 @@ class ToolsCIGMC():
         # ngc1068 properties
         self.ra_agn    = float(self._read_key("ra_agn", "gal").split("deg")[0])
         self.dec_agn   = float(self._read_key("dec_agn", "gal").split("deg")[0])
+        self.ra_fov2   = 40.6679
+        self.dec_fov2  = -0.0171116
+        self.ra_fov3   = 40.675
+        self.dec_fov3  = -0.012926
         self.scale_pc  = float(self._read_key("scale", "gal"))
         self.scale_kpc = self.scale_pc / 1000.
 
@@ -338,8 +348,22 @@ class ToolsCIGMC():
         tb_ci10 = f[1].data
 
         # extract tag
-        self._plot_cprops_map(self.outfits_mom0_co10,tb_co10,"CO(1-0)",self.outpng_cprops_co10)
-        self._plot_cprops_map(self.outfits_mom0_ci10,tb_ci10,"[CI](1-0)",self.outpng_cprops_ci10)
+        self._plot_cprops_map(
+            self.outfits_mom0_co10,
+            tb_co10,
+            "CO(1-0)",
+            self.outpng_cprops_co10_agn,
+            self.outpng_cprops_co10_fov2,
+            self.outpng_cprops_co10_fov3,
+            )
+        self._plot_cprops_map(
+            self.outfits_mom0_ci10,
+            tb_ci10,
+            "[CI](1-0)",
+            self.outpng_cprops_ci10_agn,
+            self.outpng_cprops_ci10_fov2,
+            self.outpng_cprops_ci10_fov3,
+            )
 
     ####################
     # _plot_cprops_map #
@@ -350,7 +374,9 @@ class ToolsCIGMC():
         imagename,
         this_tb,
         linename,
-        outpng,
+        outpng_agn,
+        outpng_fov2,
+        outpng_fov3,
         ):
         """
         # CLOUDNUM
@@ -369,10 +395,36 @@ class ToolsCIGMC():
 
         myfig_fits2png(
             imagename,
-            outpng,
+            outpng_agn,
             imsize_as = 18.0,
             ra_cnt    = str(self.ra_agn) + "deg",
             dec_cnt   = str(self.dec_agn) + "deg",
+            numann    = "ci-gmc",
+            txtfiles  = this_tb,
+            set_title = linename + " Cloud Catalog",
+            scalebar  = scalebar,
+            label_scalebar = label_scalebar,
+            )
+
+        myfig_fits2png(
+            imagename,
+            outpng_fov2,
+            imsize_as = 18.0,
+            ra_cnt    = str(self.ra_fov2) + "deg",
+            dec_cnt   = str(self.dec_fov2) + "deg",
+            numann    = "ci-gmc",
+            txtfiles  = this_tb,
+            set_title = linename + " Cloud Catalog",
+            scalebar  = scalebar,
+            label_scalebar = label_scalebar,
+            )
+
+        myfig_fits2png(
+            imagename,
+            outpng_fov3,
+            imsize_as = 18.0,
+            ra_cnt    = str(self.ra_fov3) + "deg",
+            dec_cnt   = str(self.dec_fov3) + "deg",
             numann    = "ci-gmc",
             txtfiles  = this_tb,
             set_title = linename + " Cloud Catalog",
