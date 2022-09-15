@@ -881,8 +881,8 @@ def myax_fig2png_ann(ax,number,ra_cnt,dec_cnt,add_text=True,txtfiles=None):
         y     = (txtfiles["YCTR_DEG"] - float(dec_cnt.split("deg")[0])) * 3600.
         pos   = txtfiles["POSANG"] * 180 / np.pi
         s2n   = txtfiles["S2N"]
-        major = txtfiles["RAD_NOEX"] / 72.
-        minor = txtfiles["MOMMINPIX"] / txtfiles["MOMMAJPIX"] * txtfiles["RAD_PC"] / 72.
+        major = txtfiles["RAD_NODC_NOEX"] / 72.
+        minor = major #txtfiles["MOMMINPIX"] / txtfiles["MOMMAJPIX"] * txtfiles["RAD_NODC_NOEX"] / 72.
 
         for i in range(len(x)):
             if s2n[i]>=7.0:
