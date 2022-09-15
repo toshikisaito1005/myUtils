@@ -180,7 +180,7 @@ class ToolsCIGMC():
         if do_prepare==True:
             self.do_align()
 
-        if do_cprops==True:
+        if print_cprops==True:
             print("### conda activate cprops")
             print("### python mypython_cprops.py")
             print("")
