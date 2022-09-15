@@ -492,9 +492,14 @@ class ToolsCIGMC():
         taskname = self.modname + sys._getframe().f_code.co_name
         check_first(self.mom0_co10,taskname)
 
+        # read template
+        template = "template.image"
+        run_importfits(self.mom0_ci10,template)
+
         # regrid co10 to ci10
-        run_imregrid(self.mom0_co10,self.mom0_ci10,self.mom0_co10+"_tmp1")
-        run_imregrid(self.emom0_co10,self.emom0_ci10,self.emom0_co10+"_tmp1")
+        run_imregrid(self.mom0_co10,template,self.mom0_co10+"_tmp1")
+        run_imregrid(self.emom0_co10,template,self.emom0_co10+"_tmp1")
+        os.system("rm -rf " + template)
 
         # clip
         expr = "iif(IM0/IM1>"+str(self.snr_mom)+",IM0,0)"
