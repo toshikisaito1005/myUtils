@@ -370,7 +370,7 @@ class ToolsCIGMC():
         myfig_fits2png(
             imagename,
             outpng,
-            imsize_as = 18.0*3,
+            imsize_as = 18.0,
             ra_cnt    = str(self.ra_agn) + "deg",
             dec_cnt   = str(self.dec_agn) + "deg",
             numann    = "ci-gmc",
