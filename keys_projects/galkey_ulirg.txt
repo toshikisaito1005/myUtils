@@ -3,79 +3,256 @@ ra_arp220       ,,,15h34m57.26s
 dec_arp220      ,,,+23d30m11.30s
 vsys_arp220     ,,,5340.0
 fwzi_arp220     ,,,1100.0
+dist_arp220     ,,,81.2
 #
 ra_arp256n      ,,,00h18m50.14s
 dec_arp256n     ,,,-10d21m41.8s
 vsys_arp256n    ,,,7925.0
 fwzi_arp256n    ,,,350.0
+dist_arp256n    ,,,122.6
 #
 ra_arp256s      ,,,00h18m50.878s
 dec_arp256s     ,,,-10d22m36.67s
 vsys_arp256s    ,,,7925.0
 fwzi_arp256s    ,,,500.0
+dist_arp256s    ,,,122.6
 #
 ra_eso267       ,,,12h14m12.88s
 dec_eso267      ,,,-47d13m42.32s
 vsys_eso267     ,,,5500.0
 fwzi_eso267     ,,,900.0
+dist_eso267     ,,,81.2
 #
 ra_eso297g011   ,,,01h36m23.40s
 dec_eso297g011  ,,,-37d19m17.60s
 vsys_eso297g011 ,,,5150.0
 fwzi_eso297g011 ,,,900.0
+dist_eso297g011 ,,,76.6
 #
 ra_eso297g012   ,,,01h36m24.17s
 dec_eso297g012  ,,,-37d20m25.70s
 vsys_eso297g012 ,,,5150.0
 fwzi_eso297g012 ,,,900.0
+dist_eso297g012 ,,,76.6
 #
 ra_eso319       ,,,11h27m54.08s
 dec_eso319      ,,,-41d36m52.40s
 vsys_eso319     ,,,4800.0
 fwzi_eso319     ,,,600.0
+dist_eso319     ,,,72.1
 #
 ra_eso507       ,,,13h02m52.35s
 dec_eso507      ,,,-23d55m17.70s
 vsys_eso507     ,,,6350.0
 fwzi_eso507     ,,,900.0
+dist_eso507     ,,,95.0
 #
 ra_eso557       ,,,06h31m47.22s
 dec_eso557      ,,,-17d37m17.30s
 vsys_eso557     ,,,6200.0
 fwzi_eso557     ,,,600.0
+dist_eso557     ,,,90.4
 #
+ra_ic4518e      ,,,14h57m44.46s
+dec_ic4518e     ,,,-43d07m52.90s
+vsys_ic4518e    ,,,4600.0
+fwzi_ic4518e    ,,,900.0
+dist_ic4518e    ,,,67.5
 #
-ic4518e      14h57m44.46s   -43d07m52.90s    4600.0   900.0
-ic4518w      14h57m41.18s   -43d07m55.60s    4800.0   900.0
-ic5179       22h16m09.10s   -36d50m37.40s    3400.0   900.0
-iras00509    00h53m34.940s  +12d41m36.20s   17250.0   900.0
-iras06592    06h59m40.25s   -63d17m52.90s    6700.0   800.0
-irasf10409   10h43m07.67s   -46d12m44.60s    5950.0   900.0
-iras13120    13h15m06.36s   -55d09m23.23s    9000.0  1000.0
-irasf17138   17h16m35.79s   -10d20m39.40s    5100.0   600.0
-irasf05189   05h21m01.392s  -25d21m45.36s    12300.0  700.0
-iras08355    08h37m01.82s   -49d54m30.2s     7550.0   300.0
-iras09022    09h04m12.710s  -36d27m00.99s    16850.0 1200.0
-irasf10190   10h21m42.60s   +13d06m55.0s     21250.0  800.0
-irasf13182   13h20m35.343s  +34d08m22.19s    6850.0   700.0
-irasf14348   14h37m38.40s   -15d00m20.0s     23000.0 2000.0
-iras15206    15h22m38.046s  +33d31m35.88s    28000.0 1000.0
-irasf17207   17h23m21.955s  -00d17m00.94s    12350.0 1400.0
-irasf18293   18h32m41.122s  -34d11m27.16s    5400.0   800.0
-irasf18341   18h38m25.70s   -57d29m25.6s     4580.0   600.0
-iras19297    19h32m22.305s  -04d00m01.1s     23550.0 1100.0
-iras19542    19h56m35.44s   +11d19m02.6s     17650.0 1100.0
-irasf22491   22h51m49.264s  -17d52m23.46s    21600.0 1200.0
-irasf23007   23h03m15.623s  +08d52m26.39s    4850.0   650.0
-mcg02-33-098 13h02m20.37s   -15d45m59.70s    4735.0   430.0
-ngc1614      04h34m00.25s   -08d34m45.12s    4700.0   700.0
-ngc2369      07h16m37.73s   -62d20m37.40s    3250.0   800.0
-ngc3110      10h04m02.11s   -06d28m29.20s    4950.0   700.0
-ngc3256      10h27m51.27s   -43d54m13.49s    2800.0  1000.0
-ngc5257      13h39m52.91s   +00d50m24.00s    6650.0   600.0
-ngc5258      13h39m57.69s   +00d49m51.40s    6660.0   620.0
-ngc5331      13h5216.270s   +02d06m18.620s   9625.0   850.0
-ngc5331n     13h52m16.423s  +02d06m31.07s    9625.0   850.0
-ngc5331s     13h52m16.15s   +02d06m03.3s     9625.0   850.0
-ngc6240      16h52m58.871s  +02d24m03.33s    7320.0  1450.0
-ngc7130      21h48m19.520s  -34d57m04.48s    4800.0   900.0
+ra_ic4518w      ,,,14h57m41.18s
+dec_ic4518w     ,,,-43d07m55.60s
+vsys_ic4518w    ,,,4800.0
+fwzi_ic4518w    ,,,900.0
+dist_ic4518w    ,,,67.5
+#
+ra_ic5179       ,,,22h16m09.10s
+dec_ic5179      ,,,-36d50m37.40s
+vsys_ic5179     ,,,3400.0
+fwzi_ic5179     ,,,900.0
+dist_ic5179     ,,,49.4
+#
+ra_iras00509    ,,,00h53m34.940s
+dec_iras00509   ,,,+12d41m36.20s
+vsys_iras00509  ,,,17250.0
+fwzi_iras00509  ,,,900.0
+dist_iras00509  ,,,283.7
+#
+ra_iras06592    ,,,06h59m40.25s
+dec_iras06592   ,,,-63d17m52.90s
+vsys_iras06592  ,,,6700.0
+fwzi_iras06592  ,,,800.0
+dist_iras06592  ,,,
+#
+ra_irasf10409   ,,,10h43m07.67s
+dec_irasf10409  ,,,-46d12m44.60s
+vsys_irasf10409 ,,,5950.0
+fwzi_irasf10409 ,,,900.0
+dist_irasf10409 ,,,
+#
+ra_iras13120    ,,,13h15m06.36s
+dec_iras13120   ,,,-55d09m23.23s
+vsys_iras13120  ,,,9000.0
+fwzi_iras13120  ,,,1000.0
+dist_iras13120  ,,,141.1
+#
+ra_irasf17138   ,,,17h16m35.79s
+dec_irasf17138  ,,,-10d20m39.40s
+vsys_irasf17138 ,,,5100.0
+fwzi_irasf17138 ,,,600.0
+dist_irasf17138 ,,,76.6
+#
+ra_irasf05189   ,,,05h21m01.392s
+dec_irasf05189  ,,,-25d21m45.36s
+vsys_irasf05189 ,,,12300.0
+fwzi_irasf05189 ,,,700.0
+dist_irasf05189 ,,,197.5
+#
+ra_iras08355    ,,,05h21m01.392s
+dec_iras08355   ,,,-25d21m45.36s
+vsys_iras08355  ,,,12300.0
+fwzi_iras08355  ,,,700.0
+dist_iras08355  ,,,113.4
+#
+ra_iras09022    ,,,09h04m12.710s
+dec_iras09022   ,,,-36d27m00.99s
+vsys_iras09022  ,,,16850.0
+fwzi_iras09022  ,,,1200.0
+dist_iras09022  ,,,274.2
+#
+ra_irasf10190   ,,,10h21m42.60s
+dec_irasf10190  ,,,+13d06m55.0s
+vsys_irasf10190 ,,,21250.0
+fwzi_irasf10190 ,,,800.0
+dist_irasf10190 ,,,357.2
+#
+ra_irasf13182   ,,,13h20m35.343s
+dec_irasf13182  ,,,+34d08m22.19s
+vsys_irasf13182 ,,,6850.0
+fwzi_irasf13182 ,,,700.0
+dist_irasf13182 ,,,104.1
+#
+ra_irasf14348   ,,,14h37m38.40s
+dec_irasf14348  ,,,-15d00m20.0s
+vsys_irasf14348 ,,,23000.0
+fwzi_irasf14348 ,,,2000.0
+dist_irasf14348 ,,,391.9
+#
+ra_iras15206    ,,,15h22m38.046s
+dec_iras15206   ,,,+33d31m35.88s
+vsys_iras15206  ,,,28000.0
+fwzi_iras15206  ,,,2000.0
+dist_iras15206  ,,,
+#
+ra_irasf17207    ,,,17h23m21.955s
+dec_irasf17207   ,,,-00d17m00.94s
+vsys_irasf17207  ,,,12350.0
+fwzi_irasf17207  ,,,1400.0
+dist_irasf17207  ,,,
+#
+ra_irasf18293    ,,,18h32m41.122s
+dec_irasf18293   ,,,-34d11m27.16s
+vsys_irasf18293  ,,,5400.0
+fwzi_irasf18293  ,,,800.0
+dist_irasf18293  ,,,
+#
+ra_irasf18341    ,,,18h38m25.70s
+dec_irasf18341   ,,,-57d29m25.6s
+vsys_irasf18341  ,,,4580.0
+fwzi_irasf18341  ,,,600.0
+dist_irasf18341  ,,,67.5
+#
+ra_iras19297     ,,,19h32m22.305s
+dec_iras19297    ,,,-04d00m01.1s
+vsys_iras19297   ,,,23550.0
+fwzi_iras19297   ,,,1100.0
+dist_iras19297   ,,,406.9
+#
+ra_iras19542     ,,,19h56m35.44s
+dec_iras19542    ,,,+11d19m02.6s
+vsys_iras19542   ,,,17650.0
+fwzi_iras19542   ,,,1100.0
+dist_iras19542   ,,,288.8
+#
+ra_irasf22491    ,,,22h51m49.264s
+dec_irasf22491   ,,,-17d52m23.46s
+vsys_irasf22491  ,,,21600.0
+fwzi_irasf22491  ,,,1200.0
+dist_irasf22491  ,,,357.1
+#
+ra_irasf23007     ,,,23h03m15.623s
+dec_irasf23007    ,,,+08d52m26.39s
+vsys_irasf23007   ,,,4850.0
+fwzi_irasf23007   ,,,650.0
+dist_irasf23007   ,,,72.1
+#
+ra_mcg02-33-098   ,,,13h02m20.37s
+dec_mcg02-33-098  ,,,-15d45m59.70s
+vsys_mcg02-33-098 ,,,4735.0
+fwzi_mcg02-33-098 ,,,430.0
+dist_mcg02-33-098 ,,,72.1
+#
+ra_ngc1614        ,,,04h34m00.25s
+dec_ngc1614       ,,,-08d34m45.12s
+vsys_ngc1614      ,,,4700.0
+fwzi_ngc1614      ,,,700.0
+dist_ngc1614      ,,,
+#
+ra_ngc2369        ,,,07h16m37.73s
+dec_ngc2369       ,,,-62d20m37.40s
+vsys_ngc2369      ,,,3250.0
+fwzi_ngc2369      ,,,800.0
+dist_ngc2369      ,,,
+#
+ra_ngc3110        ,,,10h04m02.11s
+dec_ngc3110       ,,,-06d28m29.20s
+vsys_ngc3110      ,,,4950.0
+fwzi_ngc3110      ,,,700.0
+dist_ngc3110      ,,,
+#
+ra_ngc3256        ,,,10h27m51.27s
+dec_ngc3256       ,,,-43d54m13.49s
+vsys_ngc3256      ,,,2800.0
+fwzi_ngc3256      ,,,1000.0
+dist_ngc3256      ,,,
+#
+ra_ngc5257        ,,,13h39m52.91s
+dec_ngc5257       ,,,+00d50m24.00s
+vsys_ngc5257      ,,,6650.0
+fwzi_ngc5257      ,,,600.0
+dist_ngc5257      ,,,
+#
+ra_ngc5258        ,,,13h39m57.69s
+dec_ngc5258       ,,,+00d49m51.40s
+vsys_ngc5258      ,,,6660.0
+fwzi_ngc5258      ,,,620.0
+dist_ngc5258      ,,,
+#
+ra_ngc5331        ,,,13h5216.270s
+dec_ngc5331       ,,,+02d06m18.620s
+vsys_ngc5331      ,,,9625.0
+fwzi_ngc5331      ,,,850.0
+dist_ngc5331      ,,,
+#
+ra_ngc5331n       ,,,13h52m16.423s
+dec_ngc5331n      ,,,+02d06m31.07s
+vsys_ngc5331n     ,,,9625.0
+fwzi_ngc5331n     ,,,850.0
+dist_ngc5331n     ,,,
+#
+ra_ngc5331s       ,,,13h52m16.15s
+dec_ngc5331s      ,,,+02d06m03.3s
+vsys_ngc5331s     ,,,9625.0
+fwzi_ngc5331s     ,,,850.0
+dist_ngc5331s     ,,,
+#
+ra_ngc6240        ,,,16h52m58.871s
+dec_ngc6240       ,,,+02d24m03.33s
+vsys_ngc6240      ,,,7320.0
+fwzi_ngc6240      ,,,1450.0
+dist_ngc6240      ,,,
+#
+ra_ngc7310        ,,,21h48m19.520s
+dec_ngc7310       ,,,-34d57m04.48s
+vsys_ngc7310      ,,,4800.0
+fwzi_ngc7310      ,,,900.0
+dist_ngc7310      ,,,

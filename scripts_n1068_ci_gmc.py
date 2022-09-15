@@ -82,7 +82,7 @@ class ToolsCIGMC():
 
         # import parameters
         if keyfile_fig is not None:
-            self.modname = "ToolsPCA."
+            self.modname = "ToolsCIGMC."
             self._set_dir()            # directories
             self._set_input_fits()     # input maps
             self._set_output_fits()    # output maps
@@ -108,29 +108,30 @@ class ToolsCIGMC():
         """
         """
 
-        self.cube_cn10h   = self.dir_raw + self._read_key("cube_cn10h")
-        self.cube_hcop10  = self.dir_raw + self._read_key("cube_hcop10")
-        self.cube_hcn10   = self.dir_raw + self._read_key("cube_hcn10")
-        self.cube_co10    = self.dir_raw + self._read_key("cube_co10")
-        self.cube_ci10    = self.dir_raw + self._read_key("cube_ci10")
+        self.cube_co10   = self.dir_raw + self._read_key("cube_co10")
+        self.cube_ci10   = self.dir_raw + self._read_key("cube_ci10")
 
-        self.ncube_cn10h  = self.dir_raw + self._read_key("ncube_cn10h")
-        self.ncube_hcop10 = self.dir_raw + self._read_key("ncube_hcop10")
-        self.ncube_hcn10  = self.dir_raw + self._read_key("ncube_hcn10")
-        self.ncube_co10   = self.dir_raw + self._read_key("ncube_co10")
-        self.ncube_ci10   = self.dir_raw + self._read_key("ncube_ci10")
+        self.ncube_co10  = self.dir_raw + self._read_key("ncube_co10")
+        self.ncube_ci10  = self.dir_raw + self._read_key("ncube_ci10")
 
-        self.mom0_cn10h   = self.dir_raw + self._read_key("mom0_cn10h")
-        self.mom0_hcop10  = self.dir_raw + self._read_key("mom0_hcop10")
-        self.mom0_hcn10   = self.dir_raw + self._read_key("mom0_hcn10")
-        self.mom0_co10    = self.dir_raw + self._read_key("mom0_co10")
-        self.mom0_ci10    = self.dir_raw + self._read_key("mom0_ci10")
+        self.mask_co10   = self.dir_raw + self._read_key("mask_co10")
+        self.mask_ci10   = self.dir_raw + self._read_key("mask_ci10")
+
+        self.mom0_co10   = self.dir_raw + self._read_key("mom0_co10")
+        self.mom0_ci10   = self.dir_raw + self._read_key("mom0_ci10")
+
+        self.emom0_co10  = self.dir_raw + self._read_key("emom0_co10")
+        self.emom0_ci10  = self.dir_raw + self._read_key("emom0_ci10")
+
+        self.cprops_co10 = self.dir_raw + self._read_key("cprops_co10")
+        self.cprops_ci10 = self.dir_raw + self._read_key("cprops_ci10")
 
     def _set_output_fits(self):
         """
         """
 
-        print("TBE.")
+        self.outfits_mom0_co10 = self.dir_ready + self._read_key("outfits_mom0_co10")
+        self.outfits_mom0_ci10 = self.dir_ready + self._read_key("outfits_mom0_ci10")
 
     def _set_input_param(self):
         """
@@ -142,31 +143,18 @@ class ToolsCIGMC():
         self.scale_pc  = float(self._read_key("scale", "gal"))
         self.scale_kpc = self.scale_pc / 1000.
 
-        self.beam      = 2.14859173174056 # 150pc in arcsec
+        self.beam      = 0.8
         self.snr_mom   = 4.0
         self.r_cnd     = 3.0 * self.scale_pc / 1000. # kpc
         self.r_cnd_as  = 3.0
         self.r_sbr     = 10.0 * self.scale_pc / 1000. # kpc
         self.r_sbr_as  = 10.0
-        self.gridsize  = 27 # int(np.ceil(self.r_sbr_as*2/self.beam))
 
     def _set_output_txt_png(self):
         """
         """
 
         # output fits
-        self.cprops_cn10h  = self.dir_ready + self._read_key("cprops_cn10h")
-        self.cprops_hcop10 = self.dir_ready + self._read_key("cprops_hcop10")
-        self.cprops_hcn10  = self.dir_ready + self._read_key("cprops_hcn10")
-        self.cprops_co10   = self.dir_ready + self._read_key("cprops_co10")
-        self.cprops_ci10   = self.dir_ready + self._read_key("cprops_ci10")
-
-        # output txt and png
-        self.outpng_cprops_cn10h  = self.dir_products + self._read_key("outpng_cprops_cn10h")
-        self.outpng_cprops_hcop10 = self.dir_products + self._read_key("outpng_cprops_hcop10")
-        self.outpng_cprops_hcn10  = self.dir_products + self._read_key("outpng_cprops_hcn10")
-        self.outpng_cprops_co10   = self.dir_products + self._read_key("outpng_cprops_co10")
-        self.outpng_cprops_ci10   = self.dir_products + self._read_key("outpng_cprops_ci10")
 
         # final
         print("TBE.")
@@ -179,7 +167,7 @@ class ToolsCIGMC():
         self,
         # analysis
         do_prepare        = False,
-        do_cprops         = False,
+        print_cprops      = False,
         # plot figures in paper
         plot_stats_cprops = False,
         # supplement
@@ -403,11 +391,161 @@ class ToolsCIGMC():
                 label="",
                 )
 
+    ###################
+    # _plot_cpropsmap #
+    ###################
+
+    def _plot_cpropsmap(
+        self,
+        outpng,
+        x,y,c,
+        title,
+        title_cbar="(K km s$^{-1}$)",
+        cmap="rainbow",
+        plot_cbar=True,
+        ann=True,
+        lim=13.0,
+        size=100,
+        add_text=False,
+        label="",
+        ):
+        """
+        """
+
+        # set plt, ax
+        fig = plt.figure(figsize=(13,10))
+        plt.rcParams["font.size"] = 16
+        gs = gridspec.GridSpec(nrows=10, ncols=10)
+        ax = plt.subplot(gs[0:10,0:10])
+
+        # set ax parameter
+        myax_set(
+        ax,
+        grid=None,
+        xlim=[lim, -lim],
+        ylim=[-lim, lim],
+        xlabel="R.A. offset (arcsec)",
+        ylabel="Decl. offset (arcsec)",
+        adjust=[0.10,0.99,0.10,0.93],
+        )
+        ax.set_aspect('equal', adjustable='box')
+
+        # plot
+        im = ax.scatter(x, y, s=size, c=c, cmap=cmap, marker="o", linewidths=0)
+
+        # cbar
+        cbar = plt.colorbar(im)
+        if plot_cbar==True:
+            cax  = fig.add_axes([0.19, 0.12, 0.025, 0.35])
+            fig.colorbar(im, cax=cax).set_label(label)
+
+        # scale bar
+        bar = 100 / self.scale_pc
+        ax.plot([-10,-10+bar],[-10,-10],"-",color="black",lw=4)
+        ax.text(-10, -10.5, "100 pc",
+                horizontalalignment="right", verticalalignment="top")
+
+        # text
+        ax.text(0.03, 0.93, title, color="black", transform=ax.transAxes, weight="bold", fontsize=24)
+
+        # ann
+        if ann==True:
+            theta1      = -10.0 # degree
+            theta2      = 70.0 # degree
+            fov_diamter = 16.5 # arcsec (12m+7m Band 8)
+
+            fov_diamter = 16.5
+            efov1 = patches.Ellipse(xy=(-0,0), width=fov_diamter,
+                height=fov_diamter, angle=0, fill=False, edgecolor="black",
+                alpha=1.0, lw=3.5)
+
+            ax.add_patch(efov1)
+
+            # plot NGC 1068 AGN and outflow geometry
+            x1 = fov_diamter/2.0 * np.cos(np.radians(-1*theta1+90))
+            y1 = fov_diamter/2.0 * np.sin(np.radians(-1*theta1+90))
+            ax.plot([x1, -x1], [y1, -y1], "--", c="black", lw=3.5)
+            x2 = fov_diamter/2.0 * np.cos(np.radians(-1*theta2+90))
+            y2 = fov_diamter/2.0 * np.sin(np.radians(-1*theta2+90))
+            ax.plot([x2, -x2], [y2, -y2], "--", c="black", lw=3.5)
+
+        # add annotation comment
+        if add_text==True:
+            ax.plot([0,-7], [0,10], lw=3, c="black")
+            ax.text(-10.5, 10.5, "AGN position",
+                horizontalalignment="right", verticalalignment="center", weight="bold")
+
+        # save
+        os.system("rm -rf " + outpng)
+        plt.savefig(outpng, dpi=300)
+
     ############
     # do_align #
     ############
 
     def do_align(
+        self,
+        ):
+        """
+        """
+
+        taskname = self.modname + sys._getframe().f_code.co_name
+        check_first(self.mom0_co10,taskname)
+
+        # regrid co10 to ci10
+        run_imregrid(self.mom0_co10,self.mom0_ci10,self.mom0_co10+"_tmp1")
+        run_imregrid(self.emom0_co10,self.emom0_ci10,self.emom0_co10+"_tmp1")
+
+        # clip
+        expr = "iif(IM0/IM1>"+str(self.snr_mom)+",IM0,0)"
+        run_immath_two(self.mom0_ci10,self.emom0_ci10,self.outfits_mom0_ci10+"_tmp2",expr)
+        run_immath_two(self.mom0_co10+"_tmp1",self.emom0_co10+"_tmp1",self.outfits_mom0_co10+"_tmp2",expr,delin=True)
+
+        # exportfits
+        run_exportfits(self.outfits_mom0_ci10+"_tmp2",self.outfits_mom0_ci10,delin=True)
+        run_exportfits(self.outfits_mom0_co10+"_tmp2",self.outfits_mom0_co10,delin=True)
+
+    ###############
+    # _create_dir #
+    ###############
+
+    def _create_dir(self, this_dir):
+
+        if self.refresh==True:
+            print("## refresh " + this_dir)
+            os.system("rm -rf " + this_dir)
+
+        if not glob.glob(this_dir):
+            print("## create " + this_dir)
+            os.mkdir(this_dir)
+
+        else:
+            print("## not refresh " + this_dir)
+
+    #############
+    # _read_key #
+    #############
+
+    def _read_key(self, key, keyfile="fig", delimiter=",,,"):
+
+        if keyfile=="gal":
+            keyfile = self.keyfile_gal
+        elif keyfile=="fig":
+            keyfile = self.keyfile_fig
+
+        keydata  = np.loadtxt(keyfile,dtype="str",delimiter=delimiter)
+        keywords =\
+             np.array([s.replace(" ","") for s in keydata[:,0]])
+        values   = keydata[:,1]
+        value    = values[np.where(keywords==key)[0][0]]
+
+        return value
+
+    #########################
+    # will be decomissioned #
+    #########################
+
+    def do_align_old(
         self,
         ):
         """
@@ -535,130 +673,6 @@ class ToolsCIGMC():
         h["RESTFREQ"] = restf_ci10
         fits.PrimaryHDU(d, h).writeto(self.ci10_nready, overwrite=True)
         os.system("rm -rf " + self.ci10_nready + "2")
-
-    ###################
-    # _plot_cpropsmap #
-    ###################
-
-    def _plot_cpropsmap(
-        self,
-        outpng,
-        x,y,c,
-        title,
-        title_cbar="(K km s$^{-1}$)",
-        cmap="rainbow",
-        plot_cbar=True,
-        ann=True,
-        lim=13.0,
-        size=100,
-        add_text=False,
-        label="",
-        ):
-        """
-        """
-
-        # set plt, ax
-        fig = plt.figure(figsize=(13,10))
-        plt.rcParams["font.size"] = 16
-        gs = gridspec.GridSpec(nrows=10, ncols=10)
-        ax = plt.subplot(gs[0:10,0:10])
-
-        # set ax parameter
-        myax_set(
-        ax,
-        grid=None,
-        xlim=[lim, -lim],
-        ylim=[-lim, lim],
-        xlabel="R.A. offset (arcsec)",
-        ylabel="Decl. offset (arcsec)",
-        adjust=[0.10,0.99,0.10,0.93],
-        )
-        ax.set_aspect('equal', adjustable='box')
-
-        # plot
-        im = ax.scatter(x, y, s=size, c=c, cmap=cmap, marker="o", linewidths=0)
-
-        # cbar
-        cbar = plt.colorbar(im)
-        if plot_cbar==True:
-            cax  = fig.add_axes([0.19, 0.12, 0.025, 0.35])
-            fig.colorbar(im, cax=cax).set_label(label)
-
-        # scale bar
-        bar = 100 / self.scale_pc
-        ax.plot([-10,-10+bar],[-10,-10],"-",color="black",lw=4)
-        ax.text(-10, -10.5, "100 pc",
-                horizontalalignment="right", verticalalignment="top")
-
-        # text
-        ax.text(0.03, 0.93, title, color="black", transform=ax.transAxes, weight="bold", fontsize=24)
-
-        # ann
-        if ann==True:
-            theta1      = -10.0 # degree
-            theta2      = 70.0 # degree
-            fov_diamter = 16.5 # arcsec (12m+7m Band 8)
-
-            fov_diamter = 16.5
-            efov1 = patches.Ellipse(xy=(-0,0), width=fov_diamter,
-                height=fov_diamter, angle=0, fill=False, edgecolor="black",
-                alpha=1.0, lw=3.5)
-
-            ax.add_patch(efov1)
-
-            # plot NGC 1068 AGN and outflow geometry
-            x1 = fov_diamter/2.0 * np.cos(np.radians(-1*theta1+90))
-            y1 = fov_diamter/2.0 * np.sin(np.radians(-1*theta1+90))
-            ax.plot([x1, -x1], [y1, -y1], "--", c="black", lw=3.5)
-            x2 = fov_diamter/2.0 * np.cos(np.radians(-1*theta2+90))
-            y2 = fov_diamter/2.0 * np.sin(np.radians(-1*theta2+90))
-            ax.plot([x2, -x2], [y2, -y2], "--", c="black", lw=3.5)
-
-        # add annotation comment
-        if add_text==True:
-            ax.plot([0,-7], [0,10], lw=3, c="black")
-            ax.text(-10.5, 10.5, "AGN position",
-                horizontalalignment="right", verticalalignment="center", weight="bold")
-
-        # save
-        os.system("rm -rf " + outpng)
-        plt.savefig(outpng, dpi=300)
-
-    ###############
-    # _create_dir #
-    ###############
-
-    def _create_dir(self, this_dir):
-
-        if self.refresh==True:
-            print("## refresh " + this_dir)
-            os.system("rm -rf " + this_dir)
-
-        if not glob.glob(this_dir):
-            print("## create " + this_dir)
-            os.mkdir(this_dir)
-
-        else:
-            print("## not refresh " + this_dir)
-
-    #############
-    # _read_key #
-    #############
-
-    def _read_key(self, key, keyfile="fig", delimiter=",,,"):
-
-        if keyfile=="gal":
-            keyfile = self.keyfile_gal
-        elif keyfile=="fig":
-            keyfile = self.keyfile_fig
-
-        keydata  = np.loadtxt(keyfile,dtype="str",delimiter=delimiter)
-        keywords =\
-             np.array([s.replace(" ","") for s in keydata[:,0]])
-        values   = keydata[:,1]
-        value    = values[np.where(keywords==key)[0][0]]
-
-        return value
 
 #####################
 # end of ToolsCIGMC #

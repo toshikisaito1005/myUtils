@@ -29,6 +29,7 @@ def hexbin_sampling(
     beam=0.8,
     gridsize=70,
     err=False,
+    stats="mean",
     ):
     """
     Run hexagonal re-sampling with CASA. Sampling area is gridsize*beam x
@@ -47,6 +48,8 @@ def hexbin_sampling(
         (nearly) independent sampling when hexagon size > synthesized beam size.
     gridsize : integer
         number of hex in x/y direction.
+    stats : str
+        which statistics hexbin should do, i.e., mean or sum.
 
     CASA tasks
     ----------
@@ -90,14 +93,22 @@ def hexbin_sampling(
     hexy    = np.array(hexdata.get_array())
     hexdata = ax.hexbin(X, Y, gridsize=gridsize, extent=extent)
 
+    # pixel per hex
+    s      = np.sqrt(3.0)/2.0 * beam**2.0
+    cdelt1 = imhead(imagename,mode="list")["cdelt1"]
+    pix    = abs(float(cdelt1)) * (3600.0*180.0)/np.pi
+    n      = s / pix**2.0
+
     # error case
     if err==True:
-        cdelt1 = imhead(imagename,mode="list")["cdelt1"]
-        s      = np.sqrt(3.0)/2.0 * beam**2.0
-        pix    = abs(float(cdelt1)) * (3600.0*180.0)/np.pi
-        n      = s / pix**2.0
-        hexc   = np.sqrt(hexc)*(1.0/np.sqrt(n))
+        hexc = np.sqrt(hexc)*(1.0/np.sqrt(n))
 
     plt.clf()
+
+    # choose stats
+    if stats=="mean":
+        pass
+    elif stats=="sum":
+        hexc = hexc * n
 
     return hexx, hexy, hexc
