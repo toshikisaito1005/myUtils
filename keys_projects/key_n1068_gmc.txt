@@ -49,7 +49,8 @@ outfits_mom0_ci10 ,,,n1068_ci10_mom0.fits
 # text files
 
 # png files
-outpng_  ,,,fig_.png
+outpng_cprops_co10 ,,,fig_co10_mom0_gmc.png
+outpng_cprops_ci10 ,,,fig_ci10_mom0_gmc.png
 
 # box for imagemajick
 

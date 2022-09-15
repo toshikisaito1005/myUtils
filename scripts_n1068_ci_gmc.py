@@ -154,7 +154,9 @@ class ToolsCIGMC():
         """
         """
 
-        # output fits
+        # output png
+        self.outpng_cprops_co10 = self.dir_products + self._read_key("outpng_cprops_co10")
+        self.outpng_cprops_ci10 = self.dir_products + self._read_key("outpng_cprops_ci10")
 
         # final
         print("TBE.")
@@ -274,31 +276,18 @@ class ToolsCIGMC():
         """
 
         taskname = self.modname + sys._getframe().f_code.co_name
-        check_first(self.cprops_hcn10,taskname)
+        check_first(self.cprops_co10,taskname)
 
         # import fits table
-        f = pyfits.open(self.cprops_cn10h)
-        tb_cn10h = f[1].data
-
-        f = pyfits.open(self.cprops_hcop10)
-        tb_hcop10 = f[1].data
-
-        f = pyfits.open(self.cprops_hcn10)
-        tb_hcn10 = f[1].data
-
         f = pyfits.open(self.cprops_co10)
         tb_co10 = f[1].data
 
         f = pyfits.open(self.cprops_ci10)
         tb_ci10 = f[1].data
 
-
         # extract tag
-        self._plot_cprops_map(self.mom0_cn10h,tb_cn10h,"CN(1-0)h",self.outpng_cprops_cn10h)
-        self._plot_cprops_map(self.mom0_hcop10,tb_hcop10,"HCO$^+$(1-0)",self.outpng_cprops_hcop10)
-        self._plot_cprops_map(self.mom0_hcn10,tb_hcn10,"HCN(1-0)",self.outpng_cprops_hcn10)
-        self._plot_cprops_map(self.mom0_co10,tb_co10,"CO(1-0)",self.outpng_cprops_co10)
-        self._plot_cprops_map(self.mom0_ci10,tb_ci10,"[CI](1-0)",self.outpng_cprops_ci10)
+        self._plot_cprops_map(self.outfits_mom0_co10,tb_co10,"CO(1-0)",self.outpng_cprops_co10)
+        self._plot_cprops_map(self.outfits_mom0_ci10,tb_ci10,"[CI](1-0)",self.outpng_cprops_ci10)
 
     ####################
     # _plot_cprops_map #
