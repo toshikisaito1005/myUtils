@@ -404,6 +404,7 @@ class ToolsCIGMC():
             set_title = linename + " Cloud Catalog",
             scalebar  = scalebar,
             label_scalebar = label_scalebar,
+            colorlog  = True,
             set_cmap  = "Greys",
             )
 
@@ -418,6 +419,7 @@ class ToolsCIGMC():
             set_title = linename + " Cloud Catalog",
             scalebar  = scalebar,
             label_scalebar = label_scalebar,
+            colorlog  = True,
             set_cmap  = "Greys",
             )
 
@@ -432,6 +434,7 @@ class ToolsCIGMC():
             set_title = linename + " Cloud Catalog",
             scalebar  = scalebar,
             label_scalebar = label_scalebar,
+            colorlog  = True,
             set_cmap  = "Greys",
             )
 
