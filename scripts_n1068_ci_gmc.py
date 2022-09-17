@@ -404,6 +404,7 @@ class ToolsCIGMC():
             set_title = linename + " Cloud Catalog",
             scalebar  = scalebar,
             label_scalebar = label_scalebar,
+            set_cmap  = "Greys",
             )
 
         myfig_fits2png(
@@ -417,6 +418,7 @@ class ToolsCIGMC():
             set_title = linename + " Cloud Catalog",
             scalebar  = scalebar,
             label_scalebar = label_scalebar,
+            set_cmap  = "Greys",
             )
 
         myfig_fits2png(
@@ -430,6 +432,7 @@ class ToolsCIGMC():
             set_title = linename + " Cloud Catalog",
             scalebar  = scalebar,
             label_scalebar = label_scalebar,
+            set_cmap  = "Greys",
             )
 
     ###################

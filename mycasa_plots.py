@@ -898,7 +898,7 @@ def myax_fig2png_ann(ax,number,ra_cnt,dec_cnt,add_text=True,txtfiles=None):
                     height=this_h,
                     angle=this_pos,
                     fill=False,
-                    edgecolor="black",
+                    edgecolor="red",
                     alpha=1.0,
                     lw=1.0)
 
