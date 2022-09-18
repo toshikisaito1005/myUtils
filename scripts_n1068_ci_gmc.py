@@ -415,7 +415,7 @@ class ToolsCIGMC():
         ##############
         # plot: mvir #
         ##############
-        xlim   = None#[0,35]
+        xlim   = [5.4,8.0]
         ylim   = None
         title  = "Cloud virial mass"
         xlabel = "Virial mass ($M_{\odot}$)"
