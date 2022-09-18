@@ -327,7 +327,6 @@ class ToolsCIGMC():
         theta      = np.where(theta>0,theta,theta+360)
         cut_cone   = np.where((s2n>=7.0) & (r<self.fov_diamter/2.0) & (theta>=self.theta2) & (theta<self.theta1) | (s2n>=7.0) & (r<self.fov_diamter/2.0) & (theta>=self.theta2+180) & (theta<self.theta1+180))
         cut_nocone = np.where((s2n>=7.0) & (r<self.fov_diamter/2.0) & (theta>=self.theta1) & (theta<self.theta2+180) | (s2n>=7.0) & (r<self.fov_diamter/2.0) & (theta>=self.theta1+180) & (theta<self.theta2+360) | (s2n>=7.0) & (r<self.fov_diamter/2.0) & (theta<self.theta1+180) & (theta<self.theta2))
-        #cut_s   = np.where((s2n>=7.0) & (r<self.fov_diamter/2.0) & (theta>=self.theta2+180) & (theta<self.theta1+180))
         cut_sbr    = np.where((s2n>=7.0) & (r>=self.fov_diamter/2.0))
 
         # data
@@ -421,11 +420,11 @@ class ToolsCIGMC():
         xlabel = "Virial mass ($M_{\odot}$)"
         ylabel = "Count density"
 
-        h = np.histogram(mvir_cone, bins=10)#, range=xlim)
+        h = np.histogram(mvir_cone, bins=10, range=xlim)
         x_mvir_cone, y_mvir_cone = h[1][:-1], h[0]/float(np.sum(h[0]))
-        h = np.histogram(mvir_nocone, bins=10)#, range=xlim)
+        h = np.histogram(mvir_nocone, bins=10, range=xlim)
         x_mvir_nocone, y_mvir_nocone = h[1][:-1], h[0]/float(np.sum(h[0]))
-        h = np.histogram(mvir_sbr, bins=10)#, range=xlim)
+        h = np.histogram(mvir_sbr, bins=10, range=xlim)
         x_mvir_sbr, y_mvir_sbr = h[1][:-1], h[0]/float(np.sum(h[0]))
 
         fig = plt.figure(figsize=(13,10))
