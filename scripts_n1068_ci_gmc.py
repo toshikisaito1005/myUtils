@@ -300,8 +300,8 @@ class ToolsCIGMC():
         tb_ci10 = f[1].data
 
         # extract parameters
-        x      = (tb_ci10["XCTR_DEG"] - self.ra_agn * 3600.
-        y      = (tb_ci10["YCTR_DEG"] - self.dec_agn * 3600.
+        x      = tb_ci10["XCTR_DEG"] - self.ra_agn * 3600.
+        y      = tb_ci10["YCTR_DEG"] - self.dec_agn * 3600.
         s2n    = tb_ci10["S2N"]
         radius = tb_ci10["RAD_NODC_NOEX"] / 72.
         sigv   = tb_ci10["SIGV_NODC_NOEX"]
@@ -321,7 +321,6 @@ class ToolsCIGMC():
         x_nocone = x[~cut]
 
         print(len(x_cone), len(x_nocone))
-
 
     ##############
     # map_cprops #
