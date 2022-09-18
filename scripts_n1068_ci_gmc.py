@@ -343,18 +343,18 @@ class ToolsCIGMC():
         tpeak_sbr  = tpeak[cut_sbr]
 
         # plot: radius
-        h = np.histogram(radius_cone, bins=10, range=[0.4*72,2.0*72])
-        x_rad_cone, y_rad_cone = h[1][:-1], h[0]/float(np.sum(h[0]))
-        h = np.histogram(radius_nocone, bins=10, range=[0.4*72,2.0*72])
-        x_rad_nocone, y_rad_nocone = h[1][:-1], h[0]/float(np.sum(h[0]))
-        h = np.histogram(radius_sbr, bins=10, range=[0.4*72,2.0*72])
-        x_rad_sbr, y_rad_sbr = h[1][:-1], h[0]/float(np.sum(h[0]))
-
         xlim   = [0.4*72-10,2.0*72+10]
         ylim   = None
         title  = "Cloud radius"
         xlabel = "Radius (pc)"
         ylabel = "Count density"
+
+        h = np.histogram(radius_cone, bins=10, range=xlim)
+        x_rad_cone, y_rad_cone = h[1][:-1], h[0]/float(np.sum(h[0]))
+        h = np.histogram(radius_nocone, bins=10, range=xlim)
+        x_rad_nocone, y_rad_nocone = h[1][:-1], h[0]/float(np.sum(h[0]))
+        h = np.histogram(radius_sbr, bins=10, range=xlim)
+        x_rad_sbr, y_rad_sbr = h[1][:-1], h[0]/float(np.sum(h[0]))
 
         fig = plt.figure(figsize=(13,10))
         gs  = gridspec.GridSpec(nrows=10, ncols=10)
@@ -371,18 +371,18 @@ class ToolsCIGMC():
         plt.savefig(self.outpng_hist_rad, dpi=self.fig_dpi)
 
         # plot: sigma
-        h = np.histogram(sigv_cone, bins=10)#, range=[0.4*72,2.0*72])
-        x_sigv_cone, y_sigv_cone = h[1][:-1], h[0]/float(np.sum(h[0]))
-        h = np.histogram(sigv_nocone, bins=10)#, range=[0.4*72,2.0*72])
-        x_sigv_nocone, y_sigv_nocone = h[1][:-1], h[0]/float(np.sum(h[0]))
-        h = np.histogram(sigv_sbr, bins=10)#, range=[0.4*72,2.0*72])
-        x_sigv_sbr, y_sigv_sbr = h[1][:-1], h[0]/float(np.sum(h[0]))
-
-        xlim   = None #[0.4*72-10,2.0*72+10]
+        xlim   = [0,40]
         ylim   = None
         title  = "Cloud velocity dispersion"
         xlabel = "Velocity dispersion (km s$^{-1}$)"
         ylabel = "Count density"
+
+        h = np.histogram(sigv_cone, bins=10, range=xlim)
+        x_sigv_cone, y_sigv_cone = h[1][:-1], h[0]/float(np.sum(h[0]))
+        h = np.histogram(sigv_nocone, bins=10, range=xlim)
+        x_sigv_nocone, y_sigv_nocone = h[1][:-1], h[0]/float(np.sum(h[0]))
+        h = np.histogram(sigv_sbr, bins=10, range=xlim)
+        x_sigv_sbr, y_sigv_sbr = h[1][:-1], h[0]/float(np.sum(h[0]))
 
         fig = plt.figure(figsize=(13,10))
         gs  = gridspec.GridSpec(nrows=10, ncols=10)
