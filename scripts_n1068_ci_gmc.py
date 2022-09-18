@@ -332,10 +332,10 @@ class ToolsCIGMC():
         gs  = gridspec.GridSpec(nrows=10, ncols=10)
         ax1 = plt.subplot(gs[0:10,0:10])
         ad  = [0.215,0.83,0.10,0.90]
-        ax1.scatter(xn,yn,size=20,color="red")
-        ax1.scatter(x1,y1,size=20,color="black")
-        ax1.scatter(xs,ys,size=20,color="blue")
-        ax1.scatter(x2,y2,size=20,color="grey")
+        ax1.scatter(xn,yn,markersize=20,color="red")
+        ax1.scatter(x1,y1,markersize=20,color="black")
+        ax1.scatter(xs,ys,markersize=20,color="blue")
+        ax1.scatter(x2,y2,markersize=20,color="grey")
         os.system("rm -rf test.png")
         plt.savefig("test.png", dpi=self.fig_dpi)
 
