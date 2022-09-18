@@ -320,7 +320,7 @@ class ToolsCIGMC():
         cut_out2 = np.where((s2n>=7.0) & (r<self.fov_diamter/2.0) & (theta>=self.theta1+180) & (theta<self.theta2+360) | (s2n>=7.0) & (r<self.fov_diamter/2.0) & (theta<self.theta1+180) & (theta<self.theta2))
         #cut_out2b = np.where((s2n>=7.0) & (r<self.fov_diamter/2.0) & (theta<self.theta1+180) & (theta<self.theta2))
 
-        print(len(r[(s2n>=7.0)]))
+        print(len(r[np.where((s2n>=7.0) & (r<self.fov_diamter/2.0))]))
         print(len(r[cut_n]), len(r[cut_out1]), len(r[cut_s]), len(r[cut_out2]))
 
     ##############
