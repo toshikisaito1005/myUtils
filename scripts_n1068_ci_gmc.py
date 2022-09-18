@@ -315,12 +315,10 @@ class ToolsCIGMC():
         #self.theta2 = 20
         cut1 = np.where((r<self.fov_diamter) & (theta>=self.theta2) & (theta<=self.theta1))
         cut2 = np.where((r<self.fov_diamter) & (theta>=self.theta2+180) & (theta<=self.theta1+180))
-        cut  = cut1 + cut2
 
-        x_cone = x[cut]
-        x_nocone = x[~cut]
+        x_cone = x[cut1]
 
-        print(len(x_cone), len(x_nocone))
+        print(len(x_cone))
 
     ##############
     # map_cprops #
