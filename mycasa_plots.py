@@ -918,7 +918,7 @@ def myax_fig2png_ann(ax,number,ra_cnt,dec_cnt,add_text=True,txtfiles=None):
         # plot NGC 1068 AGN and outflow geometry
         x1 = fov_diamter/2.0 * np.cos(np.radians(-1*theta1+90))
         y1 = fov_diamter/2.0 * np.sin(np.radians(-1*theta1+90))
-        ax.plot([x1, -x1], [y1, -y1], "--", c="red", lw=3.5)
+        ax.plot([x1, -x1], [y1, -y1], "--", c="black", lw=3.5)
         x2 = fov_diamter/2.0 * np.cos(np.radians(-1*theta2+90))
         y2 = fov_diamter/2.0 * np.sin(np.radians(-1*theta2+90))
         ax.plot([x2, -x2], [y2, -y2], "--", c="black", lw=3.5)
