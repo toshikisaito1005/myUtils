@@ -300,7 +300,7 @@ class ToolsCIGMC():
         tb_ci10 = f[1].data
 
         # extract parameters
-        x      = (tb_ci10["XCTR_DEG"] - self.ra_agn) * 3600.
+        x      = (tb_ci10["XCTR_DEG"] - self.ra_agn) * -3600.
         y      = (tb_ci10["YCTR_DEG"] - self.dec_agn) * 3600.
         s2n    = tb_ci10["S2N"]
         radius = tb_ci10["RAD_NODC_NOEX"] / 72.
@@ -337,7 +337,7 @@ class ToolsCIGMC():
         ax1.scatter(xs,ys,s=50,color="blue")
         ax1.scatter(x2,y2,s=50,color="grey")
         os.system("rm -rf test.png")
-        plt.xlim([10,-10])
+        plt.xlim([-10,10])
         plt.ylim([-10,10])
         plt.savefig("test.png", dpi=self.fig_dpi)
 
