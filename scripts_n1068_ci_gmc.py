@@ -172,7 +172,8 @@ class ToolsCIGMC():
         self.outpng_cprops_co10_fov3 = self.dir_products + self._read_key("outpng_cprops_co10_fov3")
         self.outpng_cprops_ci10_fov3 = self.dir_products + self._read_key("outpng_cprops_ci10_fov3")
 
-        self.outpng_hist_rad = self.dir_products + self._read_key("outpng_hist_rad")
+        self.outpng_hist_rad  = self.dir_products + self._read_key("outpng_hist_rad")
+        self.outpng_hist_sigv = self.dir_products + self._read_key("outpng_hist_sigv")
 
         # final
         print("TBE.")
@@ -349,8 +350,15 @@ class ToolsCIGMC():
         h = np.histogram(radius_sbr, bins=10, range=[0.4*72,2.0*72])
         x_rad_sbr, y_rad_sbr = h[1][:-1], h[0]/float(np.sum(h[0]))
 
-        # plot
-        xlim   = [0.4*72,2.0*72]
+        h = np.histogram(sigv_cone, bins=10, range=[0.4*72,2.0*72])
+        x_sigv_cone, y_sigv_cone = h[1][:-1], h[0]/float(np.sum(h[0]))
+        h = np.histogram(sigv_nocone, bins=10, range=[0.4*72,2.0*72])
+        x_sigv_nocone, y_sigv_nocone = h[1][:-1], h[0]/float(np.sum(h[0]))
+        h = np.histogram(sigv_sbr, bins=10, range=[0.4*72,2.0*72])
+        x_sigv_sbr, y_sigv_sbr = h[1][:-1], h[0]/float(np.sum(h[0]))
+
+        # plot: radius
+        xlim   = [0.4*72-10,2.0*72+10]
         ylim   = None
         title  = "Cloud radius"
         xlabel = "Radius (pc)"
@@ -369,6 +377,27 @@ class ToolsCIGMC():
         # save
         os.system("rm -rf " + self.outpng_hist_rad)
         plt.savefig(self.outpng_hist_rad, dpi=self.fig_dpi)
+
+        # plot: sigma
+        xlim   = None #[0.4*72-10,2.0*72+10]
+        ylim   = None
+        title  = "Cloud velocity dispersion"
+        xlabel = "Velocity dispersion (km s$^{-1}$)"
+        ylabel = "Count density"
+
+        fig = plt.figure(figsize=(13,10))
+        gs  = gridspec.GridSpec(nrows=10, ncols=10)
+        ax1 = plt.subplot(gs[0:10,0:10])
+        ad  = [0.215,0.83,0.10,0.90]
+        myax_set(ax1, "x", xlim, ylim, title, xlabel, ylabel, adjust=ad)
+
+        ax1.bar(x_sigv_cone, y_sigv_cone, lw=0, color="red", width=x_rad_cone[1]-x_rad_cone[0], alpha=0.5)
+        ax1.bar(x_sigv_nocone, y_sigv_nocone, lw=0, color="blue", width=x_rad_nocone[1]-x_rad_nocone[0], alpha=0.5)
+        ax1.bar(x_sigv_sbr, y_sigv_sbr, lw=0, color="grey", width=x_rad_sbr[1]-x_rad_sbr[0], alpha=0.5)
+
+        # save
+        os.system("rm -rf " + self.outpng_hist_sigv)
+        plt.savefig(self.outpng_hist_sigv, dpi=self.fig_dpi)
 
     ##############
     # map_cprops #
