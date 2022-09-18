@@ -342,8 +342,12 @@ class ToolsCIGMC():
         tpeak_sbr  = tpeak[cut_sbr]
 
         # plot hist
-        h = np.histogram(radius_cone, bins=25)#, range=[0.5,3.5])
+        h = np.histogram(radius_cone, bins=10)#, range=[0.5,3.5])
         x_rad_cone, y_rad_cone = h[1][:-1], h[0]/float(np.sum(h[0]))
+        h = np.histogram(radius_nocone, bins=10)#, range=[0.5,3.5])
+        x_rad_nocone, y_rad_nocone = h[1][:-1], h[0]/float(np.sum(h[0]))
+        h = np.histogram(radius_sbr, bins=10)#, range=[0.5,3.5])
+        x_rad_sbr, y_rad_sbr = h[1][:-1], h[0]/float(np.sum(h[0]))
 
         # plot
         xlim   = None
@@ -358,7 +362,9 @@ class ToolsCIGMC():
         ad  = [0.215,0.83,0.10,0.90]
         myax_set(ax1, "x", xlim, ylim, title, xlabel, ylabel, adjust=ad)
 
-        ax1.bar(x_rad_cone, y_rad_cone, lw=0, color="black", width=x_rad_cone[1]-x_rad_cone[0], alpha=0.5)
+        ax1.bar(x_rad_cone, y_rad_cone, lw=0, color="red", width=x_rad_cone[1]-x_rad_cone[0], alpha=0.5)
+        ax1.bar(x_rad_nocone, y_rad_nocone, lw=0, color="blue", width=x_rad_nocone[1]-x_rad_nocone[0], alpha=0.5)
+        ax1.bar(x_rad_sbr, y_rad_sbr, lw=0, color="grey", width=x_rad_sbr[1]-x_rad_sbr[0], alpha=0.5)
 
         # save
         os.system("rm -rf " + self.outpng_hist_rad)
