@@ -163,14 +163,16 @@ class ToolsCIGMC():
         """
 
         # output png
-        self.outpng_cprops_co10_agn = self.dir_products + self._read_key("outpng_cprops_co10_agn")
-        self.outpng_cprops_ci10_agn = self.dir_products + self._read_key("outpng_cprops_ci10_agn")
+        self.outpng_cprops_co10_agn  = self.dir_products + self._read_key("outpng_cprops_co10_agn")
+        self.outpng_cprops_ci10_agn  = self.dir_products + self._read_key("outpng_cprops_ci10_agn")
 
         self.outpng_cprops_co10_fov2 = self.dir_products + self._read_key("outpng_cprops_co10_fov2")
         self.outpng_cprops_ci10_fov2 = self.dir_products + self._read_key("outpng_cprops_ci10_fov2")
 
         self.outpng_cprops_co10_fov3 = self.dir_products + self._read_key("outpng_cprops_co10_fov3")
         self.outpng_cprops_ci10_fov3 = self.dir_products + self._read_key("outpng_cprops_ci10_fov3")
+
+        self.outpng_hist_rad = self.dir_products + self._read_key("outpng_hist_rad")
 
         # final
         print("TBE.")
@@ -309,16 +311,58 @@ class ToolsCIGMC():
         tpeak  = tb_ci10["TMAX_K"]
 
         # bicone definition
-        r       = np.sqrt(x**2 + y**2)
-        theta   = np.degrees(np.arctan2(x, y)) + 90
-        theta   = np.where(theta>0,theta,theta+360)
-        cut_n   = np.where((s2n>=7.0) & (r<self.fov_diamter/2.0) & (theta>=self.theta2) & (theta<self.theta1))
-        cut_out = np.where((s2n>=7.0) & (r<self.fov_diamter/2.0) & (theta>=self.theta1) & (theta<self.theta2+180) | (s2n>=7.0) & (r<self.fov_diamter/2.0) & (theta>=self.theta1+180) & (theta<self.theta2+360) | (s2n>=7.0) & (r<self.fov_diamter/2.0) & (theta<self.theta1+180) & (theta<self.theta2))
-        cut_s   = np.where((s2n>=7.0) & (r<self.fov_diamter/2.0) & (theta>=self.theta2+180) & (theta<self.theta1+180))
-        #cut_out2 = np.where((s2n>=7.0) & (r<self.fov_diamter/2.0) & (theta>=self.theta1+180) & (theta<self.theta2+360) | (s2n>=7.0) & (r<self.fov_diamter/2.0) & (theta<self.theta1+180) & (theta<self.theta2))
+        r          = np.sqrt(x**2 + y**2)
+        theta      = np.degrees(np.arctan2(x, y)) + 90
+        theta      = np.where(theta>0,theta,theta+360)
+        cut_cone   = np.where((s2n>=7.0) & (r<self.fov_diamter/2.0) & (theta>=self.theta2) & (theta<self.theta1) | (s2n>=7.0) & (r<self.fov_diamter/2.0) & (theta>=self.theta2+180) & (theta<self.theta1+180))
+        cut_nocone = np.where((s2n>=7.0) & (r<self.fov_diamter/2.0) & (theta>=self.theta1) & (theta<self.theta2+180) | (s2n>=7.0) & (r<self.fov_diamter/2.0) & (theta>=self.theta1+180) & (theta<self.theta2+360) | (s2n>=7.0) & (r<self.fov_diamter/2.0) & (theta<self.theta1+180) & (theta<self.theta2))
+        #cut_s   = np.where((s2n>=7.0) & (r<self.fov_diamter/2.0) & (theta>=self.theta2+180) & (theta<self.theta1+180))
+        cut_sbr    = np.where((s2n>=7.0) & (r>=self.fov_diamter/2.0))
 
-        print(len(r[np.where((s2n>=7.0) & (r<self.fov_diamter/2.0))]))
-        print(len(r[cut_n]), len(r[cut_out]), len(r[cut_s]))
+        # data
+        x_cone      = x[cut_cone]
+        y_cone      = y[cut_cone]
+        radius_cone = radius[cut_cone]
+        sigv_cone   = sigv[cut_cone]
+        mvir_cone   = mvir[cut_cone]
+        tpeak_cone  = tpeak[cut_cone]
+
+        x_nocone      = x[cut_nocone]
+        y_nocone      = y[cut_nocone]
+        radius_nocone = radius[cut_nocone]
+        sigv_nocone   = sigv[cut_nocone]
+        mvir_nocone   = mvir[cut_nocone]
+        tpeak_nocone  = tpeak[cut_nocone]
+
+        x_sbr      = x[cut_sbr]
+        y_sbr      = y[cut_sbr]
+        radius_sbr = radius[cut_sbr]
+        sigv_sbr   = sigv[cut_sbr]
+        mvir_sbr   = mvir[cut_sbr]
+        tpeak_sbr  = tpeak[cut_sbr]
+
+        # plot hist
+        h = np.histogram(radius_cone, bins=25)#, range=[0.5,3.5])
+        x_rad_cone, y_rad_cone = h[1][:-1], h[0]/float(np.sum(h[0]))
+
+        # plot
+        xlim   = None
+        ylim   = None
+        title  = None
+        xlabel = None
+        ylabel = None
+
+        fig = plt.figure(figsize=(13,10))
+        gs  = gridspec.GridSpec(nrows=10, ncols=10)
+        ax1 = plt.subplot(gs[0:10,0:10])
+        ad  = [0.215,0.83,0.10,0.90]
+        myax_set(ax1, "x", xlim, ylim, title, xlabel, ylabel, adjust=ad)
+
+        ax1.bar(x_rad_cone, y_rad_cone, lw=0, color="black", width=x_rad_cone[1]-x_rad_cone[0], alpha=0.5)
+
+        # save
+        os.system("rm -rf " + self.outpng_hist_rad)
+        plt.savefig(self.outpng_hist_rad, dpi=self.fig_dpi)
 
     ##############
     # map_cprops #
