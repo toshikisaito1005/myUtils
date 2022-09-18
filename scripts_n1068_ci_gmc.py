@@ -342,7 +342,9 @@ class ToolsCIGMC():
         mvir_sbr   = mvir[cut_sbr]
         tpeak_sbr  = tpeak[cut_sbr]
 
-        # plot: radius
+        ################
+        # plot: radius #
+        ################
         xlim   = [0.4*72-10,2.0*72+10]
         ylim   = None
         title  = "Cloud radius"
@@ -370,8 +372,10 @@ class ToolsCIGMC():
         os.system("rm -rf " + self.outpng_hist_rad)
         plt.savefig(self.outpng_hist_rad, dpi=self.fig_dpi)
 
-        # plot: sigma
-        xlim   = [0,40]
+        ###############
+        # plot: sigma #
+        ###############
+        xlim   = [0,35]
         ylim   = None
         title  = "Cloud velocity dispersion"
         xlabel = "Velocity dispersion (km s$^{-1}$)"
