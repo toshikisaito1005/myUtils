@@ -305,7 +305,7 @@ class ToolsCIGMC():
         x      = (tb_ci10["XCTR_DEG"] - self.ra_agn) * -3600.
         y      = (tb_ci10["YCTR_DEG"] - self.dec_agn) * 3600.
         s2n    = tb_ci10["S2N"]
-        radius = tb_ci10["RAD_NODC_NOEX"] / 72.
+        radius = tb_ci10["RAD_NODC_NOEX"]
         sigv   = tb_ci10["SIGV_NODC_NOEX"]
         mvir   = tb_ci10["MVIR_MSUN"]
         tpeak  = tb_ci10["TMAX_K"]
@@ -342,11 +342,11 @@ class ToolsCIGMC():
         tpeak_sbr  = tpeak[cut_sbr]
 
         # plot hist
-        h = np.histogram(radius_cone, bins=10)#, range=[0.5,3.5])
+        h = np.histogram(radius_cone, bins=10, range=[0.4*72,2.0*72])
         x_rad_cone, y_rad_cone = h[1][:-1], h[0]/float(np.sum(h[0]))
-        h = np.histogram(radius_nocone, bins=10)#, range=[0.5,3.5])
+        h = np.histogram(radius_nocone, bins=10, range=[0.4*72,2.0*72])
         x_rad_nocone, y_rad_nocone = h[1][:-1], h[0]/float(np.sum(h[0]))
-        h = np.histogram(radius_sbr, bins=10)#, range=[0.5,3.5])
+        h = np.histogram(radius_sbr, bins=10, range=[0.4*72,2.0*72])
         x_rad_sbr, y_rad_sbr = h[1][:-1], h[0]/float(np.sum(h[0]))
 
         # plot
