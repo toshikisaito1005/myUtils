@@ -313,11 +313,13 @@ class ToolsCIGMC():
         theta  = np.degrees(np.arctan2(x, y))
         #self.theta1 = 100
         #self.theta2 = 20
-        cut1 = np.where((r<self.fov_diamter) & (theta>=self.theta2) & (theta<=self.theta1))
-        cut2 = np.where((r<self.fov_diamter) & (theta>=self.theta2+180) & (theta<=self.theta1+180))
+        cut_n    = np.where((r<self.fov_diamter) & (theta>=self.theta2) & (theta<=self.theta1))
+        cut_out1 = np.where((r<self.fov_diamter) & (theta>=self.theta1) & (theta<=self.theta2+180))
+        cut_s    = np.where((r<self.fov_diamter) & (theta>=self.theta2+180) & (theta<=self.theta1+180))
+        cut_out1 = np.where((r<self.fov_diamter) & (theta>=self.theta1+180) & (theta<=self.theta2+360))
 
-        print(np.min(r), np.max(r))
-        print(np.min(theta), np.max(theta))
+        print(len(r))
+        print(len(cut_n), len(cut_out1), len(cut_s), len(cut_out1))
 
     ##############
     # map_cprops #
