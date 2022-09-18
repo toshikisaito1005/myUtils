@@ -406,6 +406,7 @@ class ToolsCIGMC():
         ##############
         # plot: mvir #
         ##############
+        print(mvir_nocone)
         xlim   = [0,35]
         ylim   = None
         title  = "Cloud virial mass"
