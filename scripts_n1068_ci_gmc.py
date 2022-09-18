@@ -310,8 +310,8 @@ class ToolsCIGMC():
 
         # bicone definition
         r      = np.sqrt(x**2 + y**2)
-        theta  = np.degrees(np.arctan2(x, y))
-        theta  = np.where(theta>0,theta+90,theta+360+90)
+        theta  = np.degrees(np.arctan2(x, y)) + 90
+        theta  = np.where(theta>0,theta,theta+360)
         #self.theta1 = 100
         #self.theta2 = 20
         cut_n    = np.where((s2n>=7.0) & (r<self.fov_diamter/2.0) & (theta>=self.theta2) & (theta<self.theta1))
