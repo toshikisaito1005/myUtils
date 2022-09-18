@@ -406,17 +406,17 @@ class ToolsCIGMC():
         ##############
         # plot: mvir #
         ##############
-        xlim   = None#[0,35]
+        xlim   = [0,35]
         ylim   = None
         title  = "Cloud virial mass"
         xlabel = "Virial mass ($M_{\odot}$)"
         ylabel = "Count density"
 
-        h = np.histogram(mvir_cone, bins=10, range=xlim)
+        h = np.histogram(mvir_cone, bins=10)#, range=xlim)
         x_mvir_cone, y_mvir_cone = h[1][:-1], h[0]/float(np.sum(h[0]))
-        h = np.histogram(mvir_nocone, bins=10, range=xlim)
+        h = np.histogram(mvir_nocone, bins=10)#, range=xlim)
         x_mvir_nocone, y_mvir_nocone = h[1][:-1], h[0]/float(np.sum(h[0]))
-        h = np.histogram(mvir_sbr, bins=10, range=xlim)
+        h = np.histogram(mvir_sbr, bins=10)#, range=xlim)
         x_mvir_sbr, y_mvir_sbr = h[1][:-1], h[0]/float(np.sum(h[0]))
 
         fig = plt.figure(figsize=(13,10))
