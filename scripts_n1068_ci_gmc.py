@@ -312,6 +312,15 @@ class ToolsCIGMC():
         mvir   = tb_ci10["MVIR_MSUN"]
         tpeak  = tb_ci10["TMAX_K"]
 
+        cut = np.where(~np.isnan(radius) & ~np.isnan(sigv) & ~np.isnan(mvir) & ~np.isnan(tpeak))
+        x      = x[cut]
+        y      = y[cut]
+        s2n    = s2n[cut]
+        radius = radius[cut]
+        sigv   = sigv[cut]
+        mvir   = mvir[cut]
+        tpeak  = tpeak[cut]
+
         # bicone definition
         r          = np.sqrt(x**2 + y**2)
         theta      = np.degrees(np.arctan2(x, y)) + 90
