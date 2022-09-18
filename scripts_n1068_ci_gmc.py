@@ -321,7 +321,7 @@ class ToolsCIGMC():
 
         print(np.max(theta),np.min(theta))
         print(len(r[r<self.fov_diamter]))
-        print(len(r[cut_n]), len(r[cut_out1]), len(r[cut_s]), len(r[cut_out1]))
+        print(len(r[cut_n]), len(r[cut_out1]), len(r[cut_s]), len(r[cut_out2]))
 
     ##############
     # map_cprops #
