@@ -57,6 +57,7 @@ outpng_cprops_co10_fov3 ,,,fig_co10_mom0_gmc_fov3.png
 outpng_cprops_ci10_fov3 ,,,fig_ci10_mom0_gmc_fov3.png
 outpng_hist_rad         ,,,outpng_hist_rad.png
 outpng_hist_sigv        ,,,outpng_hist_sigv.png
+outpng_hist_mvir        ,,,outpng_hist_mvir.png
 
 # box for imagemajick
 

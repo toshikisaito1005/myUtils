@@ -174,6 +174,7 @@ class ToolsCIGMC():
 
         self.outpng_hist_rad  = self.dir_products + self._read_key("outpng_hist_rad")
         self.outpng_hist_sigv = self.dir_products + self._read_key("outpng_hist_sigv")
+        self.outpng_hist_mvir = self.dir_products + self._read_key("outpng_hist_mvir")
 
         # final
         print("TBE.")
@@ -401,6 +402,36 @@ class ToolsCIGMC():
         # save
         os.system("rm -rf " + self.outpng_hist_sigv)
         plt.savefig(self.outpng_hist_sigv, dpi=self.fig_dpi)
+
+        ##############
+        # plot: mvir #
+        ##############
+        xlim   = [0,35]
+        ylim   = None
+        title  = "Cloud virial mass"
+        xlabel = "Virial mass ($M_{\odot}$)"
+        ylabel = "Count density"
+
+        h = np.histogram(mvir_cone, bins=10, range=xlim)
+        x_mvir_cone, y_mvir_cone = h[1][:-1], h[0]/float(np.sum(h[0]))
+        h = np.histogram(mvir_nocone, bins=10, range=xlim)
+        x_mvir_nocone, y_mvir_nocone = h[1][:-1], h[0]/float(np.sum(h[0]))
+        h = np.histogram(mvir_sbr, bins=10, range=xlim)
+        x_mvir_sbr, y_mvir_sbr = h[1][:-1], h[0]/float(np.sum(h[0]))
+
+        fig = plt.figure(figsize=(13,10))
+        gs  = gridspec.GridSpec(nrows=10, ncols=10)
+        ax1 = plt.subplot(gs[0:10,0:10])
+        ad  = [0.215,0.83,0.10,0.90]
+        myax_set(ax1, "x", xlim, ylim, title, xlabel, ylabel, adjust=ad)
+
+        ax1.bar(x_mvir_cone, y_mvir_cone, lw=0, color="red", width=x_mvir_cone[1]-x_mvir_cone[0], alpha=0.5)
+        ax1.bar(x_mvir_nocone, y_mvir_nocone, lw=0, color="blue", width=x_mvir_nocone[1]-x_mvir_nocone[0], alpha=0.5)
+        ax1.bar(x_mvir_sbr, y_mvir_sbr, lw=0, color="grey", width=x_mvir_sbr[1]-x_mvir_sbr[0], alpha=0.5)
+
+        # save
+        os.system("rm -rf " + self.outpng_hist_mvir)
+        plt.savefig(self.outpng_hist_mvir, dpi=self.fig_dpi)
 
     ##############
     # map_cprops #
