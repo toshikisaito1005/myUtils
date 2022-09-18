@@ -350,11 +350,11 @@ class ToolsCIGMC():
         x_rad_sbr, y_rad_sbr = h[1][:-1], h[0]/float(np.sum(h[0]))
 
         # plot
-        xlim   = None
+        xlim   = [0.4*72,2.0*72]
         ylim   = None
-        title  = None
-        xlabel = None
-        ylabel = None
+        title  = "Cloud radius"
+        xlabel = "Radius (pc)"
+        ylabel = "Count density"
 
         fig = plt.figure(figsize=(13,10))
         gs  = gridspec.GridSpec(nrows=10, ncols=10)
