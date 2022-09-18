@@ -154,6 +154,10 @@ class ToolsCIGMC():
         self.r_sbr     = 10.0 * self.scale_pc / 1000. # kpc
         self.r_sbr_as  = 10.0
 
+        self.theta1      = -1 * -10.0 + 90.0 # 100
+        self.theta2      = -1 * 70.0  + 90.0 # 20
+        self.fov_diamter = 16.5
+
     def _set_output_txt_png(self):
         """
         """
@@ -178,10 +182,11 @@ class ToolsCIGMC():
     def run_ngc1068_cigmc(
         self,
         # analysis
-        do_prepare        = False,
-        print_cprops      = False,
+        do_prepare   = False,
+        print_cprops = False,
         # plot figures in paper
-        plot_stats_cprops = False,
+        map_cprops   = False,
+        plot_cprops  = False,
         # supplement
         ):
         """
@@ -240,8 +245,11 @@ class ToolsCIGMC():
             print("        )")
             print("    os.system('mv ' + cubefile[:-5]+'.props.fits' + ' ' + outfile)")
 
-        if plot_stats_cprops==True:
-            self.plot_stats_cprops()
+        if map_cprops==True:
+            self.map_cprops()
+
+        if plot_cprops==True:
+            self.plot_cprops()
 
     ####################
     # immagick_figures #
@@ -274,63 +282,44 @@ class ToolsCIGMC():
             )
         """
 
-    ###################
-    # _plot_all_param #
-    ###################
+    ###############
+    # plot_cprops #
+    ###############
 
-    def _plot_all_param(
+    def plot_cprops(
         self,
-        this_tb,
-        linename,
-        outpng_header,
-        snr=4,
         ):
         """
-        # CLOUDNUM
-        # XCTR_DEG
-        # YCTR_DEG
-        # VCTR_KMS
-        # RAD_PC
-        # SIGV_KMS
-        # FLUX_KKMS_PC2
-        # MVIR_MSUN
-        # S2N
         """
 
-        radlimit = 72.*0.8/2.
+        taskname = self.modname + sys._getframe().f_code.co_name
+        check_first(self.cprops_ci10,taskname)
 
-        # FLUX_KKMS_PC2
-        params = ["FLUX_KKMS_PC2","RAD_PC","SIGV_KMS"]
-        footers = ["flux","radius","disp"]
-        for i in range(len(params)):
-            this_param  = params[i]
-            this_footer = footers[i]
-            cut         = np.where((this_tb["S2N"]>=snr) & (this_tb["RAD_PC"]>=radlimit) & (this_tb["RAD_PC"]<=radlimit*10))
-            this_x      = (this_tb["XCTR_DEG"][cut] - self.ra_agn) * 3600.  
-            this_y      = (this_tb["YCTR_DEG"][cut] - self.dec_agn) * 3600.  
-            this_c      = this_tb[this_param][cut]
-            this_outpng = outpng_header.replace(".png","_"+this_footer+".png")
+        # import cprops table
+        f = pyfits.open(self.cprops_ci10)
+        tb_ci10 = f[1].data
 
-            if this_param=="FLUX_KKMS_PC2":
-                this_c = np.log(this_c)
+        # extract parameters
+        x      = (tb_ci10["XCTR_DEG"] - float(ra_cnt.split("deg")[0])) * 3600.
+        y      = (tb_ci10["YCTR_DEG"] - float(dec_cnt.split("deg")[0])) * 3600.
+        s2n    = tb_ci10["S2N"]
+        radius = tb_ci10["RAD_NODC_NOEX"] / 72.
+        sigv   = tb_ci10["SIGV_NODC_NOEX"]
+        mvir   = tb_ci10["MVIR_MSUN"]
+        tpeak  = tb_ci10["TMAX_K"]
 
-            self._plot_cpropsmap(
-                this_outpng,
-                this_x,
-                this_y,
-                this_c,
-                linename + " (" + this_param + ")",
-                title_cbar="(K km s$^{-1}$)",
-                cmap="rainbow",
-                add_text=False,
-                label="",
-                )
+        # bicone definition
+        r      = np.sqrt(x**2 + y**2)
+        theta  = np.degrees(np.arctan2(x, y))
+        #self.theta1 = 100
+        #self.theta2 = 20
 
-    #####################
-    # plot_stats_cprops #
-    #####################
 
-    def plot_stats_cprops(
+    ##############
+    # map_cprops #
+    ##############
+
+    def map_cprops(
         self,
         delin=False,
         ):
@@ -437,94 +426,6 @@ class ToolsCIGMC():
             colorlog  = True,
             set_cmap  = "Greys",
             )
-
-    ###################
-    # _plot_cpropsmap #
-    ###################
-
-    def _plot_cpropsmap(
-        self,
-        outpng,
-        x,y,c,
-        title,
-        title_cbar="(K km s$^{-1}$)",
-        cmap="rainbow",
-        plot_cbar=True,
-        ann=True,
-        lim=13.0,
-        size=100,
-        add_text=False,
-        label="",
-        ):
-        """
-        """
-
-        # set plt, ax
-        fig = plt.figure(figsize=(13,10))
-        plt.rcParams["font.size"] = 16
-        gs = gridspec.GridSpec(nrows=10, ncols=10)
-        ax = plt.subplot(gs[0:10,0:10])
-
-        # set ax parameter
-        myax_set(
-        ax,
-        grid=None,
-        xlim=[lim, -lim],
-        ylim=[-lim, lim],
-        xlabel="R.A. offset (arcsec)",
-        ylabel="Decl. offset (arcsec)",
-        adjust=[0.10,0.99,0.10,0.93],
-        )
-        ax.set_aspect('equal', adjustable='box')
-
-        # plot
-        im = ax.scatter(x, y, s=size, c=c, cmap=cmap, marker="o", linewidths=0)
-
-        # cbar
-        cbar = plt.colorbar(im)
-        if plot_cbar==True:
-            cax  = fig.add_axes([0.19, 0.12, 0.025, 0.35])
-            fig.colorbar(im, cax=cax).set_label(label)
-
-        # scale bar
-        bar = 100 / self.scale_pc
-        ax.plot([-10,-10+bar],[-10,-10],"-",color="black",lw=4)
-        ax.text(-10, -10.5, "100 pc",
-                horizontalalignment="right", verticalalignment="top")
-
-        # text
-        ax.text(0.03, 0.93, title, color="black", transform=ax.transAxes, weight="bold", fontsize=24)
-
-        # ann
-        if ann==True:
-            theta1      = -10.0 # degree
-            theta2      = 70.0 # degree
-            fov_diamter = 16.5 # arcsec (12m+7m Band 8)
-
-            fov_diamter = 16.5
-            efov1 = patches.Ellipse(xy=(-0,0), width=fov_diamter,
-                height=fov_diamter, angle=0, fill=False, edgecolor="black",
-                alpha=1.0, lw=3.5)
-
-            ax.add_patch(efov1)
-
-            # plot NGC 1068 AGN and outflow geometry
-            x1 = fov_diamter/2.0 * np.cos(np.radians(-1*theta1+90))
-            y1 = fov_diamter/2.0 * np.sin(np.radians(-1*theta1+90))
-            ax.plot([x1, -x1], [y1, -y1], "--", c="black", lw=3.5)
-            x2 = fov_diamter/2.0 * np.cos(np.radians(-1*theta2+90))
-            y2 = fov_diamter/2.0 * np.sin(np.radians(-1*theta2+90))
-            ax.plot([x2, -x2], [y2, -y2], "--", c="black", lw=3.5)
-
-        # add annotation comment
-        if add_text==True:
-            ax.plot([0,-7], [0,10], lw=3, c="black")
-            ax.text(-10.5, 10.5, "AGN position",
-                horizontalalignment="right", verticalalignment="center", weight="bold")
-
-        # save
-        os.system("rm -rf " + outpng)
-        plt.savefig(outpng, dpi=300)
 
     ############
     # do_align #
@@ -725,6 +626,138 @@ class ToolsCIGMC():
         h["RESTFREQ"] = restf_ci10
         fits.PrimaryHDU(d, h).writeto(self.ci10_nready, overwrite=True)
         os.system("rm -rf " + self.ci10_nready + "2")
+
+    def _plot_all_param(
+        self,
+        this_tb,
+        linename,
+        outpng_header,
+        snr=4,
+        ):
+        """
+        # CLOUDNUM
+        # XCTR_DEG
+        # YCTR_DEG
+        # VCTR_KMS
+        # RAD_PC
+        # SIGV_KMS
+        # FLUX_KKMS_PC2
+        # MVIR_MSUN
+        # S2N
+        """
+
+        radlimit = 72.*0.8/2.
+
+        # FLUX_KKMS_PC2
+        params = ["FLUX_KKMS_PC2","RAD_PC","SIGV_KMS"]
+        footers = ["flux","radius","disp"]
+        for i in range(len(params)):
+            this_param  = params[i]
+            this_footer = footers[i]
+            cut         = np.where((this_tb["S2N"]>=snr) & (this_tb["RAD_PC"]>=radlimit) & (this_tb["RAD_PC"]<=radlimit*10))
+            this_x      = (this_tb["XCTR_DEG"][cut] - self.ra_agn) * 3600.  
+            this_y      = (this_tb["YCTR_DEG"][cut] - self.dec_agn) * 3600.  
+            this_c      = this_tb[this_param][cut]
+            this_outpng = outpng_header.replace(".png","_"+this_footer+".png")
+
+            if this_param=="FLUX_KKMS_PC2":
+                this_c = np.log(this_c)
+
+            self._plot_cpropsmap(
+                this_outpng,
+                this_x,
+                this_y,
+                this_c,
+                linename + " (" + this_param + ")",
+                title_cbar="(K km s$^{-1}$)",
+                cmap="rainbow",
+                add_text=False,
+                label="",
+                )
+
+    def _plot_cpropsmap(
+        self,
+        outpng,
+        x,y,c,
+        title,
+        title_cbar="(K km s$^{-1}$)",
+        cmap="rainbow",
+        plot_cbar=True,
+        ann=True,
+        lim=13.0,
+        size=100,
+        add_text=False,
+        label="",
+        ):
+        """
+        """
+
+        # set plt, ax
+        fig = plt.figure(figsize=(13,10))
+        plt.rcParams["font.size"] = 16
+        gs = gridspec.GridSpec(nrows=10, ncols=10)
+        ax = plt.subplot(gs[0:10,0:10])
+
+        # set ax parameter
+        myax_set(
+        ax,
+        grid=None,
+        xlim=[lim, -lim],
+        ylim=[-lim, lim],
+        xlabel="R.A. offset (arcsec)",
+        ylabel="Decl. offset (arcsec)",
+        adjust=[0.10,0.99,0.10,0.93],
+        )
+        ax.set_aspect('equal', adjustable='box')
+
+        # plot
+        im = ax.scatter(x, y, s=size, c=c, cmap=cmap, marker="o", linewidths=0)
+
+        # cbar
+        cbar = plt.colorbar(im)
+        if plot_cbar==True:
+            cax  = fig.add_axes([0.19, 0.12, 0.025, 0.35])
+            fig.colorbar(im, cax=cax).set_label(label)
+
+        # scale bar
+        bar = 100 / self.scale_pc
+        ax.plot([-10,-10+bar],[-10,-10],"-",color="black",lw=4)
+        ax.text(-10, -10.5, "100 pc",
+                horizontalalignment="right", verticalalignment="top")
+
+        # text
+        ax.text(0.03, 0.93, title, color="black", transform=ax.transAxes, weight="bold", fontsize=24)
+
+        # ann
+        if ann==True:
+            theta1      = -10.0 # degree
+            theta2      = 70.0 # degree
+            fov_diamter = 16.5 # arcsec (12m+7m Band 8)
+
+            fov_diamter = 16.5
+            efov1 = patches.Ellipse(xy=(-0,0), width=fov_diamter,
+                height=fov_diamter, angle=0, fill=False, edgecolor="black",
+                alpha=1.0, lw=3.5)
+
+            ax.add_patch(efov1)
+
+            # plot NGC 1068 AGN and outflow geometry
+            x1 = fov_diamter/2.0 * np.cos(np.radians(-1*theta1+90))
+            y1 = fov_diamter/2.0 * np.sin(np.radians(-1*theta1+90))
+            ax.plot([x1, -x1], [y1, -y1], "--", c="black", lw=3.5)
+            x2 = fov_diamter/2.0 * np.cos(np.radians(-1*theta2+90))
+            y2 = fov_diamter/2.0 * np.sin(np.radians(-1*theta2+90))
+            ax.plot([x2, -x2], [y2, -y2], "--", c="black", lw=3.5)
+
+        # add annotation comment
+        if add_text==True:
+            ax.plot([0,-7], [0,10], lw=3, c="black")
+            ax.text(-10.5, 10.5, "AGN position",
+                horizontalalignment="right", verticalalignment="center", weight="bold")
+
+        # save
+        os.system("rm -rf " + outpng)
+        plt.savefig(outpng, dpi=300)
 
 #####################
 # end of ToolsCIGMC #
