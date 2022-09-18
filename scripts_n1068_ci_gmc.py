@@ -318,7 +318,7 @@ class ToolsCIGMC():
         s2n    = s2n[cut]
         radius = radius[cut]
         sigv   = sigv[cut]
-        mvir   = mvir[cut]
+        mvir   = np.log10(mvir[cut])
         tpeak  = tpeak[cut]
 
         # bicone definition
