@@ -318,7 +318,7 @@ class ToolsCIGMC():
         cut_out1 = np.where((s2n>=7.0) & (r<self.fov_diamter/2.0) & (theta>=self.theta1) & (theta<self.theta2+180))
         cut_s    = np.where((s2n>=7.0) & (r<self.fov_diamter/2.0) & (theta>=self.theta2+180) & (theta<self.theta1+180))
         cut_out2 = np.where((s2n>=7.0) & (r<self.fov_diamter/2.0) & (theta>=self.theta1+180) & (theta<self.theta2+360))
-        cut_out2b = np.where((s2n>=7.0) & (r<self.fov_diamter/2.0) & (theta>self.theta1+180))
+        cut_out2b = np.where((s2n>=7.0) & (r<self.fov_diamter/2.0) & (theta<self.theta1+180))
 
         xn=x[cut_n]
         x1=x[cut_out1]
@@ -336,10 +336,10 @@ class ToolsCIGMC():
         gs  = gridspec.GridSpec(nrows=10, ncols=10)
         ax1 = plt.subplot(gs[0:10,0:10])
         ad  = [0.215,0.83,0.10,0.90]
-        #ax1.scatter(xn,yn,s=50,color="red")
-        #ax1.scatter(x1,y1,s=50,color="black")
-        #ax1.scatter(xs,ys,s=50,color="blue")
-        #ax1.scatter(x2,y2,s=50,color="grey")
+        ax1.scatter(xn,yn,s=50,color="red")
+        ax1.scatter(x1,y1,s=50,color="black")
+        ax1.scatter(xs,ys,s=50,color="blue")
+        ax1.scatter(x2,y2,s=50,color="grey")
         ax1.scatter(x2b,y2b,s=50,color="green")
         os.system("rm -rf test.png")
         plt.xlim([-10,10])
