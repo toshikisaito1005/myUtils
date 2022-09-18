@@ -311,13 +311,13 @@ class ToolsCIGMC():
         # bicone definition
         r      = np.sqrt(x**2 + y**2)
         theta  = np.degrees(np.arctan2(x, y))
-        theta  = np.where(theta>0,theta,theta+360)
+        theta  = np.where(theta>0,theta+90,theta+360+90)
         #self.theta1 = 100
         #self.theta2 = 20
-        cut_n    = np.where((s2n>7.0) & (r<self.fov_diamter/2.0) & (theta>=self.theta2) & (theta<self.theta1))
-        cut_out1 = np.where((s2n>7.0) & (r<self.fov_diamter/2.0) & (theta>=self.theta1) & (theta<self.theta2+180))
-        cut_s    = np.where((s2n>7.0) & (r<self.fov_diamter/2.0) & (theta>=self.theta2+180) & (theta<self.theta1+180))
-        cut_out2 = np.where((s2n>7.0) & (r<self.fov_diamter/2.0) & (theta>=self.theta1+180) & (theta<self.theta2+360))
+        cut_n    = np.where((s2n>=7.0) & (r<self.fov_diamter/2.0) & (theta>=self.theta2) & (theta<self.theta1))
+        cut_out1 = np.where((s2n>=7.0) & (r<self.fov_diamter/2.0) & (theta>=self.theta1) & (theta<self.theta2+180))
+        cut_s    = np.where((s2n>=7.0) & (r<self.fov_diamter/2.0) & (theta>=self.theta2+180) & (theta<self.theta1+180))
+        cut_out2 = np.where((s2n>=7.0) & (r<self.fov_diamter/2.0) & (theta>=self.theta1+180) & (theta<self.theta2+360))
 
         xn=x[cut_n]
         x1=x[cut_out1]
