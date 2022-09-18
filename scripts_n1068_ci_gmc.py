@@ -319,9 +319,25 @@ class ToolsCIGMC():
         cut_s    = np.where((r<self.fov_diamter) & (theta>=self.theta2+180) & (theta<self.theta1+180))
         cut_out2 = np.where((r<self.fov_diamter) & (theta>=self.theta1+180) & (theta<self.theta2+360))
 
-        print(np.max(theta),np.min(theta))
-        print(len(r[r<self.fov_diamter]))
-        print(len(r[cut_n]), len(r[cut_out1]), len(r[cut_s]), len(r[cut_out2]))
+        xn=x[cut_n]
+        x1=x[cut_out1]
+        xs=x[cut_s]
+        x2=x[cut_out2]
+        yn=y[cut_n]
+        y1=y[cut_out1]
+        ys=y[cut_s]
+        y2=y[cut_out2]
+
+        fig = plt.figure(figsize=(13,10))
+        gs  = gridspec.GridSpec(nrows=10, ncols=10)
+        ax1 = plt.subplot(gs[0:10,0:10])
+        ad  = [0.215,0.83,0.10,0.90]
+        ax1.plot(xn,yn,color="red")
+        ax1.plot(x1,y1,color="black")
+        ax1.plot(xs,ys,color="blue")
+        ax1.plot(x2,y2,color="grey")
+        os.system("rm -rf test.png")
+        plt.savefig("test.png", dpi=self.fig_dpi)
 
     ##############
     # map_cprops #
