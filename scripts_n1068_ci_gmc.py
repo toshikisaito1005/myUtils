@@ -319,7 +319,7 @@ class ToolsCIGMC():
         cut_out1 = np.where((r<self.fov_diamter) & (theta>=self.theta1+180) & (theta<=self.theta2+360))
 
         print(len(r))
-        print(len(r[cut_n]), len(cut_out1), len(cut_s), len(cut_out1))
+        print(len(r[cut_n]), len(r[cut_out1]), len(r[cut_s]), len(r[cut_out1]))
 
     ##############
     # map_cprops #
