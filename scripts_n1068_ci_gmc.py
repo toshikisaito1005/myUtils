@@ -130,8 +130,9 @@ class ToolsCIGMC():
         """
         """
 
-        self.outfits_mom0_co10 = self.dir_ready + self._read_key("outfits_mom0_co10")
-        self.outfits_mom0_ci10 = self.dir_ready + self._read_key("outfits_mom0_ci10")
+        self.outfits_mom0_co10  = self.dir_ready + self._read_key("outfits_mom0_co10")
+        self.outfits_mom0_ci10  = self.dir_ready + self._read_key("outfits_mom0_ci10")
+        self.outfits_mom0_ratio = self.dir_ready + self._read_key("outfits_mom0_ratio")
 
     def _set_input_param(self):
         """
@@ -296,6 +297,21 @@ class ToolsCIGMC():
             delin=delin,
             )
         """
+
+    ############
+    # plot_map #
+    ############
+
+    def plot_map(
+        self,
+        ):
+        """
+        """
+
+        taskname = self.modname + sys._getframe().f_code.co_name
+        check_first(self.outfits_mom0_ci10,taskname)
+
+        #
 
     ###############
     # plot_larson #
@@ -714,10 +730,12 @@ class ToolsCIGMC():
         expr = "iif(IM0/IM1>"+str(self.snr_mom)+",IM0,0)"
         run_immath_two(self.mom0_ci10,self.emom0_ci10,self.outfits_mom0_ci10+"_tmp2",expr)
         run_immath_two(self.mom0_co10+"_tmp1",self.emom0_co10+"_tmp1",self.outfits_mom0_co10+"_tmp2",expr,delin=True)
+        run_immath_two(self.outfits_mom0_ci10+"_tmp2",self.outfits_mom0_co10+"_tmp2",self.outfits_mom0_ratio+"_tmp2","iif(IM1>0,IM0/IM1,0)")
 
         # exportfits
         run_exportfits(self.outfits_mom0_ci10+"_tmp2",self.outfits_mom0_ci10,delin=True)
         run_exportfits(self.outfits_mom0_co10+"_tmp2",self.outfits_mom0_co10,delin=True)
+        run_exportfits(self.outfits_mom0_ratio+"_tmp2",self.outfits_mom0_ratio,delin=True)
 
     ###############
     # _create_dir #
