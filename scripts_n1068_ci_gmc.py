@@ -336,7 +336,7 @@ class ToolsCIGMC():
             #label_scalebar=label_scalebar,
             set_cbar=True,
             label_cbar="",
-            clim=[0.1,3],
+            clim=[0.1,1],
             #set_bg_color=set_bg_color,
             )
 
