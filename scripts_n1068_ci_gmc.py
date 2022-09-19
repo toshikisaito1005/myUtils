@@ -363,9 +363,9 @@ class ToolsCIGMC():
         ####################
         # plot: larson 3rd #
         ####################
-        density_cone   = lci_cone*self.alpha_ci/(4./3.*np.pi*radius_cone)
-        density_nocone = lci_nocone*self.alpha_ci/(4./3.*np.pi*radius_nocone)
-        density_sbr    = lci_sbr*self.alpha_ci/(4./3.*np.pi*radius_sbr)
+        density_cone   = lci_cone*self.alpha_ci/(4./3.*np.pi*radius_cone**3)
+        density_nocone = lci_nocone*self.alpha_ci/(4./3.*np.pi*radius_nocone**3)
+        density_sbr    = lci_sbr*self.alpha_ci/(4./3.*np.pi*radius_sbr**3)
 
         xlim   = None #[0.4*72-10,2.0*72+10]
         ylim   = None
