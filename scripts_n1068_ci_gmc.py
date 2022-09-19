@@ -537,7 +537,7 @@ class ToolsCIGMC():
         tpeak_sbr  = tpeak[cut_sbr]
         mci_sbr    = mci[cut_sbr]
 
-        return x_cone, y_cone, radius_cone, sigv_cone, mvir_cone, tpeak_cone, x_nocone, mci_cone, y_nocone, radius_nocone, sigv_nocone, mvir_nocone, tpeak_nocone, mci_nocone, x_sbr, y_sbr, radius_sbr, sigv_sbr, mvir_sbr, tpeak_sbr, mci_sbr
+        return x_cone, y_cone, radius_cone, sigv_cone, mvir_cone, tpeak_cone, mci_cone, x_nocone, y_nocone, radius_nocone, sigv_nocone, mvir_nocone, tpeak_nocone, mci_nocone, x_sbr, y_sbr, radius_sbr, sigv_sbr, mvir_sbr, tpeak_sbr, mci_sbr
 
     ##############
     # map_cprops #
