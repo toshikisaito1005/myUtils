@@ -326,11 +326,11 @@ class ToolsCIGMC():
         gs  = gridspec.GridSpec(nrows=10, ncols=10)
         ax1 = plt.subplot(gs[0:10,0:10])
         ad  = [0.215,0.83,0.10,0.90]
-        myax_set(ax1, "x", xlim, ylim, title, xlabel, ylabel, adjust=ad)
+        myax_set(ax1, "both", xlim, ylim, title, xlabel, ylabel, adjust=ad)
 
-        ax1.scatter(np.log10(radius_cone), np.log10(sigv_cone), lw=0, s=40, color="red", alpha=0.5)
-        ax1.scatter(np.log10(radius_nocone), np.log10(sigv_nocone), lw=0, s=40, color="blue", alpha=0.5)
-        ax1.scatter(np.log10(radius_sbr), np.log10(sigv_sbr), lw=0, s=40, color="grey", alpha=0.5)
+        ax1.scatter(np.log10(radius_cone), np.log10(sigv_cone), lw=0, s=80, color="red", alpha=0.5)
+        ax1.scatter(np.log10(radius_nocone), np.log10(sigv_nocone), lw=0, s=80, color="blue", alpha=0.5)
+        ax1.scatter(np.log10(radius_sbr), np.log10(sigv_sbr), lw=0, s=80, color="grey", alpha=0.5)
 
         # save
         os.system("rm -rf " + self.outpng_larson_1st)
