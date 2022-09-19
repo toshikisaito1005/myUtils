@@ -759,10 +759,15 @@ class ToolsCIGMC():
         run_immath_two(self.mom0_co10+"_tmp1",self.emom0_co10+"_tmp1",self.outfits_mom0_co10+"_tmp2",expr,delin=True)
         run_immath_two(self.outfits_mom0_ci10+"_tmp2",self.outfits_mom0_co10+"_tmp2",self.outfits_mom0_ratio+"_tmp2","iif(IM1>0,IM0/IM1,0)")
 
+        run_immath_two(self.outfits_mom0_ci10+"_tmp2",self.outfits_mom0_ratio+"_tmp2",self.outfits_mom0_ratio+"_tmp3","iif(IM1>0,0,1)")
+        run_immath_two(self.outfits_mom0_ratio+"_tmp2",self.outfits_mom0_ratio+"_tmp3",self.outfits_mom0_ratio+"_tmp4","IM0+IM1")
+        os.system("rm -rf " + self.outfits_mom0_ratio+"_tmp2")
+        os.system("rm -rf " + self.outfits_mom0_ratio+"_tmp3")
+
         # exportfits
         run_exportfits(self.outfits_mom0_ci10+"_tmp2",self.outfits_mom0_ci10,delin=True)
         run_exportfits(self.outfits_mom0_co10+"_tmp2",self.outfits_mom0_co10,delin=True)
-        run_exportfits(self.outfits_mom0_ratio+"_tmp2",self.outfits_mom0_ratio,delin=True)
+        run_exportfits(self.outfits_mom0_ratio+"_tmp4",self.outfits_mom0_ratio,delin=True)
 
     ###############
     # _create_dir #
