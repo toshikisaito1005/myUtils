@@ -162,6 +162,8 @@ class ToolsCIGMC():
         self.snr_cprops = 7.0
         self.alpha_ci   = 15.0
 
+        self.imsize_as  = 18
+
     def _set_output_txt_png(self):
         """
         """
@@ -183,6 +185,8 @@ class ToolsCIGMC():
         self.outpng_larson_1st = self.dir_products + self._read_key("outpng_larson_1st")
         self.outpng_larson_2nd = self.dir_products + self._read_key("outpng_larson_2nd")
         self.outpng_larson_3rd = self.dir_products + self._read_key("outpng_larson_3rd")
+
+        self.outpng_map_ratio = self.dir_products + self._read_key("outpng_map_ratio")
 
         # final
         print("TBE.")
@@ -311,7 +315,26 @@ class ToolsCIGMC():
         taskname = self.modname + sys._getframe().f_code.co_name
         check_first(self.outfits_mom0_ci10,taskname)
 
-        #
+        # self.outfits_mom0_ratio
+        myfig_fits2png(
+            imcolor=self.outfits_mom0_ratio,
+            outfile=self.outpng_map_ratio,
+            imcontour1=self.outfits_mom0_co10,
+            imsize_as=self.imsize_as,
+            ra_cnt=str(self.ra_agn)+"deg",
+            dec_cnt=str(self.dec_agn)+"deg",
+            #unit_cont1=rms_vla,
+            #levels_cont1=[-3,3,6,12,24,48],
+            width_cont1=[1.0],
+            set_title="ratio",
+            colorlog=True,
+            #scalebar=scalebar,
+            #label_scalebar=label_scalebar,
+            set_cbar=True,
+            label_cbar="",
+            clim=[0.1,3],
+            #set_bg_color=set_bg_color,
+            )
 
     ###############
     # plot_larson #

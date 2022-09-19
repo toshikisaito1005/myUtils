@@ -62,6 +62,7 @@ outpng_hist_mvir        ,,,outpng_hist_mvir.png
 outpng_larson_1st       ,,,outpng_larson_1st.png
 outpng_larson_2nd       ,,,outpng_larson_2nd.png
 outpng_larson_3rd       ,,,outpng_larson_3rd.png
+outpng_map_ratio        ,,,outpng_map_ratio.png
 
 # box for imagemajick
 
