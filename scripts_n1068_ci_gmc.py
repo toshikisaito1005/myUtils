@@ -159,6 +159,7 @@ class ToolsCIGMC():
         self.fov_diamter = 16.5
 
         self.snr_cprops = 7.0
+        self.alpha_ci   = 15.0
 
     def _set_output_txt_png(self):
         """
@@ -309,9 +310,9 @@ class ToolsCIGMC():
         taskname = self.modname + sys._getframe().f_code.co_name
         check_first(self.cprops_ci10,taskname)
 
-        x_cone, y_cone, radius_cone, sigv_cone, mvir_cone, tpeak_cone, \
-            x_nocone, y_nocone, radius_nocone, sigv_nocone, mvir_nocone, tpeak_nocone, \
-            x_sbr, y_sbr, radius_sbr, sigv_sbr, mvir_sbr, tpeak_sbr = self._import_cprops_table(self.cprops_ci10)
+        x_cone, y_cone, radius_cone, sigv_cone, mvir_cone, tpeak_cone, mci_cone, \
+            x_nocone, y_nocone, radius_nocone, sigv_nocone, mvir_nocone, tpeak_nocone, mci_nocone, \
+            x_sbr, y_sbr, radius_sbr, sigv_sbr, mvir_sbr, tpeak_sbr, mci_sbr = self._import_cprops_table(self.cprops_ci10)
 
         ####################
         # plot: larson 1st #
@@ -336,6 +337,29 @@ class ToolsCIGMC():
         os.system("rm -rf " + self.outpng_larson_1st)
         plt.savefig(self.outpng_larson_1st, dpi=self.fig_dpi)
 
+        ####################
+        # plot: larson 2nd #
+        ####################
+        xlim   = None #[0.4*72-10,2.0*72+10]
+        ylim   = None
+        title  = "Larson's 2nd law"
+        xlabel = "log M(H$_2$) ($M_{\odot}$)"
+        ylabel = "log velocity dispersion (km s$^{-1}$)"
+
+        fig = plt.figure(figsize=(13,10))
+        gs  = gridspec.GridSpec(nrows=10, ncols=10)
+        ax1 = plt.subplot(gs[0:10,0:10])
+        ad  = [0.215,0.83,0.10,0.90]
+        myax_set(ax1, "both", xlim, ylim, title, xlabel, ylabel, adjust=ad)
+
+        ax1.scatter(np.log10(mci_cone*self.alpha_ci), np.log10(sigv_cone), lw=0, s=160, color="red", alpha=0.5)
+        ax1.scatter(np.log10(mci_nocone*self.alpha_ci), np.log10(sigv_nocone), lw=0, s=160, color="blue", alpha=0.5)
+        ax1.scatter(np.log10(mci_sbr*self.alpha_ci), np.log10(sigv_sbr), lw=0, s=160, color="grey", alpha=0.5)
+
+        # save
+        os.system("rm -rf " + self.outpng_larson_2nd)
+        plt.savefig(self.outpng_larson_2nd, dpi=self.fig_dpi)
+
     ###############
     # plot_cprops #
     ###############
@@ -349,9 +373,9 @@ class ToolsCIGMC():
         taskname = self.modname + sys._getframe().f_code.co_name
         check_first(self.cprops_ci10,taskname)
 
-        x_cone, y_cone, radius_cone, sigv_cone, mvir_cone, tpeak_cone, \
-            x_nocone, y_nocone, radius_nocone, sigv_nocone, mvir_nocone, tpeak_nocone, \
-            x_sbr, y_sbr, radius_sbr, sigv_sbr, mvir_sbr, tpeak_sbr = self._import_cprops_table(self.cprops_ci10)
+        x_cone, y_cone, radius_cone, sigv_cone, mvir_cone, tpeak_cone, mci_cone, \
+            x_nocone, y_nocone, radius_nocone, sigv_nocone, mvir_nocone, tpeak_nocone, mci_nocone, \
+            x_sbr, y_sbr, radius_sbr, sigv_sbr, mvir_sbr, tpeak_sbr, mci_sbr = self._import_cprops_table(self.cprops_ci10)
 
         ################
         # plot: radius #
@@ -466,6 +490,7 @@ class ToolsCIGMC():
         sigv   = tb["SIGV_NODC_NOEX"]
         mvir   = tb["MVIR_MSUN"]
         tpeak  = tb["TMAX_K"]
+        mci    = tb["MLUM_MSUN"]
 
         cut    = np.where(~np.isnan(radius) & ~np.isnan(sigv) & ~np.isnan(mvir) & ~np.isnan(tpeak))
         x      = x[cut]
@@ -475,6 +500,7 @@ class ToolsCIGMC():
         sigv   = sigv[cut]
         mvir   = np.log10(mvir[cut])
         tpeak  = tpeak[cut]
+        mci    = mci[cut]
 
         # bicone definition
         r          = np.sqrt(x**2 + y**2)
@@ -491,6 +517,7 @@ class ToolsCIGMC():
         sigv_cone   = sigv[cut_cone]
         mvir_cone   = mvir[cut_cone]
         tpeak_cone  = tpeak[cut_cone]
+        mci_cone    = mci[cut_cone]
 
         x_nocone      = x[cut_nocone]
         y_nocone      = y[cut_nocone]
@@ -498,6 +525,7 @@ class ToolsCIGMC():
         sigv_nocone   = sigv[cut_nocone]
         mvir_nocone   = mvir[cut_nocone]
         tpeak_nocone  = tpeak[cut_nocone]
+        mci_nocone    = mci[cut_nocone]
 
         x_sbr      = x[cut_sbr]
         y_sbr      = y[cut_sbr]
@@ -505,8 +533,9 @@ class ToolsCIGMC():
         sigv_sbr   = sigv[cut_sbr]
         mvir_sbr   = mvir[cut_sbr]
         tpeak_sbr  = tpeak[cut_sbr]
+        mci_sbr    = mci[cut_sbr]
 
-        return x_cone, y_cone, radius_cone, sigv_cone, mvir_cone, tpeak_cone, x_nocone, y_nocone, radius_nocone, sigv_nocone, mvir_nocone, tpeak_nocone, x_sbr, y_sbr, radius_sbr, sigv_sbr, mvir_sbr, tpeak_sbr
+        return x_cone, y_cone, radius_cone, sigv_cone, mvir_cone, tpeak_cone, x_nocone, mci_cone, y_nocone, radius_nocone, sigv_nocone, mvir_nocone, tpeak_nocone, mci_nocone, x_sbr, y_sbr, radius_sbr, sigv_sbr, mvir_sbr, tpeak_sbr, mci_sbr
 
     ##############
     # map_cprops #
