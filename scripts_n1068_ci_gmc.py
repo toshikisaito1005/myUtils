@@ -310,9 +310,9 @@ class ToolsCIGMC():
         taskname = self.modname + sys._getframe().f_code.co_name
         check_first(self.cprops_ci10,taskname)
 
-        x_cone, y_cone, radius_cone, sigv_cone, mvir_cone, tpeak_cone, mci_cone, \
-            x_nocone, y_nocone, radius_nocone, sigv_nocone, mvir_nocone, tpeak_nocone, mci_nocone, \
-            x_sbr, y_sbr, radius_sbr, sigv_sbr, mvir_sbr, tpeak_sbr, mci_sbr = self._import_cprops_table(self.cprops_ci10)
+        x_cone, y_cone, radius_cone, sigv_cone, mvir_cone, tpeak_cone, lci_cone, \
+            x_nocone, y_nocone, radius_nocone, sigv_nocone, mvir_nocone, tpeak_nocone, lci_nocone, \
+            x_sbr, y_sbr, radius_sbr, sigv_sbr, mvir_sbr, tpeak_sbr, lci_sbr = self._import_cprops_table(self.cprops_ci10)
 
         ####################
         # plot: larson 1st #
@@ -352,9 +352,11 @@ class ToolsCIGMC():
         ad  = [0.215,0.83,0.10,0.90]
         myax_set(ax1, "both", xlim, ylim, title, xlabel, ylabel, adjust=ad)
 
-        ax1.scatter(np.log10(mci_cone*self.alpha_ci), np.log10(sigv_cone), lw=0, s=160, color="red", alpha=0.5)
-        ax1.scatter(np.log10(mci_nocone*self.alpha_ci), np.log10(sigv_nocone), lw=0, s=160, color="blue", alpha=0.5)
-        ax1.scatter(np.log10(mci_sbr*self.alpha_ci), np.log10(sigv_sbr), lw=0, s=160, color="grey", alpha=0.5)
+        print(len(lci_cone), len(sigv_cone))
+
+        ax1.scatter(np.log10(lci_cone*self.alpha_ci), np.log10(sigv_cone), lw=0, s=160, color="red", alpha=0.5)
+        ax1.scatter(np.log10(lci_nocone*self.alpha_ci), np.log10(sigv_nocone), lw=0, s=160, color="blue", alpha=0.5)
+        ax1.scatter(np.log10(lci_sbr*self.alpha_ci), np.log10(sigv_sbr), lw=0, s=160, color="grey", alpha=0.5)
 
         # save
         os.system("rm -rf " + self.outpng_larson_2nd)
