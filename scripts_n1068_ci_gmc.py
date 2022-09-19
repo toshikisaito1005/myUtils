@@ -329,9 +329,9 @@ class ToolsCIGMC():
         ad  = [0.215,0.83,0.10,0.90]
         myax_set(ax1, "both", xlim, ylim, title, xlabel, ylabel, adjust=ad)
 
-        ax1.scatter(np.log10(radius_cone), np.log10(sigv_cone), lw=0, s=160, color="red", alpha=0.5)
-        ax1.scatter(np.log10(radius_nocone), np.log10(sigv_nocone), lw=0, s=160, color="blue", alpha=0.5)
-        ax1.scatter(np.log10(radius_sbr), np.log10(sigv_sbr), lw=0, s=160, color="grey", alpha=0.5)
+        ax1.scatter(np.log10(radius_cone*2.0), np.log10(sigv_cone), lw=0, s=160, color="red", alpha=0.5)
+        ax1.scatter(np.log10(radius_nocone*2.0), np.log10(sigv_nocone), lw=0, s=160, color="blue", alpha=0.5)
+        ax1.scatter(np.log10(radius_sbr*2.0), np.log10(sigv_sbr), lw=0, s=160, color="grey", alpha=0.5)
 
         # save
         os.system("rm -rf " + self.outpng_larson_1st)
@@ -352,8 +352,6 @@ class ToolsCIGMC():
         ad  = [0.215,0.83,0.10,0.90]
         myax_set(ax1, "both", xlim, ylim, title, xlabel, ylabel, adjust=ad)
 
-        print(len(lci_cone), len(sigv_cone))
-
         ax1.scatter(np.log10(lci_cone*self.alpha_ci), np.log10(sigv_cone), lw=0, s=160, color="red", alpha=0.5)
         ax1.scatter(np.log10(lci_nocone*self.alpha_ci), np.log10(sigv_nocone), lw=0, s=160, color="blue", alpha=0.5)
         ax1.scatter(np.log10(lci_sbr*self.alpha_ci), np.log10(sigv_sbr), lw=0, s=160, color="grey", alpha=0.5)
@@ -361,6 +359,33 @@ class ToolsCIGMC():
         # save
         os.system("rm -rf " + self.outpng_larson_2nd)
         plt.savefig(self.outpng_larson_2nd, dpi=self.fig_dpi)
+
+        ####################
+        # plot: larson 3rd #
+        ####################
+        density_cone   = lci_cone*self.alpha_ci/(4./3.*np.pi*radius_cone)
+        density_nocone = lci_nocone*self.alpha_ci/(4./3.*np.pi*radius_nocone)
+        density_sbr    = lci_sbr*self.alpha_ci/(4./3.*np.pi*radius_sbr)
+
+        xlim   = None #[0.4*72-10,2.0*72+10]
+        ylim   = None
+        title  = "Larson's 3rd law"
+        xlabel = "log Diameter (pc)"
+        ylabel = "log Volume density (cm$^{-3}$)"
+
+        fig = plt.figure(figsize=(13,10))
+        gs  = gridspec.GridSpec(nrows=10, ncols=10)
+        ax1 = plt.subplot(gs[0:10,0:10])
+        ad  = [0.215,0.83,0.10,0.90]
+        myax_set(ax1, "both", xlim, ylim, title, xlabel, ylabel, adjust=ad)
+
+        ax1.scatter(np.log10(radius_cone*2.0), np.log10(density_cone), lw=0, s=160, color="red", alpha=0.5)
+        ax1.scatter(np.log10(radius_nocone*2.0), np.log10(density_nocone), lw=0, s=160, color="blue", alpha=0.5)
+        ax1.scatter(np.log10(radius_sbr*2.0), np.log10(density_sbr), lw=0, s=160, color="grey", alpha=0.5)
+
+        # save
+        os.system("rm -rf " + self.outpng_larson_3rd)
+        plt.savefig(self.outpng_larson_3rd, dpi=self.fig_dpi)
 
     ###############
     # plot_cprops #
