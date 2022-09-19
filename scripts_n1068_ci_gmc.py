@@ -204,6 +204,7 @@ class ToolsCIGMC():
         map_cprops   = False,
         plot_cprops  = False,
         plot_larson  = False,
+        plot_map     = False,
         # supplement
         ):
         """
@@ -270,6 +271,9 @@ class ToolsCIGMC():
 
         if plot_larson==True:
             self.plot_larson()
+
+        if plot_map==True:
+            self.plot_map()
 
     ####################
     # immagick_figures #
