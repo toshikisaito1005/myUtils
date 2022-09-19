@@ -371,9 +371,9 @@ class ToolsCIGMC():
         density_nocone = lci_nocone*self.alpha_ci/(4./3.*np.pi*radius_nocone**3)
         density_sbr    = lci_sbr*self.alpha_ci/(4./3.*np.pi*radius_sbr**3)
 
-        rvir_cone   = mvir_cone / lci_cone*self.alpha_ci
-        rvir_nocone = mvir_nocone / lci_nocone*self.alpha_ci
-        rvir_sbr    = mvir_sbr / lci_sbr*self.alpha_ci
+        rvir_cone   = mvir_cone / (lci_cone*self.alpha_ci)
+        rvir_nocone = mvir_nocone / (lci_nocone*self.alpha_ci)
+        rvir_sbr    = mvir_sbr / (lci_sbr*self.alpha_ci)
 
         print(np.median(rvir_cone))
         print(np.median(rvir_nocone))
