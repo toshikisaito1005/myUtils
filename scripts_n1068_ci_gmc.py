@@ -375,10 +375,6 @@ class ToolsCIGMC():
         rvir_nocone = mvir_nocone / (lci_nocone*self.alpha_ci)
         rvir_sbr    = mvir_sbr / (lci_sbr*self.alpha_ci)
 
-        print(np.median(rvir_cone))
-        print(np.median(rvir_nocone))
-        print(np.median(rvir_sbr))
-
         xlim   = None #[0.4*72-10,2.0*72+10]
         ylim   = None
         title  = "Larson's 3rd law"
@@ -391,13 +387,13 @@ class ToolsCIGMC():
         ad  = [0.215,0.83,0.10,0.90]
         myax_set(ax1, "both", xlim, ylim, title, xlabel, ylabel, adjust=ad)
 
-        ax1.scatter(np.log10(radius_cone*2.0)[rvir_cone>=0.5], np.log10(density_cone)[rvir_cone>=0.5], lw=0, s=160, color="red", alpha=0.5)
-        ax1.scatter(np.log10(radius_nocone*2.0)[rvir_nocone>=0.5], np.log10(density_nocone)[rvir_nocone>=0.5], lw=0, s=160, color="blue", alpha=0.5)
-        ax1.scatter(np.log10(radius_sbr*2.0)[rvir_sbr>=0.5], np.log10(density_sbr)[rvir_sbr>=0.5], lw=0, s=160, color="grey", alpha=0.5)
+        ax1.scatter(np.log10(radius_cone*2.0)[rvir_cone>=np.median(rvir_cone)], np.log10(density_cone)[rvir_cone>=np.median(rvir_cone)], lw=0, s=160, color="red", alpha=0.5)
+        ax1.scatter(np.log10(radius_nocone*2.0)[rvir_nocone>=np.median(rvir_nocone)], np.log10(density_nocone)[rvir_nocone>=np.median(rvir_nocone)], lw=0, s=160, color="blue", alpha=0.5)
+        ax1.scatter(np.log10(radius_sbr*2.0)[rvir_sbr>=np.median(rvir_sbr)], np.log10(density_sbr)[rvir_sbr>=np.median(rvir_sbr)], lw=0, s=160, color="grey", alpha=0.5)
 
-        ax1.scatter(np.log10(radius_cone*2.0)[rvir_cone<0.5], np.log10(density_cone)[rvir_cone<0.5], lw=0, s=40, color="red", alpha=0.5)
-        ax1.scatter(np.log10(radius_nocone*2.0)[rvir_nocone<0.5], np.log10(density_nocone)[rvir_nocone<0.5], lw=0, s=40, color="blue", alpha=0.5)
-        ax1.scatter(np.log10(radius_sbr*2.0)[rvir_sbr<0.5], np.log10(density_sbr)[rvir_sbr<0.5], lw=0, s=40, color="grey", alpha=0.5)
+        ax1.scatter(np.log10(radius_cone*2.0)[rvir_cone<np.median(rvir_cone)], np.log10(density_cone)[rvir_cone<np.median(rvir_cone)], lw=0, s=40, color="red", alpha=0.5)
+        ax1.scatter(np.log10(radius_nocone*2.0)[rvir_nocone<np.median(rvir_nocone)], np.log10(density_nocone)[rvir_nocone<np.median(rvir_nocone)], lw=0, s=40, color="blue", alpha=0.5)
+        ax1.scatter(np.log10(radius_sbr*2.0)[rvir_sbr<np.median(rvir_sbr)], np.log10(density_sbr)[rvir_sbr<np.median(rvir_sbr)], lw=0, s=40, color="grey", alpha=0.5)
 
         # save
         os.system("rm -rf " + self.outpng_larson_3rd)
