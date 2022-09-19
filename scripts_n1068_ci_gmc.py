@@ -178,9 +178,9 @@ class ToolsCIGMC():
         self.outpng_hist_sigv = self.dir_products + self._read_key("outpng_hist_sigv")
         self.outpng_hist_mvir = self.dir_products + self._read_key("outpng_hist_mvir")
 
-        self.self.outpng_larson_1st = self.dir_products + self._read_key("outpng_larson_1st")
-        self.self.outpng_larson_2nd = self.dir_products + self._read_key("outpng_larson_2nd")
-        self.self.outpng_larson_3rd = self.dir_products + self._read_key("outpng_larson_3rd")
+        self.outpng_larson_1st = self.dir_products + self._read_key("outpng_larson_1st")
+        self.outpng_larson_2nd = self.dir_products + self._read_key("outpng_larson_2nd")
+        self.outpng_larson_3rd = self.dir_products + self._read_key("outpng_larson_3rd")
 
         # final
         print("TBE.")
