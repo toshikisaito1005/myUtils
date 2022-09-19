@@ -158,6 +158,8 @@ class ToolsCIGMC():
         self.theta2      = -1 * 70.0  + 90.0 # 20
         self.fov_diamter = 16.5
 
+        self.snr_cprops = 7.0
+
     def _set_output_txt_png(self):
         """
         """
@@ -176,6 +178,10 @@ class ToolsCIGMC():
         self.outpng_hist_sigv = self.dir_products + self._read_key("outpng_hist_sigv")
         self.outpng_hist_mvir = self.dir_products + self._read_key("outpng_hist_mvir")
 
+        self.self.outpng_larson_1st = self.dir_products + self._read_key("outpng_larson_1st")
+        self.self.outpng_larson_2nd = self.dir_products + self._read_key("outpng_larson_2nd")
+        self.self.outpng_larson_3rd = self.dir_products + self._read_key("outpng_larson_3rd")
+
         # final
         print("TBE.")
 
@@ -191,6 +197,7 @@ class ToolsCIGMC():
         # plot figures in paper
         map_cprops   = False,
         plot_cprops  = False,
+        plot_larson  = False,
         # supplement
         ):
         """
@@ -255,6 +262,9 @@ class ToolsCIGMC():
         if plot_cprops==True:
             self.plot_cprops()
 
+        if plot_larson==True:
+            self.plot_larson()
+
     ####################
     # immagick_figures #
     ####################
@@ -287,6 +297,46 @@ class ToolsCIGMC():
         """
 
     ###############
+    # plot_larson #
+    ###############
+
+    def plot_larson(
+        self,
+        ):
+        """
+        """
+
+        taskname = self.modname + sys._getframe().f_code.co_name
+        check_first(self.cprops_ci10,taskname)
+
+        x_cone, y_cone, radius_cone, sigv_cone, mvir_cone, tpeak_cone, \
+            x_nocone, y_nocone, radius_nocone, sigv_nocone, mvir_nocone, tpeak_nocone, \
+            x_sbr, y_sbr, radius_sbr, sigv_sbr, mvir_sbr, tpeak_sbr = self._import_cprops_table(self.cprops_ci10)
+
+        ####################
+        # plot: larson 1st #
+        ####################
+        xlim   = None #[0.4*72-10,2.0*72+10]
+        ylim   = None
+        title  = "Larson's 1st law"
+        xlabel = "log Diameter (pc)"
+        ylabel = "log velocity dispersion (km s$^{-1}$)"
+
+        fig = plt.figure(figsize=(13,10))
+        gs  = gridspec.GridSpec(nrows=10, ncols=10)
+        ax1 = plt.subplot(gs[0:10,0:10])
+        ad  = [0.215,0.83,0.10,0.90]
+        myax_set(ax1, "x", xlim, ylim, title, xlabel, ylabel, adjust=ad)
+
+        ax1.scatter(np.log10(radius_cone), np.log10(sigv_cone), lw=0, s=40, color="red", alpha=0.5)
+        ax1.scatter(np.log10(radius_nocone), np.log10(sigv_nocone), lw=0, s=40, color="blue", alpha=0.5)
+        ax1.scatter(np.log10(radius_sbr), np.log10(sigv_sbr), lw=0, s=40, color="grey", alpha=0.5)
+
+        # save
+        os.system("rm -rf " + self.outpng_larson_1st)
+        plt.savefig(self.outpng_larson_1st, dpi=self.fig_dpi)
+
+    ###############
     # plot_cprops #
     ###############
 
@@ -299,57 +349,9 @@ class ToolsCIGMC():
         taskname = self.modname + sys._getframe().f_code.co_name
         check_first(self.cprops_ci10,taskname)
 
-        # import cprops table
-        f = pyfits.open(self.cprops_ci10)
-        tb_ci10 = f[1].data
-
-        # extract parameters
-        x      = (tb_ci10["XCTR_DEG"] - self.ra_agn) * -3600.
-        y      = (tb_ci10["YCTR_DEG"] - self.dec_agn) * 3600.
-        s2n    = tb_ci10["S2N"]
-        radius = tb_ci10["RAD_NODC_NOEX"]
-        sigv   = tb_ci10["SIGV_NODC_NOEX"]
-        mvir   = tb_ci10["MVIR_MSUN"]
-        tpeak  = tb_ci10["TMAX_K"]
-
-        cut = np.where(~np.isnan(radius) & ~np.isnan(sigv) & ~np.isnan(mvir) & ~np.isnan(tpeak))
-        x      = x[cut]
-        y      = y[cut]
-        s2n    = s2n[cut]
-        radius = radius[cut]
-        sigv   = sigv[cut]
-        mvir   = np.log10(mvir[cut])
-        tpeak  = tpeak[cut]
-
-        # bicone definition
-        r          = np.sqrt(x**2 + y**2)
-        theta      = np.degrees(np.arctan2(x, y)) + 90
-        theta      = np.where(theta>0,theta,theta+360)
-        cut_cone   = np.where((s2n>=7.0) & (r<self.fov_diamter/2.0) & (theta>=self.theta2) & (theta<self.theta1) | (s2n>=7.0) & (r<self.fov_diamter/2.0) & (theta>=self.theta2+180) & (theta<self.theta1+180))
-        cut_nocone = np.where((s2n>=7.0) & (r<self.fov_diamter/2.0) & (theta>=self.theta1) & (theta<self.theta2+180) | (s2n>=7.0) & (r<self.fov_diamter/2.0) & (theta>=self.theta1+180) & (theta<self.theta2+360) | (s2n>=7.0) & (r<self.fov_diamter/2.0) & (theta<self.theta1+180) & (theta<self.theta2))
-        cut_sbr    = np.where((s2n>=7.0) & (r>=self.fov_diamter/2.0))
-
-        # data
-        x_cone      = x[cut_cone]
-        y_cone      = y[cut_cone]
-        radius_cone = radius[cut_cone]
-        sigv_cone   = sigv[cut_cone]
-        mvir_cone   = mvir[cut_cone]
-        tpeak_cone  = tpeak[cut_cone]
-
-        x_nocone      = x[cut_nocone]
-        y_nocone      = y[cut_nocone]
-        radius_nocone = radius[cut_nocone]
-        sigv_nocone   = sigv[cut_nocone]
-        mvir_nocone   = mvir[cut_nocone]
-        tpeak_nocone  = tpeak[cut_nocone]
-
-        x_sbr      = x[cut_sbr]
-        y_sbr      = y[cut_sbr]
-        radius_sbr = radius[cut_sbr]
-        sigv_sbr   = sigv[cut_sbr]
-        mvir_sbr   = mvir[cut_sbr]
-        tpeak_sbr  = tpeak[cut_sbr]
+        x_cone, y_cone, radius_cone, sigv_cone, mvir_cone, tpeak_cone, \
+            x_nocone, y_nocone, radius_nocone, sigv_nocone, mvir_nocone, tpeak_nocone, \
+            x_sbr, y_sbr, radius_sbr, sigv_sbr, mvir_sbr, tpeak_sbr = self._import_cprops_table(self.cprops_ci10)
 
         ################
         # plot: radius #
@@ -440,6 +442,71 @@ class ToolsCIGMC():
         # save
         os.system("rm -rf " + self.outpng_hist_mvir)
         plt.savefig(self.outpng_hist_mvir, dpi=self.fig_dpi)
+
+    ########################
+    # _import_cprops_table #
+    ########################
+
+    def _import_cprops_table(
+        self,
+        table,
+        ):
+        """
+        """
+
+        # import cprops table
+        f = pyfits.open(table)
+        tb = f[1].data
+
+        # extract parameters
+        x      = (tb["XCTR_DEG"] - self.ra_agn) * -3600.
+        y      = (tb["YCTR_DEG"] - self.dec_agn) * 3600.
+        s2n    = tb["S2N"]
+        radius = tb["RAD_NODC_NOEX"]
+        sigv   = tb["SIGV_NODC_NOEX"]
+        mvir   = tb["MVIR_MSUN"]
+        tpeak  = tb["TMAX_K"]
+
+        cut    = np.where(~np.isnan(radius) & ~np.isnan(sigv) & ~np.isnan(mvir) & ~np.isnan(tpeak))
+        x      = x[cut]
+        y      = y[cut]
+        s2n    = s2n[cut]
+        radius = radius[cut]
+        sigv   = sigv[cut]
+        mvir   = np.log10(mvir[cut])
+        tpeak  = tpeak[cut]
+
+        # bicone definition
+        r          = np.sqrt(x**2 + y**2)
+        theta      = np.degrees(np.arctan2(x, y)) + 90
+        theta      = np.where(theta>0,theta,theta+360)
+        cut_cone   = np.where((s2n>=self.snr_cprops) & (r<self.fov_diamter/2.0) & (theta>=self.theta2) & (theta<self.theta1) | (s2n>=self.snr_cprops) & (r<self.fov_diamter/2.0) & (theta>=self.theta2+180) & (theta<self.theta1+180))
+        cut_nocone = np.where((s2n>=self.snr_cprops) & (r<self.fov_diamter/2.0) & (theta>=self.theta1) & (theta<self.theta2+180) | (s2n>=self.snr_cprops) & (r<self.fov_diamter/2.0) & (theta>=self.theta1+180) & (theta<self.theta2+360) | (s2n>=self.snr_cprops) & (r<self.fov_diamter/2.0) & (theta<self.theta1+180) & (theta<self.theta2))
+        cut_sbr    = np.where((s2n>=self.snr_cprops) & (r>=self.fov_diamter/2.0))
+
+        # data
+        x_cone      = x[cut_cone]
+        y_cone      = y[cut_cone]
+        radius_cone = radius[cut_cone]
+        sigv_cone   = sigv[cut_cone]
+        mvir_cone   = mvir[cut_cone]
+        tpeak_cone  = tpeak[cut_cone]
+
+        x_nocone      = x[cut_nocone]
+        y_nocone      = y[cut_nocone]
+        radius_nocone = radius[cut_nocone]
+        sigv_nocone   = sigv[cut_nocone]
+        mvir_nocone   = mvir[cut_nocone]
+        tpeak_nocone  = tpeak[cut_nocone]
+
+        x_sbr      = x[cut_sbr]
+        y_sbr      = y[cut_sbr]
+        radius_sbr = radius[cut_sbr]
+        sigv_sbr   = sigv[cut_sbr]
+        mvir_sbr   = mvir[cut_sbr]
+        tpeak_sbr  = tpeak[cut_sbr]
+
+        return x_cone, y_cone, radius_cone, sigv_cone, mvir_cone, tpeak_cone, x_nocone, y_nocone, radius_nocone, sigv_nocone, mvir_nocone, tpeak_nocone, x_sbr, y_sbr, radius_sbr, sigv_sbr, mvir_sbr, tpeak_sbr
 
     ##############
     # map_cprops #
