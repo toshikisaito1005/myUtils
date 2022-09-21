@@ -167,6 +167,10 @@ class ToolsCIGMC():
 
         self.xlim_larson_1st = [1.9,2.65]
         self.ylim_larson_1st = [0.4,1.6]
+        self.xlim_larson_2nd = [6.5,9.0]
+        self.ylim_larson_2nd = [0.4,1.6]
+        self.xlim_larson_3rd = [1.9,2.65]
+        self.ylim_larson_3rd = [0.2,2.3]
 
     def _set_output_txt_png(self):
         """
@@ -399,8 +403,8 @@ class ToolsCIGMC():
         ####################
         # plot: larson 2nd #
         ####################
-        xlim   = None #[0.4*72-10,2.0*72+10]
-        ylim   = None
+        xlim   = self.xlim_larson_2nd
+        ylim   = self.ylim_larson_2nd
         title  = "Larson's 2nd law"
         xlabel = "log M(H$_2$) ($M_{\odot}$)"
         ylabel = "log velocity dispersion (km s$^{-1}$)"
@@ -430,8 +434,8 @@ class ToolsCIGMC():
         rvir_nocone = mvir_nocone / (lci_nocone*self.alpha_co)
         rvir_sbr    = mvir_sbr / (lci_sbr*self.alpha_co)
 
-        xlim   = None #[0.4*72-10,2.0*72+10]
-        ylim   = None
+        xlim   = self.xlim_larson_3rd
+        ylim   = self.ylim_larson_3rd
         title  = "Larson's 3rd law"
         xlabel = "log Diameter (pc)"
         ylabel = "log Volume density (cm$^{-3}$)"
@@ -501,8 +505,8 @@ class ToolsCIGMC():
         ####################
         # plot: larson 2nd #
         ####################
-        xlim   = None #[0.4*72-10,2.0*72+10]
-        ylim   = None
+        xlim   = self.xlim_larson_2nd
+        ylim   = self.ylim_larson_2nd
         title  = "Larson's 2nd law"
         xlabel = "log M(H$_2$) ($M_{\odot}$)"
         ylabel = "log velocity dispersion (km s$^{-1}$)"
@@ -532,8 +536,8 @@ class ToolsCIGMC():
         rvir_nocone = mvir_nocone / (lci_nocone*self.alpha_ci)
         rvir_sbr    = mvir_sbr / (lci_sbr*self.alpha_ci)
 
-        xlim   = None #[0.4*72-10,2.0*72+10]
-        ylim   = None
+        xlim   = self.xlim_larson_3rd
+        ylim   = self.ylim_larson_3rd
         title  = "Larson's 3rd law"
         xlabel = "log Diameter (pc)"
         ylabel = "log Volume density (cm$^{-3}$)"
