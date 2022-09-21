@@ -888,6 +888,89 @@ class ToolsCIGMC():
             self.outpng_cprops_ci10_fov2,
             self.outpng_cprops_ci10_fov3,
             )
+        self._plot_cprops_map2(
+            self.outfits_mom0_ci10,
+            tb_co10,
+            tb_ci10,
+            "[CI](1-0)",
+            self.outpng_cprops_ci10_co10_agn,
+            self.outpng_cprops_ci10_co10_fov2,
+            self.outpng_cprops_ci10_co10_fov3,
+            )
+
+    #####################
+    # _plot_cprops_map2 #
+    #####################
+
+    def _plot_cprops_map2(
+        self,
+        imagename,
+        this_tb1,
+        this_tb2,
+        linename,
+        outpng_agn,
+        outpng_fov2,
+        outpng_fov3,
+        ):
+        """
+        # CLOUDNUM
+        # XCTR_DEG
+        # YCTR_DEG
+        # VCTR_KMS
+        # RAD_PC
+        # SIGV_KMS
+        # FLUX_KKMS_PC2
+        # MVIR_MSUN
+        # S2N
+        """
+
+        scalebar = 100. / self.scale_pc
+        label_scalebar = "100 pc"
+
+        myfig_fits2png(
+            imagename,
+            outpng_agn,
+            imsize_as = 18.0,
+            ra_cnt    = str(self.ra_agn) + "deg",
+            dec_cnt   = str(self.dec_agn) + "deg",
+            numann    = "ci-gmc2",
+            txtfiles  = [this_tb1,this_tb2],
+            set_title = linename + " Cloud Catalog",
+            scalebar  = scalebar,
+            label_scalebar = label_scalebar,
+            colorlog  = True,
+            set_cmap  = "Greys",
+            )
+
+        myfig_fits2png(
+            imagename,
+            outpng_fov2,
+            imsize_as = 18.0,
+            ra_cnt    = str(self.ra_fov2) + "deg",
+            dec_cnt   = str(self.dec_fov2) + "deg",
+            numann    = "ci-gmc2",
+            txtfiles  = [this_tb1,this_tb2],
+            set_title = linename + " Cloud Catalog",
+            scalebar  = scalebar,
+            label_scalebar = label_scalebar,
+            colorlog  = True,
+            set_cmap  = "Greys",
+            )
+
+        myfig_fits2png(
+            imagename,
+            outpng_fov3,
+            imsize_as = 18.0,
+            ra_cnt    = str(self.ra_fov3) + "deg",
+            dec_cnt   = str(self.dec_fov3) + "deg",
+            numann    = "ci-gmc2",
+            txtfiles  = [this_tb1,this_tb2],
+            set_title = linename + " Cloud Catalog",
+            scalebar  = scalebar,
+            label_scalebar = label_scalebar,
+            colorlog  = True,
+            set_cmap  = "Greys",
+            )
 
     ####################
     # _plot_cprops_map #

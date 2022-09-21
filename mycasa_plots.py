@@ -936,6 +936,96 @@ def myax_fig2png_ann(ax,number,ra_cnt,dec_cnt,add_text=True,txtfiles=None):
             ax.text(8.5, 7.3, "boundary",
                 horizontalalignment="left", verticalalignment="center", weight="bold")
 
+    if number=="ci-gmc2":
+        txtfile1 = txtfiles[0]
+        x     = (txtfile1["XCTR_DEG"] - float(ra_cnt.split("deg")[0])) * 3600.
+        y     = (txtfile1["YCTR_DEG"] - float(dec_cnt.split("deg")[0])) * 3600.
+        pos   = txtfile1["POSANG"] * 180 / np.pi
+        s2n   = txtfile1["S2N"]
+        major = txtfile1["RAD_NOEX"] / 72.
+        minor = txtfile1["MOMMINPIX"] / txtfile1["MOMMAJPIX"] * txtfile1["RAD_NOEX"] / 72.
+
+        for i in range(len(x)):
+            if s2n[i]>=7.0:
+                this_x   = x[i]
+                this_y   = y[i]
+                this_pos = pos[i]
+                this_w   = major[i]
+                this_h   = minor[i]
+
+                ell = patches.Ellipse(
+                    xy=(this_x,this_y),
+                    width=this_w,
+                    height=this_h,
+                    angle=this_pos,
+                    fill=False,
+                    edgecolor="blue",
+                    alpha=1.0,
+                    lw=1.0)
+
+                ax.add_patch(ell)
+
+        txtfile1 = txtfiles[1]
+        x     = (txtfile1["XCTR_DEG"] - float(ra_cnt.split("deg")[0])) * 3600.
+        y     = (txtfile1["YCTR_DEG"] - float(dec_cnt.split("deg")[0])) * 3600.
+        pos   = txtfile1["POSANG"] * 180 / np.pi
+        s2n   = txtfile1["S2N"]
+        major = txtfile1["RAD_NOEX"] / 72.
+        minor = txtfile1["MOMMINPIX"] / txtfile1["MOMMAJPIX"] * txtfile1["RAD_NOEX"] / 72.
+
+        for i in range(len(x)):
+            if s2n[i]>=7.0:
+                this_x   = x[i]
+                this_y   = y[i]
+                this_pos = pos[i]
+                this_w   = major[i]
+                this_h   = minor[i]
+
+                ell = patches.Ellipse(
+                    xy=(this_x,this_y),
+                    width=this_w,
+                    height=this_h,
+                    angle=this_pos,
+                    fill=True,
+                    edgecolor="red",
+                    facecolor="red",
+                    alpha=0.5,
+                    lw=1.0)
+
+                ax.add_patch(ell)
+
+        theta1      = -10.0 # degree
+        theta2      = 70.0 # degree
+        fov_diamter = 16.5 # arcsec (12m+7m Band 8)
+
+        fov_diamter = 16.5
+        efov1 = patches.Ellipse(xy=(-0,0), width=fov_diamter,
+            height=fov_diamter, angle=0, fill=False, edgecolor="black",
+            alpha=1.0, lw=3.5)
+
+        ax.add_patch(efov1)
+
+        # plot NGC 1068 AGN and outflow geometry
+        x1 = fov_diamter/2.0 * np.cos(np.radians(-1*theta1+90))
+        y1 = fov_diamter/2.0 * np.sin(np.radians(-1*theta1+90))
+        ax.plot([x1, -x1], [y1, -y1], "--", c="black", lw=3.5)
+        x2 = fov_diamter/2.0 * np.cos(np.radians(-1*theta2+90))
+        y2 = fov_diamter/2.0 * np.sin(np.radians(-1*theta2+90))
+        ax.plot([x2, -x2], [y2, -y2], "--", c="black", lw=3.5)
+
+        # add annotation comment
+        if add_text==True:
+            ax.plot([0,-5], [0,7.5], lw=3, c="black")
+            ax.text(-8.5, 8.0, "AGN position",
+                horizontalalignment="right", verticalalignment="center", weight="bold")
+
+            ax.plot([7,7.5], [2.5,7.0], "--", lw=3, c="black")
+            ax.plot([-1,4.8], [7.0,7.5], "--", lw=3, c="black")
+            ax.text(8.5, 8.0, "Bicone",
+                horizontalalignment="left", verticalalignment="center", weight="bold")
+            ax.text(8.5, 7.3, "boundary",
+                horizontalalignment="left", verticalalignment="center", weight="bold")
+
     #######################################
     # Figure 1 of the NGC 1068 CI outflow #
     #######################################
