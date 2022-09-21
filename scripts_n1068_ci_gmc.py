@@ -797,7 +797,7 @@ class ToolsCIGMC():
         x_fov2 = (tb["XCTR_DEG"] - self.ra_fov2) * -3600.
         y_fov2 = (tb["XCTR_DEG"] - self.dec_fov2) * -3600.
         x_fov3 = (tb["XCTR_DEG"] - self.ra_fov3) * -3600.
-        y_fov3 = (tb["XCTR_DEG"] - self.dec_fov3) * -3600. # self.fov_diamter
+        y_fov3 = (tb["XCTR_DEG"] - self.dec_fov3) * -3600.
 
         cut    = np.where(~np.isnan(radius) & ~np.isnan(sigv) & ~np.isnan(mvir) & ~np.isnan(tpeak))
         x      = x[cut]
@@ -810,6 +810,7 @@ class ToolsCIGMC():
         mci    = mci[cut]
         r_fov2 = np.sqrt(x_fov2[cut]**2 + y_fov2[cut]**2)
         r_fov3 = np.sqrt(x_fov3[cut]**2 + y_fov3[cut]**2)
+        print(r_fov2)
 
         # bicone definition
         r          = np.sqrt(x**2 + y**2)
