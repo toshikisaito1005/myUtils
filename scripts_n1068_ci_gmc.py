@@ -161,6 +161,7 @@ class ToolsCIGMC():
 
         self.snr_cprops = 7.0
         self.alpha_ci   = 15.0
+        self.alpha_co   = 1.0
 
         self.imsize_as  = 18
 
@@ -407,9 +408,9 @@ class ToolsCIGMC():
         ad  = [0.215,0.83,0.10,0.90]
         myax_set(ax1, "both", xlim, ylim, title, xlabel, ylabel, adjust=ad)
 
-        ax1.scatter(np.log10(lci_cone*self.alpha_ci), np.log10(sigv_cone), lw=0, s=160, color="red", alpha=0.5)
-        ax1.scatter(np.log10(lci_nocone*self.alpha_ci), np.log10(sigv_nocone), lw=0, s=160, color="blue", alpha=0.5)
-        ax1.scatter(np.log10(lci_sbr*self.alpha_ci), np.log10(sigv_sbr), lw=0, s=160, color="grey", alpha=0.5)
+        ax1.scatter(np.log10(lci_cone*self.alpha_co), np.log10(sigv_cone), lw=0, s=160, color="red", alpha=0.5)
+        ax1.scatter(np.log10(lci_nocone*self.alpha_co), np.log10(sigv_nocone), lw=0, s=160, color="blue", alpha=0.5)
+        ax1.scatter(np.log10(lci_sbr*self.alpha_co), np.log10(sigv_sbr), lw=0, s=160, color="grey", alpha=0.5)
 
         # save
         os.system("rm -rf " + self.outpng_co_larson_2nd)
@@ -418,13 +419,13 @@ class ToolsCIGMC():
         ####################
         # plot: larson 3rd #
         ####################
-        density_cone   = lci_cone*self.alpha_ci/(4./3.*np.pi*radius_cone**3)
-        density_nocone = lci_nocone*self.alpha_ci/(4./3.*np.pi*radius_nocone**3)
-        density_sbr    = lci_sbr*self.alpha_ci/(4./3.*np.pi*radius_sbr**3)
+        density_cone   = lci_cone*self.alpha_co/(4./3.*np.pi*radius_cone**3)
+        density_nocone = lci_nocone*self.alpha_co/(4./3.*np.pi*radius_nocone**3)
+        density_sbr    = lci_sbr*self.alpha_co/(4./3.*np.pi*radius_sbr**3)
 
-        rvir_cone   = mvir_cone / (lci_cone*self.alpha_ci)
-        rvir_nocone = mvir_nocone / (lci_nocone*self.alpha_ci)
-        rvir_sbr    = mvir_sbr / (lci_sbr*self.alpha_ci)
+        rvir_cone   = mvir_cone / (lci_cone*self.alpha_co)
+        rvir_nocone = mvir_nocone / (lci_nocone*self.alpha_co)
+        rvir_sbr    = mvir_sbr / (lci_sbr*self.alpha_co)
 
         xlim   = None #[0.4*72-10,2.0*72+10]
         ylim   = None
@@ -572,7 +573,7 @@ class ToolsCIGMC():
         ################
         # plot: radius #
         ################
-        xlim   = None#[0.4*72-10,2.0*72+10]
+        xlim   = [60,200]
         ylim   = None
         title  = "Cloud radius"
         xlabel = "Radius (pc)"
@@ -602,7 +603,7 @@ class ToolsCIGMC():
         ###############
         # plot: sigma #
         ###############
-        xlim   = None#[0,35]
+        xlim   = [0,35]
         ylim   = None
         title  = "Cloud velocity dispersion"
         xlabel = "Velocity dispersion (km s$^{-1}$)"
@@ -632,7 +633,7 @@ class ToolsCIGMC():
         ##############
         # plot: mvir #
         ##############
-        xlim   = None#[5.4,8.0]
+        xlim   = [6.0,9.0]
         ylim   = None
         title  = "Cloud virial mass"
         xlabel = "Virial mass ($M_{\odot}$)"
