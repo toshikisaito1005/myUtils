@@ -895,7 +895,7 @@ class ToolsCIGMC():
             self.outfits_mom0_ci10,
             tb_co10,
             tb_ci10,
-            "[CI](1-0)",
+            "[CI](1-0)+CO(1-0)",
             self.outpng_cprops_ci10_co10_agn,
             self.outpng_cprops_ci10_co10_fov2,
             self.outpng_cprops_ci10_co10_fov3,
