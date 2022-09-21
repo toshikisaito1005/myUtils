@@ -165,6 +165,9 @@ class ToolsCIGMC():
 
         self.imsize_as  = 18
 
+        self.xlim_larson_1st = [1.9,2.65]
+        self.ylim_larson_1st = [0.4,1.6]
+
     def _set_output_txt_png(self):
         """
         """
@@ -373,8 +376,8 @@ class ToolsCIGMC():
         ####################
         # plot: larson 1st #
         ####################
-        xlim   = None #[0.4*72-10,2.0*72+10]
-        ylim   = None
+        xlim   = self.xlim_larson_1st
+        ylim   = self.ylim_larson_1st
         title  = "Larson's 1st law"
         xlabel = "log Diameter (pc)"
         ylabel = "log velocity dispersion (km s$^{-1}$)"
@@ -475,8 +478,8 @@ class ToolsCIGMC():
         ####################
         # plot: larson 1st #
         ####################
-        xlim   = None #[0.4*72-10,2.0*72+10]
-        ylim   = None
+        xlim   = self.xlim_larson_1st
+        ylim   = self.ylim_larson_1st
         title  = "Larson's 1st law"
         xlabel = "log Diameter (pc)"
         ylabel = "log velocity dispersion (km s$^{-1}$)"
@@ -791,6 +794,10 @@ class ToolsCIGMC():
         mvir   = tb["MVIR_MSUN"]
         tpeak  = tb["TMAX_K"]
         mci    = tb["MLUM_MSUN"]
+        x_fov2 = (tb["XCTR_DEG"] - self.ra_fov2) * -3600.
+        y_fov2 = (tb["XCTR_DEG"] - self.dec_fov2) * -3600.
+        x_fov3 = (tb["XCTR_DEG"] - self.ra_fov3) * -3600.
+        y_fov3 = (tb["XCTR_DEG"] - self.dec_fov3) * -3600. # self.fov_diamter
 
         cut    = np.where(~np.isnan(radius) & ~np.isnan(sigv) & ~np.isnan(mvir) & ~np.isnan(tpeak))
         x      = x[cut]
@@ -801,6 +808,8 @@ class ToolsCIGMC():
         mvir   = np.log10(mvir[cut])
         tpeak  = tpeak[cut]
         mci    = mci[cut]
+        r_fov2 = np.sqrt(x_fov2[cut]**2 + y_fov2[cut]**2)
+        r_fov3 = np.sqrt(x_fov3[cut]**2 + y_fov3[cut]**2)
 
         # bicone definition
         r          = np.sqrt(x**2 + y**2)
@@ -808,7 +817,7 @@ class ToolsCIGMC():
         theta      = np.where(theta>0,theta,theta+360)
         cut_cone   = np.where((s2n>=self.snr_cprops) & (r<self.fov_diamter/2.0) & (theta>=self.theta2) & (theta<self.theta1) | (s2n>=self.snr_cprops) & (r<self.fov_diamter/2.0) & (theta>=self.theta2+180) & (theta<self.theta1+180))
         cut_nocone = np.where((s2n>=self.snr_cprops) & (r<self.fov_diamter/2.0) & (theta>=self.theta1) & (theta<self.theta2+180) | (s2n>=self.snr_cprops) & (r<self.fov_diamter/2.0) & (theta>=self.theta1+180) & (theta<self.theta2+360) | (s2n>=self.snr_cprops) & (r<self.fov_diamter/2.0) & (theta<self.theta1+180) & (theta<self.theta2))
-        cut_sbr    = np.where((s2n>=self.snr_cprops) & (r>=self.fov_diamter/2.0))
+        cut_sbr    = np.where((s2n>=self.snr_cprops) & (r>=self.fov_diamter/2.0) & (r_fov2<=self.fov_diamter/2.0) | (s2n>=self.snr_cprops) & (r>=self.fov_diamter/2.0) & (r_fov3<=self.fov_diamter/2.0))
 
         # data
         x_cone      = x[cut_cone]
