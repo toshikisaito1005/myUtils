@@ -178,15 +178,21 @@ class ToolsCIGMC():
         self.outpng_cprops_co10_fov3 = self.dir_products + self._read_key("outpng_cprops_co10_fov3")
         self.outpng_cprops_ci10_fov3 = self.dir_products + self._read_key("outpng_cprops_ci10_fov3")
 
-        self.outpng_hist_rad  = self.dir_products + self._read_key("outpng_hist_rad")
-        self.outpng_hist_sigv = self.dir_products + self._read_key("outpng_hist_sigv")
-        self.outpng_hist_mvir = self.dir_products + self._read_key("outpng_hist_mvir")
+        self.outpng_ci_hist_rad   = self.dir_products + self._read_key("outpng_ci_hist_rad")
+        self.outpng_ci_hist_sigv  = self.dir_products + self._read_key("outpng_ci_hist_sigv")
+        self.outpng_ci_hist_mvir  = self.dir_products + self._read_key("outpng_ci_hist_mvir")
+        self.outpng_ci_larson_1st = self.dir_products + self._read_key("outpng_ci_larson_1st")
+        self.outpng_ci_larson_2nd = self.dir_products + self._read_key("outpng_ci_larson_2nd")
+        self.outpng_ci_larson_3rd = self.dir_products + self._read_key("outpng_ci_larson_3rd")
 
-        self.outpng_larson_1st = self.dir_products + self._read_key("outpng_larson_1st")
-        self.outpng_larson_2nd = self.dir_products + self._read_key("outpng_larson_2nd")
-        self.outpng_larson_3rd = self.dir_products + self._read_key("outpng_larson_3rd")
+        self.outpng_co_hist_rad   = self.dir_products + self._read_key("outpng_co_hist_rad")
+        self.outpng_co_hist_sigv  = self.dir_products + self._read_key("outpng_co_hist_sigv")
+        self.outpng_co_hist_mvir  = self.dir_products + self._read_key("outpng_co_hist_mvir")
+        self.outpng_co_larson_1st = self.dir_products + self._read_key("outpng_co_larson_1st")
+        self.outpng_co_larson_2nd = self.dir_products + self._read_key("outpng_co_larson_2nd")
+        self.outpng_co_larson_3rd = self.dir_products + self._read_key("outpng_co_larson_3rd")
 
-        self.outpng_map_ratio = self.dir_products + self._read_key("outpng_map_ratio")
+        self.outpng_map_ratio     = self.dir_products + self._read_key("outpng_map_ratio")
 
         # final
         print("TBE.")
@@ -267,10 +273,12 @@ class ToolsCIGMC():
             self.map_cprops()
 
         if plot_cprops==True:
-            self.plot_cprops()
+            self.plot_ci_cprops()
+            self.plot_co_cprops()
 
         if plot_larson==True:
-            self.plot_larson()
+            self.plot_ci_larson()
+            self.plot_co_larson()
 
         if plot_map==True:
             self.plot_map()
@@ -319,7 +327,7 @@ class ToolsCIGMC():
         taskname = self.modname + sys._getframe().f_code.co_name
         check_first(self.outfits_mom0_ci10,taskname)
 
-        # self.outfits_mom0_ratio
+        #
         myfig_fits2png(
             imcolor=self.outfits_mom0_ratio,
             outfile=self.outpng_map_ratio,
@@ -340,11 +348,113 @@ class ToolsCIGMC():
             #set_bg_color=set_bg_color,
             )
 
-    ###############
-    # plot_larson #
-    ###############
+    ##################
+    # plot_co_larson #
+    ##################
 
-    def plot_larson(
+    def plot_co_larson(
+        self,
+        ):
+        """
+        """
+
+        taskname = self.modname + sys._getframe().f_code.co_name
+        check_first(self.cprops_co10,taskname)
+
+        x_cone, y_cone, radius_cone, sigv_cone, mvir_cone, tpeak_cone, lci_cone, \
+            x_nocone, y_nocone, radius_nocone, sigv_nocone, mvir_nocone, tpeak_nocone, lci_nocone, \
+            x_sbr, y_sbr, radius_sbr, sigv_sbr, mvir_sbr, tpeak_sbr, lci_sbr = self._import_cprops_table(self.cprops_co10)
+
+        mvir_cone   = 10**mvir_cone
+        mvir_nocone = 10**mvir_nocone
+        mvir_sbr    = 10**mvir_sbr
+
+        ####################
+        # plot: larson 1st #
+        ####################
+        xlim   = None #[0.4*72-10,2.0*72+10]
+        ylim   = None
+        title  = "Larson's 1st law"
+        xlabel = "log Diameter (pc)"
+        ylabel = "log velocity dispersion (km s$^{-1}$)"
+
+        fig = plt.figure(figsize=(13,10))
+        gs  = gridspec.GridSpec(nrows=10, ncols=10)
+        ax1 = plt.subplot(gs[0:10,0:10])
+        ad  = [0.215,0.83,0.10,0.90]
+        myax_set(ax1, "both", xlim, ylim, title, xlabel, ylabel, adjust=ad)
+
+        ax1.scatter(np.log10(radius_cone*2.0), np.log10(sigv_cone), lw=0, s=160, color="red", alpha=0.5)
+        ax1.scatter(np.log10(radius_nocone*2.0), np.log10(sigv_nocone), lw=0, s=160, color="blue", alpha=0.5)
+        ax1.scatter(np.log10(radius_sbr*2.0), np.log10(sigv_sbr), lw=0, s=160, color="grey", alpha=0.5)
+
+        # save
+        os.system("rm -rf " + self.outpng_co_larson_1st)
+        plt.savefig(self.outpng_co_larson_1st, dpi=self.fig_dpi)
+
+        ####################
+        # plot: larson 2nd #
+        ####################
+        xlim   = None #[0.4*72-10,2.0*72+10]
+        ylim   = None
+        title  = "Larson's 2nd law"
+        xlabel = "log M(H$_2$) ($M_{\odot}$)"
+        ylabel = "log velocity dispersion (km s$^{-1}$)"
+
+        fig = plt.figure(figsize=(13,10))
+        gs  = gridspec.GridSpec(nrows=10, ncols=10)
+        ax1 = plt.subplot(gs[0:10,0:10])
+        ad  = [0.215,0.83,0.10,0.90]
+        myax_set(ax1, "both", xlim, ylim, title, xlabel, ylabel, adjust=ad)
+
+        ax1.scatter(np.log10(lci_cone*self.alpha_ci), np.log10(sigv_cone), lw=0, s=160, color="red", alpha=0.5)
+        ax1.scatter(np.log10(lci_nocone*self.alpha_ci), np.log10(sigv_nocone), lw=0, s=160, color="blue", alpha=0.5)
+        ax1.scatter(np.log10(lci_sbr*self.alpha_ci), np.log10(sigv_sbr), lw=0, s=160, color="grey", alpha=0.5)
+
+        # save
+        os.system("rm -rf " + self.outpng_co_larson_2nd)
+        plt.savefig(self.outpng_co_larson_2nd, dpi=self.fig_dpi)
+
+        ####################
+        # plot: larson 3rd #
+        ####################
+        density_cone   = lci_cone*self.alpha_ci/(4./3.*np.pi*radius_cone**3)
+        density_nocone = lci_nocone*self.alpha_ci/(4./3.*np.pi*radius_nocone**3)
+        density_sbr    = lci_sbr*self.alpha_ci/(4./3.*np.pi*radius_sbr**3)
+
+        rvir_cone   = mvir_cone / (lci_cone*self.alpha_ci)
+        rvir_nocone = mvir_nocone / (lci_nocone*self.alpha_ci)
+        rvir_sbr    = mvir_sbr / (lci_sbr*self.alpha_ci)
+
+        xlim   = None #[0.4*72-10,2.0*72+10]
+        ylim   = None
+        title  = "Larson's 3rd law"
+        xlabel = "log Diameter (pc)"
+        ylabel = "log Volume density (cm$^{-3}$)"
+
+        fig = plt.figure(figsize=(13,10))
+        gs  = gridspec.GridSpec(nrows=10, ncols=10)
+        ax1 = plt.subplot(gs[0:10,0:10])
+        ad  = [0.215,0.83,0.10,0.90]
+        myax_set(ax1, "both", xlim, ylim, title, xlabel, ylabel, adjust=ad)
+
+        ax1.scatter(np.log10(radius_cone*2.0)[rvir_cone>=np.median(rvir_cone)], np.log10(density_cone)[rvir_cone>=np.median(rvir_cone)], lw=0, s=40, color="red", alpha=0.5)
+        ax1.scatter(np.log10(radius_nocone*2.0)[rvir_nocone>=np.median(rvir_nocone)], np.log10(density_nocone)[rvir_nocone>=np.median(rvir_nocone)], lw=0, s=40, color="blue", alpha=0.5)
+        ax1.scatter(np.log10(radius_sbr*2.0)[rvir_sbr>=np.median(rvir_sbr)], np.log10(density_sbr)[rvir_sbr>=np.median(rvir_sbr)], lw=0, s=40, color="grey", alpha=0.5)
+
+        ax1.scatter(np.log10(radius_cone*2.0)[rvir_cone<np.median(rvir_cone)], np.log10(density_cone)[rvir_cone<np.median(rvir_cone)], lw=0, s=160, color="red", alpha=0.5)
+        ax1.scatter(np.log10(radius_nocone*2.0)[rvir_nocone<np.median(rvir_nocone)], np.log10(density_nocone)[rvir_nocone<np.median(rvir_nocone)], lw=0, s=160, color="blue", alpha=0.5)
+        ax1.scatter(np.log10(radius_sbr*2.0)[rvir_sbr<np.median(rvir_sbr)], np.log10(density_sbr)[rvir_sbr<np.median(rvir_sbr)], lw=0, s=160, color="grey", alpha=0.5)
+
+        # save
+        os.system("rm -rf " + self.outpng_co_larson_3rd)
+        plt.savefig(self.outpng_co_larson_3rd, dpi=self.fig_dpi)
+
+    ##################
+    # plot_ci_larson #
+    ##################
+
+    def plot_ci_larson(
         self,
         ):
         """
@@ -381,8 +491,8 @@ class ToolsCIGMC():
         ax1.scatter(np.log10(radius_sbr*2.0), np.log10(sigv_sbr), lw=0, s=160, color="grey", alpha=0.5)
 
         # save
-        os.system("rm -rf " + self.outpng_larson_1st)
-        plt.savefig(self.outpng_larson_1st, dpi=self.fig_dpi)
+        os.system("rm -rf " + self.outpng_ci_larson_1st)
+        plt.savefig(self.outpng_ci_larson_1st, dpi=self.fig_dpi)
 
         ####################
         # plot: larson 2nd #
@@ -404,8 +514,8 @@ class ToolsCIGMC():
         ax1.scatter(np.log10(lci_sbr*self.alpha_ci), np.log10(sigv_sbr), lw=0, s=160, color="grey", alpha=0.5)
 
         # save
-        os.system("rm -rf " + self.outpng_larson_2nd)
-        plt.savefig(self.outpng_larson_2nd, dpi=self.fig_dpi)
+        os.system("rm -rf " + self.outpng_ci_larson_2nd)
+        plt.savefig(self.outpng_ci_larson_2nd, dpi=self.fig_dpi)
 
         ####################
         # plot: larson 3rd #
@@ -439,14 +549,121 @@ class ToolsCIGMC():
         ax1.scatter(np.log10(radius_sbr*2.0)[rvir_sbr<np.median(rvir_sbr)], np.log10(density_sbr)[rvir_sbr<np.median(rvir_sbr)], lw=0, s=160, color="grey", alpha=0.5)
 
         # save
-        os.system("rm -rf " + self.outpng_larson_3rd)
-        plt.savefig(self.outpng_larson_3rd, dpi=self.fig_dpi)
+        os.system("rm -rf " + self.outpng_ci_larson_3rd)
+        plt.savefig(self.outpng_ci_larson_3rd, dpi=self.fig_dpi)
 
-    ###############
-    # plot_cprops #
-    ###############
+    ##################
+    # plot_co_cprops #
+    ##################
 
-    def plot_cprops(
+    def plot_co_cprops(
+        self,
+        ):
+        """
+        """
+
+        taskname = self.modname + sys._getframe().f_code.co_name
+        check_first(self.cprops_co10,taskname)
+
+        x_cone, y_cone, radius_cone, sigv_cone, mvir_cone, tpeak_cone, mci_cone, \
+            x_nocone, y_nocone, radius_nocone, sigv_nocone, mvir_nocone, tpeak_nocone, mci_nocone, \
+            x_sbr, y_sbr, radius_sbr, sigv_sbr, mvir_sbr, tpeak_sbr, mci_sbr = self._import_cprops_table(self.cprops_co10)
+
+        ################
+        # plot: radius #
+        ################
+        xlim   = [0.4*72-10,2.0*72+10]
+        ylim   = None
+        title  = "Cloud radius"
+        xlabel = "Radius (pc)"
+        ylabel = "Count density"
+
+        h = np.histogram(radius_cone, bins=10, range=xlim)
+        x_rad_cone, y_rad_cone = h[1][:-1], h[0]/float(np.sum(h[0]))
+        h = np.histogram(radius_nocone, bins=10, range=xlim)
+        x_rad_nocone, y_rad_nocone = h[1][:-1], h[0]/float(np.sum(h[0]))
+        h = np.histogram(radius_sbr, bins=10, range=xlim)
+        x_rad_sbr, y_rad_sbr = h[1][:-1], h[0]/float(np.sum(h[0]))
+
+        fig = plt.figure(figsize=(13,10))
+        gs  = gridspec.GridSpec(nrows=10, ncols=10)
+        ax1 = plt.subplot(gs[0:10,0:10])
+        ad  = [0.215,0.83,0.10,0.90]
+        myax_set(ax1, "x", xlim, ylim, title, xlabel, ylabel, adjust=ad)
+
+        ax1.bar(x_rad_cone, y_rad_cone, lw=0, color="red", width=x_rad_cone[1]-x_rad_cone[0], alpha=0.5)
+        ax1.bar(x_rad_nocone, y_rad_nocone, lw=0, color="blue", width=x_rad_nocone[1]-x_rad_nocone[0], alpha=0.5)
+        ax1.bar(x_rad_sbr, y_rad_sbr, lw=0, color="grey", width=x_rad_sbr[1]-x_rad_sbr[0], alpha=0.5)
+
+        # save
+        os.system("rm -rf " + self.outpng_co_hist_rad)
+        plt.savefig(self.outpng_co_hist_rad, dpi=self.fig_dpi)
+
+        ###############
+        # plot: sigma #
+        ###############
+        xlim   = [0,35]
+        ylim   = None
+        title  = "Cloud velocity dispersion"
+        xlabel = "Velocity dispersion (km s$^{-1}$)"
+        ylabel = "Count density"
+
+        h = np.histogram(sigv_cone, bins=10, range=xlim)
+        x_sigv_cone, y_sigv_cone = h[1][:-1], h[0]/float(np.sum(h[0]))
+        h = np.histogram(sigv_nocone, bins=10, range=xlim)
+        x_sigv_nocone, y_sigv_nocone = h[1][:-1], h[0]/float(np.sum(h[0]))
+        h = np.histogram(sigv_sbr, bins=10, range=xlim)
+        x_sigv_sbr, y_sigv_sbr = h[1][:-1], h[0]/float(np.sum(h[0]))
+
+        fig = plt.figure(figsize=(13,10))
+        gs  = gridspec.GridSpec(nrows=10, ncols=10)
+        ax1 = plt.subplot(gs[0:10,0:10])
+        ad  = [0.215,0.83,0.10,0.90]
+        myax_set(ax1, "x", xlim, ylim, title, xlabel, ylabel, adjust=ad)
+
+        ax1.bar(x_sigv_cone, y_sigv_cone, lw=0, color="red", width=x_sigv_cone[1]-x_sigv_cone[0], alpha=0.5)
+        ax1.bar(x_sigv_nocone, y_sigv_nocone, lw=0, color="blue", width=x_sigv_nocone[1]-x_sigv_nocone[0], alpha=0.5)
+        ax1.bar(x_sigv_sbr, y_sigv_sbr, lw=0, color="grey", width=x_sigv_sbr[1]-x_sigv_sbr[0], alpha=0.5)
+
+        # save
+        os.system("rm -rf " + self.outpng_co_hist_sigv)
+        plt.savefig(self.outpng_co_hist_sigv, dpi=self.fig_dpi)
+
+        ##############
+        # plot: mvir #
+        ##############
+        xlim   = [5.4,8.0]
+        ylim   = None
+        title  = "Cloud virial mass"
+        xlabel = "Virial mass ($M_{\odot}$)"
+        ylabel = "Count density"
+
+        h = np.histogram(mvir_cone, bins=10, range=xlim)
+        x_mvir_cone, y_mvir_cone = h[1][:-1], h[0]/float(np.sum(h[0]))
+        h = np.histogram(mvir_nocone, bins=10, range=xlim)
+        x_mvir_nocone, y_mvir_nocone = h[1][:-1], h[0]/float(np.sum(h[0]))
+        h = np.histogram(mvir_sbr, bins=10, range=xlim)
+        x_mvir_sbr, y_mvir_sbr = h[1][:-1], h[0]/float(np.sum(h[0]))
+
+        fig = plt.figure(figsize=(13,10))
+        gs  = gridspec.GridSpec(nrows=10, ncols=10)
+        ax1 = plt.subplot(gs[0:10,0:10])
+        ad  = [0.215,0.83,0.10,0.90]
+        myax_set(ax1, "x", xlim, ylim, title, xlabel, ylabel, adjust=ad)
+
+        ax1.bar(x_mvir_cone, y_mvir_cone, lw=0, color="red", width=x_mvir_cone[1]-x_mvir_cone[0], alpha=0.5)
+        ax1.bar(x_mvir_nocone, y_mvir_nocone, lw=0, color="blue", width=x_mvir_nocone[1]-x_mvir_nocone[0], alpha=0.5)
+        ax1.bar(x_mvir_sbr, y_mvir_sbr, lw=0, color="grey", width=x_mvir_sbr[1]-x_mvir_sbr[0], alpha=0.5)
+
+        # save
+        os.system("rm -rf " + self.outpng_co_hist_mvir)
+        plt.savefig(self.outpng_co_hist_mvir, dpi=self.fig_dpi)
+
+    ##################
+    # plot_ci_cprops #
+    ##################
+
+    def plot_ci_cprops(
         self,
         ):
         """
@@ -486,8 +703,8 @@ class ToolsCIGMC():
         ax1.bar(x_rad_sbr, y_rad_sbr, lw=0, color="grey", width=x_rad_sbr[1]-x_rad_sbr[0], alpha=0.5)
 
         # save
-        os.system("rm -rf " + self.outpng_hist_rad)
-        plt.savefig(self.outpng_hist_rad, dpi=self.fig_dpi)
+        os.system("rm -rf " + self.outpng_ci_hist_rad)
+        plt.savefig(self.outpng_ci_hist_rad, dpi=self.fig_dpi)
 
         ###############
         # plot: sigma #
@@ -516,8 +733,8 @@ class ToolsCIGMC():
         ax1.bar(x_sigv_sbr, y_sigv_sbr, lw=0, color="grey", width=x_sigv_sbr[1]-x_sigv_sbr[0], alpha=0.5)
 
         # save
-        os.system("rm -rf " + self.outpng_hist_sigv)
-        plt.savefig(self.outpng_hist_sigv, dpi=self.fig_dpi)
+        os.system("rm -rf " + self.outpng_ci_hist_sigv)
+        plt.savefig(self.outpng_ci_hist_sigv, dpi=self.fig_dpi)
 
         ##############
         # plot: mvir #
@@ -546,8 +763,8 @@ class ToolsCIGMC():
         ax1.bar(x_mvir_sbr, y_mvir_sbr, lw=0, color="grey", width=x_mvir_sbr[1]-x_mvir_sbr[0], alpha=0.5)
 
         # save
-        os.system("rm -rf " + self.outpng_hist_mvir)
-        plt.savefig(self.outpng_hist_mvir, dpi=self.fig_dpi)
+        os.system("rm -rf " + self.outpng_ci_hist_mvir)
+        plt.savefig(self.outpng_ci_hist_mvir, dpi=self.fig_dpi)
 
     ########################
     # _import_cprops_table #

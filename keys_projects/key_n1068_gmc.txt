@@ -56,12 +56,18 @@ outpng_cprops_co10_fov2 ,,,fig_co10_mom0_gmc_fov2.png
 outpng_cprops_ci10_fov2 ,,,fig_ci10_mom0_gmc_fov2.png
 outpng_cprops_co10_fov3 ,,,fig_co10_mom0_gmc_fov3.png
 outpng_cprops_ci10_fov3 ,,,fig_ci10_mom0_gmc_fov3.png
-outpng_hist_rad         ,,,outpng_hist_rad.png
-outpng_hist_sigv        ,,,outpng_hist_sigv.png
-outpng_hist_mvir        ,,,outpng_hist_mvir.png
-outpng_larson_1st       ,,,outpng_larson_1st.png
-outpng_larson_2nd       ,,,outpng_larson_2nd.png
-outpng_larson_3rd       ,,,outpng_larson_3rd.png
+outpng_ci_hist_rad      ,,,outpng_ci_hist_rad.png
+outpng_ci_hist_sigv     ,,,outpng_ci_hist_sigv.png
+outpng_ci_hist_mvir     ,,,outpng_ci_hist_mvir.png
+outpng_ci_larson_1st    ,,,outpng_ci_larson_1st.png
+outpng_ci_larson_2nd    ,,,outpng_ci_larson_2nd.png
+outpng_ci_larson_3rd    ,,,outpng_ci_larson_3rd.png
+outpng_co_hist_rad      ,,,outpng_co_hist_rad.png
+outpng_co_hist_sigv     ,,,outpng_co_hist_sigv.png
+outpng_co_hist_mvir     ,,,outpng_co_hist_mvir.png
+outpng_co_larson_1st    ,,,outpng_co_larson_1st.png
+outpng_co_larson_2nd    ,,,outpng_co_larson_2nd.png
+outpng_co_larson_3rd    ,,,outpng_co_larson_3rd.png
 outpng_map_ratio        ,,,outpng_map_ratio.png
 
 # box for imagemajick
