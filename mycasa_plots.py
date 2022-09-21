@@ -915,14 +915,6 @@ def myax_fig2png_ann(ax,number,ra_cnt,dec_cnt,add_text=True,txtfiles=None):
 
         ax.add_patch(efov1)
 
-        # plot NGC 1068 AGN and outflow geometry
-        x1 = fov_diamter/2.0 * np.cos(np.radians(-1*theta1+90))
-        y1 = fov_diamter/2.0 * np.sin(np.radians(-1*theta1+90))
-        ax.plot([x1, -x1], [y1, -y1], "--", c="black", lw=3.5)
-        x2 = fov_diamter/2.0 * np.cos(np.radians(-1*theta2+90))
-        y2 = fov_diamter/2.0 * np.sin(np.radians(-1*theta2+90))
-        ax.plot([x2, -x2], [y2, -y2], "--", c="black", lw=3.5)
-
         # add annotation comment
         if add_text==True:
             ax.plot([0,-5], [0,7.5], lw=3, c="black")
@@ -935,6 +927,14 @@ def myax_fig2png_ann(ax,number,ra_cnt,dec_cnt,add_text=True,txtfiles=None):
                 horizontalalignment="left", verticalalignment="center", weight="bold")
             ax.text(8.5, 7.3, "boundary",
                 horizontalalignment="left", verticalalignment="center", weight="bold")
+
+            # plot NGC 1068 AGN and outflow geometry
+            x1 = fov_diamter/2.0 * np.cos(np.radians(-1*theta1+90))
+            y1 = fov_diamter/2.0 * np.sin(np.radians(-1*theta1+90))
+            ax.plot([x1, -x1], [y1, -y1], "--", c="black", lw=3.5)
+            x2 = fov_diamter/2.0 * np.cos(np.radians(-1*theta2+90))
+            y2 = fov_diamter/2.0 * np.sin(np.radians(-1*theta2+90))
+            ax.plot([x2, -x2], [y2, -y2], "--", c="black", lw=3.5)
 
     if number=="ci-gmc2":
         txtfile1 = txtfiles[0]
@@ -958,9 +958,10 @@ def myax_fig2png_ann(ax,number,ra_cnt,dec_cnt,add_text=True,txtfiles=None):
                     width=this_w,
                     height=this_h,
                     angle=this_pos,
-                    fill=False,
+                    fill=True,
                     edgecolor="blue",
-                    alpha=1.0,
+                    facecolor="blue",
+                    alpha=0.5,
                     lw=1.0)
 
                 ax.add_patch(ell)
@@ -1005,14 +1006,6 @@ def myax_fig2png_ann(ax,number,ra_cnt,dec_cnt,add_text=True,txtfiles=None):
 
         ax.add_patch(efov1)
 
-        # plot NGC 1068 AGN and outflow geometry
-        x1 = fov_diamter/2.0 * np.cos(np.radians(-1*theta1+90))
-        y1 = fov_diamter/2.0 * np.sin(np.radians(-1*theta1+90))
-        ax.plot([x1, -x1], [y1, -y1], "--", c="black", lw=3.5)
-        x2 = fov_diamter/2.0 * np.cos(np.radians(-1*theta2+90))
-        y2 = fov_diamter/2.0 * np.sin(np.radians(-1*theta2+90))
-        ax.plot([x2, -x2], [y2, -y2], "--", c="black", lw=3.5)
-
         # add annotation comment
         if add_text==True:
             ax.plot([0,-5], [0,7.5], lw=3, c="black")
@@ -1025,6 +1018,14 @@ def myax_fig2png_ann(ax,number,ra_cnt,dec_cnt,add_text=True,txtfiles=None):
                 horizontalalignment="left", verticalalignment="center", weight="bold")
             ax.text(8.5, 7.3, "boundary",
                 horizontalalignment="left", verticalalignment="center", weight="bold")
+
+            # plot NGC 1068 AGN and outflow geometry
+            x1 = fov_diamter/2.0 * np.cos(np.radians(-1*theta1+90))
+            y1 = fov_diamter/2.0 * np.sin(np.radians(-1*theta1+90))
+            ax.plot([x1, -x1], [y1, -y1], "--", c="black", lw=3.5)
+            x2 = fov_diamter/2.0 * np.cos(np.radians(-1*theta2+90))
+            y2 = fov_diamter/2.0 * np.sin(np.radians(-1*theta2+90))
+            ax.plot([x2, -x2], [y2, -y2], "--", c="black", lw=3.5)
 
     #######################################
     # Figure 1 of the NGC 1068 CI outflow #
