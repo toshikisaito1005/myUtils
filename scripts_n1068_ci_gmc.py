@@ -179,12 +179,15 @@ class ToolsCIGMC():
         # output png
         self.outpng_cprops_co10_agn  = self.dir_products + self._read_key("outpng_cprops_co10_agn")
         self.outpng_cprops_ci10_agn  = self.dir_products + self._read_key("outpng_cprops_ci10_agn")
+        self.outpng_cprops_ci10_co10_agn = self.dir_products + self._read_key("outpng_cprops_ci10_co10_agn")
 
         self.outpng_cprops_co10_fov2 = self.dir_products + self._read_key("outpng_cprops_co10_fov2")
         self.outpng_cprops_ci10_fov2 = self.dir_products + self._read_key("outpng_cprops_ci10_fov2")
+        self.outpng_cprops_ci10_co10_fov2 = self.dir_products + self._read_key("outpng_cprops_ci10_co10_fov2")
 
         self.outpng_cprops_co10_fov3 = self.dir_products + self._read_key("outpng_cprops_co10_fov3")
         self.outpng_cprops_ci10_fov3 = self.dir_products + self._read_key("outpng_cprops_ci10_fov3")
+        self.outpng_cprops_ci10_co10_fov3 = self.dir_products + self._read_key("outpng_cprops_ci10_co10_fov3")
 
         self.outpng_ci_hist_rad   = self.dir_products + self._read_key("outpng_ci_hist_rad")
         self.outpng_ci_hist_sigv  = self.dir_products + self._read_key("outpng_ci_hist_sigv")
