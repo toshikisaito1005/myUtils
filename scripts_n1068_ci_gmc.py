@@ -159,7 +159,7 @@ class ToolsCIGMC():
         self.theta2      = -1 * 70.0  + 90.0 # 20
         self.fov_diamter = 16.5
 
-        self.snr_cprops = 7.0
+        self.snr_cprops = 5.0
         self.alpha_ci   = 15.0
         self.alpha_co   = 1.0
 
