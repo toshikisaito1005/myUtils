@@ -572,7 +572,7 @@ class ToolsCIGMC():
         ################
         # plot: radius #
         ################
-        xlim   = [0.4*72-10,2.0*72+10]
+        xlim   = None#[0.4*72-10,2.0*72+10]
         ylim   = None
         title  = "Cloud radius"
         xlabel = "Radius (pc)"
@@ -602,7 +602,7 @@ class ToolsCIGMC():
         ###############
         # plot: sigma #
         ###############
-        xlim   = [0,35]
+        xlim   = None#[0,35]
         ylim   = None
         title  = "Cloud velocity dispersion"
         xlabel = "Velocity dispersion (km s$^{-1}$)"
@@ -632,7 +632,7 @@ class ToolsCIGMC():
         ##############
         # plot: mvir #
         ##############
-        xlim   = [5.4,8.0]
+        xlim   = None#[5.4,8.0]
         ylim   = None
         title  = "Cloud virial mass"
         xlabel = "Virial mass ($M_{\odot}$)"
