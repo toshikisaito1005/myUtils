@@ -1012,7 +1012,6 @@ class ToolsCIGMC():
             ra_cnt    = str(self.ra_agn) + "deg",
             dec_cnt   = str(self.dec_agn) + "deg",
             numann    = "ci-gmc",
-            textann   = False,
             txtfiles  = this_tb,
             set_title = linename + " Cloud Catalog",
             scalebar  = scalebar,
