@@ -502,12 +502,12 @@ class ToolsCIGMC():
         myax_set(ax1, "both", xlim, ylim, title, xlabel, ylabel, adjust=ad)
 
         ax1.scatter(np.log10(radius_co_cone*2.0), np.log10(sigv_co_cone), lw=0, s=200, color="deepskyblue", alpha=1.0)
-        ax1.scatter(np.log10(radius_co_nocone*2.0), np.log10(sigv_co_nocone), lw=0, s=100, color="deepskyblue", alpha=0.5)
-        ax1.scatter(np.log10(radius_co_sbr*2.0), np.log10(sigv_co_sbr), lw=0, s=100, color="deepskyblue", alpha=0.5)
+        ax1.scatter(np.log10(radius_co_nocone*2.0), np.log10(sigv_co_nocone), lw=0, s=100, color="deepskyblue", alpha=0.3)
+        ax1.scatter(np.log10(radius_co_sbr*2.0), np.log10(sigv_co_sbr), lw=0, s=100, color="deepskyblue", alpha=0.3)
 
         ax1.scatter(np.log10(radius_ci_cone*2.0), np.log10(sigv_ci_cone), lw=0, s=200, color="tomato", alpha=1.0)
-        ax1.scatter(np.log10(radius_ci_nocone*2.0), np.log10(sigv_ci_nocone), lw=0, s=100, color="tomato", alpha=0.5)
-        ax1.scatter(np.log10(radius_ci_sbr*2.0), np.log10(sigv_ci_sbr), lw=0, s=100, color="tomato", alpha=0.5)
+        ax1.scatter(np.log10(radius_ci_nocone*2.0), np.log10(sigv_ci_nocone), lw=0, s=100, color="tomato", alpha=0.3)
+        ax1.scatter(np.log10(radius_ci_sbr*2.0), np.log10(sigv_ci_sbr), lw=0, s=100, color="tomato", alpha=0.3)
 
         # save
         os.system("rm -rf " + self.outpng_cico_larson_1st)
@@ -529,12 +529,12 @@ class ToolsCIGMC():
         myax_set(ax1, "both", xlim, ylim, title, xlabel, ylabel, adjust=ad)
 
         ax1.scatter(np.log10(lci_co_cone*self.alpha_co), np.log10(sigv_co_cone), lw=0, s=200, color="deepskyblue", alpha=1.0)
-        ax1.scatter(np.log10(lci_co_nocone*self.alpha_co), np.log10(sigv_co_nocone), lw=0, s=100, color="deepskyblue", alpha=0.5)
-        ax1.scatter(np.log10(lci_co_sbr*self.alpha_co), np.log10(sigv_co_sbr), lw=0, s=100, color="deepskyblue", alpha=0.5)
+        ax1.scatter(np.log10(lci_co_nocone*self.alpha_co), np.log10(sigv_co_nocone), lw=0, s=100, color="deepskyblue", alpha=0.3)
+        ax1.scatter(np.log10(lci_co_sbr*self.alpha_co), np.log10(sigv_co_sbr), lw=0, s=100, color="deepskyblue", alpha=0.3)
 
         ax1.scatter(np.log10(lci_ci_cone*self.alpha_ci), np.log10(sigv_ci_cone), lw=0, s=200, color="tomato", alpha=1.0)
-        ax1.scatter(np.log10(lci_ci_nocone*self.alpha_ci), np.log10(sigv_ci_nocone), lw=0, s=100, color="tomato", alpha=0.5)
-        ax1.scatter(np.log10(lci_ci_sbr*self.alpha_ci), np.log10(sigv_ci_sbr), lw=0, s=100, color="tomato", alpha=0.5)
+        ax1.scatter(np.log10(lci_ci_nocone*self.alpha_ci), np.log10(sigv_ci_nocone), lw=0, s=100, color="tomato", alpha=0.3)
+        ax1.scatter(np.log10(lci_ci_sbr*self.alpha_ci), np.log10(sigv_ci_sbr), lw=0, s=100, color="tomato", alpha=0.3)
 
         # save
         os.system("rm -rf " + self.outpng_cico_larson_2nd)
@@ -563,12 +563,12 @@ class ToolsCIGMC():
         myax_set(ax1, "both", xlim, ylim, title, xlabel, ylabel, adjust=ad)
 
         ax1.scatter(np.log10(radius_co_cone*2.0), np.log10(density_co_cone), lw=0, s=200, color="deepskyblue", alpha=1.0)
-        ax1.scatter(np.log10(radius_co_nocone*2.0), np.log10(density_co_nocone), lw=0, s=100, color="deepskyblue", alpha=0.5)
-        ax1.scatter(np.log10(radius_co_sbr*2.0), np.log10(density_co_sbr), lw=0, s=100, color="deepskyblue", alpha=0.5)
+        ax1.scatter(np.log10(radius_co_nocone*2.0), np.log10(density_co_nocone), lw=0, s=100, color="deepskyblue", alpha=0.3)
+        ax1.scatter(np.log10(radius_co_sbr*2.0), np.log10(density_co_sbr), lw=0, s=100, color="deepskyblue", alpha=0.3)
 
         ax1.scatter(np.log10(radius_ci_cone*2.0), np.log10(density_ci_cone), lw=0, s=200, color="tomato", alpha=1.0)
-        ax1.scatter(np.log10(radius_ci_nocone*2.0), np.log10(density_ci_nocone), lw=0, s=100, color="tomato", alpha=0.5)
-        ax1.scatter(np.log10(radius_ci_sbr*2.0), np.log10(density_ci_sbr), lw=0, s=100, color="tomato", alpha=0.5)
+        ax1.scatter(np.log10(radius_ci_nocone*2.0), np.log10(density_ci_nocone), lw=0, s=100, color="tomato", alpha=0.3)
+        ax1.scatter(np.log10(radius_ci_sbr*2.0), np.log10(density_ci_sbr), lw=0, s=100, color="tomato", alpha=0.3)
 
         # save
         os.system("rm -rf " + self.outpng_cico_larson_3rd)
