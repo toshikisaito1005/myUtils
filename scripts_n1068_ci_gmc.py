@@ -515,8 +515,8 @@ class ToolsCIGMC():
         ax1.scatter(np.log10(radius_co_sbr*2.0), np.log10(sigv_co_sbr), lw=0, s=100, color="deepskyblue", alpha=0.3)
 
         X, Y, Z = density_estimation(
-            np_r[np.log10(radius_co_cone*2.0),np.log10(radius_co_nocone*2.0),np.log10(radius_co_sbr*2.0)],
-            np_r[np.log10(sigv_co_cone),np.log10(sigv_co_nocone),np.log10(sigv_co_sbr)],
+            np.r_[np.log10(radius_co_cone*2.0),np.log10(radius_co_nocone*2.0),np.log10(radius_co_sbr*2.0)],
+            np.r_[np.log10(sigv_co_cone),np.log10(sigv_co_nocone),np.log10(sigv_co_sbr)],
             )
         ax1.contour(X, Y, Z)
 
