@@ -545,7 +545,7 @@ class ToolsCIGMC():
 
         # fill
         ax1.axvspan(xlim[0], np.log10(55*2), color='grey', alpha=.5, lw=0)
-        ax.axvspan(np.log10(55*2), xlim[1], ylim[0], np.log10(2.6), color='grey', alpha=.5, lw=0)
+        ax1.axvspan(np.log10(55*2), xlim[1], ylim[0], np.log10(2.6), color='grey', alpha=.5, lw=0)
 
         # save
         os.system("rm -rf " + self.outpng_cico_larson_1st)
