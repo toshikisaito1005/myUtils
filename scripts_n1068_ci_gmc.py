@@ -532,7 +532,7 @@ class ToolsCIGMC():
 
         # plot larson
         x1 = xlim[0]
-        x2 = ylim[1]
+        x2 = xlim[1]
         y1 = np.log10(1.10 * (10**x1)**0.38)
         y2 = np.log10(1.10 * (10**x2)**0.38)
         ax1.plot([x1,x2],[y1,y2],"--",lw=3,color="grey")
