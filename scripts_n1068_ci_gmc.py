@@ -544,7 +544,7 @@ class ToolsCIGMC():
         ax1.text(0.03, 0.78, "CO (non-outflow)", color="deepskyblue", transform=ax1.transAxes, fontsize=24)
 
         # fill
-        plt.fill_betweenx(ylim[1], xlim[0], np.log10(55*2), color='grey', alpha=.5)
+        ax1.axvspan(xlim[0], np.log10(55*2), color='grey', alpha=.5)
 
         # save
         os.system("rm -rf " + self.outpng_cico_larson_1st)
