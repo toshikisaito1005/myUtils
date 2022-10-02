@@ -530,6 +530,13 @@ class ToolsCIGMC():
             xlim, ylim)
         ax1.contour(X, Y, Z, colors="red")
 
+        # plot larson
+        x1 = xlim[0]
+        x2 = ylim[1]
+        y1 = np.log10(1.10 * (10**x1)**0.38)
+        y2 = np.log10(1.10 * (10**x2)**0.38)
+        ax1.plot([x1,x2],[y1,y2],"--",lw=3,color="grey")
+
         # save
         os.system("rm -rf " + self.outpng_cico_larson_1st)
         plt.savefig(self.outpng_cico_larson_1st, dpi=self.fig_dpi)
