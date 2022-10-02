@@ -518,7 +518,7 @@ class ToolsCIGMC():
             np.r_[np.log10(radius_co_cone*2.0),np.log10(radius_co_nocone*2.0),np.log10(radius_co_sbr*2.0)],
             np.r_[np.log10(sigv_co_cone),np.log10(sigv_co_nocone),np.log10(sigv_co_sbr)],
             xlim, ylim)
-        ax1.contour(X, Y, Z, c="blue")
+        ax1.contour(X, Y, Z, colors="blue")
 
         ax1.scatter(np.log10(radius_ci_cone*2.0), np.log10(sigv_ci_cone), lw=0, s=200, color="tomato", alpha=1.0)
         ax1.scatter(np.log10(radius_ci_nocone*2.0), np.log10(sigv_ci_nocone), lw=0, s=100, color="tomato", alpha=0.3)
@@ -528,7 +528,7 @@ class ToolsCIGMC():
             np.r_[np.log10(radius_ci_cone*2.0),np.log10(radius_ci_nocone*2.0),np.log10(radius_ci_sbr*2.0)],
             np.r_[np.log10(sigv_ci_cone),np.log10(sigv_ci_nocone),np.log10(sigv_ci_sbr)],
             xlim, ylim)
-        ax1.contour(X, Y, Z, c="red")
+        ax1.contour(X, Y, Z, colors="red")
 
         # save
         os.system("rm -rf " + self.outpng_cico_larson_1st)
