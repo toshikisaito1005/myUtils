@@ -45,8 +45,6 @@ outfits_mom0_ratio ,,,n1068_ratio_mom0.fits
 ######################
 # output png and txt #
 ######################
-# fits files
-
 # text files
 
 # png files
@@ -71,6 +69,9 @@ outpng_co_hist_mvir          ,,,outpng_co_hist_mvir.png
 outpng_co_larson_1st         ,,,outpng_co_larson_1st.png
 outpng_co_larson_2nd         ,,,outpng_co_larson_2nd.png
 outpng_co_larson_3rd         ,,,outpng_co_larson_3rd.png
+outpng_cico_larson_1st       ,,,outpng_cico_larson_1st.png
+outpng_cico_larson_2nd       ,,,outpng_cico_larson_2nd.png
+outpng_cico_larson_3rd       ,,,outpng_cico_larson_3rd.png
 outpng_map_ratio             ,,,outpng_map_ratio.png
 
 # box for imagemajick

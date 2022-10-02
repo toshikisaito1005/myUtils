@@ -141,10 +141,10 @@ class ToolsCIGMC():
         # ngc1068 properties
         self.ra_agn    = float(self._read_key("ra_agn", "gal").split("deg")[0])
         self.dec_agn   = float(self._read_key("dec_agn", "gal").split("deg")[0])
-        self.ra_fov2   = 40.6679
-        self.dec_fov2  = -0.0171116
-        self.ra_fov3   = 40.675
-        self.dec_fov3  = -0.012926
+        self.ra_fov2   = float(self._read_key("ra_fov2", "gal").split("deg")[0])
+        self.dec_fov2  = float(self._read_key("dec_fov2", "gal").split("deg")[0])
+        self.ra_fov3   = float(self._read_key("ra_fov3", "gal").split("deg")[0])
+        self.dec_fov3  = float(self._read_key("dec_fov3", "gal").split("deg")[0])
         self.scale_pc  = float(self._read_key("scale", "gal"))
         self.scale_kpc = self.scale_pc / 1000.
 
@@ -160,7 +160,7 @@ class ToolsCIGMC():
         self.fov_diamter = 16.5
 
         self.snr_cprops = 5.0
-        self.alpha_ci   = 15.0
+        self.alpha_ci   = 12.0
         self.alpha_co   = 1.0
 
         self.imsize_as  = 18
@@ -177,33 +177,37 @@ class ToolsCIGMC():
         """
 
         # output png
-        self.outpng_cprops_co10_agn  = self.dir_products + self._read_key("outpng_cprops_co10_agn")
-        self.outpng_cprops_ci10_agn  = self.dir_products + self._read_key("outpng_cprops_ci10_agn")
-        self.outpng_cprops_ci10_co10_agn = self.dir_products + self._read_key("outpng_cprops_ci10_co10_agn")
+        self.outpng_cprops_co10_agn       = self.dir_products + self._read_key("outpng_cprops_co10_agn")
+        self.outpng_cprops_ci10_agn       = self.dir_products + self._read_key("outpng_cprops_ci10_agn")
+        self.outpng_cprops_ci10_co10_agn  = self.dir_products + self._read_key("outpng_cprops_ci10_co10_agn")
 
-        self.outpng_cprops_co10_fov2 = self.dir_products + self._read_key("outpng_cprops_co10_fov2")
-        self.outpng_cprops_ci10_fov2 = self.dir_products + self._read_key("outpng_cprops_ci10_fov2")
+        self.outpng_cprops_co10_fov2      = self.dir_products + self._read_key("outpng_cprops_co10_fov2")
+        self.outpng_cprops_ci10_fov2      = self.dir_products + self._read_key("outpng_cprops_ci10_fov2")
         self.outpng_cprops_ci10_co10_fov2 = self.dir_products + self._read_key("outpng_cprops_ci10_co10_fov2")
 
-        self.outpng_cprops_co10_fov3 = self.dir_products + self._read_key("outpng_cprops_co10_fov3")
-        self.outpng_cprops_ci10_fov3 = self.dir_products + self._read_key("outpng_cprops_ci10_fov3")
+        self.outpng_cprops_co10_fov3      = self.dir_products + self._read_key("outpng_cprops_co10_fov3")
+        self.outpng_cprops_ci10_fov3      = self.dir_products + self._read_key("outpng_cprops_ci10_fov3")
         self.outpng_cprops_ci10_co10_fov3 = self.dir_products + self._read_key("outpng_cprops_ci10_co10_fov3")
 
-        self.outpng_ci_hist_rad   = self.dir_products + self._read_key("outpng_ci_hist_rad")
-        self.outpng_ci_hist_sigv  = self.dir_products + self._read_key("outpng_ci_hist_sigv")
-        self.outpng_ci_hist_mvir  = self.dir_products + self._read_key("outpng_ci_hist_mvir")
-        self.outpng_ci_larson_1st = self.dir_products + self._read_key("outpng_ci_larson_1st")
-        self.outpng_ci_larson_2nd = self.dir_products + self._read_key("outpng_ci_larson_2nd")
-        self.outpng_ci_larson_3rd = self.dir_products + self._read_key("outpng_ci_larson_3rd")
+        self.outpng_ci_hist_rad           = self.dir_products + self._read_key("outpng_ci_hist_rad")
+        self.outpng_ci_hist_sigv          = self.dir_products + self._read_key("outpng_ci_hist_sigv")
+        self.outpng_ci_hist_mvir          = self.dir_products + self._read_key("outpng_ci_hist_mvir")
+        self.outpng_ci_larson_1st         = self.dir_products + self._read_key("outpng_ci_larson_1st")
+        self.outpng_ci_larson_2nd         = self.dir_products + self._read_key("outpng_ci_larson_2nd")
+        self.outpng_ci_larson_3rd         = self.dir_products + self._read_key("outpng_ci_larson_3rd")
 
-        self.outpng_co_hist_rad   = self.dir_products + self._read_key("outpng_co_hist_rad")
-        self.outpng_co_hist_sigv  = self.dir_products + self._read_key("outpng_co_hist_sigv")
-        self.outpng_co_hist_mvir  = self.dir_products + self._read_key("outpng_co_hist_mvir")
-        self.outpng_co_larson_1st = self.dir_products + self._read_key("outpng_co_larson_1st")
-        self.outpng_co_larson_2nd = self.dir_products + self._read_key("outpng_co_larson_2nd")
-        self.outpng_co_larson_3rd = self.dir_products + self._read_key("outpng_co_larson_3rd")
+        self.outpng_co_hist_rad           = self.dir_products + self._read_key("outpng_co_hist_rad")
+        self.outpng_co_hist_sigv          = self.dir_products + self._read_key("outpng_co_hist_sigv")
+        self.outpng_co_hist_mvir          = self.dir_products + self._read_key("outpng_co_hist_mvir")
+        self.outpng_co_larson_1st         = self.dir_products + self._read_key("outpng_co_larson_1st")
+        self.outpng_co_larson_2nd         = self.dir_products + self._read_key("outpng_co_larson_2nd")
+        self.outpng_co_larson_3rd         = self.dir_products + self._read_key("outpng_co_larson_3rd")
 
-        self.outpng_map_ratio     = self.dir_products + self._read_key("outpng_map_ratio")
+        self.outpng_cico_larson_1st       = self.dir_products + self._read_key("outpng_cico_larson_1st")
+        self.outpng_cico_larson_2nd       = self.dir_products + self._read_key("outpng_cico_larson_2nd")
+        self.outpng_cico_larson_3rd       = self.dir_products + self._read_key("outpng_cico_larson_3rd")
+
+        self.outpng_map_ratio             = self.dir_products + self._read_key("outpng_map_ratio")
 
         # final
         print("TBE.")
@@ -290,6 +294,7 @@ class ToolsCIGMC():
         if plot_larson==True:
             self.plot_ci_larson()
             self.plot_co_larson()
+            self.plot_cico_larson()
 
         if plot_map==True:
             self.plot_map()
@@ -460,6 +465,118 @@ class ToolsCIGMC():
         # save
         os.system("rm -rf " + self.outpng_co_larson_3rd)
         plt.savefig(self.outpng_co_larson_3rd, dpi=self.fig_dpi)
+
+    ####################
+    # plot_cico_larson #
+    ####################
+
+    def plot_cico_larson(
+        self,
+        ):
+        """
+        """
+
+        taskname = self.modname + sys._getframe().f_code.co_name
+        check_first(self.cprops_ci10,taskname)
+
+        x_ci_cone, y_ci_cone, radius_ci_cone, sigv_ci_cone, mvir_ci_cone, tpeak_ci_cone, lci_ci_cone, \
+            x_ci_nocone, y_ci_nocone, radius_ci_nocone, sigv_ci_nocone, mvir_ci_nocone, tpeak_ci_nocone, lci_ci_nocone, \
+            x_ci_sbr, y_ci_sbr, radius_ci_sbr, sigv_ci_sbr, mvir_ci_sbr, tpeak_ci_sbr, lci_ci_sbr = self._import_cprops_table(self.cprops_ci10)
+        x_co_cone, y_co_cone, radius_co_cone, sigv_co_cone, mvir_co_cone, tpeak_co_cone, lci_co_cone, \
+            x_co_nocone, y_co_nocone, radius_co_nocone, sigv_co_nocone, mvir_co_nocone, tpeak_co_nocone, lci_co_nocone, \
+            x_co_sbr, y_co_sbr, radius_co_sbr, sigv_co_sbr, mvir_co_sbr, tpeak_co_sbr, lci_co_sbr = self._import_cprops_table(self.cprops_co10)
+
+        mvir_cone   = 10**mvir_cone
+        mvir_nocone = 10**mvir_nocone
+        mvir_sbr    = 10**mvir_sbr
+
+        ####################
+        # plot: larson 1st #
+        ####################
+        xlim   = self.xlim_larson_1st
+        ylim   = self.ylim_larson_1st
+        title  = "Larson's 1st law"
+        xlabel = "log Diameter (pc)"
+        ylabel = "log velocity dispersion (km s$^{-1}$)"
+
+        fig = plt.figure(figsize=(13,10))
+        gs  = gridspec.GridSpec(nrows=10, ncols=10)
+        ax1 = plt.subplot(gs[0:10,0:10])
+        ad  = [0.215,0.83,0.10,0.90]
+        myax_set(ax1, "both", xlim, ylim, title, xlabel, ylabel, adjust=ad)
+
+        ax1.scatter(np.log10(radius_co_cone*2.0), np.log10(sigv_co_cone), lw=0, s=200, color="deepskyblue", alpha=0.5)
+        ax1.scatter(np.log10(radius_co_nocone*2.0), np.log10(sigv_co_nocone), lw=0, s=100, color="deepskyblue", alpha=0.5)
+        ax1.scatter(np.log10(radius_co_sbr*2.0), np.log10(sigv_co_sbr), lw=0, s=100, color="deepskyblue", alpha=0.5)
+
+        ax1.scatter(np.log10(radius_ci_cone*2.0), np.log10(sigv_ci_cone), lw=0, s=200, color="tomato", alpha=0.5)
+        ax1.scatter(np.log10(radius_ci_nocone*2.0), np.log10(sigv_ci_nocone), lw=0, s=100, color="tomato", alpha=0.5)
+        ax1.scatter(np.log10(radius_ci_sbr*2.0), np.log10(sigv_ci_sbr), lw=0, s=100, color="tomato", alpha=0.5)
+
+        # save
+        os.system("rm -rf " + self.outpng_cico_larson_1st)
+        plt.savefig(self.outpng_cico_larson_1st, dpi=self.fig_dpi)
+
+        ####################
+        # plot: larson 2nd #
+        ####################
+        xlim   = self.xlim_larson_2nd
+        ylim   = self.ylim_larson_2nd
+        title  = "Larson's 2nd law"
+        xlabel = "log M(H$_2$) ($M_{\odot}$)"
+        ylabel = "log velocity dispersion (km s$^{-1}$)"
+
+        fig = plt.figure(figsize=(13,10))
+        gs  = gridspec.GridSpec(nrows=10, ncols=10)
+        ax1 = plt.subplot(gs[0:10,0:10])
+        ad  = [0.215,0.83,0.10,0.90]
+        myax_set(ax1, "both", xlim, ylim, title, xlabel, ylabel, adjust=ad)
+
+        ax1.scatter(np.log10(lci_co_cone*self.alpha_co), np.log10(sigv_co_cone), lw=0, s=200, color="deepskyblue", alpha=0.5)
+        ax1.scatter(np.log10(lci_co_nocone*self.alpha_co), np.log10(sigv_co_nocone), lw=0, s=100, color="deepskyblue", alpha=0.5)
+        ax1.scatter(np.log10(lci_co_sbr*self.alpha_co), np.log10(sigv_co_sbr), lw=0, s=100, color="deepskyblue", alpha=0.5)
+
+        ax1.scatter(np.log10(lci_ci_cone*self.alpha_ci), np.log10(sigv_ci_cone), lw=0, s=200, color="tomato", alpha=0.5)
+        ax1.scatter(np.log10(lci_ci_nocone*self.alpha_ci), np.log10(sigv_ci_nocone), lw=0, s=100, color="tomato", alpha=0.5)
+        ax1.scatter(np.log10(lci_ci_sbr*self.alpha_ci), np.log10(sigv_ci_sbr), lw=0, s=100, color="tomato", alpha=0.5)
+
+        # save
+        os.system("rm -rf " + self.outpng_cico_larson_2nd)
+        plt.savefig(self.outpng_cico_larson_2nd, dpi=self.fig_dpi)
+
+        ####################
+        # plot: larson 3rd #
+        ####################
+        density_co_cone   = lci_co_cone*self.alpha_co/(4./3.*np.pi*radius_co_cone**3)
+        density_co_nocone = lci_co_nocone*self.alpha_co/(4./3.*np.pi*radius_co_nocone**3)
+        density_co_sbr    = lci_co_sbr*self.alpha_co/(4./3.*np.pi*radius_co_sbr**3)
+        density_ci_cone   = lci_ci_cone*self.alpha_ci/(4./3.*np.pi*radius_ci_cone**3)
+        density_ci_nocone = lci_ci_nocone*self.alpha_ci/(4./3.*np.pi*radius_ci_nocone**3)
+        density_ci_sbr    = lci_ci_sbr*self.alpha_ci/(4./3.*np.pi*radius_ci_sbr**3)
+
+        xlim   = self.xlim_larson_3rd
+        ylim   = self.ylim_larson_3rd
+        title  = "Larson's 3rd law"
+        xlabel = "log Diameter (pc)"
+        ylabel = "log Volume density (cm$^{-3}$)"
+
+        fig = plt.figure(figsize=(13,10))
+        gs  = gridspec.GridSpec(nrows=10, ncols=10)
+        ax1 = plt.subplot(gs[0:10,0:10])
+        ad  = [0.215,0.83,0.10,0.90]
+        myax_set(ax1, "both", xlim, ylim, title, xlabel, ylabel, adjust=ad)
+
+        ax1.scatter(np.log10(radius_co_cone*2.0), np.log10(density_co_cone), lw=0, s=200, color="deepskyblue", alpha=0.5)
+        ax1.scatter(np.log10(radius_co_nocone*2.0), np.log10(density_co_nocone), lw=0, s=100, color="deepskyblue", alpha=0.5)
+        ax1.scatter(np.log10(radius_co_sbr*2.0), np.log10(density_co_sbr), lw=0, s=100, color="deepskyblue", alpha=0.5)
+
+        ax1.scatter(np.log10(radius_ci_cone*2.0), np.log10(density_ci_cone), lw=0, s=200, color="tomato", alpha=0.5)
+        ax1.scatter(np.log10(radius_ci_nocone*2.0), np.log10(density_ci_nocone), lw=0, s=100, color="tomato", alpha=0.5)
+        ax1.scatter(np.log10(radius_ci_sbr*2.0), np.log10(density_ci_sbr), lw=0, s=100, color="tomato", alpha=0.5)
+
+        # save
+        os.system("rm -rf " + self.outpng_cico_larson_3rd)
+        plt.savefig(self.outpng_cico_larson_3rd, dpi=self.fig_dpi)
 
     ##################
     # plot_ci_larson #

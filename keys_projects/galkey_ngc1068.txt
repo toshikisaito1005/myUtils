@@ -22,6 +22,10 @@ ra_wknot   ,,,40.669125deg
 dec_wknot  ,,,-0.01354528deg
 ra_sbr     ,,,40.66800417deg
 dec_sbr    ,,,-0.01721417deg
+ra_fov2    ,,,40.6679deg
+dec_fov2   ,,,-0.0171116deg
+ra_fov3    ,,,40.675deg
+dec_fov3   ,,,-0.012926deg
 vsys       ,,,1116kms
 #######
 # end #
