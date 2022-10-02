@@ -538,10 +538,10 @@ class ToolsCIGMC():
         ax1.plot([x1,x2],[y1,y2],"--",lw=3,color="grey")
 
         # text
-        ax.text(0.03, 0.93, "[CI] (outflow)", color="tomato", transform=ax.transAxes, weight="bold", fontsize=24)
-        ax.text(0.03, 0.88, "[CI] (non-outflow)", color="tomato", transform=ax.transAxes, fontsize=24)
-        ax.text(0.03, 0.83, "CO (outflow)", color="deepskyblue", transform=ax.transAxes, weight="bold", fontsize=24)
-        ax.text(0.03, 0.78, "CO (non-outflow)", color="deepskyblue", transform=ax.transAxes, fontsize=24)
+        ax.text(0.03, 0.93, "[CI] (outflow)", color="tomato", transform=ax1.transAxes, weight="bold", fontsize=24)
+        ax.text(0.03, 0.88, "[CI] (non-outflow)", color="tomato", transform=ax1.transAxes, fontsize=24)
+        ax.text(0.03, 0.83, "CO (outflow)", color="deepskyblue", transform=ax1.transAxes, weight="bold", fontsize=24)
+        ax.text(0.03, 0.78, "CO (non-outflow)", color="deepskyblue", transform=ax1.transAxes, fontsize=24)
 
         # save
         os.system("rm -rf " + self.outpng_cico_larson_1st)
