@@ -486,10 +486,6 @@ class ToolsCIGMC():
             x_co_nocone, y_co_nocone, radius_co_nocone, sigv_co_nocone, mvir_co_nocone, tpeak_co_nocone, lci_co_nocone, \
             x_co_sbr, y_co_sbr, radius_co_sbr, sigv_co_sbr, mvir_co_sbr, tpeak_co_sbr, lci_co_sbr = self._import_cprops_table(self.cprops_co10)
 
-        mvir_cone   = 10**mvir_cone
-        mvir_nocone = 10**mvir_nocone
-        mvir_sbr    = 10**mvir_sbr
-
         ####################
         # plot: larson 1st #
         ####################
