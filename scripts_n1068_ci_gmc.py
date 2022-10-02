@@ -41,9 +41,18 @@ Toshiki Saito@Nichidai/NAOJ
 
 import os, sys, glob
 import numpy as np
+ from scipy import stats
 
 from mycasa_tasks import *
 from mycasa_plots import *
+
+def density_estimation(m1, m2):
+    X, Y = np.mgrid[np.min(m1):np.max(m1):100j, np.min(m2):np.max(m2):100j]
+    positions = np.vstack([X.ravel(), Y.ravel()])
+    values = np.vstack([m1, m2])
+    kernel = stats.gaussian_kde(values)
+    Z = np.reshape(kernel(positions).T, X.shape)
+    return X, Y, Z
 
 ############
 # ToolsPCA #
@@ -504,6 +513,12 @@ class ToolsCIGMC():
         ax1.scatter(np.log10(radius_co_cone*2.0), np.log10(sigv_co_cone), lw=0, s=200, color="deepskyblue", alpha=1.0)
         ax1.scatter(np.log10(radius_co_nocone*2.0), np.log10(sigv_co_nocone), lw=0, s=100, color="deepskyblue", alpha=0.3)
         ax1.scatter(np.log10(radius_co_sbr*2.0), np.log10(sigv_co_sbr), lw=0, s=100, color="deepskyblue", alpha=0.3)
+
+        X, Y, Z = density_estimation(
+            np_r[np.log10(radius_co_cone*2.0),np.log10(radius_co_nocone*2.0),np.log10(radius_co_sbr*2.0)],
+            np_r[np.log10(sigv_co_cone),np.log10(sigv_co_nocone),np.log10(sigv_co_sbr)],
+            )
+        ax1.contour(X, Y, Z)
 
         ax1.scatter(np.log10(radius_ci_cone*2.0), np.log10(sigv_ci_cone), lw=0, s=200, color="tomato", alpha=1.0)
         ax1.scatter(np.log10(radius_ci_nocone*2.0), np.log10(sigv_ci_nocone), lw=0, s=100, color="tomato", alpha=0.3)
