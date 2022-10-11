@@ -315,6 +315,7 @@ class ToolsR21():
         run_imregrid(outcube2+"_tmp1",outcube1+"_tmp2",outcube2+"_tmp1p5",
             axes=[0,1])
 
+        os.system("rm -rf " + outcube1 + "_tmp1")
         os.system("rm -rf " + outcube2 + "_tmp1")
         run_imregrid(outcube2+"_tmp1p5",outcube1+"_tmp2",outcube2+"_tmp2")
         os.system("rm -rf " + outcube2 + "_tmp1p5")
@@ -336,6 +337,8 @@ class ToolsR21():
         run_immath_two(outcube1+"_tmp3p5",outcube1+"_combined_mask",outcube1+"_tmp4","iif(IM1>0,IM0,0)")
         run_immath_two(outcube2+"_tmp3p5",outcube1+"_combined_mask",outcube2+"_tmp4","iif(IM1>0,IM0,0)",
             delin=True)
+        os.system("rm -rf " + outcube1 + "_tmp3p5")
+        os.system("rm -rf " + outcube2 + "_tmp3p5")
 
         imhead(outcube1+"_tmp4",mode="put",hdkey="beamminor",hdvalue=str(beam)+"arcsec")
         imhead(outcube1+"_tmp4",mode="put",hdkey="beammajor",hdvalue=str(beam)+"arcsec")
