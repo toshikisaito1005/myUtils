@@ -283,6 +283,9 @@ def make_gridtemplate(
     myia.setcoordsys(mycs.torecord())
     myia.setbrightnessunit("Jy/pixel")
     myia.modify(mycl.torecord(),subtract=False)
+    myia.close()
+    mycl.close()
+    
     exportfits(imagename="template.im",
                fitsimage="template.fits",
                overwrite=True)
@@ -291,8 +294,6 @@ def make_gridtemplate(
     importfits(fitsimage="template.fits",
                imagename="template.image")
 
-    myia.close()
-    mycl.close()
     #
     os.system("rm -rf template.im template.fits")
 

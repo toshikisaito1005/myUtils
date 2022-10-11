@@ -269,6 +269,7 @@ class ToolsR21():
             self.outcube_co10_n0628,self.outcube_co21_n0628,self.basebeam_n0628,
             self.imsize_n0628,self.ra_n0628,self.dec_n0628,self.chans_n0628)
 
+        """
         self._align_cube_gal(self.cube_co10_n3627,self.cube_co21_n3627,
             self.outcube_co10_n3627,self.outcube_co21_n3627,self.basebeam_n3627,
             self.imsize_n3627,self.ra_n3627,self.dec_n3627,self.chans_n3627)
@@ -280,6 +281,7 @@ class ToolsR21():
         self._align_cube_gal(self.cube_co10_n4321,self.cube_co21_n4321,
             self.outcube_co10_n4321,self.outcube_co21_n4321,self.basebeam_n4321,
             self.imsize_n4321,self.ra_n4321,self.dec_n4321,self.chans_n4321)
+        """
 
     ###################
     # _align_cube_gal #
