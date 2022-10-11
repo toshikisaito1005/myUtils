@@ -322,15 +322,19 @@ class ToolsR21():
         # clip edge channels
         run_immath_one(outcube1+"_tmp2",outcube1+"_tmp3","IM0",chans,delin=True)
         run_immath_one(outcube2+"_tmp2",outcube2+"_tmp3","IM0",chans,delin=True)
+        run_exportfits(outcube1+"_tmp3",outcube1+"_tmp3.fits",delin=True)
+        run_exportfits(outcube2+"_tmp3",outcube2+"_tmp3.fits",delin=True)
+        run_importfits(outcube1+"_tmp3.fits",outcube1+"_tmp3p5",defaultaxes=True,delin=True)
+        run_importfits(outcube2+"_tmp3.fits",outcube2+"_tmp3p5",defaultaxes=True,delin=True)
 
         # masking
-        run_immath_one(outcube1+"_tmp3",outcube1+"_tmp4","iif(IM0>-10000000.0,1,0)", "")
-        run_immath_one(outcube2+"_tmp3",outcube2+"_tmp4","iif(IM0>-10000000.0,1,0)", "")
+        run_immath_one(outcube1+"_tmp3p5",outcube1+"_tmp4","iif(IM0>-10000000.0,1,0)", "")
+        run_immath_one(outcube2+"_tmp3p5",outcube2+"_tmp4","iif(IM0>-10000000.0,1,0)", "")
         run_immath_two(outcube1+"_tmp4",outcube2+"_tmp4",outcube1+"_combined_mask",
             "IM0*IM1",delin=True)
 
-        run_immath_two(outcube1+"_tmp3",outcube1+"_combined_mask",outcube1+"_tmp4","iif(IM1>0,IM0,0)")
-        run_immath_two(outcube2+"_tmp3",outcube1+"_combined_mask",outcube2+"_tmp4","iif(IM1>0,IM0,0)",
+        run_immath_two(outcube1+"_tmp3p5",outcube1+"_combined_mask",outcube1+"_tmp4","iif(IM1>0,IM0,0)")
+        run_immath_two(outcube2+"_tmp3p5",outcube1+"_combined_mask",outcube2+"_tmp4","iif(IM1>0,IM0,0)",
             delin=True)
 
         imhead(outcube1+"_tmp4",mode="put",hdkey="beamminor",hdvalue=str(beam)+"arcsec")
