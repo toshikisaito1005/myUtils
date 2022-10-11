@@ -269,7 +269,6 @@ class ToolsR21():
             self.outcube_co10_n0628,self.outcube_co21_n0628,self.basebeam_n0628,
             self.imsize_n0628,self.ra_n0628,self.dec_n0628,self.chans_n0628)
 
-        """
         self._align_cube_gal(self.cube_co10_n3627,self.cube_co21_n3627,
             self.outcube_co10_n3627,self.outcube_co21_n3627,self.basebeam_n3627,
             self.imsize_n3627,self.ra_n3627,self.dec_n3627,self.chans_n3627)
@@ -281,7 +280,6 @@ class ToolsR21():
         self._align_cube_gal(self.cube_co10_n4321,self.cube_co21_n4321,
             self.outcube_co10_n4321,self.outcube_co21_n4321,self.basebeam_n4321,
             self.imsize_n4321,self.ra_n4321,self.dec_n4321,self.chans_n4321)
-        """
 
     ###################
     # _align_cube_gal #
@@ -309,7 +307,6 @@ class ToolsR21():
         # staging cubes
         self._stage_cube(incube1,outcube1+"_tmp1",beam,imsize,ra,dec,115.27120)
         make_gridtemplate(outcube1+"_tmp1",outcube1+"_tmp2",imsize,ra,dec,beam)
-        """
         self._stage_cube(incube2,outcube2+"_tmp1",beam,imsize,ra,dec,230.53800)
 
         # align cubes
@@ -343,7 +340,6 @@ class ToolsR21():
 
         unitconv_Jyb_K(outcube1+"_tmp4",outcube1,115.27120,unitto="Jy/beam",delin=True)
         unitconv_Jyb_K(outcube2+"_tmp4",outcube2,230.53800,unitto="Jy/beam",delin=True)
-        """
 
     ###############
     # _stage_cube #
