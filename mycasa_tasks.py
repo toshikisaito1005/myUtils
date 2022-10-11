@@ -275,8 +275,8 @@ def make_gridtemplate(
     mycs.setunits(["rad","rad","","Hz"])
     cell_rad=myqa.convert(myqa.quantity(str(pix_size)+"arcsec"),"rad")["value"]
     mycs.setincrement([-cell_rad,cell_rad],"direction")
-    mycs.setreferencevalue([myqa.convert(direction_ra,"rad")["value"],
-                            myqa.convert(direction_dec,"rad")["value"]],
+    mycs.setreferencevalue([myqa.convert(ra_dgr,"rad")["value"],
+                            myqa.convert(dec_dgr,"rad")["value"]],
                            type="direction")
     mycs.setreferencevalue(str(obsfreq)+"GHz","spectral")
     mycs.setincrement("1GHz","spectral")
