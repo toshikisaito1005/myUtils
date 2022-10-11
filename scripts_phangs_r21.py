@@ -314,6 +314,7 @@ class ToolsR21():
         print(glob.glob(outcube1+"_tmp2"))
         run_imregrid(outcube2+"_tmp1",outcube1+"_tmp2",outcube2+"_tmp1p5",
             axes=[0,1])
+        
         os.system("rm -rf " + outcube2 + "_tmp1")
         run_imregrid(outcube2+"_tmp1p5",outcube1+"_tmp2",outcube2+"_tmp2")
         os.system("rm -rf " + outcube2 + "_tmp1p5")

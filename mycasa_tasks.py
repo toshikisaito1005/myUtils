@@ -268,6 +268,7 @@ def make_gridtemplate(
                       minoraxis="0.05arcmin",
                       positionangle="45.0deg")
 
+    os.system("rm -rf template.im")
     myia.fromshape("template.im",[size_x,size_y,1,1],overwrite=True)
     mycs=myia.coordsys()
     mycs.setunits(["rad","rad","","Hz"])
