@@ -307,6 +307,7 @@ class ToolsR21():
         # staging cubes
         self._stage_cube(incube1,outcube1+"_tmp1",beam,imsize,ra,dec,115.27120)
         make_gridtemplate(outcube1+"_tmp1",outcube1+"_tmp2",imsize,ra,dec,beam)
+        """
         self._stage_cube(incube2,outcube2+"_tmp1",beam,imsize,ra,dec,230.53800)
 
         # align cubes
@@ -340,6 +341,7 @@ class ToolsR21():
 
         unitconv_Jyb_K(outcube1+"_tmp4",outcube1,115.27120,unitto="Jy/beam",delin=True)
         unitconv_Jyb_K(outcube2+"_tmp4",outcube2,230.53800,unitto="Jy/beam",delin=True)
+        """
 
     ###############
     # _stage_cube #
