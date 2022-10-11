@@ -254,8 +254,8 @@ def make_gridtemplate(
     direction_dec = direction.split(" ")[1].split("s")[0]
     c = SkyCoord(direction_ra, direction_dec)
     print(c)
-    ra_dgr = str(c.ra.degree)
-    dec_dgr = str(c.dec.degree)
+    ra_dgr = str(c.ra.degree/(180/np.pi))
+    dec_dgr = str(c.dec.degree/(180/np.pi))
 
     direction="J2000 "+direction_ra+" "+direction_dec
     print(direction)
@@ -285,7 +285,7 @@ def make_gridtemplate(
     myia.modify(mycl.torecord(),subtract=False)
     myia.close()
     mycl.close()
-    
+
     exportfits(imagename="template.im",
                fitsimage="template.fits",
                overwrite=True)
