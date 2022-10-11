@@ -253,6 +253,7 @@ def make_gridtemplate(
     direction_ra = direction.split(" ")[0].split("s")[0]
     direction_dec = direction.split(" ")[1].split("s")[0]
     c = SkyCoord(direction_ra, direction_dec)
+    print(c)
     ra_dgr = str(c.ra.degree)
     dec_dgr = str(c.dec.degree)
 
