@@ -270,7 +270,7 @@ class ToolsR21():
         incube_co21 = self.outcube_co21_n0628.replace(str(self.basebeam_n0628).replace(".","p").zfill(4),"????").replace(".image","_k.image")
         outmom_co10 = incube_co10.replace("_k.image",".momX")
         outmom_co21 = incube_co21.replace("_k.image",".momX")
-        this_beams  = self.beams_n0628[:2]
+        this_beams  = self.beams_n0628
 
         for i in range(len(this_beams)):
             this_beam       = this_beams[i]
@@ -383,7 +383,7 @@ class ToolsR21():
         """
 
         outcube_template = incube.replace(str(basebeam).replace(".","p").zfill(4),"????")
-        this_beams       = beams[1:]
+        this_beams       = beams
 
         unitconv_Jyb_K(incube,incube.replace(".image","_k.image"),freq)
 
