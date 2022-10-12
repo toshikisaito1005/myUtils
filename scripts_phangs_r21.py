@@ -310,8 +310,8 @@ class ToolsR21():
         for i in range(len(smcubes)):
             this_smcube = smcubes[i]
             this_smmask = smmasks[i]
-            this_sm     = sms[i]
-            this_snr    = smsnr[i]
+            this_sm     = convtos[i]
+            this_snr    = snrs[i]
             this_smbeam = bmaj*this_sm # float, arcsec
 
             run_roundsmooth(incube,this_smcube,this_smbeam,inputbeam=bmaj)
