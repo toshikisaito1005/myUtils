@@ -315,7 +315,7 @@ class ToolsR21():
             this_smbeam = bmaj*this_sm # float, arcsec
 
             run_roundsmooth(incube,this_smcube,this_smbeam,inputbeam=bmaj)
-            this_smrms = r21tool.measure_rms(this_smcube)
+            this_smrms = measure_rms(this_smcube)
             signal_masking(this_smcube,this_smmask,this_smrms*this_snr,delin=True)
 
         # combine
