@@ -52,7 +52,7 @@ from mycasa_plots import *
 from mycasa_pca import *
 
 ############
-# ToolsR21 #
+# ToolsR21 #2
 ############
 class ToolsR21():
     """
@@ -175,30 +175,38 @@ class ToolsR21():
         """
         """
 
-        self.ra_n0628  = self._read_key("ra_n0628", "gal").split("deg")[0]
-        self.ra_n3627  = self._read_key("ra_n3627", "gal").split("deg")[0]
-        self.ra_n4254  = self._read_key("ra_n4254", "gal").split("deg")[0]
-        self.ra_n4321  = self._read_key("ra_n4321", "gal").split("deg")[0]
+        self.ra_n0628       = self._read_key("ra_n0628", "gal").split("deg")[0]
+        self.ra_n3627       = self._read_key("ra_n3627", "gal").split("deg")[0]
+        self.ra_n4254       = self._read_key("ra_n4254", "gal").split("deg")[0]
+        self.ra_n4321       = self._read_key("ra_n4321", "gal").split("deg")[0]
 
-        self.dec_n0628 = self._read_key("dec_n0628", "gal").split("deg")[0]
-        self.dec_n3627 = self._read_key("dec_n3627", "gal").split("deg")[0]
-        self.dec_n4254 = self._read_key("dec_n4254", "gal").split("deg")[0]
-        self.dec_n4321 = self._read_key("dec_n4321", "gal").split("deg")[0]
+        self.dec_n0628      = self._read_key("dec_n0628", "gal").split("deg")[0]
+        self.dec_n3627      = self._read_key("dec_n3627", "gal").split("deg")[0]
+        self.dec_n4254      = self._read_key("dec_n4254", "gal").split("deg")[0]
+        self.dec_n4321      = self._read_key("dec_n4321", "gal").split("deg")[0]
 
         self.basebeam_n0628 = float(self._read_key("basebeam_n0628"))
         self.basebeam_n3627 = float(self._read_key("basebeam_n3627"))
         self.basebeam_n4254 = float(self._read_key("basebeam_n4254"))
         self.basebeam_n4321 = float(self._read_key("basebeam_n4321"))
 
-        self.imsize_n0628 = float(self._read_key("imsize_n0628"))
-        self.imsize_n3627 = float(self._read_key("imsize_n3627"))
-        self.imsize_n4254 = float(self._read_key("imsize_n4254"))
-        self.imsize_n4321 = float(self._read_key("imsize_n4321"))
+        self.imsize_n0628   = float(self._read_key("imsize_n0628"))
+        self.imsize_n3627   = float(self._read_key("imsize_n3627"))
+        self.imsize_n4254   = float(self._read_key("imsize_n4254"))
+        self.imsize_n4321   = float(self._read_key("imsize_n4321"))
 
-        self.chans_n0628 = self._read_key("chans_n0628")
-        self.chans_n3627 = self._read_key("chans_n3627")
-        self.chans_n4254 = self._read_key("chans_n4254")
-        self.chans_n4321 = self._read_key("chans_n4321")
+        self.chans_n0628    = self._read_key("chans_n0628")
+        self.chans_n3627    = self._read_key("chans_n3627")
+        self.chans_n4254    = self._read_key("chans_n4254")
+        self.chans_n4321    = self._read_key("chans_n4321")
+
+        self.beams_n0628    = [float(s) for s in self._read_key("beams_n0628").split(",")]
+        self.beams_n3627    = [float(s) for s in self._read_key("beams_n3627").split(",")]
+        self.beams_n4254    = [float(s) for s in self._read_key("beams_n4254").split(",")]
+        self.beams_n4321    = [float(s) for s in self._read_key("beams_n4321").split(",")]
+
+        self.freq_co10      = 115.27120
+        self.freq_co21      = 230.53800
 
     def _set_output_txt_png(self):
         """
@@ -213,11 +221,12 @@ class ToolsR21():
 
     def run_phangs_r21(
         self,
-        do_all        = False,
+        do_all         = False,
         # analysis
-        do_prepare    = False,
+        do_align       = False,
+        do_multismooth = False,
         # plot figures in paper
-        plot_showcase = False,
+        plot_showcase  = False,
         # supplement
         ):
         """
@@ -228,8 +237,10 @@ class ToolsR21():
             do_prepare = True
 
         # analysis
-        if do_prepare==True:
+        if do_align==True:
             self.align_cubes()
+        
+        if do_multismooth==True:
             self.multismooth()
 
         # plot figures in paper
@@ -249,8 +260,57 @@ class ToolsR21():
         taskname = self.modname + sys._getframe().f_code.co_name
         check_first(self.outcube_co10_n0628,taskname)
 
-        # line 710 of scripts_phangs_r21_tasks.py
-        outcube_template = self.outcube_co10_n0628.replace("04p0","????")
+        self._loop_roundsmooth(
+            self.outcube_co10_n0628,self.beams_n0628[1:],self.basebeam_n0628,
+            self.imsize_n0628,self.ra_n0628,self.dec_n0628,self.freq_co10,
+            )
+
+        self._loop_roundsmooth(
+            self.outcube_co21_n0628,self.beams_n0628[1:],self.basebeam_n0628,
+            self.imsize_n0628,self.ra_n0628,self.dec_n0628,self.freq_co21,
+            )
+
+        self._loop_roundsmooth(
+            self.outcube_co10_n3627,self.beams_n3627[1:],self.basebeam_n3627,
+            self.imsize_n3627,self.ra_n3627,self.dec_n3627,self.freq_co10,
+            )
+
+        self._loop_roundsmooth(
+            self.outcube_co21_n3627,self.beams_n3627[1:],self.basebeam_n3627,
+            self.imsize_n3627,self.ra_n3627,self.dec_n3627,self.freq_co21,
+            )
+
+    ###############
+    # align_cubes #
+    ###############
+
+    def _loop_roundsmooth(
+        self,
+        incube,
+        beams,
+        basebeam,
+        imsize,
+        ra,
+        dec,
+        freq,
+        ):
+        """
+        """
+
+        outcube_template = incube.replace("04p0","????")
+        this_beams       = beams[1:]
+
+        for i in range(len(this_beams)):
+            this_beam    = this_beams[i]
+            this_beamstr = str(this_beam).replace(".","p").zfill(4)
+            this_outfile = outcube_template.replace("????",this_beamstr)
+
+            print("# create " + this_outfile.split("/")[-1])
+
+            run_roundsmooth(incube,this_outfile+"_tmp1",this_beam,inputbeam=basebeam)
+            make_gridtemplate(this_outfile+"_tmp1",this_outfile,imsize,ra,dec,this_beam)
+            unitconv_Jyb_K(this_outfile,this_outfile.replace(".image","_k.image"),freq)
+            os.system("rm -rf template.image")
 
     ###############
     # align_cubes #
