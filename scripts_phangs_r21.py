@@ -208,6 +208,8 @@ class ToolsR21():
         self.freq_co10      = 115.27120
         self.freq_co21      = 230.53800
 
+        self.snr_mom        = 4.0
+
     def _set_output_txt_png(self):
         """
         """
@@ -264,14 +266,61 @@ class ToolsR21():
         taskname = self.modname + sys._getframe().f_code.co_name
         check_first(self.outcube_co10_n0628,taskname)
 
-        out_co10_template = self.outcube_co10_n0628.replace(str(self.basebeam_n0628).replace(".","p").zfill(4),"????")
-        out_co21_template = self.outcube_co21_n0628.replace(str(self.basebeam_n0628).replace(".","p").zfill(4),"????")
-        this_beams        = self.beams_n0628
+        incube_co10 = self.outcube_co10_n0628.replace(str(self.basebeam_n0628).replace(".","p").zfill(4),"????").replace(".image","_k.image")
+        incube_co21 = self.outcube_co21_n0628.replace(str(self.basebeam_n0628).replace(".","p").zfill(4),"????").replace(".image","_k.image")
+        outmom_co10 = incube_co10.replace("_k.image",".momX")
+        outmom_co21 = incube_co21.replace("_k.image",".momX")
+        this_beams  = self.beams_n0628[:2]
 
         for i in range(len(this_beams)):
-            this_beam     = this_beams[i]
-            this_beamstr  = str(this_beam).replace(".","p").zfill(4)
-            this_out_co10 = outcube_template.replace("????",this_beamstr)
+            this_beam       = this_beams[i]
+            this_beamstr    = str(this_beam).replace(".","p").zfill(4)
+            mask_co10       = "co10.mask"
+            mask_co21       = "co21.mask"
+            mask_combine    = "comb_" + this_beamstr + ".mask"
+            this_input_co10 = incube_co10.replace("????",this_beamstr)
+            this_input_co21 = incube_co21.replace("????",this_beamstr)
+
+            # masking
+            self._maskig_cube_snr(this_input_co10,mask_co10)
+            self._maskig_cube_snr(this_input_co21,mask_co21)
+            run_immath_two(mask_co10,mask_co21,mask_combine,"IM0*IM1",delin=True)
+
+            # from line 992
+
+    ####################
+    # _maskig_cube_snr #
+    ####################
+
+    def _maskig_cube_snr(
+        self,
+        incube,
+        outmask,
+        convtos=[3.0,5.0,7.0],
+        snrs=[0.0,0.0,0.0],
+        ):
+        """
+        """
+
+        smcubes = [incube+".sm1",incube+".sm2",incube+".sm3"]
+        smmasks = [s+".mask" for s in smcubes]
+        bmaj    = imhead(incube, mode="list")["beammajor"]["value"]
+
+        # multi smooth
+        for i in range(len(smcubes)):
+            this_smcube = smcubes[i]
+            this_smmask = smmasks[i]
+            this_sm     = sms[i]
+            this_snr    = smsnr[i]
+            this_smbeam = bmaj*this_sm # float, arcsec
+
+            run_roundsmooth(incube,this_smcube,this_smbeam,inputbeam=bmaj)
+            this_smrms = r21tool.measure_rms(this_smcube)
+            signal_masking(this_smcube,this_smmask,this_smrms*this_snr,delin=True)
+
+        # combine
+        expr = "iif( IM0+IM1+IM2>=2.0, 1, 0 )"
+        run_immath_three(smmasks[0],smmasks[1],smmasks[2],outmask,expr,delin=False)
 
     ###############
     # multismooth #
@@ -363,9 +412,9 @@ class ToolsR21():
         taskname = self.modname + sys._getframe().f_code.co_name
         check_first(self.cube_co10_n0628,taskname)
 
-        #self._align_cube_gal(self.cube_co10_n0628,self.cube_co21_n0628,
-        #    self.outcube_co10_n0628,self.outcube_co21_n0628,self.basebeam_n0628,
-        #    self.imsize_n0628,self.ra_n0628,self.dec_n0628,self.chans_n0628)
+        self._align_cube_gal(self.cube_co10_n0628,self.cube_co21_n0628,
+            self.outcube_co10_n0628,self.outcube_co21_n0628,self.basebeam_n0628,
+            self.imsize_n0628,self.ra_n0628,self.dec_n0628,self.chans_n0628)
 
         self._align_cube_gal(self.cube_co10_n3627,self.cube_co21_n3627,
             self.outcube_co10_n3627,self.outcube_co21_n3627,self.basebeam_n3627,
@@ -375,9 +424,9 @@ class ToolsR21():
             self.outcube_co10_n4254,self.outcube_co21_n4254,self.basebeam_n4254,
             self.imsize_n4254,self.ra_n4254,self.dec_n4254,self.chans_n4254)
 
-        #self._align_cube_gal(self.cube_co10_n4321,self.cube_co21_n4321,
-        #    self.outcube_co10_n4321,self.outcube_co21_n4321,self.basebeam_n4321,
-        #    self.imsize_n4321,self.ra_n4321,self.dec_n4321,self.chans_n4321)
+        self._align_cube_gal(self.cube_co10_n4321,self.cube_co21_n4321,
+            self.outcube_co10_n4321,self.outcube_co21_n4321,self.basebeam_n4321,
+            self.imsize_n4321,self.ra_n4321,self.dec_n4321,self.chans_n4321)
 
     ###################
     # _align_cube_gal #
