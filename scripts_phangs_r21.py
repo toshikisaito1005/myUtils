@@ -262,27 +262,35 @@ class ToolsR21():
 
         self._loop_roundsmooth(
             self.outcube_co10_n0628,self.beams_n0628[1:],self.basebeam_n0628,
-            self.imsize_n0628,self.ra_n0628,self.dec_n0628,self.freq_co10,
-            )
-
+            self.imsize_n0628,self.ra_n0628,self.dec_n0628,self.freq_co10)
         self._loop_roundsmooth(
             self.outcube_co21_n0628,self.beams_n0628[1:],self.basebeam_n0628,
-            self.imsize_n0628,self.ra_n0628,self.dec_n0628,self.freq_co21,
-            )
+            self.imsize_n0628,self.ra_n0628,self.dec_n0628,self.freq_co21)
 
         self._loop_roundsmooth(
             self.outcube_co10_n3627,self.beams_n3627[1:],self.basebeam_n3627,
-            self.imsize_n3627,self.ra_n3627,self.dec_n3627,self.freq_co10,
-            )
-
+            self.imsize_n3627,self.ra_n3627,self.dec_n3627,self.freq_co10)
         self._loop_roundsmooth(
             self.outcube_co21_n3627,self.beams_n3627[1:],self.basebeam_n3627,
-            self.imsize_n3627,self.ra_n3627,self.dec_n3627,self.freq_co21,
-            )
+            self.imsize_n3627,self.ra_n3627,self.dec_n3627,self.freq_co21)
 
-    ###############
-    # align_cubes #
-    ###############
+        self._loop_roundsmooth(
+            self.outcube_co10_n4254,self.beams_n4254[1:],self.basebeam_n4254,
+            self.imsize_n4254,self.ra_n4254,self.dec_n4254,self.freq_co10)
+        self._loop_roundsmooth(
+            self.outcube_co21_n4254,self.beams_n4254[1:],self.basebeam_n4254,
+            self.imsize_n4254,self.ra_n4254,self.dec_n4254,self.freq_co21)
+
+        self._loop_roundsmooth(
+            self.outcube_co10_n4321,self.beams_n4321[1:],self.basebeam_n4321,
+            self.imsize_n4321,self.ra_n4321,self.dec_n4321,self.freq_co10)
+        self._loop_roundsmooth(
+            self.outcube_co21_n4321,self.beams_n4321[1:],self.basebeam_n4321,
+            self.imsize_n4321,self.ra_n4321,self.dec_n4321,self.freq_co21)
+
+    #####################
+    # _loop_roundsmooth #
+    #####################
 
     def _loop_roundsmooth(
         self,
@@ -295,6 +303,7 @@ class ToolsR21():
         freq,
         ):
         """
+        multismooth
         """
 
         outcube_template = incube.replace("04p0","????")
@@ -311,6 +320,7 @@ class ToolsR21():
             make_gridtemplate(this_outfile+"_tmp1",this_outfile,imsize,ra,dec,this_beam)
             unitconv_Jyb_K(this_outfile,this_outfile.replace(".image","_k.image"),freq)
             os.system("rm -rf template.image")
+            os.system("rm -rf " + this_outfile + "_tmp1")
 
     ###############
     # align_cubes #
