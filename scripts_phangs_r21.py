@@ -298,7 +298,7 @@ class ToolsR21():
         incube,
         outmask,
         convtos=[3.0,5.0,7.0],
-        snrs=[0.0,0.0,0.0],
+        snrs=[1.0,1.0,1.0],
         ):
         """
         """
