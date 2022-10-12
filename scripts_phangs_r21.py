@@ -281,7 +281,8 @@ class ToolsR21():
             this_input_co10 = incube_co10.replace("????",this_beamstr)
             this_input_co21 = incube_co21.replace("????",this_beamstr)
 
-            # masking
+            # snr-based masking
+            print(this_input_co10)
             self._maskig_cube_snr(this_input_co10,mask_co10)
             self._maskig_cube_snr(this_input_co21,mask_co21)
             run_immath_two(mask_co10,mask_co21,mask_combine,"IM0*IM1",delin=True)
