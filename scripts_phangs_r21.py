@@ -335,21 +335,21 @@ class ToolsR21():
         taskname = self.modname + sys._getframe().f_code.co_name
         check_first(self.cube_co10_n0628,taskname)
 
-        self._align_cube_gal(self.cube_co10_n0628,self.cube_co21_n0628,
-            self.outcube_co10_n0628,self.outcube_co21_n0628,self.basebeam_n0628,
-            self.imsize_n0628,self.ra_n0628,self.dec_n0628,self.chans_n0628)
+        #self._align_cube_gal(self.cube_co10_n0628,self.cube_co21_n0628,
+        #    self.outcube_co10_n0628,self.outcube_co21_n0628,self.basebeam_n0628,
+        #    self.imsize_n0628,self.ra_n0628,self.dec_n0628,self.chans_n0628)
 
         self._align_cube_gal(self.cube_co10_n3627,self.cube_co21_n3627,
             self.outcube_co10_n3627,self.outcube_co21_n3627,self.basebeam_n3627,
             self.imsize_n3627,self.ra_n3627,self.dec_n3627,self.chans_n3627)
 
-        self._align_cube_gal(self.cube_co10_n4254,self.cube_co21_n4254,
-            self.outcube_co10_n4254,self.outcube_co21_n4254,self.basebeam_n4254,
-            self.imsize_n4254,self.ra_n4254,self.dec_n4254,self.chans_n4254)
+        #self._align_cube_gal(self.cube_co10_n4254,self.cube_co21_n4254,
+        #    self.outcube_co10_n4254,self.outcube_co21_n4254,self.basebeam_n4254,
+        #    self.imsize_n4254,self.ra_n4254,self.dec_n4254,self.chans_n4254)
 
-        self._align_cube_gal(self.cube_co10_n4321,self.cube_co21_n4321,
-            self.outcube_co10_n4321,self.outcube_co21_n4321,self.basebeam_n4321,
-            self.imsize_n4321,self.ra_n4321,self.dec_n4321,self.chans_n4321)
+        #self._align_cube_gal(self.cube_co10_n4321,self.cube_co21_n4321,
+        #    self.outcube_co10_n4321,self.outcube_co21_n4321,self.basebeam_n4321,
+        #    self.imsize_n4321,self.ra_n4321,self.dec_n4321,self.chans_n4321)
 
     ###################
     # _align_cube_gal #
