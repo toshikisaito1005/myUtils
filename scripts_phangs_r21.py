@@ -289,6 +289,20 @@ class ToolsR21():
 
             # from line 992
 
+    ######################
+    # _maskig_cube_nchan #
+    ######################
+
+    def _maskig_cube_nchan(
+        self,
+        incube,
+        outmask,
+        snr=2.0,
+        pixelmin=1,
+        ):
+        """
+        """
+
     ####################
     # _maskig_cube_snr #
     ####################
@@ -321,7 +335,7 @@ class ToolsR21():
 
         # combine
         expr = "iif( IM0+IM1+IM2>=2.0, 1, 0 )"
-        run_immath_three(smmasks[0],smmasks[1],smmasks[2],outmask,expr,delin=False)
+        run_immath_three(smmasks[0],smmasks[1],smmasks[2],outmask,expr,delin=True)
 
     ###############
     # multismooth #
