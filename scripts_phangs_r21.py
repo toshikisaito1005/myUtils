@@ -225,6 +225,7 @@ class ToolsR21():
         # analysis
         do_align       = False,
         do_multismooth = False,
+        do_moments     = False,
         # plot figures in paper
         plot_showcase  = False,
         # supplement
@@ -243,9 +244,34 @@ class ToolsR21():
         if do_multismooth==True:
             self.multismooth()
 
+        if do_moments==True:
+            self.multimoments()
+
         # plot figures in paper
         #if plot_showcase==True:
         #    self.showcase()
+
+    ################
+    # multimoments #
+    ################
+
+    def multimoments(
+        self,
+        ):
+        """
+        """
+
+        taskname = self.modname + sys._getframe().f_code.co_name
+        check_first(self.outcube_co10_n0628,taskname)
+
+        out_co10_template = self.outcube_co10_n0628.replace(str(self.basebeam_n0628).replace(".","p").zfill(4),"????")
+        out_co21_template = self.outcube_co21_n0628.replace(str(self.basebeam_n0628).replace(".","p").zfill(4),"????")
+        this_beams        = self.beams_n0628
+
+        for i in range(len(this_beams)):
+            this_beam     = this_beams[i]
+            this_beamstr  = str(this_beam).replace(".","p").zfill(4)
+            this_out_co10 = outcube_template.replace("????",this_beamstr)
 
     ###############
     # multismooth #
@@ -306,8 +332,10 @@ class ToolsR21():
         multismooth
         """
 
-        outcube_template = incube.replace("04p0","????")
+        outcube_template = incube.replace(str(basebeam).replace(".","p").zfill(4),"????")
         this_beams       = beams[1:]
+
+        unitconv_Jyb_K(incube,incube.replace(".image","_k.image"),freq)
 
         for i in range(len(this_beams)):
             this_beam    = this_beams[i]
@@ -343,9 +371,9 @@ class ToolsR21():
             self.outcube_co10_n3627,self.outcube_co21_n3627,self.basebeam_n3627,
             self.imsize_n3627,self.ra_n3627,self.dec_n3627,self.chans_n3627)
 
-        #self._align_cube_gal(self.cube_co10_n4254,self.cube_co21_n4254,
-        #    self.outcube_co10_n4254,self.outcube_co21_n4254,self.basebeam_n4254,
-        #    self.imsize_n4254,self.ra_n4254,self.dec_n4254,self.chans_n4254)
+        self._align_cube_gal(self.cube_co10_n4254,self.cube_co21_n4254,
+            self.outcube_co10_n4254,self.outcube_co21_n4254,self.basebeam_n4254,
+            self.imsize_n4254,self.ra_n4254,self.dec_n4254,self.chans_n4254)
 
         #self._align_cube_gal(self.cube_co10_n4321,self.cube_co21_n4321,
         #    self.outcube_co10_n4321,self.outcube_co21_n4321,self.basebeam_n4321,
