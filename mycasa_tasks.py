@@ -532,11 +532,13 @@ def signal_masking(
         hdkey     = "beammajor",
         )
 
+    """
     boolean_masking(
         imagename = outfile + "_tmp0_signal_masking",
         outfile   = outfile,
         delin     = True,
         )
+    """
 
     # delete input
     if delin==True:
