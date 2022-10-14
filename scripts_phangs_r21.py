@@ -290,14 +290,14 @@ class ToolsR21():
             # snr-based masking
             self._maskig_cube_snr(this_input_co10,mask_co10+"_snr")
             self._maskig_cube_snr(this_input_co21,mask_co21+"_snr")
-            run_immath_two(mask_co10,mask_co21,mask_combine,"IM0*IM1",delin=True)
+            run_immath_two(mask_co10+"_snr",mask_co21+"_snr",mask_combine,"IM0*IM1",delin=True)
 
             # nchan-based masking
             self._masking_cube_nchan(incube_co10,mask_co10+"_nchan",nchan_thres=nchan_thres)
-            run_immath_two(mask_co10+"_snr",mask_co10+"_nchan",mask_co10,"IM0*IM1",delin=True)
+            run_immath_two(mask_combine,mask_co10+"_nchan",mask_co10,"IM0*IM1",delin=True)
 
             self._masking_cube_nchan(incube_co21,mask_co21+"_nchan",nchan_thres=nchan_thres)
-            run_immath_two(mask_co21+"_snr",mask_co21+"_nchan",mask_co21,"IM0*IM1",delin=True)
+            run_immath_two(mask_combine,mask_co21+"_nchan",mask_co21,"IM0*IM1",delin=True)
 
     #######################
     # _masking_cube_nchan #
