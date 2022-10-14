@@ -388,7 +388,7 @@ class ToolsR21():
 
         # create nchan 2d mask
         expr = "iif( IM0>="+str(nchan_thres)+", 1, 0 )"
-        run_immath_one(incube+"_tmp2",incube,expr,delin=True)
+        run_immath_one(incube+"_tmp2",outmask,expr,delin=True)
         #boolean_masking(incube+"_tmp3",outmask,delin=True)
 
     ####################
@@ -445,6 +445,7 @@ class ToolsR21():
             self.outcube_co21_n0628,self.beams_n0628[1:],self.basebeam_n0628,
             self.imsize_n0628,self.ra_n0628,self.dec_n0628,self.freq_co21)
 
+        """
         self._loop_roundsmooth(
             self.outcube_co10_n3627,self.beams_n3627[1:],self.basebeam_n3627,
             self.imsize_n3627,self.ra_n3627,self.dec_n3627,self.freq_co10)
@@ -465,6 +466,7 @@ class ToolsR21():
         self._loop_roundsmooth(
             self.outcube_co21_n4321,self.beams_n4321[1:],self.basebeam_n4321,
             self.imsize_n4321,self.ra_n4321,self.dec_n4321,self.freq_co21)
+        """
 
     #####################
     # _loop_roundsmooth #
