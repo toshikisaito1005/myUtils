@@ -181,7 +181,6 @@ class ToolsR21():
         self.outmom_co21_n4254   = self.outcube_co21_n4254.replace(".image",".momX")
         self.outmom_co21_n4321   = self.outcube_co21_n4321.replace(".image",".momX")
 
-
     def _set_input_param(self):
         """
         """
@@ -313,7 +312,7 @@ class ToolsR21():
             self._masking_cube_nchan(this_input_co21,mask_co21+"_nchan",nchan_thres=nchan_thres)
             run_immath_two(mask_combine,mask_co21+"_nchan",mask_co21,"IM0*IM1",delin=False)
 
-            # mom
+            # mom creation
             self._eazy_immoments(this_input_co10,mask_co10,this_output_co10)
             self._eazy_immoments(this_input_co21,mask_co21,this_output_co21)
 
@@ -390,7 +389,7 @@ class ToolsR21():
         # create nchan 2d mask
         expr = "iif( IM0>="+str(nchan_thres)+", 1, 0 )"
         run_immath_one(incube+"_tmp2",incube+"_tmp3",expr,delin=True)
-        boolean_masking(incube+"_tmp3",outmask,delin=True)
+        #boolean_masking(incube+"_tmp3",outmask,delin=True)
 
     ####################
     # _maskig_cube_snr #
