@@ -388,7 +388,7 @@ class ToolsR21():
 
         # create nchan 2d mask
         expr = "iif( IM0>="+str(nchan_thres)+", 1, 0 )"
-        run_immath_one(incube+"_tmp2",incube+"_tmp3",expr,delin=True)
+        run_immath_one(incube+"_tmp2",incube,expr,delin=True)
         #boolean_masking(incube+"_tmp3",outmask,delin=True)
 
     ####################
