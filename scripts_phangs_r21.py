@@ -226,6 +226,11 @@ class ToolsR21():
         self.nchan_thres_n4254 = 3
         self.nchan_thres_n4321 = 2
 
+        self.beam_wise_n0628 = 11.5
+        self.beam_wise_n3627 = 10.0
+        self.beam_wise_n4254 = 8.7
+        self.beam_wise_n4321 = 7.5
+
     def _set_output_txt_png(self):
         """
         """
