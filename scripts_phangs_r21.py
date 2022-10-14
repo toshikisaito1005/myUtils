@@ -171,6 +171,17 @@ class ToolsR21():
         self.outfits_wise3_n4254 = self.dir_ready + self._read_key("outfits_wise3_n4254")
         self.outfits_wise3_n4321 = self.dir_ready + self._read_key("outfits_wise3_n4321")
 
+        self.outmom_co10_n0628   = self.outcube_co10_n0628.replace(".image",".momX")
+        self.outmom_co10_n3627   = self.outcube_co10_n3627.replace(".image",".momX")
+        self.outmom_co10_n4254   = self.outcube_co10_n4254.replace(".image",".momX")
+        self.outmom_co10_n4321   = self.outcube_co10_n4321.replace(".image",".momX")
+
+        self.outmom_co21_n0628   = self.outcube_co21_n0628.replace(".image",".momX")
+        self.outmom_co21_n3627   = self.outcube_co21_n3627.replace(".image",".momX")
+        self.outmom_co21_n4254   = self.outcube_co21_n4254.replace(".image",".momX")
+        self.outmom_co21_n4321   = self.outcube_co21_n4321.replace(".image",".momX")
+
+
     def _set_input_param(self):
         """
         """
@@ -273,8 +284,8 @@ class ToolsR21():
 
         incube_co10 = self.outcube_co10_n0628.replace(str(self.basebeam_n0628).replace(".","p").zfill(4),"????").replace(".image","_k.image")
         incube_co21 = self.outcube_co21_n0628.replace(str(self.basebeam_n0628).replace(".","p").zfill(4),"????").replace(".image","_k.image")
-        outmom_co10 = incube_co10.replace("_k.image",".momX")
-        outmom_co21 = incube_co21.replace("_k.image",".momX")
+        outmom_co10 = self.outmom_co10_n0628
+        outmom_co21 = self.outmom_co21_n0628
         this_beams  = self.beams_n0628
         nchan_thres = self.nchan_thres_n0628
 
@@ -300,6 +311,39 @@ class ToolsR21():
 
             self._masking_cube_nchan(this_input_co21,mask_co21+"_nchan",nchan_thres=nchan_thres)
             run_immath_two(mask_combine,mask_co21+"_nchan",mask_co21,"IM0*IM1",delin=True)
+
+            # mom
+            self._eazy_immoments(this_input_co10,mask_co10,outmom_co10)
+            self._eazy_immoments(this_input_co21,mask_co21,outmom_co21)
+
+            # clean up
+            os.system("rm -rf " + mask_co10)
+            os.system("rm -rf " + mask_co21)
+
+    ###################
+    # _eazy_immoments #
+    ###################
+
+    def _eazy_immoments(
+        self,
+        incube,
+        inmask,
+        baseoutmom,
+        ):
+        """
+        """
+
+        rms = measure_rms(incube)
+
+        outfile  = baseoutmom.replace("momX","mom0")
+        outefile = baseoutmom.replace("momX","emom0")
+        run_immoments(incube,inmask,outfile,mom=0,rms=rms,snr=self.snr_mom,outfile_err=outefile,vdim=3)
+        outfile  = baseoutmom.replace("momX","mom1")
+        run_immoments(incube,inmask,outfile,mom=1,rms=rms,snr=self.snr_mom,vdim=3)
+        outfile  = baseoutmom.replace("momX","mom2")
+        run_immoments(incube,inmask,outfile,mom=2,rms=rms,snr=self.snr_mom,vdim=3)
+        outfile  = baseoutmom.replace("momX","mom8")
+        run_immoments(incube,inmask,outfile,mom=8,rms=rms,snr=self.snr_mom,vdim=3)
 
     #######################
     # _masking_cube_nchan #
