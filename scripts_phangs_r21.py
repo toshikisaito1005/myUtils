@@ -37,6 +37,8 @@ history:
 2017-11-01   created
 2022-07-28   constructed align_cubes
 2022-07-29   constructed multismooth
+2022-10-11   constructed multimoments
+2022-10-14   constrcuted align_wise
 Toshiki Saito@NAOJ
 """
 
@@ -252,8 +254,20 @@ class ToolsR21():
         This method runs all the methods which will create figures in the paper.
         """
 
+        self.do_ngc0628 = True
+        self.do_ngc3627 = True
+        self.do_ngc4254 = True
+        self.do_ngc4321 = True
+
         if do_all==True:
-            do_prepare = True
+            self.do_ngc0628 = True
+            self.do_ngc3627 = True
+            self.do_ngc4254 = True
+            self.do_ngc4321 = True
+            do_align       = True
+            do_multismooth = True
+            do_moments     = True
+            do_align_other = True
 
         # analysis
         if do_align==True:
@@ -299,12 +313,62 @@ class ToolsR21():
         taskname = self.modname + sys._getframe().f_code.co_name
         check_first(self.outcube_co10_n0628,taskname)
 
-        incube_co10 = self.outcube_co10_n0628.replace(str(self.basebeam_n0628).replace(".","p").zfill(4),"????").replace(".image","_k.image")
-        incube_co21 = self.outcube_co21_n0628.replace(str(self.basebeam_n0628).replace(".","p").zfill(4),"????").replace(".image","_k.image")
-        outmom_co10 = self.outmom_co10_n0628.replace(str(self.basebeam_n0628).replace(".","p").zfill(4),"????")
-        outmom_co21 = self.outmom_co21_n0628.replace(str(self.basebeam_n0628).replace(".","p").zfill(4),"????")
-        this_beams  = self.beams_n0628
-        nchan_thres = self.nchan_thres_n0628
+        if self.do_ngc0628==True:
+            self._loop_immoments(
+                self.outcube_co10_n0628.replace(str(self.basebeam_n0628).replace(".","p").zfill(4),"????").replace(".image","_k.image"),
+                self.outcube_co21_n0628.replace(str(self.basebeam_n0628).replace(".","p").zfill(4),"????").replace(".image","_k.image"),
+                self.outmom_co10_n0628.replace(str(self.basebeam_n0628).replace(".","p").zfill(4),"????"),
+                self.outmom_co21_n0628.replace(str(self.basebeam_n0628).replace(".","p").zfill(4),"????"),
+                self.beams_n0628,
+                self.nchan_thres_n0628,
+                )
+
+        if self.do_ngc3627==True:
+            self._loop_immoments(
+                self.outcube_co10_n3627.replace(str(self.basebeam_n3627).replace(".","p").zfill(4),"????").replace(".image","_k.image"),
+                self.outcube_co21_n3627.replace(str(self.basebeam_n3627).replace(".","p").zfill(4),"????").replace(".image","_k.image"),
+                self.outmom_co10_n3627.replace(str(self.basebeam_n3627).replace(".","p").zfill(4),"????"),
+                self.outmom_co21_n3627.replace(str(self.basebeam_n3627).replace(".","p").zfill(4),"????"),
+                self.beams_n3627,
+                self.nchan_thres_n3627,
+                )
+
+        if self.do_ngc4254==True:
+            self._loop_immoments(
+                self.outcube_co10_n4254.replace(str(self.basebeam_n4254).replace(".","p").zfill(4),"????").replace(".image","_k.image"),
+                self.outcube_co21_n4254.replace(str(self.basebeam_n4254).replace(".","p").zfill(4),"????").replace(".image","_k.image"),
+                self.outmom_co10_n4254.replace(str(self.basebeam_n4254).replace(".","p").zfill(4),"????"),
+                self.outmom_co21_n4254.replace(str(self.basebeam_n4254).replace(".","p").zfill(4),"????"),
+                self.beams_n4254,
+                self.nchan_thres_n4254,
+                )
+
+        if self.do_ngc4321==True:
+            self._loop_immoments(
+                self.outcube_co10_n4321.replace(str(self.basebeam_n4321).replace(".","p").zfill(4),"????").replace(".image","_k.image"),
+                self.outcube_co21_n4321.replace(str(self.basebeam_n4321).replace(".","p").zfill(4),"????").replace(".image","_k.image"),
+                self.outmom_co10_n4321.replace(str(self.basebeam_n4321).replace(".","p").zfill(4),"????"),
+                self.outmom_co21_n4321.replace(str(self.basebeam_n4321).replace(".","p").zfill(4),"????"),
+                self.beams_n4321,
+                self.nchan_thres_n4321,
+                )
+
+    ###################
+    # _loop_immoments #
+    ###################
+
+    def _loop_immoments(
+        self,
+        incube_co10,
+        incube_co21,
+        outmom_co10,
+        outmom_co21,
+        this_beams,
+        nchan_thres,
+        ):
+        """
+        multimoments
+        """
 
         for i in range(len(this_beams)):
             this_beam        = this_beams[i]
@@ -349,6 +413,7 @@ class ToolsR21():
         baseoutmom,
         ):
         """
+        multimoments - _loop_immoments
         """
 
         rms = measure_rms(incube)
@@ -375,6 +440,7 @@ class ToolsR21():
         nchan_thres=2,
         ):
         """
+        multimoments - _loop_immoments
         """
 
         thres  = str( measure_rms(incube) * self.snr_mom )
@@ -421,6 +487,7 @@ class ToolsR21():
         snrs=[1.0,1.0,1.0],
         ):
         """
+        multimoments - _loop_immoments
         """
 
         smcubes = [incube+".sm1",incube+".sm2",incube+".sm3"]
@@ -456,35 +523,37 @@ class ToolsR21():
         taskname = self.modname + sys._getframe().f_code.co_name
         check_first(self.outcube_co10_n0628,taskname)
 
-        self._loop_roundsmooth(
-            self.outcube_co10_n0628,self.beams_n0628[1:],self.basebeam_n0628,
-            self.imsize_n0628,self.ra_n0628,self.dec_n0628,self.freq_co10)
-        self._loop_roundsmooth(
-            self.outcube_co21_n0628,self.beams_n0628[1:],self.basebeam_n0628,
-            self.imsize_n0628,self.ra_n0628,self.dec_n0628,self.freq_co21)
+        if self.do_ngc0628==True:
+            self._loop_roundsmooth(
+                self.outcube_co10_n0628,self.beams_n0628[1:],self.basebeam_n0628,
+                self.imsize_n0628,self.ra_n0628,self.dec_n0628,self.freq_co10)
+            self._loop_roundsmooth(
+                self.outcube_co21_n0628,self.beams_n0628[1:],self.basebeam_n0628,
+                self.imsize_n0628,self.ra_n0628,self.dec_n0628,self.freq_co21)
 
-        """
-        self._loop_roundsmooth(
-            self.outcube_co10_n3627,self.beams_n3627[1:],self.basebeam_n3627,
-            self.imsize_n3627,self.ra_n3627,self.dec_n3627,self.freq_co10)
-        self._loop_roundsmooth(
-            self.outcube_co21_n3627,self.beams_n3627[1:],self.basebeam_n3627,
-            self.imsize_n3627,self.ra_n3627,self.dec_n3627,self.freq_co21)
+        if self.do_ngc3627==True:
+            self._loop_roundsmooth(
+                self.outcube_co10_n3627,self.beams_n3627[1:],self.basebeam_n3627,
+                self.imsize_n3627,self.ra_n3627,self.dec_n3627,self.freq_co10)
+            self._loop_roundsmooth(
+                self.outcube_co21_n3627,self.beams_n3627[1:],self.basebeam_n3627,
+                self.imsize_n3627,self.ra_n3627,self.dec_n3627,self.freq_co21)
 
-        self._loop_roundsmooth(
-            self.outcube_co10_n4254,self.beams_n4254[1:],self.basebeam_n4254,
-            self.imsize_n4254,self.ra_n4254,self.dec_n4254,self.freq_co10)
-        self._loop_roundsmooth(
-            self.outcube_co21_n4254,self.beams_n4254[1:],self.basebeam_n4254,
-            self.imsize_n4254,self.ra_n4254,self.dec_n4254,self.freq_co21)
+        if self.do_ngc4254==True:
+            self._loop_roundsmooth(
+                self.outcube_co10_n4254,self.beams_n4254[1:],self.basebeam_n4254,
+                self.imsize_n4254,self.ra_n4254,self.dec_n4254,self.freq_co10)
+            self._loop_roundsmooth(
+                self.outcube_co21_n4254,self.beams_n4254[1:],self.basebeam_n4254,
+                self.imsize_n4254,self.ra_n4254,self.dec_n4254,self.freq_co21)
 
-        self._loop_roundsmooth(
-            self.outcube_co10_n4321,self.beams_n4321[1:],self.basebeam_n4321,
-            self.imsize_n4321,self.ra_n4321,self.dec_n4321,self.freq_co10)
-        self._loop_roundsmooth(
-            self.outcube_co21_n4321,self.beams_n4321[1:],self.basebeam_n4321,
-            self.imsize_n4321,self.ra_n4321,self.dec_n4321,self.freq_co21)
-        """
+        if self.do_ngc4321==True:
+            self._loop_roundsmooth(
+                self.outcube_co10_n4321,self.beams_n4321[1:],self.basebeam_n4321,
+                self.imsize_n4321,self.ra_n4321,self.dec_n4321,self.freq_co10)
+            self._loop_roundsmooth(
+                self.outcube_co21_n4321,self.beams_n4321[1:],self.basebeam_n4321,
+                self.imsize_n4321,self.ra_n4321,self.dec_n4321,self.freq_co21)
 
     #####################
     # _loop_roundsmooth #
@@ -535,21 +604,25 @@ class ToolsR21():
         taskname = self.modname + sys._getframe().f_code.co_name
         check_first(self.cube_co10_n0628,taskname)
 
-        self._align_cube_gal(self.cube_co10_n0628,self.cube_co21_n0628,
-            self.outcube_co10_n0628,self.outcube_co21_n0628,self.basebeam_n0628,
-            self.imsize_n0628,self.ra_n0628,self.dec_n0628,self.chans_n0628)
+        if self.do_ngc0628==True:
+            self._align_cube_gal(self.cube_co10_n0628,self.cube_co21_n0628,
+                self.outcube_co10_n0628,self.outcube_co21_n0628,self.basebeam_n0628,
+                self.imsize_n0628,self.ra_n0628,self.dec_n0628,self.chans_n0628)
 
-        self._align_cube_gal(self.cube_co10_n3627,self.cube_co21_n3627,
-            self.outcube_co10_n3627,self.outcube_co21_n3627,self.basebeam_n3627,
-            self.imsize_n3627,self.ra_n3627,self.dec_n3627,self.chans_n3627)
+        if self.do_ngc3627==True:
+            self._align_cube_gal(self.cube_co10_n3627,self.cube_co21_n3627,
+                self.outcube_co10_n3627,self.outcube_co21_n3627,self.basebeam_n3627,
+                self.imsize_n3627,self.ra_n3627,self.dec_n3627,self.chans_n3627)
 
-        self._align_cube_gal(self.cube_co10_n4254,self.cube_co21_n4254,
-            self.outcube_co10_n4254,self.outcube_co21_n4254,self.basebeam_n4254,
-            self.imsize_n4254,self.ra_n4254,self.dec_n4254,self.chans_n4254)
+        if self.do_ngc4254==True:
+            self._align_cube_gal(self.cube_co10_n4254,self.cube_co21_n4254,
+                self.outcube_co10_n4254,self.outcube_co21_n4254,self.basebeam_n4254,
+                self.imsize_n4254,self.ra_n4254,self.dec_n4254,self.chans_n4254)
 
-        self._align_cube_gal(self.cube_co10_n4321,self.cube_co21_n4321,
-            self.outcube_co10_n4321,self.outcube_co21_n4321,self.basebeam_n4321,
-            self.imsize_n4321,self.ra_n4321,self.dec_n4321,self.chans_n4321)
+        if self.do_ngc4321==True:
+            self._align_cube_gal(self.cube_co10_n4321,self.cube_co21_n4321,
+                self.outcube_co10_n4321,self.outcube_co21_n4321,self.basebeam_n4321,
+                self.imsize_n4321,self.ra_n4321,self.dec_n4321,self.chans_n4321)
 
     ###################
     # _align_cube_gal #
@@ -633,7 +706,7 @@ class ToolsR21():
         restfreq=115.27120,
         ):
         """
-        _align_cube_gal
+        align_cubes - _align_cube_gal
         """
 
         taskname = self.modname + sys._getframe().f_code.co_name
@@ -660,7 +733,7 @@ class ToolsR21():
         delin=False,
         ):
         """
-        _stage_cube
+        align_cubes - _stage_cube
         """
 
         taskname = self.modname + sys._getframe().f_code.co_name
