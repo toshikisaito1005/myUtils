@@ -527,7 +527,7 @@ def signal_masking(
         )
 
     imhead(
-        imagename = outfile + "_tmp0_signal_masking",
+        imagename = outfile,# + "_tmp0_signal_masking",
         mode      = "del",
         hdkey     = "beammajor",
         )
