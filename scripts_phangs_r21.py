@@ -280,6 +280,7 @@ class ToolsR21():
 
         for i in range(len(this_beams)):
             this_beam       = this_beams[i]
+            print(this_beamstr)
             this_beamstr    = str(this_beam).replace(".","p").zfill(4)
             mask_co10       = "co10.mask"
             mask_co21       = "co21.mask"
