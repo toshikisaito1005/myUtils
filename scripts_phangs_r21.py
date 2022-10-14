@@ -210,6 +210,11 @@ class ToolsR21():
 
         self.snr_mom        = 4.0
 
+        self.nchan_thres_n0628 = 2
+        self.nchan_thres_n3627 = 3
+        self.nchan_thres_n4254 = 3
+        self.nchan_thres_n4321 = 2
+
     def _set_output_txt_png(self):
         """
         """
@@ -271,6 +276,7 @@ class ToolsR21():
         outmom_co10 = incube_co10.replace("_k.image",".momX")
         outmom_co21 = incube_co21.replace("_k.image",".momX")
         this_beams  = self.beams_n0628
+        nchan_thres = self.nchan_thres_n0628
 
         for i in range(len(this_beams)):
             this_beam       = this_beams[i]
@@ -282,26 +288,61 @@ class ToolsR21():
             this_input_co21 = incube_co21.replace("????",this_beamstr)
 
             # snr-based masking
-            print(this_input_co10)
-            self._maskig_cube_snr(this_input_co10,mask_co10)
-            self._maskig_cube_snr(this_input_co21,mask_co21)
+            self._maskig_cube_snr(this_input_co10,mask_co10+"_snr")
+            self._maskig_cube_snr(this_input_co21,mask_co21+"_snr")
             run_immath_two(mask_co10,mask_co21,mask_combine,"IM0*IM1",delin=True)
 
-            # from line 992
+            # nchan-based masking
+            self._masking_cube_nchan(incube_co10,mask_co10+"_nchan",nchan_thres=nchan_thres)
+            run_immath_two(mask_co10+"_snr",mask_co10+"_nchan",mask_co10,"IM0*IM1",delin=True)
 
-    ######################
-    # _maskig_cube_nchan #
-    ######################
+            self._masking_cube_nchan(incube_co21,mask_co21+"_nchan",nchan_thres=nchan_thres)
+            run_immath_two(mask_co21+"_snr",mask_co21+"_nchan",mask_co21,"IM0*IM1",delin=True)
 
-    def _maskig_cube_nchan(
+    #######################
+    # _masking_cube_nchan #
+    #######################
+
+    def _masking_cube_nchan(
         self,
         incube,
         outmask,
         snr=2.0,
         pixelmin=1,
+        nchan_thres=2,
         ):
         """
         """
+
+        thres  = str( measure_rms(incube) * snr )
+        data   = imval(incube)["coords"][:,3]
+        cwidth = str(np.round(abs(data[1]-data[0])/imhead(imagename,mode="list")["restfreq"][0] * 299792.458, 2))
+
+        # create nchan 3d mask
+        expr = "iif( IM0>=" + thres + ",1.0/" + cwidth + ",0.0 )"
+        run_immath_one(incube,incube+"_tmp1",expr)
+        immoments(imagename=incube+"_tmp1",moments=[0],outfile=incube+"_tmp2")
+
+        # remove islands
+        maskfile = incube + "_tmp2"
+        beamarea = beam_area(maskfile)
+
+        myia.open(maskfile)
+        mask           = myia.getchunk()
+        labeled, j     = scipy.ndimage.label(mask)
+        myhistogram    = scipy.ndimage.measurements.histogram(labeled,0,j+1,j+1)
+        object_slices  = scipy.ndimage.find_objects(labeled)
+        threshold_area = beamarea*pixelmin
+        for i in range(j):
+            if myhistogram[i+1]<threshold_area:
+                mask[object_slices[i]] = 0
+        myia.putchunk(mask)
+        myia.done()
+
+        # create nchan 2d mask
+        expr = "iif( IM0>="+str(nchan_thres)+", 1, 0 )"
+        run_immath_one(incube+"_tmp2",incube+"_tmp3",expr,delin=True)
+        boolean_masking(incube+"_tmp3",outmask,delin=True)
 
     ####################
     # _maskig_cube_snr #

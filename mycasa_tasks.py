@@ -492,7 +492,7 @@ def boolean_masking(
     makemask(
         mode      = "copy",
         inpimage  = imagename,
-        inpmask   = imagename, # + ":mask0",
+        inpmask   = imagename + ":mask0",
         output    = outfile,
         overwrite = True,
         )
