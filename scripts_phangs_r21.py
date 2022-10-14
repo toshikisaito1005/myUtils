@@ -254,9 +254,9 @@ class ToolsR21():
         """
 
         self.do_ngc0628 = True
-        self.do_ngc3627 = False
-        self.do_ngc4254 = False
-        self.do_ngc4321 = False
+        self.do_ngc3627 = True
+        self.do_ngc4254 = True
+        self.do_ngc4321 = True
 
         if do_all==True:
             self.do_ngc0628 = True
