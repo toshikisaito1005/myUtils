@@ -243,6 +243,7 @@ class ToolsR21():
         do_align       = False,
         do_multismooth = False,
         do_moments     = False,
+        do_align_other = False,
         # plot figures in paper
         plot_showcase  = False,
         # supplement
@@ -264,9 +265,26 @@ class ToolsR21():
         if do_moments==True:
             self.multimoments()
 
+        if do_align_other==True:
+            self.align_wise()
+            #self.align_env()
+
         # plot figures in paper
         #if plot_showcase==True:
         #    self.showcase()
+
+    ##############
+    # align_wise #
+    ##############
+
+    def align_wise(
+        self,
+        ):
+        """
+        """
+
+        taskname = self.modname + sys._getframe().f_code.co_name
+        check_first(self.outcube_co10_n0628,taskname)
 
     ################
     # multimoments #
@@ -445,7 +463,6 @@ class ToolsR21():
             self.outcube_co21_n0628,self.beams_n0628[1:],self.basebeam_n0628,
             self.imsize_n0628,self.ra_n0628,self.dec_n0628,self.freq_co21)
 
-        """
         self._loop_roundsmooth(
             self.outcube_co10_n3627,self.beams_n3627[1:],self.basebeam_n3627,
             self.imsize_n3627,self.ra_n3627,self.dec_n3627,self.freq_co10)
@@ -466,7 +483,6 @@ class ToolsR21():
         self._loop_roundsmooth(
             self.outcube_co21_n4321,self.beams_n4321[1:],self.basebeam_n4321,
             self.imsize_n4321,self.ra_n4321,self.dec_n4321,self.freq_co21)
-        """
 
     #####################
     # _loop_roundsmooth #
