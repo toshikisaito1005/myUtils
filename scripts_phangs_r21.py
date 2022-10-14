@@ -398,8 +398,7 @@ class ToolsR21():
             self._eazy_immoments(this_input_co21,mask_co21,this_output_co21)
 
             # clean up
-            os.system("rm -rf " + mask_co10)
-            os.system("rm -rf " + mask_co21)
+            os.system("rm -rf " + mask_combine)
 
     ###################
     # _eazy_immoments #
