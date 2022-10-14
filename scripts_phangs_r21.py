@@ -284,20 +284,22 @@ class ToolsR21():
 
         incube_co10 = self.outcube_co10_n0628.replace(str(self.basebeam_n0628).replace(".","p").zfill(4),"????").replace(".image","_k.image")
         incube_co21 = self.outcube_co21_n0628.replace(str(self.basebeam_n0628).replace(".","p").zfill(4),"????").replace(".image","_k.image")
-        outmom_co10 = self.outmom_co10_n0628
-        outmom_co21 = self.outmom_co21_n0628
+        outmom_co10 = self.outmom_co10_n0628.replace(str(self.basebeam_n0628).replace(".","p").zfill(4),"????")
+        outmom_co21 = self.outmom_co21_n0628.replace(str(self.basebeam_n0628).replace(".","p").zfill(4),"????")
         this_beams  = self.beams_n0628
         nchan_thres = self.nchan_thres_n0628
 
         for i in range(len(this_beams)):
-            this_beam       = this_beams[i]
-            this_beamstr    = str(this_beam).replace(".","p").zfill(4)
+            this_beam        = this_beams[i]
+            this_beamstr     = str(this_beam).replace(".","p").zfill(4)
             print(this_beamstr)
-            mask_co10       = "co10.mask"
-            mask_co21       = "co21.mask"
-            mask_combine    = "comb_" + this_beamstr + ".mask"
-            this_input_co10 = incube_co10.replace("????",this_beamstr)
-            this_input_co21 = incube_co21.replace("????",this_beamstr)
+            mask_co10        = "co10.mask"
+            mask_co21        = "co21.mask"
+            mask_combine     = "comb_" + this_beamstr + ".mask"
+            this_input_co10  = incube_co10.replace("????",this_beamstr)
+            this_input_co21  = incube_co21.replace("????",this_beamstr)
+            this_output_co10 = outmom_co10.replace("????",this_beamstr)
+            this_output_co21 = outmom_co21.replace("????",this_beamstr)
 
             # snr-based masking
             self._maskig_cube_snr(this_input_co10,mask_co10+"_snr")
@@ -313,8 +315,8 @@ class ToolsR21():
             run_immath_two(mask_combine,mask_co21+"_nchan",mask_co21,"IM0*IM1",delin=True)
 
             # mom
-            self._eazy_immoments(this_input_co10,mask_co10,outmom_co10)
-            self._eazy_immoments(this_input_co21,mask_co21,outmom_co21)
+            self._eazy_immoments(this_input_co10,mask_co10,this_output_co10)
+            self._eazy_immoments(this_input_co21,mask_co21,this_output_co21)
 
             # clean up
             os.system("rm -rf " + mask_co10)
@@ -368,6 +370,7 @@ class ToolsR21():
         expr = "iif( IM0>=" + thres + ",1.0/" + cwidth + ",0.0 )"
         run_immath_one(incube,incube+"_tmp1",expr)
         immoments(imagename=incube+"_tmp1",moments=[0],outfile=incube+"_tmp2")
+        os.system("rm -rf " + incube + "_tmp1")
 
         # remove islands
         maskfile = incube + "_tmp2"
