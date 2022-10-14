@@ -523,7 +523,7 @@ def signal_masking(
         imagename = imagename,
         mode      = "evalexpr",
         expr      = expr,
-        outfile   = outfile + "_tmp0_signal_masking",
+        outfile   = outfile,# + "_tmp0_signal_masking",
         )
 
     imhead(
