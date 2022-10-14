@@ -44,7 +44,6 @@ Toshiki Saito@NAOJ
 
 import os, sys, glob
 import numpy as np
-from scipy.stats import gaussian_kde
 
 from mycasa_rotation import *
 from mycasa_sampling import *
@@ -255,19 +254,19 @@ class ToolsR21():
         """
 
         self.do_ngc0628 = True
-        self.do_ngc3627 = True
-        self.do_ngc4254 = True
-        self.do_ngc4321 = True
+        self.do_ngc3627 = False
+        self.do_ngc4254 = False
+        self.do_ngc4321 = False
 
         if do_all==True:
             self.do_ngc0628 = True
             self.do_ngc3627 = True
             self.do_ngc4254 = True
             self.do_ngc4321 = True
-            do_align       = True
-            do_multismooth = True
-            do_moments     = True
-            do_align_other = True
+            do_align        = True
+            do_multismooth  = True
+            do_moments      = True
+            do_align_other  = True
 
         # analysis
         if do_align==True:
@@ -389,7 +388,7 @@ class ToolsR21():
             # nchan-based masking
             self._masking_cube_nchan(this_input_co10,mask_co10+"_nchan",nchan_thres=nchan_thres)
             run_immath_two(mask_combine,mask_co10+"_nchan",mask_co10,"IM0*IM1",delin=False)
-            os.system("rm -rf " + mask_co10 + "_nchan")
+            #os.system("rm -rf " + mask_co10 + "_nchan")
 
             self._masking_cube_nchan(this_input_co21,mask_co21+"_nchan",nchan_thres=nchan_thres)
             run_immath_two(mask_combine,mask_co21+"_nchan",mask_co21,"IM0*IM1",delin=False)
