@@ -379,6 +379,7 @@ class ToolsR21():
 
         thres  = str( measure_rms(incube) * self.snr_mom )
         data   = imval(incube)["coords"][:,3]
+        print(np.shape(data))
         cwidth = str(np.round(abs(data[1]-data[0])/imhead(incube,mode="list")["restfreq"][0] * 299792.458, 2))
 
         # create nchan 3d mask
