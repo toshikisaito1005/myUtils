@@ -355,23 +355,21 @@ class ToolsR21():
         self,
         incube,
         outmask,
-        snr=2.0,
         pixelmin=1,
         nchan_thres=2,
         ):
         """
         """
 
-        thres  = str( measure_rms(incube) * snr )
+        thres  = str( measure_rms(incube) * self.snr_mom )
         data   = imval(incube)["coords"][:,3]
         cwidth = str(np.round(abs(data[1]-data[0])/imhead(incube,mode="list")["restfreq"][0] * 299792.458, 2))
-        print("# cwidth")
-        print(cwidth)
 
         # create nchan 3d mask
         expr = "iif( IM0>=" + thres + ",1.0/" + cwidth + ",0.0 )"
         run_immath_one(incube,incube+"_tmp1",expr)
         immoments(imagename=incube+"_tmp1",moments=[0],outfile=incube+"_tmp2")
+        print(incube + "_tmp1")
         os.system("rm -rf " + incube + "_tmp1")
 
         # remove islands
@@ -392,7 +390,7 @@ class ToolsR21():
 
         # create nchan 2d mask
         expr = "iif( IM0>="+str(nchan_thres)+", 1, 0 )"
-        run_immath_one(incube+"_tmp2",incube+"_tmp3",expr,delin=True)
+        run_immath_one(incube+"_tmp2",incube+"_tmp3",expr,delin=False)#True)
         boolean_masking(incube+"_tmp3",outmask,delin=True)
 
     ####################
