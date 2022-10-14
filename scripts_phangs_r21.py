@@ -388,10 +388,10 @@ class ToolsR21():
             # nchan-based masking
             self._masking_cube_nchan(this_input_co10,mask_co10+"_nchan",nchan_thres=nchan_thres)
             run_immath_two(mask_combine,mask_co10+"_nchan",mask_co10,"IM0*IM1",delin=False)
-            #os.system("rm -rf " + mask_co10 + "_nchan")
+            os.system("rm -rf " + mask_co10 + "_nchan")
 
             self._masking_cube_nchan(this_input_co21,mask_co21+"_nchan",nchan_thres=nchan_thres)
-            run_immath_two(mask_combine,mask_co21+"_nchan",mask_co21,"IM0*IM1",delin=False)
+            run_immath_two(mask_combine,mask_co21+"_nchan",mask_co21,"IM0*IM1",delin=True)
 
             # mom creation
             self._eazy_immoments(this_input_co10,mask_co10,this_output_co10)
@@ -449,7 +449,6 @@ class ToolsR21():
         expr = "iif( IM0>=" + thres + ",1.0/" + cwidth + ",0.0 )"
         run_immath_one(incube,incube+"_tmp1",expr)
         immoments(imagename=incube+"_tmp1",moments=[0],outfile=incube+"_tmp2")
-        print(incube + "_tmp1")
         os.system("rm -rf " + incube + "_tmp1")
 
         # remove islands
