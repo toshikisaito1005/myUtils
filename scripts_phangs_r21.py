@@ -292,7 +292,6 @@ class ToolsR21():
         for i in range(len(this_beams)):
             this_beam        = this_beams[i]
             this_beamstr     = str(this_beam).replace(".","p").zfill(4)
-            print(this_beamstr)
             mask_co10        = "co10.mask"
             mask_co21        = "co21.mask"
             mask_combine     = "comb_" + this_beamstr + ".mask"
@@ -309,7 +308,7 @@ class ToolsR21():
             # nchan-based masking
             self._masking_cube_nchan(this_input_co10,mask_co10+"_nchan",nchan_thres=nchan_thres)
             run_immath_two(mask_combine,mask_co10+"_nchan",mask_co10,"IM0*IM1",delin=False)
-            #os.system("rm -rf " + mask_co10 + "_nchan")
+            os.system("rm -rf " + mask_co10 + "_nchan")
 
             self._masking_cube_nchan(this_input_co21,mask_co21+"_nchan",nchan_thres=nchan_thres)
             run_immath_two(mask_combine,mask_co21+"_nchan",mask_co21,"IM0*IM1",delin=False)
@@ -390,7 +389,7 @@ class ToolsR21():
 
         # create nchan 2d mask
         expr = "iif( IM0>="+str(nchan_thres)+", 1, 0 )"
-        run_immath_one(incube+"_tmp2",incube+"_tmp3",expr,delin=False)#True)
+        run_immath_one(incube+"_tmp2",incube+"_tmp3",expr,delin=True)
         boolean_masking(incube+"_tmp3",outmask,delin=True)
 
     ####################
