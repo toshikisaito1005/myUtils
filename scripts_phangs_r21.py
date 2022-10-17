@@ -612,6 +612,7 @@ class ToolsR21():
         data[np.isnan(data)] = 0
         data[np.isinf(data)] = 0
         data = data[data!=0]
+        print(np.max(data),np.min(data))
 
         # data
         histrange    = [data.min(), data.max()]
