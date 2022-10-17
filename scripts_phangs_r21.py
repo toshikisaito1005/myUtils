@@ -116,6 +116,7 @@ class ToolsR21():
 
         self._create_dir(self.dir_ready)
         self._create_dir(self.dir_products)
+        self._create_dir(self.dir_products_txt)
         self._create_dir(self.dir_final)
 
     def _set_input_fits(self):
@@ -328,8 +329,16 @@ class ToolsR21():
         self.noise_hist_bins     = 500
         self.noise_hist_snr4plt  = 2.5
 
-        self.outpng_noise_vs_beam  = self.dir_products + self._read_key("outpng_noise_vs_beam")
-        self.noise_vs_beam_snr4fit = 0.5
+        self.outpng_noise_vs_beam     = self.dir_products + self._read_key("outpng_noise_vs_beam")
+        self.noise_vs_beam_co10_n0628 = self.dir_products_txt + self._read_key("noise_vs_beam_co10_n0628")
+        self.noise_vs_beam_co10_n3627 = self.dir_products_txt + self._read_key("noise_vs_beam_co10_n3627")
+        self.noise_vs_beam_co10_n4254 = self.dir_products_txt + self._read_key("noise_vs_beam_co10_n4254")
+        self.noise_vs_beam_co10_n4321 = self.dir_products_txt + self._read_key("noise_vs_beam_co10_n4321")
+        self.noise_vs_beam_co21_n0628 = self.dir_products_txt + self._read_key("noise_vs_beam_co21_n0628")
+        self.noise_vs_beam_co21_n3627 = self.dir_products_txt + self._read_key("noise_vs_beam_co21_n3627")
+        self.noise_vs_beam_co21_n4254 = self.dir_products_txt + self._read_key("noise_vs_beam_co21_n4254")
+        self.noise_vs_beam_co21_n4321 = self.dir_products_txt + self._read_key("noise_vs_beam_co21_n4321")
+        self.noise_vs_beam_snr4fit    = 0.5
 
     ##################
     # run_phangs_r21 #
@@ -408,15 +417,114 @@ class ToolsR21():
         taskname = self.modname + sys._getframe().f_code.co_name
         check_first(self.outcube_co10_n0628,taskname)
 
-        this_beams      = self.beams_n0628
-        this_cubes_co10 = self.outcube_co10_n0628.replace(str(self.basebeam_n0628).replace(".","p").zfill(4),"????").replace(".image","_k.image")
-        this_cubes_co21 = self.outcube_co21_n0628.replace(str(self.basebeam_n0628).replace(".","p").zfill(4),"????").replace(".image","_k.image")
+        ###########
+        # prepare #
+        ###########
 
-        for i in range(len(this_beams)):
-            this_beam       = this_beams[i]
-            this_beamstr    = str(this_beam).replace(".","p").zfill(4)
-            this_cube_co10  = this_cubes_co10.replace("????",this_beamstr)
-            this_cube_co21  = this_cubes_co21.replace("????",this_beamstr)
+        list_rms_co10_n0628 = self._measure_log_rms(
+            self.outcube_co10_n0628.replace(str(self.basebeam_n0628).replace(".","p").zfill(4),"????").replace(".image","_k.image"),
+            self.beams_n0628,
+            self.noise_vs_beam_co10_n0628,
+            )
+        list_rms_co21_n0628 = self._measure_log_rms(
+            self.outcube_co21_n0628.replace(str(self.basebeam_n0628).replace(".","p").zfill(4),"????").replace(".image","_k.image"),
+            self.beams_n0628,
+            self.noise_vs_beam_co21_n0628,
+            )
+
+        list_rms_co10_n3627 = self._measure_log_rms(
+            self.outcube_co10_n3627.replace(str(self.basebeam_n3627).replace(".","p").zfill(4),"????").replace(".image","_k.image"),
+            self.beams_n3627,
+            self.noise_vs_beam_co10_n3627,
+            )
+        list_rms_co21_n3627 = self._measure_log_rms(
+            self.outcube_co21_n3627.replace(str(self.basebeam_n3627).replace(".","p").zfill(4),"????").replace(".image","_k.image"),
+            self.beams_n3627,
+            self.noise_vs_beam_co21_n3627,
+            )
+
+        list_rms_co10_n4254 = self._measure_log_rms(
+            self.outcube_co10_n4254.replace(str(self.basebeam_n4254).replace(".","p").zfill(4),"????").replace(".image","_k.image"),
+            self.beams_n4254,
+            self.noise_vs_beam_co10_n4254,
+            )
+        list_rms_co21_n4254 = self._measure_log_rms(
+            self.outcube_co21_n4254.replace(str(self.basebeam_n4254).replace(".","p").zfill(4),"????").replace(".image","_k.image"),
+            self.beams_n4254,
+            self.noise_vs_beam_co21_n4254,
+            )
+
+        list_rms_co10_n4321 = self._measure_log_rms(
+            self.outcube_co10_n4321.replace(str(self.basebeam_n4321).replace(".","p").zfill(4),"????").replace(".image","_k.image"),
+            self.beams_n4321,
+            self.noise_vs_beam_co10_n4321,
+            )
+        list_rms_co21_n4321 = self._measure_log_rms(
+            self.outcube_co21_n4321.replace(str(self.basebeam_n4321).replace(".","p").zfill(4),"????").replace(".image","_k.image"),
+            self.beams_n4321,
+            self.noise_vs_beam_co21_n4321,
+            )
+
+        xlim   = [2,28]
+        ylim   = -3.6,-0.8
+        title  = "(b) Sensitivity vs. Beam Size"
+        xlabel = "Beam size (arcsec)"
+        ylabel = "log rms per voxel (K)"
+
+        ########
+        # plot #
+        ########
+
+        plt.figure(figsize=(13,10))
+        gs = gridspec.GridSpec(nrows=10, ncols=10)
+        ax = plt.subplot(gs[0:10,0:10])
+        
+        myax_set(ax, "both", xlim, ylim, title, xlabel, ylabel)
+        ax.set_yticks(np.linspace(0,20000,3)[1:])
+
+        # plot
+
+        #plt.savefig(self.outpng_noise_vs_beam, dpi=self.fig_dpi)
+
+    ####################
+    # _measure_log_rms #
+    ####################
+
+    def _measure_log_rms(
+        self,
+        incubes,
+        beams,
+        outtxt,
+        ):
+        """
+        plot_noise_vs_beam
+        """
+
+        if not glob.glob(outtxt):
+            print("# loop_meausre_rms")
+            list_log_rms = []
+            list_log_p84 = []
+            for i in range(len(beams)):
+                this_beam    = beams[i]
+                this_beamstr = str(this_beam).replace(".","p").zfill(4)
+                this_cube    = incubes.replace("????",this_beamstr)
+
+                this_data = run_imval(this_cube)
+                this_bins = (np.ceil(np.log2(len(this_data))) + 1) * 20 # Sturgess equation * 20
+
+                _,_,_,_,this_rms,_,_,this_p84 = gaussfit_noise_histo(this_data)
+                list_log_rms.append(np.log10(this_rms))
+                list_log_p84.append(np.log10(this_p84))
+
+            header="Column 1 = beam size (arcsec)\nColumn 2 = log best-fit rms (K)\nColumn 3 = log 84th percentile of inversed histogram (K)"
+            np.savetxt(outtxt, np.c_[beams,list_log_rms,list_log_p84], fmt ="%4.1f %4.4f %4.4f", header=header, delimiter="   ")
+        else:
+            print("# read " + outtxt)
+            data = np.loadtxt(outtxt)
+            list_log_rms = data[:,1]
+            list_log_p84 = data[:,2]
+
+        return np.c_[list_log_rms, list_log_p84]
 
     #
 
@@ -452,6 +560,7 @@ class ToolsR21():
         ########
         # plot #
         ########
+
         plt.figure(figsize=(13,10))
         gs = gridspec.GridSpec(nrows=10, ncols=10)
         ax = plt.subplot(gs[0:10,0:10])
@@ -1399,7 +1508,6 @@ class ToolsR21():
         expr = "iif( IM0>=" + thres + ",1.0/" + cwidth + ",0.0 )"
         run_immath_one(incube,incube+"_tmp1",expr)
         immoments(imagename=incube+"_tmp1",moments=[0],outfile=incube+"_tmp2")
-        os.system("rm -rf " + incube + "_tmp1")
 
         # remove islands
         maskfile = incube + "_tmp2"
@@ -1421,6 +1529,8 @@ class ToolsR21():
         expr = "iif( IM0>="+str(nchan_thres)+", 1, 0 )"
         run_immath_one(incube+"_tmp2",incube+"_tmp3",expr,delin=True)
         boolean_masking(incube+"_tmp3",outmask,delin=True)
+
+        os.system("rm -rf " + incube + "_tmp1")
 
     ####################
     # _maskig_cube_snr #

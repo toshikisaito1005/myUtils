@@ -165,6 +165,14 @@ id_bar_n4321         ,,,>0
 # output png and txt #
 ######################
 # text files
+noise_vs_beam_co10_n0628 ,,,noise_vs_beam_co10_n0628.txt
+noise_vs_beam_co10_n3627 ,,,noise_vs_beam_co10_n3627.txt
+noise_vs_beam_co10_n4254 ,,,noise_vs_beam_co10_n4254.txt
+noise_vs_beam_co10_n4321 ,,,noise_vs_beam_co10_n4321.txt
+noise_vs_beam_co21_n0628 ,,,noise_vs_beam_co21_n0628.txt
+noise_vs_beam_co21_n3627 ,,,noise_vs_beam_co21_n3627.txt
+noise_vs_beam_co21_n4254 ,,,noise_vs_beam_co21_n4254.txt
+noise_vs_beam_co21_n4321 ,,,noise_vs_beam_co21_n4321.txt
 # png files
 outpng_noise_hist    ,,,fig_noise_hist.png
 outpng_noise_vs_beam ,,,fig_noise_vs_beam.png
