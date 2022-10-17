@@ -291,7 +291,7 @@ class ToolsR21():
         self.freq_co10         = 115.27120
         self.freq_co21         = 230.53800
 
-        self.snr_mom           = 4.0
+        self.snr_mom           = -2.0
         self.snr_gmc           = 5.0
         self.snr_ratio         = 3.0
 
