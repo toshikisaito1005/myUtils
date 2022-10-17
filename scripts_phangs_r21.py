@@ -1203,6 +1203,8 @@ class ToolsR21():
         outmom_co21,
         outmom_r21,
         outmom_t21,
+        outmom_er21,
+        outmom_et21,
         this_beams,
         nchan_thres,
         ):
