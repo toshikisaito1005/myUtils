@@ -405,7 +405,7 @@ class ToolsR21():
             #self.plot_noise_hist()
             self.plot_noise_vs_beam()
 
-        if plot_recovery=True:
+        if plot_recovery==True:
             self.plot_recovery()
 
     #####################
