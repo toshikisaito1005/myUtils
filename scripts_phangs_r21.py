@@ -385,11 +385,11 @@ class ToolsR21():
             self.multimoments()
 
         if do_align_other==True:
-            self.align_wise(skip=True)
-            self.align_cprops(skip=True)
+            self.align_wise(skip=False)
+            self.align_cprops(skip=False)
             self.align_env(skip=False)
-            self.align_halpha(skip=True)
-            self.align_r21(skip=True)
+            self.align_halpha(skip=False)
+            self.align_r21(skip=False)
             self.align_bulge(skip=False)
 
         # plot figures in paper
