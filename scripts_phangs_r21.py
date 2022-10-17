@@ -395,7 +395,7 @@ class ToolsR21():
         # plot figures in paper
         if plot_noise==True:
             self.plot_noise_hist()
-            self.plot_noise_vs_beam()
+            #self.plot_noise_vs_beam()
 
     #####################
     #####################
