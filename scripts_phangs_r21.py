@@ -512,7 +512,7 @@ class ToolsR21():
                 this_data   = this_data["data"]
                 this_bins   = (np.ceil(np.log2(len(this_data))) + 1) * 20 # Sturgess equation * 20
 
-                _,_,_,_,this_rms,_,_,this_p84 = gaussfit_noise_histo(this_data)
+                _,_,_,_,this_rms,_,_,this_p84 = self._gaussfit_noise(this_data)
                 list_log_rms.append(np.log10(this_rms))
                 list_log_p84.append(np.log10(this_p84))
 
@@ -547,7 +547,7 @@ class ToolsR21():
 
         data,_ = imval_all(self.outcube_co10_n0628)
         data   = data["data"]
-        histx, histy, histrange, peak, rms, x_bestfit, y_bestfit, _ = gaussfit_noise_histo(data)
+        histx, histy, histrange, peak, rms, x_bestfit, y_bestfit, _ = self._gaussfit_noise(data)
 
         xlim     = [0, self.noise_hist_xmax_snr*rms]
         ylim     = [0, np.max(histy)*1.02]
