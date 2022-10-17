@@ -388,8 +388,8 @@ class ToolsR21():
         if do_align_other==True:
             self.align_wise(skip=True)
             self.align_cprops(skip=True)
-            self.align_env(skip=False)
-            self.align_halpha()
+            self.align_env(skip=True)
+            self.align_halpha(skip=False)
             self.align_r21()
             self.align_bulge()
 
@@ -781,40 +781,43 @@ class ToolsR21():
 
     def align_halpha(
         self,
+        skip=False,
         ):
         """
         """
 
-        taskname = self.modname + sys._getframe().f_code.co_name
-        check_first(self.outcube_co10_n0628,taskname)
+        if skip==False:
+            taskname = self.modname + sys._getframe().f_code.co_name
+            check_first(self.outcube_co10_n0628,taskname)
 
-        if self.do_ngc0628==True:
-            this_halpha   = self.halpha_mask_n0628
-            this_output   = self.outfits_halpha_n0628
-            this_beam     = self.basebeam_n0628
-            this_template = self.outmom_co10_n0628.replace("momX","mom0")
-            self._import_halpha(this_halpha,this_output,this_template,this_beam)
+            if self.do_ngc0628==True:
+                this_halpha   = self.halpha_mask_n0628
+                print(self.halpha_mask_n0628)
+                this_output   = self.outfits_halpha_n0628
+                this_beam     = self.basebeam_n0628
+                this_template = self.outmom_co10_n0628.replace("momX","mom0")
+                self._import_halpha(this_halpha,this_output,this_template,this_beam)
 
-        if self.do_ngc3627==True:
-            this_halpha   = self.halpha_mask_n3627
-            this_output   = self.outfits_halpha_n3627
-            this_beam     = self.basebeam_n3627
-            this_template = self.outmom_co10_n3627.replace("momX","mom0")
-            self._import_halpha(this_halpha,this_output,this_template,this_beam)
+            if self.do_ngc3627==True:
+                this_halpha   = self.halpha_mask_n3627
+                this_output   = self.outfits_halpha_n3627
+                this_beam     = self.basebeam_n3627
+                this_template = self.outmom_co10_n3627.replace("momX","mom0")
+                self._import_halpha(this_halpha,this_output,this_template,this_beam)
 
-        if self.do_ngc4254==True:
-            this_halpha   = self.halpha_mask_n4254
-            this_output   = self.outfits_halpha_n4254
-            this_beam     = self.basebeam_n4254
-            this_template = self.outmom_co10_n4254.replace("momX","mom0")
-            self._import_halpha(this_halpha,this_output,this_template,this_beam)
+            if self.do_ngc4254==True:
+                this_halpha   = self.halpha_mask_n4254
+                this_output   = self.outfits_halpha_n4254
+                this_beam     = self.basebeam_n4254
+                this_template = self.outmom_co10_n4254.replace("momX","mom0")
+                self._import_halpha(this_halpha,this_output,this_template,this_beam)
 
-        if self.do_ngc4321==True:
-            this_halpha   = self.halpha_mask_n4321
-            this_output   = self.outfits_halpha_n4321
-            this_beam     = self.basebeam_n4321
-            this_template = self.outmom_co10_n4321.replace("momX","mom0")
-            self._import_halpha(this_halpha,this_output,this_template,this_beam)
+            if self.do_ngc4321==True:
+                this_halpha   = self.halpha_mask_n4321
+                this_output   = self.outfits_halpha_n4321
+                this_beam     = self.basebeam_n4321
+                this_template = self.outmom_co10_n4321.replace("momX","mom0")
+                self._import_halpha(this_halpha,this_output,this_template,this_beam)
 
     ##################
     # _import_halpha #
