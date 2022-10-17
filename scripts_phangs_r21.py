@@ -389,7 +389,7 @@ class ToolsR21():
             self.align_cprops(skip=True)
             self.align_env(skip=True)
             self.align_halpha(skip=True)
-            self.align_r21(skip=False)
+            self.align_r21(skip=True)
             self.align_bulge(skip=False)
 
         # plot figures in paper
@@ -641,44 +641,46 @@ class ToolsR21():
 
     def align_bulge(
         self,
+        skip=False,
         ):
         """
         """
 
-        taskname = self.modname + sys._getframe().f_code.co_name
-        check_first(self.outcube_co10_n0628,taskname)
+        if skip==False:
+            taskname = self.modname + sys._getframe().f_code.co_name
+            check_first(self.outcube_co10_n0628,taskname)
 
-        if self.do_ngc0628==True:
-            this_beam     = self.basebeam_n0628
-            this_convbeam = self.beam_wise_n0628
-            this_template = self.outmom_co10_n0628.replace("momX","mom0")
-            this_bulge    = self.env_bulge_n0628
-            this_output   = self.outfits_bulge_n0628
-            self._import_bulge(this_bulge,this_output,this_beam,this_convbeam,this_template)
+            if self.do_ngc0628==True:
+                this_beam     = self.basebeam_n0628
+                this_convbeam = self.beam_wise_n0628
+                this_template = self.outmom_co10_n0628.replace("momX","mom0")
+                this_bulge    = self.env_bulge_n0628
+                this_output   = self.outfits_bulge_n0628
+                self._import_bulge(this_bulge,this_output,this_beam,this_convbeam,this_template)
 
-        if self.do_ngc3627==True:
-            this_beam     = self.basebeam_n3627
-            this_convbeam = self.beam_wise_n3627
-            this_template = self.outmom_co10_n3627.replace("momX","mom0")
-            this_bulge    = self.env_bulge_n3627
-            this_output   = self.outfits_bulge_n3627
-            self._import_bulge(this_bulge,this_output,this_beam,this_convbeam,this_template)
+            if self.do_ngc3627==True:
+                this_beam     = self.basebeam_n3627
+                this_convbeam = self.beam_wise_n3627
+                this_template = self.outmom_co10_n3627.replace("momX","mom0")
+                this_bulge    = self.env_bulge_n3627
+                this_output   = self.outfits_bulge_n3627
+                self._import_bulge(this_bulge,this_output,this_beam,this_convbeam,this_template)
 
-        if self.do_ngc4254==True:
-            this_beam     = self.basebeam_n4254
-            this_convbeam = self.beam_wise_n4254
-            this_template = self.outmom_co10_n4254.replace("momX","mom0")
-            this_bulge    = self.env_bulge_n4254
-            this_output   = self.outfits_bulge_n4254
-            self._import_bulge(this_bulge,this_output,this_beam,this_convbeam,this_template)
+            if self.do_ngc4254==True:
+                this_beam     = self.basebeam_n4254
+                this_convbeam = self.beam_wise_n4254
+                this_template = self.outmom_co10_n4254.replace("momX","mom0")
+                this_bulge    = self.env_bulge_n4254
+                this_output   = self.outfits_bulge_n4254
+                self._import_bulge(this_bulge,this_output,this_beam,this_convbeam,this_template)
 
-        if self.do_ngc4321==True:
-            this_beam     = self.basebeam_n4321
-            this_convbeam = self.beam_wise_n4321
-            this_template = self.outmom_co10_n4321.replace("momX","mom0")
-            this_bulge    = self.env_bulge_n4321
-            this_output   = self.outfits_bulge_n4321
-            self._import_bulge(this_bulge,this_output,this_beam,this_convbeam,this_template)
+            if self.do_ngc4321==True:
+                this_beam     = self.basebeam_n4321
+                this_convbeam = self.beam_wise_n4321
+                this_template = self.outmom_co10_n4321.replace("momX","mom0")
+                this_bulge    = self.env_bulge_n4321
+                this_output   = self.outfits_bulge_n4321
+                self._import_bulge(this_bulge,this_output,this_beam,this_convbeam,this_template)
 
     #################
     # _import_bulge #
