@@ -1043,7 +1043,6 @@ class ToolsR21():
         size_y   = imhead(template,mode="list")["shape"][1]
         pix_rad  = imhead(template,mode="list")["cdelt2"]
         pix_size = round(pix_rad * 3600 * 180 / np.pi, 3)
-        print(pix_size)
         freq     = str(imhead(template,mode="list")["restfreq"][0]/1e9)+"GHz"
 
         # construct fits
@@ -1052,6 +1051,10 @@ class ToolsR21():
             this_min = str(gmc_minor_arcsec[i] * gmc_radius_arcsec[i] / gmc_major_arcsec[i]) + "arcsec"
             this_dir = "J2000 " + str(gmc_ra_dgr[i]) + "deg " + str(gmc_dec_dgr[i]) + "deg"
             this_pa  = str(gmc_pa[i])+"deg"
+            #
+            c = SkyCoord(gmc_ra_dgr[i], gmc_dec_dgr[i], unit="deg")
+            ra_dgr = str(c.ra.degree/(180/np.pi))
+            dec_dgr = str(c.dec.degree/(180/np.pi))
             #
             mycl.addcomponent(
                 dir=this_dir,
@@ -1069,7 +1072,9 @@ class ToolsR21():
         mycs.setunits(["rad", "rad", "", "Hz"])
         cell_rad = myqa.convert(myqa.quantity(str(pix_size)+"arcsec"), "rad")["value"]
         mycs.setincrement([-cell_rad, cell_rad], "direction")
-        mycs.setreferencevalue([myqa.convert(image_ra_cnt,"rad")["value"], myqa.convert(image_dec_cnt,"rad")["value"]], type="direction")
+        mycs.setreferencevalue([myqa.convert(ra_dgr,"rad")["value"],
+                                myqa.convert(dec_dgr,"rad")["value"]],
+                                type="direction")
         mycs.setreferencevalue(freq, "spectral")
         mycs.setincrement("1GHz" ,"spectral")
         myia.setcoordsys(mycs.torecord())
