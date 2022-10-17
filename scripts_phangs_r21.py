@@ -578,7 +578,7 @@ class ToolsR21():
 
         # # plot 1 sigma and 2.5sigma dashed vertical lines
         ax.plot([rms, rms], ylim, "--", color='black', lw=2)
-        ax.plot([rms*snr4plt, rms*snr4plt], ylim, "--", color='black', lw=2)
+        ax.plot([rms*self.noise_hist_snr4plt, rms*self.noise_hist_snr4plt], ylim, "--", color='black', lw=2)
 
         # legend
         ax.text(0.95, 0.93, "positive voxel histogram", color=c_pos, horizontalalignment="right", transform=ax.transAxes, size=self.legend_fontsize, fontweight="bold")
