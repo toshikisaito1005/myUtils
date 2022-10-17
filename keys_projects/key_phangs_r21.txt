@@ -43,10 +43,10 @@ cprops_n0628         ,,,ngc0628_12m+7m+tp_co21_120pc_props.fits
 cprops_n3627         ,,,ngc3627_12m+7m+tp_co21_120pc_props.fits
 cprops_n4254         ,,,ngc4254_12m+7m+tp_co21_120pc_props.fits
 cprops_n4321         ,,,ngc4321_12m+7m+tp_co21_120pc_props.fits
-env_bulge_n0628      ,,,NGC0628_mask_v5_bulge.fits
-env_bulge_n3627      ,,,NGC3627_mask_v5_bulge.fits
-env_bulge_n4254      ,,,NGC4254_mask_v5_bulge.fits
-env_bulge_n4321      ,,,NGC4321_mask_v5_bulge.fits
+env_bulge_n0628      ,,,NGC0628_mask_v5_bulge.fits_env0
+env_bulge_n3627      ,,,NGC3627_mask_v5_bulge.fits_env0
+env_bulge_n4254      ,,,NGC4254_mask_v5_bulge.fits_env0
+env_bulge_n4321      ,,,NGC4321_mask_v5_bulge.fits_env0
 env_arm_n0628        ,,,NGC0628_mask_v5_sp_arms.fits
 env_arm_n3627        ,,,NGC3627_large_barends_sp1500pc.fits
 env_arm_n4254        ,,,NGC4254_mask_v5_sp_arms.fits

@@ -390,7 +390,7 @@ class ToolsR21():
             self.align_env(skip=True)
             self.align_halpha(skip=True)
             self.align_r21(skip=False)
-            self.align_bulge()
+            self.align_bulge(skip=False)
 
         # plot figures in paper
         if plot_noise==True:
@@ -691,7 +691,7 @@ class ToolsR21():
         beam,
         beamto,
         template,
-        index=3,
+        index=1,
         ):
         """
         align_bulge
@@ -769,7 +769,9 @@ class ToolsR21():
 
         run_immath_one(infile,outfile+"_tmp1","iif( IM0>0,2,0 )")
         run_immath_two(infile,outfile+"_tmp1",outfile+"_tmp2","iif( IM0<"+p33+",1,IM1 )")
-        run_immath_two(infile,outfile+"_tmp2",outfile,"iif( IM0>="+p66+",1,IM1 )")
+        run_immath_two(infile,outfile+"_tmp2",outfile,"iif( IM0>="+p66+",3,IM1 )")
+        os.system("rm -rf " + outfile + "_tmp1")
+        os.system("rm -rf " + outfile + "_tmp2")
 
         beamstr = str(beam) + "arcsec"
         imhead(imagename=outfile,mode="put",hdkey="beamminor",hdvalue=beamstr)
