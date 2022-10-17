@@ -291,7 +291,7 @@ class ToolsR21():
         self.freq_co10         = 115.27120
         self.freq_co21         = 230.53800
 
-        self.snr_mom           = -2.0
+        self.snr_mom           = 1.5
         self.snr_gmc           = 5.0
         self.snr_ratio         = 3.0
 
@@ -450,27 +450,256 @@ class ToolsR21():
         taskname = self.modname + sys._getframe().f_code.co_name
         check_first(self.outcube_co10_n0628,taskname)
 
-        this_co10   = self.outmom_co10_n0628.replace("momX","mom0")
-        this_co21   = self.outmom_co21_n0628.replace("momX","mom0")
-        this_r21    = self.outfits_r21_n0628
-        this_out    = self.outpng_co10_n0628
-        this_imsize = self.imsize_n0628
-        this_clim_co10 = [10**-2,imstat(this_co10)["max"]]
+        ###########
+        # ngc0628 #
+        ###########
+        this_co10      = self.outmom_co10_n0628.replace("momX","mom0")
+        this_co21      = self.outmom_co21_n0628.replace("momX","mom0")
+        this_r21       = self.outfits_r21_n0628
+        this_out_co10  = self.outpng_co10_n0628
+        this_out_co21  = self.outpng_co21_n0628
+        this_out_r21   = self.outpng_r21_n0628
+        this_imsize    = self.imsize_n0628
+        this_ra        = self.ra_n0628
+        this_dec       = self.dec_n0628
+        this_scalebar  = 1000. / self.scale_n0628
+        this_title     = "NGC 0628"
         myfig_fits2png(
             this_co10,
-            this_out,
+            this_out_co10,
             imcontour1=this_co10,
             imsize_as=this_imsize,
-            ra_cnt=self.ra_n0628,
-            dec_cnt=self.dec_n0628,
+            ra_cnt=this_ra,
+            dec_cnt=this_dec,
             levels_cont1=[0.02,0.04,0.08,0.16,0.32,0.64,0.96],
-            set_title="NGC 0628",
+            set_title=this_title,
             colorlog=True,
             set_cmap="PuBu",
-            scalebar=1000. / self.scale_n0628,
+            scalebar=this_scalebar,
             label_scalebar="1 kpc",
             comment="CO(1-0) integrated intensity",
-            clim=this_clim_co10,
+            clim=[10**-2,imstat(this_co10)["max"]],
+            )
+        myfig_fits2png(
+            this_co21,
+            this_out_co21,
+            imcontour1=this_co21,
+            imsize_as=this_imsize,
+            ra_cnt=this_ra,
+            dec_cnt=this_dec,
+            levels_cont1=[0.02,0.04,0.08,0.16,0.32,0.64,0.96],
+            set_title=this_title,
+            colorlog=True,
+            set_cmap="Reds",
+            scalebar=this_scalebar,
+            label_scalebar="1 kpc",
+            comment="CO(2-1) integrated intensity",
+            clim=[10**-2,imstat(this_co21)["max"]],
+            )
+        myfig_fits2png(
+            this_r21,
+            this_out_r21,
+            imcontour1=this_co21,
+            imsize_as=this_imsize,
+            ra_cnt=this_ra,
+            dec_cnt=this_dec,
+            levels_cont1=[0.02,0.04,0.08,0.16,0.32,0.64,0.96],
+            set_title=this_title,
+            colorlog=False,
+            set_cmap="rainbow",
+            scalebar=this_scalebar,
+            label_scalebar="1 kpc",
+            comment="CO(2-1)/CO(1-0) integrated intensity ratio",
+            clim=[0.2,1.0],
+            )
+
+        ###########
+        # ngc3627 #
+        ###########
+        this_co10      = self.outmom_co10_n3627.replace("momX","mom0")
+        this_co21      = self.outmom_co21_n3627.replace("momX","mom0")
+        this_r21       = self.outfits_r21_n3627
+        this_out_co10  = self.outpng_co10_n3627
+        this_out_co21  = self.outpng_co21_n3627
+        this_out_r21   = self.outpng_r21_n3627
+        this_imsize    = self.imsize_n3627
+        this_ra        = self.ra_n3627
+        this_dec       = self.dec_n3627
+        this_scalebar  = 1000. / self.scale_n3627
+        this_title     = "NGC 3627"
+        myfig_fits2png(
+            this_co10,
+            this_out_co10,
+            imcontour1=this_co10,
+            imsize_as=this_imsize,
+            ra_cnt=this_ra,
+            dec_cnt=this_dec,
+            levels_cont1=[0.02,0.04,0.08,0.16,0.32,0.64,0.96],
+            set_title=this_title,
+            colorlog=True,
+            set_cmap="PuBu",
+            scalebar=this_scalebar,
+            label_scalebar="1 kpc",
+            comment="CO(1-0) integrated intensity",
+            clim=[10**-2,imstat(this_co10)["max"]],
+            )
+        myfig_fits2png(
+            this_co21,
+            this_out_co21,
+            imcontour1=this_co21,
+            imsize_as=this_imsize,
+            ra_cnt=this_ra,
+            dec_cnt=this_dec,
+            levels_cont1=[0.02,0.04,0.08,0.16,0.32,0.64,0.96],
+            set_title=this_title,
+            colorlog=True,
+            set_cmap="Reds",
+            scalebar=this_scalebar,
+            label_scalebar="1 kpc",
+            comment="CO(2-1) integrated intensity",
+            clim=[10**-2,imstat(this_co21)["max"]],
+            )
+        myfig_fits2png(
+            this_r21,
+            this_out_r21,
+            imcontour1=this_co21,
+            imsize_as=this_imsize,
+            ra_cnt=this_ra,
+            dec_cnt=this_dec,
+            levels_cont1=[0.02,0.04,0.08,0.16,0.32,0.64,0.96],
+            set_title=this_title,
+            colorlog=False,
+            set_cmap="rainbow",
+            scalebar=this_scalebar,
+            label_scalebar="1 kpc",
+            comment="CO(2-1)/CO(1-0) integrated intensity ratio",
+            clim=[0.2,1.0],
+            )
+
+        ###########
+        # ngc4254 #
+        ###########
+        this_co10      = self.outmom_co10_n4254.replace("momX","mom0")
+        this_co21      = self.outmom_co21_n4254.replace("momX","mom0")
+        this_r21       = self.outfits_r21_n4254
+        this_out_co10  = self.outpng_co10_n4254
+        this_out_co21  = self.outpng_co21_n4254
+        this_out_r21   = self.outpng_r21_n4254
+        this_imsize    = self.imsize_n4254
+        this_ra        = self.ra_n4254
+        this_dec       = self.dec_n4254
+        this_scalebar  = 1000. / self.scale_n4254
+        this_title     = "NGC 4254"
+        myfig_fits2png(
+            this_co10,
+            this_out_co10,
+            imcontour1=this_co10,
+            imsize_as=this_imsize,
+            ra_cnt=this_ra,
+            dec_cnt=this_dec,
+            levels_cont1=[0.02,0.04,0.08,0.16,0.32,0.64,0.96],
+            set_title=this_title,
+            colorlog=True,
+            set_cmap="PuBu",
+            scalebar=this_scalebar,
+            label_scalebar="1 kpc",
+            comment="CO(1-0) integrated intensity",
+            clim=[10**-2,imstat(this_co10)["max"]],
+            )
+        myfig_fits2png(
+            this_co21,
+            this_out_co21,
+            imcontour1=this_co21,
+            imsize_as=this_imsize,
+            ra_cnt=this_ra,
+            dec_cnt=this_dec,
+            levels_cont1=[0.02,0.04,0.08,0.16,0.32,0.64,0.96],
+            set_title=this_title,
+            colorlog=True,
+            set_cmap="Reds",
+            scalebar=this_scalebar,
+            label_scalebar="1 kpc",
+            comment="CO(2-1) integrated intensity",
+            clim=[10**-2,imstat(this_co21)["max"]],
+            )
+        myfig_fits2png(
+            this_r21,
+            this_out_r21,
+            imcontour1=this_co21,
+            imsize_as=this_imsize,
+            ra_cnt=this_ra,
+            dec_cnt=this_dec,
+            levels_cont1=[0.02,0.04,0.08,0.16,0.32,0.64,0.96],
+            set_title=this_title,
+            colorlog=False,
+            set_cmap="rainbow",
+            scalebar=this_scalebar,
+            label_scalebar="1 kpc",
+            comment="CO(2-1)/CO(1-0) integrated intensity ratio",
+            clim=[0.2,1.0],
+            )
+
+        ###########
+        # ngc4321 #
+        ###########
+        this_co10      = self.outmom_co10_n4321.replace("momX","mom0")
+        this_co21      = self.outmom_co21_n4321.replace("momX","mom0")
+        this_r21       = self.outfits_r21_n4321
+        this_out_co10  = self.outpng_co10_n4321
+        this_out_co21  = self.outpng_co21_n4321
+        this_out_r21   = self.outpng_r21_n4321
+        this_imsize    = self.imsize_n4321
+        this_ra        = self.ra_n4321
+        this_dec       = self.dec_n4321
+        this_scalebar  = 1000. / self.scale_n4321
+        this_title     = "NGC 4254"
+        myfig_fits2png(
+            this_co10,
+            this_out_co10,
+            imcontour1=this_co10,
+            imsize_as=this_imsize,
+            ra_cnt=this_ra,
+            dec_cnt=this_dec,
+            levels_cont1=[0.02,0.04,0.08,0.16,0.32,0.64,0.96],
+            set_title=this_title,
+            colorlog=True,
+            set_cmap="PuBu",
+            scalebar=this_scalebar,
+            label_scalebar="1 kpc",
+            comment="CO(1-0) integrated intensity",
+            clim=[10**-2,imstat(this_co10)["max"]],
+            )
+        myfig_fits2png(
+            this_co21,
+            this_out_co21,
+            imcontour1=this_co21,
+            imsize_as=this_imsize,
+            ra_cnt=this_ra,
+            dec_cnt=this_dec,
+            levels_cont1=[0.02,0.04,0.08,0.16,0.32,0.64,0.96],
+            set_title=this_title,
+            colorlog=True,
+            set_cmap="Reds",
+            scalebar=this_scalebar,
+            label_scalebar="1 kpc",
+            comment="CO(2-1) integrated intensity",
+            clim=[10**-2,imstat(this_co21)["max"]],
+            )
+        myfig_fits2png(
+            this_r21,
+            this_out_r21,
+            imcontour1=this_co21,
+            imsize_as=this_imsize,
+            ra_cnt=this_ra,
+            dec_cnt=this_dec,
+            levels_cont1=[0.02,0.04,0.08,0.16,0.32,0.64,0.96],
+            set_title=this_title,
+            colorlog=False,
+            set_cmap="rainbow",
+            scalebar=this_scalebar,
+            label_scalebar="1 kpc",
+            comment="CO(2-1)/CO(1-0) integrated intensity ratio",
+            clim=[0.2,1.0],
             )
 
     #
