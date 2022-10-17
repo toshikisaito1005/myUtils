@@ -488,6 +488,7 @@ class ToolsR21():
         ad = [0.215,0.83,0.10,0.90]
         myax_set(ax, "both", xlim, ylim, title, xlabel, ylabel, adjust=ad)
 
+        print(self.beams_n0628[:-2], list_rms_co10_n0628[:,1])
         # plot co10 rms
         ax.plot(self.beams_n0628[:-2], list_rms_co10_n0628[:,1], "o-", color=self.c_n0628, markeredgewidth=0, markersize = 20, lw=3, label = "NGC 0628 CO(1-0)")
         ax.plot(self.beams_n3627[:-2], list_rms_co10_n3627[:,1], "o-", color=self.c_n3627, markeredgewidth=0, markersize = 20, lw=3, label = "NGC 3627 CO(1-0)")
