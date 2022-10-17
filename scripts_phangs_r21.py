@@ -455,6 +455,7 @@ class ToolsR21():
         this_r21    = self.outfits_r21_n0628
         this_out    = self.outpng_co10_n0628
         this_imsize = self.imsize_n0628
+        this_clim_co10 = [10**-1,imstat(this_co10)["max"]]
         myfig_fits2png(
             this_co10,
             this_out,
@@ -462,14 +463,14 @@ class ToolsR21():
             imsize_as=this_imsize,
             ra_cnt=self.ra_n0628,
             dec_cnt=self.dec_n0628,
-            levels_cont1=[0.04,0.08,0.16,0.32,0.64,0.96],
+            levels_cont1=[0.02,0.04,0.08,0.16,0.32,0.64,0.96],
             set_title="NGC 0628",
             colorlog=True,
             set_cmap="PuBu",
             scalebar=1000. / self.scale_n0628,
             label_scalebar="1 kpc",
             comment="CO(1-0) integrated intensity",
-            clim=None,
+            clim=this_clim_co10,
             )
 
     #
