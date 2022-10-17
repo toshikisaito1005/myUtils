@@ -450,7 +450,7 @@ class ToolsR21():
         # prepare #
         ###########
 
-        beams_new_n0628 = [s for s in self.beams_n0628[:-1] if not 11.5 in s]
+        beams_new_n0628 = [s for s in self.beams_n0628[:-1] if not "11.5" in str(s)]
         list_rms_co10_n0628 = self._measure_log_rms(
             self.outcube_co10_n0628.replace(str(self.basebeam_n0628).replace(".","p").zfill(4),"????").replace(".image","_k.image"),
             beams_new_n0628,
@@ -474,7 +474,7 @@ class ToolsR21():
             self.noise_vs_beam_co21_n3627,
             )
 
-        beams_new_n4254 = [s for s in self.beams_n4254[:-1] if not 8.7 in s]
+        beams_new_n4254 = [s for s in self.beams_n4254[:-1] if not "8.7" in str(s)]
         list_rms_co10_n4254 = self._measure_log_rms(
             self.outcube_co10_n4254.replace(str(self.basebeam_n4254).replace(".","p").zfill(4),"????").replace(".image","_k.image"),
             beams_new_n4254,
@@ -486,7 +486,7 @@ class ToolsR21():
             self.noise_vs_beam_co21_n4254,
             )
 
-        beams_new_n4321 = [s for s in self.beams_n4321[:-1] if not 7.5 in s]
+        beams_new_n4321 = [s for s in self.beams_n4321[:-1] if not "7.5" in str(s)]
         list_rms_co10_n4321 = self._measure_log_rms(
             self.outcube_co10_n4321.replace(str(self.basebeam_n4321).replace(".","p").zfill(4),"????").replace(".image","_k.image"),
             beams_new_n4321,
