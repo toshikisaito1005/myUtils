@@ -621,9 +621,6 @@ class ToolsR21():
         histx4fit    = histx[histx<p84_data*snr]
         histy4fit    = histy[histx<p84_data*snr]
 
-        print(p84_data)
-        print(np.c_[histx4fit,histy4fit])
-
 
         # fit
         x_bestfit    = np.linspace(histrange[0], histrange[1], bins)
@@ -634,7 +631,7 @@ class ToolsR21():
 
         return histx, histy, histrange, peak, rms, x_bestfit, y_bestfit, p84_data
 
-    def _func1(x, a, c):
+    def _func1(self, x, a, c):
         """
         """
         return a*np.exp(-(x)**2/(2*c**2))
