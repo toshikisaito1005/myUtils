@@ -489,28 +489,28 @@ class ToolsR21():
         ax.set_yticks(np.linspace(0,20000,3)[1:])
 
         # plot co10 rms
-        ax.plot(self.beams_n0628, list_rms_co10_n0628[:,0], "o-", color=c_n0628, markeredgewidth=0, markersize = 20, lw=3, label = "NGC 0628 CO(1-0)")
-        ax.plot(self.beams_n3627, list_rms_co10_n3627[:,0], "o-", color=c_n3627, markeredgewidth=0, markersize = 20, lw=3, label = "NGC 3627 CO(1-0)")
-        ax.plot(self.beams_n4254, list_rms_co10_n4254[:,0], "o-", color=c_n4254, markeredgewidth=0, markersize = 20, lw=3, label = "NGC 4254 CO(1-0)")
-        ax.plot(self.beams_n4321, list_rms_co10_n4321[:,0], "o-", color=c_n4321, markeredgewidth=0, markersize = 20, lw=3, label = "NGC 4321 CO(1-0)")
+        ax.plot(self.beams_n0628, list_rms_co10_n0628[:,0], "o-", color=self.c_n0628, markeredgewidth=0, markersize = 20, lw=3, label = "NGC 0628 CO(1-0)")
+        ax.plot(self.beams_n3627, list_rms_co10_n3627[:,0], "o-", color=self.c_n3627, markeredgewidth=0, markersize = 20, lw=3, label = "NGC 3627 CO(1-0)")
+        ax.plot(self.beams_n4254, list_rms_co10_n4254[:,0], "o-", color=self.c_n4254, markeredgewidth=0, markersize = 20, lw=3, label = "NGC 4254 CO(1-0)")
+        ax.plot(self.beams_n4321, list_rms_co10_n4321[:,0], "o-", color=self.c_n4321, markeredgewidth=0, markersize = 20, lw=3, label = "NGC 4321 CO(1-0)")
         # plot co21 rms
-        ax.plot(self.beams_n0628, list_rms_co21_n0628[:,0], "s--", color=c_n0628, markeredgewidth=0, markersize = 20, lw=3, label = "NGC 0628 CO(2-1)")
-        ax.plot(self.beams_n3627, list_rms_co21_n3627[:,0], "s--", color=c_n3627, markeredgewidth=0, markersize = 20, lw=3, label = "NGC 3627 CO(2-1)")
-        ax.plot(self.beams_n4254, list_rms_co21_n4254[:,0], "s--", color=c_n4254, markeredgewidth=0, markersize = 20, lw=3, label = "NGC 4254 CO(2-1)")
-        ax.plot(self.beams_n4321, list_rms_co21_n4321[:,0], "s--", color=c_n4321, markeredgewidth=0, markersize = 20, lw=3, label = "NGC 4321 CO(2-1)")
+        ax.plot(self.beams_n0628, list_rms_co21_n0628[:,0], "s--", color=self.c_n0628, markeredgewidth=0, markersize = 20, lw=3, label = "NGC 0628 CO(2-1)")
+        ax.plot(self.beams_n3627, list_rms_co21_n3627[:,0], "s--", color=self.c_n3627, markeredgewidth=0, markersize = 20, lw=3, label = "NGC 3627 CO(2-1)")
+        ax.plot(self.beams_n4254, list_rms_co21_n4254[:,0], "s--", color=self.c_n4254, markeredgewidth=0, markersize = 20, lw=3, label = "NGC 4254 CO(2-1)")
+        ax.plot(self.beams_n4321, list_rms_co21_n4321[:,0], "s--", color=self.c_n4321, markeredgewidth=0, markersize = 20, lw=3, label = "NGC 4321 CO(2-1)")
 
         # text
-        t=ax.text(0.95, 0.93, "NGC 0628", color=c_n0628, horizontalalignment="right", transform=ax.transAxes, size=legend_fontsize, fontweight="bold")
-        t.set_bbox(dict(facecolor="white", alpha=text_back_alpha, lw=0))
-        t=ax.text(0.95, 0.88, "NGC 3627", color=c_n3627, horizontalalignment="right", transform=ax.transAxes, size=legend_fontsize, fontweight="bold")
-        t.set_bbox(dict(facecolor="white", alpha=text_back_alpha, lw=0))
-        t=ax.text(0.95, 0.83, "NGC 4254", color=c_n4254, horizontalalignment="right", transform=ax.transAxes, size=legend_fontsize, fontweight="bold")
-        t.set_bbox(dict(facecolor="white", alpha=text_back_alpha, lw=0))
-        t=ax.text(0.95, 0.78, "NGC 4321", color=c_n4321, horizontalalignment="right", transform=ax.transAxes, size=legend_fontsize, fontweight="bold")
-        t.set_bbox(dict(facecolor="white", alpha=text_back_alpha, lw=0))
+        t=ax.text(0.95, 0.93, "NGC 0628", color=self.c_n0628, horizontalalignment="right", transform=ax.transAxes, size=self.legend_fontsize, fontweight="bold")
+        t.set_bbox(dict(facecolor="white", alpha=self.text_back_alpha, lw=0))
+        t=ax.text(0.95, 0.88, "NGC 3627", color=self.c_n3627, horizontalalignment="right", transform=ax.transAxes, size=self.legend_fontsize, fontweight="bold")
+        t.set_bbox(dict(facecolor="white", alpha=self.text_back_alpha, lw=0))
+        t=ax.text(0.95, 0.83, "NGC 4254", color=self.c_n4254, horizontalalignment="right", transform=ax.transAxes, size=self.legend_fontsize, fontweight="bold")
+        t.set_bbox(dict(facecolor="white", alpha=self.text_back_alpha, lw=0))
+        t=ax.text(0.95, 0.78, "NGC 4321", color=self.c_n4321, horizontalalignment="right", transform=ax.transAxes, size=self.legend_fontsize, fontweight="bold")
+        t.set_bbox(dict(facecolor="white", alpha=self.text_back_alpha, lw=0))
 
-        ax.text(0.55, 0.90, "CO(1-0) datacubes", color="black", horizontalalignment="right", transform=ax.transAxes, size=legend_fontsize, fontweight="bold")
-        ax.text(0.48, 0.25, "CO(2-1) datacubes", color="black", horizontalalignment="right", transform=ax.transAxes, size=legend_fontsize, fontweight="bold")
+        ax.text(0.55, 0.90, "CO(1-0) datacubes", color="black", horizontalalignment="right", transform=ax.transAxes, size=self.legend_fontsize, fontweight="bold")
+        ax.text(0.48, 0.25, "CO(2-1) datacubes", color="black", horizontalalignment="right", transform=ax.transAxes, size=self.legend_fontsize, fontweight="bold")
 
         plt.savefig(self.outpng_noise_vs_beam, dpi=self.fig_dpi)
 
