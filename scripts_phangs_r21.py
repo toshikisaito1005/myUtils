@@ -935,9 +935,9 @@ class ToolsR21():
                 if i>0:
                     mask1 = this_output
 
-            this_mask   = masks[i]
-            this_output = output+"_tmp"+str(i+1)
-            run_immath_two(mask1,this_mask,this_output,"iif( IM1>0,IM1,IM0 )",delin=False)
+                this_mask   = masks[i]
+                this_output = output+"_tmp"+str(i+1)
+                run_immath_two(mask1,this_mask,this_output,"iif( IM1>0,IM1,IM0 )",delin=False)
 
         os.system("mv " + this_output + " " + output)
         imhead(imagename = output, mode="put", hdkey="beamminor", hdvalue=beamstr)
