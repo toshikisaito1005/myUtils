@@ -455,7 +455,7 @@ class ToolsR21():
         this_r21    = self.outfits_r21_n0628
         this_out    = self.outpng_co10_n0628
         this_imsize = self.imsize_n0628
-        this_clim_co10 = [10**-1,imstat(this_co10)["max"]]
+        this_clim_co10 = [10**-2,imstat(this_co10)["max"]]
         myfig_fits2png(
             this_co10,
             this_out,
