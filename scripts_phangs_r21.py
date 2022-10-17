@@ -450,47 +450,51 @@ class ToolsR21():
         # prepare #
         ###########
 
+        beams_new_n0628 = [s for s in self.beams_n0628[:-1] if not 11.5 in s]
         list_rms_co10_n0628 = self._measure_log_rms(
             self.outcube_co10_n0628.replace(str(self.basebeam_n0628).replace(".","p").zfill(4),"????").replace(".image","_k.image"),
-            self.beams_n0628[:-1],
+            beams_new_n0628,
             self.noise_vs_beam_co10_n0628,
             )
         list_rms_co21_n0628 = self._measure_log_rms(
             self.outcube_co21_n0628.replace(str(self.basebeam_n0628).replace(".","p").zfill(4),"????").replace(".image","_k.image"),
-            self.beams_n0628[:-1],
+            beams_new_n0628,
             self.noise_vs_beam_co21_n0628,
             )
 
+        beams_new_n3627 = [s for s in self.beams_n3627[:-1]]
         list_rms_co10_n3627 = self._measure_log_rms(
             self.outcube_co10_n3627.replace(str(self.basebeam_n3627).replace(".","p").zfill(4),"????").replace(".image","_k.image"),
-            self.beams_n3627[:-1],
+            beams_new_n3627,
             self.noise_vs_beam_co10_n3627,
             )
         list_rms_co21_n3627 = self._measure_log_rms(
             self.outcube_co21_n3627.replace(str(self.basebeam_n3627).replace(".","p").zfill(4),"????").replace(".image","_k.image"),
-            self.beams_n3627[:-1],
+            beams_new_n3627,
             self.noise_vs_beam_co21_n3627,
             )
 
+        beams_new_n4254 = [s for s in self.beams_n4254[:-1] if not 8.7 in s]
         list_rms_co10_n4254 = self._measure_log_rms(
             self.outcube_co10_n4254.replace(str(self.basebeam_n4254).replace(".","p").zfill(4),"????").replace(".image","_k.image"),
-            self.beams_n4254[:-1],
+            beams_new_n4254,
             self.noise_vs_beam_co10_n4254,
             )
         list_rms_co21_n4254 = self._measure_log_rms(
             self.outcube_co21_n4254.replace(str(self.basebeam_n4254).replace(".","p").zfill(4),"????").replace(".image","_k.image"),
-            self.beams_n4254[:-1],
+            beams_new_n4254,
             self.noise_vs_beam_co21_n4254,
             )
 
+        beams_new_n4321 = [s for s in self.beams_n4321[:-1] if not 7.5 in s]
         list_rms_co10_n4321 = self._measure_log_rms(
             self.outcube_co10_n4321.replace(str(self.basebeam_n4321).replace(".","p").zfill(4),"????").replace(".image","_k.image"),
-            self.beams_n4321[:-1],
+            beams_new_n4321,
             self.noise_vs_beam_co10_n4321,
             )
         list_rms_co21_n4321 = self._measure_log_rms(
             self.outcube_co21_n4321.replace(str(self.basebeam_n4321).replace(".","p").zfill(4),"????").replace(".image","_k.image"),
-            self.beams_n4321[:-1],
+            beams_new_n4321,
             self.noise_vs_beam_co21_n4321,
             )
 
@@ -513,15 +517,15 @@ class ToolsR21():
         myax_set(ax, "both", xlim, ylim, title, xlabel, ylabel, adjust=ad)
 
         # plot co10 rms
-        ax.plot(self.beams_n0628[:-1], list_rms_co10_n0628[:,index], "o-", color=self.c_n0628, markeredgewidth=0, markersize = 20, lw=3, label = "NGC 0628 CO(1-0)")
-        ax.plot(self.beams_n3627[:-1], list_rms_co10_n3627[:,index], "o-", color=self.c_n3627, markeredgewidth=0, markersize = 20, lw=3, label = "NGC 3627 CO(1-0)")
-        ax.plot(self.beams_n4254[:-1], list_rms_co10_n4254[:,index], "o-", color=self.c_n4254, markeredgewidth=0, markersize = 20, lw=3, label = "NGC 4254 CO(1-0)")
-        ax.plot(self.beams_n4321[:-1], list_rms_co10_n4321[:,index], "o-", color=self.c_n4321, markeredgewidth=0, markersize = 20, lw=3, label = "NGC 4321 CO(1-0)")
+        ax.plot(beams_new_n0628, list_rms_co10_n0628[:,index], "o-", color=self.c_n0628, markeredgewidth=0, markersize = 20, lw=3, label = "NGC 0628 CO(1-0)")
+        ax.plot(beams_new_n3627, list_rms_co10_n3627[:,index], "o-", color=self.c_n3627, markeredgewidth=0, markersize = 20, lw=3, label = "NGC 3627 CO(1-0)")
+        ax.plot(beams_new_n4254, list_rms_co10_n4254[:,index], "o-", color=self.c_n4254, markeredgewidth=0, markersize = 20, lw=3, label = "NGC 4254 CO(1-0)")
+        ax.plot(beams_new_n4321, list_rms_co10_n4321[:,index], "o-", color=self.c_n4321, markeredgewidth=0, markersize = 20, lw=3, label = "NGC 4321 CO(1-0)")
         # plot co21 rms
-        ax.plot(self.beams_n0628[:-1], list_rms_co21_n0628[:,index], "s--", color=self.c_n0628, markeredgewidth=0, markersize = 20, lw=3, label = "NGC 0628 CO(2-1)")
-        ax.plot(self.beams_n3627[:-1], list_rms_co21_n3627[:,index], "s--", color=self.c_n3627, markeredgewidth=0, markersize = 20, lw=3, label = "NGC 3627 CO(2-1)")
-        ax.plot(self.beams_n4254[:-1], list_rms_co21_n4254[:,index], "s--", color=self.c_n4254, markeredgewidth=0, markersize = 20, lw=3, label = "NGC 4254 CO(2-1)")
-        ax.plot(self.beams_n4321[:-1], list_rms_co21_n4321[:,index], "s--", color=self.c_n4321, markeredgewidth=0, markersize = 20, lw=3, label = "NGC 4321 CO(2-1)")
+        ax.plot(beams_new_n0628, list_rms_co21_n0628[:,index], "s--", color=self.c_n0628, markeredgewidth=0, markersize = 20, lw=3, label = "NGC 0628 CO(2-1)")
+        ax.plot(beams_new_n3627, list_rms_co21_n3627[:,index], "s--", color=self.c_n3627, markeredgewidth=0, markersize = 20, lw=3, label = "NGC 3627 CO(2-1)")
+        ax.plot(beams_new_n4254, list_rms_co21_n4254[:,index], "s--", color=self.c_n4254, markeredgewidth=0, markersize = 20, lw=3, label = "NGC 4254 CO(2-1)")
+        ax.plot(beams_new_n4321, list_rms_co21_n4321[:,index], "s--", color=self.c_n4321, markeredgewidth=0, markersize = 20, lw=3, label = "NGC 4321 CO(2-1)")
 
         # text
         t=ax.text(0.95, 0.93, "NGC 0628", color=self.c_n0628, horizontalalignment="right", transform=ax.transAxes, size=self.legend_fontsize, fontweight="bold")
