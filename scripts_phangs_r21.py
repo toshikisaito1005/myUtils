@@ -543,7 +543,7 @@ class ToolsR21():
                 this_data[np.isnan(this_data)] = 0
                 this_data[np.isinf(this_data)] = 0
                 this_data   = this_data[this_data!=0]
-                this_bins   = (np.ceil(np.log2(len(this_data))) + 1) * 20 # Sturgess equation * 20
+                this_bins   = 500 # (np.ceil(np.log2(len(this_data))) + 1) * 20 # Sturgess equation * 20
 
                 _,_,_,_,this_rms,_,_,this_p84 = self._gaussfit_noise(this_data)
                 list_log_rms.append(np.log10(this_rms))
