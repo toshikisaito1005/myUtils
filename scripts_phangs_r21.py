@@ -565,8 +565,9 @@ class ToolsR21():
         plt.figure(figsize=(13,10))
         gs = gridspec.GridSpec(nrows=10, ncols=10)
         ax = plt.subplot(gs[0:10,0:10])
-        
-        myax_set(ax, None, xlim, ylim, title, xlabel, ylabel)
+
+        ad = [0.215,0.83,0.10,0.90]
+        myax_set(ax, None, xlim, ylim, title, xlabel, ylabel, adjust=ad)
         ax.set_yticks(np.linspace(0,20000,3)[1:])
 
         # plot hists
