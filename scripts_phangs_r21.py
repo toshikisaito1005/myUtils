@@ -543,9 +543,9 @@ class ToolsR21():
                 this_data[np.isnan(this_data)] = 0
                 this_data[np.isinf(this_data)] = 0
                 this_data   = this_data[this_data!=0]
-                this_bins   = 500 # (np.ceil(np.log2(len(this_data))) + 1) * 20 # Sturgess equation * 20
+                this_bins   = (np.ceil(np.log2(len(this_data))) + 1) * 20 # Sturgess equation * 20
 
-                _,_,_,_,this_rms,_,_,this_p84 = self._gaussfit_noise(this_data)
+                _,_,_,_,this_rms,_,_,this_p84 = self._gaussfit_noise(this_data,this_bins)
                 list_log_rms.append(np.log10(this_rms))
                 list_log_p84.append(np.log10(this_p84))
 
@@ -654,7 +654,6 @@ class ToolsR21():
         histx, histy = histogram[1][:-1], histogram[0]
         histx4fit    = histx[histx<p84_data*snr]
         histy4fit    = histy[histx<p84_data*snr]
-
 
         # fit
         x_bestfit    = np.linspace(histrange[0], histrange[1], bins)
