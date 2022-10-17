@@ -386,7 +386,7 @@ class ToolsR21():
             self.multimoments()
 
         if do_align_other==True:
-            self.align_wise()
+            self.align_wise(True)
             self.align_cprops()
             self.align_env()
             self.align_halpha()
@@ -1034,7 +1034,7 @@ class ToolsR21():
 
         # reading_cprops_table
         gmc_ra_dgr, gmc_dec_dgr, gmc_radius_arcsec, gmc_pa, gmc_major_arcsec, gmc_minor_arcsec = \
-            reading_cprops_table(fits_table_cprops, snr_gmc, scale, convolving_beam)
+            self._reading_cprops_table(fits_table_cprops, snr_gmc, scale, convolving_beam)
 
         # get template grid information
         size_x   = imhead(template,mode="list")["shape"][0]
@@ -1134,64 +1134,66 @@ class ToolsR21():
 
     def align_wise(
         self,
+        skip=False,
         ):
         """
         """
 
-        taskname = self.modname + sys._getframe().f_code.co_name
-        check_first(self.outcube_co10_n0628,taskname)
+        if skip==False:
+            taskname = self.modname + sys._getframe().f_code.co_name
+            check_first(self.outcube_co10_n0628,taskname)
 
-        if self.do_ngc0628==True:
-            input_w1  = self.wise1_n0628
-            input_w2  = self.wise2_n0628
-            input_w3  = self.wise3_n0628
-            output_w1 = self.outfits_wise1_n0628
-            output_w2 = self.outfits_wise2_n0628
-            output_w3 = self.outfits_wise3_n0628
-            this_beam = self.beam_wise_n0628
-            template  = self.outmom_co10_n0628.replace( str(self.basebeam_n0628).replace(".","p").zfill(4) , str(this_beam).replace(".","p").zfill(4) ).replace("momX","mom0")
-            self._import_wise(input_w1,output_w1,this_beam,template)
-            self._import_wise(input_w2,output_w2,this_beam,template)
-            self._import_wise(input_w3,output_w3,this_beam,template)
+            if self.do_ngc0628==True:
+                input_w1  = self.wise1_n0628
+                input_w2  = self.wise2_n0628
+                input_w3  = self.wise3_n0628
+                output_w1 = self.outfits_wise1_n0628
+                output_w2 = self.outfits_wise2_n0628
+                output_w3 = self.outfits_wise3_n0628
+                this_beam = self.beam_wise_n0628
+                template  = self.outmom_co10_n0628.replace( str(self.basebeam_n0628).replace(".","p").zfill(4) , str(this_beam).replace(".","p").zfill(4) ).replace("momX","mom0")
+                self._import_wise(input_w1,output_w1,this_beam,template)
+                self._import_wise(input_w2,output_w2,this_beam,template)
+                self._import_wise(input_w3,output_w3,this_beam,template)
 
-        if self.do_ngc3627==True:
-            input_w1  = self.wise1_n3627
-            input_w2  = self.wise2_n3627
-            input_w3  = self.wise3_n3627
-            output_w1 = self.outfits_wise1_n3627
-            output_w2 = self.outfits_wise2_n3627
-            output_w3 = self.outfits_wise3_n3627
-            this_beam = self.beam_wise_n3627
-            template  = self.outmom_co10_n3627.replace( str(self.basebeam_n3627).replace(".","p").zfill(4) , str(this_beam).replace(".","p").zfill(4) ).replace("momX","mom0")
-            self._import_wise(input_w1,output_w1,this_beam,template)
-            self._import_wise(input_w2,output_w2,this_beam,template)
-            self._import_wise(input_w3,output_w3,this_beam,template)
+            if self.do_ngc3627==True:
+                input_w1  = self.wise1_n3627
+                input_w2  = self.wise2_n3627
+                input_w3  = self.wise3_n3627
+                output_w1 = self.outfits_wise1_n3627
+                output_w2 = self.outfits_wise2_n3627
+                output_w3 = self.outfits_wise3_n3627
+                this_beam = self.beam_wise_n3627
+                template  = self.outmom_co10_n3627.replace( str(self.basebeam_n3627).replace(".","p").zfill(4) , str(this_beam).replace(".","p").zfill(4) ).replace("momX","mom0")
+                self._import_wise(input_w1,output_w1,this_beam,template)
+                self._import_wise(input_w2,output_w2,this_beam,template)
+                self._import_wise(input_w3,output_w3,this_beam,template)
 
-        if self.do_ngc4254==True:
-            input_w1  = self.wise1_n4254
-            input_w2  = self.wise2_n4254
-            input_w3  = self.wise3_n4254
-            output_w1 = self.outfits_wise1_n4254
-            output_w2 = self.outfits_wise2_n4254
-            output_w3 = self.outfits_wise3_n4254
-            this_beam = self.beam_wise_n4254
-            template  = self.outmom_co10_n4254.replace( str(self.basebeam_n4254).replace(".","p").zfill(4) , str(this_beam).replace(".","p").zfill(4) ).replace("momX","mom0")
-            self._import_wise(input_w1,output_w1,this_beam,template)
-            self._import_wise(input_w2,output_w2,this_beam,template)
-            self._import_wise(input_w3,output_w3,this_beam,template)
+            if self.do_ngc4254==True:
+                input_w1  = self.wise1_n4254
+                input_w2  = self.wise2_n4254
+                input_w3  = self.wise3_n4254
+                output_w1 = self.outfits_wise1_n4254
+                output_w2 = self.outfits_wise2_n4254
+                output_w3 = self.outfits_wise3_n4254
+                this_beam = self.beam_wise_n4254
+                template  = self.outmom_co10_n4254.replace( str(self.basebeam_n4254).replace(".","p").zfill(4) , str(this_beam).replace(".","p").zfill(4) ).replace("momX","mom0")
+                self._import_wise(input_w1,output_w1,this_beam,template)
+                self._import_wise(input_w2,output_w2,this_beam,template)
+                self._import_wise(input_w3,output_w3,this_beam,template)
 
-        if self.do_ngc4321==True:
-            input_w1  = self.wise1_n4321
-            input_w2  = self.wise2_n4321
-            input_w3  = self.wise3_n4321
-            output_w1 = self.outfits_wise1_n4321
-            output_w2 = self.outfits_wise2_n4321
-            output_w3 = self.outfits_wise3_n4321
-            this_beam = self.beam_wise_n4321
-            template  = self.outmom_co10_n4321.replace( str(self.basebeam_n4321).replace(".","p").zfill(4) , str(this_beam).replace(".","p").zfill(4) ).replace("momX","mom0")
-            self._import_wise(input_w1,output_w1,this_beam,template)
-            self._import_wise(input_w2,output_w2,this_beam,template)
-            self._import_wise(input_w3,output_w3,this_beam,template)
+            if self.do_ngc4321==True:
+                input_w1  = self.wise1_n4321
+                input_w2  = self.wise2_n4321
+                input_w3  = self.wise3_n4321
+                output_w1 = self.outfits_wise1_n4321
+                output_w2 = self.outfits_wise2_n4321
+                output_w3 = self.outfits_wise3_n4321
+                this_beam = self.beam_wise_n4321
+                template  = self.outmom_co10_n4321.replace( str(self.basebeam_n4321).replace(".","p").zfill(4) , str(this_beam).replace(".","p").zfill(4) ).replace("momX","mom0")
+                self._import_wise(input_w1,output_w1,this_beam,template)
+                self._import_wise(input_w2,output_w2,this_beam,template)
+                self._import_wise(input_w3,output_w3,this_beam,template)
 
     ################
     # _import_wise #
