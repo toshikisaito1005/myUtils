@@ -609,7 +609,9 @@ class ToolsR21():
         plot_noise
         """
 
-        print(data)
+        data[np.isnan(data)] = 0
+        data[np.isinf(data)] = 0
+        data = data[data!=0]
 
         # data
         histrange    = [data.min(), data.max()]
