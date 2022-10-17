@@ -676,7 +676,7 @@ class ToolsR21():
 
         # data
         histrange    = [data.min(), data.max()]
-        p84_data     = np.percentile(data, 16) * -1  # 84th percentile of the inversed histogram
+        p84_data     = np.percentile(data, 84) # np.percentile(data, 16) * -1  # 84th percentile of the inversed histogram
         histogram    = np.histogram(data, bins=bins, range=histrange)
         histx, histy = histogram[1][:-1], histogram[0]
         histx4fit    = histx[histx<p84_data*snr]
