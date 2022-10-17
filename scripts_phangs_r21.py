@@ -1224,8 +1224,8 @@ class ToolsR21():
             this_output_co21 = outmom_co21.replace("????",this_beamstr)
             this_output_r21  = outmom_r21.replace("????",this_beamstr)
             this_output_t21  = outmom_t21.replace("????",this_beamstr)
-            this_output_er21 = outfits_er21_n0628.replace("????",this_beamstr)
-            this_output_et21 = outfits_et21_n0628.replace("????",this_beamstr)
+            this_output_er21 = outmom_er21.replace("????",this_beamstr)
+            this_output_et21 = outmom_et21.replace("????",this_beamstr)
 
             print("# create " + this_output_co10.split("/")[-1])
 
