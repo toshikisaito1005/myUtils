@@ -360,6 +360,7 @@ class ToolsR21():
         do_align_other = False,
         # plot figures in paper
         plot_noise     = False,
+        plot_recovery  = False,
         # supplement
         ):
         """
@@ -404,11 +405,33 @@ class ToolsR21():
             #self.plot_noise_hist()
             self.plot_noise_vs_beam()
 
+        if plot_recovery=True:
+            self.plot_recovery()
+
     #####################
     #####################
     ### plotting part ###
     #####################
     #####################
+
+    #################
+    # plot_recovery #
+    #################
+
+    def plot_recovery(
+        self,
+        ):
+        """
+        """
+
+        taskname = self.modname + sys._getframe().f_code.co_name
+        check_first(self.outcube_co10_n0628,taskname)
+
+        ###########
+        # prepare #
+        ###########
+
+    #
 
     ######################
     # plot_noise_vs_beam #
@@ -429,45 +452,45 @@ class ToolsR21():
 
         list_rms_co10_n0628 = self._measure_log_rms(
             self.outcube_co10_n0628.replace(str(self.basebeam_n0628).replace(".","p").zfill(4),"????").replace(".image","_k.image"),
-            self.beams_n0628[:-2],
+            self.beams_n0628[:-1],
             self.noise_vs_beam_co10_n0628,
             )
         list_rms_co21_n0628 = self._measure_log_rms(
             self.outcube_co21_n0628.replace(str(self.basebeam_n0628).replace(".","p").zfill(4),"????").replace(".image","_k.image"),
-            self.beams_n0628[:-2],
+            self.beams_n0628[:-1],
             self.noise_vs_beam_co21_n0628,
             )
 
         list_rms_co10_n3627 = self._measure_log_rms(
             self.outcube_co10_n3627.replace(str(self.basebeam_n3627).replace(".","p").zfill(4),"????").replace(".image","_k.image"),
-            self.beams_n3627[:-2],
+            self.beams_n3627[:-1],
             self.noise_vs_beam_co10_n3627,
             )
         list_rms_co21_n3627 = self._measure_log_rms(
             self.outcube_co21_n3627.replace(str(self.basebeam_n3627).replace(".","p").zfill(4),"????").replace(".image","_k.image"),
-            self.beams_n3627[:-2],
+            self.beams_n3627[:-1],
             self.noise_vs_beam_co21_n3627,
             )
 
         list_rms_co10_n4254 = self._measure_log_rms(
             self.outcube_co10_n4254.replace(str(self.basebeam_n4254).replace(".","p").zfill(4),"????").replace(".image","_k.image"),
-            self.beams_n4254[:-2],
+            self.beams_n4254[:-1],
             self.noise_vs_beam_co10_n4254,
             )
         list_rms_co21_n4254 = self._measure_log_rms(
             self.outcube_co21_n4254.replace(str(self.basebeam_n4254).replace(".","p").zfill(4),"????").replace(".image","_k.image"),
-            self.beams_n4254[:-2],
+            self.beams_n4254[:-1],
             self.noise_vs_beam_co21_n4254,
             )
 
         list_rms_co10_n4321 = self._measure_log_rms(
             self.outcube_co10_n4321.replace(str(self.basebeam_n4321).replace(".","p").zfill(4),"????").replace(".image","_k.image"),
-            self.beams_n4321[:-2],
+            self.beams_n4321[:-1],
             self.noise_vs_beam_co10_n4321,
             )
         list_rms_co21_n4321 = self._measure_log_rms(
             self.outcube_co21_n4321.replace(str(self.basebeam_n4321).replace(".","p").zfill(4),"????").replace(".image","_k.image"),
-            self.beams_n4321[:-2],
+            self.beams_n4321[:-1],
             self.noise_vs_beam_co21_n4321,
             )
 
