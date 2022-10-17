@@ -387,8 +387,8 @@ class ToolsR21():
 
         if do_align_other==True:
             self.align_wise(skip=True)
-            self.align_cprops(skip=False)
-            self.align_env()
+            self.align_cprops(skip=True)
+            self.align_env(skip=False)
             self.align_halpha()
             self.align_r21()
             self.align_bulge()
@@ -848,44 +848,46 @@ class ToolsR21():
 
     def align_env(
         self,
+        skip=False,
         ):
         """
         """
 
-        taskname = self.modname + sys._getframe().f_code.co_name
-        check_first(self.outcube_co10_n0628,taskname)
+        if skip==False:
+            taskname = self.modname + sys._getframe().f_code.co_name
+            check_first(self.outcube_co10_n0628,taskname)
 
-        if self.do_ngc0628==True:
-            this_beam     = self.basebeam_n0628
-            this_fits_env = [self.env_bulge_n0628,self.env_arm_n0628,self.env_bar_n0628]
-            this_id_env   = [self.id_bulge_n0628,self.id_arm_n0628,self.id_bar_n0628]
-            this_template = self.outmom_co10_n0628.replace("momX","mom0")
-            this_output   = self.outfits_env_n0628
-            self._import_env(this_fits_env,this_id_env,this_template,this_output,this_beam)
+            if self.do_ngc0628==True:
+                this_beam     = self.basebeam_n0628
+                this_fits_env = [self.env_bulge_n0628,self.env_arm_n0628,self.env_bar_n0628]
+                this_id_env   = [self.id_bulge_n0628,self.id_arm_n0628,self.id_bar_n0628]
+                this_template = self.outmom_co10_n0628.replace("momX","mom0")
+                this_output   = self.outfits_env_n0628
+                self._import_env(this_fits_env,this_id_env,this_template,this_output,this_beam)
 
-        if self.do_ngc3627==True:
-            this_beam     = self.basebeam_n3627
-            this_fits_env = [self.env_bulge_n3627,self.env_arm_n3627,self.env_bar_n3627]
-            this_id_env   = [self.id_bulge_n3627,self.id_arm_n3627,self.id_bar_n3627]
-            this_template = self.outmom_co10_n3627.replace("momX","mom0")
-            this_output   = self.outfits_env_n3627
-            self._import_env(this_fits_env,this_id_env,this_template,this_output,this_beam)
+            if self.do_ngc3627==True:
+                this_beam     = self.basebeam_n3627
+                this_fits_env = [self.env_bulge_n3627,self.env_arm_n3627,self.env_bar_n3627]
+                this_id_env   = [self.id_bulge_n3627,self.id_arm_n3627,self.id_bar_n3627]
+                this_template = self.outmom_co10_n3627.replace("momX","mom0")
+                this_output   = self.outfits_env_n3627
+                self._import_env(this_fits_env,this_id_env,this_template,this_output,this_beam)
 
-        if self.do_ngc4254==True:
-            this_beam     = self.basebeam_n4254
-            this_fits_env = [self.env_bulge_n4254,self.env_arm_n4254,self.env_bar_n4254]
-            this_id_env   = [self.id_bulge_n4254,self.id_arm_n4254,self.id_bar_n4254]
-            this_template = self.outmom_co10_n4254.replace("momX","mom0")
-            this_output   = self.outfits_env_n4254
-            self._import_env(this_fits_env,this_id_env,this_template,this_output,this_beam)
+            if self.do_ngc4254==True:
+                this_beam     = self.basebeam_n4254
+                this_fits_env = [self.env_bulge_n4254,self.env_arm_n4254,self.env_bar_n4254]
+                this_id_env   = [self.id_bulge_n4254,self.id_arm_n4254,self.id_bar_n4254]
+                this_template = self.outmom_co10_n4254.replace("momX","mom0")
+                this_output   = self.outfits_env_n4254
+                self._import_env(this_fits_env,this_id_env,this_template,this_output,this_beam)
 
-        if self.do_ngc4321==True:
-            this_beam     = self.basebeam_n4321
-            this_fits_env = [self.env_bulge_n4321,self.env_arm_n4321,self.env_bar_n4321]
-            this_id_env   = [self.id_bulge_n4321,self.id_arm_n4321,self.id_bar_n4321]
-            this_template = self.outmom_co10_n4321.replace("momX","mom0")
-            this_output   = self.outfits_env_n4321
-            self._import_env(this_fits_env,this_id_env,this_template,this_output,this_beam)
+            if self.do_ngc4321==True:
+                this_beam     = self.basebeam_n4321
+                this_fits_env = [self.env_bulge_n4321,self.env_arm_n4321,self.env_bar_n4321]
+                this_id_env   = [self.id_bulge_n4321,self.id_arm_n4321,self.id_bar_n4321]
+                this_template = self.outmom_co10_n4321.replace("momX","mom0")
+                this_output   = self.outfits_env_n4321
+                self._import_env(this_fits_env,this_id_env,this_template,this_output,this_beam)
 
     ###############
     # _import_env #
@@ -913,7 +915,7 @@ class ToolsR21():
 
             if this_fits.split("/")[-1]!="None":
                 run_importfits(this_fits,this_fits+"_env"+str(i)+"_tmp1")
-                relabelimage(this_fits+"_env"+str(i),icrs_to_j2000=True)
+                relabelimage(this_fits+"_env"+str(i)+"_tmp1",icrs_to_j2000=True)
                 run_immath_one(this_fits+"_env"+str(i)+"_tmp1",this_fits+"_env"+str(i)+"_tmp2",
                     this_expr,delin=True)
                 run_imregrid(this_fits+"_env"+str(i)+"_tmp2",template,this_fits+"_env"+str(i)+"_tmp3",
