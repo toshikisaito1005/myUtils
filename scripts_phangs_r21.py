@@ -539,13 +539,13 @@ class ToolsR21():
         """
 
         taskname = self.modname + sys._getframe().f_code.co_name
-        check_first(self.outcube_co10_n0628,taskname)
+        check_first(self.outcube_co10_n0628.replace(".image","_k.image"),taskname)
 
         ###########
         # prepare #
         ###########
 
-        data,_ = imval_all(self.outcube_co10_n0628)
+        data,_ = imval_all(self.outcube_co10_n0628.replace(".image","_k.image"))
         data   = data["data"].flatten()
         histx, histy, histrange, peak, rms, x_bestfit, y_bestfit, _ = self._gaussfit_noise(data)
 
