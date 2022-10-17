@@ -388,8 +388,8 @@ class ToolsR21():
             self.align_wise(skip=True)
             self.align_cprops(skip=True)
             self.align_env(skip=True)
-            self.align_halpha(skip=False)
-            self.align_r21()
+            self.align_halpha(skip=True)
+            self.align_r21(skip=False)
             self.align_bulge()
 
         # plot figures in paper
@@ -711,36 +711,38 @@ class ToolsR21():
 
     def align_r21(
         self,
+        skip=False,
         ):
         """
         """
 
-        taskname = self.modname + sys._getframe().f_code.co_name
-        check_first(self.outcube_co10_n0628,taskname)
+        if skip==False:
+            taskname = self.modname + sys._getframe().f_code.co_name
+            check_first(self.outcube_co10_n0628,taskname)
 
-        if self.do_ngc0628==True:
-            this_beam   = self.basebeam_n0628
-            this_input  = self.outfits_r21_n0628
-            this_output = self.outfits_r21hl_n0628
-            self._import_r21(this_input,this_output,this_beam)
+            if self.do_ngc0628==True:
+                this_beam   = self.basebeam_n0628
+                this_input  = self.outfits_r21_n0628
+                this_output = self.outfits_r21hl_n0628
+                self._import_r21(this_input,this_output,this_beam)
 
-        if self.do_ngc3627==True:
-            this_beam   = self.basebeam_n3627
-            this_input  = self.outfits_r21_n3627
-            this_output = self.outfits_r21hl_n3627
-            self._import_r21(this_input,this_output,this_beam)
+            if self.do_ngc3627==True:
+                this_beam   = self.basebeam_n3627
+                this_input  = self.outfits_r21_n3627
+                this_output = self.outfits_r21hl_n3627
+                self._import_r21(this_input,this_output,this_beam)
 
-        if self.do_ngc4254==True:
-            this_beam   = self.basebeam_n4254
-            this_input  = self.outfits_r21_n4254
-            this_output = self.outfits_r21hl_n4254
-            self._import_r21(this_input,this_output,this_beam)
+            if self.do_ngc4254==True:
+                this_beam   = self.basebeam_n4254
+                this_input  = self.outfits_r21_n4254
+                this_output = self.outfits_r21hl_n4254
+                self._import_r21(this_input,this_output,this_beam)
 
-        if self.do_ngc4321==True:
-            this_beam   = self.basebeam_n4321
-            this_input  = self.outfits_r21_n4321
-            this_output = self.outfits_r21hl_n4321
-            self._import_r21(this_input,this_output,this_beam)
+            if self.do_ngc4321==True:
+                this_beam   = self.basebeam_n4321
+                this_input  = self.outfits_r21_n4321
+                this_output = self.outfits_r21hl_n4321
+                self._import_r21(this_input,this_output,this_beam)
 
     ###############
     # _import_r21 #
@@ -756,7 +758,7 @@ class ToolsR21():
         align_r21
         """
 
-        data = imval_all(infile)
+        data = imval_all(infile)["data"]
         data[np.isnan(data)] = 0
         data[np.isinf(data)] = 0
         data = data[data!=0]
