@@ -84,10 +84,10 @@ outfits_wise3_n0628  ,,,ngc0628_wise3.image
 outfits_wise3_n3627  ,,,ngc3627_wise3.image
 outfits_wise3_n4254  ,,,ngc4254_wise3.image
 outfits_wise3_n4321  ,,,ngc4321_wise3.image
-outfits_cprops_n0628 ,,,ngc0628_cpros.image
-outfits_cprops_n3627 ,,,ngc3627_cpros.image
-outfits_cprops_n4254 ,,,ngc4254_cpros.image
-outfits_cprops_n4321 ,,,ngc4321_cpros.image
+outfits_cprops_n0628 ,,,ngc0628_cprops.image
+outfits_cprops_n3627 ,,,ngc3627_cprops.image
+outfits_cprops_n4254 ,,,ngc4254_cprops.image
+outfits_cprops_n4321 ,,,ngc4321_cprops.image
 outfits_env_n0628    ,,,ngc0628_env.image
 outfits_env_n3627    ,,,ngc3627_env.image
 outfits_env_n4254    ,,,ngc4254_env.image

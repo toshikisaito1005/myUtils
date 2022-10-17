@@ -386,8 +386,8 @@ class ToolsR21():
             self.multimoments()
 
         if do_align_other==True:
-            self.align_wise(True)
-            self.align_cprops()
+            self.align_wise(skip=True)
+            self.align_cprops(skip=False)
             self.align_env()
             self.align_halpha()
             self.align_r21()
@@ -1052,10 +1052,6 @@ class ToolsR21():
             this_dir = "J2000 " + str(gmc_ra_dgr[i]) + "deg " + str(gmc_dec_dgr[i]) + "deg"
             this_pa  = str(gmc_pa[i])+"deg"
             #
-            c = SkyCoord(gmc_ra_dgr[i], gmc_dec_dgr[i], unit="deg")
-            ra_dgr = str(c.ra.degree/(180/np.pi))
-            dec_dgr = str(c.dec.degree/(180/np.pi))
-            #
             mycl.addcomponent(
                 dir=this_dir,
                 flux=1.0,
@@ -1066,6 +1062,10 @@ class ToolsR21():
                 minoraxis=this_min,
                 positionangle=this_pa,
                 )
+
+        c = SkyCoord(float(image_ra_cnt), float(image_dec_cnt), unit="deg")
+        ra_dgr = str(c.ra.degree/(180/np.pi))
+        dec_dgr = str(c.dec.degree/(180/np.pi))
 
         myia.fromshape(outputfits+"_tmp1", [size_x,size_y,1,1], overwrite=True)
         mycs = myia.coordsys()
@@ -1084,10 +1084,10 @@ class ToolsR21():
         mycl.close()
 
         # exportfits
-        run_immath_one(outputfits+"_tmp1",outputfits+"_tmp2","iif( IM0>0,1,0 )",delin=True)
-        imhead(imagename=outputfits+"_tmp2",mode="put",hdkey="beamminor",hdvalue=this_beamstr)
-        imhead(imagename=outputfits+"_tmp2",mode="put",hdkey="beammajor",hdvalue=this_beamstr)
-        run_exportfits(outputfits+"_tmp2", outputfits, delin=True)
+        run_immath_one(outputfits+"_tmp1",outputfits,"iif( IM0>0,1,0 )",delin=True)
+        imhead(imagename=outputfits,mode="put",hdkey="beamminor",hdvalue=this_beamstr)
+        imhead(imagename=outputfits,mode="put",hdkey="beammajor",hdvalue=this_beamstr)
+        #run_exportfits(outputfits+"_tmp2", outputfits, delin=True)
 
     #########################
     # _reading_cprops_table #
