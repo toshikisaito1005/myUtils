@@ -869,7 +869,7 @@ class ToolsR21():
             if self.do_ngc0628==True:
                 this_beam     = self.basebeam_n0628
                 this_fits_env = [self.env_arm_n0628,self.env_bar_n0628,self.env_bulge_n0628]
-                this_id_env   = [self.id_arm_n0628,self.id_abarn0628,self.id_bulge_n0628]
+                this_id_env   = [self.id_arm_n0628,self.id_bar_n0628,self.id_bulge_n0628]
                 this_template = self.outmom_co10_n0628.replace("momX","mom0")
                 this_output   = self.outfits_env_n0628
                 self._import_env(this_fits_env,this_id_env,this_template,this_output,this_beam)
@@ -877,7 +877,7 @@ class ToolsR21():
             if self.do_ngc3627==True:
                 this_beam     = self.basebeam_n3627
                 this_fits_env = [self.env_arm_n3627,self.env_bar_n3627,self.env_bulge_n3627]
-                this_id_env   = [self.id_arm_n3627,self.id_abarn3627,self.id_bulge_n3627]
+                this_id_env   = [self.id_arm_n3627,self.id_bar_n3627,self.id_bulge_n3627]
                 this_template = self.outmom_co10_n3627.replace("momX","mom0")
                 this_output   = self.outfits_env_n3627
                 self._import_env(this_fits_env,this_id_env,this_template,this_output,this_beam)
@@ -885,7 +885,7 @@ class ToolsR21():
             if self.do_ngc4254==True:
                 this_beam     = self.basebeam_n4254
                 this_fits_env = [self.env_arm_n4254,self.env_bar_n4254,self.env_bulge_n4254]
-                this_id_env   = [self.id_arm_n4254,self.id_abarn4254,self.id_bulge_n4254]
+                this_id_env   = [self.id_arm_n4254,self.id_bar_n4254,self.id_bulge_n4254]
                 this_template = self.outmom_co10_n4254.replace("momX","mom0")
                 this_output   = self.outfits_env_n4254
                 self._import_env(this_fits_env,this_id_env,this_template,this_output,this_beam)
@@ -893,7 +893,7 @@ class ToolsR21():
             if self.do_ngc4321==True:
                 this_beam     = self.basebeam_n4321
                 this_fits_env = [self.env_arm_n4321,self.env_bar_n4321,self.env_bulge_n4321]
-                this_id_env   = [self.id_arm_n4321,self.id_abarn4321,self.id_bulge_n4321]
+                this_id_env   = [self.id_arm_n4321,self.id_bar_n4321,self.id_bulge_n4321]
                 this_template = self.outmom_co10_n4321.replace("momX","mom0")
                 this_output   = self.outfits_env_n4321
                 self._import_env(this_fits_env,this_id_env,this_template,this_output,this_beam)
