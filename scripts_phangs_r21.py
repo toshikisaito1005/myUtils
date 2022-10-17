@@ -1149,7 +1149,7 @@ class ToolsR21():
             output_w2 = self.outfits_wise2_n0628
             output_w3 = self.outfits_wise3_n0628
             this_beam = self.beam_wise_n0628
-            template  = self.outmom_co10_n0628.replace( str(self.basebeam_n0628).replace(".","p").zfill(4) , str(this_beam).replace(".","p").zfill(4) )
+            template  = self.outmom_co10_n0628.replace( str(self.basebeam_n0628).replace(".","p").zfill(4) , str(this_beam).replace(".","p").zfill(4) ).replace("momX","mom0")
             self._import_wise(input_w1,output_w1,this_beam,template)
             self._import_wise(input_w2,output_w2,this_beam,template)
             self._import_wise(input_w3,output_w3,this_beam,template)
@@ -1162,7 +1162,7 @@ class ToolsR21():
             output_w2 = self.outfits_wise2_n3627
             output_w3 = self.outfits_wise3_n3627
             this_beam = self.beam_wise_n3627
-            template  = self.outmom_co10_n3627.replace( str(self.basebeam_n3627).replace(".","p").zfill(4) , str(this_beam).replace(".","p").zfill(4) )
+            template  = self.outmom_co10_n3627.replace( str(self.basebeam_n3627).replace(".","p").zfill(4) , str(this_beam).replace(".","p").zfill(4) ).replace("momX","mom0")
             self._import_wise(input_w1,output_w1,this_beam,template)
             self._import_wise(input_w2,output_w2,this_beam,template)
             self._import_wise(input_w3,output_w3,this_beam,template)
@@ -1175,7 +1175,7 @@ class ToolsR21():
             output_w2 = self.outfits_wise2_n4254
             output_w3 = self.outfits_wise3_n4254
             this_beam = self.beam_wise_n4254
-            template  = self.outmom_co10_n4254.replace( str(self.basebeam_n4254).replace(".","p").zfill(4) , str(this_beam).replace(".","p").zfill(4) )
+            template  = self.outmom_co10_n4254.replace( str(self.basebeam_n4254).replace(".","p").zfill(4) , str(this_beam).replace(".","p").zfill(4) ).replace("momX","mom0")
             self._import_wise(input_w1,output_w1,this_beam,template)
             self._import_wise(input_w2,output_w2,this_beam,template)
             self._import_wise(input_w3,output_w3,this_beam,template)
@@ -1188,7 +1188,7 @@ class ToolsR21():
             output_w2 = self.outfits_wise2_n4321
             output_w3 = self.outfits_wise3_n4321
             this_beam = self.beam_wise_n4321
-            template  = self.outmom_co10_n4321.replace( str(self.basebeam_n4321).replace(".","p").zfill(4) , str(this_beam).replace(".","p").zfill(4) )
+            template  = self.outmom_co10_n4321.replace( str(self.basebeam_n4321).replace(".","p").zfill(4) , str(this_beam).replace(".","p").zfill(4) ).replace("momX","mom0")
             self._import_wise(input_w1,output_w1,this_beam,template)
             self._import_wise(input_w2,output_w2,this_beam,template)
             self._import_wise(input_w3,output_w3,this_beam,template)
