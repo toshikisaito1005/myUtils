@@ -546,7 +546,7 @@ class ToolsR21():
         ###########
 
         data,_ = imval_all(self.outcube_co10_n0628)
-        data   = data["data"]
+        data   = data["data"].flatten()
         histx, histy, histrange, peak, rms, x_bestfit, y_bestfit, _ = self._gaussfit_noise(data)
 
         xlim     = [0, self.noise_hist_xmax_snr*rms]
@@ -619,7 +619,7 @@ class ToolsR21():
 
         # fit
         x_bestfit    = np.linspace(histrange[0], histrange[1], bins)
-        popt, _      = curve_fit(self._func1, histx4fit, histy4fit, p0=[np.max(histy4fit),p84_data], maxfev=10000)
+        popt,_       = curve_fit(self._func1, histx4fit, histy4fit, p0=[np.max(histy4fit),p84_data], maxfev=10000)
         peak         = popt[0]
         rms          = abs(np.round(popt[1], 3))
         y_bestfit    = self._func1(x_bestfit, peak, rms)
