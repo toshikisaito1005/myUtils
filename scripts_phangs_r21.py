@@ -472,7 +472,7 @@ class ToolsR21():
             )
 
         xlim   = [2,28]
-        ylim   = -3.6,-0.8
+        ylim   = [-3.6,-0.8]
         title  = "(b) Sensitivity vs. Beam Size"
         xlabel = "Beam size (arcsec)"
         ylabel = "log rms per voxel (K)"
