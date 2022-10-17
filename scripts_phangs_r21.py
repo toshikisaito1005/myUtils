@@ -1220,8 +1220,8 @@ class ToolsR21():
             mask_combine     = "comb_" + this_beamstr + ".mask"
             this_input_co10  = incube_co10.replace("????",this_beamstr)
             this_input_co21  = incube_co21.replace("????",this_beamstr)
-            this_output_co10 = outmom_co10.replace("????",this_beamstr).replace("momX","mom0")
-            this_output_co21 = outmom_co21.replace("????",this_beamstr).replace("momX","mom0")
+            this_output_co10 = outmom_co10.replace("????",this_beamstr)
+            this_output_co21 = outmom_co21.replace("????",this_beamstr)
             this_output_r21  = outmom_r21.replace("????",this_beamstr)
             this_output_t21  = outmom_t21.replace("????",this_beamstr)
             this_output_er21 = outmom_er21.replace("????",this_beamstr)
