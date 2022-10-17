@@ -423,6 +423,8 @@ def imval_all(
     else:
         data  = imval(imagename,region=region)
         return data
+
+    print("# done imval_all")
     
 ###############
 # measure_rms #
@@ -492,8 +494,8 @@ def boolean_masking(
     makemask(
         mode      = "copy",
         inpimage  = imagename,
-        inpmask   = imagename + ":mask0",
-        output    = outfile,
+        inpmask   = imagename,
+        output    = outfile + ":mask0",
         overwrite = True,
         )
     
