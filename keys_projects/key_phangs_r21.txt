@@ -175,6 +175,7 @@ noise_vs_beam_co21_n4321 ,,,noise_vs_beam_co21_n4321.txt
 # png files
 outpng_noise_hist    ,,,fig_noise_hist.png
 outpng_noise_vs_beam ,,,fig_noise_vs_beam.png
+outpng_recovery      ,,,fig_recovery.png
 
 #######
 # end #

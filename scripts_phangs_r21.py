@@ -346,6 +346,8 @@ class ToolsR21():
         self.noise_vs_beam_co21_n4321 = self.dir_products_txt + self._read_key("noise_vs_beam_co21_n4321")
         self.noise_vs_beam_snr4fit    = 0.5
 
+        self.outpng_recovery = self.dir_products + self._read_key("outpng_recovery")
+
     ##################
     # run_phangs_r21 #
     ##################
@@ -431,6 +433,42 @@ class ToolsR21():
         # prepare #
         ###########
 
+        beams_new_n0628 = [s for s in self.beams_n0628[:-1] if not "11.5" in str(s)]
+        list_rms_co10_n0628 = self._loop_measure_flux_norm(self.outcube_co10_n0628.replace(str(self.basebeam_n0628).replace(".","p").zfill(4),"????").replace(".image","_k.image"))
+
+    ###########################
+    # _loop_measure_flux_norm #
+    ###########################
+
+    def _loop_measure_flux_norm(
+        self,
+        imagenames,
+        ):
+        """
+        plot_recovery
+        """
+
+        list_total_flux = []
+        for i in range(len(imagenames)):
+            # get names
+            this_map     = imagenames[i]
+
+            # get data
+            print("# measure total flux of " + this_map.split("/")[-1])
+            this_data,_  = run_imval(this_map)
+            this_data[np.isnan(this_data)] = 0
+            this_data[np.isinf(this_data)] = 0
+            this_data = this_data[this_data!=0]
+
+            # determine number of bins
+            pix       = abs(imhead(this_map,mode="list")["cdelt1"]) * 3600 * 180/np.pi
+            this_flux = np.sum(this_data) * pix**2
+            #
+            list_total_flux.append(this_flux)
+            #
+        #
+        return list_total_flux / list_total_flux[-1]
+
     #
 
     ######################
@@ -451,48 +489,48 @@ class ToolsR21():
         ###########
 
         beams_new_n0628 = [s for s in self.beams_n0628[:-1] if not "11.5" in str(s)]
-        list_rms_co10_n0628 = self._measure_log_rms(
+        list_rms_co10_n0628 = self._loop_measure_log_rms(
             self.outcube_co10_n0628.replace(str(self.basebeam_n0628).replace(".","p").zfill(4),"????").replace(".image","_k.image"),
             beams_new_n0628,
             self.noise_vs_beam_co10_n0628,
             )
-        list_rms_co21_n0628 = self._measure_log_rms(
+        list_rms_co21_n0628 = self._loop_measure_log_rms(
             self.outcube_co21_n0628.replace(str(self.basebeam_n0628).replace(".","p").zfill(4),"????").replace(".image","_k.image"),
             beams_new_n0628,
             self.noise_vs_beam_co21_n0628,
             )
 
         beams_new_n3627 = [s for s in self.beams_n3627[:-1]]
-        list_rms_co10_n3627 = self._measure_log_rms(
+        list_rms_co10_n3627 = self._loop_measure_log_rms(
             self.outcube_co10_n3627.replace(str(self.basebeam_n3627).replace(".","p").zfill(4),"????").replace(".image","_k.image"),
             beams_new_n3627,
             self.noise_vs_beam_co10_n3627,
             )
-        list_rms_co21_n3627 = self._measure_log_rms(
+        list_rms_co21_n3627 = self._loop_measure_log_rms(
             self.outcube_co21_n3627.replace(str(self.basebeam_n3627).replace(".","p").zfill(4),"????").replace(".image","_k.image"),
             beams_new_n3627,
             self.noise_vs_beam_co21_n3627,
             )
 
         beams_new_n4254 = [s for s in self.beams_n4254[:-1] if not "8.7" in str(s)]
-        list_rms_co10_n4254 = self._measure_log_rms(
+        list_rms_co10_n4254 = self._loop_measure_log_rms(
             self.outcube_co10_n4254.replace(str(self.basebeam_n4254).replace(".","p").zfill(4),"????").replace(".image","_k.image"),
             beams_new_n4254,
             self.noise_vs_beam_co10_n4254,
             )
-        list_rms_co21_n4254 = self._measure_log_rms(
+        list_rms_co21_n4254 = self._loop_measure_log_rms(
             self.outcube_co21_n4254.replace(str(self.basebeam_n4254).replace(".","p").zfill(4),"????").replace(".image","_k.image"),
             beams_new_n4254,
             self.noise_vs_beam_co21_n4254,
             )
 
         beams_new_n4321 = [s for s in self.beams_n4321[:-1] if not "7.5" in str(s)]
-        list_rms_co10_n4321 = self._measure_log_rms(
+        list_rms_co10_n4321 = self._loop_measure_log_rms(
             self.outcube_co10_n4321.replace(str(self.basebeam_n4321).replace(".","p").zfill(4),"????").replace(".image","_k.image"),
             beams_new_n4321,
             self.noise_vs_beam_co10_n4321,
             )
-        list_rms_co21_n4321 = self._measure_log_rms(
+        list_rms_co21_n4321 = self._loop_measure_log_rms(
             self.outcube_co21_n4321.replace(str(self.basebeam_n4321).replace(".","p").zfill(4),"????").replace(".image","_k.image"),
             beams_new_n4321,
             self.noise_vs_beam_co21_n4321,
@@ -542,11 +580,11 @@ class ToolsR21():
 
         plt.savefig(self.outpng_noise_vs_beam, dpi=self.fig_dpi)
 
-    ####################
-    # _measure_log_rms #
-    ####################
+    #########################
+    # _loop_measure_log_rms #
+    #########################
 
-    def _measure_log_rms(
+    def _loop_measure_log_rms(
         self,
         incubes,
         beams,
@@ -676,7 +714,7 @@ class ToolsR21():
 
         # data
         histrange    = [data.min(), data.max()]
-        p84_data     = np.percentile(data, 84) # np.percentile(data, 16) * -1  # 84th percentile of the inversed histogram
+        p84_data     = np.percentile(data, 16) * -1  # 84th percentile of the inversed histogram
         histogram    = np.histogram(data, bins=bins, range=histrange)
         histx, histy = histogram[1][:-1], histogram[0]
         histx4fit    = histx[histx<p84_data*snr]
