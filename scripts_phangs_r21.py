@@ -953,64 +953,66 @@ class ToolsR21():
 
     def align_cprops(
         self,
+        skip=False,
         ):
         """
         """
 
-        taskname = self.modname + sys._getframe().f_code.co_name
-        check_first(self.outcube_co10_n0628,taskname)
+        if skip==False:
+            taskname = self.modname + sys._getframe().f_code.co_name
+            check_first(self.outcube_co10_n0628,taskname)
 
-        if self.do_ngc0628==True:
-            this_beam     = self.basebeam_n0628
-            this_beamstr  = str(self.basebeam_n0628).replace(".","p").zfill(4) + "arcsec"
-            this_output   = self.outfits_cprops_n0628
-            this_table    = self.cprops_table_n0628
-            this_scale    = self.scale_n0628
-            this_template = self.outmom_co10_n0628.replace("momX","mom0")
-            this_ra       = self.ra_n0628
-            this_dec      = self.dec_n0628
-            this_convbeam = np.sqrt((this_scale*this_beam)**2 - 120**2)
-            self._cprops_table2fits(this_template,this_output,this_table,self.snr_gmc,
-                this_scale,this_convbeam,this_ra,this_dec,this_beamstr)
+            if self.do_ngc0628==True:
+                this_beam     = self.basebeam_n0628
+                this_beamstr  = str(self.basebeam_n0628).replace(".","p").zfill(4) + "arcsec"
+                this_output   = self.outfits_cprops_n0628
+                this_table    = self.cprops_table_n0628
+                this_scale    = self.scale_n0628
+                this_template = self.outmom_co10_n0628.replace("momX","mom0")
+                this_ra       = self.ra_n0628
+                this_dec      = self.dec_n0628
+                this_convbeam = np.sqrt((this_scale*this_beam)**2 - 120**2)
+                self._cprops_table2fits(this_template,this_output,this_table,self.snr_gmc,
+                    this_scale,this_convbeam,this_ra,this_dec,this_beamstr)
 
-        if self.do_ngc3627==True:
-            this_beam     = self.basebeam_n3627
-            this_beamstr  = str(self.basebeam_n3627).replace(".","p").zfill(4) + "arcsec"
-            this_output   = self.outfits_cprops_n3627
-            this_table    = self.cprops_table_n3627
-            this_scale    = self.scale_n3627
-            this_template = self.outmom_co10_n3627.replace("momX","mom0")
-            this_ra       = self.ra_n3627
-            this_dec      = self.dec_n3627
-            this_convbeam = np.sqrt((this_scale*this_beam)**2 - 120**2)
-            self._cprops_table2fits(this_template,this_output,this_table,self.snr_gmc,
-                this_scale,this_convbeam,this_ra,this_dec,this_beamstr)
+            if self.do_ngc3627==True:
+                this_beam     = self.basebeam_n3627
+                this_beamstr  = str(self.basebeam_n3627).replace(".","p").zfill(4) + "arcsec"
+                this_output   = self.outfits_cprops_n3627
+                this_table    = self.cprops_table_n3627
+                this_scale    = self.scale_n3627
+                this_template = self.outmom_co10_n3627.replace("momX","mom0")
+                this_ra       = self.ra_n3627
+                this_dec      = self.dec_n3627
+                this_convbeam = np.sqrt((this_scale*this_beam)**2 - 120**2)
+                self._cprops_table2fits(this_template,this_output,this_table,self.snr_gmc,
+                    this_scale,this_convbeam,this_ra,this_dec,this_beamstr)
 
-        if self.do_ngc4254==True:
-            this_beam     = self.basebeam_n4254
-            this_beamstr  = str(self.basebeam_n4254).replace(".","p").zfill(4) + "arcsec"
-            this_output   = self.outfits_cprops_n4254
-            this_table    = self.cprops_table_n4254
-            this_scale    = self.scale_n4254
-            this_template = self.outmom_co10_n4254.replace("momX","mom0")
-            this_ra       = self.ra_n4254
-            this_dec      = self.dec_n4254
-            this_convbeam = np.sqrt((this_scale*this_beam)**2 - 120**2)
-            self._cprops_table2fits(this_template,this_output,this_table,self.snr_gmc,
-                this_scale,this_convbeam,this_ra,this_dec,this_beamstr)
+            if self.do_ngc4254==True:
+                this_beam     = self.basebeam_n4254
+                this_beamstr  = str(self.basebeam_n4254).replace(".","p").zfill(4) + "arcsec"
+                this_output   = self.outfits_cprops_n4254
+                this_table    = self.cprops_table_n4254
+                this_scale    = self.scale_n4254
+                this_template = self.outmom_co10_n4254.replace("momX","mom0")
+                this_ra       = self.ra_n4254
+                this_dec      = self.dec_n4254
+                this_convbeam = np.sqrt((this_scale*this_beam)**2 - 120**2)
+                self._cprops_table2fits(this_template,this_output,this_table,self.snr_gmc,
+                    this_scale,this_convbeam,this_ra,this_dec,this_beamstr)
 
-        if self.do_ngc4321==True:
-            this_beam     = self.basebeam_n4321
-            this_beamstr  = str(self.basebeam_n4321).replace(".","p").zfill(4) + "arcsec"
-            this_output   = self.outfits_cprops_n4321
-            this_table    = self.cprops_table_n4321
-            this_scale    = self.scale_n4321
-            this_template = self.outmom_co10_n4321.replace("momX","mom0")
-            this_ra       = self.ra_n4321
-            this_dec      = self.dec_n4321
-            this_convbeam = np.sqrt((this_scale*this_beam)**2 - 120**2)
-            self._cprops_table2fits(this_template,this_output,this_table,self.snr_gmc,
-                this_scale,this_convbeam,this_ra,this_dec,this_beamstr)
+            if self.do_ngc4321==True:
+                this_beam     = self.basebeam_n4321
+                this_beamstr  = str(self.basebeam_n4321).replace(".","p").zfill(4) + "arcsec"
+                this_output   = self.outfits_cprops_n4321
+                this_table    = self.cprops_table_n4321
+                this_scale    = self.scale_n4321
+                this_template = self.outmom_co10_n4321.replace("momX","mom0")
+                this_ra       = self.ra_n4321
+                this_dec      = self.dec_n4321
+                this_convbeam = np.sqrt((this_scale*this_beam)**2 - 120**2)
+                self._cprops_table2fits(this_template,this_output,this_table,self.snr_gmc,
+                    this_scale,this_convbeam,this_ra,this_dec,this_beamstr)
 
     ######################
     # _cprops_table2fits #
@@ -1041,6 +1043,7 @@ class ToolsR21():
         size_y   = imhead(template,mode="list")["shape"][1]
         pix_rad  = imhead(template,mode="list")["cdelt2"]
         pix_size = round(pix_rad * 3600 * 180 / np.pi, 3)
+        print(pix_size)
         freq     = str(imhead(template,mode="list")["restfreq"][0]/1e9)+"GHz"
 
         # construct fits
