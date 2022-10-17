@@ -1143,6 +1143,8 @@ class ToolsR21():
                 self.outmom_co21_n0628.replace(str(self.basebeam_n0628).replace(".","p").zfill(4),"????"),
                 self.outfits_r21_n0628.replace(str(self.basebeam_n0628).replace(".","p").zfill(4),"????"),
                 self.outfits_t21_n0628.replace(str(self.basebeam_n0628).replace(".","p").zfill(4),"????"),
+                self.outfits_er21_n0628.replace(str(self.basebeam_n0628).replace(".","p").zfill(4),"????"),
+                self.outfits_et21_n0628.replace(str(self.basebeam_n0628).replace(".","p").zfill(4),"????"),
                 self.beams_n0628,
                 self.nchan_thres_n0628,
                 )
@@ -1155,6 +1157,8 @@ class ToolsR21():
                 self.outmom_co21_n3627.replace(str(self.basebeam_n3627).replace(".","p").zfill(4),"????"),
                 self.outfits_r21_n3627.replace(str(self.basebeam_n3627).replace(".","p").zfill(4),"????"),
                 self.outfits_t21_n3627.replace(str(self.basebeam_n3627).replace(".","p").zfill(4),"????"),
+                self.outfits_er21_n3627.replace(str(self.basebeam_n3627).replace(".","p").zfill(4),"????"),
+                self.outfits_et21_n3627.replace(str(self.basebeam_n3627).replace(".","p").zfill(4),"????"),
                 self.beams_n3627,
                 self.nchan_thres_n3627,
                 )
@@ -1167,6 +1171,8 @@ class ToolsR21():
                 self.outmom_co21_n4254.replace(str(self.basebeam_n4254).replace(".","p").zfill(4),"????"),
                 self.outfits_r21_n4254.replace(str(self.basebeam_n4254).replace(".","p").zfill(4),"????"),
                 self.outfits_t21_n4254.replace(str(self.basebeam_n4254).replace(".","p").zfill(4),"????"),
+                self.outfits_er21_n4254.replace(str(self.basebeam_n4254).replace(".","p").zfill(4),"????"),
+                self.outfits_et21_n4254.replace(str(self.basebeam_n4254).replace(".","p").zfill(4),"????"),
                 self.beams_n4254,
                 self.nchan_thres_n4254,
                 )
@@ -1179,6 +1185,8 @@ class ToolsR21():
                 self.outmom_co21_n4321.replace(str(self.basebeam_n4321).replace(".","p").zfill(4),"????"),
                 self.outfits_r21_n4321.replace(str(self.basebeam_n4321).replace(".","p").zfill(4),"????"),
                 self.outfits_t21_n4321.replace(str(self.basebeam_n4321).replace(".","p").zfill(4),"????"),
+                self.outfits_er21_n4321.replace(str(self.basebeam_n4321).replace(".","p").zfill(4),"????"),
+                self.outfits_et21_n4321.replace(str(self.basebeam_n4321).replace(".","p").zfill(4),"????"),
                 self.beams_n4321,
                 self.nchan_thres_n4321,
                 )
@@ -1212,8 +1220,8 @@ class ToolsR21():
             this_input_co21  = incube_co21.replace("????",this_beamstr)
             this_output_co10 = outmom_co10.replace("????",this_beamstr)
             this_output_co21 = outmom_co21.replace("????",this_beamstr)
-            this_output_r21  = outfits_r21_n0628.replace("????",this_beamstr)
-            this_output_t21  = outfits_t21_n0628.replace("????",this_beamstr)
+            this_output_r21  = outmom_r21.replace("????",this_beamstr)
+            this_output_t21  = outmom_t21.replace("????",this_beamstr)
             this_output_er21 = outfits_er21_n0628.replace("????",this_beamstr)
             this_output_et21 = outfits_et21_n0628.replace("????",this_beamstr)
 
