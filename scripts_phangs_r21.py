@@ -758,7 +758,8 @@ class ToolsR21():
         align_r21
         """
 
-        data = imval_all(infile)["data"]
+        data,_ = imval_all(infile)
+        data = data["data"]
         data[np.isnan(data)] = 0
         data[np.isinf(data)] = 0
         data = data[data!=0]
