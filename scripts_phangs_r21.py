@@ -923,7 +923,11 @@ class ToolsR21():
             this_expr = "iif( IM0" + list_id_env[i] + ", 1, 0 )"
 
             if this_fits.split("/")[-1]!="None":
-                run_importfits(this_fits,this_fits+"_env"+str(i)+"_tmp1")
+                if this_fits.endswith(".fits"):
+                    run_importfits(this_fits,this_fits+"_env"+str(i)+"_tmp1")
+                else:
+                    os.system("cp " + this_fits + " " + this_fits + "_env" + str(i) + "_tmp1")
+
                 relabelimage(this_fits+"_env"+str(i)+"_tmp1",icrs_to_j2000=True)
                 run_immath_one(this_fits+"_env"+str(i)+"_tmp1",this_fits+"_env"+str(i)+"_tmp2",
                     this_expr,delin=True)
