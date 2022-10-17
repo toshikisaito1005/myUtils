@@ -612,7 +612,6 @@ class ToolsR21():
         data[np.isnan(data)] = 0
         data[np.isinf(data)] = 0
         data = data[data!=0]
-        print(np.max(data),np.min(data))
 
         # data
         histrange    = [data.min(), data.max()]
@@ -621,6 +620,10 @@ class ToolsR21():
         histx, histy = histogram[1][:-1], histogram[0]
         histx4fit    = histx[histx<p84_data*snr]
         histy4fit    = histy[histx<p84_data*snr]
+
+        print(p84_data)
+        print(np.c_[histx4fit,histy4fit])
+
 
         # fit
         x_bestfit    = np.linspace(histrange[0], histrange[1], bins)
