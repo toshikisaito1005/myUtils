@@ -163,10 +163,10 @@ class ToolsR21():
         self.env_bar_n4254   = self.dir_env + self._read_key("env_bar_n4254")
         self.env_bar_n4321   = self.dir_env + self._read_key("env_bar_n4321")
 
-        self.halpha_mask_n0628 = self.dir_env + self._read_key("halpha_mask_n0628")
-        self.halpha_mask_n3627 = self.dir_env + self._read_key("halpha_mask_n3627")
-        self.halpha_mask_n4254 = self.dir_env + self._read_key("halpha_mask_n4254")
-        self.halpha_mask_n4321 = self.dir_env + self._read_key("halpha_mask_n4321")
+        self.halpha_mask_n0628 = self.dir_halpha + self._read_key("halpha_mask_n0628")
+        self.halpha_mask_n3627 = self.dir_halpha + self._read_key("halpha_mask_n3627")
+        self.halpha_mask_n4254 = self.dir_halpha + self._read_key("halpha_mask_n4254")
+        self.halpha_mask_n4321 = self.dir_halpha + self._read_key("halpha_mask_n4321")
 
     def _set_output_fits(self):
         """
