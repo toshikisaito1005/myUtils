@@ -107,7 +107,6 @@ class ToolsR21():
         self.dir_cprops   = self.dir_proj + self._read_key("dir_cprops")
         self.dir_env      = self.dir_proj + self._read_key("dir_env")
         self.dir_halpha   = self.dir_proj + self._read_key("dir_halpha")
-        self.dir_piechart = self.dir_proj + self._read_key("dir_piechart")
         self.dir_wise     = self.dir_proj + self._read_key("dir_wise")
         self.dir_ready    = self.dir_proj + self._read_key("dir_ready")
         self.dir_products = self.dir_proj + self._read_key("dir_products")

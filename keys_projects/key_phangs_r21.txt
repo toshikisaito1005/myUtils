@@ -5,8 +5,7 @@ dir_proj            ,,,/lfs13/saitots/proj_phangs_r21/
 dir_raw             ,,,data_raw/
 dir_cprops          ,,,data_other/cprops/
 dir_env             ,,,data_other/env_masks/
-dir_halpha          ,,,data_other/halpha/
-dir_piechart        ,,,data_other/mask_piechart/
+dir_halpha          ,,,data_other/mask_piechart/
 dir_wise            ,,,data_other/wise/
 dir_ready           ,,,data_ready/
 dir_products        ,,,products_png/
