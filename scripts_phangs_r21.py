@@ -590,7 +590,7 @@ class ToolsR21():
         ax.text(x, 0.96, text, color="black", horizontalalignment="left", verticalalignment="top", transform=ax.transAxes, rotation=90)
         #
         x    = rms*self.noise_hist_snr4plt / (xlim[1]-xlim[0]) + 0.01
-        text = str(self.noise_hist_snr4plt)+r"$\sigma$ = "+str(rms*self.noise_hist_snr4plt).ljust(5, "0") + " K"
+        text = str(self.noise_hist_snr4plt)+r"$\sigma$ = "+str(np.round(rms*self.noise_hist_snr4plt,3)).ljust(5, "0") + " K"
         ax.text(x, 0.96, text, color="black", horizontalalignment="left", verticalalignment="top", transform=ax.transAxes, rotation=90)
 
         plt.savefig(self.outpng_noise_hist, dpi=self.fig_dpi)
