@@ -1228,6 +1228,11 @@ class ToolsR21():
             this_output_et21 = outmom_et21.replace("????",this_beamstr)
 
             print("# create " + this_output_co10.split("/")[-1])
+            print("# create " + this_output_co21.split("/")[-1])
+            print("# create " + this_output_r21.split("/")[-1])
+            print("# create " + this_output_t21.split("/")[-1])
+            print("# create " + this_output_er21.split("/")[-1])
+            print("# create " + this_output_et21.split("/")[-1])
 
             # snr-based masking
             self._maskig_cube_snr(this_input_co10,mask_co10+"_snr")
@@ -1286,12 +1291,12 @@ class ToolsR21():
         run_immath_two(output_et21+"_term1",output_et21+"_term2",output_et21+"_term3",expr,delin=True)
 
         expr = "IM0 * IM1"
-        r21tool.run_immath_two(output_t21+"_tmp1",output_et21+"_term3",output_et21+"_tmp1",expr)
+        run_immath_two(output_t21+"_tmp1",output_et21+"_term3",output_et21+"_tmp1",expr)
         os.system("rm -rf " + output_et21 + "_term3")
 
         # clipping at snr
         expr = "iif( IM0>=IM1*"+str(self.snr_ratio)+", 1, 0 )"
-        r21tool.run_immath_two(output_t21+"_tmp1",output_et21+"_tmp1",output_t21+"_snrmask_tmp1",expr)
+        run_immath_two(output_t21+"_tmp1",output_et21+"_tmp1",output_t21+"_snrmask_tmp1",expr)
         boolean_masking(output_t21+"_snrmask_tmp1",output_t21+"_snrmask",delin=True)
 
         expr = "iif(IM1>0, IM0, IM1)"
@@ -1330,12 +1335,12 @@ class ToolsR21():
         run_immath_two(output_er21+"_term1",output_er21+"_term2",output_er21+"_term3",expr,delin=True)
 
         expr = "IM0 * IM1"
-        r21tool.run_immath_two(output_r21+"_tmp1",output_er21+"_term3",output_er21+"_tmp1",expr)
+        run_immath_two(output_r21+"_tmp1",output_er21+"_term3",output_er21+"_tmp1",expr)
         os.system("rm -rf " + output_er21 + "_term3")
 
         # clipping at snr
         expr = "iif( IM0>=IM1*"+str(self.snr_ratio)+", 1, 0 )"
-        r21tool.run_immath_two(output_r21+"_tmp1",output_er21+"_tmp1",output_r21+"_snrmask_tmp1",expr)
+        run_immath_two(output_r21+"_tmp1",output_er21+"_tmp1",output_r21+"_snrmask_tmp1",expr)
         boolean_masking(output_r21+"_snrmask_tmp1",output_r21+"_snrmask",delin=True)
 
         expr = "iif(IM1>0, IM0, IM1)"
