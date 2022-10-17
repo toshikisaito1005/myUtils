@@ -387,7 +387,7 @@ class ToolsR21():
         if do_align_other==True:
             self.align_wise(skip=True)
             self.align_cprops(skip=True)
-            self.align_env(skip=True)
+            self.align_env(skip=False)
             self.align_halpha(skip=True)
             self.align_r21(skip=True)
             self.align_bulge(skip=False)
