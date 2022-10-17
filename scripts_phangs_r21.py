@@ -583,7 +583,7 @@ class ToolsR21():
         # legend
         ax.text(0.95, 0.93, "positive voxel histogram", color=c_pos, horizontalalignment="right", transform=ax.transAxes, size=self.legend_fontsize, fontweight="bold")
         ax.text(0.95, 0.88, "negative voxel histogram", color=c_neg, horizontalalignment="right", transform=ax.transAxes, size=self.legend_fontsize, fontweight="bold")
-        ax.text(0.95, 0.83, "best-fit Gaussian", color="black", alpha=alpha, horizontalalignment="right", transform=ax.transAxes, size=self.legend_fontsize, fontweight="bold")
+        ax.text(0.95, 0.83, "best-fit Gaussian", color="black", horizontalalignment="right", transform=ax.transAxes, size=self.legend_fontsize, fontweight="bold")
         #
         x    = rms / (xlim[1]-xlim[0]) + 0.01
         text = r"1$\sigma$ = "+str(rms).ljust(5, "0") + " K"
