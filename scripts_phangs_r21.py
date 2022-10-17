@@ -39,7 +39,7 @@ history:
 2022-07-29   constructed multismooth
 2022-10-11   constructed multimoments
 2022-10-14   constrcuted do_align_other
-2022-10-17   constrcuted plot_noise
+2022-10-17   constrcuted plot_noise, plot_recovery
 Toshiki Saito@NAOJ
 """
 
@@ -348,6 +348,23 @@ class ToolsR21():
 
         self.outpng_recovery = self.dir_products + self._read_key("outpng_recovery")
 
+        self.outpng_co10_n0628 = self.dir_products + self._read_key("outpng_co10_n0628")
+        self.outpng_co10_n3627 = self.dir_products + self._read_key("outpng_co10_n3627")
+        self.outpng_co10_n4254 = self.dir_products + self._read_key("outpng_co10_n4254")
+        self.outpng_co10_n4321 = self.dir_products + self._read_key("outpng_co10_n4321")
+        self.outpng_co21_n0628 = self.dir_products + self._read_key("outpng_co21_n0628")
+        self.outpng_co21_n3627 = self.dir_products + self._read_key("outpng_co21_n3627")
+        self.outpng_co21_n4254 = self.dir_products + self._read_key("outpng_co21_n4254")
+        self.outpng_co21_n4321 = self.dir_products + self._read_key("outpng_co21_n4321")
+        self.outpng_r21_n0628  = self.dir_products + self._read_key("outpng_r21_n0628")
+        self.outpng_r21_n3627  = self.dir_products + self._read_key("outpng_r21_n3627")
+        self.outpng_r21_n4254  = self.dir_products + self._read_key("outpng_r21_n4254")
+        self.outpng_r21_n4321  = self.dir_products + self._read_key("outpng_r21_n4321")
+        self.imsize_n0628      = 290
+        self.imsize_n3637      = 290
+        self.imsize_n4254      = 290
+        self.imsize_n4321      = 290
+
     ##################
     # run_phangs_r21 #
     ##################
@@ -363,6 +380,7 @@ class ToolsR21():
         # plot figures in paper
         plot_noise     = False,
         plot_recovery  = False,
+        plot_showcase  = False,
         # supplement
         ):
         """
@@ -404,17 +422,57 @@ class ToolsR21():
 
         # plot figures in paper
         if plot_noise==True:
-            #self.plot_noise_hist()
-            self.plot_noise_vs_beam()
+            self.plot_noise_hist()
+            self.plot_noise_vs_beam() # ngc4254 co21 rms curve is strange.
 
         if plot_recovery==True:
             self.plot_recovery()
+
+        if plot_showcase==True:
+            self.plot_showcase()
 
     #####################
     #####################
     ### plotting part ###
     #####################
     #####################
+
+    #################
+    # plot_showcase #
+    #################
+
+    def plot_showcase(
+        self,
+        ):
+        """
+        """
+
+        taskname = self.modname + sys._getframe().f_code.co_name
+        check_first(self.outcube_co10_n0628,taskname)
+
+        this_co10   = self.outmom_co10_n0628.replace("momX","mom0")
+        this_co21   = self.outmom_co21_n0628.replace("momX","mom0")
+        this_r21    = self.outfits_r21_n0628
+        this_out    = self.outpng_co10_n0628
+        this_imsize = self.imsize_n0628
+        myfig_fits2png(
+            this_co10,
+            this_out,
+            imcontour1=this_co10,
+            imsize_as=this_imsize,
+            ra_cnt=self.ra_n0628,
+            dec_cnt=self.dec_n0628,
+            levels_cont1=[0.04,0.08,0.16,0.32,0.64,0.96],
+            set_title="NGC 0628",
+            colorlog=True,
+            set_cmap="PuBu",
+            scalebar=1000. / self.scale_n0628,
+            label_scalebar="1 kpc",
+            comment="CO(1-0) integrated intensity",
+            clim=None,
+            )
+
+    #
 
     #################
     # plot_recovery #
@@ -434,7 +492,79 @@ class ToolsR21():
         ###########
 
         beams_new_n0628 = [s for s in self.beams_n0628[:-1] if not "11.5" in str(s)]
-        list_rms_co10_n0628 = self._loop_measure_flux_norm(self.outcube_co10_n0628.replace(str(self.basebeam_n0628).replace(".","p").zfill(4),"????").replace(".image","_k.image"))
+        list_flux_co10_n0628 = self._loop_measure_flux_norm(
+            self.outcube_co10_n0628.replace(str(self.basebeam_n0628).replace(".","p").zfill(4),"????").replace(".image","_k.image"))
+        list_flux_co21_n0628 = self._loop_measure_flux_norm(
+            self.outcube_co21_n0628.replace(str(self.basebeam_n0628).replace(".","p").zfill(4),"????").replace(".image","_k.image"))
+
+        beams_new_n3627 = [s for s in self.beams_n3627[:-1]]
+        list_flux_co10_n3627 = self._loop_measure_flux_norm(
+            self.outcube_co10_n3627.replace(str(self.basebeam_n3627).replace(".","p").zfill(4),"????").replace(".image","_k.image"))
+        list_flux_co21_n3627 = self._loop_measure_flux_norm(
+            self.outcube_co21_n3627.replace(str(self.basebeam_n3627).replace(".","p").zfill(4),"????").replace(".image","_k.image"))
+
+        beams_new_n4254 = [s for s in self.beams_n4254[:-1] if not "8.7" in str(s)]
+        list_flux_co10_n4254 = self._loop_measure_flux_norm(
+            self.outcube_co10_n4254.replace(str(self.basebeam_n4254).replace(".","p").zfill(4),"????").replace(".image","_k.image"))
+        list_flux_co21_n4254 = self._loop_measure_flux_norm(
+            self.outcube_co21_n4254.replace(str(self.basebeam_n4254).replace(".","p").zfill(4),"????").replace(".image","_k.image"))
+
+        beams_new_n4321 = [s for s in self.beams_n4321[:-1] if not "7.5" in str(s)]
+        list_flux_co10_n4321 = self._loop_measure_flux_norm(
+            self.outcube_co10_n4321.replace(str(self.basebeam_n4321).replace(".","p").zfill(4),"????").replace(".image","_k.image"))
+        list_flux_co21_n4321 = self._loop_measure_flux_norm(
+            self.outcube_co21_n4321.replace(str(self.basebeam_n4321).replace(".","p").zfill(4),"????").replace(".image","_k.image"))
+
+        xlim   = [2,26]
+        ylim   = [0.8,1.2]
+        title  = "Total Flux vs. Beam Size"
+        xlabel = "Beam size (arcsec)"
+        ylabel = "Total flux recovery"
+
+        ########
+        # plot #
+        ########
+
+        plt.figure(figsize=(13,10))
+        gs = gridspec.GridSpec(nrows=10, ncols=10)
+        ax = plt.subplot(gs[0:10,0:10])
+
+        ad = [0.215,0.83,0.10,0.90]
+        myax_set(ax, "both", xlim, ylim, title, xlabel, ylabel, adjust=ad)
+
+        # plot co10 recovery
+        ax.plot(beams_new_n0628, list_flux_co10_n0628, "o-", color=self.c_n0628, markeredgewidth=0, markersize=20, lw=3)
+        ax.plot(beams_new_n3627, list_flux_co10_n3627, "o-", color=self.c_n3627, markeredgewidth=0, markersize=20, lw=3)
+        ax.plot(beams_new_n4254, list_flux_co10_n4254, "o-", color=self.c_n4254, markeredgewidth=0, markersize=20, lw=3)
+        ax.plot(beams_new_n4321, list_flux_co10_n4321, "o-", color=self.c_n4321, markeredgewidth=0, markersize=20, lw=3)
+        # plot co21 recovery
+        ax.plot(beams_new_n0628, list_flux_co21_n0628, "s--", color=self.c_n0628, markeredgewidth=0, markersize=20, lw=3)
+        ax.plot(beams_new_n3627, list_flux_co21_n3627, "s--", color=self.c_n3627, markeredgewidth=0, markersize=20, lw=3)
+        ax.plot(beams_new_n4254, list_flux_co21_n4254, "s--", color=self.c_n4254, markeredgewidth=0, markersize=20, lw=3)
+        ax.plot(beams_new_n4321, list_flux_co21_n4321, "s--", color=self.c_n4321, markeredgewidth=0, markersize=20, lw=3)
+
+        # text
+        t=ax.text(0.95, 0.93, "NGC 0628", color=self.c_n0628, alpha=alpha, horizontalalignment="right", transform=ax.transAxes, size=self.legend_fontsize, fontweight="bold")
+        t.set_bbox(dict(facecolor="white", alpha=self.text_back_alpha, lw=0))
+        t=ax.text(0.95, 0.88, "NGC 3627", color=self.c_n3627, alpha=alpha, horizontalalignment="right", transform=ax.transAxes, size=self.legend_fontsize, fontweight="bold")
+        t.set_bbox(dict(facecolor="white", alpha=self.text_back_alpha, lw=0))
+        t=ax.text(0.95, 0.83, "NGC 4254", color=self.c_n4254, alpha=alpha, horizontalalignment="right", transform=ax.transAxes, size=self.legend_fontsize, fontweight="bold")
+        t.set_bbox(dict(facecolor="white", alpha=self.text_back_alpha, lw=0))
+        t=ax.text(0.95, 0.78, "NGC 4321", color=self.c_n4321, alpha=alpha, horizontalalignment="right", transform=ax.transAxes, size=self.legend_fontsize, fontweight="bold")
+        t.set_bbox(dict(facecolor="white", alpha=self.text_back_alpha, lw=0))
+
+        xtext   = 0.68
+        xmarker = xtext-0.23
+        ytext   = 0.93
+        ymarker = ytext+0.013
+        ax.text(xtext,   ytext, "CO(1-0)", color="black", horizontalalignment="right", transform=ax.transAxes, size=self.legend_fontsize, fontweight="bold")
+        ax.plot(xmarker, ymarker, marker="o", color="black", markeredgewidth=0, markersize=20, transform=ax.transAxes)
+        ax.plot([xmarker-0.05,xmarker+0.05], [ymarker, ymarker], "-", color="black", lw=3, transform=ax.transAxes)
+        ax.text(xtext,   ytext-0.05, "CO(2-1)", color="black", horizontalalignment="right", transform=ax.transAxes, size=self.legend_fontsize, fontweight="bold")
+        ax.plot(xmarker, ymarker-0.05, marker="s", color="black", markeredgewidth=0, markersize=20, transform=ax.transAxes)
+        ax.plot([xmarker-0.05,xmarker+0.05], [ymarker-0.05, ymarker-0.05], "--", color="black", lw=3, transform=ax.transAxes)
+
+        plt.savefig(self.outpng_recovery, dpi=self.fig_dpi)
 
     ###########################
     # _loop_measure_flux_norm #
@@ -463,10 +593,8 @@ class ToolsR21():
             # determine number of bins
             pix       = abs(imhead(this_map,mode="list")["cdelt1"]) * 3600 * 180/np.pi
             this_flux = np.sum(this_data) * pix**2
-            #
             list_total_flux.append(this_flux)
-            #
-        #
+
         return list_total_flux / list_total_flux[-1]
 
     #
