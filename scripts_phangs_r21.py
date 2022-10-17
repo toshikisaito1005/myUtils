@@ -926,7 +926,7 @@ class ToolsR21():
                 if this_fits.endswith(".fits"):
                     run_importfits(this_fits,this_fits+"_env"+str(i)+"_tmp1")
                 else:
-                    os.system("cp " + this_fits + " " + this_fits + "_env" + str(i) + "_tmp1")
+                    os.system("cp -r " + this_fits + " " + this_fits + "_env" + str(i) + "_tmp1")
 
                 relabelimage(this_fits+"_env"+str(i)+"_tmp1",icrs_to_j2000=True)
                 run_immath_one(this_fits+"_env"+str(i)+"_tmp1",this_fits+"_env"+str(i)+"_tmp2",
