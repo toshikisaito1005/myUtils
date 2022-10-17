@@ -508,8 +508,9 @@ class ToolsR21():
                 this_beamstr = str(this_beam).replace(".","p").zfill(4)
                 this_cube    = incubes.replace("????",this_beamstr)
 
-                this_data = run_imval(this_cube)
-                this_bins = (np.ceil(np.log2(len(this_data))) + 1) * 20 # Sturgess equation * 20
+                this_data,_ = imval_all(this_cube)
+                this_data   = this_data["data"]
+                this_bins   = (np.ceil(np.log2(len(this_data))) + 1) * 20 # Sturgess equation * 20
 
                 _,_,_,_,this_rms,_,_,this_p84 = gaussfit_noise_histo(this_data)
                 list_log_rms.append(np.log10(this_rms))
@@ -544,7 +545,8 @@ class ToolsR21():
         # prepare #
         ###########
 
-        data = run_imval(self.outcube_co10_n0628)
+        data,_ = imval_all(self.outcube_co10_n0628)
+        data   = data["data"]
         histx, histy, histrange, peak, rms, x_bestfit, y_bestfit, _ = gaussfit_noise_histo(data)
 
         xlim     = [0, self.noise_hist_xmax_snr*rms]
