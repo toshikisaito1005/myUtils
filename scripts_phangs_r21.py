@@ -609,6 +609,8 @@ class ToolsR21():
         plot_noise
         """
 
+        print(data)
+
         # data
         histrange    = [data.min(), data.max()]
         p84_data     = np.percentile(data, 16) * -1  # 84th percentile of the inversed histogram
@@ -619,7 +621,6 @@ class ToolsR21():
 
         # fit
         x_bestfit    = np.linspace(histrange[0], histrange[1], bins)
-        print(np.shape(np.max(histy4fit)),np.shape(np.max(p84_data)))
         popt,_       = curve_fit(self._func1, histx4fit, histy4fit, p0=[np.max(histy4fit),p84_data], maxfev=10000)
         peak         = popt[0]
         rms          = abs(np.round(popt[1], 3))
