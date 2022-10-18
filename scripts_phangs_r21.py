@@ -535,15 +535,15 @@ class ToolsR21():
         ax.plot(xlim, ylim_p84, "-", color="black", lw=1, zorder=100000)
 
         # text
-        t=ax.text(0.95, 0.25, "All"+cor_all, color="black", alpha=alpha, horizontalalignment="right", transform=ax.transAxes, size=self.legend_fontsize, fontweight="bold")
+        t=ax.text(0.95, 0.25, "All"+cor_all, color="black", horizontalalignment="right", transform=ax.transAxes, size=self.legend_fontsize, fontweight="bold")
         t.set_bbox(dict(facecolor="white", alpha=self.text_back_alpha, lw=0))
-        t=ax.text(0.95, 0.20, "NGC 0628"+cor_n0628, color=self.c_n0628, alpha=alpha, horizontalalignment="right", transform=ax.transAxes, size=self.legend_fontsize, fontweight="bold")
+        t=ax.text(0.95, 0.20, "NGC 0628"+cor_n0628, color=self.c_n0628, horizontalalignment="right", transform=ax.transAxes, size=self.legend_fontsize, fontweight="bold")
         t.set_bbox(dict(facecolor="white", alpha=self.text_back_alpha, lw=0))
-        t=ax.text(0.95, 0.15, "NGC 3627"+cor_n3627, color=self.c_n3627, alpha=alpha, horizontalalignment="right", transform=ax.transAxes, size=self.legend_fontsize, fontweight="bold")
+        t=ax.text(0.95, 0.15, "NGC 3627"+cor_n3627, color=self.c_n3627, horizontalalignment="right", transform=ax.transAxes, size=self.legend_fontsize, fontweight="bold")
         t.set_bbox(dict(facecolor="white", alpha=self.text_back_alpha, lw=0))
-        t=ax.text(0.95, 0.10, "NGC 4254"+cor_n4254, color=self.c_n4254, alpha=alpha, horizontalalignment="right", transform=ax.transAxes, size=self.legend_fontsize, fontweight="bold")
+        t=ax.text(0.95, 0.10, "NGC 4254"+cor_n4254, color=self.c_n4254, horizontalalignment="right", transform=ax.transAxes, size=self.legend_fontsize, fontweight="bold")
         t.set_bbox(dict(facecolor="white", alpha=self.text_back_alpha, lw=0))
-        t=ax.text(0.95, 0.05, "NGC 4321"+cor_n4321, color=self.c_n4321, alpha=alpha, horizontalalignment="right", transform=ax.transAxes, size=self.legend_fontsize, fontweight="bold")
+        t=ax.text(0.95, 0.05, "NGC 4321"+cor_n4321, color=self.c_n4321, horizontalalignment="right", transform=ax.transAxes, size=self.legend_fontsize, fontweight="bold")
         t.set_bbox(dict(facecolor="white", alpha=self.text_back_alpha, lw=0))
 
         ax.text(0.02, 0.13, "84$^{th}$ pctl.", horizontalalignment="left", verticalalignment="bottom", rotation=45, transform=ax.transAxes, size=self.legend_fontsize)
@@ -596,7 +596,10 @@ class ToolsR21():
         plot_m0_vs_m8
         """
 
-        return np.log10(mom0), np.log10(mom8), emom0 / (np.log(10)*mom0), emom8 / (np.log(10)*mom8)
+        mom0, mom8, emom0, emom8 = np.log10(mom0), np.log10(mom8), emom0 / (np.log(10)*mom0), emom8 / (np.log(10)*mom8)
+        cut = np.where( (~np.isnan(mom0)) & (~np.isinf(mom0)) & (~np.isnan(mom8)) & (~np.isinf(mom8)) & (~np.isnan(emom0)) & (~np.isinf(emom0)) & (~np.isnan(emom8)) & (~np.isinf(emom8)) )
+
+        return mom0[cut], mom8[cut], emom0[cut], emom8[cut]
 
     ####################
     # _import_m0_vs_m8 #
