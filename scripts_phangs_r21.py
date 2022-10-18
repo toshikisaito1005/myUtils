@@ -537,7 +537,7 @@ class ToolsR21():
             scalebar=this_scalebar,
             label_scalebar="1 kpc",
             comment="CO(2-1)/CO(1-0) integrated intensity ratio",
-            clim=None,#[0.2,1.0],
+            clim=[0.2,1.0],
             )
 
         ###########
