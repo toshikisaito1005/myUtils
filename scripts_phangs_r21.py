@@ -602,7 +602,8 @@ class ToolsR21():
         this_er21   = this_er21["data"].flatten()
         this_et21   = this_et21["data"].flatten()
 
-        cut = np.where( (~np.isnan(this_r21)) & (~np.isinf(this_r21)) & (~np.isnan(this_t21)) & (~np.isinf(this_t21)) \
+        cut = np.where( (~np.isnan(this_r21)) & (~np.isinf(this_r21)) & (this_r21!=0) \
+            & (~np.isnan(this_t21)) & (~np.isinf(this_t21)) & (this_t21!=0) \
             & (this_r21>=this_er21*self.snr_ratio) & (this_t21>=this_et21*self.snr_ratio) )
 
         r21  = np.log10(this_r21[cut])
