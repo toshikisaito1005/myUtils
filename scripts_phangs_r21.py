@@ -743,7 +743,6 @@ class ToolsR21():
         self,
         mom0,
         emom0,
-        snr,
         ):
         """
         plot_showcase
