@@ -263,6 +263,16 @@ class ToolsR21():
         self.scale_n4254       = float(self._read_key("scale_n4254", "gal"))
         self.scale_n4321       = float(self._read_key("scale_n4321", "gal"))
 
+        self.pa_n0628          = float(self._read_key("pa_n0628", "gal"))
+        self.pa_n3627          = float(self._read_key("pa_n3627", "gal"))
+        self.pa_n4254          = float(self._read_key("pa_n4254", "gal"))
+        self.pa_n4321          = float(self._read_key("pa_n4321", "gal"))
+
+        self.incl_n0628        = float(self._read_key("incl_n0628", "gal"))
+        self.incl_n3627        = float(self._read_key("incl_n3627", "gal"))
+        self.incl_n4254        = float(self._read_key("incl_n4254", "gal"))
+        self.incl_n4321        = float(self._read_key("incl_n4321", "gal"))
+
         self.basebeam_n0628    = float(self._read_key("basebeam_n0628"))
         self.basebeam_n3627    = float(self._read_key("basebeam_n3627"))
         self.basebeam_n4254    = float(self._read_key("basebeam_n4254"))
@@ -323,7 +333,7 @@ class ToolsR21():
         self.c_n3627                  = "purple"
         self.c_n4254                  = "forestgreen"
         self.c_n4321                  = "deepskyblue"
-        self.text_back_alpha          = 0.9
+        self.self.text_back_alpha          = 0.9
 
         # output txt and png
         self.outpng_noise_hist        = self.dir_products + self._read_key("outpng_noise_hist")
@@ -359,23 +369,29 @@ class ToolsR21():
 
         self.outpng_m0_vs_m8          = self.dir_products + self._read_key("outpng_m0_vs_m8")
 
+        self.outpng_hist_550pc        = self.dir_products + self._read_key("outpng_hist_550pc")
+        self.hist_550pc_cnter_radius  = 1.0 # kpc
+        self.hist_550pc_bins          = 50
+        self.hist_550pc_hrange        = [0.06, 1.06]
+
     ##################
     # run_phangs_r21 #
     ##################
 
     def run_phangs_r21(
         self,
-        do_all         = False,
+        do_all          = False,
         # analysis
-        do_align       = False,
-        do_multismooth = False,
-        do_moments     = False,
-        do_align_other = False,
+        do_align        = False,
+        do_multismooth  = False,
+        do_moments      = False,
+        do_align_other  = False,
         # plot figures in paper
-        plot_noise     = False,
-        plot_recovery  = False,
-        plot_showcase  = False,
-        plot_m0_vs_m8  = False,
+        plot_noise      = False,
+        plot_recovery   = False,
+        plot_showcase   = False,
+        plot_m0_vs_m8   = False,
+        plot_hist_550pc = False,
         # supplement
         ):
         """
@@ -433,11 +449,491 @@ class ToolsR21():
         if plot_m0_vs_m8==True:
             self.plot_m0_vs_m8()
 
+        if plot_hist_550pc==True:
+            self.plot_hist_550pc()
+
     #####################
     #####################
     ### plotting part ###
     #####################
     #####################
+
+    ###################
+    # plot_hist_550pc #
+    ###################
+
+    def plot_hist_550pc(
+        self,
+        ):
+        """
+        """
+
+        taskname = self.modname + sys._getframe().f_code.co_name
+        check_first(self.outcube_co10_n0628,taskname)
+
+        ###########
+        # prepare #
+        ###########
+
+        this_basebeam = str(self.basebeam_n0628).replace(".","p").zfill(4)
+        this_wisebeam = str(self.beam_wise_n0628).replace(".","p").zfill(4)
+        this_r21      = self.outfits_r21_n0628.replace(this_basebeam,this_wisebeam)
+        this_er21     = self.outfits_r21_n0628.replace(this_basebeam,this_wisebeam)
+        this_co10     = self.outmom_co10_n0628.replace(this_basebeam,this_wisebeam)
+        this_ra       = self.ra_n0628
+        this_dec      = self.dec_n0628
+        this_scale    = self.scale_n0628
+        this_pa       = self.pa_n0628
+        this_incl     = self.incl_n0628
+        hist_all_n0628, hist_inner_n0628, hist_outer_n0628, pctls_all_n0628, pctls_inner_n0628, pctls_outer_n0628 = \
+            self._import_hist_550pc(this_co10,this_co21,this_r21,this_er21,this_ra,this_dec,this_scale,this_pa,this_incl)
+
+        this_basebeam = str(self.basebeam_n3627).replace(".","p").zfill(4)
+        this_wisebeam = str(self.beam_wise_n3627).replace(".","p").zfill(4)
+        this_r21      = self.outfits_r21_n3627.replace(this_basebeam,this_wisebeam)
+        this_er21     = self.outfits_r21_n3627.replace(this_basebeam,this_wisebeam)
+        this_co10     = self.outmom_co10_n3627.replace(this_basebeam,this_wisebeam)
+        this_ra       = self.ra_n3627
+        this_dec      = self.dec_n3627
+        this_scale    = self.scale_n3627
+        this_pa       = self.pa_n3627
+        this_incl     = self.incl_n3627
+        hist_all_n3627, hist_inner_n3627, hist_outer_n3627, pctls_all_n3627, pctls_inner_n3627, pctls_outer_n3627 = \
+            self._import_hist_550pc(this_co10,this_co21,this_r21,this_er21,this_ra,this_dec,this_scale,this_pa,this_incl)
+
+        this_basebeam = str(self.basebeam_n4254).replace(".","p").zfill(4)
+        this_wisebeam = str(self.beam_wise_n4254).replace(".","p").zfill(4)
+        this_r21      = self.outfits_r21_n4254.replace(this_basebeam,this_wisebeam)
+        this_er21     = self.outfits_r21_n4254.replace(this_basebeam,this_wisebeam)
+        this_co10     = self.outmom_co10_n4254.replace(this_basebeam,this_wisebeam)
+        this_ra       = self.ra_n4254
+        this_dec      = self.dec_n4254
+        this_scale    = self.scale_n4254
+        this_pa       = self.pa_n4254
+        this_incl     = self.incl_n4254
+        hist_all_n4254, hist_inner_n4254, hist_outer_n4254, pctls_all_n4254, pctls_inner_n4254, pctls_outer_n4254 = \
+            self._import_hist_550pc(this_co10,this_co21,this_r21,this_er21,this_ra,this_dec,this_scale,this_pa,this_incl)
+
+        this_basebeam = str(self.basebeam_n4321).replace(".","p").zfill(4)
+        this_wisebeam = str(self.beam_wise_n4321).replace(".","p").zfill(4)
+        this_r21      = self.outfits_r21_n4321.replace(this_basebeam,this_wisebeam)
+        this_er21     = self.outfits_r21_n4321.replace(this_basebeam,this_wisebeam)
+        this_co10     = self.outmom_co10_n4321.replace(this_basebeam,this_wisebeam)
+        this_ra       = self.ra_n4321
+        this_dec      = self.dec_n4321
+        this_scale    = self.scale_n4321
+        this_pa       = self.pa_n4321
+        this_incl     = self.incl_n4321
+        hist_all_n4321, hist_inner_n4321, hist_outer_n4321, pctls_all_n4321, pctls_inner_n4321, pctls_outer_n4321 = \
+            self._import_hist_550pc(this_co10,this_co21,this_r21,this_er21,this_ra,this_dec,this_scale,this_pa,this_incl)
+
+
+        ylim_n0628 = np.max(np.max(hist_all_n0628[2][:,1]/np.sum(hist_all_n0628[2][:,1])))
+        ylim_n3627 = np.max(np.max(hist_all_n3627[2][:,1]/np.sum(hist_all_n3627[2][:,1])))
+        ylim_n4254 = np.max(np.max(hist_all_n4254[2][:,1]/np.sum(hist_all_n4254[2][:,1])))
+        ylim_n4321 = np.max(np.max(hist_all_n4321[2][:,1]/np.sum(hist_all_n4321[2][:,1])))
+        ax1_title  = "Area-weighted"
+        ax2_title  = "CO(1-0)-weighted"
+        ax3_title  = "CO(2-1)-weighted"
+        barwidth   = (histrange[1] - histrange[0]) / histbins
+        xlabel     = "$R_{21}$"
+        ylabel     = "Count"
+
+        ########
+        # plot #
+        ########
+
+        # set plt, ax
+        plt.figure(figsize=(15,9))
+        plt.subplots_adjust(bottom=0.09, left=0.07, right=0.99, top=0.95)
+        gs   = gridspec.GridSpec(nrows=12, ncols=9)
+        ax1  = plt.subplot(gs[0:3,0:3])
+        ax2  = plt.subplot(gs[0:3,3:6])
+        ax3  = plt.subplot(gs[0:3,6:9])
+        ax4  = plt.subplot(gs[3:6,0:3])
+        ax5  = plt.subplot(gs[3:6,3:6])
+        ax6  = plt.subplot(gs[3:6,6:9])
+        ax7  = plt.subplot(gs[6:9,0:3])
+        ax8  = plt.subplot(gs[6:9,3:6])
+        ax9  = plt.subplot(gs[6:9,6:9])
+        ax10 = plt.subplot(gs[9:12,0:3])
+        ax11 = plt.subplot(gs[9:12,3:6])
+        ax12 = plt.subplot(gs[9:12,6:9])
+
+        # set ax param
+        myax_set(ax1,  "x", self.hist_550pc_hrange, [0.0001,ylim_n0628*factor], ax1_title, None, ylabel)
+        myax_set(ax2,  "x", self.hist_550pc_hrange, [0.0001,ylim_n0628*factor], ax2_title, None, None)
+        myax_set(ax3,  "x", self.hist_550pc_hrange, [0.0001,ylim_n0628*factor], ax3_title, None, None)
+        myax_set(ax4,  "x", self.hist_550pc_hrange, [0.0001,ylim_n3627*factor], None, None, None)
+        myax_set(ax5,  "x", self.hist_550pc_hrange, [0.0001,ylim_n3627*factor], None, None, None)
+        myax_set(ax6,  "x", self.hist_550pc_hrange, [0.0001,ylim_n3627*factor], None, None, None)
+        myax_set(ax7,  "x", self.hist_550pc_hrange, [0.0001,ylim_n4254*factor], None, None, None)
+        myax_set(ax8,  "x", self.hist_550pc_hrange, [0.0001,ylim_n4254*factor], None, None, None)
+        myax_set(ax9,  "x", self.hist_550pc_hrange, [0.0001,ylim_n4254*factor], None, None, None)
+        myax_set(ax10, "x", self.hist_550pc_hrange, [0.0001,ylim_n4321*factor], None, xlabel, None)
+        myax_set(ax11, "x", self.hist_550pc_hrange, [0.0001,ylim_n4321*factor], None, xlabel, None)
+        myax_set(ax12, "x", self.hist_550pc_hrange, [0.0001,ylim_n4321*factor], None, xlabel, None)
+
+        # unset xlabels
+        ax1.tick_params(labelbottom=False,labelleft=True,labelright=False,labeltop=False)
+        ax2.tick_params(labelbottom=False,labelleft=False,labelright=False,labeltop=False)
+        ax3.tick_params(labelbottom=False,labelleft=False,labelright=False,labeltop=False)
+        ax4.tick_params(labelbottom=False,labelleft=True,labelright=False,labeltop=False)
+        ax5.tick_params(labelbottom=False,labelleft=False,labelright=False,labeltop=False)
+        ax6.tick_params(labelbottom=False,labelleft=False,labelright=False,labeltop=False)
+        ax7.tick_params(labelbottom=False,labelleft=True,labelright=False,labeltop=False)
+        ax8.tick_params(labelbottom=False,labelleft=False,labelright=False,labeltop=False)
+        ax9.tick_params(labelbottom=False,labelleft=False,labelright=False,labeltop=False)
+        ax10.tick_params(labelbottom=True,labelleft=True,labelright=False,labeltop=False)
+        ax11.tick_params(labelbottom=True,labelleft=False,labelright=False,labeltop=False)
+        ax12.tick_params(labelbottom=True,labelleft=False,labelright=False,labeltop=False)
+
+        # plot: all
+        lw_hist_all = 3
+        y_ax1 = hist_all_n0628[0][:,1] / np.sum(hist_all_n0628[0][:,1])
+        y_ax2 = hist_all_n0628[1][:,1] / np.sum(hist_all_n0628[1][:,1])
+        y_ax3 = hist_all_n0628[2][:,1] / np.sum(hist_all_n0628[2][:,1])
+        y_ax4 = hist_all_n3627[0][:,1] / np.sum(hist_all_n3627[0][:,1])
+        y_ax5 = hist_all_n3627[1][:,1] / np.sum(hist_all_n3627[1][:,1])
+        y_ax6 = hist_all_n3627[2][:,1] / np.sum(hist_all_n3627[2][:,1])
+        y_ax7 = hist_all_n4254[0][:,1] / np.sum(hist_all_n4254[0][:,1])
+        y_ax8 = hist_all_n4254[1][:,1] / np.sum(hist_all_n4254[1][:,1])
+        y_ax9 = hist_all_n4254[2][:,1] / np.sum(hist_all_n4254[2][:,1])
+        y_ax10 = hist_all_n4321[0][:,1] / np.sum(hist_all_n4321[0][:,1])
+        y_ax11 = hist_all_n4321[1][:,1] / np.sum(hist_all_n4321[1][:,1])
+        y_ax12 = hist_all_n4321[2][:,1] / np.sum(hist_all_n4321[2][:,1])
+
+        ax1.step(hist_all_n0628[0][:,0], y_ax1, color="black", lw=lw_hist_all)
+        ax2.step(hist_all_n0628[1][:,0], y_ax2, color="black", lw=lw_hist_all)
+        ax3.step(hist_all_n0628[2][:,0], y_ax3, color="black", lw=lw_hist_all)
+        ax4.step(hist_all_n3627[0][:,0], y_ax4, color="black", lw=lw_hist_all)
+        ax5.step(hist_all_n3627[1][:,0], y_ax5, color="black", lw=lw_hist_all)
+        ax6.step(hist_all_n3627[2][:,0], y_ax6, color="black", lw=lw_hist_all)
+        ax7.step(hist_all_n4254[0][:,0], y_ax7, color="black", lw=lw_hist_all)
+        ax8.step(hist_all_n4254[1][:,0], y_ax8, color="black", lw=lw_hist_all)
+        ax9.step(hist_all_n4254[2][:,0], y_ax9, color="black", lw=lw_hist_all)
+        ax10.step(hist_all_n4321[0][:,0], y_ax10, color="black", lw=lw_hist_all)
+        ax11.step(hist_all_n4321[1][:,0], y_ax11, color="black", lw=lw_hist_all)
+        ax12.step(hist_all_n4321[2][:,0], y_ax12, color="black", lw=lw_hist_all)
+
+        # plot: outer
+        lw_hist_outer = 2
+        y_ax1 = hist_outer_n0628[0][:,1] / np.sum(hist_all_n0628[0][:,1])
+        y_ax2 = hist_outer_n0628[1][:,1] / np.sum(hist_all_n0628[1][:,1])
+        y_ax3 = hist_outer_n0628[2][:,1] / np.sum(hist_all_n0628[2][:,1])
+        y_ax4 = hist_outer_n3627[0][:,1] / np.sum(hist_all_n3627[0][:,1])
+        y_ax5 = hist_outer_n3627[1][:,1] / np.sum(hist_all_n3627[1][:,1])
+        y_ax6 = hist_outer_n3627[2][:,1] / np.sum(hist_all_n3627[2][:,1])
+        y_ax7 = hist_outer_n4254[0][:,1] / np.sum(hist_all_n4254[0][:,1])
+        y_ax8 = hist_outer_n4254[1][:,1] / np.sum(hist_all_n4254[1][:,1])
+        y_ax9 = hist_outer_n4254[2][:,1] / np.sum(hist_all_n4254[2][:,1])
+        y_ax10 = hist_outer_n4321[0][:,1] / np.sum(hist_all_n4321[0][:,1])
+        y_ax11 = hist_outer_n4321[1][:,1] / np.sum(hist_all_n4321[1][:,1])
+        y_ax12 = hist_outer_n4321[2][:,1] / np.sum(hist_all_n4321[2][:,1])
+
+        ax1.bar(hist_outer_n0628[0][:,0]-barwidth/2.0, y_ax1, color=self.c_n0628, lw=0, width=barwidth, align="center", alpha=0.5)
+        ax2.bar(hist_outer_n0628[1][:,0]-barwidth/2.0, y_ax2, color=self.c_n0628, lw=0, width=barwidth, align="center", alpha=0.5)
+        ax3.bar(hist_outer_n0628[2][:,0]-barwidth/2.0, y_ax3, color=self.c_n0628, lw=0, width=barwidth, align="center", alpha=0.5)
+        ax4.bar(hist_outer_n3627[0][:,0]-barwidth/2.0, y_ax4, color=self.c_n3627, lw=0, width=barwidth, align="center", alpha=0.5)
+        ax5.bar(hist_outer_n3627[1][:,0]-barwidth/2.0, y_ax5, color=self.c_n3627, lw=0, width=barwidth, align="center", alpha=0.5)
+        ax6.bar(hist_outer_n3627[2][:,0]-barwidth/2.0, y_ax6, color=self.c_n3627, lw=0, width=barwidth, align="center", alpha=0.5)
+        ax7.bar(hist_outer_n4254[0][:,0]-barwidth/2.0, y_ax7, color=self.c_n4254, lw=0, width=barwidth, align="center", alpha=0.5)
+        ax8.bar(hist_outer_n4254[1][:,0]-barwidth/2.0, y_ax8, color=self.c_n4254, lw=0, width=barwidth, align="center", alpha=0.5)
+        ax9.bar(hist_outer_n4254[2][:,0]-barwidth/2.0, y_ax9, color=self.c_n4254, lw=0, width=barwidth, align="center", alpha=0.5)
+        ax10.bar(hist_outer_n4321[0][:,0]-barwidth/2.0, y_ax10, color=self.c_n4321, lw=0, width=barwidth, align="center", alpha=0.5)
+        ax11.bar(hist_outer_n4321[1][:,0]-barwidth/2.0, y_ax11, color=self.c_n4321, lw=0, width=barwidth, align="center", alpha=0.5)
+        ax12.bar(hist_outer_n4321[2][:,0]-barwidth/2.0, y_ax12, color=self.c_n4321, lw=0, width=barwidth, align="center", alpha=0.5)
+
+        # inner
+        lw_hist_outer = 2
+        y_ax1 = hist_inner_n0628[0][:,1] / np.sum(hist_all_n0628[0][:,1])
+        y_ax2 = hist_inner_n0628[1][:,1] / np.sum(hist_all_n0628[1][:,1])
+        y_ax3 = hist_inner_n0628[2][:,1] / np.sum(hist_all_n0628[2][:,1])
+        y_ax4 = hist_inner_n3627[0][:,1] / np.sum(hist_all_n3627[0][:,1])
+        y_ax5 = hist_inner_n3627[1][:,1] / np.sum(hist_all_n3627[1][:,1])
+        y_ax6 = hist_inner_n3627[2][:,1] / np.sum(hist_all_n3627[2][:,1])
+        y_ax7 = hist_inner_n4254[0][:,1] / np.sum(hist_all_n4254[0][:,1])
+        y_ax8 = hist_inner_n4254[1][:,1] / np.sum(hist_all_n4254[1][:,1])
+        y_ax9 = hist_inner_n4254[2][:,1] / np.sum(hist_all_n4254[2][:,1])
+        y_ax10 = hist_inner_n4321[0][:,1] / np.sum(hist_all_n4321[0][:,1])
+        y_ax11 = hist_inner_n4321[1][:,1] / np.sum(hist_all_n4321[1][:,1])
+        y_ax12 = hist_inner_n4321[2][:,1] / np.sum(hist_all_n4321[2][:,1])
+
+        ax1.bar(hist_inner_n0628[0][:,0]-barwidth/2.0, y_ax1, color="firebrick", lw=0, width=barwidth, align="center", alpha=0.8)
+        ax2.bar(hist_inner_n0628[1][:,0]-barwidth/2.0, y_ax2, color="firebrick", lw=0, width=barwidth, align="center", alpha=0.8)
+        ax3.bar(hist_inner_n0628[2][:,0]-barwidth/2.0, y_ax3, color="firebrick", lw=0, width=barwidth, align="center", alpha=0.8)
+        ax4.bar(hist_inner_n3627[0][:,0]-barwidth/2.0, y_ax4, color="firebrick", lw=0, width=barwidth, align="center", alpha=0.8)
+        ax5.bar(hist_inner_n3627[1][:,0]-barwidth/2.0, y_ax5, color="firebrick", lw=0, width=barwidth, align="center", alpha=0.8)
+        ax6.bar(hist_inner_n3627[2][:,0]-barwidth/2.0, y_ax6, color="firebrick", lw=0, width=barwidth, align="center", alpha=0.8)
+        ax7.bar(hist_inner_n4254[0][:,0]-barwidth/2.0, y_ax7, color="firebrick", lw=0, width=barwidth, align="center", alpha=0.8)
+        ax8.bar(hist_inner_n4254[1][:,0]-barwidth/2.0, y_ax8, color="firebrick", lw=0, width=barwidth, align="center", alpha=0.8)
+        ax9.bar(hist_inner_n4254[2][:,0]-barwidth/2.0, y_ax9, color="firebrick", lw=0, width=barwidth, align="center", alpha=0.8)
+        ax10.bar(hist_inner_n4321[0][:,0]-barwidth/2.0, y_ax10, color="firebrick", lw=0, width=barwidth, align="center", alpha=0.8)
+        ax11.bar(hist_inner_n4321[1][:,0]-barwidth/2.0, y_ax11, color="firebrick", lw=0, width=barwidth, align="center", alpha=0.8)
+        ax12.bar(hist_inner_n4321[2][:,0]-barwidth/2.0, y_ax12, color="firebrick", lw=0, width=barwidth, align="center", alpha=0.8)
+
+        # plot: pctls
+        factor = 1.5
+        ax_pctl_bar(ax1, pctl_all_n0628[0], ylim_n0628, "all", ylim_factor=factor)
+        ax_pctl_bar(ax2, pctl_all_n0628[1], ylim_n0628, None, ylim_factor=factor)
+        ax_pctl_bar(ax3, pctl_all_n0628[2], ylim_n0628, None, ylim_factor=factor)
+        ax_pctl_bar(ax4, pctl_all_n3627[0], ylim_n3627, "all", ylim_factor=factor)
+        ax_pctl_bar(ax5, pctl_all_n3627[1], ylim_n3627, None, ylim_factor=factor)
+        ax_pctl_bar(ax6, pctl_all_n3627[2], ylim_n3627, None, ylim_factor=factor)
+        ax_pctl_bar(ax7, pctl_all_n4254[0], ylim_n4254, "all", ylim_factor=factor)
+        ax_pctl_bar(ax8, pctl_all_n4254[1], ylim_n4254, None, ylim_factor=factor)
+        ax_pctl_bar(ax9, pctl_all_n4254[2], ylim_n4254, None, ylim_factor=factor)
+        ax_pctl_bar(ax10, pctl_all_n4321[0], ylim_n4321, "all", ylim_factor=factor)
+        ax_pctl_bar(ax11, pctl_all_n4321[1], ylim_n4321, None, ylim_factor=factor)
+        ax_pctl_bar(ax12, pctl_all_n4321[2], ylim_n4321, None, ylim_factor=factor)
+
+        factor = 1.5-0.15
+        ax_pctl_bar(ax1, pctl_outer_n0628[0], ylim_n0628, "outer", ylim_factor=factor, color=self.c_n0628)
+        ax_pctl_bar(ax2, pctl_outer_n0628[1], ylim_n0628, None, ylim_factor=factor, color=self.c_n0628)
+        ax_pctl_bar(ax3, pctl_outer_n0628[2], ylim_n0628, None, ylim_factor=factor, color=self.c_n0628)
+        ax_pctl_bar(ax4, pctl_outer_n3627[0], ylim_n3627, "outer", ylim_factor=factor, color=self.c_n3627)
+        ax_pctl_bar(ax5, pctl_outer_n3627[1], ylim_n3627, None, ylim_factor=factor, color=self.c_n3627)
+        ax_pctl_bar(ax6, pctl_outer_n3627[2], ylim_n3627, None, ylim_factor=factor, color=self.c_n3627)
+        ax_pctl_bar(ax7, pctl_outer_n4254[0], ylim_n4254, "outer", ylim_factor=factor, color=self.c_n4254)
+        ax_pctl_bar(ax8, pctl_outer_n4254[1], ylim_n4254, None, ylim_factor=factor, color=self.c_n4254)
+        ax_pctl_bar(ax9, pctl_outer_n4254[2], ylim_n4254, None, ylim_factor=factor, color=self.c_n4254)
+        ax_pctl_bar(ax10, pctl_outer_n4321[0], ylim_n4321, "outer", ylim_factor=factor, color=self.c_n4321)
+        ax_pctl_bar(ax11, pctl_outer_n4321[1], ylim_n4321, None, ylim_factor=factor, color=self.c_n4321)
+        ax_pctl_bar(ax12, pctl_outer_n4321[2], ylim_n4321, None, ylim_factor=factor, color=self.c_n4321)
+
+        factor = 1.5-0.15*2
+        ax_pctl_bar(ax1, pctl_inner_n0628[0], ylim_n0628, "inner", ylim_factor=factor, color="firebrick")
+        ax_pctl_bar(ax2, pctl_inner_n0628[1], ylim_n0628, None, ylim_factor=factor, color="firebrick")
+        ax_pctl_bar(ax3, pctl_inner_n0628[2], ylim_n0628, None, ylim_factor=factor, color="firebrick")
+        ax_pctl_bar(ax4, pctl_inner_n3627[0], ylim_n3627, "inner", ylim_factor=factor, color="firebrick", pos="left")
+        ax_pctl_bar(ax5, pctl_inner_n3627[1], ylim_n3627, None, ylim_factor=factor, color="firebrick")
+        ax_pctl_bar(ax6, pctl_inner_n3627[2], ylim_n3627, None, ylim_factor=factor, color="firebrick")
+        ax_pctl_bar(ax7, pctl_inner_n4254[0], ylim_n4254, "inner", ylim_factor=factor, color="firebrick")
+        ax_pctl_bar(ax8, pctl_inner_n4254[1], ylim_n4254, None, ylim_factor=factor, color="firebrick")
+        ax_pctl_bar(ax9, pctl_inner_n4254[2], ylim_n4254, None, ylim_factor=factor, color="firebrick")
+        ax_pctl_bar(ax10, pctl_inner_n4321[0], ylim_n4321, "inner", ylim_factor=factor, color="firebrick")
+        ax_pctl_bar(ax11, pctl_inner_n4321[1], ylim_n4321, None, ylim_factor=factor, color="firebrick")
+        ax_pctl_bar(ax12, pctl_inner_n4321[2], ylim_n4321, None, ylim_factor=factor, color="firebrick")
+
+        # text
+        xpos = 0.03
+        ypos = 0.82
+        yoffset = 0.15
+        xoffset_n4321 = 0.58
+        yoffset_n4321 = -0.33
+        scale_n0628_pc = str(int(np.round(beam_n0628*scale_n0628, -1))) + " pc"
+        scale_n3627_pc = str(int(np.round(beam_n3627*scale_n3627, -1))) + " pc"
+        scale_n4254_pc = str(int(np.round(beam_n4254*scale_n4254, -1))) + " pc"
+        scale_n4321_pc = str(int(np.round(beam_n4321*scale_n4321, -1))) + " pc"
+        t=ax1.text(xpos, ypos, "NGC 0628", color=self.c_n0628, horizontalalignment="left", transform=ax1.transAxes, size=self.legend_fontsize-2, fontweight="bold")
+        t.set_bbox(dict(facecolor="white", alpha=self.text_back_alpha, lw=0))
+        t=ax4.text(xpos, ypos, "NGC 3627", color=self.c_n3627, horizontalalignment="left", transform=ax4.transAxes, size=self.legend_fontsize-2, fontweight="bold")
+        t.set_bbox(dict(facecolor="white", alpha=self.text_back_alpha, lw=0))
+        t=ax7.text(xpos, ypos, "NGC 4254", color=self.c_n4254, horizontalalignment="left", transform=ax7.transAxes, size=self.legend_fontsize-2, fontweight="bold")
+        t.set_bbox(dict(facecolor="white", alpha=self.text_back_alpha, lw=0))
+        t=ax10.text(xpos+xoffset_n4321, ypos+yoffset_n4321, "NGC 4321", color=self.c_n4321, horizontalalignment="left", transform=ax10.transAxes, size=self.legend_fontsize-2, fontweight="bold")
+        t.set_bbox(dict(facecolor="white", alpha=self.text_back_alpha, lw=0))
+
+        t=ax1.text(xpos, ypos-yoffset, str(beam_n0628)+"$^{\prime}$$^{\prime}$ beam", color=self.c_n0628, horizontalalignment="left", transform=ax1.transAxes, size=self.legend_fontsize-2)
+        t.set_bbox(dict(facecolor="white", alpha=self.text_back_alpha, lw=0))
+        t=ax1.text(xpos, ypos-yoffset*2, scale_n0628_pc, color=self.c_n0628, horizontalalignment="left", transform=ax1.transAxes, size=self.legend_fontsize-2)
+        t.set_bbox(dict(facecolor="white", alpha=self.text_back_alpha, lw=0))
+
+        t=ax4.text(xpos, ypos-yoffset, str(beam_n3627)+"$^{\prime}$$^{\prime}$ beam", color=self.c_n3627, horizontalalignment="left", transform=ax4.transAxes, size=self.legend_fontsize-2)
+        t.set_bbox(dict(facecolor="white", alpha=self.text_back_alpha, lw=0))
+        t=ax4.text(xpos, ypos-yoffset*2, scale_n3627_pc, color=self.c_n3627, horizontalalignment="left", transform=ax4.transAxes, size=self.legend_fontsize-2)
+        t.set_bbox(dict(facecolor="white", alpha=self.text_back_alpha, lw=0))
+
+        t=ax7.text(xpos, ypos-yoffset, str(beam_n4254)+"$^{\prime}$$^{\prime}$ beam", color=self.c_n4254, horizontalalignment="left", transform=ax7.transAxes, size=self.legend_fontsize-2)
+        t.set_bbox(dict(facecolor="white", alpha=self.text_back_alpha, lw=0))
+        t=ax7.text(xpos, ypos-yoffset*2, scale_n4254_pc, color=self.c_n4254, horizontalalignment="left", transform=ax7.transAxes, size=self.legend_fontsize-2)
+        t.set_bbox(dict(facecolor="white", alpha=self.text_back_alpha, lw=0))
+
+        t=ax10.text(xpos+xoffset_n4321, ypos-yoffset+yoffset_n4321, str(beam_n4321)+"$^{\prime}$$^{\prime}$ beam", color=self.c_n4321, horizontalalignment="left", transform=ax10.transAxes, size=self.legend_fontsize-2)
+        t.set_bbox(dict(facecolor="white", alpha=self.text_back_alpha, lw=0))
+        t=ax10.text(xpos+xoffset_n4321, ypos-yoffset*2+yoffset_n4321, scale_n4321_pc, color=self.c_n4321, horizontalalignment="left", transform=ax10.transAxes, size=self.legend_fontsize-2)
+        t.set_bbox(dict(facecolor="white", alpha=self.text_back_alpha, lw=0))
+
+        # savefig
+        plt.savefig(self.outpng_hist_550pc, dpi=fig_dpi)
+
+    #################
+    # _ax_pctls_bar #
+    #################
+
+    def _ax_pctls_bar(
+        self,
+        ax,
+        pctls,
+        ylim,
+        text=None,
+        ylim_factor=1.35,
+        color="black",
+        pos="right",
+        ):
+        ax.plot([pctls[0], pctls[2]], [ylim*ylim_factor, ylim*ylim_factor], "-", color=color, lw=3)
+        ax.plot(pctls[1], ylim*ylim_factor, "o", color=color, markersize=10, markeredgewidth=0)
+        if text!=None:
+            if pos=="right":
+                ax.text(
+                    pctls[2]+0.02,
+                    ylim*ylim_factor,
+                    text,
+                    color=color,
+                    horizontalalignment="left",
+                    verticalalignment="center",
+                    size=legend_fontsize-2)
+            else:
+                ax.text(
+                    pctls[0]-0.02,
+                    ylim*ylim_factor,
+                    text,
+                    color=color,
+                    horizontalalignment="right",
+                    verticalalignment="center",
+                    size=legend_fontsize-2)
+
+    ######################
+    # _import_hist_550pc #
+    ######################
+
+    def _import_hist_550pc(self,co10,co21,r21,er21,ra,dec,scale,pa,incl):
+        """
+        plot_hist_550pc
+        """
+
+        # import
+        shape           = imhead(co10,mode="list")["shape"]
+        box             = "0,0," + str(shape[0]-1) + "," + str(shape[1]-1)
+        ra_deg, dec_deg = imval(co10,box=box)["coords"][:,:,0] * 180/np.pi, imval(co10,box=box)["coords"][:,:,1] * 180/np.pi
+        co10, co21      = imval(co10,box=box)["data"], imval(co21,box=box)["data"]
+        r21, er21       = imval(r21,box=box)["data"], imval(er21,box=box)["data"]
+
+        # trim
+        cut = np.where( (~np.isnan(co10)) & (~np.isinf(co10)) & (~np.isnan(co21)) & (~np.isinf(co21)) \
+            & (~np.isnan(r21)) & (~np.isinf(r21)) & (r21>=er21*self.snr_ratio) )
+        ra_deg, dec_deg, co10, co21, r21, er21 = ra_deg[cut], dec_deg[cut], co10[cut], co21[cut], r21[cut], er21[cut]
+
+        # hist
+        dist_pc, _ = self._get_rel_dist_pc(ra_deg, dec_deg, ra, dec, scale, pa, inc)
+        dist_kpc   = dist_pc / 1000.
+        co10_inner = co10[dist_kpc <= self.hist_550pc_cnter_radius]
+        co10_outer = co10[dist_kpc > self.hist_550pc_cnter_radius]
+        co21_inner = co21[dist_kpc <= self.hist_550pc_cnter_radius]
+        co21_outer = co21[dist_kpc > self.hist_550pc_cnter_radius]
+        r21_inner  = r21[dist_kpc <= self.hist_550pc_cnter_radius]
+        r21_outer  = r21[dist_kpc > self.hist_550pc_cnter_radius]
+
+        hist_all   = self._get_weighted_hists(      co10,       co21,       r21)
+        hist_inner = self._get_weighted_hists(co10_inner, co21_inner, r21_inner)
+        hist_outer = self._get_weighted_hists(co10_outer, co21_outer, r21_outer)
+
+        # pctls
+        pctls_all   = self._three_three_pctls(co10,co21,r21)
+        pctls_inner = self._three_three_pctls(co10_inner,co21_inner,r21_inner)
+        pctls_outer = self._three_three_pctls(co10_outer,co21_outer,r21_outer)
+
+        return hist_all, hist_inner, hist_outer, pctls_all, pctls_inner, pctls_outer
+
+    ######################
+    # _three_three_pctls #
+    ######################
+
+    def _three_three_pctls(self,co10,co21,r21):
+        """
+        """
+
+        weights = None
+        p84 = weighted_percentile(r21, 84, weights=weights)
+        p50 = weighted_percentile(r21, 50, weights=weights)
+        p16 = weighted_percentile(r21, 16, weights=weights)
+        pctl_wnone = [p16, p50, p84]
+
+        weights = co10
+        p84 = weighted_percentile(r21, 84, weights=weights)
+        p50 = weighted_percentile(r21, 50, weights=weights)
+        p16 = weighted_percentile(r21, 16, weights=weights)
+        pctl_co10 = [p16, p50, p84]
+
+        weights = co21
+        p84 = weighted_percentile(r21, 84, weights=weights)
+        p50 = weighted_percentile(r21, 50, weights=weights)
+        p16 = weighted_percentile(r21, 16, weights=weights)
+        pctl_co21 = [p16, p50, p84]
+
+        return np.array([pctl_wnone, pctl_co10, pctl_co21])
+
+    ########################
+    # _weighted_percentile #
+    ########################
+
+    def _weighted_percentile(self,data,percentile,weights=None):
+        """
+        Args:
+            data (list or numpy.array): data
+            weights (list or numpy.array): weights
+        """
+
+        if weights==None:
+            w_percentile = np.percentile(data,percentile)
+        else:
+            data, weights = np.array(data).squeeze(), np.array(weights).squeeze()
+            s_data, s_weights = map(np.array, zip(*sorted(zip(data, weights))))
+            midpoint = percentile/100. * sum(s_weights)
+            if any(weights > midpoint):
+                w_percentile = (data[weights == np.max(weights)])[0]
+            else:
+                cs_weights = np.cumsum(s_weights)
+                idx = np.where(cs_weights <= midpoint)[0][-1]
+                if cs_weights[idx] == midpoint:
+                    w_percentile = np.mean(s_data[idx:idx+2])
+                else:
+                    w_percentile = s_data[idx+1]
+
+        return w_percentile
+
+    #######################
+    # _get_weighted_hists #
+    #######################
+
+    def _get_weighted_hists(self,co10,co21,r21):
+        """
+        """
+
+        hist = np.histogram(r21, bins=self.hist_550pc_bins, range=self.hist_550pc_hrange, weights=None)
+        hist_wnone = np.c_[ np.delete(hist[1],-1), hist[0]]#/float(sum(hist[0])) ]
+
+        hist = np.histogram(r21, bins=self.hist_550pc_bins, range=self.hist_550pc_hrange, weights=co10)
+        hist_wco10 = np.c_[ np.delete(hist[1],-1), hist[0]]#/float(sum(hist[0])) ]
+
+        hist = np.histogram(r21, bins=self.hist_550pc_bins, range=self.hist_550pc_hrange, weights=co21)
+        hist_wco21 = np.c_[ np.delete(hist[1],-1), hist[0]]#/float(sum(hist[0])) ]
+
+        return [hist_wnone, hist_wco10, hist_wco21]
+
+    ####################
+    # _get_rel_dist_pc #
+    ####################
+
+    def _get_rel_dist_pc(self,ra_deg,dec_deg,center_ra_deg,center_dec_deg,scale,pa,inc):
+        """
+        """
+
+        tilt_cos = math.cos(math.radians(pa))
+        tilt_sin = math.sin(math.radians(pa))
+
+        ra_rel_deg  = (ra_deg - center_ra_deg)
+        dec_rel_deg = (dec_deg - center_dec_deg)
+
+        ra_rel_deproj_deg  = (ra_rel_deg*tilt_cos - dec_rel_deg*tilt_sin)
+        deg_rel_deproj_deg = (ra_rel_deg*tilt_sin + dec_rel_deg*tilt_cos) / math.cos(math.radians(inc))
+
+        distance_pc = np.sqrt(ra_rel_deproj_deg**2 + deg_rel_deproj_deg**2) * 3600 * scale
+        theta_deg   = np.degrees(np.arctan2(ra_rel_deproj_deg, deg_rel_deproj_deg))
+
+        return distance_pc, theta_deg
+
+    #
 
     #################
     # plot_m0_vs_m8 #
@@ -492,8 +988,6 @@ class ToolsR21():
         ratio_p16 = np.percentile((t21_all-0.3) / (r21_all-0.3), 16)
         ratio_p50 = np.percentile((t21_all-0.3) / (r21_all-0.3), 50)
         ratio_p84 = np.percentile((t21_all-0.3) / (r21_all-0.3), 84)
-        print(ratio_p16, ratio_p50, ratio_p84)
-        print(np.mean((t21_all-0.3) / (r21_all-0.3)))
         ylim_p16 = [ylim[0]+np.log10(ratio_p16), ylim[1]+np.log10(ratio_p16)]
         ylim_p50 = [ylim[0]+np.log10(ratio_p50), ylim[1]+np.log10(ratio_p50)]
         ylim_p84 = [ylim[0]+np.log10(ratio_p84), ylim[1]+np.log10(ratio_p84)]
@@ -501,8 +995,6 @@ class ToolsR21():
         ########
         # plot #
         ########
-        print(np.max(r21_n0628), np.median(r21_n0628), np.min(r21_n0628))
-        print(np.max(t21_n0628), np.median(t21_n0628), np.min(t21_n0628))
 
         plt.figure(figsize=(13,10))
         gs = gridspec.GridSpec(nrows=10, ncols=10)
@@ -513,7 +1005,6 @@ class ToolsR21():
 
         # plot
         ax.errorbar(r21_all, t21_all, xerr=er21_all, yerr=et21_all, lw=1, capsize=0, color="grey", linestyle="None")
-        #ax.errorbar(r21_n0628, t21_n0628, xerr=er21_n0628, yerr=et21_n0628, lw=1, capsize=0, color="grey", linestyle="None")
 
         alpha_contourf = 0.6
         alpha_contour  = 1.0
@@ -534,26 +1025,26 @@ class ToolsR21():
 
         # text
         t=ax.text(0.95, 0.25, "All"+cor_all, color="black", horizontalalignment="right", transform=ax.transAxes, size=self.legend_fontsize, fontweight="bold")
-        t.set_bbox(dict(facecolor="white", alpha=self.text_back_alpha, lw=0))
+        t.set_bbox(dict(facecolor="white", alpha=self.self.text_back_alpha, lw=0))
         t=ax.text(0.95, 0.20, "NGC 0628"+cor_n0628, color=self.c_n0628, horizontalalignment="right", transform=ax.transAxes, size=self.legend_fontsize, fontweight="bold")
-        t.set_bbox(dict(facecolor="white", alpha=self.text_back_alpha, lw=0))
+        t.set_bbox(dict(facecolor="white", alpha=self.self.text_back_alpha, lw=0))
         t=ax.text(0.95, 0.15, "NGC 3627"+cor_n3627, color=self.c_n3627, horizontalalignment="right", transform=ax.transAxes, size=self.legend_fontsize, fontweight="bold")
-        t.set_bbox(dict(facecolor="white", alpha=self.text_back_alpha, lw=0))
+        t.set_bbox(dict(facecolor="white", alpha=self.self.text_back_alpha, lw=0))
         t=ax.text(0.95, 0.10, "NGC 4254"+cor_n4254, color=self.c_n4254, horizontalalignment="right", transform=ax.transAxes, size=self.legend_fontsize, fontweight="bold")
-        t.set_bbox(dict(facecolor="white", alpha=self.text_back_alpha, lw=0))
+        t.set_bbox(dict(facecolor="white", alpha=self.self.text_back_alpha, lw=0))
         t=ax.text(0.95, 0.05, "NGC 4321"+cor_n4321, color=self.c_n4321, horizontalalignment="right", transform=ax.transAxes, size=self.legend_fontsize, fontweight="bold")
-        t.set_bbox(dict(facecolor="white", alpha=self.text_back_alpha, lw=0))
+        t.set_bbox(dict(facecolor="white", alpha=self.self.text_back_alpha, lw=0))
 
         ax.text(0.02, 0.13, "84$^{th}$ pctl.", horizontalalignment="left", verticalalignment="bottom", rotation=45, transform=ax.transAxes, size=self.legend_fontsize)
         ax.text(0.02, 0.05, "50$^{th}$ pctl.", horizontalalignment="left", verticalalignment="bottom", rotation=45, transform=ax.transAxes, size=self.legend_fontsize)
         ax.text(0.08, 0.01, "16$^{th}$ pctl.", horizontalalignment="left", verticalalignment="bottom", rotation=45, transform=ax.transAxes, size=self.legend_fontsize)
 
         t=ax.text(0.02, 0.93, "84$^{th}$ percentile = " + str(np.round(ratio_p84,2)).ljust(4,"0"), horizontalalignment="left", transform=ax.transAxes, size=self.legend_fontsize)
-        t.set_bbox(dict(facecolor="white", alpha=self.text_back_alpha, lw=0))
+        t.set_bbox(dict(facecolor="white", alpha=self.self.text_back_alpha, lw=0))
         t=ax.text(0.02, 0.88, "50$^{th}$ percentile = " + str(np.round(ratio_p50,2)).ljust(4,"0"), horizontalalignment="left", transform=ax.transAxes, size=self.legend_fontsize)
-        t.set_bbox(dict(facecolor="white", alpha=self.text_back_alpha, lw=0))
+        t.set_bbox(dict(facecolor="white", alpha=self.self.text_back_alpha, lw=0))
         t=ax.text(0.02, 0.83, "16$^{th}$ percentile = " + str(np.round(ratio_p16,2)).ljust(4,"0"), horizontalalignment="left", transform=ax.transAxes, size=self.legend_fontsize)
-        t.set_bbox(dict(facecolor="white", alpha=self.text_back_alpha, lw=0))
+        t.set_bbox(dict(facecolor="white", alpha=self.self.text_back_alpha, lw=0))
 
         plt.savefig(self.outpng_m0_vs_m8, dpi=self.fig_dpi)   
 
@@ -1001,13 +1492,13 @@ class ToolsR21():
 
         # text
         t=ax.text(0.95, 0.93, "NGC 0628", color=self.c_n0628, horizontalalignment="right", transform=ax.transAxes, size=self.legend_fontsize, fontweight="bold")
-        t.set_bbox(dict(facecolor="white", alpha=self.text_back_alpha, lw=0))
+        t.set_bbox(dict(facecolor="white", alpha=self.self.text_back_alpha, lw=0))
         t=ax.text(0.95, 0.88, "NGC 3627", color=self.c_n3627, horizontalalignment="right", transform=ax.transAxes, size=self.legend_fontsize, fontweight="bold")
-        t.set_bbox(dict(facecolor="white", alpha=self.text_back_alpha, lw=0))
+        t.set_bbox(dict(facecolor="white", alpha=self.self.text_back_alpha, lw=0))
         t=ax.text(0.95, 0.83, "NGC 4254", color=self.c_n4254, horizontalalignment="right", transform=ax.transAxes, size=self.legend_fontsize, fontweight="bold")
-        t.set_bbox(dict(facecolor="white", alpha=self.text_back_alpha, lw=0))
+        t.set_bbox(dict(facecolor="white", alpha=self.self.text_back_alpha, lw=0))
         t=ax.text(0.95, 0.78, "NGC 4321", color=self.c_n4321, horizontalalignment="right", transform=ax.transAxes, size=self.legend_fontsize, fontweight="bold")
-        t.set_bbox(dict(facecolor="white", alpha=self.text_back_alpha, lw=0))
+        t.set_bbox(dict(facecolor="white", alpha=self.self.text_back_alpha, lw=0))
 
         xtext   = 0.68
         xmarker = xtext-0.23
@@ -1154,13 +1645,13 @@ class ToolsR21():
 
         # text
         t=ax.text(0.95, 0.93, "NGC 0628", color=self.c_n0628, horizontalalignment="right", transform=ax.transAxes, size=self.legend_fontsize, fontweight="bold")
-        t.set_bbox(dict(facecolor="white", alpha=self.text_back_alpha, lw=0))
+        t.set_bbox(dict(facecolor="white", alpha=self.self.text_back_alpha, lw=0))
         t=ax.text(0.95, 0.88, "NGC 3627", color=self.c_n3627, horizontalalignment="right", transform=ax.transAxes, size=self.legend_fontsize, fontweight="bold")
-        t.set_bbox(dict(facecolor="white", alpha=self.text_back_alpha, lw=0))
+        t.set_bbox(dict(facecolor="white", alpha=self.self.text_back_alpha, lw=0))
         t=ax.text(0.95, 0.83, "NGC 4254", color=self.c_n4254, horizontalalignment="right", transform=ax.transAxes, size=self.legend_fontsize, fontweight="bold")
-        t.set_bbox(dict(facecolor="white", alpha=self.text_back_alpha, lw=0))
+        t.set_bbox(dict(facecolor="white", alpha=self.self.text_back_alpha, lw=0))
         t=ax.text(0.95, 0.78, "NGC 4321", color=self.c_n4321, horizontalalignment="right", transform=ax.transAxes, size=self.legend_fontsize, fontweight="bold")
-        t.set_bbox(dict(facecolor="white", alpha=self.text_back_alpha, lw=0))
+        t.set_bbox(dict(facecolor="white", alpha=self.self.text_back_alpha, lw=0))
 
         ax.text(0.55, 0.90, "CO(1-0) datacubes", color="black", horizontalalignment="right", transform=ax.transAxes, size=self.legend_fontsize, fontweight="bold")
         ax.text(0.48, 0.25, "CO(2-1) datacubes", color="black", horizontalalignment="right", transform=ax.transAxes, size=self.legend_fontsize, fontweight="bold")
