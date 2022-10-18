@@ -889,7 +889,7 @@ class ToolsR21():
 
             # determine number of bins
             pix       = abs(imhead(this_map,mode="list")["cdelt1"]) * 3600 * 180/np.pi
-            this_flux = np.sum(this_data) / pix**2
+            this_flux = np.sum(this_data) * pix**2
             list_total_flux.append(this_flux)
 
         return list_total_flux / list_total_flux[-1]
