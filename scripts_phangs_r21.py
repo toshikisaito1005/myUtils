@@ -375,6 +375,8 @@ class ToolsR21():
         self.hist_550pc_bins          = 50
         self.hist_550pc_hrange        = [0.00, 1.10]
 
+        self.outpng_violins           = self.dir_products + self._read_key("outpng_violins")
+
     ##################
     # run_phangs_r21 #
     ##################
@@ -491,8 +493,68 @@ class ToolsR21():
         this_scale    = self.scale_n0628
         this_pa       = self.pa_n0628
         this_incl     = self.incl_n0628
-        co10_n0628, co21_n0628, r21_n0628 = \
+        xlim_n0628    = [np.min(this_beams)-4.0, np.max(this_beams)+4.0]
+        co10s_n0628, co21s_n0628, r21s_n0628 = \
             self._import_violins(this_co10,this_co21,this_r21,this_er21,this_beams,this_ra,this_dec,this_scale,this_pa,this_incl)
+
+        ax1_title  = "Area-weighted"
+        ax2_title  = "CO(1-0)-weighted"
+        ax3_title  = "CO(2-1)-weighted"
+        ylim       = [0.0,1.2]
+
+        ########
+        # plot #
+        ########
+
+        # set plt, ax
+        plt.figure(figsize=(15,12))
+        plt.subplots_adjust(bottom=0.09, left=0.07, right=0.99, top=0.95)
+        gs   = gridspec.GridSpec(nrows=12, ncols=9)
+        ax1  = plt.subplot(gs[0:3,0:3])
+        ax2  = plt.subplot(gs[0:3,3:6])
+        ax3  = plt.subplot(gs[0:3,6:9])
+        ax4  = plt.subplot(gs[3:6,0:3])
+        ax5  = plt.subplot(gs[3:6,3:6])
+        ax6  = plt.subplot(gs[3:6,6:9])
+        ax7  = plt.subplot(gs[6:9,0:3])
+        ax8  = plt.subplot(gs[6:9,3:6])
+        ax9  = plt.subplot(gs[6:9,6:9])
+        ax10 = plt.subplot(gs[9:12,0:3])
+        ax11 = plt.subplot(gs[9:12,3:6])
+        ax12 = plt.subplot(gs[9:12,6:9])
+
+        # set ax param
+        factor = 1.65
+        myax_set(ax1,  "y", xlim_n0628, ylim, ax1_title, None, None)
+        myax_set(ax2,  "y", xlim_n0628, ylim, ax2_title, None, None)
+        myax_set(ax3,  "y", xlim_n0628, ylim, ax3_title, None, None)
+        myax_set(ax4,  "y", None, ylim, None, None, None)
+        myax_set(ax5,  "y", None, ylim, None, None, None)
+        myax_set(ax6,  "y", None, ylim, None, None, None)
+        myax_set(ax7,  "y", None, ylim, None, None, None)
+        myax_set(ax8,  "y", None, ylim, None, None, None)
+        myax_set(ax9,  "y", None, ylim, None, None, None)
+        myax_set(ax10, "y", None, ylim, None, None, None)
+        myax_set(ax11, "y", None, ylim, None, None, None)
+        myax_set(ax12, "y", None, ylim, None, None, None)
+
+        # unset xlabels
+        ax1.tick_params(labelbottom=False,labelleft=True,labelright=False,labeltop=False)
+        ax2.tick_params(labelbottom=False,labelleft=False,labelright=False,labeltop=False)
+        ax3.tick_params(labelbottom=False,labelleft=False,labelright=False,labeltop=False)
+        ax4.tick_params(labelbottom=False,labelleft=True,labelright=False,labeltop=False)
+        ax5.tick_params(labelbottom=False,labelleft=False,labelright=False,labeltop=False)
+        ax6.tick_params(labelbottom=False,labelleft=False,labelright=False,labeltop=False)
+        ax7.tick_params(labelbottom=False,labelleft=True,labelright=False,labeltop=False)
+        ax8.tick_params(labelbottom=False,labelleft=False,labelright=False,labeltop=False)
+        ax9.tick_params(labelbottom=False,labelleft=False,labelright=False,labeltop=False)
+        ax10.tick_params(labelbottom=True,labelleft=True,labelright=False,labeltop=False)
+        ax11.tick_params(labelbottom=True,labelleft=False,labelright=False,labeltop=False)
+        ax12.tick_params(labelbottom=True,labelleft=False,labelright=False,labeltop=False)
+
+        # from here!
+
+        plt.savefig(self.outpng_violins, dpi=self.fig_dpi)
 
     ###################
     # _import_violins #
@@ -534,7 +596,6 @@ class ToolsR21():
             array_co10.append(this_co10[cut].flatten())
             array_co21.append(this_co21[cut].flatten())
             array_r21.append(this_r21[cut].flatten())
-
 
         return array_co10, array_co21, array_r21
 
