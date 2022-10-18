@@ -822,14 +822,6 @@ class ToolsR21():
         dist_pc, _ = self._get_rel_dist_pc(ra_deg, dec_deg, ra, dec, scale, pa, incl)
         dist_kpc   = dist_pc / 1000.
 
-        plt.figure(figsize=(13,10))
-        gs = gridspec.GridSpec(nrows=10, ncols=10)
-        ax = plt.subplot(gs[0:10,0:10])
-        ad = [0.215,0.83,0.10,0.90]
-        myax_set(ax, "both", None, None, None, None, None, adjust=ad)
-        ax.scatter(ra_deg,dec_deg,c=co21)
-        plt.savefig("test.png", dpi=self.fig_dpi)
-
         co10_inner = co10[dist_kpc <= self.hist_550pc_cnter_radius]
         co10_outer = co10[dist_kpc > self.hist_550pc_cnter_radius]
         co21_inner = co21[dist_kpc <= self.hist_550pc_cnter_radius]
