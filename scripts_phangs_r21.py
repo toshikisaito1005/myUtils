@@ -608,7 +608,7 @@ class ToolsR21():
         er21 = this_er21[cut] / (np.log(10) * this_r21[cut])
         et21 = this_et21[cut] / (np.log(10) * this_t21[cut])
         
-        return r21[cut], t21[cut], er21[cut], et21[cut]
+        return r21, t21, er21, et21
 
     #
 
