@@ -781,7 +781,7 @@ class ToolsR21():
             self.outmom_co21_n0628.replace(str(self.basebeam_n0628).replace(".","p").zfill(4),"????").replace(".image","_k.image").replace("momX","mom0"),
             beams_new_n0628)
 
-        beams_new_n3627 = [s for s in self.beams_n3627[:-3]]
+        beams_new_n3627 = [s for s in self.beams_n3627[:-2]]
         list_flux_co10_n3627 = self._loop_measure_flux_norm(
             self.outmom_co10_n3627.replace(str(self.basebeam_n3627).replace(".","p").zfill(4),"????").replace(".image","_k.image").replace("momX","mom0"),
             beams_new_n3627)
@@ -789,7 +789,7 @@ class ToolsR21():
             self.outmom_co21_n3627.replace(str(self.basebeam_n3627).replace(".","p").zfill(4),"????").replace(".image","_k.image").replace("momX","mom0"),
             beams_new_n3627)
 
-        beams_new_n4254 = [s for s in self.beams_n4254[:-3] if not "8.7" in str(s)]
+        beams_new_n4254 = [s for s in self.beams_n4254[:-2] if not "8.7" in str(s)]
         list_flux_co10_n4254 = self._loop_measure_flux_norm(
             self.outmom_co10_n4254.replace(str(self.basebeam_n4254).replace(".","p").zfill(4),"????").replace(".image","_k.image").replace("momX","mom0"),
             beams_new_n4254)
@@ -810,6 +810,10 @@ class ToolsR21():
         title  = "Total Flux vs. Beam Size"
         xlabel = "Beam size (arcsec)"
         ylabel = "Total flux recovery"
+        beams_new_n0628 = np.array(beams_new_n0628) * self.scale_n0628
+        beams_new_n3627 = np.array(beams_new_n3627) * self.scale_n3627
+        beams_new_n4254 = np.array(beams_new_n4254) * self.scale_n4254
+        beams_new_n4321 = np.array(beams_new_n4321) * self.scale_n4321
 
         ########
         # plot #
