@@ -272,6 +272,10 @@ class ToolsR21():
         self.imsize_n3627      = float(self._read_key("imsize_n3627"))
         self.imsize_n4254      = float(self._read_key("imsize_n4254"))
         self.imsize_n4321      = float(self._read_key("imsize_n4321"))
+        print(self.imsize_n0628)
+        print(self.imsize_n3627)
+        print(self.imsize_n4254)
+        print(self.imsize_n4321)
 
         self.chans_n0628       = self._read_key("chans_n0628")
         self.chans_n3627       = self._read_key("chans_n3627")
