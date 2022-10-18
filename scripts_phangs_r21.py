@@ -827,7 +827,7 @@ class ToolsR21():
         ax = plt.subplot(gs[0:10,0:10])
         ad = [0.215,0.83,0.10,0.90]
         myax_set(ax, "both", None, None, None, None, None, adjust=ad)
-        ax.scatter(ra_deg,dec_deg,c=dist_kpc)
+        ax.scatter(ra_deg,dec_deg,c=co21)
         plt.savefig("test.png", dpi=self.fig_dpi)
 
         co10_inner = co10[dist_kpc <= self.hist_550pc_cnter_radius]
