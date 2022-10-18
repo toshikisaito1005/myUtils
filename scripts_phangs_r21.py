@@ -545,6 +545,8 @@ class ToolsR21():
         ###########
         this_co10      = self.outmom_co10_n3627.replace("momX","mom0")
         this_co21      = self.outmom_co21_n3627.replace("momX","mom0")
+        this_eco10     = self.outmom_co10_n3627.replace("momX","emom0")
+        this_eco21     = self.outmom_co21_n3627.replace("momX","emom0")
         this_r21       = self.outfits_r21_n3627
         this_out_co10  = self.outpng_co10_n3627
         this_out_co21  = self.outpng_co21_n3627
@@ -610,6 +612,8 @@ class ToolsR21():
         ###########
         this_co10      = self.outmom_co10_n4254.replace("momX","mom0")
         this_co21      = self.outmom_co21_n4254.replace("momX","mom0")
+        this_eco10     = self.outmom_co10_n4254.replace("momX","emom0")
+        this_eco21     = self.outmom_co21_n4254.replace("momX","emom0")
         this_r21       = self.outfits_r21_n4254
         this_out_co10  = self.outpng_co10_n4254
         this_out_co21  = self.outpng_co21_n4254
@@ -675,6 +679,8 @@ class ToolsR21():
         ###########
         this_co10      = self.outmom_co10_n4321.replace("momX","mom0")
         this_co21      = self.outmom_co21_n4321.replace("momX","mom0")
+        this_eco10     = self.outmom_co10_n4321.replace("momX","emom0")
+        this_eco21     = self.outmom_co21_n4321.replace("momX","emom0")
         this_r21       = self.outfits_r21_n4321
         this_out_co10  = self.outpng_co10_n4321
         this_out_co21  = self.outpng_co21_n4321
