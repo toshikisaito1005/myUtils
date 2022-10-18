@@ -815,7 +815,7 @@ class ToolsR21():
 
         # trim
         cut = np.where( (~np.isnan(co10)) & (~np.isinf(co10)) & (~np.isnan(co21)) & (~np.isinf(co21)) \
-            & (~np.isnan(r21)) & (~np.isinf(r21))) & (r21>=er21*self.snr_ratio) )
+            & (~np.isnan(r21)) & (~np.isinf(r21)) & (r21>=er21*self.snr_ratio) )
         ra_deg, dec_deg, co10, co21, r21, er21 = ra_deg[cut], dec_deg[cut], co10[cut], co21[cut], r21[cut], er21[cut]
 
         # hist
