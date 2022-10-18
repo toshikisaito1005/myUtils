@@ -607,8 +607,10 @@ class ToolsR21():
         t21  = np.log10(this_t21[cut])
         er21 = this_er21[cut] / (np.log(10) * this_r21[cut])
         et21 = this_et21[cut] / (np.log(10) * this_t21[cut])
-        
-        return r21, t21, er21, et21
+
+        cut = np.where( (~np.isnan(this_r21)) & (~np.isinf(this_r21)) & (~np.isnan(this_t21)) & (~np.isinf(this_t21)) )
+
+        return r21[cut], t21[cut], er21[cut], et21[cut]
 
     #
 
