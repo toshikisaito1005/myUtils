@@ -462,7 +462,7 @@ class ToolsR21():
             self._import_m0_vs_m8(self.outfits_r21_n3627, self.outfits_t21_n3627, self.outfits_er21_n3627, self.outfits_et21_n3627)
         r21_n4254, t21_n4254, er21_n4254, et21_n4254 = \
             self._import_m0_vs_m8(self.outfits_r21_n4254, self.outfits_t21_n4254, self.outfits_er21_n4254, self.outfits_et21_n4254)
-        r21_n04321, t21_n04321, er21_n04321, et21_n04321 = \
+        r21_n4321, t21_n4321, er21_n4321, et21_n4321 = \
             self._import_m0_vs_m8(self.outfits_r21_n4321, self.outfits_t21_n4321, self.outfits_er21_n4321, self.outfits_et21_n4321)
         r21_all  = np.r_[ r21_n0628,  r21_n3627,  r21_n4254,  r21_n4321]
         t21_all  = np.r_[ t21_n0628,  t21_n3627,  t21_n4254,  t21_n4321]
