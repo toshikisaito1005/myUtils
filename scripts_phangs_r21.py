@@ -468,11 +468,6 @@ class ToolsR21():
         t21_all  = np.r_[ t21_n0628,  t21_n3627,  t21_n4254,  t21_n4321]
         er21_all = np.r_[er21_n0628, er21_n3627, er21_n4254, er21_n4321]
         et21_all = np.r_[et21_n0628, et21_n3627, et21_n4254, et21_n4321]
-        r21_n0628, t21_n0628, er21_n0628, et21_n0628 = self._log10_m0_vs_m8(r21_n0628, t21_n0628, er21_n0628, et21_n0628)
-        r21_n3627, t21_n3627, er21_n3627, et21_n3627 = self._log10_m0_vs_m8(r21_n3627, t21_n3627, er21_n3627, et21_n3627)
-        r21_n4254, t21_n4254, er21_n4254, et21_n4254 = self._log10_m0_vs_m8(r21_n4254, t21_n4254, er21_n4254, et21_n4254)
-        r21_n4321, t21_n4321, er21_n4321, et21_n4321 = self._log10_m0_vs_m8(r21_n4321, t21_n4321, er21_n4321, et21_n4321)
-        r21_all, t21_all, er21_all, et21_all         = self._log10_m0_vs_m8(r21_all, t21_all, er21_all, et21_all)
 
         # get coreelation coeff
         cor_all   = " (r=" + str(np.round(np.corrcoef(t21_all,r21_all)[0,1], 2)).ljust(4, "0") + ")"
@@ -581,26 +576,6 @@ class ToolsR21():
 
         return this_contour, this_extent
 
-    ###################
-    # _log10_m0_vs_m8 #
-    ###################
-
-    def _log10_m0_vs_m8(
-        self,
-        mom0,
-        mom8,
-        emom0,
-        emom8,
-        ):
-        """
-        plot_m0_vs_m8
-        """
-
-        mom0, mom8, emom0, emom8 = np.log10(mom0), np.log10(mom8), emom0 / (np.log(10)*mom0), emom8 / (np.log(10)*mom8)
-        cut = np.where( (~np.isnan(mom0)) & (~np.isinf(mom0)) & (~np.isnan(mom8)) & (~np.isinf(mom8)) & (~np.isnan(emom0)) & (~np.isinf(emom0)) & (~np.isnan(emom8)) & (~np.isinf(emom8)) )
-
-        return mom0[cut], mom8[cut], emom0[cut], emom8[cut]
-
     ####################
     # _import_m0_vs_m8 #
     ####################
@@ -627,8 +602,13 @@ class ToolsR21():
 
         cut = np.where( (~np.isnan(this_r21)) & (~np.isinf(this_r21)) & (~np.isnan(this_t21)) & (~np.isinf(this_t21)) \
             & (this_r21>=this_er21*self.snr_ratio) & (this_t21>=this_et21*self.snr_ratio) )
+
+        r21  = np.log10(this_r21[cut])
+        t21  = np.log10(this_t21[cut])
+        er21 = this_er21[cut] / (np.log(10) * this_r21[cut])
+        et21 = this_et21[cut] / (np.log(10) * this_t21[cut])
         
-        return this_r21[cut], this_t21[cut], this_er21[cut], this_et21[cut]
+        return r21[cut], t21[cut], er21[cut], et21[cut]
 
     #
 
