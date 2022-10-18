@@ -515,7 +515,7 @@ class ToolsR21():
         myax_set(ax, "both", xlim, ylim, title, xlabel, ylabel, adjust=ad)
 
         # plot
-        ax1.errorbar(r21_all, t21_all, xerr=er21_all, yerr=et21_all, lw=1, capsize=0, color="grey", linestyle="None")
+        ax.errorbar(r21_all, t21_all, xerr=er21_all, yerr=et21_all, lw=1, capsize=0, color="grey", linestyle="None")
 
         alpha_contourf = 0.6
         alpha_contour  = 1.0
