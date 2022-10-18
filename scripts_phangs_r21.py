@@ -819,7 +819,7 @@ class ToolsR21():
         ra_deg, dec_deg, co10, co21, r21, er21 = ra_deg[cut], dec_deg[cut], co10[cut], co21[cut], r21[cut], er21[cut]
 
         # hist
-        dist_pc, _ = self._get_rel_dist_pc(ra_deg, dec_deg, ra, dec, scale, pa, inc)
+        dist_pc, _ = self._get_rel_dist_pc(ra_deg, dec_deg, ra, dec, scale, pa, incl)
         dist_kpc   = dist_pc / 1000.
         co10_inner = co10[dist_kpc <= self.hist_550pc_cnter_radius]
         co10_outer = co10[dist_kpc > self.hist_550pc_cnter_radius]
