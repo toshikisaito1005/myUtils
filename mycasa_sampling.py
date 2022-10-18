@@ -99,6 +99,13 @@ def hexbin_sampling(
     pix    = abs(float(cdelt1)) * (3600.0*180.0)/np.pi
     n      = s / pix**2.0
 
+    # apply pixel per beam
+    barea_pix = beam_area(imagename)
+    if err==True:
+        hexc = hexc / np.sqrt(barea_pix)
+    else:
+        hexc = hexc / barea_pix
+
     # error case
     if err==True:
         hexc = np.sqrt(hexc)*(1.0/np.sqrt(n))
