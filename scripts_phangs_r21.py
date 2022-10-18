@@ -272,10 +272,6 @@ class ToolsR21():
         self.imsize_n3627      = float(self._read_key("imsize_n3627"))
         self.imsize_n4254      = float(self._read_key("imsize_n4254"))
         self.imsize_n4321      = float(self._read_key("imsize_n4321"))
-        print(self.imsize_n0628)
-        print(self.imsize_n3627)
-        print(self.imsize_n4254)
-        print(self.imsize_n4321)
 
         self.chans_n0628       = self._read_key("chans_n0628")
         self.chans_n3627       = self._read_key("chans_n3627")
@@ -360,10 +356,6 @@ class ToolsR21():
         self.outpng_r21_n3627         = self.dir_products + self._read_key("outpng_r21_n3627")
         self.outpng_r21_n4254         = self.dir_products + self._read_key("outpng_r21_n4254")
         self.outpng_r21_n4321         = self.dir_products + self._read_key("outpng_r21_n4321")
-        self.imsize_n0628             = 290
-        self.imsize_n3637             = 290
-        self.imsize_n4254             = 290
-        self.imsize_n4321             = 290
 
     ##################
     # run_phangs_r21 #
