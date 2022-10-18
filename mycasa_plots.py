@@ -658,6 +658,7 @@ def myfig_fits2png(
 
     print("# run fits2png")
     print("# imcolor = " + imcolor)
+    os.system("rm -rf " + outfile)
 
     #################
     ### preparation #
