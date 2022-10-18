@@ -726,10 +726,10 @@ class ToolsR21():
         yoffset = 0.15
         xoffset_n4321 = 0.58
         yoffset_n4321 = -0.33
-        scale_n0628_pc = str(int(np.round(beam_n0628*scale_n0628, -1))) + " pc"
-        scale_n3627_pc = str(int(np.round(beam_n3627*scale_n3627, -1))) + " pc"
-        scale_n4254_pc = str(int(np.round(beam_n4254*scale_n4254, -1))) + " pc"
-        scale_n4321_pc = str(int(np.round(beam_n4321*scale_n4321, -1))) + " pc"
+        scale_n0628_pc = str(int(np.round(self.beam_wise_n0628*scale_n0628, -1))) + " pc"
+        scale_n3627_pc = str(int(np.round(self.beam_wise_n3627*scale_n3627, -1))) + " pc"
+        scale_n4254_pc = str(int(np.round(self.beam_wise_n4254*scale_n4254, -1))) + " pc"
+        scale_n4321_pc = str(int(np.round(self.beam_wise_n4321*scale_n4321, -1))) + " pc"
         t=ax1.text(xpos, ypos, "NGC 0628", color=self.c_n0628, horizontalalignment="left", transform=ax1.transAxes, size=self.legend_fontsize-2, fontweight="bold")
         t.set_bbox(dict(facecolor="white", alpha=self.text_back_alpha, lw=0))
         t=ax4.text(xpos, ypos, "NGC 3627", color=self.c_n3627, horizontalalignment="left", transform=ax4.transAxes, size=self.legend_fontsize-2, fontweight="bold")
@@ -739,22 +739,22 @@ class ToolsR21():
         t=ax10.text(xpos+xoffset_n4321, ypos+yoffset_n4321, "NGC 4321", color=self.c_n4321, horizontalalignment="left", transform=ax10.transAxes, size=self.legend_fontsize-2, fontweight="bold")
         t.set_bbox(dict(facecolor="white", alpha=self.text_back_alpha, lw=0))
 
-        t=ax1.text(xpos, ypos-yoffset, str(beam_n0628)+"$^{\prime}$$^{\prime}$ beam", color=self.c_n0628, horizontalalignment="left", transform=ax1.transAxes, size=self.legend_fontsize-2)
+        t=ax1.text(xpos, ypos-yoffset, str(self.beam_wise_n0628)+"$^{\prime}$$^{\prime}$ beam", color=self.c_n0628, horizontalalignment="left", transform=ax1.transAxes, size=self.legend_fontsize-2)
         t.set_bbox(dict(facecolor="white", alpha=self.text_back_alpha, lw=0))
         t=ax1.text(xpos, ypos-yoffset*2, scale_n0628_pc, color=self.c_n0628, horizontalalignment="left", transform=ax1.transAxes, size=self.legend_fontsize-2)
         t.set_bbox(dict(facecolor="white", alpha=self.text_back_alpha, lw=0))
 
-        t=ax4.text(xpos, ypos-yoffset, str(beam_n3627)+"$^{\prime}$$^{\prime}$ beam", color=self.c_n3627, horizontalalignment="left", transform=ax4.transAxes, size=self.legend_fontsize-2)
+        t=ax4.text(xpos, ypos-yoffset, str(self.beam_wise_n3627)+"$^{\prime}$$^{\prime}$ beam", color=self.c_n3627, horizontalalignment="left", transform=ax4.transAxes, size=self.legend_fontsize-2)
         t.set_bbox(dict(facecolor="white", alpha=self.text_back_alpha, lw=0))
         t=ax4.text(xpos, ypos-yoffset*2, scale_n3627_pc, color=self.c_n3627, horizontalalignment="left", transform=ax4.transAxes, size=self.legend_fontsize-2)
         t.set_bbox(dict(facecolor="white", alpha=self.text_back_alpha, lw=0))
 
-        t=ax7.text(xpos, ypos-yoffset, str(beam_n4254)+"$^{\prime}$$^{\prime}$ beam", color=self.c_n4254, horizontalalignment="left", transform=ax7.transAxes, size=self.legend_fontsize-2)
+        t=ax7.text(xpos, ypos-yoffset, str(self.beam_wise_n4254)+"$^{\prime}$$^{\prime}$ beam", color=self.c_n4254, horizontalalignment="left", transform=ax7.transAxes, size=self.legend_fontsize-2)
         t.set_bbox(dict(facecolor="white", alpha=self.text_back_alpha, lw=0))
         t=ax7.text(xpos, ypos-yoffset*2, scale_n4254_pc, color=self.c_n4254, horizontalalignment="left", transform=ax7.transAxes, size=self.legend_fontsize-2)
         t.set_bbox(dict(facecolor="white", alpha=self.text_back_alpha, lw=0))
 
-        t=ax10.text(xpos+xoffset_n4321, ypos-yoffset+yoffset_n4321, str(beam_n4321)+"$^{\prime}$$^{\prime}$ beam", color=self.c_n4321, horizontalalignment="left", transform=ax10.transAxes, size=self.legend_fontsize-2)
+        t=ax10.text(xpos+xoffset_n4321, ypos-yoffset+yoffset_n4321, str(self.beam_wise_n4321)+"$^{\prime}$$^{\prime}$ beam", color=self.c_n4321, horizontalalignment="left", transform=ax10.transAxes, size=self.legend_fontsize-2)
         t.set_bbox(dict(facecolor="white", alpha=self.text_back_alpha, lw=0))
         t=ax10.text(xpos+xoffset_n4321, ypos-yoffset*2+yoffset_n4321, scale_n4321_pc, color=self.c_n4321, horizontalalignment="left", transform=ax10.transAxes, size=self.legend_fontsize-2)
         t.set_bbox(dict(facecolor="white", alpha=self.text_back_alpha, lw=0))
