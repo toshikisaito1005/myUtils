@@ -872,7 +872,7 @@ class ToolsR21():
         list_total_flux = []
         for i in range(len(beams)):
             # get names
-            this_beam    = beams[i].replace(".","p").zfill(4)
+            this_beam    = str(beams[i]).replace(".","p").zfill(4)
             this_map     = imagenames[i].replace("????",this_beam)
 
             # get data
