@@ -480,6 +480,7 @@ class ToolsR21():
         this_r21      = self.outfits_r21_n0628.replace(this_basebeam,this_wisebeam)
         this_er21     = self.outfits_r21_n0628.replace(this_basebeam,this_wisebeam)
         this_co10     = self.outmom_co10_n0628.replace(this_basebeam,this_wisebeam)
+        print(this_co10)
         this_co21     = self.outmom_co21_n0628.replace(this_basebeam,this_wisebeam)
         this_ra       = self.ra_n0628
         this_dec      = self.dec_n0628
