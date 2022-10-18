@@ -512,6 +512,7 @@ class ToolsR21():
             this_co10     = co10.replace("????",this_beam)
             this_co21     = co21.replace("????",this_beam)
             this_r21      = r21.replace("????",this_beam)
+            this_r21_err  = er21.replace("????",this_beam)
 
             shape         = imhead(this_co10,mode="list")["shape"]
             box           = "0,0," + str(shape[0]-1) + "," + str(shape[1]-1)
@@ -520,6 +521,7 @@ class ToolsR21():
             this_co10     = imval(this_co10,box=box)["data"]
             this_co21     = imval(this_co21,box=box)["data"]
             this_r21      = imval(this_r21,box=box)["data"]
+            this_r21_err  = imval(this_r21_err,box=box)["data"]
 
             dist_pc, _ = self._get_rel_dist_pc(ra_deg, dec_deg, ra, dec, scale, pa, incl)
             dist_kpc   = dist_pc / 1000.
