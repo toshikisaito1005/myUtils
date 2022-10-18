@@ -539,7 +539,7 @@ class ToolsR21():
         ax1_title  = "Area-weighted"
         ax2_title  = "CO(1-0)-weighted"
         ax3_title  = "CO(2-1)-weighted"
-        barwidth   = (histrange[1] - histrange[0]) / histbins
+        barwidth   = (self.hist_550pc_hrange[1] - self.hist_550pc_hrange[0]) / self.hist_550pc_bins
         xlabel     = "$R_{21}$"
         ylabel     = "Count"
 
