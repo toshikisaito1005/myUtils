@@ -815,8 +815,8 @@ class ToolsR21():
         r21, er21       = imval(r21,box=box)["data"], imval(er21,box=box)["data"]
 
         # trim
-        cut = np.where( (~np.isnan(co10)) & (~np.isinf(co10)) & (~np.isnan(co21)) & (~np.isinf(co21)) \
-            & (~np.isnan(r21)) & (~np.isinf(r21)) & (r21>=er21*self.snr_ratio) )
+        cut = np.where( (~np.isnan(co10)) & (~np.isinf(co10)) & (co10!=0) & (~np.isnan(co21)) & (~np.isinf(co21)) & (co21!=0) \
+            & (~np.isnan(r21)) & (~np.isinf(r21)) & (r21!=0) & (r21>=er21*self.snr_ratio) )
         ra_deg, dec_deg, co10, co21, r21, er21 = ra_deg[cut], dec_deg[cut], co10[cut], co21[cut], r21[cut], er21[cut]
 
         # hist
@@ -835,7 +835,7 @@ class ToolsR21():
         hist_outer = self._get_weighted_hists(co10_outer, co21_outer, r21_outer)
 
         # pctls
-        pctls_all   = self._three_three_pctls(co10,co21,r21)
+        pctls_all   = self._three_three_pctls(      co10,      co21,      r21)
         pctls_inner = self._three_three_pctls(co10_inner,co21_inner,r21_inner)
         pctls_outer = self._three_three_pctls(co10_outer,co21_outer,r21_outer)
 
