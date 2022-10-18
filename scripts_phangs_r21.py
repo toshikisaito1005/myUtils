@@ -873,7 +873,7 @@ class ToolsR21():
         for i in range(len(beams)):
             # get names
             this_beam    = str(beams[i]).replace(".","p").zfill(4)
-            this_map     = imagenames[i].replace("????",this_beam)
+            this_map     = imagenames.replace("????",this_beam)
 
             # get data
             print("# measure total flux of " + this_map.split("/")[-1])
