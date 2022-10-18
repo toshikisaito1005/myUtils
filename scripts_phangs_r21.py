@@ -848,21 +848,21 @@ class ToolsR21():
         """
 
         weights = None
-        p84 = weighted_percentile(r21, 84, weights=weights)
-        p50 = weighted_percentile(r21, 50, weights=weights)
-        p16 = weighted_percentile(r21, 16, weights=weights)
+        p84 = self._weighted_percentile(r21, 84, weights=weights)
+        p50 = self._weighted_percentile(r21, 50, weights=weights)
+        p16 = self._weighted_percentile(r21, 16, weights=weights)
         pctl_wnone = [p16, p50, p84]
 
         weights = co10
-        p84 = weighted_percentile(r21, 84, weights=weights)
-        p50 = weighted_percentile(r21, 50, weights=weights)
-        p16 = weighted_percentile(r21, 16, weights=weights)
+        p84 = self._weighted_percentile(r21, 84, weights=weights)
+        p50 = self._weighted_percentile(r21, 50, weights=weights)
+        p16 = self._weighted_percentile(r21, 16, weights=weights)
         pctl_co10 = [p16, p50, p84]
 
         weights = co21
-        p84 = weighted_percentile(r21, 84, weights=weights)
-        p50 = weighted_percentile(r21, 50, weights=weights)
-        p16 = weighted_percentile(r21, 16, weights=weights)
+        p84 = self._weighted_percentile(r21, 84, weights=weights)
+        p50 = self._weighted_percentile(r21, 50, weights=weights)
+        p16 = self._weighted_percentile(r21, 16, weights=weights)
         pctl_co21 = [p16, p50, p84]
 
         return np.array([pctl_wnone, pctl_co10, pctl_co21])
