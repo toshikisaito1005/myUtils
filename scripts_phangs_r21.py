@@ -478,7 +478,7 @@ class ToolsR21():
         this_basebeam = str(self.basebeam_n0628).replace(".","p").zfill(4)
         this_wisebeam = str(self.beam_wise_n0628).replace(".","p").zfill(4)
         this_r21      = self.outfits_r21_n0628.replace(this_basebeam,this_wisebeam)
-        this_er21     = self.outfits_r21_n0628.replace(this_basebeam,this_wisebeam)
+        this_er21     = self.outfits_er21_n0628.replace(this_basebeam,this_wisebeam)
         this_co10     = self.outmom_co10_n0628.replace(this_basebeam,this_wisebeam).replace("momX","mom0")
         this_co21     = self.outmom_co21_n0628.replace(this_basebeam,this_wisebeam).replace("momX","mom0")
         this_ra       = float(self.ra_n0628)
@@ -492,7 +492,7 @@ class ToolsR21():
         this_basebeam = str(self.basebeam_n3627).replace(".","p").zfill(4)
         this_wisebeam = str(self.beam_wise_n3627).replace(".","p").zfill(4)
         this_r21      = self.outfits_r21_n3627.replace(this_basebeam,this_wisebeam)
-        this_er21     = self.outfits_r21_n3627.replace(this_basebeam,this_wisebeam)
+        this_er21     = self.outfits_er21_n3627.replace(this_basebeam,this_wisebeam)
         this_co10     = self.outmom_co10_n3627.replace(this_basebeam,this_wisebeam).replace("momX","mom0")
         this_co21     = self.outmom_co21_n3627.replace(this_basebeam,this_wisebeam).replace("momX","mom0")
         this_ra       = float(self.ra_n3627)
@@ -506,7 +506,7 @@ class ToolsR21():
         this_basebeam = str(self.basebeam_n4254).replace(".","p").zfill(4)
         this_wisebeam = str(self.beam_wise_n4254).replace(".","p").zfill(4)
         this_r21      = self.outfits_r21_n4254.replace(this_basebeam,this_wisebeam)
-        this_er21     = self.outfits_r21_n4254.replace(this_basebeam,this_wisebeam)
+        this_er21     = self.outfits_er21_n4254.replace(this_basebeam,this_wisebeam)
         this_co10     = self.outmom_co10_n4254.replace(this_basebeam,this_wisebeam).replace("momX","mom0")
         this_co21     = self.outmom_co21_n4254.replace(this_basebeam,this_wisebeam).replace("momX","mom0")
         this_ra       = float(self.ra_n4254)
@@ -520,7 +520,7 @@ class ToolsR21():
         this_basebeam = str(self.basebeam_n4321).replace(".","p").zfill(4)
         this_wisebeam = str(self.beam_wise_n4321).replace(".","p").zfill(4)
         this_r21      = self.outfits_r21_n4321.replace(this_basebeam,this_wisebeam)
-        this_er21     = self.outfits_r21_n4321.replace(this_basebeam,this_wisebeam)
+        this_er21     = self.outfits_er21_n4321.replace(this_basebeam,this_wisebeam)
         this_co10     = self.outmom_co10_n4321.replace(this_basebeam,this_wisebeam).replace("momX","mom0")
         this_co21     = self.outmom_co21_n4321.replace(this_basebeam,this_wisebeam).replace("momX","mom0")
         this_ra       = float(self.ra_n4321)
@@ -815,7 +815,7 @@ class ToolsR21():
 
         # trim
         cut = np.where( (~np.isnan(co10)) & (~np.isinf(co10)) & (~np.isnan(co21)) & (~np.isinf(co21)) \
-            & (~np.isnan(r21)) & (~np.isinf(r21)))# & (r21>=er21*self.snr_ratio) )
+            & (~np.isnan(r21)) & (~np.isinf(r21))) & (r21>=er21*self.snr_ratio) )
         ra_deg, dec_deg, co10, co21, r21, er21 = ra_deg[cut], dec_deg[cut], co10[cut], co21[cut], r21[cut], er21[cut]
 
         # hist
