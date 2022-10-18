@@ -333,7 +333,7 @@ class ToolsR21():
         self.c_n3627                  = "purple"
         self.c_n4254                  = "forestgreen"
         self.c_n4321                  = "deepskyblue"
-        self.self.text_back_alpha          = 0.9
+        self.text_back_alpha          = 0.9
 
         # output txt and png
         self.outpng_noise_hist        = self.dir_products + self._read_key("outpng_noise_hist")
