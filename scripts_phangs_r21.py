@@ -810,10 +810,10 @@ class ToolsR21():
         title  = "Total Flux vs. Beam Size"
         xlabel = "Beam size (kpc)"
         ylabel = "Total flux recovery"
-        beams_new_n0628 = np.array(beams_new_n0628) * self.scale_n0628 . 1000.
-        beams_new_n3627 = np.array(beams_new_n3627) * self.scale_n3627 . 1000.
-        beams_new_n4254 = np.array(beams_new_n4254) * self.scale_n4254 . 1000.
-        beams_new_n4321 = np.array(beams_new_n4321) * self.scale_n4321 . 1000.
+        beams_new_n0628 = np.array(beams_new_n0628) * self.scale_n0628 / 1000.
+        beams_new_n3627 = np.array(beams_new_n3627) * self.scale_n3627 / 1000.
+        beams_new_n4254 = np.array(beams_new_n4254) * self.scale_n4254 / 1000.
+        beams_new_n4321 = np.array(beams_new_n4321) * self.scale_n4321 / 1000.
 
         ########
         # plot #
