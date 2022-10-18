@@ -775,27 +775,35 @@ class ToolsR21():
 
         beams_new_n0628 = [s for s in self.beams_n0628[:-1] if not "11.5" in str(s)]
         list_flux_co10_n0628 = self._loop_measure_flux_norm(
-            self.outcube_co10_n0628.replace(str(self.basebeam_n0628).replace(".","p").zfill(4),"????").replace(".image","_k.image"))
+            self.outcube_co10_n0628.replace(str(self.basebeam_n0628).replace(".","p").zfill(4),"????").replace(".image","_k.image"),
+            beams_new_n0628)
         list_flux_co21_n0628 = self._loop_measure_flux_norm(
-            self.outcube_co21_n0628.replace(str(self.basebeam_n0628).replace(".","p").zfill(4),"????").replace(".image","_k.image"))
+            self.outcube_co21_n0628.replace(str(self.basebeam_n0628).replace(".","p").zfill(4),"????").replace(".image","_k.image"),
+            beams_new_n0628)
 
         beams_new_n3627 = [s for s in self.beams_n3627[:-1]]
         list_flux_co10_n3627 = self._loop_measure_flux_norm(
-            self.outcube_co10_n3627.replace(str(self.basebeam_n3627).replace(".","p").zfill(4),"????").replace(".image","_k.image"))
+            self.outcube_co10_n3627.replace(str(self.basebeam_n3627).replace(".","p").zfill(4),"????").replace(".image","_k.image"),
+            beams_new_n3627)
         list_flux_co21_n3627 = self._loop_measure_flux_norm(
-            self.outcube_co21_n3627.replace(str(self.basebeam_n3627).replace(".","p").zfill(4),"????").replace(".image","_k.image"))
+            self.outcube_co21_n3627.replace(str(self.basebeam_n3627).replace(".","p").zfill(4),"????").replace(".image","_k.image"),
+            beams_new_n3627)
 
         beams_new_n4254 = [s for s in self.beams_n4254[:-1] if not "8.7" in str(s)]
         list_flux_co10_n4254 = self._loop_measure_flux_norm(
-            self.outcube_co10_n4254.replace(str(self.basebeam_n4254).replace(".","p").zfill(4),"????").replace(".image","_k.image"))
+            self.outcube_co10_n4254.replace(str(self.basebeam_n4254).replace(".","p").zfill(4),"????").replace(".image","_k.image"),
+            beams_new_n4254)
         list_flux_co21_n4254 = self._loop_measure_flux_norm(
-            self.outcube_co21_n4254.replace(str(self.basebeam_n4254).replace(".","p").zfill(4),"????").replace(".image","_k.image"))
+            self.outcube_co21_n4254.replace(str(self.basebeam_n4254).replace(".","p").zfill(4),"????").replace(".image","_k.image"),
+            beams_new_n4254)
 
         beams_new_n4321 = [s for s in self.beams_n4321[:-1] if not "7.5" in str(s)]
         list_flux_co10_n4321 = self._loop_measure_flux_norm(
-            self.outcube_co10_n4321.replace(str(self.basebeam_n4321).replace(".","p").zfill(4),"????").replace(".image","_k.image"))
+            self.outcube_co10_n4321.replace(str(self.basebeam_n4321).replace(".","p").zfill(4),"????").replace(".image","_k.image"),
+            beams_new_n4321)
         list_flux_co21_n4321 = self._loop_measure_flux_norm(
-            self.outcube_co21_n4321.replace(str(self.basebeam_n4321).replace(".","p").zfill(4),"????").replace(".image","_k.image"))
+            self.outcube_co21_n4321.replace(str(self.basebeam_n4321).replace(".","p").zfill(4),"????").replace(".image","_k.image"),
+            beams_new_n4321)
 
         xlim   = [2,26]
         ylim   = [0.8,1.2]
@@ -855,15 +863,17 @@ class ToolsR21():
     def _loop_measure_flux_norm(
         self,
         imagenames,
+        beams,
         ):
         """
         plot_recovery
         """
 
         list_total_flux = []
-        for i in range(len(imagenames)):
+        for i in range(len(beams)):
             # get names
-            this_map     = imagenames[i]
+            this_beam    = beams[i].replace(".","p").zfill(4)
+            this_map     = imagenames[i].replace("????",this_beam)
 
             # get data
             print("# measure total flux of " + this_map.split("/")[-1])
