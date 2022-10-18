@@ -688,7 +688,7 @@ class ToolsR21():
         this_ra        = self.ra_n4321
         this_dec       = self.dec_n4321
         this_scalebar  = 1000. / self.scale_n4321
-        this_title     = "NGC 4254"
+        this_title     = "NGC 4321"
         this_co10      = self._clip_for_showcase(this_co10,this_eco10)
         this_co21      = self._clip_for_showcase(this_co21,this_eco21)
         print(this_imsize)
