@@ -102,17 +102,16 @@ class ToolsR21():
         """
         """
 
-        self.dir_proj     = self._read_key("dir_proj")
-        self.dir_raw      = self.dir_proj + self._read_key("dir_raw")
-        self.dir_cprops   = self.dir_proj + self._read_key("dir_cprops")
-        self.dir_env      = self.dir_proj + self._read_key("dir_env")
-        self.dir_halpha   = self.dir_proj + self._read_key("dir_halpha")
-        self.dir_wise     = self.dir_proj + self._read_key("dir_wise")
-        self.dir_ready    = self.dir_proj + self._read_key("dir_ready")
-        self.dir_products = self.dir_proj + self._read_key("dir_products")
+        self.dir_proj         = self._read_key("dir_proj")
+        self.dir_raw          = self.dir_proj + self._read_key("dir_raw")
+        self.dir_cprops       = self.dir_proj + self._read_key("dir_cprops")
+        self.dir_env          = self.dir_proj + self._read_key("dir_env")
+        self.dir_halpha       = self.dir_proj + self._read_key("dir_halpha")
+        self.dir_wise         = self.dir_proj + self._read_key("dir_wise")
+        self.dir_ready        = self.dir_proj + self._read_key("dir_ready")
+        self.dir_products     = self.dir_proj + self._read_key("dir_products")
         self.dir_products_txt = self.dir_proj + self._read_key("dir_products_txt")
-        self.dir_final    = self.dir_proj + self._read_key("dir_final")
-
+        self.dir_final        = self.dir_proj + self._read_key("dir_final")
         self._create_dir(self.dir_ready)
         self._create_dir(self.dir_products)
         self._create_dir(self.dir_products_txt)
@@ -122,50 +121,50 @@ class ToolsR21():
         """
         """
 
-        self.cube_co10_n0628 = self.dir_raw + self._read_key("cube_co10_n0628")
-        self.cube_co10_n3627 = self.dir_raw + self._read_key("cube_co10_n3627")
-        self.cube_co10_n4254 = self.dir_raw + self._read_key("cube_co10_n4254")
-        self.cube_co10_n4321 = self.dir_raw + self._read_key("cube_co10_n4321")
-        self.cube_co21_n0628 = self.dir_raw + self._read_key("cube_co21_n0628")
-        self.cube_co21_n3627 = self.dir_raw + self._read_key("cube_co21_n3627")
-        self.cube_co21_n4254 = self.dir_raw + self._read_key("cube_co21_n4254")
-        self.cube_co21_n4321 = self.dir_raw + self._read_key("cube_co21_n4321")
+        self.cube_co10_n0628    = self.dir_raw + self._read_key("cube_co10_n0628")
+        self.cube_co10_n3627    = self.dir_raw + self._read_key("cube_co10_n3627")
+        self.cube_co10_n4254    = self.dir_raw + self._read_key("cube_co10_n4254")
+        self.cube_co10_n4321    = self.dir_raw + self._read_key("cube_co10_n4321")
+        self.cube_co21_n0628    = self.dir_raw + self._read_key("cube_co21_n0628")
+        self.cube_co21_n3627    = self.dir_raw + self._read_key("cube_co21_n3627")
+        self.cube_co21_n4254    = self.dir_raw + self._read_key("cube_co21_n4254")
+        self.cube_co21_n4321    = self.dir_raw + self._read_key("cube_co21_n4321")
 
-        self.wise1_n0628     = self.dir_wise + self._read_key("wise1_n0628")
-        self.wise1_n3627     = self.dir_wise + self._read_key("wise1_n3627")
-        self.wise1_n4254     = self.dir_wise + self._read_key("wise1_n4254")
-        self.wise1_n4321     = self.dir_wise + self._read_key("wise1_n4321")
-        self.wise2_n0628     = self.dir_wise + self._read_key("wise2_n0628")
-        self.wise2_n3627     = self.dir_wise + self._read_key("wise2_n3627")
-        self.wise2_n4254     = self.dir_wise + self._read_key("wise2_n4254")
-        self.wise2_n4321     = self.dir_wise + self._read_key("wise2_n4321")
-        self.wise3_n0628     = self.dir_wise + self._read_key("wise3_n0628")
-        self.wise3_n3627     = self.dir_wise + self._read_key("wise3_n3627")
-        self.wise3_n4254     = self.dir_wise + self._read_key("wise3_n4254")
-        self.wise3_n4321     = self.dir_wise + self._read_key("wise3_n4321")
+        self.wise1_n0628        = self.dir_wise + self._read_key("wise1_n0628")
+        self.wise1_n3627        = self.dir_wise + self._read_key("wise1_n3627")
+        self.wise1_n4254        = self.dir_wise + self._read_key("wise1_n4254")
+        self.wise1_n4321        = self.dir_wise + self._read_key("wise1_n4321")
+        self.wise2_n0628        = self.dir_wise + self._read_key("wise2_n0628")
+        self.wise2_n3627        = self.dir_wise + self._read_key("wise2_n3627")
+        self.wise2_n4254        = self.dir_wise + self._read_key("wise2_n4254")
+        self.wise2_n4321        = self.dir_wise + self._read_key("wise2_n4321")
+        self.wise3_n0628        = self.dir_wise + self._read_key("wise3_n0628")
+        self.wise3_n3627        = self.dir_wise + self._read_key("wise3_n3627")
+        self.wise3_n4254        = self.dir_wise + self._read_key("wise3_n4254")
+        self.wise3_n4321        = self.dir_wise + self._read_key("wise3_n4321")
 
         self.cprops_table_n0628 = self.dir_cprops + self._read_key("cprops_n0628")
         self.cprops_table_n3627 = self.dir_cprops + self._read_key("cprops_n3627")
         self.cprops_table_n4254 = self.dir_cprops + self._read_key("cprops_n4254")
         self.cprops_table_n4321 = self.dir_cprops + self._read_key("cprops_n4321")
 
-        self.env_bulge_n0628 = self.dir_env + self._read_key("env_bulge_n0628")
-        self.env_bulge_n3627 = self.dir_env + self._read_key("env_bulge_n3627")
-        self.env_bulge_n4254 = self.dir_env + self._read_key("env_bulge_n4254")
-        self.env_bulge_n4321 = self.dir_env + self._read_key("env_bulge_n4321")
-        self.env_arm_n0628   = self.dir_env + self._read_key("env_arm_n0628")
-        self.env_arm_n3627   = self.dir_env + self._read_key("env_arm_n3627")
-        self.env_arm_n4254   = self.dir_env + self._read_key("env_arm_n4254")
-        self.env_arm_n4321   = self.dir_env + self._read_key("env_arm_n4321")
-        self.env_bar_n0628   = self.dir_env + self._read_key("env_bar_n0628")
-        self.env_bar_n3627   = self.dir_env + self._read_key("env_bar_n3627")
-        self.env_bar_n4254   = self.dir_env + self._read_key("env_bar_n4254")
-        self.env_bar_n4321   = self.dir_env + self._read_key("env_bar_n4321")
+        self.env_bulge_n0628    = self.dir_env + self._read_key("env_bulge_n0628")
+        self.env_bulge_n3627    = self.dir_env + self._read_key("env_bulge_n3627")
+        self.env_bulge_n4254    = self.dir_env + self._read_key("env_bulge_n4254")
+        self.env_bulge_n4321    = self.dir_env + self._read_key("env_bulge_n4321")
+        self.env_arm_n0628      = self.dir_env + self._read_key("env_arm_n0628")
+        self.env_arm_n3627      = self.dir_env + self._read_key("env_arm_n3627")
+        self.env_arm_n4254      = self.dir_env + self._read_key("env_arm_n4254")
+        self.env_arm_n4321      = self.dir_env + self._read_key("env_arm_n4321")
+        self.env_bar_n0628      = self.dir_env + self._read_key("env_bar_n0628")
+        self.env_bar_n3627      = self.dir_env + self._read_key("env_bar_n3627")
+        self.env_bar_n4254      = self.dir_env + self._read_key("env_bar_n4254")
+        self.env_bar_n4321      = self.dir_env + self._read_key("env_bar_n4321")
 
-        self.halpha_mask_n0628 = self.dir_halpha + self._read_key("halpha_mask_n0628")
-        self.halpha_mask_n3627 = self.dir_halpha + self._read_key("halpha_mask_n3627")
-        self.halpha_mask_n4254 = self.dir_halpha + self._read_key("halpha_mask_n4254")
-        self.halpha_mask_n4321 = self.dir_halpha + self._read_key("halpha_mask_n4321")
+        self.halpha_mask_n0628  = self.dir_halpha + self._read_key("halpha_mask_n0628")
+        self.halpha_mask_n3627  = self.dir_halpha + self._read_key("halpha_mask_n3627")
+        self.halpha_mask_n4254  = self.dir_halpha + self._read_key("halpha_mask_n4254")
+        self.halpha_mask_n4321  = self.dir_halpha + self._read_key("halpha_mask_n4321")
 
     def _set_output_fits(self):
         """
@@ -175,7 +174,6 @@ class ToolsR21():
         self.outcube_co10_n3627   = self.dir_ready + self._read_key("outcube_co10_n3627")
         self.outcube_co10_n4254   = self.dir_ready + self._read_key("outcube_co10_n4254")
         self.outcube_co10_n4321   = self.dir_ready + self._read_key("outcube_co10_n4321")
-
         self.outcube_co21_n0628   = self.dir_ready + self._read_key("outcube_co21_n0628")
         self.outcube_co21_n3627   = self.dir_ready + self._read_key("outcube_co21_n3627")
         self.outcube_co21_n4254   = self.dir_ready + self._read_key("outcube_co21_n4254")
@@ -185,12 +183,10 @@ class ToolsR21():
         self.outfits_wise1_n3627  = self.dir_ready + self._read_key("outfits_wise1_n3627")
         self.outfits_wise1_n4254  = self.dir_ready + self._read_key("outfits_wise1_n4254")
         self.outfits_wise1_n4321  = self.dir_ready + self._read_key("outfits_wise1_n4321")
-
         self.outfits_wise2_n0628  = self.dir_ready + self._read_key("outfits_wise2_n0628")
         self.outfits_wise2_n3627  = self.dir_ready + self._read_key("outfits_wise2_n3627")
         self.outfits_wise2_n4254  = self.dir_ready + self._read_key("outfits_wise2_n4254")
         self.outfits_wise2_n4321  = self.dir_ready + self._read_key("outfits_wise2_n4321")
-
         self.outfits_wise3_n0628  = self.dir_ready + self._read_key("outfits_wise3_n0628")
         self.outfits_wise3_n3627  = self.dir_ready + self._read_key("outfits_wise3_n3627")
         self.outfits_wise3_n4254  = self.dir_ready + self._read_key("outfits_wise3_n4254")
@@ -200,7 +196,6 @@ class ToolsR21():
         self.outmom_co10_n3627    = self.outcube_co10_n3627.replace(".image",".momX")
         self.outmom_co10_n4254    = self.outcube_co10_n4254.replace(".image",".momX")
         self.outmom_co10_n4321    = self.outcube_co10_n4321.replace(".image",".momX")
-
         self.outmom_co21_n0628    = self.outcube_co21_n0628.replace(".image",".momX")
         self.outmom_co21_n3627    = self.outcube_co21_n3627.replace(".image",".momX")
         self.outmom_co21_n4254    = self.outcube_co21_n4254.replace(".image",".momX")
@@ -294,6 +289,7 @@ class ToolsR21():
         self.snr_mom           = 1.5
         self.snr_gmc           = 5.0
         self.snr_ratio         = 3.0
+        self.snr_showcase      = 2.5
 
         self.nchan_thres_n0628 = 2
         self.nchan_thres_n3627 = 3
@@ -323,17 +319,17 @@ class ToolsR21():
         """
 
         # common set
-        self.c_n0628         = "tomato"
-        self.c_n3627         = "purple"
-        self.c_n4254         = "forestgreen"
-        self.c_n4321         = "deepskyblue"
-        self.text_back_alpha = 0.9
+        self.c_n0628                  = "tomato"
+        self.c_n3627                  = "purple"
+        self.c_n4254                  = "forestgreen"
+        self.c_n4321                  = "deepskyblue"
+        self.text_back_alpha          = 0.9
 
         # output txt and png
-        self.outpng_noise_hist   = self.dir_products + self._read_key("outpng_noise_hist")
-        self.noise_hist_xmax_snr = 7.5
-        self.noise_hist_bins     = 500
-        self.noise_hist_snr4plt  = 2.5
+        self.outpng_noise_hist        = self.dir_products + self._read_key("outpng_noise_hist")
+        self.noise_hist_xmax_snr      = 7.5
+        self.noise_hist_bins          = 500
+        self.noise_hist_snr4plt       = 2.5
 
         self.outpng_noise_vs_beam     = self.dir_products + self._read_key("outpng_noise_vs_beam")
         self.noise_vs_beam_co10_n0628 = self.dir_products_txt + self._read_key("noise_vs_beam_co10_n0628")
@@ -346,24 +342,24 @@ class ToolsR21():
         self.noise_vs_beam_co21_n4321 = self.dir_products_txt + self._read_key("noise_vs_beam_co21_n4321")
         self.noise_vs_beam_snr4fit    = 0.5
 
-        self.outpng_recovery = self.dir_products + self._read_key("outpng_recovery")
+        self.outpng_recovery          = self.dir_products + self._read_key("outpng_recovery")
 
-        self.outpng_co10_n0628 = self.dir_products + self._read_key("outpng_co10_n0628")
-        self.outpng_co10_n3627 = self.dir_products + self._read_key("outpng_co10_n3627")
-        self.outpng_co10_n4254 = self.dir_products + self._read_key("outpng_co10_n4254")
-        self.outpng_co10_n4321 = self.dir_products + self._read_key("outpng_co10_n4321")
-        self.outpng_co21_n0628 = self.dir_products + self._read_key("outpng_co21_n0628")
-        self.outpng_co21_n3627 = self.dir_products + self._read_key("outpng_co21_n3627")
-        self.outpng_co21_n4254 = self.dir_products + self._read_key("outpng_co21_n4254")
-        self.outpng_co21_n4321 = self.dir_products + self._read_key("outpng_co21_n4321")
-        self.outpng_r21_n0628  = self.dir_products + self._read_key("outpng_r21_n0628")
-        self.outpng_r21_n3627  = self.dir_products + self._read_key("outpng_r21_n3627")
-        self.outpng_r21_n4254  = self.dir_products + self._read_key("outpng_r21_n4254")
-        self.outpng_r21_n4321  = self.dir_products + self._read_key("outpng_r21_n4321")
-        self.imsize_n0628      = 290
-        self.imsize_n3637      = 290
-        self.imsize_n4254      = 290
-        self.imsize_n4321      = 290
+        self.outpng_co10_n0628        = self.dir_products + self._read_key("outpng_co10_n0628")
+        self.outpng_co10_n3627        = self.dir_products + self._read_key("outpng_co10_n3627")
+        self.outpng_co10_n4254        = self.dir_products + self._read_key("outpng_co10_n4254")
+        self.outpng_co10_n4321        = self.dir_products + self._read_key("outpng_co10_n4321")
+        self.outpng_co21_n0628        = self.dir_products + self._read_key("outpng_co21_n0628")
+        self.outpng_co21_n3627        = self.dir_products + self._read_key("outpng_co21_n3627")
+        self.outpng_co21_n4254        = self.dir_products + self._read_key("outpng_co21_n4254")
+        self.outpng_co21_n4321        = self.dir_products + self._read_key("outpng_co21_n4321")
+        self.outpng_r21_n0628         = self.dir_products + self._read_key("outpng_r21_n0628")
+        self.outpng_r21_n3627         = self.dir_products + self._read_key("outpng_r21_n3627")
+        self.outpng_r21_n4254         = self.dir_products + self._read_key("outpng_r21_n4254")
+        self.outpng_r21_n4321         = self.dir_products + self._read_key("outpng_r21_n4321")
+        self.imsize_n0628             = 290
+        self.imsize_n3637             = 290
+        self.imsize_n4254             = 290
+        self.imsize_n4321             = 290
 
     ##################
     # run_phangs_r21 #
@@ -381,6 +377,7 @@ class ToolsR21():
         plot_noise     = False,
         plot_recovery  = False,
         plot_showcase  = False,
+        plot_m0_vs_m8  = False,
         # supplement
         ):
         """
@@ -401,6 +398,10 @@ class ToolsR21():
             do_multismooth  = True
             do_moments      = True
             do_align_other  = True
+            plot_noise      = True
+            plot_recovery   = True
+            plot_showcase   = True
+            plot_m0_vs_m8   = True
 
         # analysis
         if do_align==True:
@@ -431,11 +432,33 @@ class ToolsR21():
         if plot_showcase==True:
             self.plot_showcase()
 
+        if plot_m0_vs_m8==True:
+            self.plot_m0_vs_m8()
+
     #####################
     #####################
     ### plotting part ###
     #####################
     #####################
+
+    #################
+    # plot_m0_vs_m8 #
+    #################
+
+    def plot_m0_vs_m8(
+        self,
+        ):
+        """
+        """
+
+        taskname = self.modname + sys._getframe().f_code.co_name
+        check_first(self.outcube_co10_n0628,taskname)
+
+        ###########
+        # prepare #
+        ###########
+
+    #
 
     #################
     # plot_showcase #
@@ -455,6 +478,8 @@ class ToolsR21():
         ###########
         this_co10      = self.outmom_co10_n0628.replace("momX","mom0")
         this_co21      = self.outmom_co21_n0628.replace("momX","mom0")
+        this_eco10     = self.outmom_co10_n0628.replace("momX","emom0")
+        this_eco21     = self.outmom_co21_n0628.replace("momX","emom0")
         this_r21       = self.outfits_r21_n0628
         this_out_co10  = self.outpng_co10_n0628
         this_out_co21  = self.outpng_co21_n0628
@@ -464,6 +489,8 @@ class ToolsR21():
         this_dec       = self.dec_n0628
         this_scalebar  = 1000. / self.scale_n0628
         this_title     = "NGC 0628"
+        this_co10      = self._clip_for_showcase(this_co10,this_eco10)
+        this_co21      = self._clip_for_showcase(this_co21,this_eco21)
         myfig_fits2png(
             this_co10,
             this_out_co10,
@@ -701,6 +728,23 @@ class ToolsR21():
             comment="CO(2-1)/CO(1-0) integrated intensity ratio",
             clim=[0.2,1.0],
             )
+
+    ######################
+    # _clip_for_showcase #
+    ######################
+
+    def _clip_for_showcase(
+        self,
+        mom0,
+        emom0,
+        ):
+        """
+        plot_showcase
+        """
+
+        run_immath_two(mom0,emom0,mom0+"_clipped","iif( IM0>IM1*"+str(self.snr_showcase)+",IM0,0 )")
+
+        return mom0+"_clipped"
 
     #
 
