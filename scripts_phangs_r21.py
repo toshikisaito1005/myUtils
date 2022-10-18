@@ -805,7 +805,7 @@ class ToolsR21():
             self.outmom_co21_n4321.replace(str(self.basebeam_n4321).replace(".","p").zfill(4),"????").replace(".image","_k.image").replace("momX","mom0"),
             beams_new_n4321)
 
-        xlim   = [2,26]
+        xlim   = None#[2,26]
         ylim   = [0.8,1.2]
         title  = "Total Flux vs. Beam Size"
         xlabel = "Beam size (arcsec)"
