@@ -498,14 +498,14 @@ class ToolsR21():
             imsize_as=this_imsize,
             ra_cnt=this_ra,
             dec_cnt=this_dec,
-            levels_cont1=[0.04,0.08,0.16,0.32,0.64,0.96],
+            levels_cont1=[0.05, 0.1, 0.2, 0.4, 0.8, 0.96],
             set_title=this_title,
             colorlog=True,
             set_cmap="PuBu",
             scalebar=this_scalebar,
             label_scalebar="1 kpc",
             comment="CO(1-0) integrated intensity",
-            clim=[10**-1,imstat(this_co10)["max"]],
+            clim=None,#[10**-1,imstat(this_co10)["max"]],
             )
         myfig_fits2png(
             this_co21,
@@ -514,14 +514,14 @@ class ToolsR21():
             imsize_as=this_imsize,
             ra_cnt=this_ra,
             dec_cnt=this_dec,
-            levels_cont1=[0.04,0.08,0.16,0.32,0.64,0.96],
+            levels_cont1=[0.05, 0.1, 0.2, 0.4, 0.8, 0.96],
             set_title=this_title,
             colorlog=True,
             set_cmap="Reds",
             scalebar=this_scalebar,
             label_scalebar="1 kpc",
             comment="CO(2-1) integrated intensity",
-            clim=[10**-1,imstat(this_co21)["max"]],
+            clim=None,#[10**-1,imstat(this_co21)["max"]],
             )
         myfig_fits2png(
             this_r21,
@@ -530,14 +530,14 @@ class ToolsR21():
             imsize_as=this_imsize,
             ra_cnt=this_ra,
             dec_cnt=this_dec,
-            levels_cont1=[0.04,0.08,0.16,0.32,0.64,0.96],
+            levels_cont1=[0.05, 0.1, 0.2, 0.4, 0.8, 0.96],
             set_title=this_title,
             colorlog=False,
             set_cmap="rainbow",
             scalebar=this_scalebar,
             label_scalebar="1 kpc",
             comment="CO(2-1)/CO(1-0) integrated intensity ratio",
-            clim=[0.2,1.0],
+            clim=None,#[0.2,1.0],
             )
 
         ###########
