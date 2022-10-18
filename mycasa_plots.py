@@ -1222,7 +1222,7 @@ def myax_fig2png_ann(ax,number,ra_cnt,dec_cnt,add_text=True,txtfiles=None):
 
 def _myax_comment(ax,dec_cnt,xlim,ylim,comment,comment_color):
     if float(dec_cnt.replace("deg",""))>0:
-        t = ax.text(min(xlim)*-0.9, max(ylim)*-0.9,
+        t = ax.text(min(xlim)*-0.9, max(ylim)*0.9,
             comment, horizontalalignment="left", verticalalignment="top",
             color=comment_color, weight="bold")
 
