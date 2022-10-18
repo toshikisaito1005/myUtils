@@ -372,7 +372,7 @@ class ToolsR21():
         self.outpng_hist_550pc        = self.dir_products + self._read_key("outpng_hist_550pc")
         self.hist_550pc_cnter_radius  = 1.0 # kpc
         self.hist_550pc_bins          = 50
-        self.hist_550pc_hrange        = [0.06, 1.06]
+        self.hist_550pc_hrange        = [0.00, 1.10]
 
     ##################
     # run_phangs_r21 #
