@@ -509,7 +509,7 @@ class ToolsR21():
         ax = plt.subplot(gs[0:10,0:10])
 
         ad = [0.215,0.83,0.10,0.90]
-        myax_set(ax, "both", xlim, ylim, title, xlabel, ylabel, adjust=ad)
+        myax_set(ax, "both", None, None, title, xlabel, ylabel, adjust=ad)
 
         # plot
         #ax.errorbar(r21_all, t21_all, xerr=er21_all, yerr=et21_all, lw=1, capsize=0, color="grey", linestyle="None")
