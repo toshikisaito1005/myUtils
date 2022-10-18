@@ -127,10 +127,10 @@ basebeam_n0628       ,,,4.0
 basebeam_n3627       ,,,8.0
 basebeam_n4254       ,,,8.0
 basebeam_n4321       ,,,4.0
-imsize_n0628         ,,,280
-imsize_n3627         ,,,300
-imsize_n4254         ,,,250
-imsize_n4321         ,,,230
+imsize_n0628         ,,,260
+imsize_n3627         ,,,290
+imsize_n4254         ,,,190
+imsize_n4321         ,,,220
 chans_n0628          ,,,14~36
 chans_n3627          ,,,25~74
 chans_n4254          ,,,39~64
