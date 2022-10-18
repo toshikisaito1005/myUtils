@@ -821,7 +821,7 @@ class ToolsR21():
         # hist
         dist_pc, _ = self._get_rel_dist_pc(ra_deg, dec_deg, ra, dec, scale, pa, incl)
         dist_kpc   = dist_pc / 1000.
-        print(dist_kpc)
+        print(np.max(dist_kpc),np.mean(dist_kpc),np.min(dist_kpc))
         co10_inner = co10[dist_kpc <= self.hist_550pc_cnter_radius]
         co10_outer = co10[dist_kpc > self.hist_550pc_cnter_radius]
         co21_inner = co21[dist_kpc <= self.hist_550pc_cnter_radius]
