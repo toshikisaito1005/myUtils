@@ -565,6 +565,7 @@ class ToolsR21():
         ax12 = plt.subplot(gs[9:12,6:9])
 
         # set ax param
+        factor = 1.65
         myax_set(ax1,  "x", self.hist_550pc_hrange, [0.0001,ylim_n0628*factor], ax1_title, None, ylabel)
         myax_set(ax2,  "x", self.hist_550pc_hrange, [0.0001,ylim_n0628*factor], ax2_title, None, None)
         myax_set(ax3,  "x", self.hist_550pc_hrange, [0.0001,ylim_n0628*factor], ax3_title, None, None)
