@@ -505,7 +505,7 @@ class ToolsR21():
             scalebar=this_scalebar,
             label_scalebar="1 kpc",
             comment="CO(1-0) integrated intensity",
-            clim=[10**-2,imstat(this_co10)["max"]],
+            clim=[10**-1,imstat(this_co10)["max"]],
             )
         myfig_fits2png(
             this_co21,
@@ -521,7 +521,7 @@ class ToolsR21():
             scalebar=this_scalebar,
             label_scalebar="1 kpc",
             comment="CO(2-1) integrated intensity",
-            clim=[10**-2,imstat(this_co21)["max"]],
+            clim=[10**-1,imstat(this_co21)["max"]],
             )
         myfig_fits2png(
             this_r21,
