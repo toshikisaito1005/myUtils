@@ -518,12 +518,14 @@ class ToolsR21():
         alpha_contour  = 1.0
         ax.contourf(contour_n0628, levels=[10,100], extent=extent_n0628, colors=self.c_n0628, zorder=1, linewidths=2.5, alpha=alpha_contourf)
         ax.contour(contour_n0628, levels=[10,100], extent=extent_n0628, colors=self.c_n0628, zorder=1, linewidths=2.5, alpha=alpha_contour)
+        """
         ax.contourf(contour_n3627, levels=[10,100], extent=extent_n3627, colors=self.c_n3627, zorder=2, linewidths=2.5, alpha=alpha_contourf)
         ax.contour(contour_n3627, levels=[10,100], extent=extent_n3627, colors=self.c_n3627, zorder=2, linewidths=2.5, alpha=alpha_contour)
         ax.contourf(contour_n4254, levels=[10,100], extent=extent_n4254, colors=self.c_n4254, zorder=3, linewidths=2.5, alpha=alpha_contourf)
         ax.contour(contour_n4254, levels=[10,100], extent=extent_n4254, colors=self.c_n4254, zorder=3, linewidths=2.5, alpha=alpha_contour)
         ax.contourf(contour_n4321, levels=[10,100], extent=extent_n4321, colors=self.c_n4321, zorder=4, linewidths=2.5, alpha=alpha_contourf)
         ax.contour(contour_n4321, levels=[10,100], extent=extent_n4321, colors=self.c_n4321, zorder=4, linewidths=2.5, alpha=alpha_contour)
+        """
 
         # ann
         ax.plot(xlim, ylim, "k--", lw=3, zorder=100000)
