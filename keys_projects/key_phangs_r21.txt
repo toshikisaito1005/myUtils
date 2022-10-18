@@ -188,6 +188,7 @@ outpng_r21_n0628     ,,,fig_map_r21_n0628.png
 outpng_r21_n3627     ,,,fig_map_r21_n3627.png
 outpng_r21_n4254     ,,,fig_map_r21_n4254.png
 outpng_r21_n4321     ,,,fig_map_r21_n4321.png
+outpng_m0_vs_m8      ,,,fig_m0_vs_m8.png
 
 #######
 # end #

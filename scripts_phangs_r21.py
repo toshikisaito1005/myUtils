@@ -357,6 +357,8 @@ class ToolsR21():
         self.outpng_r21_n4254         = self.dir_products + self._read_key("outpng_r21_n4254")
         self.outpng_r21_n4321         = self.dir_products + self._read_key("outpng_r21_n4321")
 
+        self.outpng_m0_vs_m8          = self.dir_products + self._read_key("outpng_m0_vs_m8")
+
     ##################
     # run_phangs_r21 #
     ##################
@@ -453,6 +455,174 @@ class ToolsR21():
         ###########
         # prepare #
         ###########
+
+        r21_n0628, t21_n0628, er21_n0628, et21_n0628 = \
+            self._import_m0_vs_m8(self.outfits_r21_n0628, self.outfits_t21_n0628, self.outfits_er21_n0628, self.outfits_et21_n0628)
+        r21_n3627, t21_n3627, er21_n3627, et21_n3627 = \
+            self._import_m0_vs_m8(self.outfits_r21_n3627, self.outfits_t21_n3627, self.outfits_er21_n3627, self.outfits_et21_n3627)
+        r21_n4254, t21_n4254, er21_n4254, et21_n4254 = \
+            self._import_m0_vs_m8(self.outfits_r21_n4254, self.outfits_t21_n4254, self.outfits_er21_n4254, self.outfits_et21_n4254)
+        r21_n04321, t21_n04321, er21_n04321, et21_n04321 = \
+            self._import_m0_vs_m8(self.outfits_r21_n04321, self.outfits_t21_n04321, self.outfits_er21_n04321, self.outfits_et21_n04321)
+        r21_all  = np.r_[ r21_n0628,  r21_n3627,  r21_n4254,  r21_n4321]
+        t21_all  = np.r_[ t21_n0628,  t21_n3627,  t21_n4254,  t21_n4321]
+        er21_all = np.r_[er21_n0628, er21_n3627, er21_n4254, er21_n4321]
+        et21_all = np.r_[et21_n0628, et21_n3627, et21_n4254, et21_n4321]
+        r21_n0628, t21_n0628, er21_n0628, et21_n0628 = self._log10_m0_vs_m8(r21_n0628, t21_n0628, er21_n0628, et21_n0628)
+        r21_n3627, t21_n3627, er21_n3627, et21_n3627 = self._log10_m0_vs_m8(r21_n3627, t21_n3627, er21_n3627, et21_n3627)
+        r21_n4254, t21_n4254, er21_n4254, et21_n4254 = self._log10_m0_vs_m8(r21_n4254, t21_n4254, er21_n4254, et21_n4254)
+        r21_n4321, t21_n4321, er21_n4321, et21_n4321 = self._log10_m0_vs_m8(r21_n4321, t21_n4321, er21_n4321, et21_n4321)
+        r21_all, t21_all, er21_all, et21_all         = self._log10_m0_vs_m8(r21_all, t21_all, er21_all, et21_all)
+
+        # get coreelation coeff
+        cor_all   = " (r=" + str(np.round(np.corrcoef(t21_all,r21_all)[0,1], 2)).ljust(4, "0") + ")"
+        cor_n0628 = " (r=" + str(np.round(np.corrcoef(t21_n0628,r21_n0628)[0,1], 2)).ljust(4, "0") + ")"
+        cor_n3627 = " (r=" + str(np.round(np.corrcoef(t21_n3627,r21_n3627)[0,1], 2)).ljust(4, "0") + ")"
+        cor_n4254 = " (r=" + str(np.round(np.corrcoef(t21_n4254,r21_n4254)[0,1], 2)).ljust(4, "0") + ")"
+        cor_n4321 = " (r=" + str(np.round(np.corrcoef(t21_n4321,r21_n4321)[0,1], 2)).ljust(4, "0") + ")"
+
+        xlim = [-1.1,0.45]
+        ylim = [-1.1,0.45]
+
+        # get contours
+        contour_n0628, extent_n0628 = self._getcontour_m0_vs_m8(r21_n0628, t21_n0628, xlim, ylim)
+        contour_n3627, extent_n3627 = self._getcontour_m0_vs_m8(r21_n3627, t21_n3627, xlim, ylim)
+        contour_n4254, extent_n4254 = self._getcontour_m0_vs_m8(r21_n4254, t21_n4254, xlim, ylim)
+        contour_n4321, extent_n4321 = self._getcontour_m0_vs_m8(r21_n4321, t21_n4321, xlim, ylim)
+
+        # get hist
+        ratio_p16 = np.percentile((t21_all-0.3) / (r21_all-0.3), 16)
+        ratio_p50 = np.percentile((t21_all-0.3) / (r21_all-0.3), 50)
+        ratio_p84 = np.percentile((t21_all-0.3) / (r21_all-0.3), 84)
+        print(ratio_p16, ratio_p50, ratio_p84)
+        print(np.mean((t21_all-0.3) / (r21_all-0.3)))
+        ylim_p16 = [ylim[0]+np.log10(ratio_p16), ylim[1]+np.log10(ratio_p16)]
+        ylim_p50 = [ylim[0]+np.log10(ratio_p50), ylim[1]+np.log10(ratio_p50)]
+        ylim_p84 = [ylim[0]+np.log10(ratio_p84), ylim[1]+np.log10(ratio_p84)]
+
+        ########
+        # plot #
+        ########
+
+        plt.figure(figsize=(13,10))
+        gs = gridspec.GridSpec(nrows=10, ncols=10)
+        ax = plt.subplot(gs[0:10,0:10])
+
+        ad = [0.215,0.83,0.10,0.90]
+        myax_set(ax, "both", xlim, ylim, title, xlabel, ylabel, adjust=ad)
+
+        # plot
+        ax1.errorbar(r21_all, t21_all, xerr=er21_all, yerr=et21_all, lw=1, capsize=0, color="grey", linestyle="None")
+
+        alpha_contourf = 0.6
+        alpha_contour  = 1.0
+        ax.contourf(contour_n0628, levels=[10,100], extent=extent_n0628, colors=self.c_n0628, zorder=1, linewidths=2.5, alpha=alpha_contourf)
+        ax.contour(contour_n0628, levels=[10,100], extent=extent_n0628, colors=self.c_n0628, zorder=1, linewidths=2.5, alpha=alpha_contour)
+        ax.contourf(contour_n3627, levels=[10,100], extent=extent_n3627, colors=self.c_n3627, zorder=2, linewidths=2.5, alpha=alpha_contourf)
+        ax.contour(contour_n3627, levels=[10,100], extent=extent_n3627, colors=self.c_n3627, zorder=2, linewidths=2.5, alpha=alpha_contour)
+        ax.contourf(contour_n4254, levels=[10,100], extent=extent_n4254, colors=self.c_n4254, zorder=3, linewidths=2.5, alpha=alpha_contourf)
+        ax.contour(contour_n4254, levels=[10,100], extent=extent_n4254, colors=self.c_n4254, zorder=3, linewidths=2.5, alpha=alpha_contour)
+        ax.contourf(contour_n4321, levels=[10,100], extent=extent_n4321, colors=self.c_n4321, zorder=4, linewidths=2.5, alpha=alpha_contourf)
+        ax.contour(contour_n4321, levels=[10,100], extent=extent_n4321, colors=self.c_n4321, zorder=4, linewidths=2.5, alpha=alpha_contour)
+
+        # ann
+        ax.plot(xlim, ylim, "k--", lw=3, zorder=100000)
+        ax.plot(xlim, ylim_p16, "-", color="black", lw=1, zorder=100000)
+        ax.plot(xlim, ylim_p50, "-", color="black", lw=1, zorder=100000)
+        ax.plot(xlim, ylim_p84, "-", color="black", lw=1, zorder=100000)
+
+        # text
+        t=ax.text(0.95, 0.25, "All"+cor_all, color="black", alpha=alpha, horizontalalignment="right", transform=ax.transAxes, size=self.legend_fontsize, fontweight="bold")
+        t.set_bbox(dict(facecolor="white", alpha=self.text_back_alpha, lw=0))
+        t=ax.text(0.95, 0.20, "NGC 0628"+cor_n0628, color=self.c_n0628, alpha=alpha, horizontalalignment="right", transform=ax.transAxes, size=self.legend_fontsize, fontweight="bold")
+        t.set_bbox(dict(facecolor="white", alpha=self.text_back_alpha, lw=0))
+        t=ax.text(0.95, 0.15, "NGC 3627"+cor_n3627, color=self.c_n3627, alpha=alpha, horizontalalignment="right", transform=ax.transAxes, size=self.legend_fontsize, fontweight="bold")
+        t.set_bbox(dict(facecolor="white", alpha=self.text_back_alpha, lw=0))
+        t=ax.text(0.95, 0.10, "NGC 4254"+cor_n4254, color=self.c_n4254, alpha=alpha, horizontalalignment="right", transform=ax.transAxes, size=self.legend_fontsize, fontweight="bold")
+        t.set_bbox(dict(facecolor="white", alpha=self.text_back_alpha, lw=0))
+        t=ax.text(0.95, 0.05, "NGC 4321"+cor_n4321, color=self.c_n4321, alpha=alpha, horizontalalignment="right", transform=ax.transAxes, size=self.legend_fontsize, fontweight="bold")
+        t.set_bbox(dict(facecolor="white", alpha=self.text_back_alpha, lw=0))
+
+        ax.text(0.02, 0.13, "84$^{th}$ pctl.", horizontalalignment="left", verticalalignment="bottom", rotation=45, transform=ax.transAxes, size=self.legend_fontsize)
+        ax.text(0.02, 0.05, "50$^{th}$ pctl.", horizontalalignment="left", verticalalignment="bottom", rotation=45, transform=ax.transAxes, size=self.legend_fontsize)
+        ax.text(0.08, 0.01, "16$^{th}$ pctl.", horizontalalignment="left", verticalalignment="bottom", rotation=45, transform=ax.transAxes, size=self.legend_fontsize)
+
+        t=ax.text(0.02, 0.93, "84$^{th}$ percentile = " + str(np.round(ratio_p84,2)).ljust(4,"0"), horizontalalignment="left", transform=ax.transAxes, size=self.legend_fontsize)
+        t.set_bbox(dict(facecolor="white", alpha=self.text_back_alpha, lw=0))
+        t=ax.text(0.02, 0.88, "50$^{th}$ percentile = " + str(np.round(ratio_p50,2)).ljust(4,"0"), horizontalalignment="left", transform=ax.transAxes, size=self.legend_fontsize)
+        t.set_bbox(dict(facecolor="white", alpha=self.text_back_alpha, lw=0))
+        t=ax.text(0.02, 0.83, "16$^{th}$ percentile = " + str(np.round(ratio_p16,2)).ljust(4,"0"), horizontalalignment="left", transform=ax.transAxes, size=self.legend_fontsize)
+        t.set_bbox(dict(facecolor="white", alpha=self.text_back_alpha, lw=0))
+
+        plt.savefig(self.outpng_m0_vs_m8, dpi=self.fig_dpi)   
+
+    ########################
+    # _getcontour_m0_vs_m8 #
+    ########################
+
+    def _getcontour_m0_vs_m8(
+        self,
+        mom0,
+        mom8,
+        xlim,
+        ylim,
+        ):
+        """
+        plot_m0_vs_m8
+        """
+
+        mom8_grid, mom0_grid = scipy.ndimage.zoom(mom8, 33), scipy.ndimage.zoom(mom0, 33)
+        contour, xedges, yedges = np.histogram2d(mom8_grid, mom0_grid, bins=50, range=(xlim,ylim))
+        this_contour = contour/contour.max() * 100
+        this_extent  = [xedges[0],xedges[-1],yedges[0],yedges[-1]]
+
+        return this_contour, this_extent
+
+    ###################
+    # _log10_m0_vs_m8 #
+    ###################
+
+    def _log10_m0_vs_m8(
+        self,
+        mom0,
+        mom8,
+        emom0,
+        emom8,
+        ):
+        """
+        plot_m0_vs_m8
+        """
+
+        return np.log10(mom0), np.log10(mom8), emom0 / (np.log(10)*mom0), emom8 / (np.log(10)*mom8)
+
+    ####################
+    # _import_m0_vs_m8 #
+    ####################
+
+    def _import_m0_vs_m8(
+        self,
+        mom0,
+        emom0,
+        mom8,
+        emom8,
+        ):
+        """
+        plot_m0_vs_m8
+        """
+
+        this_r21,_  = imval_all(mom0)
+        this_t21,_  = imval_all(mom8)
+        this_er21,_ = imval_all(emom0)
+        this_et21,_ = imval_all(emom8)
+        this_r21    = this_r21["data"].flatten()
+        this_t21    = this_t21["data"].flatten()
+        this_er21   = this_er21["data"].flatten()
+        this_et21   = this_et21["data"].flatten()
+
+        cut = np.where( (~np.isnan(this_r21)) & (~np.isinf(this_r21)) & (~np.isnan(this_t21)) & (~np.isinf(this_t21)) \
+            & (this_r21>=this_er21*self.snr_ratio) & (this_t21>=this_et21*self.snr_ratio) )
+        
+        return this_r21[cut], this_t21[cut], this_er21[cut], this_et21[cut]
 
     #
 
