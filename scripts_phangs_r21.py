@@ -45,6 +45,7 @@ Toshiki Saito@NAOJ
 
 import os, sys, glob
 import numpy as np
+from scipy.stats import gaussian_kde
 
 from mycasa_rotation import *
 from mycasa_sampling import *
@@ -392,6 +393,7 @@ class ToolsR21():
         plot_showcase   = False,
         plot_m0_vs_m8   = False,
         plot_hist_550pc = False,
+        plot_violins    = False,
         # supplement
         ):
         """
@@ -452,11 +454,89 @@ class ToolsR21():
         if plot_hist_550pc==True:
             self.plot_hist_550pc()
 
+        if plot_violins==True:
+            self.plot_violins()
+
     #####################
     #####################
     ### plotting part ###
     #####################
     #####################
+
+    ################
+    # plot_violins #
+    ################
+
+    def plot_violins(
+        self,
+        ):
+        """
+        """
+
+        taskname = self.modname + sys._getframe().f_code.co_name
+        check_first(self.outcube_co10_n0628,taskname)
+
+        ###########
+        # prepare #
+        ###########
+
+        this_basebeam = str(self.basebeam_n0628).replace(".","p").zfill(4)
+        this_beams    = [s for s in self.beams_n0628 if s%4==0]
+        this_r21      = self.outfits_r21_n0628.replace(this_basebeam,"????")
+        this_er21     = self.outfits_er21_n0628.replace(this_basebeam,"????")
+        this_co10     = self.outmom_co10_n0628.replace(this_basebeam,"????").replace("momX","mom0")
+        this_co21     = self.outmom_co21_n0628.replace(this_basebeam,"????").replace("momX","mom0")
+        this_ra       = float(self.ra_n0628)
+        this_dec      = float(self.dec_n0628)
+        this_scale    = self.scale_n0628
+        this_pa       = self.pa_n0628
+        this_incl     = self.incl_n0628
+        co10_n0628, co21_n0628, r21_n0628 = \
+            self._import_violins(this_co10,this_co21,this_r21,this_er21,this_beams,this_ra,this_dec,this_scale,this_pa,this_incl)
+
+    ###################
+    # _import_violins #
+    ###################
+
+    def _import_violins(self,co10,co21,r21,er21,beams,ra,dec,scale,pa,incl):
+        """
+        plot_hist_550pc
+        """
+
+        array_co10 = []
+        array_co21 = []
+        array_r21 = []
+        for i in range(len(beams)):
+            # get names
+            this_beam     = str(beams[i]).replace(".","p").zfill(4)
+            this_co10     = co10.replace("????",this_beam)
+            this_co21     = co21.replace("????",this_beam)
+            this_r21      = r21.replace("????",this_beam)
+
+            shape         = imhead(this_co10,mode="list")["shape"]
+            box           = "0,0," + str(shape[0]-1) + "," + str(shape[1]-1)
+            ra_deg        = imval(this_co10,box=box)["coords"][:,:,0] * 180/np.pi
+            dec_deg       = imval(this_co10,box=box)["coords"][:,:,1] * 180/np.pi
+            this_co10     = imval(this_co10,box=box)["data"]
+            this_co21     = imval(this_co21,box=box)["data"]
+            this_r21      = imval(this_r21,box=box)["data"]
+
+            dist_pc, _ = self._get_rel_dist_pc(ra_deg, dec_deg, ra, dec, scale, pa, incl)
+            dist_kpc   = dist_pc / 1000.
+
+            cut = np.where( (~np.isnan(this_co10)) & (~np.isinf(this_co10)) & (this_co10!=0) \
+                & (~np.isnan(this_co21)) & (~np.isinf(this_co21)) & (this_co21!=0) \
+                & (~np.isnan(this_r21)) & (~np.isinf(this_r21)) & (this_r21!=0) \
+                & (this_r21!=this_r21_err*self.snr_ratio) & (dist_kpc > self.hist_550pc_cnter_radius) ) 
+
+            array_co10.append(this_co10[cut].flatten())
+            array_co21.append(this_co21[cut].flatten())
+            array_r21.append(this_r21[cut].flatten())
+
+
+        return array_co10, array_co21, array_r21
+
+    #
 
     ###################
     # plot_hist_550pc #
