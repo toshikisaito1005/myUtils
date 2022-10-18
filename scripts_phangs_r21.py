@@ -775,34 +775,34 @@ class ToolsR21():
 
         beams_new_n0628 = [s for s in self.beams_n0628[:-1] if not "11.5" in str(s)]
         list_flux_co10_n0628 = self._loop_measure_flux_norm(
-            self.outcube_co10_n0628.replace(str(self.basebeam_n0628).replace(".","p").zfill(4),"????").replace(".image","_k.image"),
+            self.outmom_co10_n0628.replace(str(self.basebeam_n0628).replace(".","p").zfill(4),"????").replace(".image","_k.image").replace("momX","mom0"),
             beams_new_n0628)
         list_flux_co21_n0628 = self._loop_measure_flux_norm(
-            self.outcube_co21_n0628.replace(str(self.basebeam_n0628).replace(".","p").zfill(4),"????").replace(".image","_k.image"),
+            self.outmom_co21_n0628.replace(str(self.basebeam_n0628).replace(".","p").zfill(4),"????").replace(".image","_k.image").replace("momX","mom0"),
             beams_new_n0628)
 
         beams_new_n3627 = [s for s in self.beams_n3627[:-1]]
         list_flux_co10_n3627 = self._loop_measure_flux_norm(
-            self.outcube_co10_n3627.replace(str(self.basebeam_n3627).replace(".","p").zfill(4),"????").replace(".image","_k.image"),
+            self.outmom_co10_n3627.replace(str(self.basebeam_n3627).replace(".","p").zfill(4),"????").replace(".image","_k.image").replace("momX","mom0"),
             beams_new_n3627)
         list_flux_co21_n3627 = self._loop_measure_flux_norm(
-            self.outcube_co21_n3627.replace(str(self.basebeam_n3627).replace(".","p").zfill(4),"????").replace(".image","_k.image"),
+            self.outmom_co21_n3627.replace(str(self.basebeam_n3627).replace(".","p").zfill(4),"????").replace(".image","_k.image").replace("momX","mom0"),
             beams_new_n3627)
 
         beams_new_n4254 = [s for s in self.beams_n4254[:-1] if not "8.7" in str(s)]
         list_flux_co10_n4254 = self._loop_measure_flux_norm(
-            self.outcube_co10_n4254.replace(str(self.basebeam_n4254).replace(".","p").zfill(4),"????").replace(".image","_k.image"),
+            self.outmom_co10_n4254.replace(str(self.basebeam_n4254).replace(".","p").zfill(4),"????").replace(".image","_k.image").replace("momX","mom0"),
             beams_new_n4254)
         list_flux_co21_n4254 = self._loop_measure_flux_norm(
-            self.outcube_co21_n4254.replace(str(self.basebeam_n4254).replace(".","p").zfill(4),"????").replace(".image","_k.image"),
+            self.outmom_co21_n4254.replace(str(self.basebeam_n4254).replace(".","p").zfill(4),"????").replace(".image","_k.image").replace("momX","mom0"),
             beams_new_n4254)
 
         beams_new_n4321 = [s for s in self.beams_n4321[:-1] if not "7.5" in str(s)]
         list_flux_co10_n4321 = self._loop_measure_flux_norm(
-            self.outcube_co10_n4321.replace(str(self.basebeam_n4321).replace(".","p").zfill(4),"????").replace(".image","_k.image"),
+            self.outmom_co10_n4321.replace(str(self.basebeam_n4321).replace(".","p").zfill(4),"????").replace(".image","_k.image").replace("momX","mom0"),
             beams_new_n4321)
         list_flux_co21_n4321 = self._loop_measure_flux_norm(
-            self.outcube_co21_n4321.replace(str(self.basebeam_n4321).replace(".","p").zfill(4),"????").replace(".image","_k.image"),
+            self.outmom_co21_n4321.replace(str(self.basebeam_n4321).replace(".","p").zfill(4),"????").replace(".image","_k.image").replace("momX","mom0"),
             beams_new_n4321)
 
         xlim   = [2,26]
