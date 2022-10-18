@@ -554,6 +554,8 @@ class ToolsR21():
         this_dec       = self.dec_n3627
         this_scalebar  = 1000. / self.scale_n3627
         this_title     = "NGC 3627"
+        this_co10      = self._clip_for_showcase(this_co10,this_eco10)
+        this_co21      = self._clip_for_showcase(this_co21,this_eco21)
         myfig_fits2png(
             this_co10,
             this_out_co10,
@@ -617,6 +619,8 @@ class ToolsR21():
         this_dec       = self.dec_n4254
         this_scalebar  = 1000. / self.scale_n4254
         this_title     = "NGC 4254"
+        this_co10      = self._clip_for_showcase(this_co10,this_eco10)
+        this_co21      = self._clip_for_showcase(this_co21,this_eco21)
         myfig_fits2png(
             this_co10,
             this_out_co10,
@@ -680,6 +684,8 @@ class ToolsR21():
         this_dec       = self.dec_n4321
         this_scalebar  = 1000. / self.scale_n4321
         this_title     = "NGC 4254"
+        this_co10      = self._clip_for_showcase(this_co10,this_eco10)
+        this_co21      = self._clip_for_showcase(this_co21,this_eco21)
         myfig_fits2png(
             this_co10,
             this_out_co10,
@@ -737,6 +743,7 @@ class ToolsR21():
         self,
         mom0,
         emom0,
+        snr,
         ):
         """
         plot_showcase
