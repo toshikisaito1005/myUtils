@@ -480,6 +480,7 @@ class ToolsR21():
         this_r21      = self.outfits_r21_n0628.replace(this_basebeam,this_wisebeam)
         this_er21     = self.outfits_r21_n0628.replace(this_basebeam,this_wisebeam)
         this_co10     = self.outmom_co10_n0628.replace(this_basebeam,this_wisebeam)
+        this_co21     = self.outmom_co21_n0628.replace(this_basebeam,this_wisebeam)
         this_ra       = self.ra_n0628
         this_dec      = self.dec_n0628
         this_scale    = self.scale_n0628
@@ -493,6 +494,7 @@ class ToolsR21():
         this_r21      = self.outfits_r21_n3627.replace(this_basebeam,this_wisebeam)
         this_er21     = self.outfits_r21_n3627.replace(this_basebeam,this_wisebeam)
         this_co10     = self.outmom_co10_n3627.replace(this_basebeam,this_wisebeam)
+        this_co21     = self.outmom_co21_n3627.replace(this_basebeam,this_wisebeam)
         this_ra       = self.ra_n3627
         this_dec      = self.dec_n3627
         this_scale    = self.scale_n3627
@@ -506,6 +508,7 @@ class ToolsR21():
         this_r21      = self.outfits_r21_n4254.replace(this_basebeam,this_wisebeam)
         this_er21     = self.outfits_r21_n4254.replace(this_basebeam,this_wisebeam)
         this_co10     = self.outmom_co10_n4254.replace(this_basebeam,this_wisebeam)
+        this_co21     = self.outmom_co21_n4254.replace(this_basebeam,this_wisebeam)
         this_ra       = self.ra_n4254
         this_dec      = self.dec_n4254
         this_scale    = self.scale_n4254
@@ -519,6 +522,7 @@ class ToolsR21():
         this_r21      = self.outfits_r21_n4321.replace(this_basebeam,this_wisebeam)
         this_er21     = self.outfits_r21_n4321.replace(this_basebeam,this_wisebeam)
         this_co10     = self.outmom_co10_n4321.replace(this_basebeam,this_wisebeam)
+        this_co21     = self.outmom_co21_n4321.replace(this_basebeam,this_wisebeam)
         this_ra       = self.ra_n4321
         this_dec      = self.dec_n4321
         this_scale    = self.scale_n4321
