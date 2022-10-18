@@ -726,10 +726,10 @@ class ToolsR21():
         yoffset = 0.15
         xoffset_n4321 = 0.58
         yoffset_n4321 = -0.33
-        scale_n0628_pc = str(int(np.round(self.beam_wise_n0628*scale_n0628, -1))) + " pc"
-        scale_n3627_pc = str(int(np.round(self.beam_wise_n3627*scale_n3627, -1))) + " pc"
-        scale_n4254_pc = str(int(np.round(self.beam_wise_n4254*scale_n4254, -1))) + " pc"
-        scale_n4321_pc = str(int(np.round(self.beam_wise_n4321*scale_n4321, -1))) + " pc"
+        scale_n0628_pc = str(int(np.round(self.beam_wise_n0628*self.scale_n0628, -1))) + " pc"
+        scale_n3627_pc = str(int(np.round(self.beam_wise_n3627*self.scale_n3627, -1))) + " pc"
+        scale_n4254_pc = str(int(np.round(self.beam_wise_n4254*self.scale_n4254, -1))) + " pc"
+        scale_n4321_pc = str(int(np.round(self.beam_wise_n4321*self.scale_n4321, -1))) + " pc"
         t=ax1.text(xpos, ypos, "NGC 0628", color=self.c_n0628, horizontalalignment="left", transform=ax1.transAxes, size=self.legend_fontsize-2, fontweight="bold")
         t.set_bbox(dict(facecolor="white", alpha=self.text_back_alpha, lw=0))
         t=ax4.text(xpos, ypos, "NGC 3627", color=self.c_n3627, horizontalalignment="left", transform=ax4.transAxes, size=self.legend_fontsize-2, fontweight="bold")
