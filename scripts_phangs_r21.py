@@ -487,7 +487,6 @@ class ToolsR21():
         this_title     = "NGC 0628"
         this_co10      = self._clip_for_showcase(this_co10,this_eco10)
         this_co21      = self._clip_for_showcase(this_co21,this_eco21)
-        print(this_imsize)
         myfig_fits2png(
             this_co10,
             this_out_co10,
@@ -555,7 +554,6 @@ class ToolsR21():
         this_title     = "NGC 3627"
         this_co10      = self._clip_for_showcase(this_co10,this_eco10)
         this_co21      = self._clip_for_showcase(this_co21,this_eco21)
-        print(this_imsize)
         myfig_fits2png(
             this_co10,
             this_out_co10,
@@ -623,7 +621,6 @@ class ToolsR21():
         this_title     = "NGC 4254"
         this_co10      = self._clip_for_showcase(this_co10,this_eco10)
         this_co21      = self._clip_for_showcase(this_co21,this_eco21)
-        print(this_imsize)
         myfig_fits2png(
             this_co10,
             this_out_co10,
@@ -691,7 +688,6 @@ class ToolsR21():
         this_title     = "NGC 4321"
         this_co10      = self._clip_for_showcase(this_co10,this_eco10)
         this_co21      = self._clip_for_showcase(this_co21,this_eco21)
-        print(this_imsize)
         myfig_fits2png(
             this_co10,
             this_out_co10,
@@ -871,7 +867,7 @@ class ToolsR21():
 
             # get data
             print("# measure total flux of " + this_map.split("/")[-1])
-            this_data,_  = run_imval(this_map)
+            this_data,_  = imval_all(this_map)
             this_data[np.isnan(this_data)] = 0
             this_data[np.isinf(this_data)] = 0
             this_data = this_data[this_data!=0]
