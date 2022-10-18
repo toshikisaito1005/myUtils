@@ -501,6 +501,8 @@ class ToolsR21():
         ########
         # plot #
         ########
+        print(np.max(r21_n0628), np.median(r21_n0628), np.min(r21_n0628))
+        print(np.max(t21_n0628), np.median(t21_n0628), np.min(t21_n0628))
 
         plt.figure(figsize=(13,10))
         gs = gridspec.GridSpec(nrows=10, ncols=10)
