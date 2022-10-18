@@ -491,7 +491,7 @@ class ToolsR21():
         this_title     = "NGC 0628"
         this_co10      = self._clip_for_showcase(this_co10,this_eco10)
         this_co21      = self._clip_for_showcase(this_co21,this_eco21)
-        print(imsize)
+        print(this_imsize)
         myfig_fits2png(
             this_co10,
             this_out_co10,
@@ -559,7 +559,7 @@ class ToolsR21():
         this_title     = "NGC 3627"
         this_co10      = self._clip_for_showcase(this_co10,this_eco10)
         this_co21      = self._clip_for_showcase(this_co21,this_eco21)
-        print(imsize)
+        print(this_imsize)
         myfig_fits2png(
             this_co10,
             this_out_co10,
@@ -627,7 +627,7 @@ class ToolsR21():
         this_title     = "NGC 4254"
         this_co10      = self._clip_for_showcase(this_co10,this_eco10)
         this_co21      = self._clip_for_showcase(this_co21,this_eco21)
-        print(imsize)
+        print(this_imsize)
         myfig_fits2png(
             this_co10,
             this_out_co10,
@@ -695,7 +695,7 @@ class ToolsR21():
         this_title     = "NGC 4254"
         this_co10      = self._clip_for_showcase(this_co10,this_eco10)
         this_co21      = self._clip_for_showcase(this_co21,this_eco21)
-        print(imsize)
+        print(this_imsize)
         myfig_fits2png(
             this_co10,
             this_out_co10,
