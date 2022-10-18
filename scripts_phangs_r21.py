@@ -878,6 +878,7 @@ class ToolsR21():
             # get data
             print("# measure total flux of " + this_map.split("/")[-1])
             this_data,_  = imval_all(this_map)
+            this_data    = this_data["data"].flatten()
             this_data[np.isnan(this_data)] = 0
             this_data[np.isinf(this_data)] = 0
             this_data = this_data[this_data!=0]
