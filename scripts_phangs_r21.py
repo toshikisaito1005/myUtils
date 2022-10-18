@@ -787,7 +787,7 @@ class ToolsR21():
                     color=color,
                     horizontalalignment="left",
                     verticalalignment="center",
-                    size=legend_fontsize-2)
+                    size=self.legend_fontsize-2)
             else:
                 ax.text(
                     pctls[0]-0.02,
@@ -796,7 +796,7 @@ class ToolsR21():
                     color=color,
                     horizontalalignment="right",
                     verticalalignment="center",
-                    size=legend_fontsize-2)
+                    size=self.legend_fontsize-2)
 
     ######################
     # _import_hist_550pc #
