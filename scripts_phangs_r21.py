@@ -481,8 +481,11 @@ class ToolsR21():
         cor_n4254 = " (r=" + str(np.round(np.corrcoef(t21_n4254,r21_n4254)[0,1], 2)).ljust(4, "0") + ")"
         cor_n4321 = " (r=" + str(np.round(np.corrcoef(t21_n4321,r21_n4321)[0,1], 2)).ljust(4, "0") + ")"
 
-        xlim = [-1.1,0.45]
-        ylim = [-1.1,0.45]
+        xlim   = [-1.1,0.45]
+        ylim   = [-1.1,0.45]
+        title  = "Peak Temperature Ratio vs. Intensity Ratio"
+        xlabel = "log Integrated intensity ratio"
+        ylabel = "log Peak temperature ratio"
 
         # get contours
         contour_n0628, extent_n0628 = self._getcontour_m0_vs_m8(r21_n0628, t21_n0628, xlim, ylim)
