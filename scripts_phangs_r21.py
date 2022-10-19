@@ -496,6 +496,48 @@ class ToolsR21():
         co10s_n0628, co21s_n0628, r21s_n0628 = \
             self._import_violins(this_co10,this_co21,this_r21,this_er21,this_beams_n0628,this_ra,this_dec,this_scale,this_pa,this_incl)
 
+        this_basebeam = str(self.basebeam_n3627).replace(".","p").zfill(4)
+        this_beams_n0628 = [s for s in self.beams_n3627 if s%4==0]
+        this_r21      = self.outfits_r21_n3627.replace(this_basebeam,"????")
+        this_er21     = self.outfits_er21_n3627.replace(this_basebeam,"????")
+        this_co10     = self.outmom_co10_n3627.replace(this_basebeam,"????").replace("momX","mom0")
+        this_co21     = self.outmom_co21_n3627.replace(this_basebeam,"????").replace("momX","mom0")
+        this_ra       = float(self.ra_n3627)
+        this_dec      = float(self.dec_n3627)
+        this_scale    = self.scale_n3627
+        this_pa       = self.pa_n3627
+        this_incl     = self.incl_n3627
+        co10s_n3627, co21s_n3627, r21s_n3627 = \
+            self._import_violins(this_co10,this_co21,this_r21,this_er21,this_beams_n0628,this_ra,this_dec,this_scale,this_pa,this_incl)
+
+        this_basebeam = str(self.basebeam_n4254).replace(".","p").zfill(4)
+        this_beams_n0628 = [s for s in self.beams_n4254 if s%4==0]
+        this_r21      = self.outfits_r21_n4254.replace(this_basebeam,"????")
+        this_er21     = self.outfits_er21_n4254.replace(this_basebeam,"????")
+        this_co10     = self.outmom_co10_n4254.replace(this_basebeam,"????").replace("momX","mom0")
+        this_co21     = self.outmom_co21_n4254.replace(this_basebeam,"????").replace("momX","mom0")
+        this_ra       = float(self.ra_n4254)
+        this_dec      = float(self.dec_n4254)
+        this_scale    = self.scale_n4254
+        this_pa       = self.pa_n4254
+        this_incl     = self.incl_n4254
+        co10s_n4254, co21s_n4254, r21s_n4254 = \
+            self._import_violins(this_co10,this_co21,this_r21,this_er21,this_beams_n0628,this_ra,this_dec,this_scale,this_pa,this_incl)
+
+        this_basebeam = str(self.basebeam_n4321).replace(".","p").zfill(4)
+        this_beams_n0628 = [s for s in self.beams_n4321 if s%4==0]
+        this_r21      = self.outfits_r21_n4321.replace(this_basebeam,"????")
+        this_er21     = self.outfits_er21_n4321.replace(this_basebeam,"????")
+        this_co10     = self.outmom_co10_n4321.replace(this_basebeam,"????").replace("momX","mom0")
+        this_co21     = self.outmom_co21_n4321.replace(this_basebeam,"????").replace("momX","mom0")
+        this_ra       = float(self.ra_n4321)
+        this_dec      = float(self.dec_n4321)
+        this_scale    = self.scale_n4321
+        this_pa       = self.pa_n4321
+        this_incl     = self.incl_n4321
+        co10s_n4321, co21s_n4321, r21s_n4321 = \
+            self._import_violins(this_co10,this_co21,this_r21,this_er21,this_beams_n0628,this_ra,this_dec,this_scale,this_pa,this_incl)
+
         ax1_title  = "Area-weighted"
         ax2_title  = "CO(1-0)-weighted"
         ax3_title  = "CO(2-1)-weighted"
@@ -552,19 +594,31 @@ class ToolsR21():
         ax11.tick_params(labelbottom=True,labelleft=False,labelright=False,labeltop=False)
         ax12.tick_params(labelbottom=True,labelleft=False,labelright=False,labeltop=False)
 
-        # plot: n0628
+        # plot
         self._ax_multiviolin(ax1,r21s_n0628,this_beams_n0628,ylim,self.c_n0628,0.8,weights=None)
         self._ax_multiviolin(ax2,r21s_n0628,this_beams_n0628,ylim,self.c_n0628,0.5,weights=co10s_n0628)
         self._ax_multiviolin(ax3,r21s_n0628,this_beams_n0628,ylim,self.c_n0628,0.3,weights=co21s_n0628)
 
+        self._ax_multiviolin(ax1,r21s_n3627,this_beams_n3627,ylim,self.c_n3627,0.8,weights=None)
+        self._ax_multiviolin(ax2,r21s_n3627,this_beams_n3627,ylim,self.c_n3627,0.5,weights=co10s_n3627)
+        self._ax_multiviolin(ax3,r21s_n3627,this_beams_n3627,ylim,self.c_n3627,0.3,weights=co21s_n3627)
+
+        self._ax_multiviolin(ax1,r21s_n4254,this_beams_n4254,ylim,self.c_n4254,0.8,weights=None)
+        self._ax_multiviolin(ax2,r21s_n4254,this_beams_n4254,ylim,self.c_n4254,0.5,weights=co10s_n4254)
+        self._ax_multiviolin(ax3,r21s_n4254,this_beams_n4254,ylim,self.c_n4254,0.3,weights=co21s_n4254)
+
+        self._ax_multiviolin(ax1,r21s_n4321,this_beams_n4321,ylim,self.c_n4321,0.8,weights=None)
+        self._ax_multiviolin(ax2,r21s_n4321,this_beams_n4321,ylim,self.c_n4321,0.5,weights=co10s_n4321)
+        self._ax_multiviolin(ax3,r21s_n4321,this_beams_n4321,ylim,self.c_n4321,0.3,weights=co21s_n4321)
+
         # text
-        t=ax1.text(0.02, 0.82, "NGC 0628", color=self.c_n0628, horizontalalignment="left", transform=ax1.transAxes, size=self.legend_fontsize-2, fontweight="bold")
+        t=ax1.text(0.05, 0.90, "NGC 0628", color=self.c_n0628, horizontalalignment="left", transform=ax1.transAxes, size=self.legend_fontsize-2, fontweight="bold")
         t.set_bbox(dict(facecolor="white", alpha=self.text_back_alpha, lw=0))
-        t=ax4.text(0.02, 0.82, "NGC 3627", color=self.c_n3627, horizontalalignment="left", transform=ax4.transAxes, size=self.legend_fontsize-2, fontweight="bold")
+        t=ax4.text(0.05, 0.90, "NGC 3627", color=self.c_n3627, horizontalalignment="left", transform=ax4.transAxes, size=self.legend_fontsize-2, fontweight="bold")
         t.set_bbox(dict(facecolor="white", alpha=self.text_back_alpha, lw=0))
-        t=ax7.text(0.02, 0.82, "NGC 4254", color=self.c_n4254, horizontalalignment="left", transform=ax7.transAxes, size=self.legend_fontsize-2, fontweight="bold")
+        t=ax7.text(0.05, 0.90, "NGC 4254", color=self.c_n4254, horizontalalignment="left", transform=ax7.transAxes, size=self.legend_fontsize-2, fontweight="bold")
         t.set_bbox(dict(facecolor="white", alpha=self.text_back_alpha, lw=0))
-        t=ax10.text(0.02, 0.82, "NGC 4321", color=self.c_n4321, horizontalalignment="left", transform=ax10.transAxes, size=self.legend_fontsize-2, fontweight="bold")
+        t=ax10.text(0.05, 0.90, "NGC 4321", color=self.c_n4321, horizontalalignment="left", transform=ax10.transAxes, size=self.legend_fontsize-2, fontweight="bold")
         t.set_bbox(dict(facecolor="white", alpha=self.text_back_alpha, lw=0))
 
         plt.savefig(self.outpng_violins, dpi=self.fig_dpi)
