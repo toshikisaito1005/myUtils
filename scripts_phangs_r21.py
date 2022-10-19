@@ -553,9 +553,9 @@ class ToolsR21():
         ax12.tick_params(labelbottom=True,labelleft=False,labelright=False,labeltop=False)
 
         # plot: n0628
-        self._ax_multiviolin(ax1,r21s_n0628,this_beams_n0628,ylim,self.c_n0628,0.6,weights=None)
-        self._ax_multiviolin(ax2,r21s_n0628,this_beams_n0628,ylim,self.c_n0628,0.4,weights=co10s_n0628)
-        self._ax_multiviolin(ax3,r21s_n0628,this_beams_n0628,ylim,self.c_n0628,0.4,weights=co21s_n0628)
+        self._ax_multiviolin(ax1,r21s_n0628,this_beams_n0628,ylim,self.c_n0628,0.8,weights=None)
+        self._ax_multiviolin(ax2,r21s_n0628,this_beams_n0628,ylim,self.c_n0628,0.5,weights=co10s_n0628)
+        self._ax_multiviolin(ax3,r21s_n0628,this_beams_n0628,ylim,self.c_n0628,0.3,weights=co21s_n0628)
 
         # text
         t=ax1.text(0.02, 0.82, "NGC 0628", color=self.c_n0628, horizontalalignment="left", transform=ax1.transAxes, size=self.legend_fontsize-2, fontweight="bold")
