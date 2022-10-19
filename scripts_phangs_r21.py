@@ -534,7 +534,7 @@ class ToolsR21():
         this_incl     = self.incl_n0628
         this_r25      = 1
         r21_n0628, w1_n0628, w2_n0628, w3_n0628, dist_n0628, disp_n0628, w3w1_n0628, w3co21_n0628, w3co10_n0628, bulge_n0628 = \
-            _import_scatters(self,co10,co21,r21,er21,w1,w2,w3,disp,ra,dec,scale,pa,incl,this_r25,outer=True)
+            _import_scatters(self,co10,co21,r21,er21,w1,w2,w3,disp,ra,dec,scale,pa,incl,this_r25)
 
         print(len(r21_n0628),len(disp_n0628),len(bulge_n0628))
 
@@ -580,24 +580,14 @@ class ToolsR21():
         dist_kpc  = dist_pc / 1000.
         dist      = dist_pc / 1000. / this_r25
 
-        if outer==True:
-            cut = np.where( (~np.isnan(this_co10)) & (~np.isinf(this_co10)) & (this_co10!=0) \
-                & (~np.isnan(this_co21)) & (~np.isinf(this_co21)) & (this_co21!=0) \
-                & (~np.isnan(this_r21)) & (~np.isinf(this_r21)) & (this_r21!=0) \
-                & (~np.isnan(this_w1)) & (~np.isinf(this_w1)) & (this_w1!=0) \
-                & (~np.isnan(this_w2)) & (~np.isinf(this_w2)) & (this_w2!=0) \
-                & (~np.isnan(this_w3)) & (~np.isinf(this_w3)) & (this_w3!=0) \
-                & (~np.isnan(this_disp)) & (~np.isinf(this_disp)) & (this_disp!=0) \
-                & (this_r21!=this_r21_err*self.snr_ratio) )
-        else:
         cut = np.where( (~np.isnan(this_co10)) & (~np.isinf(this_co10)) & (this_co10!=0) \
-                & (~np.isnan(this_co21)) & (~np.isinf(this_co21)) & (this_co21!=0) \
-                & (~np.isnan(this_r21)) & (~np.isinf(this_r21)) & (this_r21!=0) \
-                & (~np.isnan(this_w1)) & (~np.isinf(this_w1)) & (this_w1!=0) \
-                & (~np.isnan(this_w2)) & (~np.isinf(this_w2)) & (this_w2!=0) \
-                & (~np.isnan(this_w3)) & (~np.isinf(this_w3)) & (this_w3!=0) \
-                & (~np.isnan(this_disp)) & (~np.isinf(this_disp)) & (this_disp!=0) \
-                & (this_r21!=this_r21_err*self.snr_ratio) )
+            & (~np.isnan(this_co21)) & (~np.isinf(this_co21)) & (this_co21!=0) \
+            & (~np.isnan(this_r21)) & (~np.isinf(this_r21)) & (this_r21!=0) \
+            & (~np.isnan(this_w1)) & (~np.isinf(this_w1)) & (this_w1!=0) \
+            & (~np.isnan(this_w2)) & (~np.isinf(this_w2)) & (this_w2!=0) \
+            & (~np.isnan(this_w3)) & (~np.isinf(this_w3)) & (this_w3!=0) \
+            & (~np.isnan(this_disp)) & (~np.isinf(this_disp)) & (this_disp!=0) \
+            & (this_r21!=this_r21_err*self.snr_ratio) )
 
         array_r21    = np.log10(this_r21[cut].flatten() / np.median(this_r21[cut].flatten()))
         array_w1     = np.log10(this_w1[cut].flatten() / np.median(this_w1[cut].flatten()))
