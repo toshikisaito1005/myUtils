@@ -601,16 +601,16 @@ class ToolsR21():
             self._import_scatters(this_co10,this_co21,this_r21,this_er21,this_w1,this_w2,this_w3,this_disp,
                 this_ra,this_dec,this_scale,this_pa,this_incl,this_r25)
 
-        r21    = [r21_n0628,r21_n3627,r21_n4254,r21_n4321]
-        w1     = [w1_n0628,w1_n3627,w1_n4254,w1_n4321]
-        w2     = [w2_n0628,w2_n3627,w2_n4254,w2_n4321]
-        w3     = [w3_n0628,w3_n3627,w3_n4254,w3_n4321]
-        dist   = [dist_n0628,dist_n3627,dist_n4254,dist_n4321]
-        disp   = [disp_n0628,disp_n3627,disp_n4254,disp_n4321]
-        w3w1   = [w3w1_n0628,w3w1_n3627,w3w1_n4321,w3w1_n4321]
-        w3co21 = [w3co21_n0628,w3co21_n3627,w3co21_n4254,w3co21_n4321]
-        w3co10 = [w3co10_n0628,w3co10_n3627,w3co10_n4254,w3co10_n4321]
-        bulge  = [bulge_n0628,bulge_n3627,bulge_n4254,bulge_n4321]
+        r21    = np.r_[r21_n0628,r21_n3627,r21_n4254,r21_n4321]
+        w1     = np.r_[w1_n0628,w1_n3627,w1_n4254,w1_n4321]
+        w2     = np.r_[w2_n0628,w2_n3627,w2_n4254,w2_n4321]
+        w3     = np.r_[w3_n0628,w3_n3627,w3_n4254,w3_n4321]
+        dist   = np.r_[dist_n0628,dist_n3627,dist_n4254,dist_n4321]
+        disp   = np.r_[disp_n0628,disp_n3627,disp_n4254,disp_n4321]
+        w3w1   = np.r_[w3w1_n0628,w3w1_n3627,w3w1_n4321,w3w1_n4321]
+        w3co21 = np.r_[w3co21_n0628,w3co21_n3627,w3co21_n4254,w3co21_n4321]
+        w3co10 = np.r_[w3co10_n0628,w3co10_n3627,w3co10_n4254,w3co10_n4321]
+        bulge  = np.r_[bulge_n0628,bulge_n3627,bulge_n4254,bulge_n4321]
 
         ########
         # plot #
@@ -652,7 +652,7 @@ class ToolsR21():
 
         # plot
         ax1.scatter(w1[bulge==0], r21[bulge==0], lw=0, color="silver")
-        #ax1.scatter(w1[bulge==1], r21[bulge==1], lw=0, color="gold")
+        ax1.scatter(w1[bulge==1], r21[bulge==1], lw=0, color="gold")
 
 
         plt.savefig(self.outpng_scatters, dpi=self.fig_dpi)  
@@ -717,7 +717,7 @@ class ToolsR21():
         array_w3w1   = np.log10(this_w3w1[cut].flatten() / np.median(this_w3w1[cut].flatten()))
         array_w3co21 = np.log10(this_w3co21[cut].flatten() / np.median(this_w3co21[cut].flatten()))
         array_w3co10 = np.log10(this_w3co10[cut].flatten() / np.median(this_w3co10[cut].flatten()))
-        array_bulge  = np.where((dist_kpc[cut]<=self.hist_550pc_cnter_radius), 1.0, 0.0)
+        array_bulge  = np.where( (dist_kpc[cut]<=self.hist_550pc_cnter_radius),1.0,0.0 )
 
         return array_r21, array_w1, array_w2, array_w3, array_dist, array_disp, array_w3w1, array_w3co21, array_w3co10, array_bulge
 
