@@ -621,7 +621,7 @@ class ToolsR21():
         array_co21 = []
         array_r21 = []
 
-        shape         = imhead(this_co10,mode="list")["shape"]
+        shape         = imhead(co21,mode="list")["shape"]
         box           = "0,0," + str(shape[0]-1) + "," + str(shape[1]-1)
         ra_deg        = imval(co21,box=box)["coords"][:,:,0] * 180/np.pi
         dec_deg       = imval(co21,box=box)["coords"][:,:,1] * 180/np.pi
