@@ -585,7 +585,7 @@ class ToolsR21():
         ygrid  = np.linspace(ylim[0], ylim[1], num=1000)
 
         # plot kde
-        h,e = np.histogram(data, bins=1000, density=True, weights=None)
+        h,e = np.histogram(r21, bins=1000, density=True, weights=None)
         x = np.linspace(e.min(), e.max())
         resamples = np.random.choice((e[:-1] + e[1:])/2, size=5000, p=h/h.sum())
         l = gaussian_kde(resamples)
@@ -600,7 +600,7 @@ class ToolsR21():
         ax.fill_betweenx(ygrid, left, right, facecolor=color, alpha=0.2, lw=0)
 
         # plot weighted kde
-        h,e = np.histogram(data, bins=1000, density=True, weights=co21)
+        h,e = np.histogram(r21, bins=1000, density=True, weights=co21)
         x = np.linspace(e.min(), e.max())
         resamples = np.random.choice((e[:-1] + e[1:])/2, size=5000, p=h/h.sum())
         l = gaussian_kde(resamples)
