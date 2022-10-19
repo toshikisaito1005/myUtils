@@ -526,7 +526,7 @@ class ToolsR21():
             ra_cnt=this_ra,
             dec_cnt=this_dec,
             levels_cont1=[0.05, 0.1, 0.2, 0.4, 0.8, 0.96],
-            set_title="NGC 0628",
+            set_title=this_title,
             colorlog=False,
             set_cmap="rainbow",
             scalebar=this_scalebar,
@@ -542,7 +542,7 @@ class ToolsR21():
             ra_cnt=this_ra,
             dec_cnt=this_dec,
             levels_cont1=[0.05, 0.1, 0.2, 0.4, 0.8, 0.96],
-            set_title="NGC 0628",
+            set_title=this_title,
             colorlog=False,
             set_cmap="bwr",
             scalebar=this_scalebar,
@@ -558,7 +558,7 @@ class ToolsR21():
             ra_cnt=this_ra,
             dec_cnt=this_dec,
             levels_cont1=[0.05, 0.1, 0.2, 0.4, 0.8, 0.96],
-            set_title="NGC 0628",
+            set_title=this_title,
             colorlog=False,
             set_cmap="gnuplot",
             scalebar=this_scalebar,
@@ -574,7 +574,259 @@ class ToolsR21():
             ra_cnt=this_ra,
             dec_cnt=this_dec,
             levels_cont1=[0.05, 0.1, 0.2, 0.4, 0.8, 0.96],
-            set_title="NGC 0628",
+            set_title=this_title,
+            colorlog=False,
+            set_cmap="PiYG_r",
+            scalebar=this_scalebar,
+            label_scalebar="1 kpc",
+            comment="HII region mask",
+            clim=[-0.2,1.2],
+            )
+
+        ###########
+        # ngc3627 #
+        ###########
+        this_co21       = self.outmom_co21_n3627.replace("momX","mom0")
+        this_eco21      = self.outmom_co21_n3627.replace("momX","emom0")
+        this_co21       = self._clip_for_showcase(this_co21,this_eco21)
+        this_r21hl      = self.outfits_r21hl_n3627
+        this_cprops     = self.outfits_cprops_n3627
+        this_env        = self.outfits_env_n3627
+        this_halpha     = self.outfits_halpha_n3627
+        this_out_r21hl  = self.outpng_r21hl_n3627
+        this_out_cprops = self.outpng_cprops_n3627
+        this_out_env    = self.outpng_env_n3627
+        this_out_halpha = self.outpng_halpha_n3627
+        this_imsize     = self.imsize_n3627
+        this_ra         = self.ra_n3627
+        this_dec        = self.dec_n3627
+        this_scalebar   = 1000. / self.scale_n3627
+        this_title      = "NGC 3627"
+        myfig_fits2png(
+            this_r21hl,
+            this_out_r21hl,
+            imcontour1=this_co21,
+            imsize_as=this_imsize,
+            ra_cnt=this_ra,
+            dec_cnt=this_dec,
+            levels_cont1=[0.05, 0.1, 0.2, 0.4, 0.8, 0.96],
+            set_title=this_title,
+            colorlog=False,
+            set_cmap="rainbow",
+            scalebar=this_scalebar,
+            label_scalebar="1 kpc",
+            comment="$R_{21}$ mask",
+            clim=[0.7,3.3],
+            )
+        myfig_fits2png(
+            this_cprops,
+            this_out_cprops,
+            imcontour1=this_co21,
+            imsize_as=this_imsize,
+            ra_cnt=this_ra,
+            dec_cnt=this_dec,
+            levels_cont1=[0.05, 0.1, 0.2, 0.4, 0.8, 0.96],
+            set_title=this_title,
+            colorlog=False,
+            set_cmap="bwr",
+            scalebar=this_scalebar,
+            label_scalebar="1 kpc",
+            comment="cloud mask",
+            clim=[-0.2,1.2],
+            )
+        myfig_fits2png(
+            this_env,
+            this_out_env,
+            imcontour1=this_co21,
+            imsize_as=this_imsize,
+            ra_cnt=this_ra,
+            dec_cnt=this_dec,
+            levels_cont1=[0.05, 0.1, 0.2, 0.4, 0.8, 0.96],
+            set_title=this_title,
+            colorlog=False,
+            set_cmap="gnuplot",
+            scalebar=this_scalebar,
+            label_scalebar="1 kpc",
+            comment="environmental mask",
+            clim=[0,3.5],
+            )
+        myfig_fits2png(
+            this_halpha,
+            this_out_halpha,
+            imcontour1=this_co21,
+            imsize_as=this_imsize,
+            ra_cnt=this_ra,
+            dec_cnt=this_dec,
+            levels_cont1=[0.05, 0.1, 0.2, 0.4, 0.8, 0.96],
+            set_title=this_title,
+            colorlog=False,
+            set_cmap="PiYG_r",
+            scalebar=this_scalebar,
+            label_scalebar="1 kpc",
+            comment="HII region mask",
+            clim=[-0.2,1.2],
+            )
+
+        ###########
+        # ngc4254 #
+        ###########
+        this_co21       = self.outmom_co21_n4254.replace("momX","mom0")
+        this_eco21      = self.outmom_co21_n4254.replace("momX","emom0")
+        this_co21       = self._clip_for_showcase(this_co21,this_eco21)
+        this_r21hl      = self.outfits_r21hl_n4254
+        this_cprops     = self.outfits_cprops_n4254
+        this_env        = self.outfits_env_n4254
+        this_halpha     = self.outfits_halpha_n4254
+        this_out_r21hl  = self.outpng_r21hl_n4254
+        this_out_cprops = self.outpng_cprops_n4254
+        this_out_env    = self.outpng_env_n4254
+        this_out_halpha = self.outpng_halpha_n4254
+        this_imsize     = self.imsize_n4254
+        this_ra         = self.ra_n4254
+        this_dec        = self.dec_n4254
+        this_scalebar   = 1000. / self.scale_n4254
+        this_title      = "NGC 4254"
+        myfig_fits2png(
+            this_r21hl,
+            this_out_r21hl,
+            imcontour1=this_co21,
+            imsize_as=this_imsize,
+            ra_cnt=this_ra,
+            dec_cnt=this_dec,
+            levels_cont1=[0.05, 0.1, 0.2, 0.4, 0.8, 0.96],
+            set_title=this_title,
+            colorlog=False,
+            set_cmap="rainbow",
+            scalebar=this_scalebar,
+            label_scalebar="1 kpc",
+            comment="$R_{21}$ mask",
+            clim=[0.7,3.3],
+            )
+        myfig_fits2png(
+            this_cprops,
+            this_out_cprops,
+            imcontour1=this_co21,
+            imsize_as=this_imsize,
+            ra_cnt=this_ra,
+            dec_cnt=this_dec,
+            levels_cont1=[0.05, 0.1, 0.2, 0.4, 0.8, 0.96],
+            set_title=this_title,
+            colorlog=False,
+            set_cmap="bwr",
+            scalebar=this_scalebar,
+            label_scalebar="1 kpc",
+            comment="cloud mask",
+            clim=[-0.2,1.2],
+            )
+        myfig_fits2png(
+            this_env,
+            this_out_env,
+            imcontour1=this_co21,
+            imsize_as=this_imsize,
+            ra_cnt=this_ra,
+            dec_cnt=this_dec,
+            levels_cont1=[0.05, 0.1, 0.2, 0.4, 0.8, 0.96],
+            set_title=this_title,
+            colorlog=False,
+            set_cmap="gnuplot",
+            scalebar=this_scalebar,
+            label_scalebar="1 kpc",
+            comment="environmental mask",
+            clim=[0,3.5],
+            )
+        myfig_fits2png(
+            this_halpha,
+            this_out_halpha,
+            imcontour1=this_co21,
+            imsize_as=this_imsize,
+            ra_cnt=this_ra,
+            dec_cnt=this_dec,
+            levels_cont1=[0.05, 0.1, 0.2, 0.4, 0.8, 0.96],
+            set_title=this_title,
+            colorlog=False,
+            set_cmap="PiYG_r",
+            scalebar=this_scalebar,
+            label_scalebar="1 kpc",
+            comment="HII region mask",
+            clim=[-0.2,1.2],
+            )
+
+        ###########
+        # ngc4321 #
+        ###########
+        this_co21       = self.outmom_co21_n4321.replace("momX","mom0")
+        this_eco21      = self.outmom_co21_n4321.replace("momX","emom0")
+        this_co21       = self._clip_for_showcase(this_co21,this_eco21)
+        this_r21hl      = self.outfits_r21hl_n4321
+        this_cprops     = self.outfits_cprops_n4321
+        this_env        = self.outfits_env_n4321
+        this_halpha     = self.outfits_halpha_n4321
+        this_out_r21hl  = self.outpng_r21hl_n4321
+        this_out_cprops = self.outpng_cprops_n4321
+        this_out_env    = self.outpng_env_n4321
+        this_out_halpha = self.outpng_halpha_n4321
+        this_imsize     = self.imsize_n4321
+        this_ra         = self.ra_n4321
+        this_dec        = self.dec_n4321
+        this_scalebar   = 1000. / self.scale_n4321
+        this_title      = "NGC 4321"
+        myfig_fits2png(
+            this_r21hl,
+            this_out_r21hl,
+            imcontour1=this_co21,
+            imsize_as=this_imsize,
+            ra_cnt=this_ra,
+            dec_cnt=this_dec,
+            levels_cont1=[0.05, 0.1, 0.2, 0.4, 0.8, 0.96],
+            set_title=this_title,
+            colorlog=False,
+            set_cmap="rainbow",
+            scalebar=this_scalebar,
+            label_scalebar="1 kpc",
+            comment="$R_{21}$ mask",
+            clim=[0.7,3.3],
+            )
+        myfig_fits2png(
+            this_cprops,
+            this_out_cprops,
+            imcontour1=this_co21,
+            imsize_as=this_imsize,
+            ra_cnt=this_ra,
+            dec_cnt=this_dec,
+            levels_cont1=[0.05, 0.1, 0.2, 0.4, 0.8, 0.96],
+            set_title=this_title,
+            colorlog=False,
+            set_cmap="bwr",
+            scalebar=this_scalebar,
+            label_scalebar="1 kpc",
+            comment="cloud mask",
+            clim=[-0.2,1.2],
+            )
+        myfig_fits2png(
+            this_env,
+            this_out_env,
+            imcontour1=this_co21,
+            imsize_as=this_imsize,
+            ra_cnt=this_ra,
+            dec_cnt=this_dec,
+            levels_cont1=[0.05, 0.1, 0.2, 0.4, 0.8, 0.96],
+            set_title=this_title,
+            colorlog=False,
+            set_cmap="gnuplot",
+            scalebar=this_scalebar,
+            label_scalebar="1 kpc",
+            comment="environmental mask",
+            clim=[0,3.5],
+            )
+        myfig_fits2png(
+            this_halpha,
+            this_out_halpha,
+            imcontour1=this_co21,
+            imsize_as=this_imsize,
+            ra_cnt=this_ra,
+            dec_cnt=this_dec,
+            levels_cont1=[0.05, 0.1, 0.2, 0.4, 0.8, 0.96],
+            set_title=this_title,
             colorlog=False,
             set_cmap="PiYG_r",
             scalebar=this_scalebar,
