@@ -566,7 +566,7 @@ class ToolsR21():
         this_scale  = self.scale_n4321
         this_pa     = self.pa_n4321
         this_incl   = self.incl_n4321
-        r21_4321, co21_4321, cprops_4321, env_4321, halpha_4321 = self._import_masked_hist(this_co21,this_r21,this_er21,
+        r21_n4321, co21_n4321, cprops_n4321, env_n4321, halpha_n4321 = self._import_masked_hist(this_co21,this_r21,this_er21,
             this_cprops,this_env,this_halpha,this_ra,this_dec,this_scale,this_pa,this_incl)
 
         r21    = np.r_[r21_n0628,r21_n3627,r21_n4254,r21_n4321]
