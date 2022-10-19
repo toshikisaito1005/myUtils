@@ -483,7 +483,7 @@ class ToolsR21():
         ###########
 
         this_basebeam = str(self.basebeam_n0628).replace(".","p").zfill(4)
-        this_beams    = [s for s in self.beams_n0628 if s%4==0]
+        this_beams_n0628 = [s for s in self.beams_n0628 if s%4==0]
         this_r21      = self.outfits_r21_n0628.replace(this_basebeam,"????")
         this_er21     = self.outfits_er21_n0628.replace(this_basebeam,"????")
         this_co10     = self.outmom_co10_n0628.replace(this_basebeam,"????").replace("momX","mom0")
@@ -493,13 +493,13 @@ class ToolsR21():
         this_scale    = self.scale_n0628
         this_pa       = self.pa_n0628
         this_incl     = self.incl_n0628
-        xlim_n0628    = [np.min(this_beams)-4.0, np.max(this_beams)+4.0]
         co10s_n0628, co21s_n0628, r21s_n0628 = \
-            self._import_violins(this_co10,this_co21,this_r21,this_er21,this_beams,this_ra,this_dec,this_scale,this_pa,this_incl)
+            self._import_violins(this_co10,this_co21,this_r21,this_er21,this_beams_n0628,this_ra,this_dec,this_scale,this_pa,this_incl)
 
         ax1_title  = "Area-weighted"
         ax2_title  = "CO(1-0)-weighted"
         ax3_title  = "CO(2-1)-weighted"
+        xlim_n0628 = [np.min(this_beams_n0628)-4.0, np.max(this_beams_n0628)+4.0]
         ylim       = [0.0,1.2]
 
         ########
@@ -553,8 +553,63 @@ class ToolsR21():
         ax12.tick_params(labelbottom=True,labelleft=False,labelright=False,labeltop=False)
 
         # from here!
+        for i in range(len(this_beams_n0628)):
+            this_beam  = this_beams_n0628[i]
+            this_r21   = r21s_n0628[i]
+            self._ax_violin(ax1,this_r21,this_beam,ylim,self.c_n0628,0.6)
 
         plt.savefig(self.outpng_violins, dpi=self.fig_dpi)
+
+    ##############
+    # _ax_violin #
+    ##############
+
+    def _ax_violin(
+        self,
+        ax,
+        data,
+        beam,
+        ylim,
+        color,
+        alpha,
+        vmin=None,
+        vmax=None,
+        ):
+        """
+        """
+
+        ygrid  = np.linspace(ylim[0], ylim[1], num=1000)
+
+        # prepare
+        if vmin==None:
+            vmin = np.min(data)
+
+        if vmax==None:
+            vmax = np.max(data)
+
+        # percentiles
+        p2   = np.nanpercentile(data[data!=0],2)
+        p16  = np.nanpercentile(data[data!=0],16)
+        p50  = np.nanpercentile(data[data!=0],50)
+        p84  = np.nanpercentile(data[data!=0],84)
+        p98  = np.nanpercentile(data[data!=0],98)
+
+        # kde
+        l = gaussian_kde(data)
+        data = np.array(l(ygrid) / np.max(l(ygrid))) / 1.1
+
+        left  = beam-data
+        right = beam+data
+        cut = np.where((ygrid<vmax)&(ygrid>vmin))
+
+        ax.plot(right[cut], ygrid[cut], lw=2, color="grey")
+        ax.plot(left[cut], ygrid[cut], lw=2, color="grey")
+        ax.fill_betweenx(ygrid, left, right, facecolor=color, alpha=alpha, lw=0)
+
+        # percentiles
+        ax.plot([beam,beam],[p2,p98],lw=2,color="grey")
+        ax.plot([beam,beam],[p16,p84],lw=9,color="grey")
+        ax.plot(beam,p50,".",color="white",markersize=10, markeredgewidth=0)
 
     ###################
     # _import_violins #
