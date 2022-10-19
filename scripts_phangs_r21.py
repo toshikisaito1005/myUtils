@@ -689,9 +689,9 @@ class ToolsR21():
             & (~np.isnan(this_r21)) & (~np.isinf(this_r21)) & (this_r21!=0) \
             & (this_r21!=this_r21_err*self.snr_ratio) & (dist_kpc > self.hist_550pc_cnter_radius) ) 
 
-        this_co21   = this_co21[cut].flatten()
+        this_co21   = (this_r21[cut].flatten() - np.mean(this_r21[cut].flatten())) / np.std(this_r21[cut].flatten())
         this_r21    = this_r21[cut].flatten() / np.median(this_r21[cut].flatten())
-        this_cprops = (this_cprops[cut].flatten() - np.mean(this_r21[cut].flatten())) / np.std(this_r21[cut].flatten())
+        this_cprops = this_cprops[cut].flatten()
         this_env    = this_env[cut].flatten()
         this_halpha = this_halpha[cut].flatten()
 
