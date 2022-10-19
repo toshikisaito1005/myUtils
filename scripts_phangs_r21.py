@@ -575,8 +575,9 @@ class ToolsR21():
         env    = np.r_[env_n0628,env_n3627,env_n4254,env_n4321]
         halpha = np.r_[halpha_n0628,halpha_n3627,halpha_n4254,halpha_n4321]
 
-        ylim       = [0.0,2.5]
-        ylabel     = "Median-normalized $R_{21}$"
+        xlim   = [0,22]
+        ylim   = [0.0,2.5]
+        ylabel = "Median-normalized $R_{21}$"
 
         ########
         # plot #
@@ -589,7 +590,7 @@ class ToolsR21():
         ax1  = plt.subplot(gs[0:12,0:9])
 
         # set ax param
-        myax_set(ax1,  "y", None, ylim, None, None, ylabel)
+        myax_set(ax1,  "y", xlim, ylim, None, None, ylabel)
         ax1.axes.xaxis.set_ticklabels([])
 
         # plot
@@ -673,12 +674,12 @@ class ToolsR21():
         p50_weight   = self._weighted_percentile(r21,50,weights=co21)
         p84_weight   = self._weighted_percentile(r21,84,weights=co21)
 
-        x_noweight = 17 + (shift-0.5)/5.
-        x_weight   = 17 + (shift+0.5)/5.
+        x_noweight = 17 + (shift-0.3)/5.
+        x_weight   = 17 + (shift+0.3)/5.
         ax.plot(x_noweight,p50_noweight,"s",color=color,alpha=0.2,lw=0)
         ax.plot(x_weight,  p50_weight,"o",color=color,alpha=0.8,lw=0)
-        ax.plot([x_noweight,x_noweight],[p16_noweight,p84_noweight],"-",color=color,alpha=0.2,lw=3)
-        ax.plot([x_weight,x_weight],    [p16_weight,p84_weight],"-",color=color,alpha=0.8,lw=3)
+        ax.plot([x_noweight,x_noweight],[p16_noweight,p84_noweight],"-",color=color,alpha=0.2,lw=2)
+        ax.plot([x_weight,x_weight],    [p16_weight,p84_weight],"-",color=color,alpha=0.8,lw=2)
 
     #######################
     # _import_masked_hist #
