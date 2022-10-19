@@ -499,7 +499,7 @@ class ToolsR21():
         ax1_title  = "Area-weighted"
         ax2_title  = "CO(1-0)-weighted"
         ax3_title  = "CO(2-1)-weighted"
-        xlim_n0628 = [np.min(this_beams_n0628)-4.0, np.max(this_beams_n0628)+4.0]
+        xlim_n0628 = [np.min(this_beams_n0628)-2.0, np.max(this_beams_n0628)+2.0]
         ylim       = [0.0,1.2]
 
         ########
@@ -596,7 +596,7 @@ class ToolsR21():
 
         # kde
         l = gaussian_kde(data)
-        data = np.array(l(ygrid) / np.max(l(ygrid))) / 1.1
+        data = np.array(l(ygrid) / np.max(l(ygrid))) / 0.55
 
         left  = beam-data
         right = beam+data
@@ -608,8 +608,8 @@ class ToolsR21():
 
         # percentiles
         ax.plot([beam,beam],[p2,p98],lw=2,color="grey")
-        ax.plot([beam,beam],[p16,p84],lw=9,color="grey")
-        ax.plot(beam,p50,".",color="white",markersize=10, markeredgewidth=0)
+        ax.plot([beam,beam],[p16,p84],lw=5,color="grey")
+        ax.plot(beam,p50,".",color="white",markersize=6, markeredgewidth=0)
 
     ###################
     # _import_violins #
