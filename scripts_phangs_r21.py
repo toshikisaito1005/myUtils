@@ -301,6 +301,7 @@ class ToolsR21():
         self.snr_gmc           = 5.0
         self.snr_ratio         = 3.0
         self.snr_showcase      = 2.5
+        self.snr_scatter       = 2.5
 
         self.nchan_thres_n0628 = 2
         self.nchan_thres_n3627 = 3
@@ -651,7 +652,7 @@ class ToolsR21():
 
         # plot
         ax1.scatter(w1[bulge==0], r21[bulge==0], lw=0, color="silver")
-        ax1.scatter(w1[bulge==1], r21[bulge==1], lw=0, color="gold")
+        #ax1.scatter(w1[bulge==1], r21[bulge==1], lw=0, color="gold")
 
 
         plt.savefig(self.outpng_scatters, dpi=self.fig_dpi)  
@@ -705,7 +706,7 @@ class ToolsR21():
             & (~np.isnan(this_w2)) & (~np.isinf(this_w2)) & (this_w2!=0) \
             & (~np.isnan(this_w3)) & (~np.isinf(this_w3)) & (this_w3!=0) \
             & (~np.isnan(this_disp)) & (~np.isinf(this_disp)) & (this_disp!=0) \
-            & (this_r21!=this_er21*self.snr_ratio) )
+            & (this_r21!=this_er21*self.snr_scatter) )
 
         array_r21    = np.log10(this_r21[cut].flatten() / np.median(this_r21[cut].flatten()))
         array_w1     = np.log10(this_w1[cut].flatten() / np.median(this_w1[cut].flatten()))
