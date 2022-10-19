@@ -554,6 +554,8 @@ class ToolsR21():
 
         # plot: n0628
         self._ax_multiviolin(ax1,r21s_n0628,this_beams_n0628,ylim,self.c_n0628,0.6,weights=None)
+        self._ax_multiviolin(ax2,r21s_n0628,this_beams_n0628,ylim,self.c_n0628,0.4,weights=co10s_n0628)
+        self._ax_multiviolin(ax3,r21s_n0628,this_beams_n0628,ylim,self.c_n0628,0.4,weights=co21s_n0628)
 
         # text
         t=ax1.text(0.02, 0.82, "NGC 0628", color=self.c_n0628, horizontalalignment="left", transform=ax1.transAxes, size=self.legend_fontsize-2, fontweight="bold")
@@ -599,7 +601,7 @@ class ToolsR21():
         # plot running pctls
         ax.plot(beams, list_p16, "--", color="black", lw=1)
         ax.plot(beams, list_p50, "--", color="black", lw=1)
-        ax.plot(beams, list_p84, "--", color="black", lw=1)
+        ax.plot(beams, list_p84, "-", color="black", lw=1)
 
     ##############
     # _ax_violin #
@@ -656,7 +658,7 @@ class ToolsR21():
         # percentiles
         ax.plot([beam,beam],[p2,p98],lw=2,color="grey")
         ax.plot([beam,beam],[p16,p84],lw=5,color="grey")
-        ax.plot(beam,p50,".",color="white",markersize=6, markeredgewidth=0)
+        ax.plot(beam,p50,".",color="black",markersize=8, markeredgewidth=0)
 
         return p16,p50,p84
 
