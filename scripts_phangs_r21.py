@@ -694,6 +694,16 @@ class ToolsR21():
         self._plot_contours_gal(ax1,w1_n4254[bulge_n4254==0],r21_n4254[bulge_n4254==0],xlim1,ylim,self.c_n4254)
         self._plot_contours_gal(ax1,w1_n4321[bulge_n4321==0],r21_n4321[bulge_n4321==0],xlim1,ylim,self.c_n4321)
 
+        self._plot_contours_gal(ax2,w2_n0628[bulge_n0628==0],r21_n0628[bulge_n0628==0],xlim2,ylim,self.c_n0628)
+        self._plot_contours_gal(ax2,w2_n3627[bulge_n3627==0],r21_n3627[bulge_n3627==0],xlim2,ylim,self.c_n3627)
+        self._plot_contours_gal(ax2,w2_n4254[bulge_n4254==0],r21_n4254[bulge_n4254==0],xlim2,ylim,self.c_n4254)
+        self._plot_contours_gal(ax2,w2_n4321[bulge_n4321==0],r21_n4321[bulge_n4321==0],xlim2,ylim,self.c_n4321)
+
+        self._plot_contours_gal(ax3,w3_n0628[bulge_n0628==0],r21_n0628[bulge_n0628==0],xlim3,ylim,self.c_n0628)
+        self._plot_contours_gal(ax3,w3_n3627[bulge_n3627==0],r21_n3627[bulge_n3627==0],xlim3,ylim,self.c_n3627)
+        self._plot_contours_gal(ax3,w3_n4254[bulge_n4254==0],r21_n4254[bulge_n4254==0],xlim3,ylim,self.c_n4254)
+        self._plot_contours_gal(ax3,w3_n4321[bulge_n4321==0],r21_n4321[bulge_n4321==0],xlim3,ylim,self.c_n4321)
+
         # text
 
         plt.savefig(self.outpng_scatters, dpi=self.fig_dpi)  
@@ -714,8 +724,8 @@ class ToolsR21():
         """
         """
 
-        xdata = scipy.ndimage.zoom(xdata, 33)
-        ydata = scipy.ndimage.zoom(ydata, 33)
+        xdata = scipy.ndimage.zoom(xdata, 21)#33)
+        ydata = scipy.ndimage.zoom(ydata, 21)#33)
 
         contour, xedges, yedges = np.histogram2d(ydata, xdata, bins=50, range=(ylim,xlim))
         contour = contour/contour.max() * 100
