@@ -527,6 +527,12 @@ class ToolsR21():
         r21_n0628, co21_n0628, cprops_n0628, env_n0628, halpha_n0628 = \
             self._import_masked_hist(this_co21,this_r21,this_er21,this_cprops,this_env,this_halpha,this_ra,this_dec,this_scale,this_pa,this_incl)
 
+        r21    = np.r_[r21_n0628]
+        co21   = np.r_[co21_n0628]
+        cprops = np.r_[cprops_n0628]
+        env    = np.r_[env_n0628]
+        halpha = np.r_[halpha_n0628]
+
         ylim       = [0.0,1.2]
         ylabel     = "$R_{21}$"
 
@@ -545,7 +551,7 @@ class ToolsR21():
         ax1.axes.xaxis.set_ticklabels([])
 
         # plot
-        self._ax_masked_violin(ax1,r21,co21,cprops_n0628,1,1,ylim,cm.bwr(1.2/1.4))
+        self._ax_masked_violin(ax1,r21,co21,cprops,1,1,ylim,cm.bwr(1.2/1.4))
 
 
         # text
