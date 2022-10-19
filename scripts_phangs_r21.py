@@ -632,11 +632,11 @@ class ToolsR21():
             vmax = np.max(data)
 
         # percentiles
-        p2   = self._weighted_percentile(data[data!=0],2,weights=weights)
-        p16  = self._weighted_percentile(data[data!=0],16,weights=weights)
-        p50  = self._weighted_percentile(data[data!=0],50,weights=weights)
-        p84  = self._weighted_percentile(data[data!=0],84,weights=weights)
-        p98  = self._weighted_percentile(data[data!=0],98,weights=weights)
+        p2   = self._weighted_percentile(data[data!=0],2,weights=weights[data!=0])
+        p16  = self._weighted_percentile(data[data!=0],16,weights=weights[data!=0])
+        p50  = self._weighted_percentile(data[data!=0],50,weights=weights[data!=0])
+        p84  = self._weighted_percentile(data[data!=0],84,weights=weights[data!=0])
+        p98  = self._weighted_percentile(data[data!=0],98,weights=weights[data!=0])
 
         # kde
         h,e = np.histogram(data, bins=1000, density=True, weights=weights)
