@@ -575,7 +575,7 @@ class ToolsR21():
         env    = np.r_[env_n0628,env_n3627,env_n4254,env_n4321]
         halpha = np.r_[halpha_n0628,halpha_n3627,halpha_n4254,halpha_n4321]
 
-        xlim   = [0,22]
+        xlim   = [0,21]
         ylim   = [0.0,2.5]
         ylabel = "Median-normalized $R_{21}$"
 
