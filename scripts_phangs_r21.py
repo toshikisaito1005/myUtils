@@ -394,26 +394,29 @@ class ToolsR21():
         self.outpng_env_n4321         = self.dir_products + self._read_key("outpng_env_n4321")
         self.outpng_halpha_n4321      = self.dir_products + self._read_key("outpng_halpha_n4321")
 
+        self.outpng_masked_hist       = self.dir_products + self._read_key("outpng_masked_hist")
+
     ##################
     # run_phangs_r21 #
     ##################
 
     def run_phangs_r21(
         self,
-        do_all          = False,
+        do_all           = False,
         # analysis
-        do_align        = False,
-        do_multismooth  = False,
-        do_moments      = False,
-        do_align_other  = False,
+        do_align         = False,
+        do_multismooth   = False,
+        do_moments       = False,
+        do_align_other   = False,
         # plot figures in paper
-        plot_noise      = False,
-        plot_recovery   = False,
-        plot_showcase   = False,
-        plot_m0_vs_m8   = False,
-        plot_hist_550pc = False,
-        plot_violins    = False,
-        plot_masks      = False,
+        plot_noise       = False,
+        plot_recovery    = False,
+        plot_showcase    = False,
+        plot_m0_vs_m8    = False,
+        plot_hist_550pc  = False,
+        plot_violins     = False,
+        plot_masks       = False,
+        plot_masked_hist = False,
         # supplement
         ):
         """
@@ -426,18 +429,22 @@ class ToolsR21():
         self.do_ngc4321 = True
 
         if do_all==True:
-            self.do_ngc0628 = True
-            self.do_ngc3627 = True
-            self.do_ngc4254 = True
-            self.do_ngc4321 = True
-            do_align        = True
-            do_multismooth  = True
-            do_moments      = True
-            do_align_other  = True
-            plot_noise      = True
-            plot_recovery   = True
-            plot_showcase   = True
-            plot_m0_vs_m8   = True
+            self.do_ngc0628  = True
+            self.do_ngc3627  = True
+            self.do_ngc4254  = True
+            self.do_ngc4321  = True
+            do_align         = True
+            do_multismooth   = True
+            do_moments       = True
+            do_align_other   = True
+            plot_noise       = True
+            plot_recovery    = True
+            plot_showcase    = True
+            plot_m0_vs_m8    = True
+            plot_hist_550pc  = True
+            plot_violins     = True
+            plot_masks       = True
+            plot_masked_hist = True
 
         # analysis
         if do_align==True:
@@ -480,11 +487,167 @@ class ToolsR21():
         if plot_masks==True:
             self.plot_masks()
 
+        if plot_masked_hist==True:
+            self.plot_masked_hist()
+
     #####################
     #####################
     ### plotting part ###
     #####################
     #####################
+
+    ####################
+    # plot_masked_hist #
+    ####################
+
+    def plot_masked_hist(
+        self,
+        ):
+        """
+        """
+
+        taskname = self.modname + sys._getframe().f_code.co_name
+        check_first(self.outcube_co10_n0628,taskname)
+
+        ###########
+        # prepare #
+        ###########
+
+        this_r21    = self.outfits_r21_n0628
+        this_er21   = self.outfits_er21_n0628
+        this_co21   = self.outmom_co21_n0628.replace("momX","mom0")
+        this_cprops = self.outfits_cprops_n0628
+        this_env    = self.outfits_env_n0628
+        this_halpha = self.outfits_halpha_n0628
+        this_ra     = float(self.ra_n0628)
+        this_dec    = float(self.dec_n0628)
+        this_scale  = self.scale_n0628
+        this_pa     = self.pa_n0628
+        this_incl   = self.incl_n0628
+        r21_n0628, co21_n0628, cprops_n0628, env_n0628, halpha_n0628 = \
+            self._import_masked_hist(this_co21,this_r21,this_er21,this_cprops,this_env,this_halpha,this_ra,this_dec,this_scale,this_pa,this_incl)
+
+        ylim       = [0.0,1.2]
+        ylabel     = "$R_{21}$"
+
+        ########
+        # plot #
+        ########
+
+        # set plt, ax
+        plt.figure(figsize=(15,12))
+        plt.subplots_adjust(bottom=0.09, left=0.07, right=0.99, top=0.95)
+        gs   = gridspec.GridSpec(nrows=12, ncols=9)
+        ax1  = plt.subplot(gs[0:12,0:9])
+
+        # set ax param
+        myax_set(ax1,  "y", None, ylim, None, None, ylabel)
+        ax1.axes.xaxis.set_ticklabels([])
+
+        # plot
+        self._ax_masked_violin(ax1,r21,co21,cprops_n0628,1,1,ylim,cm.bwr(1.2/1.4))
+
+
+        # text
+
+        plt.savefig(self.outpng_violins, dpi=self.fig_dpi)
+
+    #####################
+    # _ax_masked_violin #
+    #####################
+
+    def _ax_masked_violin(
+        self,
+        ax,
+        r21,
+        co21,
+        mask,
+        index,
+        shift,
+        ylim,
+        color,
+        vmin=None,
+        vmax=None,
+        ):
+        """
+        """
+
+        # constrain data
+        r21  = r21[mask==index]
+        co21 = co21[mask==index]
+
+        ygrid  = np.linspace(ylim[0], ylim[1], num=1000)
+
+        # prepare
+        if vmin==None:
+            vmin = np.min(data)
+
+        if vmax==None:
+            vmax = np.max(data)
+
+        # plot kde
+        h,e = np.histogram(data, bins=1000, density=True, weights=None)
+        x = np.linspace(e.min(), e.max())
+        resamples = np.random.choice((e[:-1] + e[1:])/2, size=5000, p=h/h.sum())
+        l = gaussian_kde(resamples)
+        data = np.array(l(ygrid) / np.max(l(ygrid))) / 1.1
+
+        left = shift-data
+        cut = np.where((ygrid<vmax)&(ygrid>vmin))
+        ax.plot(left[cut], ygrid[cut], lw=1, color="grey")
+        ax.fill_betweenx(ygrid, left, right, facecolor=color, alpha=0.2, lw=0)
+
+        # plot weighted kde
+        h,e = np.histogram(data, bins=1000, density=True, weights=co21)
+        x = np.linspace(e.min(), e.max())
+        resamples = np.random.choice((e[:-1] + e[1:])/2, size=5000, p=h/h.sum())
+        l = gaussian_kde(resamples)
+        data = np.array(l(ygrid) / np.max(l(ygrid))) / 1.1
+
+        right = shift+data
+        cut = np.where((ygrid<vmax)&(ygrid>vmin))
+        ax.plot(left[cut], ygrid[cut], lw=1, color="grey")
+        ax.fill_betweenx(ygrid, left, right, facecolor=color, alpha=1.0, lw=0)
+
+    #######################
+    # _import_masked_hist #
+    #######################
+
+    def _import_masked_hist(self,co21,r21,er21,cprops,env,halpha,ra,dec,scale,pa,incl):
+        """
+        plot_masked_hist
+        """
+
+        array_co21 = []
+        array_r21 = []
+
+        shape         = imhead(this_co10,mode="list")["shape"]
+        box           = "0,0," + str(shape[0]-1) + "," + str(shape[1]-1)
+        ra_deg        = imval(co21,box=box)["coords"][:,:,0] * 180/np.pi
+        dec_deg       = imval(co21,box=box)["coords"][:,:,1] * 180/np.pi
+        this_co21     = imval(co21,box=box)["data"]
+        this_r21      = imval(r21,box=box)["data"]
+        this_r21_err  = imval(er21,box=box)["data"]
+        this_cprops   = imval(cprops,box=box)["data"]
+        this_env      = imval(env,box=box)["data"]
+        this_halpha   = imval(halpha,box=box)["data"]
+
+        dist_pc, _ = self._get_rel_dist_pc(ra_deg, dec_deg, ra, dec, scale, pa, incl)
+        dist_kpc   = dist_pc / 1000.
+
+        cut = np.where( (~np.isnan(this_co21)) & (~np.isinf(this_co21)) & (this_co21!=0) \
+            & (~np.isnan(this_r21)) & (~np.isinf(this_r21)) & (this_r21!=0) \
+            & (this_r21!=this_r21_err*self.snr_ratio) & (dist_kpc > self.hist_550pc_cnter_radius) ) 
+
+        this_co21   = this_co21[cut].flatten()
+        this_r21    = this_r21[cut].flatten()
+        this_cprops = this_cprops[cut].flatten()
+        this_env    = this_env[cut].flatten()
+        this_halpha = this_halpha[cut].flatten()
+
+        return this_r21, this_co21, this_cprops, this_env, this_halpha
+
+    #
 
     ##############
     # plot_masks #
