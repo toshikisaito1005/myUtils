@@ -552,13 +552,15 @@ class ToolsR21():
         ax11.tick_params(labelbottom=True,labelleft=False,labelright=False,labeltop=False)
         ax12.tick_params(labelbottom=True,labelleft=False,labelright=False,labeltop=False)
 
-        # from here!
+        # plot: ngc0628
         list_p16, list_p50, list_p84 = [], [], []
         for i in range(len(this_beams_n0628)):
             this_beam  = this_beams_n0628[i]
             this_r21   = r21s_n0628[i]
             p16,p50,p84 = self._ax_violin(ax1,this_r21,this_beam,ylim,self.c_n0628,0.6)
             list_p16.append(p16)
+            list_p50.append(p50)
+            list_p84.append(p84)
         ax1.plot(this_beams_n0628, list_p16, "--", color="grey", lw=1)
         ax1.plot(this_beams_n0628, list_p50, "--", color="grey", lw=1)
         ax1.plot(this_beams_n0628, list_p84, "--", color="grey", lw=1)
