@@ -612,6 +612,25 @@ class ToolsR21():
         w3co10 = np.r_[w3co10_n0628,w3co10_n3627,w3co10_n4254,w3co10_n4321]
         bulge  = np.r_[bulge_n0628,bulge_n3627,bulge_n4254,bulge_n4321]
 
+        xlim1   = [-0.99,1.5]
+        xlim2   = [-0.99,1.5]
+        xlim3   = [-0.99,1.5]
+        xlim4   = [-1.9,0.6]
+        xlim5   = [-0.65,1.0]
+        xlim6   = [-0.75,0.65]
+        xlim7   = [-0.65,0.65]
+        xlim8   = [-0.75,0.75]
+        ylim    = [-0.9,0.8]
+        xlabel1 = "log_{10} Normalized W1"
+        xlabel2 = "log_{10} Normalized W2"
+        xlabel3 = "log_{10} Normalized W3"
+        xlabel4 = "log_{10} $r$/$R_{\rm eff}$"
+        xlabel5 = "log_{10} Normalized $\sigma_{\rm CO(2-1)}$"
+        xlabel6 = "log_{10} Normalized W3/W1"
+        xlabel7 = "log_{10} Normalized W3/$I_{\rm CO(1-0)}$"
+        xlabel8 = "log_{10} Normalized W3/$I_{\rm CO(2-1)}$"
+        ylabel  = "log_{10} Normalized $R_{21}$"
+
         ########
         # plot #
         ########
@@ -629,14 +648,14 @@ class ToolsR21():
         ax7 = plt.subplot(gs[2:3,0:1])
         ax8 = plt.subplot(gs[2:3,1:2])
 
-        myax_set(ax1, "both", None, None, None, None, None)
-        myax_set(ax2, "both", None, None, None, None, None)
-        myax_set(ax3, "both", None, None, None, None, None)
-        myax_set(ax4, "both", None, None, None, None, None)
-        myax_set(ax5, "both", None, None, None, None, None)
-        myax_set(ax6, "both", None, None, None, None, None)
-        myax_set(ax7, "both", None, None, None, None, None)
-        myax_set(ax8, "both", None, None, None, None, None)
+        myax_set(ax1, "both", xlim1, ylim, None, xlabel1, ylabel)
+        myax_set(ax2, "both", xlim2, ylim, None, xlabel2, None)
+        myax_set(ax3, "both", xlim3, ylim, None, xlabel3, None)
+        myax_set(ax4, "both", xlim4, ylim, None, xlabel4, ylabel)
+        myax_set(ax5, "both", xlim5, ylim, None, xlabel5, None)
+        myax_set(ax6, "both", xlim6, ylim, None, xlabel6, None)
+        myax_set(ax7, "both", xlim7, ylim, None, xlabel7, ylabel)
+        myax_set(ax8, "both", xlim8, ylim, None, xlabel8, None)
         ax1.tick_params(labelbottom=True,labelleft=True,labelright=False,labeltop=False)
         ax2.tick_params(labelbottom=True,labelleft=False,labelright=False,labeltop=False)
         ax3.tick_params(labelbottom=True,labelleft=False,labelright=False,labeltop=False)
