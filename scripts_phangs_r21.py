@@ -586,6 +586,7 @@ class ToolsR21():
         """
         """
 
+        # plot each violin
         list_p16, list_p50, list_p84 = [], [], []
         for i in range(len(beams)):
             this_beam  = beams[i]
@@ -594,9 +595,11 @@ class ToolsR21():
             list_p16.append(p16)
             list_p50.append(p50)
             list_p84.append(p84)
-        ax.plot(this_beams_n0628, list_p16, "--", color="black", lw=1)
-        ax.plot(this_beams_n0628, list_p50, "--", color="black", lw=1)
-        ax.plot(this_beams_n0628, list_p84, "--", color="black", lw=1)
+ 
+        # plot running pctls
+        ax.plot(beams, list_p16, "--", color="black", lw=1)
+        ax.plot(beams, list_p50, "--", color="black", lw=1)
+        ax.plot(beams, list_p84, "--", color="black", lw=1)
 
     ##############
     # _ax_violin #
