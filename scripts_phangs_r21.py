@@ -673,10 +673,12 @@ class ToolsR21():
         p50_weight   = self._weighted_percentile(r21,50,weights=co21)
         p84_weight   = self._weighted_percentile(r21,84,weights=co21)
 
-        x_noweight = 18+(shift-0.5)/10.
-        x_weight   = 18+(shift+0.5)/10.
+        x_noweight = 16+(shift-0.5)/5.
+        x_weight   = 16+(shift+0.5)/5.
         ax.plot(x_noweight,p50_noweight,"s",color=color,alpha=0.2,lw=0)
         ax.plot(x_weight,  p50_noweight,"o",color=color,alpha=0.8,lw=0)
+        ax.plot([x_noweight,x_noweight],[p16_noweight,p84_noweight],"-",color=color,alpha=0.2,lw=0)
+        ax.plot([x_weight,x_weight],    [p16_noweight,p84_noweight],"-",color=color,alpha=0.8,lw=0)
 
     #######################
     # _import_masked_hist #
