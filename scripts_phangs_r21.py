@@ -571,7 +571,8 @@ class ToolsR21():
         ax12 = plt.subplot(gs[9:12,6:9])
 
         # set ax param
-        factor = 1.65
+        factor     = 1.65
+        x_beamtext = 0.16
         myax_set(ax1,  "y", xlim_n0628, ylim, ax1_title, None, ylabel)
         myax_set(ax2,  "y", xlim_n0628, ylim, ax2_title, None, None)
         myax_set(ax3,  "y", xlim_n0628, ylim, ax3_title, None, None)
@@ -584,6 +585,30 @@ class ToolsR21():
         myax_set(ax10, "y", xlim_n4321, ylim, None, xlabel, ylabel)
         myax_set(ax11, "y", xlim_n4321, ylim, None, xlabel, None)
         myax_set(ax12, "y", xlim_n4321, ylim, None, xlabel, None)
+        ax1.set_yticks([0.3,0.6,0.9])
+        ax2.set_yticks([0.3,0.6,0.9])
+        ax3.set_yticks([0.3,0.6,0.9])
+        ax4.set_yticks([0.3,0.6,0.9])
+        ax1.text(4.4,  x_beamtext,  "4\"", fontsize=font_beamtext)
+        ax1.text(8.4,  x_beamtext,  "8\"", fontsize=font_beamtext)
+        ax1.text(12.4, x_beamtext, "12\"", fontsize=font_beamtext)
+        ax1.text(16.4, x_beamtext, "16\"", fontsize=font_beamtext)
+        ax1.text(20.4, x_beamtext, "20\"", fontsize=font_beamtext)
+        ax2.text(8.4,  x_beamtext,  "8\"", fontsize=font_beamtext)
+        ax2.text(12.4, x_beamtext, "12\"", fontsize=font_beamtext)
+        ax2.text(16.4, x_beamtext, "16\"", fontsize=font_beamtext)
+        ax2.text(20.4, x_beamtext, "20\"", fontsize=font_beamtext)
+        ax2.text(24.4, x_beamtext, "24\"", fontsize=font_beamtext)
+        ax3.text(8.4,  x_beamtext,  "8\"", fontsize=font_beamtext)
+        ax3.text(12.4, x_beamtext, "12\"", fontsize=font_beamtext)
+        ax3.text(16.4, x_beamtext, "16\"", fontsize=font_beamtext)
+        ax3.text(20.4, x_beamtext, "20\"", fontsize=font_beamtext)
+        ax3.text(24.4, x_beamtext, "24\"", fontsize=font_beamtext)
+        ax4.text(4.4,  x_beamtext,  "4\"", fontsize=font_beamtext)
+        ax4.text(8.4,  x_beamtext,  "8\"", fontsize=font_beamtext)
+        ax4.text(12.4, x_beamtext, "12\"", fontsize=font_beamtext)
+        ax4.text(16.4, x_beamtext, "16\"", fontsize=font_beamtext)
+        ax4.text(20.4, x_beamtext, "20\"", fontsize=font_beamtext)
 
         # unset xlabels
         ax1.tick_params(labelbottom=False,labelleft=True,labelright=False,labeltop=False)
@@ -598,6 +623,9 @@ class ToolsR21():
         ax10.tick_params(labelbottom=True,labelleft=True,labelright=False,labeltop=False)
         ax11.tick_params(labelbottom=True,labelleft=False,labelright=False,labeltop=False)
         ax12.tick_params(labelbottom=True,labelleft=False,labelright=False,labeltop=False)
+        ax10.axes.xaxis.set_ticklabels([])
+        ax11.axes.xaxis.set_ticklabels([])
+        ax12.axes.xaxis.set_ticklabels([])
 
         # plot
         self._ax_multiviolin(ax1,r21s_n0628,this_beams_n0628,ylim,self.c_n0628,0.8,weights=None)
@@ -617,13 +645,13 @@ class ToolsR21():
         self._ax_multiviolin(ax12,r21s_n4321,this_beams_n4321,ylim,self.c_n4321,0.3,weights=co21s_n4321)
 
         # text
-        t=ax1.text(0.05, 0.90, "NGC 0628", color=self.c_n0628, horizontalalignment="left", transform=ax1.transAxes, size=self.legend_fontsize-2, fontweight="bold")
+        t=ax1.text(0.03, 0.86, "NGC 0628", color=self.c_n0628, horizontalalignment="left", transform=ax1.transAxes, size=self.legend_fontsize-2, fontweight="bold")
         t.set_bbox(dict(facecolor="white", alpha=self.text_back_alpha, lw=0))
-        t=ax4.text(0.05, 0.90, "NGC 3627", color=self.c_n3627, horizontalalignment="left", transform=ax4.transAxes, size=self.legend_fontsize-2, fontweight="bold")
+        t=ax4.text(0.03, 0.86, "NGC 3627", color=self.c_n3627, horizontalalignment="left", transform=ax4.transAxes, size=self.legend_fontsize-2, fontweight="bold")
         t.set_bbox(dict(facecolor="white", alpha=self.text_back_alpha, lw=0))
-        t=ax7.text(0.05, 0.90, "NGC 4254", color=self.c_n4254, horizontalalignment="left", transform=ax7.transAxes, size=self.legend_fontsize-2, fontweight="bold")
+        t=ax7.text(0.03, 0.86, "NGC 4254", color=self.c_n4254, horizontalalignment="left", transform=ax7.transAxes, size=self.legend_fontsize-2, fontweight="bold")
         t.set_bbox(dict(facecolor="white", alpha=self.text_back_alpha, lw=0))
-        t=ax10.text(0.05, 0.90, "NGC 4321", color=self.c_n4321, horizontalalignment="left", transform=ax10.transAxes, size=self.legend_fontsize-2, fontweight="bold")
+        t=ax10.text(0.03, 0.86, "NGC 4321", color=self.c_n4321, horizontalalignment="left", transform=ax10.transAxes, size=self.legend_fontsize-2, fontweight="bold")
         t.set_bbox(dict(facecolor="white", alpha=self.text_back_alpha, lw=0))
 
         plt.savefig(self.outpng_violins, dpi=self.fig_dpi)
