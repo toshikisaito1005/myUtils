@@ -584,19 +584,15 @@ class ToolsR21():
 
         ygrid  = np.linspace(ylim[0], ylim[1], num=1000)
 
-        # prepare
-        if vmin==None:
-            vmin = np.min(data)
-
-        if vmax==None:
-            vmax = np.max(data)
-
         # plot kde
         h,e = np.histogram(data, bins=1000, density=True, weights=None)
         x = np.linspace(e.min(), e.max())
         resamples = np.random.choice((e[:-1] + e[1:])/2, size=5000, p=h/h.sum())
         l = gaussian_kde(resamples)
         data = np.array(l(ygrid) / np.max(l(ygrid))) / 1.1
+
+        if vmin==None:
+            vmin = np.min(data)
 
         left = shift-data
         cut = np.where((ygrid<vmax)&(ygrid>vmin))
@@ -609,6 +605,9 @@ class ToolsR21():
         resamples = np.random.choice((e[:-1] + e[1:])/2, size=5000, p=h/h.sum())
         l = gaussian_kde(resamples)
         data = np.array(l(ygrid) / np.max(l(ygrid))) / 1.1
+
+        if vmax==None:
+            vmax = np.max(data)
 
         right = shift+data
         cut = np.where((ygrid<vmax)&(ygrid>vmin))
