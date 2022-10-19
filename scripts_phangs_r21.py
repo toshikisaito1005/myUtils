@@ -669,7 +669,7 @@ class ToolsR21():
         ax7.set_xticks([-0.6,-0.2,0.2,0.6])
         ax8.set_xticks([-0.6,-0.2,0.2,0.6])
 
-        # plot
+        # plot: scatter
         ax1.scatter(w1[bulge==0], r21[bulge==0], lw=0, color="silver")
         ax2.scatter(w2[bulge==0], r21[bulge==0], lw=0, color="silver")
         ax3.scatter(w3[bulge==0], r21[bulge==0], lw=0, color="silver")
@@ -688,9 +688,45 @@ class ToolsR21():
         ax7.scatter(w3co21[bulge==1], r21[bulge==1], lw=0, color="gold")
         ax8.scatter(w3co10[bulge==1], r21[bulge==1], lw=0, color="gold")
 
+        # plot contours + corrcoeff
+        self. _plot_contours_gal(ax1,w1_n0628,r21_n0628,xlim,xlim1,self._n0628)
+
         # text
 
         plt.savefig(self.outpng_scatters, dpi=self.fig_dpi)  
+
+    ######################
+    # _plot_contours_gal #
+    ######################
+
+    def _plot_contours_gal(
+        self,
+        ax,
+        xdata,
+        ydata,
+        xlim,
+        ylim,
+        color,
+        ):
+        """
+        """
+
+        xdata = scipy.ndimage.zoom(xdata, 33)
+        ydata = scipy.ndimage.zoom(ydata, 33)
+
+        contour, xedges, yedges = np.histogram2d(xdata, ydata, bins=50, range=(ylim,xlim))
+        contour = contour/contour.max() * 100
+        extent  = [yedges[0],yedges[-1],xedges[0],xedges[-1]]
+
+        cor = "r=" + str(np.round(np.corrcoef(xdata,ydata)[0,1], 2)).replace("-","$-$").ljust(4, "0")
+
+        # plot
+        ax.contourf(contour, levels=[20,100], extent=extent, colors=color, zorder=1, linewidths=2.5, alpha=0.3s)
+        ax.contour( contour, levels=[20,100], extent=extent, colors=color, zorder=1, linewidths=2.5, alpha=1.0)
+
+        # text
+        t=ax.text(0.95, 0.12, cor, color="grey", horizontalalignment="right", transform=ax.transAxes, size=self.legend_fontsize-1, fontweight="bold")
+        t.set_bbox(dict(facecolor="white", alpha=self.text_back_alpha, lw=0))
 
     ####################
     # _import_scatters #
