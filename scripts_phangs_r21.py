@@ -396,6 +396,8 @@ class ToolsR21():
 
         self.outpng_masked_hist       = self.dir_products + self._read_key("outpng_masked_hist")
 
+        self.outpng_scatters          = self.dir_products + self._read_key("outpng_scatters")
+
     ##################
     # run_phangs_r21 #
     ##################
@@ -446,6 +448,7 @@ class ToolsR21():
             plot_violins     = True
             plot_masks       = True
             plot_masked_hist = True
+            plot_scatters    = True
 
         # analysis
         if do_align==True:
@@ -608,6 +611,51 @@ class ToolsR21():
         w3co10 = [w3co10_n0628,w3co10_n3627,w3co10_n4254,w3co10_n4321]
         bulge  = [bulge_n0628,bulge_n3627,bulge_n4254,bulge_n4321]
 
+        ########
+        # plot #
+        ########
+
+        # set plt, ax
+        plt.figure(figsize=(15,15))
+        plt.subplots_adjust(bottom=0.05, left=0.09, right=0.98, top=0.97)
+        gs = gridspec.GridSpec(nrows=3, ncols=3)
+        ax1 = plt.subplot(gs[0:1,0:1])
+        ax2 = plt.subplot(gs[0:1,1:2])
+        ax3 = plt.subplot(gs[0:1,2:3])
+        ax4 = plt.subplot(gs[1:2,0:1])
+        ax5 = plt.subplot(gs[1:2,1:2])
+        ax6 = plt.subplot(gs[1:2,2:3])
+        ax7 = plt.subplot(gs[2:3,0:1])
+        ax8 = plt.subplot(gs[2:3,1:2])
+
+        myax_set(ax1, "both", None, None, None, None, None)
+        myax_set(ax2, "both", None, None, None, None, None)
+        myax_set(ax3, "both", None, None, None, None, None)
+        myax_set(ax4, "both", None, None, None, None, None)
+        myax_set(ax5, "both", None, None, None, None, None)
+        myax_set(ax6, "both", None, None, None, None, None)
+        myax_set(ax7, "both", None, None, None, None, None)
+        myax_set(ax8, "both", None, None, None, None, None)
+        ax1.tick_params(labelbottom=True,labelleft=True,labelright=False,labeltop=False)
+        ax2.tick_params(labelbottom=True,labelleft=False,labelright=False,labeltop=False)
+        ax3.tick_params(labelbottom=True,labelleft=False,labelright=False,labeltop=False)
+        ax4.tick_params(labelbottom=True,labelleft=True,labelright=False,labeltop=False)
+        ax5.tick_params(labelbottom=True,labelleft=False,labelright=False,labeltop=False)
+        ax6.tick_params(labelbottom=True,labelleft=False,labelright=False,labeltop=False)
+        ax7.tick_params(labelbottom=True,labelleft=True,labelright=False,labeltop=False)
+        ax8.tick_params(labelbottom=True,labelleft=False,labelright=False,labeltop=False)
+        ax5.set_xticks([-0.4,0.0,0.4,0.8])
+        ax6.set_xticks([-0.6,-0.2,0.2,0.6])
+        ax7.set_xticks([-0.6,-0.2,0.2,0.6])
+        ax8.set_xticks([-0.6,-0.2,0.2,0.6])
+
+        # plot
+        ax1.scatter(w1[bulge==0], r21[bulge==0], lw=0, color="silver")
+        ax1.scatter(w1[bulge==1], r21[bulge==1], lw=0, color="gold")
+
+
+        plt.savefig(self.outpng_scatters, dpi=self.fig_dpi)  
+
     ####################
     # _import_scatters #
     ####################
@@ -668,7 +716,7 @@ class ToolsR21():
         array_w3w1   = np.log10(this_w3w1[cut].flatten() / np.median(this_w3w1[cut].flatten()))
         array_w3co21 = np.log10(this_w3co21[cut].flatten() / np.median(this_w3co21[cut].flatten()))
         array_w3co10 = np.log10(this_w3co10[cut].flatten() / np.median(this_w3co10[cut].flatten()))
-        array_bulge  = np.where((dist_kpc[cut]>self.hist_550pc_cnter_radius), 1.0, 0.0)
+        array_bulge  = np.where((dist_kpc[cut]=<=self.hist_550pc_cnter_radius), 1.0, 0.0)
 
         return array_r21, array_w1, array_w2, array_w3, array_dist, array_disp, array_w3w1, array_w3co21, array_w3co10, array_bulge
 

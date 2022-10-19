@@ -222,6 +222,8 @@ outpng_halpha_n4321  ,,,fig_halpha_n4321.png
 
 outpng_masked_hist   ,,,fig_masked_hist.png
 
+outpng_scatters      ,,,fig_scatters.png
+
 #######
 # end #
 #######
