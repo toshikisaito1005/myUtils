@@ -597,7 +597,7 @@ class ToolsR21():
         left = shift-data
         cut = np.where((ygrid<vmax)&(ygrid>vmin))
         ax.plot(left[cut], ygrid[cut], lw=1, color="grey")
-        ax.fill_betweenx(ygrid, left, right, facecolor=color, alpha=0.2, lw=0)
+        ax.fill_betweenx(ygrid, left, shift, facecolor=color, alpha=0.2, lw=0)
 
         # plot weighted kde
         h,e = np.histogram(r21, bins=1000, density=True, weights=co21)
@@ -609,10 +609,9 @@ class ToolsR21():
         if vmax==None:
             vmax = np.max(data)
 
-        right = shift+data
         cut = np.where((ygrid<vmax)&(ygrid>vmin))
         ax.plot(left[cut], ygrid[cut], lw=1, color="grey")
-        ax.fill_betweenx(ygrid, left, right, facecolor=color, alpha=1.0, lw=0)
+        ax.fill_betweenx(ygrid, shift, right, facecolor=color, alpha=1.0, lw=0)
 
     #######################
     # _import_masked_hist #
