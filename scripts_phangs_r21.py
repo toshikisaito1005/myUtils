@@ -662,8 +662,21 @@ class ToolsR21():
 
         right = shift+data
         cut = np.where((ygrid<vmax)&(ygrid>vmin))
-        ax.plot(left[cut], ygrid[cut], lw=1, color=color)
+        ax.plot(right[cut], ygrid[cut], lw=1, color=color)
         ax.fill_betweenx(ygrid, shift, right, facecolor=color, alpha=0.8, lw=0)
+
+        # plot percentiles
+        p16_noweight = self._weighted_percentile(r21,16,weights=None)
+        p50_noweight = self._weighted_percentile(r21,50,weights=None)
+        p84_noweight = self._weighted_percentile(r21,84,weights=None)
+        p16_weight   = self._weighted_percentile(r21,16,weights=co21)
+        p50_weight   = self._weighted_percentile(r21,50,weights=co21)
+        p84_weight   = self._weighted_percentile(r21,84,weights=co21)
+
+        x_noweight = 18+(shift-0.5)/10.
+        x_weight   = 18+(shift+0.5)/10.
+        ax.plot(x_noweight,p50_noweight,"s",color=color,alpha=0.2,lw=0)
+        ax.plot(x_weight,  p50_noweight,"o",color=color,alpha=0.8,lw=0)
 
     #######################
     # _import_masked_hist #
