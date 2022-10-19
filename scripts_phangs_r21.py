@@ -591,9 +591,13 @@ class ToolsR21():
         # plot each violin
         list_p16, list_p50, list_p84 = [], [], []
         for i in range(len(beams)):
-            this_beam  = beams[i]
-            this_r21   = r21s[i]
-            p16,p50,p84 = self._ax_violin(ax,this_r21,this_beam,ylim,color,alpha,weights=weights)
+            this_beam    = beams[i]
+            this_r21     = r21s[i]
+            if weights!=None:
+                this_weights = weights[i]
+            else:
+                this_weights = None
+            p16,p50,p84  = self._ax_violin(ax,this_r21,this_beam,ylim,color,alpha,weights=this_weights)
             list_p16.append(p16)
             list_p50.append(p50)
             list_p84.append(p84)
@@ -698,8 +702,6 @@ class ToolsR21():
                 & (~np.isnan(this_co21)) & (~np.isinf(this_co21)) & (this_co21!=0) \
                 & (~np.isnan(this_r21)) & (~np.isinf(this_r21)) & (this_r21!=0) \
                 & (this_r21!=this_r21_err*self.snr_ratio) & (dist_kpc > self.hist_550pc_cnter_radius) ) 
-
-            print(len(this_co10[cut]), len(this_co21[cut]), len(this_r21[cut]))
 
             array_co10.append(this_co10[cut].flatten())
             array_co21.append(this_co21[cut].flatten())
