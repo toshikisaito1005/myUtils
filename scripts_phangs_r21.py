@@ -542,6 +542,9 @@ class ToolsR21():
         ax2_title  = "CO(1-0)-weighted"
         ax3_title  = "CO(2-1)-weighted"
         xlim_n0628 = [np.min(this_beams_n0628)-2.0, np.max(this_beams_n0628)+2.0]
+        xlim_n3627 = [np.min(this_beams_n3627)-2.0, np.max(this_beams_n3627)+2.0]
+        xlim_n4254 = [np.min(this_beams_n4254)-2.0, np.max(this_beams_n4254)+2.0]
+        xlim_n4321 = [np.min(this_beams_n4321)-2.0, np.max(this_beams_n4321)+2.0]
         ylim       = [0.0,1.2]
 
         ########
