@@ -524,14 +524,56 @@ class ToolsR21():
         this_scale  = self.scale_n0628
         this_pa     = self.pa_n0628
         this_incl   = self.incl_n0628
-        r21_n0628, co21_n0628, cprops_n0628, env_n0628, halpha_n0628 = \
-            self._import_masked_hist(this_co21,this_r21,this_er21,this_cprops,this_env,this_halpha,this_ra,this_dec,this_scale,this_pa,this_incl)
+        r21_n0628, co21_n0628, cprops_n0628, env_n0628, halpha_n0628 = self._import_masked_hist(this_co21,this_r21,this_er21,
+            this_cprops,this_env,this_halpha,this_ra,this_dec,this_scale,this_pa,this_incl)
 
-        r21    = np.r_[r21_n0628]
-        co21   = np.r_[co21_n0628]
-        cprops = np.r_[cprops_n0628]
-        env    = np.r_[env_n0628]
-        halpha = np.r_[halpha_n0628]
+        this_r21    = self.outfits_r21_n3627
+        this_er21   = self.outfits_er21_n3627
+        this_co21   = self.outmom_co21_n3627.replace("momX","mom0")
+        this_cprops = self.outfits_cprops_n3627
+        this_env    = self.outfits_env_n3627
+        this_halpha = self.outfits_halpha_n3627
+        this_ra     = float(self.ra_n3627)
+        this_dec    = float(self.dec_n3627)
+        this_scale  = self.scale_n3627
+        this_pa     = self.pa_n3627
+        this_incl   = self.incl_n3627
+        r21_n3627, co21_n3627, cprops_n3627, env_n3627, halpha_n3627 = self._import_masked_hist(this_co21,this_r21,this_er21,
+            this_cprops,this_env,this_halpha,this_ra,this_dec,this_scale,this_pa,this_incl)
+
+        this_r21    = self.outfits_r21_n4254
+        this_er21   = self.outfits_er21_n4254
+        this_co21   = self.outmom_co21_n4254.replace("momX","mom0")
+        this_cprops = self.outfits_cprops_n4254
+        this_env    = self.outfits_env_n4254
+        this_halpha = self.outfits_halpha_n4254
+        this_ra     = float(self.ra_n4254)
+        this_dec    = float(self.dec_n4254)
+        this_scale  = self.scale_n4254
+        this_pa     = self.pa_n4254
+        this_incl   = self.incl_n4254
+        r21_n4254, co21_n4254, cprops_n4254, env_n4254, halpha_n4254 = self._import_masked_hist(this_co21,this_r21,this_er21,
+            this_cprops,this_env,this_halpha,this_ra,this_dec,this_scale,this_pa,this_incl)
+
+        this_r21    = self.outfits_r21_n4321
+        this_er21   = self.outfits_er21_n4321
+        this_co21   = self.outmom_co21_n4321.replace("momX","mom0")
+        this_cprops = self.outfits_cprops_n4321
+        this_env    = self.outfits_env_n4321
+        this_halpha = self.outfits_halpha_n4321
+        this_ra     = float(self.ra_n4321)
+        this_dec    = float(self.dec_n4321)
+        this_scale  = self.scale_n4321
+        this_pa     = self.pa_n4321
+        this_incl   = self.incl_n4321
+        r21_4321, co21_4321, cprops_4321, env_4321, halpha_4321 = self._import_masked_hist(this_co21,this_r21,this_er21,
+            this_cprops,this_env,this_halpha,this_ra,this_dec,this_scale,this_pa,this_incl)
+
+        r21    = np.r_[r21_n0628,r21_n3627,r21_n4254,r21_n4321]
+        co21   = np.r_[co21_n0628,co21_n3627,co21_n4254,co21_n4321]
+        cprops = np.r_[cprops_n0628,cprops_n3627,cprops_n4254,cprops_n4321]
+        env    = np.r_[env_n0628,env_n3627,env_n4254,env_n4321]
+        halpha = np.r_[halpha_n0628,halpha_n3627,halpha_n4254,halpha_n4321]
 
         ylim       = [-0.5,2.5]
         ylabel     = "Median-normalized $R_{21}$"
@@ -649,7 +691,7 @@ class ToolsR21():
 
         this_co21   = this_co21[cut].flatten()
         this_r21    = this_r21[cut].flatten() / np.median(this_r21[cut].flatten())
-        this_cprops = this_cprops[cut].flatten()
+        this_cprops = (this_cprops[cut].flatten() - np.mean(this_r21[cut].flatten())) / np.std(this_r21[cut].flatten())
         this_env    = this_env[cut].flatten()
         this_halpha = this_halpha[cut].flatten()
 
