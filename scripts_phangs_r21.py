@@ -699,6 +699,8 @@ class ToolsR21():
                 & (~np.isnan(this_r21)) & (~np.isinf(this_r21)) & (this_r21!=0) \
                 & (this_r21!=this_r21_err*self.snr_ratio) & (dist_kpc > self.hist_550pc_cnter_radius) ) 
 
+            print(len(this_co10[cut]), len(this_co21[cut]), len(this_r21[cut]))
+
             array_co10.append(this_co10[cut].flatten())
             array_co21.append(this_co21[cut].flatten())
             array_r21.append(this_r21[cut].flatten())
