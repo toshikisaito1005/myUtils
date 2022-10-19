@@ -597,6 +597,12 @@ class ToolsR21():
         self._ax_masked_violin(ax1,r21,co21,cprops,0,3,ylim,cm.bwr(0.2/1.4))
 
         self._ax_masked_violin(ax1,r21,co21,env,3,5,ylim,cm.gnuplot(3/3.5))
+        self._ax_masked_violin(ax1,r21,co21,env,2,7,ylim,cm.gnuplot(2/3.5))
+        self._ax_masked_violin(ax1,r21,co21,env,1,9,ylim,cm.gnuplot(1/3.5))
+        self._ax_masked_violin(ax1,r21,co21,env,0,11,ylim,cm.gnuplot(0/3.5))
+
+        self._ax_masked_violin(ax1,r21,co21,halpha,1,13,ylim,cm.PiYG(0.2/1.4))
+        self._ax_masked_violin(ax1,r21,co21,halpha,0,15,ylim,cm.PiYG(1.2/1.4))
 
 
         # text
