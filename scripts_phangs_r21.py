@@ -571,8 +571,9 @@ class ToolsR21():
         ax12 = plt.subplot(gs[9:12,6:9])
 
         # set ax param
-        factor     = 1.65
-        x_beamtext = 0.16
+        factor        = 1.65
+        x_beamtext    = 0.16
+        font_beamtext = 15
         myax_set(ax1,  "y", xlim_n0628, ylim, ax1_title, None, ylabel)
         myax_set(ax2,  "y", xlim_n0628, ylim, ax2_title, None, None)
         myax_set(ax3,  "y", xlim_n0628, ylim, ax3_title, None, None)
@@ -589,26 +590,26 @@ class ToolsR21():
         ax2.set_yticks([0.3,0.6,0.9])
         ax3.set_yticks([0.3,0.6,0.9])
         ax4.set_yticks([0.3,0.6,0.9])
-        ax1.text(4.4,  x_beamtext,  "4\"", fontsize=self.font_beamtext)
-        ax1.text(8.4,  x_beamtext,  "8\"", fontsize=self.font_beamtext)
-        ax1.text(12.4, x_beamtext, "12\"", fontsize=self.font_beamtext)
-        ax1.text(16.4, x_beamtext, "16\"", fontsize=self.font_beamtext)
-        ax1.text(20.4, x_beamtext, "20\"", fontsize=self.font_beamtext)
-        ax2.text(8.4,  x_beamtext,  "8\"", fontsize=self.font_beamtext)
-        ax2.text(12.4, x_beamtext, "12\"", fontsize=self.font_beamtext)
-        ax2.text(16.4, x_beamtext, "16\"", fontsize=self.font_beamtext)
-        ax2.text(20.4, x_beamtext, "20\"", fontsize=self.font_beamtext)
-        ax2.text(24.4, x_beamtext, "24\"", fontsize=self.font_beamtext)
-        ax3.text(8.4,  x_beamtext,  "8\"", fontsize=self.font_beamtext)
-        ax3.text(12.4, x_beamtext, "12\"", fontsize=self.font_beamtext)
-        ax3.text(16.4, x_beamtext, "16\"", fontsize=self.font_beamtext)
-        ax3.text(20.4, x_beamtext, "20\"", fontsize=self.font_beamtext)
-        ax3.text(24.4, x_beamtext, "24\"", fontsize=self.font_beamtext)
-        ax4.text(4.4,  x_beamtext,  "4\"", fontsize=self.font_beamtext)
-        ax4.text(8.4,  x_beamtext,  "8\"", fontsize=self.font_beamtext)
-        ax4.text(12.4, x_beamtext, "12\"", fontsize=self.font_beamtext)
-        ax4.text(16.4, x_beamtext, "16\"", fontsize=self.font_beamtext)
-        ax4.text(20.4, x_beamtext, "20\"", fontsize=self.font_beamtext)
+        ax1.text(4.4,  x_beamtext,  "4\"", fontsize=font_beamtext)
+        ax1.text(8.4,  x_beamtext,  "8\"", fontsize=font_beamtext)
+        ax1.text(12.4, x_beamtext, "12\"", fontsize=font_beamtext)
+        ax1.text(16.4, x_beamtext, "16\"", fontsize=font_beamtext)
+        ax1.text(20.4, x_beamtext, "20\"", fontsize=font_beamtext)
+        ax2.text(8.4,  x_beamtext,  "8\"", fontsize=font_beamtext)
+        ax2.text(12.4, x_beamtext, "12\"", fontsize=font_beamtext)
+        ax2.text(16.4, x_beamtext, "16\"", fontsize=font_beamtext)
+        ax2.text(20.4, x_beamtext, "20\"", fontsize=font_beamtext)
+        ax2.text(24.4, x_beamtext, "24\"", fontsize=font_beamtext)
+        ax3.text(8.4,  x_beamtext,  "8\"", fontsize=font_beamtext)
+        ax3.text(12.4, x_beamtext, "12\"", fontsize=font_beamtext)
+        ax3.text(16.4, x_beamtext, "16\"", fontsize=font_beamtext)
+        ax3.text(20.4, x_beamtext, "20\"", fontsize=font_beamtext)
+        ax3.text(24.4, x_beamtext, "24\"", fontsize=font_beamtext)
+        ax4.text(4.4,  x_beamtext,  "4\"", fontsize=font_beamtext)
+        ax4.text(8.4,  x_beamtext,  "8\"", fontsize=font_beamtext)
+        ax4.text(12.4, x_beamtext, "12\"", fontsize=font_beamtext)
+        ax4.text(16.4, x_beamtext, "16\"", fontsize=font_beamtext)
+        ax4.text(20.4, x_beamtext, "20\"", fontsize=font_beamtext)
 
         # unset xlabels
         ax1.tick_params(labelbottom=False,labelleft=True,labelright=False,labeltop=False)
