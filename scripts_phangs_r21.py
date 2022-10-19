@@ -417,6 +417,7 @@ class ToolsR21():
         plot_violins     = False,
         plot_masks       = False,
         plot_masked_hist = False,
+        plot_scatters    = False,
         # supplement
         ):
         """
@@ -490,11 +491,128 @@ class ToolsR21():
         if plot_masked_hist==True:
             self.plot_masked_hist()
 
+        if plot_scatters==True:
+            self.plot_scatters()
+
     #####################
     #####################
     ### plotting part ###
     #####################
     #####################
+
+    #################
+    # plot_scatters #
+    #################
+
+    def plot_scatters(
+        self,
+        ):
+        """
+        """
+
+        taskname = self.modname + sys._getframe().f_code.co_name
+        check_first(self.outcube_co10_n0628,taskname)
+
+        ###########
+        # prepare #
+        ###########
+
+        this_basebeam = str(self.basebeam_n0628).replace(".","p").zfill(4)
+        this_wisebeam = str(self.beam_wise_n0628).replace(".","p").zfill(4)
+        this_r21      = self.outfits_r21_n0628.replace(this_basebeam,this_wisebeam)
+        this_er21     = self.outfits_er21_n0628.replace(this_basebeam,this_wisebeam)
+        this_co10     = self.outmom_co10_n0628.replace(this_basebeam,this_wisebeam).replace("momX","mom0")
+        this_co21     = self.outmom_co21_n0628.replace(this_basebeam,this_wisebeam).replace("momX","mom0")
+        this_disp     = self.outmom_co21_n0628.replace(this_basebeam,this_wisebeam).replace("momX","mom2")
+        this_w1       = self.outfits_wise1_n0628
+        this_w2       = self.outfits_wise2_n0628
+        this_w3       = self.outfits_wise3_n0628
+        this_ra       = float(self.ra_n0628)
+        this_dec      = float(self.dec_n0628)
+        this_scale    = self.scale_n0628
+        this_pa       = self.pa_n0628
+        this_incl     = self.incl_n0628
+        this_r25      = 1
+        r21_n0628, w1_n0628, w2_n0628, w3_n0628, dist_n0628, disp_n0628, w3w1_n0628, w3co21_n0628, w3co10_n0628, bulge_n0628 = \
+            _import_scatters(self,co10,co21,r21,er21,w1,w2,w3,disp,ra,dec,scale,pa,incl,this_r25,outer=True)
+
+        print(len(r21_n0628),len(disp_n0628),len(bulge_n0628))
+
+    ####################
+    # _import_scatters #
+    ####################
+
+    def _import_scatters(self,co10,co21,r21,er21,w1,w2,w3,disp,ra,dec,scale,pa,incl,this_r25):
+        """
+        plot_scatters
+        """
+
+        array_r21    = []
+        array_w1     = []
+        array_w2     = []
+        array_w3     = []
+        array_dist   = []
+        array_disp   = []
+        array_w3w1   = []
+        array_w3co21 = []
+        array_w3co10 = []
+        array_bulge  = []
+
+        # import
+        shape       = imhead(co21,mode="list")["shape"]
+        box         = "0,0," + str(shape[0]-1) + "," + str(shape[1]-1)
+
+        ra_deg      = imval(co21,box=box)["coords"][:,:,0] * 180/np.pi
+        dec_deg     = imval(co21,box=box)["coords"][:,:,1] * 180/np.pi
+        this_co10   = imval(co10,box=box)["data"]
+        this_co21   = imval(co21,box=box)["data"]
+        this_r21    = imval(r21,box=box)["data"]
+        this_er21   = imval(er21,box=box)["data"]
+        this_w1     = imval(w1,box=box)["data"]
+        this_w2     = imval(w2,box=box)["data"]
+        this_w3     = imval(w3,box=box)["data"]
+        this_disp   = imval(disp,box=box)["data"]
+        this_w3w1   = this_w3/this_w1
+        this_w3co21 = this_w3/this_co21
+        this_w3co10 = this_w3/this_co10
+
+        dist_pc,_ = self._get_rel_dist_pc(ra_deg, dec_deg, ra, dec, scale, pa, incl)
+        dist_kpc  = dist_pc / 1000.
+        dist      = dist_pc / 1000. / this_r25
+
+        if outer==True:
+            cut = np.where( (~np.isnan(this_co10)) & (~np.isinf(this_co10)) & (this_co10!=0) \
+                & (~np.isnan(this_co21)) & (~np.isinf(this_co21)) & (this_co21!=0) \
+                & (~np.isnan(this_r21)) & (~np.isinf(this_r21)) & (this_r21!=0) \
+                & (~np.isnan(this_w1)) & (~np.isinf(this_w1)) & (this_w1!=0) \
+                & (~np.isnan(this_w2)) & (~np.isinf(this_w2)) & (this_w2!=0) \
+                & (~np.isnan(this_w3)) & (~np.isinf(this_w3)) & (this_w3!=0) \
+                & (~np.isnan(this_disp)) & (~np.isinf(this_disp)) & (this_disp!=0) \
+                & (this_r21!=this_r21_err*self.snr_ratio) )
+        else:
+        cut = np.where( (~np.isnan(this_co10)) & (~np.isinf(this_co10)) & (this_co10!=0) \
+                & (~np.isnan(this_co21)) & (~np.isinf(this_co21)) & (this_co21!=0) \
+                & (~np.isnan(this_r21)) & (~np.isinf(this_r21)) & (this_r21!=0) \
+                & (~np.isnan(this_w1)) & (~np.isinf(this_w1)) & (this_w1!=0) \
+                & (~np.isnan(this_w2)) & (~np.isinf(this_w2)) & (this_w2!=0) \
+                & (~np.isnan(this_w3)) & (~np.isinf(this_w3)) & (this_w3!=0) \
+                & (~np.isnan(this_disp)) & (~np.isinf(this_disp)) & (this_disp!=0) \
+                & (this_r21!=this_r21_err*self.snr_ratio) )
+
+        array_r21    = np.log10(this_r21[cut].flatten() / np.median(this_r21[cut].flatten()))
+        array_w1     = np.log10(this_w1[cut].flatten() / np.median(this_w1[cut].flatten()))
+        array_w2     = np.log10(this_w2[cut].flatten() / np.median(this_w2[cut].flatten()))
+        array_w3     = np.log10(this_w3[cut].flatten() / np.median(this_w3[cut].flatten()))
+        array_dist   = np.log10(dist[cut].flatten() / np.median(dist[cut].flatten()))
+        array_disp   = np.log10(this_disp[cut].flatten() / np.median(this_disp[cut].flatten()))
+        array_w3w1   = np.log10(this_w3w1[cut].flatten() / np.median(this_w3w1[cut].flatten()))
+        array_w3co21 = np.log10(this_w3co21[cut].flatten() / np.median(this_w3co21[cut].flatten()))
+        array_w3co10 = np.log10(this_w3co10[cut].flatten() / np.median(this_w3co10[cut].flatten()))
+        array_bulge  = np.where((dist_kpc[cut]>self.hist_550pc_cnter_radius), 1.0, 0.0)
+
+        return array_r21, array_w1, array_w2, array_w3, array_dist, array_disp, array_w3w1, array_w3co21, array_w3co10, array_bulge
+
+    #
 
     ####################
     # plot_masked_hist #
