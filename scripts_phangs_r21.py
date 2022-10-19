@@ -553,10 +553,25 @@ class ToolsR21():
         ax12.tick_params(labelbottom=True,labelleft=False,labelright=False,labeltop=False)
 
         # from here!
+        list_p16, list_p50, list_p84 = [], [], []
         for i in range(len(this_beams_n0628)):
             this_beam  = this_beams_n0628[i]
             this_r21   = r21s_n0628[i]
-            self._ax_violin(ax1,this_r21,this_beam,ylim,self.c_n0628,0.6)
+            p16,p50,p84 = self._ax_violin(ax1,this_r21,this_beam,ylim,self.c_n0628,0.6)
+            list_p16.append(p16)
+        ax1.plot(this_beams_n0628, list_p16, "--", color="grey", lw=1)
+        ax1.plot(this_beams_n0628, list_p50, "--", color="grey", lw=1)
+        ax1.plot(this_beams_n0628, list_p84, "--", color="grey", lw=1)
+
+        # text
+        t=ax1.text(0.02, 0.82, "NGC 0628", color=self.c_n0628, horizontalalignment="left", transform=ax1.transAxes, size=self.legend_fontsize-2, fontweight="bold")
+        t.set_bbox(dict(facecolor="white", alpha=self.text_back_alpha, lw=0))
+        t=ax4.text(0.02, 0.82, "NGC 3627", color=self.c_n3627, horizontalalignment="left", transform=ax4.transAxes, size=self.legend_fontsize-2, fontweight="bold")
+        t.set_bbox(dict(facecolor="white", alpha=self.text_back_alpha, lw=0))
+        t=ax7.text(0.02, 0.82, "NGC 4254", color=self.c_n4254, horizontalalignment="left", transform=ax7.transAxes, size=self.legend_fontsize-2, fontweight="bold")
+        t.set_bbox(dict(facecolor="white", alpha=self.text_back_alpha, lw=0))
+        t=ax10.text(0.02, 0.82, "NGC 4321", color=self.c_n4321, horizontalalignment="left", transform=ax10.transAxes, size=self.legend_fontsize-2, fontweight="bold")
+        t.set_bbox(dict(facecolor="white", alpha=self.text_back_alpha, lw=0))
 
         plt.savefig(self.outpng_violins, dpi=self.fig_dpi)
 
@@ -602,14 +617,16 @@ class ToolsR21():
         right = beam+data
         cut = np.where((ygrid<vmax)&(ygrid>vmin))
 
-        ax.plot(right[cut], ygrid[cut], lw=2, color="grey")
-        ax.plot(left[cut], ygrid[cut], lw=2, color="grey")
+        ax.plot(right[cut], ygrid[cut], lw=1, color="grey")
+        ax.plot(left[cut], ygrid[cut], lw=1, color="grey")
         ax.fill_betweenx(ygrid, left, right, facecolor=color, alpha=alpha, lw=0)
 
         # percentiles
         ax.plot([beam,beam],[p2,p98],lw=2,color="grey")
         ax.plot([beam,beam],[p16,p84],lw=5,color="grey")
         ax.plot(beam,p50,".",color="white",markersize=6, markeredgewidth=0)
+
+        return p16,p50,p84
 
     ###################
     # _import_violins #
