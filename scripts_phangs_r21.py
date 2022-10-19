@@ -552,18 +552,8 @@ class ToolsR21():
         ax11.tick_params(labelbottom=True,labelleft=False,labelright=False,labeltop=False)
         ax12.tick_params(labelbottom=True,labelleft=False,labelright=False,labeltop=False)
 
-        # plot: ngc0628
-        list_p16, list_p50, list_p84 = [], [], []
-        for i in range(len(this_beams_n0628)):
-            this_beam  = this_beams_n0628[i]
-            this_r21   = r21s_n0628[i]
-            p16,p50,p84 = self._ax_violin(ax1,this_r21,this_beam,ylim,self.c_n0628,0.6)
-            list_p16.append(p16)
-            list_p50.append(p50)
-            list_p84.append(p84)
-        ax1.plot(this_beams_n0628, list_p16, "--", color="grey", lw=1)
-        ax1.plot(this_beams_n0628, list_p50, "--", color="grey", lw=1)
-        ax1.plot(this_beams_n0628, list_p84, "--", color="grey", lw=1)
+        # plot: n0628
+        self._ax_multiviolin(ax1,r21s_n0628,this_beams_n0628,ylim,self.c_n0628,0.6,weights=None)
 
         # text
         t=ax1.text(0.02, 0.82, "NGC 0628", color=self.c_n0628, horizontalalignment="left", transform=ax1.transAxes, size=self.legend_fontsize-2, fontweight="bold")
@@ -577,6 +567,37 @@ class ToolsR21():
 
         plt.savefig(self.outpng_violins, dpi=self.fig_dpi)
 
+    ###################
+    # _ax_multiviolin #
+    ###################
+
+    def _ax_multiviolin(
+        self,
+        ax,
+        r21s,
+        beams,
+        ylim,
+        color,
+        alpha,
+        weights=None,
+        vmin=None,
+        vmax=None,
+        ):
+        """
+        """
+
+        list_p16, list_p50, list_p84 = [], [], []
+        for i in range(len(beams)):
+            this_beam  = beams[i]
+            this_r21   = r21s[i]
+            p16,p50,p84 = self._ax_violin(ax,this_r21,this_beam,ylim,color,alpha,weights=weights)
+            list_p16.append(p16)
+            list_p50.append(p50)
+            list_p84.append(p84)
+        ax.plot(this_beams_n0628, list_p16, "--", color="black", lw=1)
+        ax.plot(this_beams_n0628, list_p50, "--", color="black", lw=1)
+        ax.plot(this_beams_n0628, list_p84, "--", color="black", lw=1)
+
     ##############
     # _ax_violin #
     ##############
@@ -589,6 +610,7 @@ class ToolsR21():
         ylim,
         color,
         alpha,
+        weights=None,
         vmin=None,
         vmax=None,
         ):
@@ -605,14 +627,14 @@ class ToolsR21():
             vmax = np.max(data)
 
         # percentiles
-        p2   = np.nanpercentile(data[data!=0],2)
-        p16  = np.nanpercentile(data[data!=0],16)
-        p50  = np.nanpercentile(data[data!=0],50)
-        p84  = np.nanpercentile(data[data!=0],84)
-        p98  = np.nanpercentile(data[data!=0],98)
+        p2   = self._weighted_percentile(data[data!=0],2,weights=weights)
+        p16  = self._weighted_percentile(data[data!=0],16,weights=weights)
+        p50  = self._weighted_percentile(data[data!=0],50,weights=weights)
+        p84  = self._weighted_percentile(data[data!=0],84,weights=weights)
+        p98  = self._weighted_percentile(data[data!=0],98,weights=weights)
 
         # kde
-        l = gaussian_kde(data)
+        l = gaussian_kde(data,weights=weights)
         data = np.array(l(ygrid) / np.max(l(ygrid))) / 0.55
 
         left  = beam-data
@@ -1098,7 +1120,7 @@ class ToolsR21():
         """
 
         if weights==None:
-            w_percentile = np.percentile(data,percentile)
+            w_percentile = np.nanpercentile(data,percentile)
         else:
             data, weights = np.array(data).squeeze(), np.array(weights).squeeze()
             s_data, s_weights = map(np.array, zip(*sorted(zip(data, weights))))
