@@ -637,7 +637,7 @@ class ToolsR21():
 
         # set plt, ax
         plt.figure(figsize=(15,15))
-        plt.subplots_adjust(bottom=0.05, left=0.09, right=0.98, top=0.97)
+        plt.subplots_adjust(bottom=0.05, left=0.09, right=0.95, top=0.97)
         gs = gridspec.GridSpec(nrows=3, ncols=3)
         ax1 = plt.subplot(gs[0:1,0:1])
         ax2 = plt.subplot(gs[0:1,1:2])
@@ -689,7 +689,7 @@ class ToolsR21():
         ax8.scatter(w3co10[bulge==1], r21[bulge==1], lw=0, color="gold")
 
         # plot contours + corrcoeff
-        self. _plot_contours_gal(ax1,w1_n0628,r21_n0628,xlim1,xlim1,self._n0628)
+        self. _plot_contours_gal(ax1,w1_n0628,r21_n0628,xlim1,ylim,self._n0628)
 
         # text
 
