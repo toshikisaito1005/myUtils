@@ -689,7 +689,10 @@ class ToolsR21():
         ax8.scatter(w3co10[bulge==1], r21[bulge==1], lw=0, color="gold")
 
         # plot contours + corrcoeff
-        self. _plot_contours_gal(ax1,w1_n0628,r21_n0628,xlim1,ylim,self.c_n0628)
+        self._plot_contours_gal(ax1,w1_n0628[bulge_n0628==0],r21_n0628[bulge_n0628==0],xlim1,ylim,self.c_n0628)
+        self._plot_contours_gal(ax1,w1_n3627[bulge_n3627==0],r21_n3627[bulge_n3627==0],xlim1,ylim,self.c_n3627)
+        self._plot_contours_gal(ax1,w1_n4254[bulge_n4254==0],r21_n4254[bulge_n4254==0],xlim1,ylim,self.c_n4254)
+        self._plot_contours_gal(ax1,w1_n4321[bulge_n4321==0],r21_n4321[bulge_n4321==0],xlim1,ylim,self.c_n4321)
 
         # text
 
