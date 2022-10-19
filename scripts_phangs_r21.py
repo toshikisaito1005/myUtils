@@ -534,7 +534,7 @@ class ToolsR21():
         this_incl     = self.incl_n0628
         this_r25      = 1
         r21_n0628, w1_n0628, w2_n0628, w3_n0628, dist_n0628, disp_n0628, w3w1_n0628, w3co21_n0628, w3co10_n0628, bulge_n0628 = \
-            self._import_scatters(self,this_co10,this_co21,this_r21,this_er21,this_w1,this_w2,this_w3,this_disp,this_ra,this_dec,this_scale,this_pa,this_incl,this_r25)
+            self._import_scatters(this_co10,this_co21,this_r21,this_er21,this_w1,this_w2,this_w3,this_disp,this_ra,this_dec,this_scale,this_pa,this_incl,this_r25)
 
         print(len(r21_n0628),len(disp_n0628),len(bulge_n0628))
 
