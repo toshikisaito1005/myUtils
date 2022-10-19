@@ -482,61 +482,61 @@ class ToolsR21():
         # prepare #
         ###########
 
-        this_basebeam = str(self.basebeam_n0628).replace(".","p").zfill(4)
+        this_basebeam    = str(self.basebeam_n0628).replace(".","p").zfill(4)
         this_beams_n0628 = [s for s in self.beams_n0628 if s%4==0]
-        this_r21      = self.outfits_r21_n0628.replace(this_basebeam,"????")
-        this_er21     = self.outfits_er21_n0628.replace(this_basebeam,"????")
-        this_co10     = self.outmom_co10_n0628.replace(this_basebeam,"????").replace("momX","mom0")
-        this_co21     = self.outmom_co21_n0628.replace(this_basebeam,"????").replace("momX","mom0")
-        this_ra       = float(self.ra_n0628)
-        this_dec      = float(self.dec_n0628)
-        this_scale    = self.scale_n0628
-        this_pa       = self.pa_n0628
-        this_incl     = self.incl_n0628
+        this_r21         = self.outfits_r21_n0628.replace(this_basebeam,"????")
+        this_er21        = self.outfits_er21_n0628.replace(this_basebeam,"????")
+        this_co10        = self.outmom_co10_n0628.replace(this_basebeam,"????").replace("momX","mom0")
+        this_co21        = self.outmom_co21_n0628.replace(this_basebeam,"????").replace("momX","mom0")
+        this_ra          = float(self.ra_n0628)
+        this_dec         = float(self.dec_n0628)
+        this_scale       = self.scale_n0628
+        this_pa          = self.pa_n0628
+        this_incl        = self.incl_n0628
         co10s_n0628, co21s_n0628, r21s_n0628 = \
             self._import_violins(this_co10,this_co21,this_r21,this_er21,this_beams_n0628,this_ra,this_dec,this_scale,this_pa,this_incl)
 
-        this_basebeam = str(self.basebeam_n3627).replace(".","p").zfill(4)
+        this_basebeam    = str(self.basebeam_n3627).replace(".","p").zfill(4)
         this_beams_n3627 = [s for s in self.beams_n3627 if s%4==0]
-        this_r21      = self.outfits_r21_n3627.replace(this_basebeam,"????")
-        this_er21     = self.outfits_er21_n3627.replace(this_basebeam,"????")
-        this_co10     = self.outmom_co10_n3627.replace(this_basebeam,"????").replace("momX","mom0")
-        this_co21     = self.outmom_co21_n3627.replace(this_basebeam,"????").replace("momX","mom0")
-        this_ra       = float(self.ra_n3627)
-        this_dec      = float(self.dec_n3627)
-        this_scale    = self.scale_n3627
-        this_pa       = self.pa_n3627
-        this_incl     = self.incl_n3627
+        this_r21         = self.outfits_r21_n3627.replace(this_basebeam,"????")
+        this_er21        = self.outfits_er21_n3627.replace(this_basebeam,"????")
+        this_co10        = self.outmom_co10_n3627.replace(this_basebeam,"????").replace("momX","mom0")
+        this_co21        = self.outmom_co21_n3627.replace(this_basebeam,"????").replace("momX","mom0")
+        this_ra          = float(self.ra_n3627)
+        this_dec         = float(self.dec_n3627)
+        this_scale       = self.scale_n3627
+        this_pa          = self.pa_n3627
+        this_incl        = self.incl_n3627
         co10s_n3627, co21s_n3627, r21s_n3627 = \
-            self._import_violins(this_co10,this_co21,this_r21,this_er21,this_beams_n0628,this_ra,this_dec,this_scale,this_pa,this_incl)
+            self._import_violins(this_co10,this_co21,this_r21,this_er21,this_beams_n3627,this_ra,this_dec,this_scale,this_pa,this_incl)
 
-        this_basebeam = str(self.basebeam_n4254).replace(".","p").zfill(4)
+        this_basebeam    = str(self.basebeam_n4254).replace(".","p").zfill(4)
         this_beams_n4254 = [s for s in self.beams_n4254 if s%4==0]
-        this_r21      = self.outfits_r21_n4254.replace(this_basebeam,"????")
-        this_er21     = self.outfits_er21_n4254.replace(this_basebeam,"????")
-        this_co10     = self.outmom_co10_n4254.replace(this_basebeam,"????").replace("momX","mom0")
-        this_co21     = self.outmom_co21_n4254.replace(this_basebeam,"????").replace("momX","mom0")
-        this_ra       = float(self.ra_n4254)
-        this_dec      = float(self.dec_n4254)
-        this_scale    = self.scale_n4254
-        this_pa       = self.pa_n4254
-        this_incl     = self.incl_n4254
+        this_r21         = self.outfits_r21_n4254.replace(this_basebeam,"????")
+        this_er21        = self.outfits_er21_n4254.replace(this_basebeam,"????")
+        this_co10        = self.outmom_co10_n4254.replace(this_basebeam,"????").replace("momX","mom0")
+        this_co21        = self.outmom_co21_n4254.replace(this_basebeam,"????").replace("momX","mom0")
+        this_ra          = float(self.ra_n4254)
+        this_dec         = float(self.dec_n4254)
+        this_scale       = self.scale_n4254
+        this_pa          = self.pa_n4254
+        this_incl        = self.incl_n4254
         co10s_n4254, co21s_n4254, r21s_n4254 = \
-            self._import_violins(this_co10,this_co21,this_r21,this_er21,this_beams_n0628,this_ra,this_dec,this_scale,this_pa,this_incl)
+            self._import_violins(this_co10,this_co21,this_r21,this_er21,this_beams_n4254,this_ra,this_dec,this_scale,this_pa,this_incl)
 
-        this_basebeam = str(self.basebeam_n4321).replace(".","p").zfill(4)
+        this_basebeam    = str(self.basebeam_n4321).replace(".","p").zfill(4)
         this_beams_n4321 = [s for s in self.beams_n4321 if s%4==0]
-        this_r21      = self.outfits_r21_n4321.replace(this_basebeam,"????")
-        this_er21     = self.outfits_er21_n4321.replace(this_basebeam,"????")
-        this_co10     = self.outmom_co10_n4321.replace(this_basebeam,"????").replace("momX","mom0")
-        this_co21     = self.outmom_co21_n4321.replace(this_basebeam,"????").replace("momX","mom0")
-        this_ra       = float(self.ra_n4321)
-        this_dec      = float(self.dec_n4321)
-        this_scale    = self.scale_n4321
-        this_pa       = self.pa_n4321
-        this_incl     = self.incl_n4321
+        this_r21         = self.outfits_r21_n4321.replace(this_basebeam,"????")
+        this_er21        = self.outfits_er21_n4321.replace(this_basebeam,"????")
+        this_co10        = self.outmom_co10_n4321.replace(this_basebeam,"????").replace("momX","mom0")
+        this_co21        = self.outmom_co21_n4321.replace(this_basebeam,"????").replace("momX","mom0")
+        this_ra          = float(self.ra_n4321)
+        this_dec         = float(self.dec_n4321)
+        this_scale       = self.scale_n4321
+        this_pa          = self.pa_n4321
+        this_incl        = self.incl_n4321
         co10s_n4321, co21s_n4321, r21s_n4321 = \
-            self._import_violins(this_co10,this_co21,this_r21,this_er21,this_beams_n0628,this_ra,this_dec,this_scale,this_pa,this_incl)
+            self._import_violins(this_co10,this_co21,this_r21,this_er21,this_beams_n4321,this_ra,this_dec,this_scale,this_pa,this_incl)
 
         ax1_title  = "Area-weighted"
         ax2_title  = "CO(1-0)-weighted"
@@ -546,6 +546,8 @@ class ToolsR21():
         xlim_n4254 = [np.min(this_beams_n4254)-2.0, np.max(this_beams_n4254)+2.0]
         xlim_n4321 = [np.min(this_beams_n4321)-2.0, np.max(this_beams_n4321)+2.0]
         ylim       = [0.0,1.2]
+        xlabel     = "Beam size"
+        ylabel     = "$R_{21}$"
 
         ########
         # plot #
@@ -570,18 +572,18 @@ class ToolsR21():
 
         # set ax param
         factor = 1.65
-        myax_set(ax1,  "y", xlim_n0628, ylim, ax1_title, None, None)
+        myax_set(ax1,  "y", xlim_n0628, ylim, ax1_title, None, ylabel)
         myax_set(ax2,  "y", xlim_n0628, ylim, ax2_title, None, None)
         myax_set(ax3,  "y", xlim_n0628, ylim, ax3_title, None, None)
-        myax_set(ax4,  "y", None, ylim, None, None, None)
-        myax_set(ax5,  "y", None, ylim, None, None, None)
-        myax_set(ax6,  "y", None, ylim, None, None, None)
-        myax_set(ax7,  "y", None, ylim, None, None, None)
-        myax_set(ax8,  "y", None, ylim, None, None, None)
-        myax_set(ax9,  "y", None, ylim, None, None, None)
-        myax_set(ax10, "y", None, ylim, None, None, None)
-        myax_set(ax11, "y", None, ylim, None, None, None)
-        myax_set(ax12, "y", None, ylim, None, None, None)
+        myax_set(ax4,  "y", xlim_n3627, ylim, None, None, ylabel)
+        myax_set(ax5,  "y", xlim_n3627, ylim, None, None, None)
+        myax_set(ax6,  "y", xlim_n3627, ylim, None, None, None)
+        myax_set(ax7,  "y", xlim_n4254, ylim, None, None, ylabel)
+        myax_set(ax8,  "y", xlim_n4254, ylim, None, None, None)
+        myax_set(ax9,  "y", xlim_n4254, ylim, None, None, None)
+        myax_set(ax10, "y", xlim_n4321, ylim, None, xlabel, ylabel)
+        myax_set(ax11, "y", xlim_n4321, ylim, None, xlabel, None)
+        myax_set(ax12, "y", xlim_n4321, ylim, None, xlabel, None)
 
         # unset xlabels
         ax1.tick_params(labelbottom=False,labelleft=True,labelright=False,labeltop=False)
