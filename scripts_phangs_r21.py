@@ -604,17 +604,17 @@ class ToolsR21():
         self._ax_multiviolin(ax2,r21s_n0628,this_beams_n0628,ylim,self.c_n0628,0.5,weights=co10s_n0628)
         self._ax_multiviolin(ax3,r21s_n0628,this_beams_n0628,ylim,self.c_n0628,0.3,weights=co21s_n0628)
 
-        self._ax_multiviolin(ax1,r21s_n3627,this_beams_n3627,ylim,self.c_n3627,0.8,weights=None)
-        self._ax_multiviolin(ax2,r21s_n3627,this_beams_n3627,ylim,self.c_n3627,0.5,weights=co10s_n3627)
-        self._ax_multiviolin(ax3,r21s_n3627,this_beams_n3627,ylim,self.c_n3627,0.3,weights=co21s_n3627)
+        self._ax_multiviolin(ax4,r21s_n3627,this_beams_n3627,ylim,self.c_n3627,0.8,weights=None)
+        self._ax_multiviolin(ax5,r21s_n3627,this_beams_n3627,ylim,self.c_n3627,0.5,weights=co10s_n3627)
+        self._ax_multiviolin(ax6,r21s_n3627,this_beams_n3627,ylim,self.c_n3627,0.3,weights=co21s_n3627)
 
-        self._ax_multiviolin(ax1,r21s_n4254,this_beams_n4254,ylim,self.c_n4254,0.8,weights=None)
-        self._ax_multiviolin(ax2,r21s_n4254,this_beams_n4254,ylim,self.c_n4254,0.5,weights=co10s_n4254)
-        self._ax_multiviolin(ax3,r21s_n4254,this_beams_n4254,ylim,self.c_n4254,0.3,weights=co21s_n4254)
+        self._ax_multiviolin(ax7,r21s_n4254,this_beams_n4254,ylim,self.c_n4254,0.8,weights=None)
+        self._ax_multiviolin(ax8,r21s_n4254,this_beams_n4254,ylim,self.c_n4254,0.5,weights=co10s_n4254)
+        self._ax_multiviolin(ax9,r21s_n4254,this_beams_n4254,ylim,self.c_n4254,0.3,weights=co21s_n4254)
 
-        self._ax_multiviolin(ax1,r21s_n4321,this_beams_n4321,ylim,self.c_n4321,0.8,weights=None)
-        self._ax_multiviolin(ax2,r21s_n4321,this_beams_n4321,ylim,self.c_n4321,0.5,weights=co10s_n4321)
-        self._ax_multiviolin(ax3,r21s_n4321,this_beams_n4321,ylim,self.c_n4321,0.3,weights=co21s_n4321)
+        self._ax_multiviolin(ax10,r21s_n4321,this_beams_n4321,ylim,self.c_n4321,0.8,weights=None)
+        self._ax_multiviolin(ax11,r21s_n4321,this_beams_n4321,ylim,self.c_n4321,0.5,weights=co10s_n4321)
+        self._ax_multiviolin(ax12,r21s_n4321,this_beams_n4321,ylim,self.c_n4321,0.3,weights=co21s_n4321)
 
         # text
         t=ax1.text(0.05, 0.90, "NGC 0628", color=self.c_n0628, horizontalalignment="left", transform=ax1.transAxes, size=self.legend_fontsize-2, fontweight="bold")
