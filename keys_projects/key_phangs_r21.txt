@@ -205,9 +205,9 @@ outpng_cprops_n0628  ,,,fig_cprops_n0628.png
 outpng_env_n0628     ,,,fig_env_n0628.png
 outpng_halpha_n0628  ,,,fig_halpha_n0628.png
 
-outpng_r21hl_n0628   ,,,fig_r21hl_n3627.png
-outpng_cprops_n0628  ,,,fig_cprops_n3627.png
-outpng_env_n0628     ,,,fig_env_n3627.png
+outpng_r21hl_n3627   ,,,fig_r21hl_n3627.png
+outpng_cprops_n3627  ,,,fig_cprops_n3627.png
+outpng_env_n3627     ,,,fig_env_n3627.png
 outpng_halpha_n3627  ,,,fig_halpha_n3627.png
 
 outpng_r21hl_n4254   ,,,fig_r21hl_n4254.png
