@@ -716,7 +716,7 @@ class ToolsR21():
         array_w3w1   = np.log10(this_w3w1[cut].flatten() / np.median(this_w3w1[cut].flatten()))
         array_w3co21 = np.log10(this_w3co21[cut].flatten() / np.median(this_w3co21[cut].flatten()))
         array_w3co10 = np.log10(this_w3co10[cut].flatten() / np.median(this_w3co10[cut].flatten()))
-        array_bulge  = np.where((dist_kpc[cut]=<=self.hist_550pc_cnter_radius), 1.0, 0.0)
+        array_bulge  = np.where((dist_kpc[cut]<=self.hist_550pc_cnter_radius), 1.0, 0.0)
 
         return array_r21, array_w1, array_w2, array_w3, array_dist, array_disp, array_w3w1, array_w3co21, array_w3co10, array_bulge
 
