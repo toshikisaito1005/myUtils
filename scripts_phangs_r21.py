@@ -730,6 +730,14 @@ class ToolsR21():
         self._plot_contours_gal(ax8,w3co10_n4321[bulge_n4321==0],r21_n4321[bulge_n4321==0],xlim8,ylim,self.c_n4321)
 
         # text
+        yoffset = 0.1
+        ax8.text(1.15, 0.90-yoffset*0.0, "bulge", color="gold", horizontalalignment="left", transform=ax8.transAxes, size=self.legend_fontsize, fontweight="bold")
+        ax8.text(1.15, 0.90-yoffset*1.0, "all other environments", color="grey", horizontalalignment="left", transform=ax8.transAxes, size=self.legend_fontsize, fontweight="bold")
+        ax8.text(1.15, 0.90-yoffset*2.5, "NGC 0628", color=self.c_n0628, horizontalalignment="left", transform=ax8.transAxes, size=self.legend_fontsize, fontweight="bold")
+        ax8.text(1.15, 0.90-yoffset*3.5, "NGC 3627", color=self.c_n3627, horizontalalignment="left", transform=ax8.transAxes, size=self.legend_fontsize, fontweight="bold")
+        ax8.text(1.15, 0.90-yoffset*4.5, "NGC 4254", color=self.c_n4254, horizontalalignment="left", transform=ax8.transAxes, size=self.legend_fontsize, fontweight="bold")
+        ax8.text(1.15, 0.90-yoffset*5.5, "NGC 4321", color=self.c_n4321, horizontalalignment="left", transform=ax8.transAxes, size=self.legend_fontsize, fontweight="bold")
+
 
         plt.savefig(self.outpng_scatters, dpi=self.fig_dpi)  
 
