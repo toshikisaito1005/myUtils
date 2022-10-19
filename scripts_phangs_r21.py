@@ -634,8 +634,13 @@ class ToolsR21():
         p98  = self._weighted_percentile(data[data!=0],98,weights=weights)
 
         # kde
-        l = gaussian_kde(data,weights=weights)
+        h,e = np.histogram(data, bins=1000, density=True, weights=weights)
+        x = np.linspace(e.min(), e.max())
+        resamples = np.random.choice((e[:-1] + e[1:])/2, size=5000, p=h/h.sum())
+        l = gaussian_kde(resamples)
+        #l = gaussian_kde(data)
         data = np.array(l(ygrid) / np.max(l(ygrid))) / 0.55
+
 
         left  = beam-data
         right = beam+data
