@@ -533,15 +533,15 @@ class ToolsR21():
         env    = np.r_[env_n0628]
         halpha = np.r_[halpha_n0628]
 
-        ylim       = [0.0,2.0]
-        ylabel     = "$R_{21}$"
+        ylim       = [-0.5,2.5]
+        ylabel     = "Median-normalized $R_{21}$"
 
         ########
         # plot #
         ########
 
         # set plt, ax
-        plt.figure(figsize=(15,12))
+        plt.figure(figsize=(15,7))
         plt.subplots_adjust(bottom=0.09, left=0.07, right=0.99, top=0.95)
         gs   = gridspec.GridSpec(nrows=12, ncols=9)
         ax1  = plt.subplot(gs[0:12,0:9])
@@ -552,7 +552,9 @@ class ToolsR21():
 
         # plot
         self._ax_masked_violin(ax1,r21,co21,cprops,1,1,ylim,cm.bwr(1.2/1.4))
-        self._ax_masked_violin(ax1,r21,co21,cprops,0,2,ylim,cm.bwr(0.2/1.4))
+        self._ax_masked_violin(ax1,r21,co21,cprops,0,3,ylim,cm.bwr(0.2/1.4))
+
+        self._ax_masked_violin(ax1,r21,co21,env,3,5,ylim,cm.gnuplot(3/3.5))
 
 
         # text
