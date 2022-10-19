@@ -533,7 +533,7 @@ class ToolsR21():
         env    = np.r_[env_n0628]
         halpha = np.r_[halpha_n0628]
 
-        ylim       = [0.0,1.2]
+        ylim       = [0.0,2.0]
         ylabel     = "$R_{21}$"
 
         ########
@@ -645,7 +645,7 @@ class ToolsR21():
             & (this_r21!=this_r21_err*self.snr_ratio) & (dist_kpc > self.hist_550pc_cnter_radius) ) 
 
         this_co21   = this_co21[cut].flatten()
-        this_r21    = this_r21[cut].flatten()
+        this_r21    = this_r21[cut].flatten() / np.max(this_r21[cut].flatten())
         this_cprops = this_cprops[cut].flatten()
         this_env    = this_env[cut].flatten()
         this_halpha = this_halpha[cut].flatten()
