@@ -575,7 +575,7 @@ class ToolsR21():
         env    = np.r_[env_n0628,env_n3627,env_n4254,env_n4321]
         halpha = np.r_[halpha_n0628,halpha_n3627,halpha_n4254,halpha_n4321]
 
-        ylim       = [-0.5,2.5]
+        ylim       = [0.0,2.5]
         ylabel     = "Median-normalized $R_{21}$"
 
         ########
@@ -623,8 +623,8 @@ class ToolsR21():
         shift,
         ylim,
         color,
-        vmin=None,
-        vmax=None,
+        vmin=0.0,
+        vmax=2.5,
         ):
         """
         """
@@ -647,7 +647,7 @@ class ToolsR21():
 
         left = shift-data
         cut = np.where((ygrid<vmax)&(ygrid>vmin))
-        ax.plot(left[cut], ygrid[cut], lw=1, color="grey")
+        ax.plot(left[cut], ygrid[cut], lw=1, color=color)
         ax.fill_betweenx(ygrid, left, shift, facecolor=color, alpha=0.2, lw=0)
 
         # plot weighted kde
@@ -662,8 +662,8 @@ class ToolsR21():
 
         right = shift+data
         cut = np.where((ygrid<vmax)&(ygrid>vmin))
-        ax.plot(left[cut], ygrid[cut], lw=1, color="grey")
-        ax.fill_betweenx(ygrid, shift, right, facecolor=color, alpha=1.0, lw=0)
+        ax.plot(left[cut], ygrid[cut], lw=1, color=color)
+        ax.fill_betweenx(ygrid, shift, right, facecolor=color, alpha=0.8, lw=0)
 
     #######################
     # _import_masked_hist #
