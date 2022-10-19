@@ -587,7 +587,7 @@ class ToolsR21():
             & (~np.isnan(this_w2)) & (~np.isinf(this_w2)) & (this_w2!=0) \
             & (~np.isnan(this_w3)) & (~np.isinf(this_w3)) & (this_w3!=0) \
             & (~np.isnan(this_disp)) & (~np.isinf(this_disp)) & (this_disp!=0) \
-            & (this_r21!=this_r21_err*self.snr_ratio) )
+            & (this_r21!=this_er21*self.snr_ratio) )
 
         array_r21    = np.log10(this_r21[cut].flatten() / np.median(this_r21[cut].flatten()))
         array_w1     = np.log10(this_w1[cut].flatten() / np.median(this_w1[cut].flatten()))
