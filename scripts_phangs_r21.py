@@ -377,6 +377,23 @@ class ToolsR21():
 
         self.outpng_violins           = self.dir_products + self._read_key("outpng_violins")
 
+        self.outpng_r21hl_n0628       = self.dir_products + self._read_key("outpng_r21hl_n0628")
+        self.outpng_cprops_n0628      = self.dir_products + self._read_key("outpng_cprops_n0628")
+        self.outpng_env_n0628         = self.dir_products + self._read_key("outpng_env_n0628")
+        self.outpng_halpha_n0628      = self.dir_products + self._read_key("outpng_halpha_n0628")
+        self.outpng_r21hl_n3627       = self.dir_products + self._read_key("outpng_r21hl_n3627")
+        self.outpng_cprops_n3627      = self.dir_products + self._read_key("outpng_cprops_n3627")
+        self.outpng_env_n3627         = self.dir_products + self._read_key("outpng_env_n3627")
+        self.outpng_halpha_n3627      = self.dir_products + self._read_key("outpng_halpha_n3627")
+        self.outpng_r21hl_n4254       = self.dir_products + self._read_key("outpng_r21hl_n4254")
+        self.outpng_cprops_n4254      = self.dir_products + self._read_key("outpng_cprops_n4254")
+        self.outpng_env_n4254         = self.dir_products + self._read_key("outpng_env_n4254")
+        self.outpng_halpha_n4254      = self.dir_products + self._read_key("outpng_halpha_n4254")
+        self.outpng_r21hl_n4321       = self.dir_products + self._read_key("outpng_r21hl_n4321")
+        self.outpng_cprops_n4321      = self.dir_products + self._read_key("outpng_cprops_n4321")
+        self.outpng_env_n4321         = self.dir_products + self._read_key("outpng_env_n4321")
+        self.outpng_halpha_n4321      = self.dir_products + self._read_key("outpng_halpha_n4321")
+
     ##################
     # run_phangs_r21 #
     ##################
@@ -396,6 +413,7 @@ class ToolsR21():
         plot_m0_vs_m8   = False,
         plot_hist_550pc = False,
         plot_violins    = False,
+        plot_masks      = False,
         # supplement
         ):
         """
@@ -459,11 +477,113 @@ class ToolsR21():
         if plot_violins==True:
             self.plot_violins()
 
+        if plot_masks==True:
+            self.plot_masks()
+
     #####################
     #####################
     ### plotting part ###
     #####################
     #####################
+
+    ##############
+    # plot_masks #
+    ##############
+
+    def plot_masks(
+        self,
+        ):
+        """
+        """
+
+        taskname = self.modname + sys._getframe().f_code.co_name
+        check_first(self.outcube_co10_n0628,taskname)
+
+        ###########
+        # ngc0628 #
+        ###########
+        this_co21       = self.outmom_co21_n0628.replace("momX","mom0")
+        this_eco21      = self.outmom_co21_n0628.replace("momX","emom0")
+        this_co21       = self._clip_for_showcase(this_co21,this_eco21)
+        this_r21hl      = self.outfits_r21hl_n0628
+        this_cprops     = self.outfits_cprops_n0628
+        this_env        = self.outfits_env_n0628
+        this_halpha     = self.outfits_halpha_n0628
+        this_out_r21hl  = self.outpng_r21hl_n0628
+        this_out_cprops = self.outpng_cprops_n0628
+        this_out_env    = self.outpng_env_n0628
+        this_out_halpha = self.outpng_halpha_n0628
+        this_imsize     = self.imsize_n0628
+        this_ra         = self.ra_n0628
+        this_dec        = self.dec_n0628
+        this_scalebar   = 1000. / self.scale_n0628
+        this_title      = "NGC 0628"
+        myfig_fits2png(
+            this_r21hl,
+            this_out_r21hl,
+            imcontour1=this_co21,
+            imsize_as=this_imsize,
+            ra_cnt=this_ra,
+            dec_cnt=this_dec,
+            levels_cont1=[0.05, 0.1, 0.2, 0.4, 0.8, 0.96],
+            set_title="NGC 0628",
+            colorlog=True,
+            set_cmap="rainbow",
+            scalebar=this_scalebar,
+            label_scalebar="1 kpc",
+            comment="$R_{21}$ mask",
+            clim=[0.7,3.3],
+            )
+        myfig_fits2png(
+            this_cprops,
+            this_out_cprops,
+            imcontour1=this_co21,
+            imsize_as=this_imsize,
+            ra_cnt=this_ra,
+            dec_cnt=this_dec,
+            levels_cont1=[0.05, 0.1, 0.2, 0.4, 0.8, 0.96],
+            set_title="NGC 0628",
+            colorlog=True,
+            set_cmap="bwr",
+            scalebar=this_scalebar,
+            label_scalebar="1 kpc",
+            comment="cloud mask",
+            clim=[-0.2,1.2],
+            )
+        myfig_fits2png(
+            this_env,
+            this_out_env,
+            imcontour1=this_co21,
+            imsize_as=this_imsize,
+            ra_cnt=this_ra,
+            dec_cnt=this_dec,
+            levels_cont1=[0.05, 0.1, 0.2, 0.4, 0.8, 0.96],
+            set_title="NGC 0628",
+            colorlog=True,
+            set_cmap="gnuplot",
+            scalebar=this_scalebar,
+            label_scalebar="1 kpc",
+            comment="environmental mask",
+            clim=[0,3.5],
+            )
+        myfig_fits2png(
+            this_halpha,
+            this_out_halpha,
+            imcontour1=this_co21,
+            imsize_as=this_imsize,
+            ra_cnt=this_ra,
+            dec_cnt=this_dec,
+            levels_cont1=[0.05, 0.1, 0.2, 0.4, 0.8, 0.96],
+            set_title="NGC 0628",
+            colorlog=True,
+            set_cmap="PiYG_r",
+            scalebar=this_scalebar,
+            label_scalebar="1 kpc",
+            comment="HII region mask",
+            clim=[-0.2,1.2],
+            )
+
+    #
 
     ################
     # plot_violins #

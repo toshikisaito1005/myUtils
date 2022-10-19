@@ -174,23 +174,51 @@ noise_vs_beam_co21_n4254 ,,,noise_vs_beam_co21_n4254.txt
 noise_vs_beam_co21_n4321 ,,,noise_vs_beam_co21_n4321.txt
 # png files
 outpng_noise_hist    ,,,fig_noise_hist.png
+
 outpng_noise_vs_beam ,,,fig_noise_vs_beam.png
+
 outpng_recovery      ,,,fig_recovery_vs_beam.png
+
 outpng_co10_n0628    ,,,fig_map_co10_n0628.png
 outpng_co10_n3627    ,,,fig_map_co10_n3627.png
 outpng_co10_n4254    ,,,fig_map_co10_n4254.png
 outpng_co10_n4321    ,,,fig_map_co10_n4321.png
+
 outpng_co21_n0628    ,,,fig_map_co21_n0628.png
 outpng_co21_n3627    ,,,fig_map_co21_n3627.png
 outpng_co21_n4254    ,,,fig_map_co21_n4254.png
 outpng_co21_n4321    ,,,fig_map_co21_n4321.png
+
 outpng_r21_n0628     ,,,fig_map_r21_n0628.png
 outpng_r21_n3627     ,,,fig_map_r21_n3627.png
 outpng_r21_n4254     ,,,fig_map_r21_n4254.png
 outpng_r21_n4321     ,,,fig_map_r21_n4321.png
+
 outpng_m0_vs_m8      ,,,fig_m0_vs_m8.png
+
 outpng_hist_550pc    ,,,fig_hist_550pc.png
+
 outpng_violins       ,,,fig_violins.png
+
+outpng_r21hl_n0628   ,,,fig_r21hl_n0628.png
+outpng_cprops_n0628  ,,,fig_cprops_n0628.png
+outpng_env_n0628     ,,,fig_env_n0628.png
+outpng_halpha_n0628  ,,,fig_halpha_n0628.png
+
+outpng_r21hl_n0628   ,,,fig_r21hl_n3627.png
+outpng_cprops_n0628  ,,,fig_cprops_n3627.png
+outpng_env_n0628     ,,,fig_env_n3627.png
+outpng_halpha_n3627  ,,,fig_halpha_n3627.png
+
+outpng_r21hl_n4254   ,,,fig_r21hl_n4254.png
+outpng_cprops_n4254  ,,,fig_cprops_n4254.png
+outpng_env_n4254     ,,,fig_env_n4254.png
+outpng_halpha_n4254  ,,,fig_halpha_n4254.png
+
+outpng_r21hl_n4321   ,,,fig_r21hl_n4321.png
+outpng_cprops_n4321  ,,,fig_cprops_n4321.png
+outpng_env_n4321     ,,,fig_env_n4321.png
+outpng_halpha_n4321  ,,,fig_halpha_n4321.png
 
 #######
 # end #
