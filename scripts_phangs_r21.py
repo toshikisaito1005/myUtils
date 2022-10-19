@@ -609,6 +609,7 @@ class ToolsR21():
         if vmax==None:
             vmax = np.max(data)
 
+        right = shift+data
         cut = np.where((ygrid<vmax)&(ygrid>vmin))
         ax.plot(left[cut], ygrid[cut], lw=1, color="grey")
         ax.fill_betweenx(ygrid, shift, right, facecolor=color, alpha=1.0, lw=0)
