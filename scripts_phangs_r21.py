@@ -704,6 +704,31 @@ class ToolsR21():
         self._plot_contours_gal(ax3,w3_n4254[bulge_n4254==0],r21_n4254[bulge_n4254==0],xlim3,ylim,self.c_n4254)
         self._plot_contours_gal(ax3,w3_n4321[bulge_n4321==0],r21_n4321[bulge_n4321==0],xlim3,ylim,self.c_n4321)
 
+        self._plot_contours_gal(ax4,dist_n0628[bulge_n0628==0],r21_n0628[bulge_n0628==0],xlim4,ylim,self.c_n0628)
+        self._plot_contours_gal(ax4,dist_n3627[bulge_n3627==0],r21_n3627[bulge_n3627==0],xlim4,ylim,self.c_n3627)
+        self._plot_contours_gal(ax4,dist_n4254[bulge_n4254==0],r21_n4254[bulge_n4254==0],xlim4,ylim,self.c_n4254)
+        self._plot_contours_gal(ax4,dist_n4321[bulge_n4321==0],r21_n4321[bulge_n4321==0],xlim4,ylim,self.c_n4321)
+
+        self._plot_contours_gal(ax5,disp_n0628[bulge_n0628==0],r21_n0628[bulge_n0628==0],xlim5,ylim,self.c_n0628)
+        self._plot_contours_gal(ax5,disp_n3627[bulge_n3627==0],r21_n3627[bulge_n3627==0],xlim5,ylim,self.c_n3627)
+        self._plot_contours_gal(ax5,disp_n4254[bulge_n4254==0],r21_n4254[bulge_n4254==0],xlim5,ylim,self.c_n4254)
+        self._plot_contours_gal(ax5,disp_n4321[bulge_n4321==0],r21_n4321[bulge_n4321==0],xlim5,ylim,self.c_n4321)
+
+        self._plot_contours_gal(ax6,w3w1_n0628[bulge_n0628==0],r21_n0628[bulge_n0628==0],xlim6,ylim,self.c_n0628)
+        self._plot_contours_gal(ax6,w3w1_n3627[bulge_n3627==0],r21_n3627[bulge_n3627==0],xlim6,ylim,self.c_n3627)
+        self._plot_contours_gal(ax6,w3w1_n4254[bulge_n4254==0],r21_n4254[bulge_n4254==0],xlim6,ylim,self.c_n4254)
+        self._plot_contours_gal(ax6,w3w1_n4321[bulge_n4321==0],r21_n4321[bulge_n4321==0],xlim6,ylim,self.c_n4321)
+
+        self._plot_contours_gal(ax7,w3co21_n0628[bulge_n0628==0],r21_n0628[bulge_n0628==0],xlim7,ylim,self.c_n0628)
+        self._plot_contours_gal(ax7,w3co21_n3627[bulge_n3627==0],r21_n3627[bulge_n3627==0],xlim7,ylim,self.c_n3627)
+        self._plot_contours_gal(ax7,w3co21_n4254[bulge_n4254==0],r21_n4254[bulge_n4254==0],xlim7,ylim,self.c_n4254)
+        self._plot_contours_gal(ax7,w3co21_n4321[bulge_n4321==0],r21_n4321[bulge_n4321==0],xlim7,ylim,self.c_n4321)
+
+        self._plot_contours_gal(ax8,w3co10_n0628[bulge_n0628==0],r21_n0628[bulge_n0628==0],xlim8,ylim,self.c_n0628)
+        self._plot_contours_gal(ax8,w3co10_n3627[bulge_n3627==0],r21_n3627[bulge_n3627==0],xlim8,ylim,self.c_n3627)
+        self._plot_contours_gal(ax8,w3co10_n4254[bulge_n4254==0],r21_n4254[bulge_n4254==0],xlim8,ylim,self.c_n4254)
+        self._plot_contours_gal(ax8,w3co10_n4321[bulge_n4321==0],r21_n4321[bulge_n4321==0],xlim8,ylim,self.c_n4321)
+
         # text
 
         plt.savefig(self.outpng_scatters, dpi=self.fig_dpi)  
@@ -738,7 +763,7 @@ class ToolsR21():
         ax.contour( contour, levels=[20,100], extent=extent, colors=color, zorder=1, linewidths=2.5, alpha=1.0)
 
         # text
-        t=ax.text(0.95, 0.12, cor, color="grey", horizontalalignment="right", transform=ax.transAxes, size=self.legend_fontsize-1, fontweight="bold")
+        t=ax.text(0.95, 0.05, cor, color="grey", horizontalalignment="right", transform=ax.transAxes, size=self.legend_fontsize-1, fontweight="bold")
         t.set_bbox(dict(facecolor="white", alpha=self.text_back_alpha, lw=0))
 
     ####################
