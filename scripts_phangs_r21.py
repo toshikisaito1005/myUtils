@@ -621,15 +621,15 @@ class ToolsR21():
         xlim7   = [-0.65,0.65]
         xlim8   = [-0.75,0.75]
         ylim    = [-0.9,0.8]
-        xlabel1 = "log_{10} Normalized W1"
-        xlabel2 = "log_{10} Normalized W2"
-        xlabel3 = "log_{10} Normalized W3"
-        xlabel4 = "log_{10} $r$/$R_{\rm eff}$"
-        xlabel5 = "log_{10} Normalized $\sigma_{\rm CO(2-1)}$"
-        xlabel6 = "log_{10} Normalized W3/W1"
-        xlabel7 = "log_{10} Normalized W3/$I_{\rm CO(1-0)}$"
-        xlabel8 = "log_{10} Normalized W3/$I_{\rm CO(2-1)}$"
-        ylabel  = "log_{10} Normalized $R_{21}$"
+        xlabel1 = "log$_{10}$ Normalized W1"
+        xlabel2 = "log$_{10}$ Normalized W2"
+        xlabel3 = "log$_{10}$ Normalized W3"
+        xlabel4 = "log$_{10}$ $r$/$R_{\rm eff}$"
+        xlabel5 = "log$_{10}$ Normalized $\sigma_{\rm CO(2-1)}$"
+        xlabel6 = "log$_{10}$ Normalized W3/W1"
+        xlabel7 = "log$_{10}$ Normalized W3/$I_{\rm CO(1-0)}$"
+        xlabel8 = "log$_{10}$ Normalized W3/$I_{\rm CO(2-1)}$"
+        ylabel  = "log$_{10}$ Normalized $R_{21}$"
 
         ########
         # plot #
@@ -671,8 +671,24 @@ class ToolsR21():
 
         # plot
         ax1.scatter(w1[bulge==0], r21[bulge==0], lw=0, color="silver")
-        ax1.scatter(w1[bulge==1], r21[bulge==1], lw=0, color="gold")
+        ax2.scatter(w2[bulge==0], r21[bulge==0], lw=0, color="silver")
+        ax3.scatter(w3[bulge==0], r21[bulge==0], lw=0, color="silver")
+        ax4.scatter(dist[bulge==0], r21[bulge==0], lw=0, color="silver")
+        ax5.scatter(disp[bulge==0], r21[bulge==0], lw=0, color="silver")
+        ax6.scatter(w3w1[bulge==0], r21[bulge==0], lw=0, color="silver")
+        ax7.scatter(w3co21[bulge==0], r21[bulge==0], lw=0, color="silver")
+        ax8.scatter(w3co10[bulge==0], r21[bulge==0], lw=0, color="silver")
 
+        ax1.scatter(w1[bulge==1], r21[bulge==1], lw=0, color="gold")
+        ax2.scatter(w2[bulge==1], r21[bulge==1], lw=0, color="gold")
+        ax3.scatter(w3[bulge==1], r21[bulge==1], lw=0, color="gold")
+        ax4.scatter(dist[bulge==1], r21[bulge==1], lw=0, color="gold")
+        ax5.scatter(disp[bulge==1], r21[bulge==1], lw=0, color="gold")
+        ax6.scatter(w3w1[bulge==1], r21[bulge==1], lw=0, color="gold")
+        ax7.scatter(w3co21[bulge==1], r21[bulge==1], lw=0, color="gold")
+        ax8.scatter(w3co10[bulge==1], r21[bulge==1], lw=0, color="gold")
+
+        # text
 
         plt.savefig(self.outpng_scatters, dpi=self.fig_dpi)  
 
