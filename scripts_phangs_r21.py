@@ -724,10 +724,10 @@ class ToolsR21():
         """
         """
 
-        xdata = scipy.ndimage.zoom(xdata, 21)#33)
-        ydata = scipy.ndimage.zoom(ydata, 21)#33)
+        xdata = scipy.ndimage.zoom(xdata, 33)
+        ydata = scipy.ndimage.zoom(ydata, 33)
 
-        contour, xedges, yedges = np.histogram2d(ydata, xdata, bins=50, range=(ylim,xlim))
+        contour, xedges, yedges = np.histogram2d(ydata, xdata, bins=35, range=(ylim,xlim))
         contour = contour/contour.max() * 100
         extent  = [yedges[0],yedges[-1],xedges[0],xedges[-1]]
 
