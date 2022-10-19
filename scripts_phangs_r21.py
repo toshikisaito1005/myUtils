@@ -534,7 +534,7 @@ class ToolsR21():
         this_incl     = self.incl_n0628
         this_r25      = 1
         r21_n0628, w1_n0628, w2_n0628, w3_n0628, dist_n0628, disp_n0628, w3w1_n0628, w3co21_n0628, w3co10_n0628, bulge_n0628 = \
-            self._import_scatters(self,co10,co21,r21,er21,w1,w2,w3,disp,ra,dec,scale,pa,incl,this_r25)
+            self._import_scatters(self,this_co10,this_co21,this_r21,this_er21,this_w1,this_w2,this_w3,this_disp,this_ra,this_dec,this_scale,this_pa,this_incl,this_r25)
 
         print(len(r21_n0628),len(disp_n0628),len(bulge_n0628))
 
@@ -542,7 +542,7 @@ class ToolsR21():
     # _import_scatters #
     ####################
 
-    def _import_scatters(self,co10,co21,r21,er21,w1,w2,w3,disp,ra,dec,scale,pa,incl,this_r25):
+    def _import_scatters(self,co10,co21,r21,er21,w1,w2,w3,disp,ra,dec,scale,pa,incl,r25):
         """
         plot_scatters
         """
@@ -578,7 +578,7 @@ class ToolsR21():
 
         dist_pc,_ = self._get_rel_dist_pc(ra_deg, dec_deg, ra, dec, scale, pa, incl)
         dist_kpc  = dist_pc / 1000.
-        dist      = dist_pc / 1000. / this_r25
+        dist      = dist_pc / 1000. / r25
 
         cut = np.where( (~np.isnan(this_co10)) & (~np.isinf(this_co10)) & (this_co10!=0) \
             & (~np.isnan(this_co21)) & (~np.isinf(this_co21)) & (this_co21!=0) \
