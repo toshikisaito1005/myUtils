@@ -534,9 +534,79 @@ class ToolsR21():
         this_incl     = self.incl_n0628
         this_r25      = 1
         r21_n0628, w1_n0628, w2_n0628, w3_n0628, dist_n0628, disp_n0628, w3w1_n0628, w3co21_n0628, w3co10_n0628, bulge_n0628 = \
-            self._import_scatters(this_co10,this_co21,this_r21,this_er21,this_w1,this_w2,this_w3,this_disp,this_ra,this_dec,this_scale,this_pa,this_incl,this_r25)
+            self._import_scatters(this_co10,this_co21,this_r21,this_er21,this_w1,this_w2,this_w3,this_disp,
+                this_ra,this_dec,this_scale,this_pa,this_incl,this_r25)
 
-        print(len(r21_n0628),len(disp_n0628),len(bulge_n0628))
+        this_basebeam = str(self.basebeam_n3627).replace(".","p").zfill(4)
+        this_wisebeam = str(self.beam_wise_n3627).replace(".","p").zfill(4)
+        this_r21      = self.outfits_r21_n3627.replace(this_basebeam,this_wisebeam)
+        this_er21     = self.outfits_er21_n3627.replace(this_basebeam,this_wisebeam)
+        this_co10     = self.outmom_co10_n3627.replace(this_basebeam,this_wisebeam).replace("momX","mom0")
+        this_co21     = self.outmom_co21_n3627.replace(this_basebeam,this_wisebeam).replace("momX","mom0")
+        this_disp     = self.outmom_co21_n3627.replace(this_basebeam,this_wisebeam).replace("momX","mom2")
+        this_w1       = self.outfits_wise1_n3627
+        this_w2       = self.outfits_wise2_n3627
+        this_w3       = self.outfits_wise3_n3627
+        this_ra       = float(self.ra_n3627)
+        this_dec      = float(self.dec_n3627)
+        this_scale    = self.scale_n3627
+        this_pa       = self.pa_n3627
+        this_incl     = self.incl_n3627
+        this_r25      = 1
+        r21_n3627, w1_n3627, w2_n3627, w3_n3627, dist_n3627, disp_n3627, w3w1_n3627, w3co21_n3627, w3co10_n3627, bulge_n3627 = \
+            self._import_scatters(this_co10,this_co21,this_r21,this_er21,this_w1,this_w2,this_w3,this_disp,
+                this_ra,this_dec,this_scale,this_pa,this_incl,this_r25)
+
+        this_basebeam = str(self.basebeam_n4254).replace(".","p").zfill(4)
+        this_wisebeam = str(self.beam_wise_n4254).replace(".","p").zfill(4)
+        this_r21      = self.outfits_r21_n4254.replace(this_basebeam,this_wisebeam)
+        this_er21     = self.outfits_er21_n4254.replace(this_basebeam,this_wisebeam)
+        this_co10     = self.outmom_co10_n4254.replace(this_basebeam,this_wisebeam).replace("momX","mom0")
+        this_co21     = self.outmom_co21_n4254.replace(this_basebeam,this_wisebeam).replace("momX","mom0")
+        this_disp     = self.outmom_co21_n4254.replace(this_basebeam,this_wisebeam).replace("momX","mom2")
+        this_w1       = self.outfits_wise1_n4254
+        this_w2       = self.outfits_wise2_n4254
+        this_w3       = self.outfits_wise3_n4254
+        this_ra       = float(self.ra_n4254)
+        this_dec      = float(self.dec_n4254)
+        this_scale    = self.scale_n4254
+        this_pa       = self.pa_n4254
+        this_incl     = self.incl_n4254
+        this_r25      = 1
+        r21_n4254, w1_n4254, w2_n4254, w3_n4254, dist_n4254, disp_n4254, w3w1_n4254, w3co21_n4254, w3co10_n4254, bulge_n4254 = \
+            self._import_scatters(this_co10,this_co21,this_r21,this_er21,this_w1,this_w2,this_w3,this_disp,
+                this_ra,this_dec,this_scale,this_pa,this_incl,this_r25)
+
+        this_basebeam = str(self.basebeam_n4321).replace(".","p").zfill(4)
+        this_wisebeam = str(self.beam_wise_n4321).replace(".","p").zfill(4)
+        this_r21      = self.outfits_r21_n4321.replace(this_basebeam,this_wisebeam)
+        this_er21     = self.outfits_er21_n4321.replace(this_basebeam,this_wisebeam)
+        this_co10     = self.outmom_co10_n4321.replace(this_basebeam,this_wisebeam).replace("momX","mom0")
+        this_co21     = self.outmom_co21_n4321.replace(this_basebeam,this_wisebeam).replace("momX","mom0")
+        this_disp     = self.outmom_co21_n4321.replace(this_basebeam,this_wisebeam).replace("momX","mom2")
+        this_w1       = self.outfits_wise1_n4321
+        this_w2       = self.outfits_wise2_n4321
+        this_w3       = self.outfits_wise3_n4321
+        this_ra       = float(self.ra_n4321)
+        this_dec      = float(self.dec_n4321)
+        this_scale    = self.scale_n4321
+        this_pa       = self.pa_n4321
+        this_incl     = self.incl_n4321
+        this_r25      = 1
+        r21_n4321, w1_n4321, w2_n4321, w3_n4321, dist_n4321, disp_n4321, w3w1_n4321, w3co21_n4321, w3co10_n4321, bulge_n4321 = \
+            self._import_scatters(this_co10,this_co21,this_r21,this_er21,this_w1,this_w2,this_w3,this_disp,
+                this_ra,this_dec,this_scale,this_pa,this_incl,this_r25)
+
+        r21    = [r21_n0628,r21_n3627,r21_n4254,r21_n4321]
+        w1     = [w1_n0628,w1_n3627,w1_n4254,w1_n4321]
+        w2     = [w2_n0628,w2_n3627,w2_n4254,w2_n4321]
+        w3     = [w3_n0628,w3_n3627,w3_n4254,w3_n4321]
+        dist   = [dist_n0628,dist_n3627,dist_n4254,dist_n4321]
+        disp   = [disp_n0628,disp_n3627,disp_n4254,disp_n4321]
+        w3w1   = [w3w1_n0628,w3w1_n3627,w3w1_n4321,w3w1_n4321]
+        w3co21 = [w3co21_n0628,w3co21_n3627,w3co21_n4254,w3co21_n4321]
+        w3co10 = [w3co10_n0628,w3co10_n3627,w3co10_n4254,w3co10_n4321]
+        bulge  = [bulge_n0628,bulge_n3627,bulge_n4254,bulge_n4321]
 
     ####################
     # _import_scatters #
