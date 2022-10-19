@@ -556,7 +556,7 @@ class ToolsR21():
 
         # text
 
-        plt.savefig(self.outpng_violins, dpi=self.fig_dpi)
+        plt.savefig(self.outpng_masked_hist, dpi=self.fig_dpi)
 
     #####################
     # _ax_masked_violin #
