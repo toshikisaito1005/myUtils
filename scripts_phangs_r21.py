@@ -552,7 +552,7 @@ class ToolsR21():
         this_outputs     = self.outtxt_obs_n0628.replace(this_basebeam,"????")
         self._loop_import_modeling(this_beams_n0628,this_co10,this_co21,this_r21,this_eco10,this_eco21,this_er21,
             this_outputs,this_ra,this_dec,this_scale,this_pa,this_incl)
-        self._loop_modeling(beams,this_outputs)
+        self._loop_modeling(this_beams_n0628,this_outputs)
 
     ##################
     # _loop_modeling #
