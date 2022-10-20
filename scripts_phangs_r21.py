@@ -612,7 +612,7 @@ class ToolsR21():
 
                 # generate model
                 print("# run _gen_models " + str(num) + " / " + str(npoint))
-                list_data = gen_models(this_logco10,this_logco21,this_logco10err,this_logco21err,
+                list_data = self._gen_models(this_logco10,this_logco21,this_logco10err,this_logco21err,
                     mean,sigma,scatter_logco10,scatter_logco21,slope,icept,nbins_co10,nbins_co21)
                 listlist_data.append(list_data)
 
