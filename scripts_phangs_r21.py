@@ -624,7 +624,7 @@ class ToolsR21():
         xlabel1 = "log$_{10}$ Normalized W1"
         xlabel2 = "log$_{10}$ Normalized W2"
         xlabel3 = "log$_{10}$ Normalized W3"
-        xlabel4 = "log$_{10}$ $r$/$R_{\rm eff}$"
+        xlabel4 = r"log$_{10}$ $r$/$R_{\rm eff}$"
         xlabel5 = r"log$_{10}$ Normalized $\sigma_{\rm CO(2-1)}$"
         xlabel6 = r"log$_{10}$ Normalized W3/W1"
         xlabel7 = r"log$_{10}$ Normalized W3/$I_{\rm CO(1-0)}$"
@@ -646,7 +646,7 @@ class ToolsR21():
 
         # set plt, ax
         plt.figure(figsize=(15,15))
-        plt.subplots_adjust(bottom=0.05, left=0.09, right=0.90, top=0.97)
+        plt.subplots_adjust(bottom=0.05, left=0.09, right=0.95, top=0.97, wspace=0.1)
         gs = gridspec.GridSpec(nrows=3, ncols=3)
         ax1 = plt.subplot(gs[0:1,0:1])
         ax2 = plt.subplot(gs[0:1,1:2])
