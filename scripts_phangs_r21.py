@@ -581,7 +581,7 @@ class ToolsR21():
 
             # get observed slope
             if i==0:
-                sig       = 10**this_logr21 / 10**this_loger21
+                sig       = 10**this_logr21 / 10**this_logr21err
                 popt, _   = curve_fit(self._func2, this_logco10, this_logco21, p0=[1.0,-0.5], maxfev=10000, sigma=sig)
                 slope_obs = popt[0]
                 icept_obs = popt[1]
