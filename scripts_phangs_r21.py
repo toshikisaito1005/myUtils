@@ -637,7 +637,7 @@ class ToolsR21():
                     np.log10(this_r21_err[cut]),
                     ]
                 fmt    = "%6.3f %6.3f %6.3f %6.3f %6.3f %6.3f"
-                np.savetxt(this_output, output, header=header, fmt=fmt)
+                np.savetxt(this_outtxt, output, header=header, fmt=fmt)
             else:
                 print("# skip _import_modeling for " + this_outtxt.split("/")[-1])
 
