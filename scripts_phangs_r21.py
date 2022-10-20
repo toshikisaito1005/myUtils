@@ -609,11 +609,17 @@ class ToolsR21():
             tmp_lowest_rms = 1000
             for i in range(npoint):
                 num = i + 1
+                this_mean         = (mean[1]-mean[0])*np.random.rand()+mean[0]
+                this_sigma        = (sigma[1]-sigma[0])*np.random.rand()+sigma[0]
+                this_scatter_co10 = (scatter_logco10[1]-scatter_logco10[0])*np.random.rand()+scatter_logco10[0]
+                this_scatter_co21 = (scatter_logco21[1]-scatter_logco21[0])*np.random.rand()+scatter_logco21[0]
+                this_slope        = (obsslope[1]-obsslope[0])*np.random.rand()+obsslope[0]
+                this_icept        = (obsicept[1]-obsicept[0])*np.random.rand()+obsicept[0]
 
                 # generate model
                 print("# run _gen_models " + str(num) + " / " + str(npoint))
                 list_data = self._gen_models(this_logco10,this_logco21,this_logco10err,this_logco21err,
-                    mean,sigma,scatter_logco10,scatter_logco21,slope,icept,nbins_co10,nbins_co21)
+                    this_mean,this_sigma,this_scatter_logco10,this_scatter_logco21,this_slope,this_icept,nbins_co10,nbins_co21)
                 listlist_data.append(list_data)
 
             # calc diff_rms of r21
@@ -989,27 +995,18 @@ class ToolsR21():
         logco21,
         logco10err,
         logco21err,
-        mean,
-        sigma,
-        scatter_logco10,
-        scatter_logco21,
-        obsslope,
-        obsicept,
+        this_mean,
+        this_sigma,
+        this_scatter_co10,
+        this_scatter_co21,
+        this_slope,
+        this_icept,
         nbins_co10,
         nbins_co21,
         ):
         """
         modeling
         """
-
-        # perturb initial guess
-        this_mean         = (mean[1]-mean[0])*np.random.rand()+mean[0]
-        this_sigma        = (sigma[1]-sigma[0])*np.random.rand()+sigma[0]
-        this_scatter_co10 = (scatter_logco10[1]-scatter_logco10[0])*np.random.rand()+scatter_logco10[0]
-        this_scatter_co21 = (scatter_logco21[1]-scatter_logco21[0])*np.random.rand()+scatter_logco21[0]
-        this_slope        = (obsslope[1]-obsslope[0])*np.random.rand()+obsslope[0]
-        this_icept        = (obsicept[1]-obsicept[0])*np.random.rand()+obsicept[0]
-
         #################
         # co10 modeling #
         #################
