@@ -608,16 +608,16 @@ class ToolsR21():
             if not done:
                 print("# run _import_modeling for " + this_outtxt.split("/")[-1])
                 # import
-                shape         = imhead(co21,mode="list")["shape"]
+                shape         = imhead(this_co21,mode="list")["shape"]
                 box           = "0,0," + str(shape[0]-1) + "," + str(shape[1]-1)
-                ra_deg        = imval(co21,box=box)["coords"][:,:,0] * 180/np.pi
-                dec_deg       = imval(co21,box=box)["coords"][:,:,1] * 180/np.pi
-                this_co21     = imval(co21,box=box)["data"]
-                this_co10     = imval(co10,box=box)["data"]
-                this_r21      = imval(r21,box=box)["data"]
-                this_co21_err = imval(eco21,box=box)["data"]
-                this_co10_err = imval(eco10,box=box)["data"]
-                this_r21_err  = imval(er21,box=box)["data"]
+                ra_deg        = imval(this_co21,box=box)["coords"][:,:,0] * 180/np.pi
+                dec_deg       = imval(this_co21,box=box)["coords"][:,:,1] * 180/np.pi
+                this_co21     = imval(this_co21,box=box)["data"]
+                this_co10     = imval(this_co10,box=box)["data"]
+                this_r21      = imval(this_r21,box=box)["data"]
+                this_co21_err = imval(this_eco21,box=box)["data"]
+                this_co10_err = imval(this_eco10,box=box)["data"]
+                this_r21_err  = imval(this_er21,box=box)["data"]
 
                 dist_pc, _    = self._get_rel_dist_pc(ra_deg, dec_deg, ra, dec, scale, pa, incl)
                 dist_kpc      = dist_pc / 1000.
