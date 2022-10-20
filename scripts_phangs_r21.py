@@ -735,16 +735,16 @@ class ToolsR21():
         p50_slope = np.percentile(list_slope,50)
         p84_slope = np.percentile(list_slope,84)
 
-        p16_icept = np.percentile(list_slope,16)
-        p50_icept = np.percentile(list_slope,50)
-        p84_icept = np.percentile(list_slope,84)
+        p16_icept = np.percentile(list_icept,16)
+        p50_icept = np.percentile(list_icept,50)
+        p84_icept = np.percentile(list_icept,84)
 
-        print("observed p16_slope     = " + str(np.round(p16_slope,2)))
-        print("observed p50_slope     = " + str(np.round(p50_slope,2)))
-        print("observed p84_slope     = " + str(np.round(p84_slope,2)))
-        print("observed p16_intercept = " + str(np.round(p16_icept,2)))
-        print("observed p50_intercept = " + str(np.round(p50_icept,2)))
-        print("observed p84_intercept = " + str(np.round(p84_icept,2)))
+        print("observed p16_slope     = " + str(np.round(p16_slope,5)))
+        print("observed p50_slope     = " + str(np.round(p50_slope,5)))
+        print("observed p84_slope     = " + str(np.round(p84_slope,5)))
+        print("observed p16_intercept = " + str(np.round(p16_icept,5)))
+        print("observed p50_intercept = " + str(np.round(p50_icept,5)))
+        print("observed p84_intercept = " + str(np.round(p84_icept,5)))
 
         return p16_slope, p50_slope, p84_slope, p16_icept, p50_icept, p84_icept
 
