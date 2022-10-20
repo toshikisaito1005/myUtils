@@ -745,6 +745,7 @@ class ToolsR21():
         print("observed p16_intercept = " + str(np.round(p16_icept,5)))
         print("observed p50_intercept = " + str(np.round(p50_icept,5)))
         print("observed p84_intercept = " + str(np.round(p84_icept,5)))
+        print(list_slope)
 
         return p16_slope, p50_slope, p84_slope, p16_icept, p50_icept, p84_icept
 
