@@ -613,8 +613,8 @@ class ToolsR21():
                 this_sigma        = (sigma[1]-sigma[0])*np.random.rand()+sigma[0]
                 this_scatter_co10 = (scatter_logco10[1]-scatter_logco10[0])*np.random.rand()+scatter_logco10[0]
                 this_scatter_co21 = (scatter_logco21[1]-scatter_logco21[0])*np.random.rand()+scatter_logco21[0]
-                this_slope        = (obsslope[1]-obsslope[0])*np.random.rand()+obsslope[0]
-                this_icept        = (obsicept[1]-obsicept[0])*np.random.rand()+obsicept[0]
+                this_slope        = (slope[1]-slope[0])*np.random.rand()+slope[0]
+                this_icept        = (icept[1]-icept[0])*np.random.rand()+icept[0]
 
                 # generate model
                 print("# run _gen_models " + str(num) + " / " + str(npoint))
