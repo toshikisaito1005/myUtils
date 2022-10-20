@@ -619,7 +619,7 @@ class ToolsR21():
                 # generate model
                 print("# run _gen_models " + str(num) + " / " + str(npoint))
                 list_data = self._gen_models(this_logco10,this_logco21,this_logco10err,this_logco21err,
-                    this_mean,this_sigma,this_scatter_logco10,this_scatter_logco21,this_slope,this_icept,nbins_co10,nbins_co21)
+                    this_mean,this_sigma,this_scatter_co10,this_scatter_co21,this_slope,this_icept,nbins_co10,nbins_co21)
                 listlist_data.append(list_data)
 
             # calc diff_rms of r21
