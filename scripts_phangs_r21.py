@@ -633,8 +633,8 @@ class ToolsR21():
         title1  = "$R_{21}$ vs. WISE1"
         title2  = "$R_{21}$ vs. WISE2"
         title3  = "$R_{21}$ vs. WISE3"
-        title4  = "$R_{21}$ vs. $r$/$R_{\rm eff}$"
-        title5  = "$R_{21}$ vs. $\sigma_{\rm CO(2-1)}$"
+        title4  = r"$R_{21}$ vs. $r$/$R_{\rm eff}$"
+        title5  = r"$R_{21}$ vs. $\sigma_{\rm CO(2-1)}$"
         title6  = "$R_{21}$ vs. WISE3/WISE1"
         title7  = "$R_{21}$ vs. WISE3/CO(1-0)"
         title8  = "$R_{21}$ vs. WISE3/CO(2-1)"
@@ -646,7 +646,7 @@ class ToolsR21():
 
         # set plt, ax
         plt.figure(figsize=(15,15))
-        plt.subplots_adjust(bottom=0.05, left=0.09, right=0.95, top=0.97)
+        plt.subplots_adjust(bottom=0.05, left=0.09, right=0.90, top=0.97)
         gs = gridspec.GridSpec(nrows=3, ncols=3)
         ax1 = plt.subplot(gs[0:1,0:1])
         ax2 = plt.subplot(gs[0:1,1:2])
