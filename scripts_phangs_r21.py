@@ -725,20 +725,19 @@ class ToolsR21():
         for i in range(500):
             popt,_ = curve_fit(self._func2, logx, logy, p0=[np.random.rand()-0.5,np.random.rand()-1.0],
                 maxfev=10000, sigma=logy)
-            
             list_slope.append(popt[0])
             list_icept.append(popt[1])
 
-            list_slope = np.array(list_slope)
-            list_icept = np.array(list_icept)
+        list_slope = np.array(list_slope)
+        list_icept = np.array(list_icept)
 
-            p16_slope = np.percentile(list_slope,16)
-            p50_slope = np.percentile(list_slope,50)
-            p84_slope = np.percentile(list_slope,84)
+        p16_slope = np.percentile(list_slope,16)
+        p50_slope = np.percentile(list_slope,50)
+        p84_slope = np.percentile(list_slope,84)
 
-            p16_icept = np.percentile(list_slope,16)
-            p50_icept = np.percentile(list_slope,50)
-            p84_icept = np.percentile(list_slope,84)
+        p16_icept = np.percentile(list_slope,16)
+        p50_icept = np.percentile(list_slope,50)
+        p84_icept = np.percentile(list_slope,84)
 
         print("observed p16_slope     = " + str(np.round(p16_slope,2)))
         print("observed p50_slope     = " + str(np.round(p50_slope,2)))
