@@ -686,7 +686,7 @@ class ToolsR21():
         logco10_model_scatter_noise = logco10_model_scatter_noise[co10_modsn_index]
         logco21_model_scatter_noise = logco21_model_scatter_noise[co21_modsn_index]
 
-        list_data = trim_data(
+        list_data = self._trim_data(
             logco10,
             logco10_model,
             logco10_model_scatter,
@@ -696,6 +696,53 @@ class ToolsR21():
             logco21_model_scatter,
             logco21_model_scatter_noise,
             )
+
+        return list_data
+
+    ##############
+    # _trim_data #
+    ##############
+
+    def _trim_data(
+        self,
+        logco10,
+        logco10_model,
+        logco10_model_scatter,
+        logco10_model_scatter_noise,
+        logco21,
+        logco21_model,
+        logco21_model_scatter,
+        logco21_model_scatter_noise,
+        ):
+        cutmin_co10, cutmax_co10 = np.min(logco10), np.max(logco10)
+        cutmin_co21, cutmax_co21 = np.min(logco21), np.max(logco21)
+        cut = \
+        (logco10_model>=cutmin_co10) & \
+        (logco10_model<=cutmax_co10) & \
+        (logco10_model_scatter>=cutmin_co10) & \
+        (logco10_model_scatter<=cutmax_co10) & \
+        (logco10_model_scatter_noise>=cutmin_co10) & \
+        (logco10_model_scatter_noise<=cutmax_co10) & \
+        (logco21_model>=cutmin_co21) & \
+        (logco21_model<=cutmax_co21) & \
+        (logco21_model_scatter>=cutmin_co21) & \
+        (logco21_model_scatter<=cutmax_co21) & \
+        (logco21_model_scatter_noise>=cutmin_co21) & \
+        (logco21_model_scatter_noise<=cutmax_co21)
+        #
+        logco10_model = logco10_model[cut]
+        logco10_model_scatter = logco10_model_scatter[cut]
+        logco10_model_scatter_noise = logco10_model_scatter_noise[cut]
+        #
+        logco21_model = logco21_model[cut]
+        logco21_model_scatter = logco21_model_scatter[cut]
+        logco21_model_scatter_noise = logco21_model_scatter_noise[cut]
+
+        list_data = \
+        [
+        logco10,logco10_model,logco10_model_scatter,logco10_model_scatter_noise,
+        logco21,logco21_model,logco21_model_scatter,logco21_model_scatter_noise,
+        ]
 
         return list_data
 
