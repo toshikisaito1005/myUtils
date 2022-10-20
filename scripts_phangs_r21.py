@@ -703,7 +703,7 @@ class ToolsR21():
     # _add_noise_log #
     ##################
 
-    def add_noise_log(
+    def _add_noise_log(
         self,
         logflux,
         logerr,
