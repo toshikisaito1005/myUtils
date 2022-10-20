@@ -562,7 +562,7 @@ class ToolsR21():
         self,
         beams,
         inputtxt,
-        npoint=200,
+        npoint=500,
         ):
         """
         modeling
@@ -686,11 +686,13 @@ class ToolsR21():
 
             # plot
             this_rms = diff_rms
+            """
             if num%100==0:
                 if len(list_data[1])>10:
                     outpng = this_txt.replace(".txt","_"+str(num)+".png")
                     os.system("rm -rf " + outpng)
                     self._plot_modeling_scatter(list_data,outpng,this_params)
+            """
 
             bestpng = this_txt.replace(".txt",".png")
             if len(list_data[1])!=0:
