@@ -655,8 +655,8 @@ class ToolsR21():
 
             # dispersion of the scatter plot
             histr = [np.min(this_logco10),np.max(this_logco10)]
-            std_modsn = get_binned_std(list_data[3], list_data[7], histr)
-            std_obs = get_binned_std(list_data[0], list_data[4], histr)
+            std_modsn = self._get_binned_std(list_data[3], list_data[7], histr)
+            std_obs = self._get_binned_std(list_data[0], list_data[4], histr)
             if std_modsn[4]==0:
                 chi2_std = 1e7
             else:
@@ -675,6 +675,25 @@ class ToolsR21():
         """
         """
         return a*x + b
+
+    ###################
+    # _get_binned_std #
+    ###################
+
+    def _get_binned_std(
+        self,
+        x,
+        y,
+        histrange,
+        nbins=8,
+        ):
+        n, _ = np.histogram(x, bins=nbins, range=histrange)
+        sy, _ = np.histogram(x, bins=nbins, weights=y, range=histrange)
+        sy2, _ = np.histogram(x, bins=nbins, weights=y*y, range=histrange)
+        mean = sy / n
+        std = np.sqrt(sy2/n - mean*mean)
+
+        return std
 
     ##############
     # _calc_chi2 #
