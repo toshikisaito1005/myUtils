@@ -552,6 +552,7 @@ class ToolsR21():
         this_outputs     = self.outtxt_obs_n0628.replace(this_basebeam,"????")
         self._loop_import_modeling(this_beams_n0628,this_co10,this_co21,this_r21,this_eco10,this_eco21,this_er21,
             this_outputs,this_ra,this_dec,this_scale,this_pa,this_incl)
+        self._loop_modeling(beams,this_outputs)
 
     ##################
     # _loop_modeling #
@@ -560,16 +561,16 @@ class ToolsR21():
     def _loop_modeling(
         self,
         beams,
-        outtxt,
-        npoint = 10,
+        inputtxt,
+        npoint=10,
         ):
         """
         modeling
         """
 
         for i, this_beam in enumerate(beams):
-            this_txt  = outtxt.replace("????",this_beamstr)
-            data      = np.loadtxt(this_txt)
+            this_txt        = inputtxt.replace("????",this_beamstr)
+            data            = np.loadtxt(this_txt)
             this_logco10    = data[:,0]
             this_logco21    = data[:,1]
             this_logr21     = data[:,2]
