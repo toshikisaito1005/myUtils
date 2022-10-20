@@ -753,7 +753,81 @@ class ToolsR21():
         """
         return a*x + b
 
-    """
+    #########################
+    # _loop_import_modeling #
+    #########################
+
+    def _loop_import_modeling(
+        self,
+        beams,
+        co10,
+        co21,
+        r21,
+        eco10,
+        eco21,
+        er21,
+        outtxt,
+        ra,
+        dec,
+        scale,
+        pa,
+        incl,
+        ):
+        """
+        modeling
+        """
+
+        for this_beam in beams:
+            this_beamstr = str(this_beam).replace(".","p").zfill(4)
+            this_co10    = co10.replace("????",this_beamstr)
+            this_co21    = co21.replace("????",this_beamstr)
+            this_r21     = r21.replace("????",this_beamstr)
+            this_eco10   = eco10.replace("????",this_beamstr)
+            this_eco21   = eco21.replace("????",this_beamstr)
+            this_er21    = er21.replace("????",this_beamstr)
+            this_outtxt  = outtxt.replace("????",this_beamstr)
+
+            done = glob.glob(this_outtxt)
+            if not done:
+                print("# run _import_modeling for " + this_outtxt.split("/")[-1])
+                # import
+                shape         = imhead(this_co21,mode="list")["shape"]
+                box           = "0,0," + str(shape[0]-1) + "," + str(shape[1]-1)
+                ra_deg        = imval(this_co21,box=box)["coords"][:,:,0] * 180/np.pi
+                dec_deg       = imval(this_co21,box=box)["coords"][:,:,1] * 180/np.pi
+                this_co21     = imval(this_co21,box=box)["data"]
+                this_co10     = imval(this_co10,box=box)["data"]
+                this_r21      = imval(this_r21,box=box)["data"]
+                this_co21_err = imval(this_eco21,box=box)["data"]
+                this_co10_err = imval(this_eco10,box=box)["data"]
+                this_r21_err  = imval(this_er21,box=box)["data"]
+
+                dist_pc, _    = self._get_rel_dist_pc(ra_deg, dec_deg, ra, dec, scale, pa, incl)
+                dist_kpc      = dist_pc / 1000.
+
+                cut = np.where( (~np.isnan(this_co10)) & (~np.isinf(this_co10)) & (this_co10!=0) \
+                    & (~np.isnan(this_co21)) & (~np.isinf(this_co21)) & (this_co21!=0) \
+                    & (~np.isnan(this_r21)) & (~np.isinf(this_r21)) & (this_r21!=0) \
+                    & (this_r21!=this_r21_err*self.snr_ratio) & (dist_kpc > self.hist_550pc_cnter_radius) )
+
+                header = "log10_co10(K), log10_co21(K), log10_r21, log10_co10err(K), log10_co21err(K), log10_r21err"
+                output = np.c_[
+                    np.log10(this_co10[cut]),
+                    np.log10(this_co21[cut]),
+                    np.log10(this_r21[cut]),
+                    this_co10_err[cut] / (np.log(10) * this_co10[cut]),
+                    this_co21_err[cut] / (np.log(10) * this_co21[cut]),
+                    this_r21_err[cut] / (np.log(10) * this_r21[cut]),
+                    ]
+                fmt    = "%6.3f %6.3f %6.3f %6.3f %6.3f %6.3f"
+                np.savetxt(this_outtxt, output, header=header, fmt=fmt)
+            else:
+                print("# skip _import_modeling for " + this_outtxt.split("/")[-1])
+
+
+
+
+
     ##########################
     # _plot_modeling_scatter #
     ##########################
@@ -1239,78 +1313,6 @@ class ToolsR21():
         logflux_noise[np.isnan(logflux_noise)] = gomi
 
         return np.array(logflux_noise)
-    """
-
-    #########################
-    # _loop_import_modeling #
-    #########################
-
-    def _loop_import_modeling(
-        self,
-        beams,
-        co10,
-        co21,
-        r21,
-        eco10,
-        eco21,
-        er21,
-        outtxt,
-        ra,
-        dec,
-        scale,
-        pa,
-        incl,
-        ):
-        """
-        modeling
-        """
-
-        for this_beam in beams:
-            this_beamstr = str(this_beam).replace(".","p").zfill(4)
-            this_co10    = co10.replace("????",this_beamstr)
-            this_co21    = co21.replace("????",this_beamstr)
-            this_r21     = r21.replace("????",this_beamstr)
-            this_eco10   = eco10.replace("????",this_beamstr)
-            this_eco21   = eco21.replace("????",this_beamstr)
-            this_er21    = er21.replace("????",this_beamstr)
-            this_outtxt  = outtxt.replace("????",this_beamstr)
-
-            done = glob.glob(this_outtxt)
-            if not done:
-                print("# run _import_modeling for " + this_outtxt.split("/")[-1])
-                # import
-                shape         = imhead(this_co21,mode="list")["shape"]
-                box           = "0,0," + str(shape[0]-1) + "," + str(shape[1]-1)
-                ra_deg        = imval(this_co21,box=box)["coords"][:,:,0] * 180/np.pi
-                dec_deg       = imval(this_co21,box=box)["coords"][:,:,1] * 180/np.pi
-                this_co21     = imval(this_co21,box=box)["data"]
-                this_co10     = imval(this_co10,box=box)["data"]
-                this_r21      = imval(this_r21,box=box)["data"]
-                this_co21_err = imval(this_eco21,box=box)["data"]
-                this_co10_err = imval(this_eco10,box=box)["data"]
-                this_r21_err  = imval(this_er21,box=box)["data"]
-
-                dist_pc, _    = self._get_rel_dist_pc(ra_deg, dec_deg, ra, dec, scale, pa, incl)
-                dist_kpc      = dist_pc / 1000.
-
-                cut = np.where( (~np.isnan(this_co10)) & (~np.isinf(this_co10)) & (this_co10!=0) \
-                    & (~np.isnan(this_co21)) & (~np.isinf(this_co21)) & (this_co21!=0) \
-                    & (~np.isnan(this_r21)) & (~np.isinf(this_r21)) & (this_r21!=0) \
-                    & (this_r21!=this_r21_err*self.snr_ratio) & (dist_kpc > self.hist_550pc_cnter_radius) )
-
-                header = "log10_co10(K), log10_co21(K), log10_r21, log10_co10err(K), log10_co21err(K), log10_r21err"
-                output = np.c_[
-                    np.log10(this_co10[cut]),
-                    np.log10(this_co21[cut]),
-                    np.log10(this_r21[cut]),
-                    this_co10_err[cut] / (np.log(10) * this_co10[cut]),
-                    this_co21_err[cut] / (np.log(10) * this_co21[cut]),
-                    this_r21_err[cut] / (np.log(10) * this_r21[cut]),
-                    ]
-                fmt    = "%6.3f %6.3f %6.3f %6.3f %6.3f %6.3f"
-                np.savetxt(this_outtxt, output, header=header, fmt=fmt)
-            else:
-                print("# skip _import_modeling for " + this_outtxt.split("/")[-1])
 
     #####################
     #####################
