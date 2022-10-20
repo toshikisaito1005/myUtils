@@ -561,14 +561,236 @@ class ToolsR21():
         self,
         beams,
         outtxt,
+        npoint = 10,
         ):
         """
         modeling
         """
 
-        for this_beam in beams:
-            this_txt = outtxt.replace("????",this_beamstr)
-            data     = np.loadtxt(this_txt)
+        for i, this_beam in enumerate(beams):
+            this_txt  = outtxt.replace("????",this_beamstr)
+            data      = np.loadtxt(this_txt)
+            this_logco10    = data[:,0]
+            this_logco21    = data[:,1]
+            this_logr21     = data[:,2]
+            this_logco10err = data[:,3]
+            this_logco21err = data[:,4]
+            this_logr21err  = data[:,5]
+
+            # get observed slope
+            if i==0:
+                sig       = 10**this_logr21 / 10**this_loger21
+                popt, _   = curve_fit(self._func2, this_logco10, this_logco21, p0=[1.0,-0.5], maxfev=10000, sigma=sig)
+                slope_obs = popt[0]
+                icept_obs = popt[1]
+                print("observed slope     = " + str(np.round(slope_obs,2)))
+                print("observed intercept = " + str(np.round(icept_obs,2)))
+
+            # determine modeling space
+            nbins_co10      = int( (np.ceil(np.log2(len(this_logco10))) + 1) + 1.5 ) * 3
+            nbins_co21      = int( (np.ceil(np.log2(len(this_logco21))) + 1) + 1.5 ) * 3
+            mean            = [0.5*np.mean(this_logco10), 1.5*np.mean(this_logco10)]
+            sigma           = [0.5*np.std(this_logco10), 1.5*np.std(this_logco10)]
+            scatter_logco10 = [-1.5, 1.5]
+            scatter_logco21 = [-1.5, 1.5]
+            slope           = [slope_obs-0.2,slope_obs+0.2]
+            icept           = [icept_obs-0.2,icept_obs+0.2]
+
+            # initialize output
+            list_co10_param = []
+            list_co21_param = []
+            listlist_data   = []
+            
+            # construct comments
+            txt10 = galname + ", " + "beam = "+str(this_beam)+" (loop = "+str(this_loop+1)+"/"+str(loop)+"): "
+
+            outpng_last    = ""
+            outpngchi_last = ""
+            list_params    = []
+            tmp_lowest_rms = 1000
+            for i in range(numpoint):
+                num = i + 1
+
+                # generate model
+                print("# run _gen_models " + str(num) + " / " + str(numpoint))
+                list_data = gen_models(this_logco10,this_logco21,this_logco10err,this_logco21err,
+                    mean,sigma,scatter_logco10,scatter_logco21,slope,icept,nbins_co10,nbins_co21)
+                listlist_data.append(list_data)
+
+    def _func2(self, x, a, b):
+        """
+        """
+        return a*x + b
+
+    ###############
+    # _gen_models #
+    ###############
+
+    def _gen_models(
+        self,
+        logco10,
+        logco21,
+        logco10err,
+        logco21err,
+        mean,
+        sigma,
+        scatter_logco10,
+        scatter_logco21,
+        obsslope,
+        obsicept,
+        nbins_co10,
+        nbins_co21,
+        ):
+        """
+        modeling
+        """
+
+        # perturb initial guess
+        this_mean         = (mean[1]-mean[0])*np.random.rand()+mean[0]
+        this_sigma        = (sigma[1]-sigma[0])*np.random.rand()+sigma[0]
+        this_scatter_co10 = (scatter_logco10[1]-scatter_logco10[0])*np.random.rand()+scatter_logco10[0]
+        this_scatter_co21 = (scatter_logco21[1]-scatter_logco21[0])*np.random.rand()+scatter_logco21[0]
+        this_slope        = (obsslope[1]-obsslope[0])*np.random.rand()+obsslope[0]
+        this_icept        = (obsicept[1]-obsicept[0])*np.random.rand()+obsicept[0]
+
+        #################
+        # co10 modeling #
+        #################
+        logco10_model  = np.random.normal(this_mean,this_sigma,len(logco10))
+        co10_mod_index = np.argsort(logco10_model)
+
+        # logco10_model
+        logco10_model  = logco10_model[co10_mod_index]
+        co10_mod_index = np.argsort(logco10_model)
+
+        # logco10_model_scatter
+        logco10_model_scatter = self._add_scatter_log(logco10_model, this_scatter_co10)
+
+        # logco10_model_scatter_noise
+        logco10_model_scatter_noise, co10_modsn_index = \
+            self._add_noise_log(logco10, logco10err, logco10_model_scatter, nbins_co10, co10_mod_index)
+
+        #################
+        # co21 modeling #
+        #################
+        # logco21_model
+        logco21_model = this_slope * logco10_model + this_icept
+
+        # logco21_model_scatter
+        logco21_model_scatter = self._add_scatter_log(logco21_model, this_scatter_co21)
+
+        # logco21_model_scatter_noise
+        logco21_model_scatter_noise,co21_modsn_index = \
+            self._add_noise_log(logco21, logco21err, logco21_model_scatter, nbins_co21, co10_mod_index)
+
+        ### sort modsn
+        logco10_model_scatter_noise = logco10_model_scatter_noise[co10_modsn_index]
+        logco21_model_scatter_noise = logco21_model_scatter_noise[co21_modsn_index]
+
+        list_data = trim_data(
+            logco10,
+            logco10_model,
+            logco10_model_scatter,
+            logco10_model_scatter_noise,
+            logco21,
+            logco21_model,
+            logco21_model_scatter,
+            logco21_model_scatter_noise,
+            )
+
+        return list_data
+
+    ##################
+    # _add_noise_log #
+    ##################
+
+    def add_noise_log(
+        self,
+        logflux,
+        logerr,
+        logflux_model_scatter,
+        nbins,
+        model_index,
+        ):
+        list_logflux, list_lognoise = self._get_logflux_vs_logerr(logflux, logerr, nbins)
+        #
+        logflux_model_scatter_noise = []
+        list_index = []
+        for i in range(len(list_logflux)-1):
+            ## cut logflux using bins
+            mincut = list_logflux[i]
+            maxcut = list_logflux[i+1]
+            ## define cut
+            if i==0:
+                cut = (logflux_model_scatter<=maxcut)
+            elif i==len(list_logflux)-2:
+                cut = (logflux_model_scatter>mincut)
+            else:
+                cut =(logflux_model_scatter>mincut)&(logflux_model_scatter<=maxcut)
+            #
+            this_logflux_model_scatter = logflux_model_scatter[cut]
+            this_lognoise              = list_lognoise[i]
+            this_index                 = model_index[cut]
+            #
+            this_logflux_model_scatter_noise = \
+            self._add_scatter_log(this_logflux_model_scatter, this_lognoise)
+            logflux_model_scatter_noise.extend(this_logflux_model_scatter_noise)
+            list_index.extend(this_index)
+            #
+
+        return np.array(logflux_model_scatter_noise), np.array(list_index)
+
+    ##########################
+    # _get_logflux_vs_logerr #
+    ##########################
+
+    def _get_logflux_vs_logerr(
+        self,
+        logflux,
+        lognoise,
+        nbins,
+        percentile=50,
+        ):
+        """
+        modeling - _loop_modeling - _gen_model - add_noise_log
+        """
+        #
+        list_logflux = np.linspace(logflux.min(), logflux.max(), nbins)
+        list_lognoise = []
+        #
+        for i in range(len(list_logflux)-1):
+            this_cut = np.where((logflux>=list_logflux[i]) & (logflux<list_logflux[i+1]))
+            this_list_noise = 10**lognoise[this_cut]
+            if len(this_list_noise)>2:
+                this_noise_mean = np.percentile(this_list_noise, percentile)
+            else:
+                this_noise_mean = np.median(this_list_noise)
+            list_lognoise.append(np.log10(this_noise_mean))
+
+        return list_logflux, list_lognoise
+
+    ####################
+    # _add_scatter_log #
+    ####################
+
+    def _add_scatter_log(
+        self,
+        logflux,
+        logsigma,
+        gomi=-1e7,
+        ):
+        """
+        modeling - _loop_modeling - _gen_model
+        """
+
+        ndata = len(logflux)
+        #
+        flux_noise = 10**logflux + np.random.normal(0.0, 10**logsigma, ndata)
+        logflux_noise = np.log10(flux_noise)
+        #
+        logflux_noise[np.isnan(logflux_noise)] = gomi
+
+        return np.array(logflux_noise)
 
     #########################
     # _loop_import_modeling #
@@ -605,7 +827,6 @@ class ToolsR21():
             this_outtxt  = outtxt.replace("????",this_beamstr)
 
             done = glob.glob(this_outtxt)
-            print(this_outtxt)
             if not done:
                 print("# run _import_modeling for " + this_outtxt.split("/")[-1])
                 # import
@@ -628,14 +849,14 @@ class ToolsR21():
                     & (~np.isnan(this_r21)) & (~np.isinf(this_r21)) & (this_r21!=0) \
                     & (this_r21!=this_r21_err*self.snr_ratio) & (dist_kpc > self.hist_550pc_cnter_radius) )
 
-                header = "co10(K), co21(K), r21, co10err(K), co21err(K), r21err"
+                header = "log10_co10(K), log10_co21(K), log10_r21, log10_co10err(K), log10_co21err(K), log10_r21err"
                 output = np.c_[
                     np.log10(this_co10[cut]),
                     np.log10(this_co21[cut]),
                     np.log10(this_r21[cut]),
-                    np.log10(this_co10_err[cut]),
-                    np.log10(this_co21_err[cut]),
-                    np.log10(this_r21_err[cut]),
+                    this_co10_err[cut] / (np.log(10) * this_co10[cut]),
+                    this_co21_err[cut] / (np.log(10) * this_co21[cut]),
+                    this_r21_err[cut] / (np.log(10) * this_r21[cut]),
                     ]
                 fmt    = "%6.3f %6.3f %6.3f %6.3f %6.3f %6.3f"
                 np.savetxt(this_outtxt, output, header=header, fmt=fmt)
