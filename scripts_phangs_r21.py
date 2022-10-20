@@ -55,7 +55,7 @@ from mycasa_plots import *
 from mycasa_pca import *
 
 ############
-# ToolsR21 #2
+# ToolsR21 #
 ############
 class ToolsR21():
     """
@@ -399,6 +399,16 @@ class ToolsR21():
 
         self.outpng_scatters          = self.dir_products + self._read_key("outpng_scatters")
 
+        self.outtxt_obs_n0628         = self.dir_products + self._read_key("outtxt_obs_n0628")
+        self.outtxt_obs_n3627         = self.dir_products + self._read_key("outtxt_obs_n3627")
+        self.outtxt_obs_n4254         = self.dir_products + self._read_key("outtxt_obs_n4254")
+        self.outtxt_obs_n4321         = self.dir_products + self._read_key("outtxt_obs_n4321")
+
+        self.outtxt_model_n0628       = self.dir_products + self._read_key("outtxt_model_n0628")
+        self.outtxt_model_n3627       = self.dir_products + self._read_key("outtxt_model_n3627")
+        self.outtxt_model_n4254       = self.dir_products + self._read_key("outtxt_model_n4254")
+        self.outtxt_model_n4321       = self.dir_products + self._read_key("outtxt_model_n4321")
+
     ##################
     # run_phangs_r21 #
     ##################
@@ -411,6 +421,7 @@ class ToolsR21():
         do_multismooth   = False,
         do_moments       = False,
         do_align_other   = False,
+        do_modeling      = False,
         # plot figures in paper
         plot_noise       = False,
         plot_recovery    = False,
@@ -441,6 +452,7 @@ class ToolsR21():
             do_multismooth   = True
             do_moments       = True
             do_align_other   = True
+            do_modeling      = True
             plot_noise       = True
             plot_recovery    = True
             plot_showcase    = True
@@ -468,6 +480,9 @@ class ToolsR21():
             self.align_halpha(skip=False)
             self.align_r21(skip=False)
             self.align_bulge(skip=False)
+
+        if do_modeling==True:
+            self.modeling()
 
         # plot figures in paper
         if plot_noise==True:
@@ -497,6 +512,134 @@ class ToolsR21():
 
         if plot_scatters==True:
             self.plot_scatters()
+
+    #####################
+    #####################
+    ### modeling part ###
+    #####################
+    #####################
+
+    ############
+    # modeling #
+    ############
+
+    def modeling(
+        self,
+        ):
+        """
+        """
+
+        taskname = self.modname + sys._getframe().f_code.co_name
+        check_first(self.outcube_co10_n0628,taskname)
+
+        ###########
+        # prepare #
+        ###########
+
+        this_basebeam    = str(self.basebeam_n0628).replace(".","p").zfill(4)
+        this_beams_n0628 = [s for s in self.beams_n0628 if s%4==0]
+        this_co10        = self.outmom_co10_n0628.replace(this_basebeam,"????").replace("momX","mom0")
+        this_co21        = self.outmom_co21_n0628.replace(this_basebeam,"????").replace("momX","mom0")
+        this_r21         = self.outfits_r21_n0628.replace(this_basebeam,"????")
+        this_eco10       = self.outmom_eco10_n0628.replace(this_basebeam,"????").replace("momX","emom0")
+        this_eco21       = self.outmom_eco21_n0628.replace(this_basebeam,"????").replace("momX","emom0")
+        this_er21        = self.outfits_er21_n0628.replace(this_basebeam,"????")
+        this_ra          = float(self.ra_n0628)
+        this_dec         = float(self.dec_n0628)
+        this_scale       = self.scale_n0628
+        this_pa          = self.pa_n0628
+        this_incl        = self.incl_n0628
+        this_outputs     = self.outtxt_obs_n0628.replace(this_basebeam,"????")
+        self._loop_import_modeling(this_beams_n0628,this_co10,this_co21,this_r21,this_eco10,this_eco21,this_er21,
+            this_outputs,this_ra,this_dec,this_scale,this_pa,this_incl)
+
+    ##################
+    # _loop_modeling #
+    ##################
+
+    def _loop_modeling(
+        self,
+        beams,
+        outtxt,
+        ):
+        """
+        modeling
+        """
+
+        for this_beam in beams:
+            this_txt = outtxt.replace("????",this_beamstr)
+            data     = np.loadtxt(this_txt)
+
+    #########################
+    # _loop_import_modeling #
+    #########################
+
+    def _loop_import_modeling(
+        self,
+        beams,
+        co10,
+        co21,
+        r21,
+        eco10,
+        eco21,
+        er21,
+        outtxt,
+        ra,
+        dec,
+        scale,
+        pa,
+        incl,
+        ):
+        """
+        modeling
+        """
+
+        for this_beam in beams:
+            this_beamstr = str(this_beam).replace(".","p").zfill(4)
+            this_co10    = co10.replace("????",this_beamstr)
+            this_co21    = co21.replace("????",this_beamstr)
+            this_r21     = r21.replace("????",this_beamstr)
+            this_eco10   = eco10.replace("????",this_beamstr)
+            this_eco21   = eco21.replace("????",this_beamstr)
+            this_er21    = er21.replace("????",this_beamstr)
+            this_outtxt  = outtxt.replace("????",this_beamstr)
+
+            done = glob.glob(this_outtxt)
+            if not done:
+                print("# run _import_modeling for " + this_outtxt.split("/")[-1])
+                # import
+                shape         = imhead(co21,mode="list")["shape"]
+                box           = "0,0," + str(shape[0]-1) + "," + str(shape[1]-1)
+                ra_deg        = imval(co21,box=box)["coords"][:,:,0] * 180/np.pi
+                dec_deg       = imval(co21,box=box)["coords"][:,:,1] * 180/np.pi
+                this_co21     = imval(co21,box=box)["data"]
+                this_co10     = imval(co10,box=box)["data"]
+                this_r21      = imval(r21,box=box)["data"]
+                this_co21_err = imval(eco21,box=box)["data"]
+                this_co10_err = imval(eco10,box=box)["data"]
+                this_r21_err  = imval(er21,box=box)["data"]
+
+                dist_pc, _    = self._get_rel_dist_pc(ra_deg, dec_deg, ra, dec, scale, pa, incl)
+                dist_kpc      = dist_pc / 1000.
+
+                cut = np.where( (~np.isnan(this_co10)) & (~np.isinf(this_co10)) & (this_co10!=0) \
+                    & (~np.isnan(this_co21)) & (~np.isinf(this_co21)) & (this_co21!=0) \
+                    & (~np.isnan(this_r21)) & (~np.isinf(this_r21)) & (this_r21!=0) \
+                    & (this_r21!=this_r21_err*self.snr_ratio) & (dist_kpc > self.hist_550pc_cnter_radius) )
+
+                header = "co10(K), co21(K), r21, co10err(K), co21err(K), r21err"
+                output = np.c_[
+                    np.log10(this_co10[cut]),
+                    np.log10(this_co21[cut]),
+                    np.log10(this_r21[cut]),
+                    np.log10(this_eco10[cut]),
+                    np.log10(this_eco21[cut]),
+                    np.log10(this_er21[cut]),
+                    ]
+                fmt    = "%6.3f %6.3f %6.3f %6.3f %6.3f %6.3f"
+                np.savetxt(this_output, output, header=header, fmt=fmt)
+            else:
+                print("# skip _import_modeling for " + this_outtxt.split("/")[-1])
 
     #####################
     #####################
@@ -646,7 +789,7 @@ class ToolsR21():
 
         # set plt, ax
         plt.figure(figsize=(15,15))
-        plt.subplots_adjust(bottom=0.05, left=0.09, right=0.95, top=0.97, wspace=0.1)
+        plt.subplots_adjust(bottom=0.05, left=0.09, right=0.98, top=0.97)
         gs = gridspec.GridSpec(nrows=3, ncols=3)
         ax1 = plt.subplot(gs[0:1,0:1])
         ax2 = plt.subplot(gs[0:1,1:2])
