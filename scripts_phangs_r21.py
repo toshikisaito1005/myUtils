@@ -607,11 +607,11 @@ class ToolsR21():
             outpngchi_last = ""
             list_params    = []
             tmp_lowest_rms = 1000
-            for i in range(numpoint):
+            for i in range(npoint):
                 num = i + 1
 
                 # generate model
-                print("# run _gen_models " + str(num) + " / " + str(numpoint))
+                print("# run _gen_models " + str(num) + " / " + str(npoint))
                 list_data = gen_models(this_logco10,this_logco21,this_logco10err,this_logco21err,
                     mean,sigma,scatter_logco10,scatter_logco21,slope,icept,nbins_co10,nbins_co21)
                 listlist_data.append(list_data)
