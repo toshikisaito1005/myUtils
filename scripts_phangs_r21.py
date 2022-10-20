@@ -605,6 +605,7 @@ class ToolsR21():
             this_outtxt  = outtxt.replace("????",this_beamstr)
 
             done = glob.glob(this_outtxt)
+            print(this_outtxt)
             if not done:
                 print("# run _import_modeling for " + this_outtxt.split("/")[-1])
                 # import
