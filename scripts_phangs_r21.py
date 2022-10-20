@@ -616,10 +616,105 @@ class ToolsR21():
                     mean,sigma,scatter_logco10,scatter_logco21,slope,icept,nbins_co10,nbins_co21)
                 listlist_data.append(list_data)
 
+            # calc diff_rms of r21
+            r21_obs   = np.log10(10**list_data[4]/10**list_data[0])
+            r21_modsn = np.log10(10**list_data[7]/10**list_data[3])
+
+            # compare histograms
+            # https://docs.opencv.org/3.4/d8/dc8/tutorial_histogram_comparison.html
+            if len(list_data[3])*len(list_data[7])>0:
+                weight="wing"
+                chi2_r21  = self._calc_chi2(r21_obs, r21_modsn, weight)
+                weight="higher"
+                chi2_co10 = self._calc_chi2(list_data[0], list_data[3], weight)
+                chi2_co21 = self._calc_chi2(list_data[4], list_data[7], weight)
+            else:
+                chi2_r21  = 1e7
+                chi2_co10 = 1e7
+                chi2_co21 = 1e7
+
+            # compare 2d histograms
+            histr       = [ [np.min(list_data[0]),np.max(list_data[0])], [np.min(list_data[4]),np.max(list_data[4])] ]
+            obs2d,_,_   = np.histogram2d(list_data[0], list_data[4], bins=(50,50), range=histr)
+            modsn2d,_,_ = np.histogram2d(list_data[3], list_data[7], bins=(50,50), range=histr)
+            modsn2d     = (modsn2d/np.sum(modsn2d)).flatten()
+            obs2d       = (obs2d/np.sum(obs2d)).flatten()
+            diff        = (modsn2d - obs2d)**2 / obs2d
+            diff        = diff[obs2d!=0]
+            obs2d       = obs2d[obs2d!=0]
+            diff[np.isnan(diff)] = -1e7
+            diff[np.isinf(diff)] = -1e7
+            diff        = diff[diff!=-1e7]
+            obs2d       = obs2d[diff!=-1e7]
+
+            if len(obs2d)>1:
+                weights = ( 1./np.array(obs2d) )**2
+                chi2_2d = np.average(diff,weights=weights) * len(diff)
+            else:
+                chi2_2d = 1e7
+
+            # dispersion of the scatter plot
+            histr = [np.min(this_logco10),np.max(this_logco10)]
+            std_modsn = get_binned_std(list_data[3], list_data[7], histr)
+            std_obs = get_binned_std(list_data[0], list_data[4], histr)
+            if std_modsn[4]==0:
+                chi2_std = 1e7
+            else:
+                diff = (std_modsn - std_obs)**2 / std_obs
+                weights = ( np.array(diff) )**2
+                chi2_std = np.average(diff,weights=weights) * len(diff)
+
+            # combine diff
+            # chi2_r21, chi2_co10, chi2_co21, chi2_2d, chi2_std
+            list_diff    = [chi2_std, chi2_r21, chi2_co10]
+            list_weights = [1./3, 1./3, 1./3]
+            diff_rms     = np.average(list_diff, weights=list_weights)
+
+
     def _func2(self, x, a, b):
         """
         """
         return a*x + b
+
+    ##############
+    # _calc_chi2 #
+    ##############
+
+    def _calc_chi2(
+        self,
+        data_obs,
+        data_modsn,
+        weight=None,
+        bins=50,
+        ):
+        """
+        """
+
+        histr   = [np.min(data_obs),np.max(data_obs)]
+        hist    = np.histogram(data_obs, bins=bins, range=histr)
+        x       = hist[1][1:]
+        y_obs   = hist[0] / float(np.sum(hist[0]))
+        hist    = np.histogram(data_modsn, bins=bins, range=histr)
+        y_modsn = hist[0] / float(np.sum(hist[0]))
+        diff    = (y_obs - y_modsn)**2 / y_obs
+        diff[np.isnan(diff)] = -1e7
+        diff[np.isinf(diff)] = -1e7
+        diff    = diff[diff!=-1e7]
+        x       = x[diff!=-1e7]
+        #
+        if len(x)>0:
+            if weight==None:
+                weights = None
+            elif weight=="higher":
+                weights = abs(x - np.min(x))**1 # weight to histogram wings
+            elif weight=="wing":
+                weights = abs(x - np.median(x))**2 # weight to histogram wings
+            sum     = np.average(diff,weights=weights) * len(diff) # sum
+            chi2    = np.sqrt(sum)
+        else:
+            chi2 = 1e7
+
+        return chi2
 
     ###############
     # _gen_models #
@@ -714,6 +809,8 @@ class ToolsR21():
         logco21_model_scatter,
         logco21_model_scatter_noise,
         ):
+        """
+        """
         cutmin_co10, cutmax_co10 = np.min(logco10), np.max(logco10)
         cutmin_co21, cutmax_co21 = np.min(logco21), np.max(logco21)
         cut = \
@@ -758,6 +855,9 @@ class ToolsR21():
         nbins,
         model_index,
         ):
+        """
+        """
+
         list_logflux, list_lognoise = self._get_logflux_vs_logerr(logflux, logerr, nbins)
         #
         logflux_model_scatter_noise = []
@@ -800,7 +900,7 @@ class ToolsR21():
         """
         modeling - _loop_modeling - _gen_model - add_noise_log
         """
-        #
+
         list_logflux = np.linspace(logflux.min(), logflux.max(), nbins)
         list_lognoise = []
         #
