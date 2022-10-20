@@ -562,7 +562,7 @@ class ToolsR21():
         self,
         beams,
         inputtxt,
-        npoint=500,
+        npoint=50,
         ):
         """
         modeling
@@ -581,12 +581,11 @@ class ToolsR21():
 
             # get observed slope
             if i==0:
-                sig       = 10**this_logr21 / 10**this_logr21err
-                popt, _   = curve_fit(self._func2, this_logco10, this_logco21, p0=[1.0,-0.5], maxfev=10000, sigma=sig)
-                slope_obs = popt[0]
-                icept_obs = popt[1]
-                print("observed slope     = " + str(np.round(slope_obs,2)))
-                print("observed intercept = " + str(np.round(icept_obs,2)))
+                p16_slope, p50_slope, p84_slope, p16_icept, p50_icept, p84_icept = \
+                    self._get_observed_slope(this_logco10,this_logco21)
+
+        """
+        for i, this_beam in enumerate(beams):
 
             # determine modeling space
             nbins_co10      = int( (np.ceil(np.log2(len(this_logco10))) + 1) + 1.5 ) * 3
@@ -689,11 +688,11 @@ class ToolsR21():
             # plot
             this_rms = diff_rms
             """
-            if num%100==0:
-                if len(list_data[1])>10:
-                    outpng = this_txt.replace(".txt","_"+str(num)+".png")
-                    os.system("rm -rf " + outpng)
-                    self._plot_modeling_scatter(list_data,outpng,this_params)
+            #if num%100==0:
+            #    if len(list_data[1])>10:
+            #        outpng = this_txt.replace(".txt","_"+str(num)+".png")
+            #        os.system("rm -rf " + outpng)
+            #        self._plot_modeling_scatter(list_data,outpng,this_params)
             """
 
             bestpng = this_txt.replace(".txt",".png")
@@ -709,13 +708,54 @@ class ToolsR21():
             del diff
             del diff_rms
             #
+        """
 
+    #######################
+    # _get_observed_slope #
+    #######################
+
+    def _get_observed_slope(
+        self,
+        logx,
+        logy,
+        ):
+        """
+        """
+
+        list_slope = []
+        list_icept = []
+        for i in range(500):
+            popt,_ = curve_fit(self._func2, logx, logy, p0=[np.random.rand()-0.5,np.random.rand()-1.0],
+                maxfev=10000, sigma=logy)
+        list_slope.append(popt[0])
+        list_icept.append(popt[1])
+
+        list_slope = np.array(list_slope)
+        list_icept = np.array(list_icept)
+
+        p16_slope = np.percentile(list_slope,16)
+        p50_slope = np.percentile(list_slope,50)
+        p84_slope = np.percentile(list_slope,84)
+
+        p16_icept = np.percentile(list_slope,16)
+        p50_icept = np.percentile(list_slope,50)
+        p84_icept = np.percentile(list_slope,84)
+
+        print("observed p16_slope     = " + str(np.round(p16_slope,2)))
+        print("observed p50_slope     = " + str(np.round(p50_slope,2)))
+        print("observed p84_slope     = " + str(np.round(p84_slope,2)))
+        print("observed p16_intercept = " + str(np.round(p16_icept,2)))
+        print("observed p50_intercept = " + str(np.round(p50_icept,2)))
+        print("observed p84_intercept = " + str(np.round(p84_icept,2)))
+
+        return p16_slope, p50_slope, p84_slope, p16_icept, p50_icept, p84_icept
 
     def _func2(self, x, a, b):
         """
         """
         return a*x + b
 
+    """
     ##########################
     # _plot_modeling_scatter #
     ##########################
@@ -1201,6 +1241,7 @@ class ToolsR21():
         logflux_noise[np.isnan(logflux_noise)] = gomi
 
         return np.array(logflux_noise)
+    """
 
     #########################
     # _loop_import_modeling #
