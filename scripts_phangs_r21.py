@@ -625,11 +625,20 @@ class ToolsR21():
         xlabel2 = "log$_{10}$ Normalized W2"
         xlabel3 = "log$_{10}$ Normalized W3"
         xlabel4 = "log$_{10}$ $r$/$R_{\rm eff}$"
-        xlabel5 = "log$_{10}$ Normalized $\sigma_{\rm CO(2-1)}$"
-        xlabel6 = "log$_{10}$ Normalized W3/W1"
-        xlabel7 = "log$_{10}$ Normalized W3/$I_{\rm CO(1-0)}$"
-        xlabel8 = "log$_{10}$ Normalized W3/$I_{\rm CO(2-1)}$"
-        ylabel  = "log$_{10}$ Normalized $R_{21}$"
+        xlabel5 = r"log$_{10}$ Normalized $\sigma_{\rm CO(2-1)}$"
+        xlabel6 = r"log$_{10}$ Normalized W3/W1"
+        xlabel7 = r"log$_{10}$ Normalized W3/$I_{\rm CO(1-0)}$"
+        xlabel8 = r"log$_{10}$ Normalized W3/$I_{\rm CO(2-1)}$"
+        ylabel  = r"log$_{10}$ Normalized $R_{21}$"
+        title1  = "$R_{21}$ vs. WISE1"
+        title2  = "$R_{21}$ vs. WISE2"
+        title3  = "$R_{21}$ vs. WISE3"
+        title4  = "$R_{21}$ vs. $r$/$R_{\rm eff}$"
+        title5  = "$R_{21}$ vs. $\sigma_{\rm CO(2-1)}$"
+        title6  = "$R_{21}$ vs. WISE3/WISE1"
+        title7  = "$R_{21}$ vs. WISE3/CO(1-0)"
+        title8  = "$R_{21}$ vs. WISE3/CO(2-1)"
+        title_all = "Normalized $R_{21}$ vs. other observed quantities at 550 pc resolution in log scale"
 
         ########
         # plot #
@@ -729,7 +738,7 @@ class ToolsR21():
         self._plot_contours_gal(ax8,w3co10_n4254[bulge_n4254==0],r21_n4254[bulge_n4254==0],xlim8,ylim,self.c_n4254)
         self._plot_contours_gal(ax8,w3co10_n4321[bulge_n4321==0],r21_n4321[bulge_n4321==0],xlim8,ylim,self.c_n4321)
 
-        # text
+        # text: lower-right
         yoffset = 0.1
         ax8.text(1.15, 0.90-yoffset*0.0, "bulge", color="gold", horizontalalignment="left", transform=ax8.transAxes, size=self.legend_fontsize, fontweight="bold")
         ax8.text(1.15, 0.90-yoffset*1.0, "all other environments", color="grey", horizontalalignment="left", transform=ax8.transAxes, size=self.legend_fontsize, fontweight="bold")
@@ -738,6 +747,24 @@ class ToolsR21():
         ax8.text(1.15, 0.90-yoffset*4.5, "NGC 4254", color=self.c_n4254, horizontalalignment="left", transform=ax8.transAxes, size=self.legend_fontsize, fontweight="bold")
         ax8.text(1.15, 0.90-yoffset*5.5, "NGC 4321", color=self.c_n4321, horizontalalignment="left", transform=ax8.transAxes, size=self.legend_fontsize, fontweight="bold")
 
+        # text: title
+        ax1.text(0.05, 1.04, title_all, color="black", horizontalalignment="left", transform=ax1.transAxes, size=self.legend_fontsize+2)
+        t=ax1.text(0.05, 0.90, title1, color="black", horizontalalignment="left", transform=ax1.transAxes, size=self.legend_fontsize-1)
+        t.set_bbox(dict(facecolor="white", alpha=self.text_back_alpha, lw=0))
+        t=ax2.text(0.05, 0.90, title2, color="black", horizontalalignment="left", transform=ax2.transAxes, size=self.legend_fontsize-1)
+        t.set_bbox(dict(facecolor="white", alpha=self.text_back_alpha, lw=0))
+        t=ax3.text(0.05, 0.90, title3, color="black", horizontalalignment="left", transform=ax3.transAxes, size=self.legend_fontsize-1)
+        t.set_bbox(dict(facecolor="white", alpha=self.text_back_alpha, lw=0))
+        t=ax4.text(0.05, 0.90, title4, color="black", horizontalalignment="left", transform=ax4.transAxes, size=self.legend_fontsize)
+        t.set_bbox(dict(facecolor="white", alpha=self.text_back_alpha, lw=0))
+        t=ax5.text(0.05, 0.90, title5, color="black", horizontalalignment="left", transform=ax5.transAxes, size=self.legend_fontsize)
+        t.set_bbox(dict(facecolor="white", alpha=self.text_back_alpha, lw=0))
+        t=ax6.text(0.05, 0.90, title6, color="black", horizontalalignment="left", transform=ax6.transAxes, size=self.legend_fontsize)
+        t.set_bbox(dict(facecolor="white", alpha=self.text_back_alpha, lw=0))
+        t=ax7.text(0.05, 0.90, title7, color="black", horizontalalignment="left", transform=ax7.transAxes, size=self.legend_fontsize)
+        t.set_bbox(dict(facecolor="white", alpha=self.text_back_alpha, lw=0))
+        t=ax8.text(0.05, 0.90, title8, color="black", horizontalalignment="left", transform=ax8.transAxes, size=self.legend_fontsize)
+        t.set_bbox(dict(facecolor="white", alpha=self.text_back_alpha, lw=0))
 
         plt.savefig(self.outpng_scatters, dpi=self.fig_dpi)  
 
