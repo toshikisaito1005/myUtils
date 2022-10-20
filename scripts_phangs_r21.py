@@ -603,9 +603,6 @@ class ToolsR21():
             list_co21_param = []
             listlist_data   = []
             
-            # construct comments
-            txt10 = galname + ", " + "beam = "+str(this_beam)+" (loop = "+str(this_loop+1)+"/"+str(loop)+"): "
-
             outpng_last    = ""
             outpngchi_last = ""
             list_params    = []
