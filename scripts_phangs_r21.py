@@ -562,7 +562,7 @@ class ToolsR21():
         self,
         beams,
         inputtxt,
-        npoint=10,
+        npoint=200,
         ):
         """
         modeling
@@ -670,11 +670,252 @@ class ToolsR21():
             list_weights = [1./3, 1./3, 1./3]
             diff_rms     = np.average(list_diff, weights=list_weights)
 
+            # output
+            this_params = [this_beam, this_mean, this_sigma, this_scatter_co10,
+                this_scatter_co21, this_slope, this_icept, diff_rms]
+            if np.isnan(this_params[7])==True:
+                this_params = [this_beam, this_mean, this_sigma, this_scatter_co10,
+                    this_scatter_co21, this_slope, this_icept, 1e7]
+            list_params.append(this_params)
+
+            # plot
+            this_rms = diff_rms
+            if num%100==0:
+                if len(list_data[1])>10:
+                    outpng = this_txt.replace(".txt","_"+str(num)+".png")
+                    os.system("rm -rf " + outpng)
+                    self._plot_modeling_scatter(list_data,outpng,this_params)
+
+            bestpng = this_txt.replace(".txt",".png")
+            if len(list_data[1])!=0:
+                if this_rms<tmp_lowest_rms:
+                    tmp_lowest_rms = this_rms
+                    os.system("rm -rf " + bestpng)
+                    self._plot_modeling_scatter(list_data,bestpng,this_params)
+            #
+            del histr
+            del obs2d
+            del modsn2d
+            del diff
+            del diff_rms
+            #
+
 
     def _func2(self, x, a, b):
         """
         """
         return a*x + b
+
+    ##########################
+    # _plot_modeling_scatter #
+    ##########################
+
+    def _plot_modeling_scatter(
+        self,
+        list_data,
+        outpng,
+        list_params,
+        ):
+        """
+        """
+
+        co10_obs   = list_data[0]
+        co10_mod   = list_data[1]
+        co10_mods  = list_data[2]
+        co10_modsn = list_data[3]
+        co21_obs   = list_data[4]
+        co21_mod   = list_data[5]
+        co21_mods  = list_data[6]
+        co21_modsn = list_data[7]
+        r21_obs    = np.log10(10**co21_obs/10**co10_obs)
+        r21_modsn  = np.log10(10**co21_modsn/10**co10_modsn)
+        rmin       = np.min([np.min(r21_obs),np.min(r21_modsn)])
+        rmax       = np.min([np.max(r21_obs),np.max(r21_modsn)])
+        rlim       = [rmin,rmax]
+        xlim       = [np.min(co10_obs)-0.1, np.max(co10_obs)+0.1]
+        ylim       = [np.min(co21_obs)-0.1, np.max(co21_obs)+0.1]
+
+        ### plot
+        fig = plt.figure(figsize=(10,10))
+        plt.subplots_adjust(bottom=0.10, left=0.13, right=0.91, top=0.94)
+        gs  = gridspec.GridSpec(nrows=16, ncols=16)
+        ax1 = plt.subplot(gs[0:12,0:12])
+        ax2 = plt.subplot(gs[12:16,0:12])
+        ax3 = plt.subplot(gs[0:12,12:16])
+        ax4 = plt.subplot(gs[12:16,12:16])
+        ax5 = fig.add_subplot(gs[7:11,8:11])
+
+        myax_set(ax1, "both", xlim, ylim, None,     None, None)
+        myax_set(ax2, "x",    xlim, None, None,     None, None)
+        myax_set(ax3, "y",    None, ylim, None,     None, None)
+        myax_set(ax4, "x",    xlim, None, None,     None, None)
+        myax_set(ax5, "both", xlim, [0,0.30], None, None, None)
+
+        ax1.tick_params(labelbottom=False,labelleft=True,labelright=False,labeltop=False)
+        ax2.tick_params(labelbottom=True,labelleft=False,labelright=False,labeltop=False)
+        ax3.tick_params(labelbottom=False,labelleft=False,labelright=False,labeltop=False)
+        ax4.tick_params(labelbottom=True,labelleft=False,labelright=False,labeltop=False)
+        ax5.tick_params(labelbottom=True,labelleft=True,labelright=False,labeltop=False)
+
+        ### plot
+        ## ax1
+        alpha=0.1
+        ax1.scatter(co10_obs,co21_obs,lw=0,s=40,alpha=alpha,color="silver")
+        ax1.scatter(co10_modsn,co21_modsn,lw=0,s=40,alpha=alpha,color="tomato")
+        ax1.scatter(co10_mods,co21_mods,lw=0,s=40,alpha=alpha,color="deepskyblue")
+        ax1.scatter(co10_mod,co21_mod,lw=0,s=40,alpha=alpha,color="black")
+        #
+        index = np.argmax(co21_modsn)
+        alpha=1.0
+        ax1.scatter(co10_modsn[index],co21_modsn[index],marker="s",lw=2,s=100,alpha=alpha,color="tomato",edgecolor="black")
+        ax1.scatter(co10_mods[index],co21_mods[index],marker="s",lw=2,s=100,alpha=alpha,color="deepskyblue",edgecolor="black")
+        ax1.scatter(co10_mod[index],co21_mod[index],marker="s",lw=2,s=100,alpha=alpha,color="black",edgecolor="black")
+        index = np.argmin(co21_modsn)
+        ax1.scatter(co10_modsn[index],co21_modsn[index],marker="^",lw=2,s=100,alpha=alpha,color="tomato",edgecolor="black")
+        ax1.scatter(co10_mods[index],co21_mods[index],marker="^",lw=2,s=100,alpha=alpha,color="deepskyblue",edgecolor="black")
+        ax1.scatter(co10_mod[index],co21_mod[index],marker="^",lw=2,s=100,alpha=alpha,color="black",edgecolor="black")
+        #
+        ## ax2
+        bins  = 50
+        histr = [np.min(co10_obs),np.max(co10_obs)]
+        hist1 = np.histogram(co10_obs, bins=bins, range=histr)
+        hist1 = [np.delete(hist1[1],-1), hist1[0] / float(np.sum(hist1[0]))]
+        hist2 = np.histogram(co10_mods, bins=bins, range=histr)
+        hist2 = [np.delete(hist2[1],-1), hist2[0] / float(np.sum(hist2[0]))]
+        hist3 = np.histogram(co10_modsn, bins=bins, range=histr)
+        hist3 = [np.delete(hist3[1],-1), hist3[0] / float(np.sum(hist3[0]))]
+        #
+        ax2.bar(hist1[0],hist1[1],width=hist1[0][1]-hist1[0][0],
+        color="black",alpha=0.5,lw=0,align="center")
+        ax2.bar(hist2[0],hist2[1],width=hist2[0][1]-hist2[0][0],
+        color="deepskyblue",alpha=0.5,lw=0,align="center")
+        ax2.bar(hist3[0],hist3[1],width=hist3[0][1]-hist3[0][0],
+        color="tomato",alpha=0.5,lw=0,align="center")
+        ## ax3
+        histr = [np.min(co21_obs),np.max(co21_obs)]
+        hist1 = np.histogram(co21_obs, bins=bins, range=histr)
+        hist1 = [np.delete(hist1[1],-1), hist1[0] / float(np.sum(hist1[0]))]
+        hist2 = np.histogram(co21_mods, bins=bins, range=histr)
+        hist2 = [np.delete(hist2[1],-1), hist2[0] / float(np.sum(hist2[0]))]
+        hist3 = np.histogram(co21_modsn, bins=bins, range=histr)
+        hist3 = [np.delete(hist3[1],-1), hist3[0] / float(np.sum(hist3[0]))]
+        #
+        ax3.barh(hist1[0],hist1[1],height=hist1[0][1]-hist1[0][0],
+        color="black",alpha=0.5,lw=0,align="center")
+        ax3.barh(hist2[0],hist2[1],height=hist2[0][1]-hist2[0][0],
+        color="deepskyblue",alpha=0.5,lw=0,align="center")
+        ax3.barh(hist3[0],hist3[1],height=hist3[0][1]-hist3[0][0],
+        color="tomato",alpha=0.5,lw=0,align="center")
+        ## ax4
+        histr = [np.min(r21_obs),np.max(r21_obs)]
+        hist1 = np.histogram(r21_obs, bins=bins, range=histr)
+        hist1 = [np.delete(hist1[1],-1), hist1[0] / float(np.sum(hist1[0]))]
+        hist2 = np.histogram(r21_modsn, bins=bins, range=histr)
+        hist2 = [np.delete(hist2[1],-1), hist2[0] / float(np.sum(hist2[0]))]
+        #
+        ax4.bar(hist1[0],hist1[1],width=hist1[0][1]-hist1[0][0],
+        color="black",alpha=0.5,lw=0,align="center")
+        ax4.bar(hist2[0],hist2[1],width=hist2[0][1]-hist2[0][0],
+        color="tomato",alpha=0.5,lw=0,align="center")
+        #
+        ## ax5
+        self._plot_binned_std(ax5,co10_obs,co21_obs,xlim,"grey")
+        self._plot_binned_std(ax5,co10_mods,co21_mods,xlim,"deepskyblue")
+        self._plot_binned_std(ax5,co10_modsn,co21_modsn,xlim,"tomato")
+        #
+
+        # text
+        legend_fontsize = 16
+        ypos = 0.95
+        step = 0.04
+        t=ax1.text(0.05,ypos-step*0,
+        "obsered data",
+        color="silver", horizontalalignment="left", transform=ax1.transAxes,
+        size=legend_fontsize-2, weight="bold")
+        t.set_bbox(dict(facecolor="white", alpha=0.9, lw=0))
+        t=ax1.text(0.05,ypos-step*1,
+        "model",
+        color="black", horizontalalignment="left", transform=ax1.transAxes,
+        size=legend_fontsize-2, weight="bold")
+        t.set_bbox(dict(facecolor="white", alpha=0.9, lw=0))
+        t=ax1.text(0.05,ypos-step*2,
+        "model+scatter",
+        color="deepskyblue", horizontalalignment="left", transform=ax1.transAxes,
+        size=legend_fontsize-2, weight="bold")
+        t.set_bbox(dict(facecolor="white", alpha=0.9, lw=0))
+        t=ax1.text(0.05,ypos-step*3,
+        "model+scatter+noise",
+        color="tomato", horizontalalignment="left", transform=ax1.transAxes,
+        size=legend_fontsize-2, weight="bold")
+        t.set_bbox(dict(facecolor="white", alpha=0.9, lw=0))
+        t=ax1.text(0.05,ypos-step*4,
+        "mean logco10 = "+str(np.round(list_params[1],4)),
+        color="black", horizontalalignment="left", transform=ax1.transAxes,
+        size=legend_fontsize-2)
+        t.set_bbox(dict(facecolor="white", alpha=0.9, lw=0))
+        t=ax1.text(0.05,ypos-step*5,
+        "sigma logco10 = "+str(np.round(list_params[2],4)),
+        color="black", horizontalalignment="left", transform=ax1.transAxes,
+        size=legend_fontsize-2)
+        t.set_bbox(dict(facecolor="white", alpha=0.9, lw=0))
+        #
+        t=ax1.text(0.05,ypos-step*6,
+        "scatter logco10 = "+str(np.round(list_params[3],4)),
+        color="black", horizontalalignment="left", transform=ax1.transAxes,
+        size=legend_fontsize-2)
+        t.set_bbox(dict(facecolor="white", alpha=0.9, lw=0))
+        #
+        t=ax1.text(0.05,ypos-step*7,
+        "scatter logco21 = "+str(np.round(list_params[4],4)),
+        color="black", horizontalalignment="left", transform=ax1.transAxes,
+        size=legend_fontsize-2)
+        t.set_bbox(dict(facecolor="white", alpha=0.9, lw=0))
+        #
+        t=ax1.text(0.05,ypos-step*8,
+        "slope = "+str(np.round(list_params[5],4)),
+        color="black", horizontalalignment="left", transform=ax1.transAxes,
+        size=legend_fontsize-2)
+        t.set_bbox(dict(facecolor="white", alpha=0.9, lw=0))
+        #
+        t=ax1.text(0.05,ypos-step*9,
+        "intercept = "+str(np.round(list_params[6],4)),
+        color="black", horizontalalignment="left", transform=ax1.transAxes,
+        size=legend_fontsize-2)
+        t.set_bbox(dict(facecolor="white", alpha=0.9, lw=0))
+        #
+        t=ax1.text(0.40,ypos-step*0.5,
+        "chi$^2$ = "+str(np.round(list_params[7],6)),
+        color="black", horizontalalignment="left", transform=ax1.transAxes,
+        size=legend_fontsize+2, weight="bold")
+        t.set_bbox(dict(facecolor="white", alpha=0.9, lw=0))
+        #
+
+        # save
+        plt.savefig(outpng)
+        plt.clf()
+        plt.close()
+
+    ####################
+    # _plot_binned_std #
+    ####################
+
+    def _plot_binned_std(
+        self,
+        ax,
+        x,
+        y,
+        histrange,
+        c,
+        nbins=5,
+        ):
+        n, _ = np.histogram(x, bins=nbins, range=histrange)
+        sy, _ = np.histogram(x, bins=nbins, weights=y, range=histrange)
+        sy2, _ = np.histogram(x, bins=nbins, weights=y*y, range=histrange)
+        mean = sy / n
+        std = np.sqrt(sy2/n - mean*mean)
+        ax.plot((_[1:]+_[:-1])/2,mean+std,"--",color=c,markersize=10,lw=1,alpha=0.8)
+        ax.plot((_[1:]+_[:-1])/2,mean,"-",color=c,markersize=10,lw=2,alpha=0.8)
+        ax.plot((_[1:]+_[:-1])/2,mean-std,"--",color=c,markersize=10,lw=1,alpha=0.8)
 
     ###################
     # _get_binned_std #
@@ -687,6 +928,9 @@ class ToolsR21():
         histrange,
         nbins=8,
         ):
+        """
+        """
+
         n, _ = np.histogram(x, bins=nbins, range=histrange)
         sy, _ = np.histogram(x, bins=nbins, weights=y, range=histrange)
         sy2, _ = np.histogram(x, bins=nbins, weights=y*y, range=histrange)
