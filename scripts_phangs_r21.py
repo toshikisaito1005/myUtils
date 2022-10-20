@@ -609,6 +609,9 @@ class ToolsR21():
             tmp_lowest_rms = 1000
             for i in range(npoint):
                 num = i + 1
+                if num%100==0:
+                    print("# run _gen_models " + str(num) + " / " + str(npoint))
+
                 this_mean         = (mean[1]-mean[0])*np.random.rand()+mean[0]
                 this_sigma        = (sigma[1]-sigma[0])*np.random.rand()+sigma[0]
                 this_scatter_co10 = (scatter_logco10[1]-scatter_logco10[0])*np.random.rand()+scatter_logco10[0]
@@ -617,7 +620,6 @@ class ToolsR21():
                 this_icept        = (icept[1]-icept[0])*np.random.rand()+icept[0]
 
                 # generate model
-                print("# run _gen_models " + str(num) + " / " + str(npoint))
                 list_data = self._gen_models(this_logco10,this_logco21,this_logco10err,this_logco21err,
                     this_mean,this_sigma,this_scatter_co10,this_scatter_co21,this_slope,this_icept,nbins_co10,nbins_co21)
                 listlist_data.append(list_data)
