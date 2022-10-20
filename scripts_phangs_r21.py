@@ -581,8 +581,7 @@ class ToolsR21():
 
             # get observed slope
             if i==0:
-                p16_slope, p50_slope, p84_slope, p16_icept, p50_icept, p84_icept = \
-                    self._get_observed_slope(this_logco10,this_logco21)
+                slope_obs, icept_obs = self._get_observed_slope(this_logco10,this_logco21)
 
         """
         for i, this_beam in enumerate(beams):
@@ -722,7 +721,7 @@ class ToolsR21():
 
         list_slope = []
         list_icept = []
-        for i in range(500):
+        for i in range(100):
             popt,_ = curve_fit(self._func2, logx, logy, p0=[np.random.rand()-0.5,np.random.rand()-1.0],
                 maxfev=10000, sigma=logy)
             list_slope.append(popt[0])
@@ -739,15 +738,14 @@ class ToolsR21():
         p50_icept = np.percentile(list_icept,50)
         p84_icept = np.percentile(list_icept,84)
 
-        print("observed p16_slope     = " + str(np.round(p16_slope,5)))
-        print("observed p50_slope     = " + str(np.round(p50_slope,5)))
-        print("observed p84_slope     = " + str(np.round(p84_slope,5)))
-        print("observed p16_intercept = " + str(np.round(p16_icept,5)))
-        print("observed p50_intercept = " + str(np.round(p50_icept,5)))
-        print("observed p84_intercept = " + str(np.round(p84_icept,5)))
-        print(list_slope)
+        print("observed p16_slope     = " + str(p16_slope))
+        print("observed p50_slope     = " + str(p50_slope))
+        print("observed p84_slope     = " + str(p84_slope))
+        print("observed p16_intercept = " + str(p16_icept))
+        print("observed p50_intercept = " + str(p50_icept))
+        print("observed p84_intercept = " + str(p84_icept))
 
-        return p16_slope, p50_slope, p84_slope, p16_icept, p50_icept, p84_icept
+        return p50_slope, p50_icept
 
     def _func2(self, x, a, b):
         """
