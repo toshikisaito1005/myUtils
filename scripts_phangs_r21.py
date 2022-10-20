@@ -632,9 +632,9 @@ class ToolsR21():
                     np.log10(this_co10[cut]),
                     np.log10(this_co21[cut]),
                     np.log10(this_r21[cut]),
-                    np.log10(this_eco10[cut]),
-                    np.log10(this_eco21[cut]),
-                    np.log10(this_er21[cut]),
+                    np.log10(this_co10_err[cut]),
+                    np.log10(this_co21_err[cut]),
+                    np.log10(this_r21_err[cut]),
                     ]
                 fmt    = "%6.3f %6.3f %6.3f %6.3f %6.3f %6.3f"
                 np.savetxt(this_output, output, header=header, fmt=fmt)
