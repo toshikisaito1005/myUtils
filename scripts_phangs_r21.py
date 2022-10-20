@@ -612,9 +612,9 @@ class ToolsR21():
         w3co10 = np.r_[w3co10_n0628,w3co10_n3627,w3co10_n4254,w3co10_n4321]
         bulge  = np.r_[bulge_n0628,bulge_n3627,bulge_n4254,bulge_n4321]
 
-        xlim1   = [-0.99,1.5]
-        xlim2   = [-0.99,1.5]
-        xlim3   = [-0.99,1.5]
+        xlim1   = [-0.99,1.6]
+        xlim2   = [-0.99,1.6]
+        xlim3   = [-0.99,1.6]
         xlim4   = [-1.9,0.6]
         xlim5   = [-0.65,1.0]
         xlim6   = [-0.75,0.65]
