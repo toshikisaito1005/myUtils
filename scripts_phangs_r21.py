@@ -844,8 +844,8 @@ class ToolsR21():
         gs  = gridspec.GridSpec(nrows=16, ncols=16)
         ax1 = plt.subplot(gs[0:16,0:16])
         myax_set(ax1, "both", None, None, None, None, None)
-        ax1.scatter(obs_co10, obs_co21, alpha=0.5, color="grey", markeredgewidth=0)
-        ax1.scatter(modsn_co10, modsn_co21, alpha=0.5, color="tomato", markeredgewidth=0)
+        ax1.scatter(obs_co10, obs_co21, alpha=0.5, color="grey", lw=0)
+        ax1.scatter(modsn_co10, modsn_co21, alpha=0.5, color="tomato", lw=0)
         plt.savefig(outpng)
 
     ########################
