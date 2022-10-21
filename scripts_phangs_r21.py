@@ -590,7 +590,7 @@ class ToolsR21():
             modeling_space = self._get_modeling_space(this_slope,this_icept,this_logco21)
 
             # generate log10 co21 mod
-            this_logco21_modsn = \
+            this_logco10_modsn, this_logco21_modsn = \
                 self._get_modsn_co21(this_logco21,this_logco21err,this_logco10_modsn,modeling_space)
             self._plot_obs_model_scatter(
                 this_logco10,
@@ -723,14 +723,17 @@ class ToolsR21():
             mod_co21 = this_slope * modsn_co10 + this_slope
 
             # log co21 model+noise distribution
-            mods_co21       = []
+            modsn_co10_final = []
+            mods_co21        = []
             nbins_available = 0
             for i in range(len(nbins)-1):
-                this_cut       = np.where((obs_co21>=nbins[i]) & (obs_co21<nbins[i+1]))
-                this_obserr    = np.nan_to_num(np.nanmedian(obs_co21err[this_cut])) + 0.0000000001
+                this_cut        = np.where((obs_co21>=nbins[i]) & (obs_co21<nbins[i+1]))
+                this_obserr     = np.nan_to_num(np.nanmedian(obs_co21err[this_cut])) + 0.0000000001
                 
-                this_cut       = np.where((mod_co21>=nbins[i]) & (mod_co21<nbins[i+1]))
-                this_mods_co21 = mod_co21[this_cut] + np.random.normal(0.0, this_obserr, len(mod_co21[this_cut]))
+                this_cut        = np.where((mod_co21>=nbins[i]) & (mod_co21<nbins[i+1]))
+                this_modsn_co10 = modsn_co10[this_cut]
+                this_mods_co21  = mod_co21[this_cut] + np.random.normal(0.0, this_obserr, len(mod_co21[this_cut]))
+                modsn_co10_final.extend(this_modsn_co10)
                 mods_co21.extend(this_mods_co21)
 
                 if len(this_mods_co21)>0:
@@ -744,7 +747,7 @@ class ToolsR21():
 
         self._plot_obs_model_hist(obs_co21,best_mods_co21,output)
 
-        return best_mods_co21
+        return modsn_co10_final, best_mods_co21
 
     ##############
     # _calc_chi2 #
