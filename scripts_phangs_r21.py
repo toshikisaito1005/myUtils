@@ -718,7 +718,7 @@ class ToolsR21():
             this_obserr = np.nan_to_num(np.nanmedian(obs_co21err[this_cut]))
             
             this_cut      = np.where((mod_co21>=nbins[i]) & (mod_co21<nbins[i+1]))
-            this_mod_co21 = mod_co21[thus_cut]
+            this_mod_co21 = mod_co21[this_cut]
 
         print(np.median(this_mod_co21))
 
