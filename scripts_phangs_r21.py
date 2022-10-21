@@ -952,8 +952,8 @@ class ToolsR21():
         #    list_obserr.append(this_obserr)
 
         # list_obs, list_obserr
-        #modesn = []
-        #for i in range(len(list_obs)-1):
+        modesn = []
+        for i in range(len(list_obs)-1):
             # cut logflux using bins
             #mincut, maxcut = list_obs[i], list_obs[i+1]
 
