@@ -713,9 +713,6 @@ class ToolsR21():
             mods  = np.random.normal(this_mean,this_sigma,int(len(obs)*1.5))
             modsn = self._add_noise_log(obs,obserr,mods,nbins)
             this_chi2 = self._calc_chi2(obs,modsn)
-            print(obs)
-            print(mods)
-            print(modsn)
             if min_chi2>this_chi2:
                 min_chi2   = this_chi2
                 best_modsn = modsn
@@ -763,6 +760,7 @@ class ToolsR21():
             this_mods   = mods[cut]
             this_obserr = list_obserr[i]
             this_modsn  = this_mods + np.random.normal(0.0, this_obserr, len(this_mods))
+            print(np.median(this_modsn))
             modesn.extend(this_modsn)
 
         return np.array(modesn.sort())
