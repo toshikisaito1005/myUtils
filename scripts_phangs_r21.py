@@ -582,15 +582,15 @@ class ToolsR21():
             if i==0:
                 this_slope,this_icept = self._get_observed_slope(this_logco10,this_logco21)
 
-            # determine modeling space
-            nbins_co10,nbins_co21,modeling_space \
-                = self._get_modeling_space(this_logco10,this_logco21)
-
             # generate log10 co10 modsn
-            best_logco10_modsn = self._get_modsn_co10(this_logco10,output="hist_modsn_obs_co10.png")
+            logco10_modsn = self._get_modsn_co10(this_logco10,output="hist_modsn_obs_co10.png")
 
-            # generate co21 distribution
+            # determine modeling space
+            nbins_co21,modeling_space = self._get_modeling_space(this_logco21)
 
+            # generate log10 co21 mod
+            logco21_mod = this_slope * logco10_modsn + this_icept
+            self._plot_obs_model_hist(this_logco21,logco21_mod,"hist_modsn_obs_co10.png")
 
             # compare model and obs: co21
 
@@ -690,68 +690,23 @@ class ToolsR21():
             #
         """
 
-    ###################
-    # _get_modsn_co10 #
-    ###################
+    #######################
+    # _get_modeling_space #
+    #######################
 
-    def _get_modsn_co10(
+    def _get_modeling_space(
         self,
         obs,
-        output="hist_modsn_obs_co10.png",
         ):
         """
         """
 
-        h,e = np.histogram(obs, bins=1000, density=True, weights=None)
-        x = np.linspace(e.min(), e.max())
-        modsn = np.random.choice((e[:-1] + e[1:])/2, size=len(obs)*5, p=h/h.sum())
+        nbins         = int( (np.ceil(np.log2(len(obs))) + 1) + 1.5 ) * 3
+        range_median  = [0.5*np.median(obs), 2.0*np.median(obs)]
+        range_sigma   = [0.5*np.std(obs), 1.5*np.std(obs)]
+        range_scatter = [0.0, 1.0]
 
-        self._plot_obs_model_hist(obs,modsn,output)
-
-        return modsn
-
-    ##################
-    # _add_noise_log #
-    ##################
-
-    def _add_noise_log(
-        self,
-        obs,
-        obserr,
-        mods,
-        nbins,
-        ):
-        """
-        """
-
-        list_obs    = np.linspace(obs.min(), obs.max(), nbins)
-        list_obserr = []
-        for i in range(len(list_obs)-1):
-            this_cut    = np.where((obs>=list_obs[i]) & (obs<list_obs[i+1]))
-            this_obserr = np.median(obserr[this_cut])
-            list_obserr.append(this_obserr)
-
-        # list_obs, list_obserr
-        modesn = []
-        for i in range(len(list_obs)-1):
-            # cut logflux using bins
-            mincut, maxcut = list_obs[i], list_obs[i+1]
-
-            # define cut
-            if i==0:
-                cut = np.where((mods<=maxcut)&(~np.isnan(mods))&(~np.isinf(mods)))
-            elif i==len(list_obs)-2:
-                cut = np.where((mods>mincut)&(~np.isnan(mods))&(~np.isinf(mods)))
-            else:
-                cut = np.where((mods>mincut)&(mods<=maxcut)&(~np.isnan(mods))&(~np.isinf(mods)))
-
-            # add noise
-            this_mods   = mods[cut]
-            this_obserr = list_obserr[i]
-            this_modsn  = this_mods + np.random.normal(0.0, this_obserr, len(this_mods))
-            modesn.extend(this_modsn)
-
-        return np.array(modesn.sort())
+        return nbins, [range_median, range_sigma, range_scatter]
 
     ########################
     # _plot_obs_model_hist #
@@ -782,80 +737,25 @@ class ToolsR21():
         ax1.bar(histmodsn[0],histmodsn[1],width=hwidth,color="tomato",alpha=0.5,lw=0,align="center")
         plt.savefig(outpng)
 
-    ##############
-    # _calc_chi2 #
-    ##############
+    ###################
+    # _get_modsn_co10 #
+    ###################
 
-    def _calc_chi2(
+    def _get_modsn_co10(
         self,
-        data_obs,
-        data_modsn,
-        weight=None,
-        bins=50,
+        obs,
+        output="hist_modsn_obs_co10.png",
         ):
         """
         """
 
-        histr   = [np.min(data_obs),np.max(data_obs)]
-        hist    = np.histogram(data_obs, bins=bins, range=histr)
-        x       = hist[1][1:]
-        y_obs   = hist[0] / float(np.sum(hist[0]))
-        hist    = np.histogram(data_modsn, bins=bins, range=histr)
-        y_modsn = hist[0] / float(np.sum(hist[0]))
-        diff    = (y_obs - y_modsn)**2 / y_obs
-        diff[np.isnan(diff)] = -1e7
-        diff[np.isinf(diff)] = -1e7
-        diff    = diff[diff!=-1e7]
-        x       = x[diff!=-1e7]
-        #
-        if len(x)>0:
-            if weight==None:
-                weights = None
-            elif weight=="higher":
-                weights = abs(x - np.min(x))**1 # weight to histogram wings
-            elif weight=="wing":
-                weights = abs(x - np.median(x))**2 # weight to histogram wings
-            chi2 = np.sqrt(np.average(diff,weights=weights)*len(diff))
-        else:
-            chi2 = 1e7
+        h,e = np.histogram(obs, bins=1000, density=True, weights=None)
+        x = np.linspace(e.min(), e.max())
+        modsn = np.random.choice((e[:-1] + e[1:])/2, size=len(obs)*5, p=h/h.sum())
 
-        return chi2
+        self._plot_obs_model_hist(obs,modsn,output)
 
-    #######################
-    # _get_modeling_param #
-    #######################
-
-    def _get_modeling_param(self,modeling_space):
-        """
-        """
-
-        this_mean            = (modeling_space[0][1]-modeling_space[0][0])*np.random.rand()+modeling_space[0][0]
-        this_sigma           = (modeling_space[1][1]-modeling_space[1][0])*np.random.rand()+modeling_space[1][0]
-        this_scatter_logco10 = (modeling_space[2][1]-modeling_space[2][0])*np.random.rand()+modeling_space[2][0]
-        this_scatter_logco21 = (modeling_space[3][1]-modeling_space[3][0])*np.random.rand()+modeling_space[3][0]
-
-        return this_mean, this_sigma, this_scatter_logco10, this_scatter_logco21
-
-    #######################
-    # _get_modeling_space #
-    #######################
-
-    def _get_modeling_space(
-        self,
-        this_logco10,
-        this_logco21,
-        ):
-        """
-        """
-
-        nbins_co10            = int( (np.ceil(np.log2(len(this_logco10))) + 1) + 1.5 ) * 3
-        nbins_co21            = int( (np.ceil(np.log2(len(this_logco21))) + 1) + 1.5 ) * 3
-        range_median          = [0.5*np.median(this_logco10), 2.0*np.median(this_logco10)]
-        range_sigma           = [0.5*np.std(this_logco10), 1.5*np.std(this_logco10)]
-        range_scatter_logco10 = [0.0, 1.0]
-        range_scatter_logco21 = [0.0, 1.0]
-
-        return nbins_co10, nbins_co21, [range_median, range_sigma, range_scatter_logco10, range_scatter_logco21]
+        return modsn
 
     #######################
     # _get_observed_slope #
@@ -975,7 +875,102 @@ class ToolsR21():
 
 
 
+    ##################
+    # _add_noise_log #
+    ##################
 
+    def _add_noise_log(
+        self,
+        obs,
+        obserr,
+        mods,
+        nbins,
+        ):
+        """
+        """
+
+        list_obs    = np.linspace(obs.min(), obs.max(), nbins)
+        list_obserr = []
+        for i in range(len(list_obs)-1):
+            this_cut    = np.where((obs>=list_obs[i]) & (obs<list_obs[i+1]))
+            this_obserr = np.median(obserr[this_cut])
+            list_obserr.append(this_obserr)
+
+        # list_obs, list_obserr
+        modesn = []
+        for i in range(len(list_obs)-1):
+            # cut logflux using bins
+            mincut, maxcut = list_obs[i], list_obs[i+1]
+
+            # define cut
+            if i==0:
+                cut = np.where((mods<=maxcut)&(~np.isnan(mods))&(~np.isinf(mods)))
+            elif i==len(list_obs)-2:
+                cut = np.where((mods>mincut)&(~np.isnan(mods))&(~np.isinf(mods)))
+            else:
+                cut = np.where((mods>mincut)&(mods<=maxcut)&(~np.isnan(mods))&(~np.isinf(mods)))
+
+            # add noise
+            this_mods   = mods[cut]
+            this_obserr = list_obserr[i]
+            this_modsn  = this_mods + np.random.normal(0.0, this_obserr, len(this_mods))
+            modesn.extend(this_modsn)
+
+        return np.array(modesn.sort())
+
+    ##############
+    # _calc_chi2 #
+    ##############
+
+    def _calc_chi2(
+        self,
+        data_obs,
+        data_modsn,
+        weight=None,
+        bins=50,
+        ):
+        """
+        """
+
+        histr   = [np.min(data_obs),np.max(data_obs)]
+        hist    = np.histogram(data_obs, bins=bins, range=histr)
+        x       = hist[1][1:]
+        y_obs   = hist[0] / float(np.sum(hist[0]))
+        hist    = np.histogram(data_modsn, bins=bins, range=histr)
+        y_modsn = hist[0] / float(np.sum(hist[0]))
+        diff    = (y_obs - y_modsn)**2 / y_obs
+        diff[np.isnan(diff)] = -1e7
+        diff[np.isinf(diff)] = -1e7
+        diff    = diff[diff!=-1e7]
+        x       = x[diff!=-1e7]
+        #
+        if len(x)>0:
+            if weight==None:
+                weights = None
+            elif weight=="higher":
+                weights = abs(x - np.min(x))**1 # weight to histogram wings
+            elif weight=="wing":
+                weights = abs(x - np.median(x))**2 # weight to histogram wings
+            chi2 = np.sqrt(np.average(diff,weights=weights)*len(diff))
+        else:
+            chi2 = 1e7
+
+        return chi2
+
+    #######################
+    # _get_modeling_param #
+    #######################
+
+    def _get_modeling_param(self,modeling_space):
+        """
+        """
+
+        this_mean            = (modeling_space[0][1]-modeling_space[0][0])*np.random.rand()+modeling_space[0][0]
+        this_sigma           = (modeling_space[1][1]-modeling_space[1][0])*np.random.rand()+modeling_space[1][0]
+        this_scatter_logco10 = (modeling_space[2][1]-modeling_space[2][0])*np.random.rand()+modeling_space[2][0]
+        this_scatter_logco21 = (modeling_space[3][1]-modeling_space[3][0])*np.random.rand()+modeling_space[3][0]
+
+        return this_mean, this_sigma, this_scatter_logco10, this_scatter_logco21
 
 
 
