@@ -711,18 +711,20 @@ class ToolsR21():
         modsn_co10,
         modeling_space,
         output="hist_modsn_obs_co21.png",
-        nloop=10000,
+        nloop=1000,
         ):
         """
         """
 
         for j in range(nloop):
+            if j%100==0:
+                print("# loop = " + str(i+1) + " / " + str(nloop))
             nbins, this_median, this_sigma, this_scatter, this_slope, this_icept = \
                 self._get_modeling_param(modeling_space)
             nbins = np.linspace(obs_co21.min(), obs_co21.max(), nbins)
 
             # log co21 model distribution
-            mod_co21 = this_slope * modsn_co10 + this_slope
+            mod_co21 = this_slope * modsn_co10 + this_icept
 
             # log co21 model+noise distribution
             modsn_co10_final = []
