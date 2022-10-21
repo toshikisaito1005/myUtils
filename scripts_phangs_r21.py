@@ -714,7 +714,7 @@ class ToolsR21():
 
             # log co21 model+noise distribution
             mods_co21       = []
-            nbins_available = []
+            nbins_available = 0
             for i in range(len(nbins)-1):
                 this_cut       = np.where((obs_co21>=nbins[i]) & (obs_co21<nbins[i+1]))
                 this_obserr    = np.nan_to_num(np.nanmedian(obs_co21err[this_cut])) + 0.0000000001
