@@ -583,14 +583,13 @@ class ToolsR21():
                 this_slope,this_icept = self._get_observed_slope(this_logco10,this_logco21)
 
             # generate log10 co10 modsn
-            logco10_modsn = self._get_modsn_co10(this_logco10,output="hist_modsn_obs_co10.png")
+            this_logco10_modsn = self._get_modsn_co10(this_logco10)
 
             # determine modeling space
-            nbins_co21,modeling_space = self._get_modeling_space(this_logco21)
+            modeling_space = self._get_modeling_space(this_slope,this_icept,this_logco21)
 
             # generate log10 co21 mod
-            logco21_mod = this_slope * logco10_modsn + this_icept
-            self._plot_obs_model_hist(this_logco21,logco21_mod,"hist_modsn_obs_co21.png")
+            self._get_modsn_co21(this_logco21,this_logco21err,this_logco10_modsn,modeling_space)
 
             # compare model and obs: co21
 
@@ -690,12 +689,65 @@ class ToolsR21():
             #
         """
 
+    ###################
+    # _get_modsn_co21 #
+    ###################
+
+    def _get_modsn_co21(
+        self,
+        obs_co21,
+        obs_co21err,
+        modsn_co10,
+        modeling_space,
+        output="hist_modsn_obs_co21.png",
+        ):
+        """
+        """
+
+        nbins, this_median, this_sigma, this_scatter, this_slope, this_icept = \
+            self._get_modeling_param(modeling_space)
+
+        # log co21 model distribution
+        mod_co21 = this_slope * modsn_co10 + this_slope
+
+        # log co21 model+noise distribution
+        nbins = np.linspace(obs_co21.min(), obs_co21.max(), nbins)
+
+        list_co21err_at_each_bin = []
+
+        for i in range(len(nbins)-1):
+            this_cut    = np.where((obs_co21>=nbins[i]) & (obs_co21<nbins[i+1]))
+            this_obserr = np.median(obs_co21err[this_cut])
+            list_co21err_at_each_bin.append(this_obserr)
+
+        print(list_co21err_at_each_bin)
+
+
+    #######################
+    # _get_modeling_param #
+    #######################
+
+    def _get_modeling_param(self,modeling_space):
+        """
+        """
+
+        nbins        = modeling_space[0]
+        this_median  = (modeling_space[1][1]-modeling_space[1][0])*np.random.rand()+modeling_space[1][0]
+        this_sigma   = (modeling_space[2][1]-modeling_space[2][0])*np.random.rand()+modeling_space[2][0]
+        this_scatter = (modeling_space[3][1]-modeling_space[3][0])*np.random.rand()+modeling_space[3][0]
+        this_slope   = (modeling_space[4][1]-modeling_space[4][0])*np.random.rand()+modeling_space[4][0]
+        this_icept   = (modeling_space[5][1]-modeling_space[5][0])*np.random.rand()+modeling_space[5][0]
+
+        return nbins, this_median, this_sigma, this_scatter, this_slope, this_icept
+
     #######################
     # _get_modeling_space #
     #######################
 
     def _get_modeling_space(
         self,
+        slope,
+        icept,
         obs,
         ):
         """
@@ -705,8 +757,10 @@ class ToolsR21():
         range_median  = [0.5*np.median(obs), 2.0*np.median(obs)]
         range_sigma   = [0.5*np.std(obs), 1.5*np.std(obs)]
         range_scatter = [0.0, 1.0]
+        range_slope   = [slope-0.3, slope+0.3]
+        range_icept   = [icept-0.5, icept+0.5]
 
-        return nbins, [range_median, range_sigma, range_scatter]
+        return [nbins, range_median, range_sigma, range_scatter, range_slope, range_slope]
 
     ########################
     # _plot_obs_model_hist #
