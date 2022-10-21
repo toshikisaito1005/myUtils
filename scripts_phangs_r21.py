@@ -719,7 +719,7 @@ class ToolsR21():
             
             this_cut      = np.where((mod_co21>=nbins[i]) & (mod_co21<nbins[i+1]))
             this_mod_co21 = mod_co21[this_cut]
-            print(np.nanmedian(this_mod_co21))
+            print(len(this_mod_co21))
 
     #######################
     # _get_modeling_param #
