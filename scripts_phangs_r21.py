@@ -715,7 +715,7 @@ class ToolsR21():
             this_chi2 = self._calc_chi2(obs,mods)
             if min_chi2>this_chi2:
                 min_chi2   = this_chi2
-                best_modsn = modsn
+                best_modsn = mods
 
         self._plot_obs_model_hist(obs,best_modsn,output)
 
@@ -734,8 +734,6 @@ class ToolsR21():
         ):
         """
         """
-
-
 
         list_obs    = np.linspace(obs.min(), obs.max(), nbins)
         list_obserr = []
@@ -786,8 +784,6 @@ class ToolsR21():
         histmodsn = [np.delete(histmodsn[1],-1), histmodsn[0] / float(np.sum(histmodsn[0]))]
         hwidth    = histobs[0][1] - histobs[0][0]
 
-        print(histobs)
-        print(histmodsn)
         fig = plt.figure(figsize=(10,10))
         plt.subplots_adjust(bottom=0.10, left=0.13, right=0.91, top=0.94)
         gs  = gridspec.GridSpec(nrows=16, ncols=16)
