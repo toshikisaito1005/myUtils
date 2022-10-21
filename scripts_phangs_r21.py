@@ -577,6 +577,7 @@ class ToolsR21():
             this_logco10err = data[:,3]
             this_logco21err = data[:,4]
             this_logr21err  = data[:,5]
+            print(this_txt)
 
             # get observed slope
             if i==0:
@@ -725,7 +726,6 @@ class ToolsR21():
                 mods_co21.extend(this_mods_co21)
                 ndata_bins.append(len(this_mods_co21))
 
-            print(ndata_bins)
 
     #######################
     # _get_modeling_param #
