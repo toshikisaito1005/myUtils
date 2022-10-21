@@ -713,15 +713,14 @@ class ToolsR21():
         # log co21 model+noise distribution
         nbins = np.linspace(obs_co21.min(), obs_co21.max(), nbins)
 
-        list_co21err_at_each_bin = []
-
         for i in range(len(nbins)-1):
             this_cut    = np.where((obs_co21>=nbins[i]) & (obs_co21<nbins[i+1]))
             this_obserr = np.nan_to_num(np.nanmedian(obs_co21err[this_cut]))
-            list_co21err_at_each_bin.append(this_obserr)
+            
+            this_cut      = np.where((mod_co21>=nbins[i]) & (mod_co21<nbins[i+1]))
+            this_mod_co21 = mod_co21[thus_cut]
 
-        print(list_co21err_at_each_bin)
-
+        print(np.median(this_mod_co21))
 
     #######################
     # _get_modeling_param #
@@ -929,6 +928,8 @@ class ToolsR21():
 
 
 
+
+
     ##################
     # _add_noise_log #
     ##################
@@ -943,18 +944,18 @@ class ToolsR21():
         """
         """
 
-        list_obs    = np.linspace(obs.min(), obs.max(), nbins)
-        list_obserr = []
-        for i in range(len(list_obs)-1):
-            this_cut    = np.where((obs>=list_obs[i]) & (obs<list_obs[i+1]))
-            this_obserr = np.median(obserr[this_cut])
-            list_obserr.append(this_obserr)
+        #list_obs    = np.linspace(obs.min(), obs.max(), nbins)
+        #list_obserr = []
+        #for i in range(len(list_obs)-1):
+        #    this_cut    = np.where((obs>=list_obs[i]) & (obs<list_obs[i+1]))
+        #    this_obserr = np.median(obserr[this_cut])
+        #    list_obserr.append(this_obserr)
 
         # list_obs, list_obserr
-        modesn = []
-        for i in range(len(list_obs)-1):
+        #modesn = []
+        #for i in range(len(list_obs)-1):
             # cut logflux using bins
-            mincut, maxcut = list_obs[i], list_obs[i+1]
+            #mincut, maxcut = list_obs[i], list_obs[i+1]
 
             # define cut
             if i==0:
