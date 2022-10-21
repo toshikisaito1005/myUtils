@@ -718,7 +718,7 @@ class ToolsR21():
 
         for j in range(nloop):
             if j%100==0:
-                print("# loop = " + str(i+1) + " / " + str(nloop))
+                print("# loop = " + str(j+1) + " / " + str(nloop))
             nbins, this_median, this_sigma, this_scatter, this_slope, this_icept = \
                 self._get_modeling_param(modeling_space)
             nbins = np.linspace(obs_co21.min(), obs_co21.max(), nbins)
