@@ -700,6 +700,7 @@ class ToolsR21():
         modsn_co10,
         modeling_space,
         output="hist_modsn_obs_co21.png",
+        nloop=1000,
         ):
         """
         """
@@ -707,21 +708,24 @@ class ToolsR21():
         nbins, this_median, this_sigma, this_scatter, this_slope, this_icept = \
             self._get_modeling_param(modeling_space)
 
-        # log co21 model distribution
-        mod_co21 = this_slope * modsn_co10 + this_slope
+        for j in range(nloop):
+            # log co21 model distribution
+            mod_co21 = this_slope * modsn_co10 + this_slope
 
-        # log co21 model+noise distribution
-        nbins = np.linspace(obs_co21.min(), obs_co21.max(), nbins)
+            # log co21 model+noise distribution
+            nbins = np.linspace(obs_co21.min(), obs_co21.max(), nbins)
 
-        test = []
-        for i in range(len(nbins)-1):
-            this_cut    = np.where((obs_co21>=nbins[i]) & (obs_co21<nbins[i+1]))
-            this_obserr = np.nan_to_num(np.nanmedian(obs_co21err[this_cut]))
-            
-            this_cut      = np.where((mod_co21>=nbins[i]) & (mod_co21<nbins[i+1]))
-            this_mod_co21 = mod_co21[this_cut]
-            if len(this_mod_co21)!=0:
-                test.append(len(this_mod_co21)))
+            test = []
+            for i in range(len(nbins)-1):
+                this_cut    = np.where((obs_co21>=nbins[i]) & (obs_co21<nbins[i+1]))
+                this_obserr = np.nan_to_num(np.nanmedian(obs_co21err[this_cut]))
+                
+                this_cut      = np.where((mod_co21>=nbins[i]) & (mod_co21<nbins[i+1]))
+                this_mod_co21 = mod_co21[this_cut]
+                if len(this_mod_co21)!=0:
+                    test.append(len(this_mod_co21))
+
+            print(test)
 
     #######################
     # _get_modeling_param #
