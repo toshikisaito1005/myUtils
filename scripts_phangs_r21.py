@@ -710,7 +710,7 @@ class ToolsR21():
         min_chi2 = 1e11
         for i in range(npoint):
             this_mean, this_sigma, _, _ = self._get_modeling_param(modeling_space)
-            mods  = np.random.normal(this_mean,this_sigma,int(len(obs)*1.5))
+            mods  = np.random.normal(this_mean,this_sigma,len(obs))
             modsn = self._add_noise_log(obs,obserr,mods,nbins)
             this_chi2 = self._calc_chi2(obs,modsn)
             if min_chi2>this_chi2:
