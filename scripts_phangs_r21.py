@@ -592,7 +592,7 @@ class ToolsR21():
             # generate log10 co21 mod
             this_logco21_modsn = \
                 self._get_modsn_co21(this_logco21,this_logco21err,this_logco10_modsn,modeling_space)
-            self._plot_obs_model_hist(
+            self._plot_obs_model_scatter(
                 this_logco10,
                 this_logco21,
                 this_logco10_modsn,
@@ -828,7 +828,7 @@ class ToolsR21():
     # _plot_obs_model_scatter #
     ###########################
 
-    def _plot_obs_model_hist(
+    def _plot_obs_model_scatter(
         self,
         obs_co10,
         obs_co21,
