@@ -713,7 +713,9 @@ class ToolsR21():
             mods  = np.random.normal(this_mean,this_sigma,int(len(obs)*1.5))
             modsn = self._add_noise_log(obs,obserr,mods,nbins)
             this_chi2 = self._calc_chi2(obs,modsn)
-            print(this_chi2)
+            print(obs)
+            print(mods)
+            print(modsn)
             if min_chi2>this_chi2:
                 min_chi2   = this_chi2
                 best_modsn = modsn
