@@ -705,13 +705,13 @@ class ToolsR21():
         """
         """
 
-        nbins, this_median, this_sigma, this_scatter, this_slope, this_icept = \
-            self._get_modeling_param(modeling_space)
-
-        # log co21 model+noise distribution
-        nbins = np.linspace(obs_co21.min(), obs_co21.max(), nbins)
-
         for j in range(nloop):
+            nbins, this_median, this_sigma, this_scatter, this_slope, this_icept = \
+                self._get_modeling_param(modeling_space)
+
+            # log co21 model+noise distribution
+            nbins = np.linspace(obs_co21.min(), obs_co21.max(), nbins)
+
             # log co21 model distribution
             mod_co21 = this_slope * modsn_co10 + this_slope
 
