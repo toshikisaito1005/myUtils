@@ -800,11 +800,9 @@ class ToolsR21():
         """
 
         nbins        = modeling_space[0]
-        this_median  = (modeling_space[1][1]-modeling_space[1][0])*np.random.rand()+modeling_space[1][0]
-        this_sigma   = (modeling_space[2][1]-modeling_space[2][0])*np.random.rand()+modeling_space[2][0]
-        this_scatter = (modeling_space[3][1]-modeling_space[3][0])*np.random.rand()+modeling_space[3][0]
-        this_slope   = (modeling_space[4][1]-modeling_space[4][0])*np.random.rand()+modeling_space[4][0]
-        this_icept   = (modeling_space[5][1]-modeling_space[5][0])*np.random.rand()+modeling_space[5][0]
+        this_scatter = (modeling_space[1][1]-modeling_space[1][0])*np.random.rand()+modeling_space[1][0]
+        this_slope   = (modeling_space[2][1]-modeling_space[2][0])*np.random.rand()+modeling_space[2][0]
+        this_icept   = (modeling_space[3][1]-modeling_space[3][0])*np.random.rand()+modeling_space[3][0]
 
         return nbins, this_median, this_sigma, this_scatter, this_slope, this_icept
 
