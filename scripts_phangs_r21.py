@@ -735,6 +735,8 @@ class ToolsR21():
         """
         """
 
+        print("#############")
+        print(np.median(mods))
         list_obs    = np.linspace(obs.min(), obs.max(), nbins)
         list_obserr = []
         for i in range(len(list_obs)-1):
