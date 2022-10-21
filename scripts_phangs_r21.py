@@ -713,8 +713,8 @@ class ToolsR21():
             mod_co21 = this_slope * modsn_co10 + this_slope
 
             # log co21 model+noise distribution
-            mods_co21  = []
-            ndata_bins = []
+            mods_co21       = []
+            nbins_available = []
             for i in range(len(nbins)-1):
                 this_cut       = np.where((obs_co21>=nbins[i]) & (obs_co21<nbins[i+1]))
                 this_obserr    = np.nan_to_num(np.nanmedian(obs_co21err[this_cut])) + 0.0000000001
@@ -722,9 +722,12 @@ class ToolsR21():
                 this_cut       = np.where((mod_co21>=nbins[i]) & (mod_co21<nbins[i+1]))
                 this_mods_co21 = mod_co21[this_cut] + np.random.normal(0.0, this_obserr, len(mod_co21[this_cut]))
                 mods_co21.extend(this_mods_co21)
-                ndata_bins.append(len(this_mods_co21))
 
-            print([s for s in ndata_bins if s!=0])
+                if len(this_mods_co21)>0:
+                    nbins_available+=1
+
+            if nbins_available>len(nbins)-2:
+                print(np.median(mods_co21), np.median(obs_co21))
 
     #######################
     # _get_modeling_param #
