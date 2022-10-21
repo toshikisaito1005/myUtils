@@ -562,7 +562,6 @@ class ToolsR21():
         self,
         beams,
         inputtxt,
-        npoint_co10=500,
         ):
         """
         modeling
@@ -587,18 +586,9 @@ class ToolsR21():
             nbins_co10,nbins_co21,modeling_space \
                 = self._get_modeling_space(this_logco10,this_logco21)
 
-            # generate co10 distribution
-            # compara model and obs and choose best: co10
-            min_chi2 = 1e7
-            for i in range(npoint_co10):
-                this_mean, this_sigma, _, _ = self._get_modeling_param(modeling_space)
-                logco10_modsn = np.random.normal(this_mean,this_sigma,int(len(this_logco10)*1.5))
-                this_chi2 = self._calc_chi2(this_logco10,logco10_modsn)
-                if min_chi2>this_chi2:
-                    min_chi2           = this_chi2
-                    best_logco10_modsn = logco10_modsn
-
-            self._plot_obs_model_hist(this_logco10,best_logco10_modsn,"hist_modsn_obs_co10.png")
+            # generate log10 co10 modsn
+            best_logco10_modsn = self._get_modsn_co10(this_logco10,this_logco10err,
+                nbins_co10,modeling_space,output="hist_modsn_obs_co10.png",npoint=1000)
 
             # generate co21 distribution
 
@@ -700,6 +690,81 @@ class ToolsR21():
             del diff_rms
             #
         """
+
+    ###################
+    # _get_modsn_co10 #
+    ###################
+
+    def _get_modsn_co10(
+        self,
+        obs,
+        obserr,
+        nbins,
+        modeling_space,
+        output="hist_modsn_obs_co10.png",
+        npoint=1000,
+        ):
+        """
+        """
+
+        min_chi2 = 1e7
+        for i in range(npoint):
+            this_mean, this_sigma, _, _ = self._get_modeling_param(modeling_space)
+            mods  = np.random.normal(this_mean,this_sigma,int(len(obs)*1.5))
+            modsn = self._add_noise_log(obs,obserr,mods,nbins)
+            this_chi2 = self._calc_chi2(obs,modsn)
+            if min_chi2>this_chi2:
+                min_chi2   = this_chi2
+                best_modsn = modsn
+
+        self._plot_obs_model_hist(obs,modsn,output)
+
+        return modsn
+
+    ##################
+    # _add_noise_log #
+    ##################
+
+    def _add_noise_log(
+        self,
+        obs,
+        obserr,
+        mods,
+        nbins,
+        ):
+        """
+        """
+
+        #list_logflux, list_lognoise = self._get_logflux_vs_logerr(logflux, logerr, nbins)
+
+        list_obs    = np.linspace(obs.min(), obs.max(), nbins)
+        list_obserr = []
+        for i in range(len(list_obs)-1):
+            this_cut    = np.where((obs>=list_obs[i]) & (obs<list_obs[i+1]))
+            this_obserr = np.median(obserr[this_cut])
+            list_obserr.append(this_obserr)
+
+        # list_obs, list_obserr
+        modesn = []
+        for i in range(len(list_obs)-1):
+            # cut logflux using bins
+            mincut, maxcut = list_obs[i], list_obs[i+1]
+
+            # define cut
+            if i==0:
+                cut = (mods<=maxcut)
+            elif i==len(list_obs)-2:
+                cut = (mods>mincut)
+            else:
+                cut = (mods>mincut)&(mods<=maxcut)
+
+            # add noise
+            this_mods   = mods[cut]
+            this_obserr = list_obserr[i]
+            this_modsn  = this_mods + np.random.normal(0.0, this_obserr, len(this_obserr))
+            modesn.extend(this_modsn)
+
+        return np.array(modesn.sort())
 
     ########################
     # _plot_obs_model_hist #
@@ -920,6 +985,7 @@ class ToolsR21():
                 np.savetxt(this_outtxt, output, header=header, fmt=fmt)
             else:
                 print("# skip _import_modeling for " + this_outtxt.split("/")[-1])
+
 
 
 
@@ -1317,49 +1383,6 @@ class ToolsR21():
         ]
 
         return list_data
-
-    ##################
-    # _add_noise_log #
-    ##################
-
-    def _add_noise_log(
-        self,
-        logflux,
-        logerr,
-        logflux_model_scatter,
-        nbins,
-        model_index,
-        ):
-        """
-        """
-
-        list_logflux, list_lognoise = self._get_logflux_vs_logerr(logflux, logerr, nbins)
-        #
-        logflux_model_scatter_noise = []
-        list_index = []
-        for i in range(len(list_logflux)-1):
-            ## cut logflux using bins
-            mincut = list_logflux[i]
-            maxcut = list_logflux[i+1]
-            ## define cut
-            if i==0:
-                cut = (logflux_model_scatter<=maxcut)
-            elif i==len(list_logflux)-2:
-                cut = (logflux_model_scatter>mincut)
-            else:
-                cut =(logflux_model_scatter>mincut)&(logflux_model_scatter<=maxcut)
-            #
-            this_logflux_model_scatter = logflux_model_scatter[cut]
-            this_lognoise              = list_lognoise[i]
-            this_index                 = model_index[cut]
-            #
-            this_logflux_model_scatter_noise = \
-            self._add_scatter_log(this_logflux_model_scatter, this_lognoise)
-            logflux_model_scatter_noise.extend(this_logflux_model_scatter_noise)
-            list_index.extend(this_index)
-            #
-
-        return np.array(logflux_model_scatter_noise), np.array(list_index)
 
     ##########################
     # _get_logflux_vs_logerr #
