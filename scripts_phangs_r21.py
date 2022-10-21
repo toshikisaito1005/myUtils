@@ -750,17 +750,16 @@ class ToolsR21():
 
             # define cut
             if i==0:
-                cut = np.where(mods<=maxcut)
+                cut = np.where((mods<=maxcut)&(~np.isnan(mods))&(~np.isinf(mods)))
             elif i==len(list_obs)-2:
-                cut = np.where(mods>mincut)
+                cut = np.where((mods>mincut)&(~np.isnan(mods))&(~np.isinf(mods)))
             else:
-                cut = np.where((mods>mincut)&(mods<=maxcut))
+                cut = np.where((mods>mincut)&(mods<=maxcut)&(~np.isnan(mods))&(~np.isinf(mods)))
 
             # add noise
             this_mods   = mods[cut]
             this_obserr = list_obserr[i]
             this_modsn  = this_mods + np.random.normal(0.0, this_obserr, len(this_mods))
-            print(np.median(this_mods), np.median(this_modsn))
             modesn.extend(this_modsn)
 
         return np.array(modesn.sort())
