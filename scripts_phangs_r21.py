@@ -715,6 +715,7 @@ class ToolsR21():
         # log co21 model+noise distribution
         nbins = np.linspace(obs_co21.min(), obs_co21.max(), nbins)
 
+        """
         test = []
         for i in range(len(nbins)-1):
             this_cut    = np.where((obs_co21>=nbins[i]) & (obs_co21<nbins[i+1]))
@@ -726,6 +727,7 @@ class ToolsR21():
                 test.append(len(this_mod_co21))
 
         print(test)
+        """
 
     #######################
     # _get_modeling_param #
