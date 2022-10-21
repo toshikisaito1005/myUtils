@@ -711,7 +711,7 @@ class ToolsR21():
         modsn_co10,
         modeling_space,
         output="hist_modsn_obs_co21.png",
-        nloop=1000,
+        nloop=10000,
         ):
         """
         """
