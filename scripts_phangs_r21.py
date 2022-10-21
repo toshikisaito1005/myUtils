@@ -726,7 +726,52 @@ class ToolsR21():
                 if len(this_mods_co21)>0:
                     nbins_available+=1
 
-            print(np.median(mods_co21), np.median(obs_co21))
+            best_chi2 = 1e44
+            this_chi2 = self._calc_chi2(obs_co21,mods_co21)
+            if best_chi2>this_chi2
+                best_chi2 = this_chi2
+                best_mods_co21 = mods_co21
+
+        self._plot_obs_model_hist(obs_co21,best_mods_co21,output)
+
+    ##############
+    # _calc_chi2 #
+    ##############
+
+    def _calc_chi2(
+        self,
+        data_obs,
+        data_modsn,
+        weight=None,
+        bins=50,
+        ):
+        """
+        """
+
+        histr   = [np.min(data_obs),np.max(data_obs)]
+        hist    = np.histogram(data_obs, bins=bins, range=histr)
+        x       = hist[1][1:]
+        y_obs   = hist[0] / float(np.sum(hist[0]))
+        hist    = np.histogram(data_modsn, bins=bins, range=histr)
+        y_modsn = hist[0] / float(np.sum(hist[0]))
+        diff    = (y_obs - y_modsn)**2 / y_obs
+        diff[np.isnan(diff)] = -1e7
+        diff[np.isinf(diff)] = -1e7
+        diff    = diff[diff!=-1e7]
+        x       = x[diff!=-1e7]
+        #
+        if len(x)>0:
+            if weight==None:
+                weights = None
+            elif weight=="higher":
+                weights = abs(x - np.min(x))**1 # weight to histogram wings
+            elif weight=="wing":
+                weights = abs(x - np.median(x))**2 # weight to histogram wings
+            chi2 = np.sqrt(np.average(diff,weights=weights)*len(diff))
+        else:
+            chi2 = 1e7
+
+        return chi2
 
     #######################
     # _get_modeling_param #
@@ -978,45 +1023,6 @@ class ToolsR21():
             modesn.extend(this_modsn)
 
         return np.array(modesn.sort())
-
-    ##############
-    # _calc_chi2 #
-    ##############
-
-    def _calc_chi2(
-        self,
-        data_obs,
-        data_modsn,
-        weight=None,
-        bins=50,
-        ):
-        """
-        """
-
-        histr   = [np.min(data_obs),np.max(data_obs)]
-        hist    = np.histogram(data_obs, bins=bins, range=histr)
-        x       = hist[1][1:]
-        y_obs   = hist[0] / float(np.sum(hist[0]))
-        hist    = np.histogram(data_modsn, bins=bins, range=histr)
-        y_modsn = hist[0] / float(np.sum(hist[0]))
-        diff    = (y_obs - y_modsn)**2 / y_obs
-        diff[np.isnan(diff)] = -1e7
-        diff[np.isinf(diff)] = -1e7
-        diff    = diff[diff!=-1e7]
-        x       = x[diff!=-1e7]
-        #
-        if len(x)>0:
-            if weight==None:
-                weights = None
-            elif weight=="higher":
-                weights = abs(x - np.min(x))**1 # weight to histogram wings
-            elif weight=="wing":
-                weights = abs(x - np.median(x))**2 # weight to histogram wings
-            chi2 = np.sqrt(np.average(diff,weights=weights)*len(diff))
-        else:
-            chi2 = 1e7
-
-        return chi2
 
 
 
