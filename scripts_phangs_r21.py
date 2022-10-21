@@ -712,7 +712,6 @@ class ToolsR21():
             this_mean, this_sigma, _, _ = self._get_modeling_param(modeling_space)
             mods  = np.random.normal(this_mean,this_sigma,len(obs))
             modsn = self._add_noise_log(obs,obserr,mods,nbins)
-            print(np.mean(obs),np.mean(obserr))
             this_chi2 = self._calc_chi2(obs,modsn)
             if min_chi2>this_chi2:
                 min_chi2   = this_chi2
@@ -863,7 +862,7 @@ class ToolsR21():
         nbins_co10            = int( (np.ceil(np.log2(len(this_logco10))) + 1) + 1.5 ) * 3
         nbins_co21            = int( (np.ceil(np.log2(len(this_logco21))) + 1) + 1.5 ) * 3
         range_median          = [0.5*np.median(this_logco10), 2.0*np.median(this_logco10)]
-        range_sigma           = [0.5*np.std(this_logco10), 1.0*np.std(this_logco10)]
+        range_sigma           = [0.5*np.std(this_logco10), 1.5*np.std(this_logco10)]
         range_scatter_logco10 = [0.0, 1.0]
         range_scatter_logco21 = [0.0, 1.0]
 
