@@ -708,24 +708,24 @@ class ToolsR21():
         for j in range(nloop):
             nbins, this_median, this_sigma, this_scatter, this_slope, this_icept = \
                 self._get_modeling_param(modeling_space)
-
-            # log co21 model+noise distribution
             nbins = np.linspace(obs_co21.min(), obs_co21.max(), nbins)
 
             # log co21 model distribution
             mod_co21 = this_slope * modsn_co10 + this_slope
 
-            test = []
+            # log co21 model+noise distribution
+            mods_co21  = []
+            ndata_bins = []
             for i in range(len(nbins)-1):
-                this_cut    = np.where((obs_co21>=nbins[i]) & (obs_co21<nbins[i+1]))
-                this_obserr = np.nan_to_num(np.nanmedian(obs_co21err[this_cut]))
+                this_cut       = np.where((obs_co21>=nbins[i]) & (obs_co21<nbins[i+1]))
+                this_obserr    = np.nan_to_num(np.nanmedian(obs_co21err[this_cut]))
                 
-                this_cut      = np.where((mod_co21>=nbins[i]) & (mod_co21<nbins[i+1]))
-                this_mod_co21 = mod_co21[this_cut]
-                if len(this_mod_co21)!=0:
-                    test.append(len(this_mod_co21))
+                this_cut       = np.where((mod_co21>=nbins[i]) & (mod_co21<nbins[i+1]))
+                this_mods_co21 = mod_co21[this_cut] + np.random.normal(0.0, this_obserr, len(mod_co21[this_cut]))
+                mods_co21.extend(this_mods_co21)
+                ndata_bins.append(len(this_mods_co21))
 
-            print(test)
+            print(ndata_bins)
 
     #######################
     # _get_modeling_param #
