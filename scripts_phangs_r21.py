@@ -593,7 +593,7 @@ class ToolsR21():
             for i in range(npoint_co10):
                 this_mean, this_sigma, _, _ = self._get_modeling_param(modeling_space)
                 logco10_modsn = np.random.normal(this_mean,this_sigma,int(len(this_logco10)*1.5))
-                this_chi2 = this_self._calc_chi2(data_obs,data_modsn)
+                this_chi2 = self._calc_chi2(data_obs,data_modsn)
                 if min_chi2>this_chi2:
                     min_chi2           = this_chi2
                     best_logco10_modsn = logco10_modsn
