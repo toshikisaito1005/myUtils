@@ -753,7 +753,7 @@ class ToolsR21():
         """
         """
 
-        nbins         = int( (np.ceil(np.log2(len(obs))) + 1) + 1.5 ) * 3
+        nbins         = int( (np.ceil(np.log2(len(obs))) + 1) + 1.5 ) * 2
         range_median  = [0.5*np.median(obs), 2.0*np.median(obs)]
         range_sigma   = [0.5*np.std(obs), 1.5*np.std(obs)]
         range_scatter = [0.0, 1.0]
