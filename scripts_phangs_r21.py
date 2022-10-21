@@ -712,7 +712,7 @@ class ToolsR21():
             this_mean, this_sigma, _, _ = self._get_modeling_param(modeling_space)
             mods  = np.random.normal(this_mean,this_sigma,len(obs))
             modsn = self._add_noise_log(obs,obserr,mods,nbins)
-            this_chi2 = self._calc_chi2(obs,modsn)
+            this_chi2 = self._calc_chi2(obs,mods)
             if min_chi2>this_chi2:
                 min_chi2   = this_chi2
                 best_modsn = modsn
@@ -735,8 +735,8 @@ class ToolsR21():
         """
         """
 
-        print("#############")
-        print(np.median(mods))
+
+
         list_obs    = np.linspace(obs.min(), obs.max(), nbins)
         list_obserr = []
         for i in range(len(list_obs)-1):
@@ -762,7 +762,6 @@ class ToolsR21():
             this_mods   = mods[cut]
             this_obserr = list_obserr[i]
             this_modsn  = this_mods + np.random.normal(0.0, this_obserr, len(this_mods))
-            print(np.median(this_mods) , np.median(this_modsn))
             modesn.extend(this_modsn)
 
         return np.array(modesn.sort())
