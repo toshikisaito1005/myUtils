@@ -719,8 +719,7 @@ class ToolsR21():
         for j in range(nloop):
             if j%100==0:
                 print("# loop = " + str(j) + " / " + str(nloop))
-            nbins, this_median, this_sigma, this_scatter, this_slope, this_icept = \
-                self._get_modeling_param(modeling_space)
+            nbins, this_scatter, this_slope, this_icept = self._get_modeling_param(modeling_space)
             nbins = np.linspace(obs_co21.min(), obs_co21.max(), nbins)
 
             # log co21 model distribution
@@ -736,7 +735,7 @@ class ToolsR21():
                 
                 this_cut        = np.where((mod_co21>=nbins[i]) & (mod_co21<nbins[i+1]))
                 this_modsn_co10 = modsn_co10[this_cut]
-                this_mods_co21  = mod_co21[this_cut] + np.random.normal(0.0, this_obserr, len(mod_co21[this_cut]))
+                this_mods_co21  = mod_co21[this_cut] + np.random.normal(0.0, np.sqrt(this_obserr**2+this_scatter**2), len(mod_co21[this_cut]))
                 modsn_co10_final.extend(this_modsn_co10)
                 mods_co21.extend(this_mods_co21)
 
@@ -823,13 +822,11 @@ class ToolsR21():
         """
 
         nbins         = int( (np.ceil(np.log2(len(obs))) + 1) + 1.5 )
-        range_median  = [0.5*np.median(obs), 2.0*np.median(obs)]
-        range_sigma   = [0.5*np.std(obs), 1.5*np.std(obs)]
         range_scatter = [0.0, 1.0]
         range_slope   = [slope-0.3, slope+0.3]
         range_icept   = [icept-0.1, icept+0.1]
 
-        return [nbins, range_median, range_sigma, range_scatter, range_slope, range_icept]
+        return [nbins, range_scatter, range_slope, range_icept]
 
     ###########################
     # _plot_obs_model_scatter #
