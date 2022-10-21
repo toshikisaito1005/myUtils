@@ -718,7 +718,7 @@ class ToolsR21():
             ndata_bins = []
             for i in range(len(nbins)-1):
                 this_cut       = np.where((obs_co21>=nbins[i]) & (obs_co21<nbins[i+1]))
-                this_obserr    = np.nan_to_num(np.nanmedian(obs_co21err[this_cut]))
+                this_obserr    = np.nan_to_num(np.nanmedian(obs_co21err[this_cut])) + 0.0000000001
                 
                 this_cut       = np.where((mod_co21>=nbins[i]) & (mod_co21<nbins[i+1]))
                 this_mods_co21 = mod_co21[this_cut] + np.random.normal(0.0, this_obserr, len(mod_co21[this_cut]))
