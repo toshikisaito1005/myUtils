@@ -717,6 +717,7 @@ class ToolsR21():
                 min_chi2   = this_chi2
                 best_modsn = modsn
 
+        print(best_modsn)
         self._plot_obs_model_hist(obs,modsn,output)
 
         return modsn
@@ -761,8 +762,6 @@ class ToolsR21():
             this_obserr = list_obserr[i]
             this_modsn  = this_mods + np.random.normal(0.0, this_obserr, len(this_mods))
             modesn.extend(this_modsn)
-
-        print(modesn)
 
         return np.array(modesn.sort())
 
