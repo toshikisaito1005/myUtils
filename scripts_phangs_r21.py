@@ -577,11 +577,9 @@ class ToolsR21():
             this_logco10err = data[:,3]
             this_logco21err = data[:,4]
             this_logr21err  = data[:,5]
-            print(this_txt)
 
             # get observed slope
-            if i==0:
-                this_slope,this_icept = self._get_observed_slope(this_logco10,this_logco21)
+            this_slope,this_icept = self._get_observed_slope(this_logco10,this_logco21)
 
             # generate log10 co10 modsn
             this_logco10_modsn = self._get_modsn_co10(this_logco10)
@@ -726,6 +724,7 @@ class ToolsR21():
                 mods_co21.extend(this_mods_co21)
                 ndata_bins.append(len(this_mods_co21))
 
+            print([s for s in ndata_bins in s!=0])
 
     #######################
     # _get_modeling_param #
