@@ -762,6 +762,8 @@ class ToolsR21():
             this_modsn  = this_mods + np.random.normal(0.0, this_obserr, len(this_mods))
             modesn.extend(this_modsn)
 
+        print(modesn)
+
         return np.array(modesn.sort())
 
     ########################
