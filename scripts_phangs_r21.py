@@ -724,7 +724,7 @@ class ToolsR21():
                 mods_co21.extend(this_mods_co21)
                 ndata_bins.append(len(this_mods_co21))
 
-            print([s for s in ndata_bins in s!=0])
+            print([s for s in ndata_bins if s!=0])
 
     #######################
     # _get_modeling_param #
