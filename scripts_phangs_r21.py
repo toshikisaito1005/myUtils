@@ -718,7 +718,7 @@ class ToolsR21():
 
         for j in range(nloop):
             if j%100==0:
-                print("# loop = " + str(j+1) + " / " + str(nloop))
+                print("# loop = " + str(j) + " / " + str(nloop))
             nbins, this_median, this_sigma, this_scatter, this_slope, this_icept = \
                 self._get_modeling_param(modeling_space)
             nbins = np.linspace(obs_co21.min(), obs_co21.max(), nbins)
@@ -827,7 +827,7 @@ class ToolsR21():
         range_sigma   = [0.5*np.std(obs), 1.5*np.std(obs)]
         range_scatter = [0.0, 1.0]
         range_slope   = [slope-0.3, slope+0.3]
-        range_icept   = [icept-0.5, icept+0.5]
+        range_icept   = [icept-0.1, icept+0.1]
 
         return [nbins, range_median, range_sigma, range_scatter, range_slope, range_icept]
 
