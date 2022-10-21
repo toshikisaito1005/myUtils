@@ -717,7 +717,7 @@ class ToolsR21():
 
         for i in range(len(nbins)-1):
             this_cut    = np.where((obs_co21>=nbins[i]) & (obs_co21<nbins[i+1]))
-            this_obserr = np.median(obs_co21err[this_cut])
+            this_obserr = np.nanmedian(obs_co21err[this_cut])
             list_co21err_at_each_bin.append(this_obserr)
 
         print(list_co21err_at_each_bin)
