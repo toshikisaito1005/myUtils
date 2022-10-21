@@ -726,6 +726,7 @@ class ToolsR21():
                 if len(this_mods_co21)>0:
                     nbins_available+=1
 
+            print(nbins_available, len(nbins))
             if nbins_available>len(nbins)-3:
                 print(np.median(mods_co21), np.median(obs_co21))
 
