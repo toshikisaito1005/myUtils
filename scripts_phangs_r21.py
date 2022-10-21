@@ -587,8 +587,7 @@ class ToolsR21():
                 = self._get_modeling_space(this_logco10,this_logco21)
 
             # generate log10 co10 modsn
-            best_logco10_modsn = self._get_modsn_co10(this_logco10,this_logco10err,
-                nbins_co10,modeling_space,output="hist_modsn_obs_co10.png",npoint=1000)
+            best_logco10_modsn = self._get_modsn_co10(this_logco10,output="hist_modsn_obs_co10.png")
 
             # generate co21 distribution
 
@@ -698,34 +697,18 @@ class ToolsR21():
     def _get_modsn_co10(
         self,
         obs,
-        obserr,
-        nbins,
-        modeling_space,
         output="hist_modsn_obs_co10.png",
-        npoint=1000,
         ):
         """
         """
 
         h,e = np.histogram(obs, bins=1000, density=True, weights=None)
         x = np.linspace(e.min(), e.max())
-        best_modsn = np.random.choice((e[:-1] + e[1:])/2, size=5000, p=h/h.sum())
+        modsn = np.random.choice((e[:-1] + e[1:])/2, size=len(obs)*5, p=h/h.sum())
 
-        """
-        min_chi2 = 1e11
-        for i in range(npoint):
-            this_mean, this_sigma, _, _ = self._get_modeling_param(modeling_space)
-            mods  = np.random.normal(this_mean,this_sigma,len(obs))
-            modsn = self._add_noise_log(obs,obserr,mods,nbins)
-            this_chi2 = self._calc_chi2(obs,modsn)
-            if min_chi2>this_chi2:
-                min_chi2   = this_chi2
-                best_modsn = modsn
-        """
+        self._plot_obs_model_hist(obs,modsn,output)
 
-        self._plot_obs_model_hist(obs,best_modsn,output)
-
-        return best_modsn
+        return modsn
 
     ##################
     # _add_noise_log #
