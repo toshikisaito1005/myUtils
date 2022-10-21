@@ -725,7 +725,7 @@ class ToolsR21():
 
         self._plot_obs_model_hist(obs,best_modsn,output)
 
-        return modsn
+        return best_modsn
 
     ##################
     # _add_noise_log #
