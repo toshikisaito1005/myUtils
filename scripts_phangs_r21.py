@@ -735,8 +735,6 @@ class ToolsR21():
         """
         """
 
-        #list_logflux, list_lognoise = self._get_logflux_vs_logerr(logflux, logerr, nbins)
-
         list_obs    = np.linspace(obs.min(), obs.max(), nbins)
         list_obserr = []
         for i in range(len(list_obs)-1):
@@ -761,6 +759,7 @@ class ToolsR21():
             # add noise
             this_mods   = mods[cut]
             this_obserr = list_obserr[i]
+            print(this_obserr)
             this_modsn  = this_mods + np.random.normal(0.0, this_obserr, len(this_obserr))
             modesn.extend(this_modsn)
 
