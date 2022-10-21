@@ -744,7 +744,7 @@ class ToolsR21():
                     nbins_available+=1
 
             best_chi2 = 1e44
-            this_chi2 = self._calc_chi2(obs_co21/obs_co10,mods_co21/modsn_co10)
+            this_chi2 = self._calc_chi2(obs_co21/obs_co10,mods_co21/modsn_co10_final)
             if best_chi2>this_chi2:
                 best_chi2 = this_chi2
                 best_mods_co21 = mods_co21
