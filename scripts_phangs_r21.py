@@ -804,7 +804,7 @@ class ToolsR21():
         this_slope   = (modeling_space[2][1]-modeling_space[2][0])*np.random.rand()+modeling_space[2][0]
         this_icept   = (modeling_space[3][1]-modeling_space[3][0])*np.random.rand()+modeling_space[3][0]
 
-        return nbins, this_median, this_sigma, this_scatter, this_slope, this_icept
+        return nbins, this_scatter, this_slope, this_icept
 
     #######################
     # _get_modeling_space #
