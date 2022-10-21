@@ -1011,20 +1011,7 @@ class ToolsR21():
 
         return chi2
 
-    #######################
-    # _get_modeling_param #
-    #######################
 
-    def _get_modeling_param(self,modeling_space):
-        """
-        """
-
-        this_mean            = (modeling_space[0][1]-modeling_space[0][0])*np.random.rand()+modeling_space[0][0]
-        this_sigma           = (modeling_space[1][1]-modeling_space[1][0])*np.random.rand()+modeling_space[1][0]
-        this_scatter_logco10 = (modeling_space[2][1]-modeling_space[2][0])*np.random.rand()+modeling_space[2][0]
-        this_scatter_logco21 = (modeling_space[3][1]-modeling_space[3][0])*np.random.rand()+modeling_space[3][0]
-
-        return this_mean, this_sigma, this_scatter_logco10, this_scatter_logco21
 
 
 
