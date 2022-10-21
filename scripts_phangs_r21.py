@@ -591,7 +591,7 @@ class ToolsR21():
 
             # generate log10 co21 mod
             this_logco10_modsn, this_logco21_modsn = \
-                self._get_modsn_co21(this_logco21,this_logco21err,this_logco10_modsn,modeling_space)
+                self._get_modsn_co21(this_logco21,this_logco21err,this_logco10_modsn,modeling_space,this_logco10)
             self._plot_obs_model_scatter(
                 this_slope,
                 this_icept,
@@ -710,6 +710,7 @@ class ToolsR21():
         obs_co21err,
         modsn_co10,
         modeling_space,
+        obs_co10,
         output="hist_modsn_obs_co21.png",
         nloop=1000,
         ):
@@ -743,7 +744,7 @@ class ToolsR21():
                     nbins_available+=1
 
             best_chi2 = 1e44
-            this_chi2 = self._calc_chi2(obs_co21,mods_co21)
+            this_chi2 = self._calc_chi2(obs_co21/obs_co10,mods_co21/modsn_co10)
             if best_chi2>this_chi2:
                 best_chi2 = this_chi2
                 best_mods_co21 = mods_co21
