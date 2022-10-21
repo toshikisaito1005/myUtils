@@ -746,8 +746,8 @@ class ToolsR21():
             mods_co21 = np.array(mods_co21)
             nmodsn_co10_final = np.array(modsn_co10_final)
             best_chi2 = 1e44
-            #this_chi2 = self._calc_chi2(obs_co21,mods_co21)
-            this_chi2 = self._calc_chi2(obs_co21/obs_co10,mods_co21/modsn_co10_final,weight="wing")
+            this_chi2 = self._calc_chi2(obs_co21,mods_co21)
+            #this_chi2 = self._calc_chi2(obs_co21/obs_co10,mods_co21/modsn_co10_final,weight="wing")
             #this_chi2 = np.sqrt(this_chi2**2 + that_chi2**2)
             if best_chi2>this_chi2:
                 best_chi2 = this_chi2
