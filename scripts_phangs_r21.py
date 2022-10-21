@@ -590,7 +590,8 @@ class ToolsR21():
             modeling_space = self._get_modeling_space(this_slope,this_icept,this_logco21)
 
             # generate log10 co21 mod
-            self._get_modsn_co21(this_logco21,this_logco21err,this_logco10_modsn,modeling_space)
+            this_logco21_modsn = \
+                self._get_modsn_co21(this_logco21,this_logco21err,this_logco10_modsn,modeling_space)
             self._plot_obs_model_hist(
                 this_logco10,
                 this_logco21,
@@ -742,6 +743,8 @@ class ToolsR21():
                 best_mods_co21 = mods_co21
 
         self._plot_obs_model_hist(obs_co21,best_mods_co21,output)
+
+        return best_mods_co21
 
     ##############
     # _calc_chi2 #
