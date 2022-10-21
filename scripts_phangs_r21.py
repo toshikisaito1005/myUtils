@@ -717,8 +717,7 @@ class ToolsR21():
                 min_chi2   = this_chi2
                 best_modsn = modsn
 
-        print(best_modsn)
-        self._plot_obs_model_hist(obs,modsn,output)
+        self._plot_obs_model_hist(obs,best_modsn,output)
 
         return modsn
 
@@ -751,11 +750,11 @@ class ToolsR21():
 
             # define cut
             if i==0:
-                cut = (mods<=maxcut)
+                cut = np.where(mods<=maxcut)
             elif i==len(list_obs)-2:
-                cut = (mods>mincut)
+                cut = np.where(mods>mincut)
             else:
-                cut = (mods>mincut)&(mods<=maxcut)
+                cut = np.where((mods>mincut)&(mods<=maxcut))
 
             # add noise
             this_mods   = mods[cut]
