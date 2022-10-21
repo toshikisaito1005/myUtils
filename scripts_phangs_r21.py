@@ -707,6 +707,11 @@ class ToolsR21():
         """
         """
 
+        h,e = np.histogram(obs, bins=1000, density=True, weights=None)
+        x = np.linspace(e.min(), e.max())
+        best_modsn = np.random.choice((e[:-1] + e[1:])/2, size=5000, p=h/h.sum())
+
+        """
         min_chi2 = 1e11
         for i in range(npoint):
             this_mean, this_sigma, _, _ = self._get_modeling_param(modeling_space)
@@ -716,6 +721,7 @@ class ToolsR21():
             if min_chi2>this_chi2:
                 min_chi2   = this_chi2
                 best_modsn = modsn
+        """
 
         self._plot_obs_model_hist(obs,best_modsn,output)
 
