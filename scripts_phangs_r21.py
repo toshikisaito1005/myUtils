@@ -862,12 +862,12 @@ class ToolsR21():
 
         nbins_co10            = int( (np.ceil(np.log2(len(this_logco10))) + 1) + 1.5 ) * 3
         nbins_co21            = int( (np.ceil(np.log2(len(this_logco21))) + 1) + 1.5 ) * 3
-        range_mean            = [0.5*np.mean(this_logco10), 2.0*np.mean(this_logco10)]
+        range_median          = [0.5*np.median(this_logco10), 2.0*np.median(this_logco10)]
         range_sigma           = [0.5*np.std(this_logco10), 1.0*np.std(this_logco10)]
         range_scatter_logco10 = [0.0, 1.0]
         range_scatter_logco21 = [0.0, 1.0]
 
-        return nbins_co10, nbins_co21, [range_mean, range_sigma, range_scatter_logco10, range_scatter_logco21]
+        return nbins_co10, nbins_co21, [range_median, range_sigma, range_scatter_logco10, range_scatter_logco21]
 
     #######################
     # _get_observed_slope #
