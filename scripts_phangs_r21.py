@@ -591,6 +591,13 @@ class ToolsR21():
 
             # generate log10 co21 mod
             self._get_modsn_co21(this_logco21,this_logco21err,this_logco10_modsn,modeling_space)
+            self._plot_obs_model_hist(
+                this_logco10,
+                this_logco21,
+                this_logco10_modsn,
+                this_logco21_modsn,
+                "scatter_modsn_obs.png",
+                )
 
             # compare model and obs: co21
 
@@ -813,6 +820,30 @@ class ToolsR21():
         range_icept   = [icept-0.5, icept+0.5]
 
         return [nbins, range_median, range_sigma, range_scatter, range_slope, range_icept]
+
+    ###########################
+    # _plot_obs_model_scatter #
+    ###########################
+
+    def _plot_obs_model_hist(
+        self,
+        obs_co10,
+        obs_co21,
+        modsn_co10,
+        modsn_co21,
+        outpng,
+        ):
+        """
+        """
+
+        fig = plt.figure(figsize=(10,10))
+        plt.subplots_adjust(bottom=0.10, left=0.13, right=0.91, top=0.94)
+        gs  = gridspec.GridSpec(nrows=16, ncols=16)
+        ax1 = plt.subplot(gs[0:16,0:16])
+        myax_set(ax1, "both", None, None, None, None, None)
+        ax1.scatter(obs_co10, obs_co21, alpha=0.5, color="grey", markeredgewidth=0)
+        ax1.scatter(modsn_co10, modsn_co21, alpha=0.5, color="tomato", markeredgewidth=0)
+        plt.savefig(outpng)
 
     ########################
     # _plot_obs_model_hist #
