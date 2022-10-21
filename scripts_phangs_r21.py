@@ -590,7 +590,7 @@ class ToolsR21():
 
             # generate log10 co21 mod
             logco21_mod = this_slope * logco10_modsn + this_icept
-            self._plot_obs_model_hist(this_logco21/this_logco10,logco21_mod/logco10_mod,"hist_modsn_obs_co21.png")
+            self._plot_obs_model_hist(this_logco21/this_logco10,logco21_mod/logco10_modsn,"hist_modsn_obs_co21.png")
 
             # compare model and obs: co21
 
