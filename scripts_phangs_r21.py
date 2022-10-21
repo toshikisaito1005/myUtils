@@ -715,6 +715,7 @@ class ToolsR21():
             # log co21 model+noise distribution
             mods_co21       = []
             nbins_available = 0
+            print(nbins)
             for i in range(len(nbins)-1):
                 print(i)
                 this_cut       = np.where((obs_co21>=nbins[i]) & (obs_co21<nbins[i+1]))
