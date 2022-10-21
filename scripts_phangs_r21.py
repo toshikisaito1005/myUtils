@@ -760,7 +760,7 @@ class ToolsR21():
             this_mods   = mods[cut]
             this_obserr = list_obserr[i]
             this_modsn  = this_mods + np.random.normal(0.0, this_obserr, len(this_mods))
-            print(np.median(this_modsn))
+            print(np.median(this_obserr))
             modesn.extend(this_modsn)
 
         return np.array(modesn.sort())
