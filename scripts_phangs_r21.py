@@ -786,6 +786,8 @@ class ToolsR21():
         histmodsn = [np.delete(histmodsn[1],-1), histmodsn[0] / float(np.sum(histmodsn[0]))]
         hwidth    = histobs[0][1] - histobs[0][0]
 
+        print(histobs)
+        print(histmodsn)
         fig = plt.figure(figsize=(10,10))
         plt.subplots_adjust(bottom=0.10, left=0.13, right=0.91, top=0.94)
         gs  = gridspec.GridSpec(nrows=16, ncols=16)
