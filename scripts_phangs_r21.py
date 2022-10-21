@@ -767,7 +767,7 @@ class ToolsR21():
         range_slope   = [slope-0.3, slope+0.3]
         range_icept   = [icept-0.5, icept+0.5]
 
-        return [nbins, range_median, range_sigma, range_scatter, range_slope, range_slope]
+        return [nbins, range_median, range_sigma, range_scatter, range_slope, range_icept]
 
     ########################
     # _plot_obs_model_hist #
