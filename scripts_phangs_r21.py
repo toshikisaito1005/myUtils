@@ -851,10 +851,6 @@ class ToolsR21():
         """
         """
 
-        cut = np.where(modsn_co21>0)
-        modsn_co10 = modsn_co10[cut]
-        modsn_co21 = modsn_co21[cut]
-
         xfunc = np.linspace(np.min(obs_co10), np.max(obs_co10), 100)
         yfunc = xfunc * slope + icept
 
@@ -866,6 +862,8 @@ class ToolsR21():
         ax1.scatter(obs_co10, obs_co21, alpha=0.5, color="grey", lw=0)
         ax1.scatter(modsn_co10, modsn_co21, alpha=0.5, color="tomato", lw=0)
         ax1.plot(xfunc, yfunc)
+        ax1.set_xlim([0.4,1.8])
+        ax1.set_ylim([0.0,1.4])
         plt.savefig(outpng)
 
     ########################
