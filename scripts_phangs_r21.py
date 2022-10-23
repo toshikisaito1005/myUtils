@@ -712,13 +712,14 @@ class ToolsR21():
         modeling_space,
         obs_co10,
         output="hist_modsn_obs_co21.png",
-        nloop=1000,
+        nloop=100,
+        nloop2=100,
         ):
         """
         """
 
         for j in range(nloop):
-            if j%100==0:
+            if j%10==0:
                 print("# loop = " + str(j) + " / " + str(nloop))
             nbins, _, this_slope, this_icept = self._get_modeling_param(modeling_space)
             nbins = np.linspace(obs_co21.min(), obs_co21.max(), nbins)
@@ -734,18 +735,29 @@ class ToolsR21():
             for i in range(len(nbins)-1):
                 this_cut        = np.where((obs_co21>=nbins[i]) & (obs_co21<nbins[i+1]))
                 this_obserr     = np.nan_to_num(np.nanmedian(obs_co21err[this_cut])) + 0.0000000001
-                _, this_scatter, _, _ = self._get_modeling_param(modeling_space)
                 
                 this_cut        = np.where((mod_co21>=nbins[i]) & (mod_co21<nbins[i+1]))
+                this_cut2       = np.where((obs_co21>=nbins[i]) & (obs_co21<nbins[i+1]))
+                this_obs_co21   = obs_co21[this_cut2]
                 this_modsn_co10 = modsn_co10[this_cut]
                 this_mod_co21   = mod_co21[this_cut]
                 this_mods_co21  = np.log10(10**mod_co21[this_cut] + np.random.normal(0.0, 10**this_obserr, len(mod_co21[this_cut])))
-                this_mods_co21  = np.log10(10**this_mods_co21 + np.random.normal(0.0, 10**this_scatter, len(this_mods_co21)))
+                for k in range(nloop2):
+                    _, this_scatter, _, _ = self._get_modeling_param(modeling_space)
+                    this_mods_co21  = np.log10(10**this_mods_co21 + np.random.normal(0.0, 10**this_scatter, len(this_mods_co21)))
+                    this_chi2k = self._calc_chi2(this_obs_co21,this_mods_co21)
+
+                    if k==0:
+                        best_chi2k = this_chi2k
+                    if best_chi2<this_chi2k:
+                        best_chi2k     = this_chi2k
+                        best_mods_co21 = this_mods_co21
+
                 modsn_co10_final.extend(this_modsn_co10)
-                mods_co21_final.extend(this_mods_co21)
+                mods_co21_final.extend(best_mods_co21)
                 mod_co21_final.extend(this_mod_co21)
 
-                if len(this_mods_co21)>0:
+                if len(best_mods_co21)>0:
                     nbins_available+=1
 
             modsn_co10_final = np.array(modsn_co10_final)
