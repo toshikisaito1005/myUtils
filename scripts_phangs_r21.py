@@ -860,7 +860,7 @@ class ToolsR21():
         ax1 = plt.subplot(gs[0:16,0:16])
         myax_set(ax1, "both", None, None, None, None, None)
         ax1.scatter(obs_co10, obs_co21, alpha=0.5, color="grey", lw=0)
-        ax1.scatter(modsn_co10, modsn_co21, alpha=0.5, color="tomato", lw=0)
+        ax1.scatter(modsn_co10, modsn_co21, alpha=0.1, color="tomato", lw=0)
         ax1.plot(xfunc, yfunc)
         ax1.set_xlim([0.4,1.8])
         ax1.set_ylim([0.0,1.4])
