@@ -772,7 +772,7 @@ class ToolsR21():
                 best_mods_co21 = mods_co21_final
 
         self._plot_obs_model_hist(obs_co21,best_mods_co21,output)
-        self._plot_obs_model_hist(obs_co21/obs_co10,mods_co21_final/modsn_co10_final,output.replace(".png","_r21.png"))
+        self._plot_obs_model_hist(obs_co21/obs_co10,best_mods_co21/modsn_co10_final,output.replace(".png","_r21.png"))
 
         return modsn_co10_final, best_mods_co21
 
