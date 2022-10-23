@@ -748,7 +748,7 @@ class ToolsR21():
 
             #mods_co21_final  = np.log10(10**np.array(mods_co21_final) + np.random.normal(0.0, 10**this_scatter, len(mods_co21_final)))
             modsn_co10_final = np.array(modsn_co10_final)
-            best_chi2 = 0 #1e44
+            best_chi2 = 1e44
             #this_chi2 = self._calc_chi2(obs_co21,mods_co21_final)
             this_chi2 = self._calc_chi2(obs_co21/obs_co10,mods_co21_final/modsn_co10_final,weight="wing")
             #this_chi2 = np.sqrt(this_chi2**2 + that_chi2**2)
@@ -775,7 +775,6 @@ class ToolsR21():
         """
         """
 
-        """
         histr   = [np.min(data_obs),np.max(data_obs)]
         hist    = np.histogram(data_obs, bins=bins, range=histr)
         x       = hist[1][1:]
@@ -798,12 +797,11 @@ class ToolsR21():
             chi2 = np.sqrt(np.average(diff,weights=weights)*len(diff))
         else:
             chi2 = 1e7
-        """
 
-        value = stats.ks_2samp(data_obs, data_modsn)
-        print(value)
+        #value = stats.ks_2samp(data_obs, data_modsn)
+        #print(value)
 
-        return value
+        return chi2
 
     #######################
     # _get_modeling_param #
