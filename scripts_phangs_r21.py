@@ -851,6 +851,10 @@ class ToolsR21():
         """
         """
 
+        cut = np.where((obs_co21>=np.min(obs_co21)) & (obs_co21<=np.max(obs_co21)
+        modsn_co10 = modsn_co10[cut]
+        modsn_co21 = modsn_co21[cut]
+
         xfunc = np.linspace(np.min(obs_co10), np.max(obs_co10), 100)
         yfunc = xfunc * slope + icept
 
