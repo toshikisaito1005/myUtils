@@ -775,6 +775,7 @@ class ToolsR21():
         """
         """
 
+        """
         histr   = [np.min(data_obs),np.max(data_obs)]
         hist    = np.histogram(data_obs, bins=bins, range=histr)
         x       = hist[1][1:]
@@ -797,11 +798,12 @@ class ToolsR21():
             chi2 = np.sqrt(np.average(diff,weights=weights)*len(diff))
         else:
             chi2 = 1e7
+        """
 
-        #value = stats.ks_2samp(data_obs, data_modsn)
-        #print(value)
+        value = stats.ks_2samp(data_obs, data_modsn)
+        print(value)
 
-        return chi2
+        return value
 
     #######################
     # _get_modeling_param #
