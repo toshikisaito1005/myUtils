@@ -748,7 +748,8 @@ class ToolsR21():
                     this_chi2k = self._calc_chi2(this_obs_co21,this_mods_co21)
 
                     if k==0:
-                        best_chi2k = this_chi2k
+                        best_chi2k     = this_chi2k
+                        best_mods_co21 = this_mods_co21
                     if best_chi2k<this_chi2k:
                         best_chi2k     = this_chi2k
                         best_mods_co21 = this_mods_co21
@@ -757,7 +758,7 @@ class ToolsR21():
                 mods_co21_final.extend(best_mods_co21)
                 mod_co21_final.extend(this_mod_co21)
 
-                if len(best_mods_co21)>0:
+                if len(mods_co21_final)>0:
                     nbins_available+=1
 
             modsn_co10_final = np.array(modsn_co10_final)
