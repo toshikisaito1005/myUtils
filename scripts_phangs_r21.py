@@ -729,6 +729,7 @@ class ToolsR21():
             # log co21 model+noise distribution
             modsn_co10_final = []
             mods_co21        = []
+            mod_co21         = []
             nbins_available = 0
             for i in range(len(nbins)-1):
                 this_cut        = np.where((obs_co21>=nbins[i]) & (obs_co21<nbins[i+1]))
@@ -736,9 +737,11 @@ class ToolsR21():
                 
                 this_cut        = np.where((mod_co21>=nbins[i]) & (mod_co21<nbins[i+1]))
                 this_modsn_co10 = modsn_co10[this_cut]
+                this_mod_co21   = mod_co21[this_cut]
                 this_mods_co21  = mod_co21[this_cut] + np.random.normal(0.0, np.sqrt(this_obserr**2+this_scatter**2), len(mod_co21[this_cut]))
                 modsn_co10_final.extend(this_modsn_co10)
                 mods_co21.extend(this_mods_co21)
+                mod_co21.extend(this_mod_co21)
 
                 if len(this_mods_co21)>0:
                     nbins_available+=1
