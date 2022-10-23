@@ -929,7 +929,7 @@ class ToolsR21():
         list_icept = []
         for i in range(100):
             popt,_ = curve_fit(self._func2, logx, logy, p0=[np.random.rand()+1.0,np.random.rand()-0.5],
-                maxfev=10000, sigma=10**logy)
+                maxfev=10000)#, sigma=logy)
             list_slope.append(popt[0])
             list_icept.append(popt[1])
 
