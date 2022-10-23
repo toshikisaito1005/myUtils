@@ -720,7 +720,7 @@ class ToolsR21():
         for j in range(nloop):
             if j%100==0:
                 print("# loop = " + str(j) + " / " + str(nloop))
-            nbins, this_scatter, this_slope, this_icept = self._get_modeling_param(modeling_space)
+            nbins, _, this_slope, this_icept = self._get_modeling_param(modeling_space)
             nbins = np.linspace(obs_co21.min(), obs_co21.max(), nbins)
 
             # log co21 model distribution
@@ -734,6 +734,7 @@ class ToolsR21():
             for i in range(len(nbins)-1):
                 this_cut        = np.where((obs_co21>=nbins[i]) & (obs_co21<nbins[i+1]))
                 this_obserr     = np.nan_to_num(np.nanmedian(obs_co21err[this_cut])) + 0.0000000001
+                _, this_scatter, _, _ = self._get_modeling_param(modeling_space)
                 
                 this_cut        = np.where((mod_co21>=nbins[i]) & (mod_co21<nbins[i+1]))
                 this_modsn_co10 = modsn_co10[this_cut]
