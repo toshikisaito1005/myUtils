@@ -712,8 +712,8 @@ class ToolsR21():
         modeling_space,
         obs_co10,
         output="hist_modsn_obs_co21.png",
-        nloop=100,
-        nloop2=100,
+        nloop=2,
+        nloop2=1000,
         ):
         """
         """
