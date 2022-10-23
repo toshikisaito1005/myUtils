@@ -851,7 +851,7 @@ class ToolsR21():
         """
         """
 
-        cut = np.where((modsn_co21>=np.min(obs_co21)) & (modsn_co21<=np.max(obs_co21)))
+        cut = np.where(modsn_co21>0)
         modsn_co10 = modsn_co10[cut]
         modsn_co21 = modsn_co21[cut]
 
