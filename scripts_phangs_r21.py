@@ -712,7 +712,7 @@ class ToolsR21():
         modeling_space,
         obs_co10,
         output="hist_modsn_obs_co21.png",
-        nloop=1000,
+        nloop=10000,
         ):
         """
         """
@@ -833,9 +833,9 @@ class ToolsR21():
         """
 
         nbins         = int( (np.ceil(np.log2(len(obs))) + 1) + 1.5 )
-        range_scatter = [0.0, 0.2]
-        range_slope   = [slope-0.5, slope+0.5]
-        range_icept   = [icept-0.3, icept+0.3]
+        range_scatter = [0.0, 2.0]
+        range_slope   = [slope-1.0, slope+1.0]
+        range_icept   = [icept-1.0, icept+1.0]
 
         return [nbins, range_scatter, range_slope, range_icept]
 
