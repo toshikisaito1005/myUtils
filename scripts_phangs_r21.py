@@ -712,7 +712,7 @@ class ToolsR21():
         modeling_space,
         obs_co10,
         output="hist_modsn_obs_co21.png",
-        nloop=10000,
+        nloop=1000,
         ):
         """
         """
@@ -757,6 +757,7 @@ class ToolsR21():
                 best_mods_co21 = mods_co21_final
 
         self._plot_obs_model_hist(obs_co21,best_mods_co21,output)
+        self._plot_obs_model_hist(obs_co21/obs_co10,mods_co21_final/modsn_co10_final,output.replace(".png","_r21.png"))
 
         return modsn_co10_final, best_mods_co21
 
@@ -828,7 +829,7 @@ class ToolsR21():
         """
 
         nbins         = int( (np.ceil(np.log2(len(obs))) + 1) + 1.5 )
-        range_scatter = [0.0, 2.0]
+        range_scatter = [0.0, 1.0]
         range_slope   = [slope-0.5, slope+0.5]
         range_icept   = [icept-1.0, icept+1.0]
 
