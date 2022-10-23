@@ -748,8 +748,8 @@ class ToolsR21():
 
             mods_co21_final  = np.log10(10**np.array(mods_co21_final) + np.random.normal(0.0, 10**this_scatter, len(mods_co21_final)))
             modsn_co10_final = np.array(modsn_co10_final)
-            #this_chi2 = self._calc_chi2(obs_co21,mods_co21_final)
-            this_chi2 = self._calc_chi2(obs_co21/obs_co10,mods_co21_final/modsn_co10_final,weight="wing")
+            this_chi2 = self._calc_chi2(obs_co21,mods_co21_final)
+            #this_chi2 = self._calc_chi2(obs_co21/obs_co10,mods_co21_final/modsn_co10_final,weight="wing")
             #this_chi2 = np.sqrt(this_chi2**2 + that_chi2**2)
             if j==0:
                 best_chi2 = this_chi2
