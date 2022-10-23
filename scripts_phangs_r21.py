@@ -758,7 +758,7 @@ class ToolsR21():
 
         self._plot_obs_model_hist(obs_co21,best_mods_co21,output)
 
-        return modsn_co10_final, mod_co21_final # best_mods_co21
+        return modsn_co10_final, best_mods_co21
 
     ##############
     # _calc_chi2 #
