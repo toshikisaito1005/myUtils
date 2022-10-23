@@ -739,6 +739,7 @@ class ToolsR21():
                 this_modsn_co10 = modsn_co10[this_cut]
                 this_mod_co21   = mod_co21[this_cut]
                 this_mods_co21  = np.log10(10**mod_co21[this_cut] + np.random.normal(0.0, 10**this_obserr, len(mod_co21[this_cut])))
+                this_mods_co21  = np.log10(10**mod_co21 + np.random.normal(0.0, 10**this_scatter, len(mod_co21)))
                 modsn_co10_final.extend(this_modsn_co10)
                 mods_co21_final.extend(this_mods_co21)
                 mod_co21_final.extend(this_mod_co21)
@@ -746,7 +747,6 @@ class ToolsR21():
                 if len(this_mods_co21)>0:
                     nbins_available+=1
 
-            mods_co21_final  = np.log10(10**np.array(mods_co21_final) + np.random.normal(0.0, 10**this_scatter, len(mods_co21_final)))
             modsn_co10_final = np.array(modsn_co10_final)
             this_chi2 = self._calc_chi2(obs_co21,mods_co21_final)
             #this_chi2 = self._calc_chi2(obs_co21/obs_co10,mods_co21_final/modsn_co10_final,weight="wing")
