@@ -746,8 +746,8 @@ class ToolsR21():
                 if len(this_mods_co21)>0:
                     nbins_available+=1
 
-            mods_co21_final   = np.log10(10**np.array(mods_co21_final) + np.random.normal(0.0, 10**this_scatter, len(mods_co21_final)))
-            nmodsn_co10_final = np.array(modsn_co10_final)
+            mods_co21_final  = np.log10(10**np.array(mods_co21_final) + np.random.normal(0.0, 10**this_scatter, len(mods_co21_final)))
+            modsn_co10_final = np.array(modsn_co10_final)
             best_chi2 = 0 #1e44
             #this_chi2 = self._calc_chi2(obs_co21,mods_co21_final)
             this_chi2 = self._calc_chi2(obs_co21/obs_co10,mods_co21_final/modsn_co10_final,weight="wing")
@@ -833,7 +833,7 @@ class ToolsR21():
         """
 
         nbins         = int( (np.ceil(np.log2(len(obs))) + 1) + 1.5 )
-        range_scatter = [0.0, 1.0]
+        range_scatter = [0.0, 0.2]
         range_slope   = [slope-0.5, slope+0.5]
         range_icept   = [icept-0.3, icept+0.3]
 
