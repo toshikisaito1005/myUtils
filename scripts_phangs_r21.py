@@ -753,7 +753,7 @@ class ToolsR21():
                 best_chi2 = this_chi2
                 best_mods_co21 = mods_co21
 
-        self._plot_obs_model_hist(obs_co21,best_mods_co21,output)
+        self._plot_obs_model_hist(obs_co21,mod_co21,output)
 
         return modsn_co10_final, best_mods_co21
 
@@ -826,8 +826,8 @@ class ToolsR21():
 
         nbins         = int( (np.ceil(np.log2(len(obs))) + 1) + 1.5 )
         range_scatter = [0.0, 1.0]
-        range_slope   = [slope-0.3, slope+0.3]
-        range_icept   = [icept-0.5, icept+0.5]
+        range_slope   = [slope-0.01, slope+0.01]
+        range_icept   = [icept-0.01, icept+0.01]
 
         return [nbins, range_scatter, range_slope, range_icept]
 
