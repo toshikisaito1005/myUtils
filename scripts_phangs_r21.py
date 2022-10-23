@@ -712,7 +712,7 @@ class ToolsR21():
         modeling_space,
         obs_co10,
         output="hist_modsn_obs_co21.png",
-        nloop=1000,
+        nloop=10000,
         ):
         """
         """
@@ -738,7 +738,7 @@ class ToolsR21():
                 this_cut        = np.where((mod_co21>=nbins[i]) & (mod_co21<nbins[i+1]))
                 this_modsn_co10 = modsn_co10[this_cut]
                 this_mod_co21   = mod_co21[this_cut]
-                this_mods_co21  = np.log10(10**mod_co21[this_cut] + np.random.normal(0.0, np.sqrt((10**this_obserr)**2), len(mod_co21[this_cut]))) # np.sqrt((10**this_obserr)**2+(10**this_scatter)**2)
+                this_mods_co21  = np.log10(10**mod_co21[this_cut] + np.random.normal(0.0, np.sqrt((10**this_obserr)**2+(10**this_scatter)**2), len(mod_co21[this_cut])))
                 modsn_co10_final.extend(this_modsn_co10)
                 mods_co21_final.extend(this_mods_co21)
                 mod_co21_final.extend(this_mod_co21)
@@ -828,9 +828,9 @@ class ToolsR21():
         """
 
         nbins         = int( (np.ceil(np.log2(len(obs))) + 1) + 1.5 )
-        range_scatter = [0.0, 1.0]
-        range_slope   = [slope-0.3, slope+0.3]
-        range_icept   = [icept-0.5, icept+0.5]
+        range_scatter = [0.0, 2.0]
+        range_slope   = [slope-0.5, slope+0.5]
+        range_icept   = [icept-1.0, icept+1.0]
 
         return [nbins, range_scatter, range_slope, range_icept]
 
