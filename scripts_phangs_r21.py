@@ -749,7 +749,7 @@ class ToolsR21():
 
                     if k==0:
                         best_chi2k = this_chi2k
-                    if best_chi2<this_chi2k:
+                    if best_chi2k<this_chi2k:
                         best_chi2k     = this_chi2k
                         best_mods_co21 = this_mods_co21
 
