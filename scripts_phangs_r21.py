@@ -738,7 +738,7 @@ class ToolsR21():
                 this_cut        = np.where((mod_co21>=nbins[i]) & (mod_co21<nbins[i+1]))
                 this_modsn_co10 = modsn_co10[this_cut]
                 this_mod_co21   = mod_co21[this_cut]
-                this_mods_co21  = np.log10(10**mod_co21[this_cut] + np.random.normal(0.0, np.sqrt(10**this_obserr**2+10**this_scatter**2), len(mod_co21[this_cut])))
+                this_mods_co21  = np.log10(10**mod_co21[this_cut] + np.random.normal(0.0, np.sqrt((10**this_obserr)**2+(10**this_scatter)**2), len(mod_co21[this_cut])))
                 modsn_co10_final.extend(this_modsn_co10)
                 mods_co21_final.extend(this_mods_co21)
                 mod_co21_final.extend(this_mod_co21)
