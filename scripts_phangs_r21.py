@@ -750,7 +750,7 @@ class ToolsR21():
                     if k==0:
                         best_chi2k     = this_chi2k
                         best_mods_co21 = this_mods_co21
-                    if best_chi2k<this_chi2k:
+                    if best_chi2k>this_chi2k:
                         best_chi2k     = this_chi2k
                         best_mods_co21 = this_mods_co21
 
@@ -767,7 +767,7 @@ class ToolsR21():
             #this_chi2 = np.sqrt(this_chi2**2 + that_chi2**2)
             if j==0:
                 best_chi2 = this_chi2
-            if best_chi2<this_chi2:
+            if best_chi2>this_chi2:
                 best_chi2      = this_chi2
                 best_mods_co21 = mods_co21_final
 
