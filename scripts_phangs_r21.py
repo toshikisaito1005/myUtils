@@ -811,8 +811,8 @@ class ToolsR21():
                 best_modsn_co21 = modsn_co21_final
         """
 
-        self._plot_obs_model_hist(obs_co21,modsn_co21_final,output)
-        self._plot_obs_model_hist(obs_co21/obs_co10,modsn_co21_final/modsn_co10_final,output.replace(".png","_r21.png"))
+        self._plot_obs_model_hist(obs_co21,mods_co21_final,modsn_co21_final,output)
+        self._plot_obs_model_hist(obs_co21/obs_co10,mods_co21_final/modsn_co10_final,modsn_co21_final/modsn_co10_final,output.replace("co21","r21"))
 
         return modsn_co10_final, modsn_co21_final, mods_co21_final
 
@@ -934,6 +934,7 @@ class ToolsR21():
     def _plot_obs_model_hist(
         self,
         obs,
+        mods,
         modsn,
         outpng,
         ):
@@ -943,6 +944,8 @@ class ToolsR21():
         hrange    = [np.min(obs), np.max(obs)]
         histobs   = np.histogram(obs, bins=50, range=hrange)
         histobs   = [np.delete(histobs[1],-1), histobs[0] / float(np.sum(histobs[0]))]
+        histmods  = np.histogram(mods, bins=50, range=hrange)
+        histmods  = [np.delete(histmods[1],-1), histmods[0] / float(np.sum(histmods[0]))]
         histmodsn = np.histogram(modsn, bins=50, range=hrange)
         histmodsn = [np.delete(histmodsn[1],-1), histmodsn[0] / float(np.sum(histmodsn[0]))]
         hwidth    = histobs[0][1] - histobs[0][0]
@@ -953,6 +956,7 @@ class ToolsR21():
         ax1 = plt.subplot(gs[0:16,0:16])
         myax_set(ax1, "both", hrange, None, None, None, None)
         ax1.bar(histobs[0],histobs[1],width=hwidth,color="black",alpha=0.5,lw=0,align="center")
+        ax1.bar(histmods[0],histmods[1],width=hwidth,color="deepskyblue",alpha=0.5,lw=0,align="center")
         ax1.bar(histmodsn[0],histmodsn[1],width=hwidth,color="tomato",alpha=0.5,lw=0,align="center")
         plt.savefig(outpng)
 
