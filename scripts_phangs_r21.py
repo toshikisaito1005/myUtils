@@ -726,13 +726,13 @@ class ToolsR21():
         modsn_co10_final = []
         modsn_co21_final = []
         for i in range(len(nbins)-1):
-            print("# nbin = " + str(i))
+            print("# nbin = " + str(i) + " / " + str(len(nbins)-1))
             # get this_obserr
             this_cut    = np.where((obs_co21>=nbins[i]) & (obs_co21<nbins[i+1]))
             this_obserr = np.nan_to_num(np.nanmedian(obs_co21err[this_cut])) + 0.0000000001
             # get best this_scatter
             for j in range(nloop):
-                if j%100==0:
+                if j%200==0:
                     print("# loop = " + str(j) + " / " + str(nloop))
                 _, this_scatter, _, _ = self._get_modeling_param(modeling_space)
                 this_cut        = np.where((mod_co21>=nbins[i]) & (mod_co21<nbins[i+1]))
@@ -755,6 +755,7 @@ class ToolsR21():
 
         modsn_co10_final = np.array(modsn_co10_final)
         modsn_co21_final = np.array(modsn_co21_final)
+        print(len(modsn_co10_final), len(modsn_co21_final))
 
         """
         for j in range(nloop):
