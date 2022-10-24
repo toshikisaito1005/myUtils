@@ -568,8 +568,6 @@ class ToolsR21():
         """
 
         for i, this_beam in enumerate(beams):
-            if i!=0:
-                break
             this_beamstr    = str(this_beam).replace(".","p").zfill(4)
             this_txt        = inputtxt.replace("????",this_beamstr)
             data            = np.loadtxt(this_txt)
@@ -595,7 +593,7 @@ class ToolsR21():
 
             # plot scatter: obs, mods, modsn
             self._plot_obs_model_scatter(this_slope,this_icept,this_logco10,this_logco21,
-                this_logco10_modsn,this_logco21_modsn,this_logco21_mods,"scatter_modsn_obs.png")
+                this_logco10_modsn,this_logco21_modsn,this_logco21_mods,"scatter_modsn_obs_"+this_beamstr+".png")
 
         """
         for i, this_beam in enumerate(beams):
