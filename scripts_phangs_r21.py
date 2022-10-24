@@ -724,6 +724,7 @@ class ToolsR21():
         mod_co21 = this_slope * modsn_co10 + this_icept
 
         modsn_co10_final = []
+        mods_co21_final  = []
         modsn_co21_final = []
         scatter_final    = []
         for i in range(len(nbins)-1):
@@ -739,9 +740,9 @@ class ToolsR21():
                 this_cut        = np.where((mod_co21>=nbins[i]) & (mod_co21<nbins[i+1]))
                 this_modsn_co10 = modsn_co10[this_cut]
                 this_mod_co21   = mod_co21[this_cut]
-                this_modn_co21  = np.log10(10**this_mod_co21 + np.random.normal(0.0, 10**this_obserr, len(this_mod_co21)))
+                this_mods_co21  = this_mod_co21 + np.random.normal(0.0, this_scatter, len(this_mod_co21))
+                this_modsn_co21 = np.log10(10**this_mods_co21 + np.random.normal(0.0, 10**this_obserr, len(this_mods_co21)))
                 #this_modsn_co21 = np.log10(10**this_modn_co21 + np.random.normal(0.0, 10**this_scatter, len(this_modn_co21)))
-                this_modsn_co21 = np.log10(this_modn_co21 + np.random.normal(0.0, this_scatter, len(this_modn_co21)))
 
                 # chi2
                 this_chi2 = self._calc_chi2(obs_co21/obs_co10,this_modsn_co21/this_modsn_co10)
@@ -756,11 +757,13 @@ class ToolsR21():
                     best_scatter    = this_scatter
 
             modsn_co10_final.extend(this_modsn_co10)
+            mods_co21_final.extend(best_mods_co21)
             modsn_co21_final.extend(best_modsn_co21)
             scatter_final.append(this_scatter)
 
         modsn_co10_final = np.array(modsn_co10_final)
         modsn_co21_final = np.array(modsn_co21_final)
+        mods_co21_final  = np.array(mods_co21_final)
         print(scatter_final)
 
         """
