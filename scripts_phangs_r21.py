@@ -728,7 +728,7 @@ class ToolsR21():
 
             # log co21 model+noise distribution
             modsn_co10_final = []
-            mods_co21_final  = []
+            modsn_co21_final = []
             mod_co21_final   = []
             nbins_available = 0
             for i in range(len(nbins)-1):
@@ -739,30 +739,31 @@ class ToolsR21():
                 this_cut        = np.where((mod_co21>=nbins[i]) & (mod_co21<nbins[i+1]))
                 this_modsn_co10 = modsn_co10[this_cut]
                 this_mod_co21   = mod_co21[this_cut]
-                this_mods_co21  = np.log10(10**mod_co21[this_cut] + np.random.normal(0.0, 10**this_obserr, len(mod_co21[this_cut])))
-                this_mods_co21  = np.log10(10**this_mods_co21 + np.random.normal(0.0, 10**this_scatter, len(this_mods_co21)))
+                this_modn_co21  = np.log10(10**this_mod_co21 + np.random.normal(0.0, 10**this_obserr, len(this_mod_co21)))
+                this_modsn_co21 = np.log10(10**this_modn_co21 + np.random.normal(0.0, 10**this_scatter, len(this_modn_co21)))
 
                 modsn_co10_final.extend(this_modsn_co10)
-                mods_co21_final.extend(this_mods_co21)
+                modsn_co21_final.extend(this_modsn_co21)
                 mod_co21_final.extend(this_mod_co21)
 
                 if len(this_mods_co21)>0:
                     nbins_available+=1
 
             modsn_co10_final = np.array(modsn_co10_final)
-            this_chi2 = self._calc_chi2(obs_co21,mods_co21_final)
-            #this_chi2 = self._calc_chi2(obs_co21/obs_co10,mods_co21_final/modsn_co10_final,weight="wing")
+            this_chi2 = self._calc_chi2(obs_co21,modsn_co21_final)
+            #this_chi2 = self._calc_chi2(obs_co21/obs_co10,modsn_co21_final/modsn_co10_final,weight="wing")
             #this_chi2 = np.sqrt(this_chi2**2 + that_chi2**2)
             if j==0:
-                best_chi2 = this_chi2
-            if best_chi2<this_chi2:
-                best_chi2      = this_chi2
-                best_mods_co21 = mods_co21_final
+                best_chi2       = this_chi2
+                best_modsn_co21 = modsn_co21_final
+            if best_chi2>this_chi2:
+                best_chi2       = this_chi2
+                best_modsn_co21 = modsn_co21_final
 
-        self._plot_obs_model_hist(obs_co21,best_mods_co21,output)
-        self._plot_obs_model_hist(obs_co21/obs_co10,best_mods_co21/modsn_co10_final,output.replace(".png","_r21.png"))
+        self._plot_obs_model_hist(obs_co21,best_modsn_co21,output)
+        self._plot_obs_model_hist(obs_co21/obs_co10,best_modsn_co21/modsn_co10_final,output.replace(".png","_r21.png"))
 
-        return modsn_co10_final, best_mods_co21
+        return modsn_co10_final, best_modsn_co21
 
     ##############
     # _calc_chi2 #
