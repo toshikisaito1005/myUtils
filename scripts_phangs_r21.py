@@ -590,7 +590,7 @@ class ToolsR21():
             modeling_space = self._get_modeling_space(this_slope,this_icept,this_logco21)
 
             # generate log10 co21 mod
-            this_logco10_modsn, this_logco21_modsn = \
+            this_logco10_modsn, this_logco21_modsn, this_logco21_mods = \
                 self._get_modsn_co21(this_logco21,this_logco21err,this_logco10_modsn,modeling_space,this_logco10)
             self._plot_obs_model_scatter(
                 this_slope,
@@ -599,6 +599,7 @@ class ToolsR21():
                 this_logco21,
                 this_logco10_modsn,
                 this_logco21_modsn,
+                this_logco21_mods,
                 "scatter_modsn_obs.png",
                 )
 
@@ -813,7 +814,7 @@ class ToolsR21():
         self._plot_obs_model_hist(obs_co21,modsn_co21_final,output)
         self._plot_obs_model_hist(obs_co21/obs_co10,modsn_co21_final/modsn_co10_final,output.replace(".png","_r21.png"))
 
-        return modsn_co10_final, modsn_co21_final
+        return modsn_co10_final, modsn_co21_final, mods_co21_final
 
     ##############
     # _calc_chi2 #
@@ -904,6 +905,7 @@ class ToolsR21():
         obs_co21,
         modsn_co10,
         modsn_co21,
+        mods_co21,
         outpng,
         ):
         """
@@ -919,6 +921,7 @@ class ToolsR21():
         myax_set(ax1, "both", None, None, None, None, None)
         ax1.scatter(obs_co10, obs_co21, alpha=0.5, color="grey", lw=0)
         ax1.scatter(modsn_co10, modsn_co21, alpha=0.1, color="tomato", lw=0)
+        ax1.scatter(modsn_co10, mods_co21, alpha=0.1, color="deepskyblue", lw=0)
         ax1.plot(xfunc, yfunc)
         ax1.set_xlim([0.4,1.8])
         ax1.set_ylim([0.0,1.4])
