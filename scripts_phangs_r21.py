@@ -740,7 +740,8 @@ class ToolsR21():
                 this_modsn_co10 = modsn_co10[this_cut]
                 this_mod_co21   = mod_co21[this_cut]
                 this_modn_co21  = np.log10(10**this_mod_co21 + np.random.normal(0.0, 10**this_obserr, len(this_mod_co21)))
-                this_modsn_co21 = np.log10(10**this_modn_co21 + np.random.normal(0.0, 10**this_scatter, len(this_modn_co21)))
+                #this_modsn_co21 = np.log10(10**this_modn_co21 + np.random.normal(0.0, 10**this_scatter, len(this_modn_co21)))
+                this_modsn_co21 = np.log10(this_modn_co21 + np.random.normal(0.0, this_scatter, len(this_modn_co21)))
 
                 # chi2
                 this_chi2 = self._calc_chi2(obs_co21/obs_co10,this_modsn_co21/this_modsn_co10)
