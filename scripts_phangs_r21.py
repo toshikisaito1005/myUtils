@@ -944,8 +944,9 @@ class ToolsR21():
         hrange    = [np.min(obs), np.max(obs)]
         histobs   = np.histogram(obs, bins=50, range=hrange)
         histobs   = [np.delete(histobs[1],-1), histobs[0] / float(np.sum(histobs[0]))]
-        histmods  = np.histogram(mods, bins=50, range=hrange)
-        histmods  = [np.delete(histmods[1],-1), histmods[0] / float(np.sum(histmods[0]))]
+        if mods!=None:
+            histmods  = np.histogram(mods, bins=50, range=hrange)
+            histmods  = [np.delete(histmods[1],-1), histmods[0] / float(np.sum(histmods[0]))]
         histmodsn = np.histogram(modsn, bins=50, range=hrange)
         histmodsn = [np.delete(histmodsn[1],-1), histmodsn[0] / float(np.sum(histmodsn[0]))]
         hwidth    = histobs[0][1] - histobs[0][0]
@@ -956,7 +957,8 @@ class ToolsR21():
         ax1 = plt.subplot(gs[0:16,0:16])
         myax_set(ax1, "both", hrange, None, None, None, None)
         ax1.bar(histobs[0],histobs[1],width=hwidth,color="black",alpha=0.5,lw=0,align="center")
-        ax1.bar(histmods[0],histmods[1],width=hwidth,color="deepskyblue",alpha=0.5,lw=0,align="center")
+        if mods!=None:
+            ax1.bar(histmods[0],histmods[1],width=hwidth,color="deepskyblue",alpha=0.5,lw=0,align="center")
         ax1.bar(histmodsn[0],histmodsn[1],width=hwidth,color="tomato",alpha=0.5,lw=0,align="center")
         plt.savefig(outpng)
 
@@ -976,7 +978,7 @@ class ToolsR21():
         x = np.linspace(e.min(), e.max())
         modsn = np.random.choice((e[:-1] + e[1:])/2, size=len(obs)*5, p=h/h.sum())
 
-        self._plot_obs_model_hist(obs,modsn,modsn,output)
+        self._plot_obs_model_hist(obs,None,modsn,output)
 
         return modsn
 
