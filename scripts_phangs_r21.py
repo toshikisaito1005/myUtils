@@ -568,6 +568,8 @@ class ToolsR21():
         """
 
         for i, this_beam in enumerate(beams):
+            if i>0:
+                continue
             this_beamstr    = str(this_beam).replace(".","p").zfill(4)
             this_txt        = inputtxt.replace("????",this_beamstr)
             data            = np.loadtxt(this_txt)
@@ -717,8 +719,6 @@ class ToolsR21():
         modsn_co21_final = []
         scatter_final    = []
         for i in range(len(nbins)-1):
-            if i==0:
-                continue
             print("# nbin = " + str(i) + " / " + str(len(nbins)-1))
             # get this_obserr
             this_cut    = np.where((obs_co21>=nbins[i]) & (obs_co21<nbins[i+1]))
