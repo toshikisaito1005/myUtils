@@ -589,23 +589,13 @@ class ToolsR21():
             # determine modeling space
             modeling_space = self._get_modeling_space(this_slope,this_icept,this_logco21)
 
-            # generate log10 co21 mod
+            # generate log10 co21 mods, modsn
             this_logco10_modsn, this_logco21_modsn, this_logco21_mods = \
                 self._get_modsn_co21(this_logco21,this_logco21err,this_logco10_modsn,modeling_space,this_logco10)
-            self._plot_obs_model_scatter(
-                this_slope,
-                this_icept,
-                this_logco10,
-                this_logco21,
-                this_logco10_modsn,
-                this_logco21_modsn,
-                this_logco21_mods,
-                "scatter_modsn_obs.png",
-                )
 
-            # compare model and obs: co21
-
-            # compare model and obs: r21
+            # plot scatter: obs, mods, modsn
+            self._plot_obs_model_scatter(this_slope,this_icept,this_logco10,this_logco21,
+                this_logco10_modsn,this_logco21_modsn,this_logco21_mods,"scatter_modsn_obs.png")
 
         """
         for i, this_beam in enumerate(beams):
