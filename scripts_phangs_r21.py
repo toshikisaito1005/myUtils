@@ -725,6 +725,7 @@ class ToolsR21():
 
         modsn_co10_final = []
         modsn_co21_final = []
+        scatter_final    = []
         for i in range(len(nbins)-1):
             print("# nbin = " + str(i) + " / " + str(len(nbins)-1))
             # get this_obserr
@@ -746,15 +747,19 @@ class ToolsR21():
                 if j==0:
                     best_chi2       = this_chi2
                     best_modsn_co21 = this_modsn_co21
+                    best_scatter    = this_scatter
                 if best_chi2>this_chi2:
                     best_chi2       = this_chi2
                     best_modsn_co21 = this_modsn_co21
+                    best_scatter    = this_scatter
 
             modsn_co10_final.extend(this_modsn_co10)
             modsn_co21_final.extend(best_modsn_co21)
+            scatter_final.extend(this_scatter)
 
         modsn_co10_final = np.array(modsn_co10_final)
         modsn_co21_final = np.array(modsn_co21_final)
+        print(scatter_final)
 
         """
         for j in range(nloop):
