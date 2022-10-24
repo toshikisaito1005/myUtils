@@ -755,7 +755,6 @@ class ToolsR21():
 
         modsn_co10_final = np.array(modsn_co10_final)
         modsn_co21_final = np.array(modsn_co21_final)
-        print(len(modsn_co10_final), len(modsn_co21_final))
 
         """
         for j in range(nloop):
@@ -875,7 +874,7 @@ class ToolsR21():
         """
         """
 
-        nbins         = int( (np.ceil(np.log2(len(obs))) + 1) + 1.5 ) * 2
+        nbins         = int( (np.ceil(np.log2(len(obs))) + 1) + 1.5 )
         range_scatter = [0.0, 1.0]
         range_slope   = [slope-0.001, slope+0.001]
         range_icept   = [icept-0.001, icept+0.001]
