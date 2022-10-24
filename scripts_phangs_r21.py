@@ -712,7 +712,7 @@ class ToolsR21():
         modeling_space,
         obs_co10,
         output="hist_modsn_obs_co21.png",
-        nloop=10000,
+        nloop=1000,
         ):
         """
         """
@@ -741,7 +741,7 @@ class ToolsR21():
                 this_mod_co21   = mod_co21[this_cut]
                 this_mods_co21  = np.log10(10**mod_co21[this_cut] + np.random.normal(0.0, 10**this_obserr, len(mod_co21[this_cut])))
                 this_mods_co21  = np.log10(10**this_mods_co21 + np.random.normal(0.0, 10**this_scatter, len(this_mods_co21)))
-                
+
                 modsn_co10_final.extend(this_modsn_co10)
                 mods_co21_final.extend(this_mods_co21)
                 mod_co21_final.extend(this_mod_co21)
