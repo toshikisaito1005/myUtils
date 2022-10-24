@@ -717,6 +717,8 @@ class ToolsR21():
         modsn_co21_final = []
         scatter_final    = []
         for i in range(len(nbins)-1):
+            if i>0:
+                continue
             print("# nbin = " + str(i) + " / " + str(len(nbins)-1))
             # get this_obserr
             this_cut    = np.where((obs_co21>=nbins[i]) & (obs_co21<nbins[i+1]))
