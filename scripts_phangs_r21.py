@@ -737,6 +737,7 @@ class ToolsR21():
             for j in range(nloop):
                 if j%200==0:
                     print("# loop = " + str(j) + " / " + str(nloop))
+
                 _, this_scatter, _, _ = self._get_modeling_param(modeling_space)
                 this_cut        = np.where((mod_co21>=nbins[i]) & (mod_co21<nbins[i+1]))
                 this_modsn_co10 = modsn_co10[this_cut]
@@ -763,7 +764,6 @@ class ToolsR21():
                     best_modsn_co21 = this_modsn_co21
                     best_scatter    = this_scatter
 
-            print(len(this_modsn_co10), len(best_mods_co21), len(best_modsn_co21))
             modsn_co10_final.extend(this_modsn_co10)
             mods_co21_final.extend(best_mods_co21)
             modsn_co21_final.extend(best_modsn_co21)
