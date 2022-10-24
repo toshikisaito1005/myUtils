@@ -745,10 +745,10 @@ class ToolsR21():
                 this_chi2 = self._calc_chi2(obs_co21,this_modsn_co21)
                 if j==0:
                     best_chi2       = this_chi2
-                    best_modsn_co21 = modsn_co21_final
+                    best_modsn_co21 = this_modsn_co21
                 if best_chi2>this_chi2:
                     best_chi2       = this_chi2
-                    best_modsn_co21 = modsn_co21_final
+                    best_modsn_co21 = this_modsn_co21
 
             modsn_co10_final.extend(this_modsn_co10)
             modsn_co21_final.extend(best_modsn_co21)
