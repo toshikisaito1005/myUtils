@@ -568,7 +568,7 @@ class ToolsR21():
         """
 
         for i, this_beam in enumerate(beams):
-            if i>0:
+            if i!=1:
                 continue
             this_beamstr    = str(this_beam).replace(".","p").zfill(4)
             this_txt        = inputtxt.replace("????",this_beamstr)
