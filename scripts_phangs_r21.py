@@ -712,7 +712,7 @@ class ToolsR21():
         modeling_space,
         obs_co10,
         output="hist_modsn_obs_co21.png",
-        nloop=1000,
+        nloop=2000,
         ):
         """
         """
@@ -744,6 +744,7 @@ class ToolsR21():
 
                 # chi2
                 this_chi2 = self._calc_chi2(obs_co21/obs_co10,this_modsn_co21/this_modsn_co10)
+                this_chi2 = np.sqrt( this_chi2**2 + self._calc_chi2(obs_co21,this_modsn_co21)**2 )
                 if j==0:
                     best_chi2       = this_chi2
                     best_modsn_co21 = this_modsn_co21
@@ -879,7 +880,7 @@ class ToolsR21():
         """
         """
 
-        nbins         = 5 # int( (np.ceil(np.log2(len(obs))) + 1) + 1.5 )
+        nbins         = int( (np.ceil(np.log2(len(obs))) + 1) + 1.5 )
         range_scatter = [0.0, 1.0]
         range_slope   = [slope-0.001, slope+0.001]
         range_icept   = [icept-0.001, icept+0.001]
