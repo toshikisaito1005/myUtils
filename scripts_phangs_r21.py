@@ -976,7 +976,7 @@ class ToolsR21():
         x = np.linspace(e.min(), e.max())
         modsn = np.random.choice((e[:-1] + e[1:])/2, size=len(obs)*5, p=h/h.sum())
 
-        self._plot_obs_model_hist(obs,modsn,output)
+        self._plot_obs_model_hist(obs,modsn,modsn,output)
 
         return modsn
 
