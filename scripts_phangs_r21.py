@@ -731,6 +731,8 @@ class ToolsR21():
             this_obserr = np.nan_to_num(np.nanmedian(obs_co21err[this_cut])) + 0.0000000001
             # get best this_scatter
             for j in range(nloop):
+                if j%100==0:
+                    print("# loop = " + str(j) + " / " + str(nloop))
                 _, this_scatter, _, _ = self._get_modeling_param(modeling_space)
                 this_cut        = np.where((mod_co21>=nbins[i]) & (mod_co21<nbins[i+1]))
                 this_modsn_co10 = modsn_co10[this_cut]
