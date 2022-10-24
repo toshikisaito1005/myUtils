@@ -755,7 +755,7 @@ class ToolsR21():
 
             modsn_co10_final.extend(this_modsn_co10)
             modsn_co21_final.extend(best_modsn_co21)
-            scatter_final.extend(this_scatter)
+            scatter_final.append(this_scatter)
 
         modsn_co10_final = np.array(modsn_co10_final)
         modsn_co21_final = np.array(modsn_co21_final)
