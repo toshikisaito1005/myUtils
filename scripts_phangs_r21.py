@@ -717,6 +717,40 @@ class ToolsR21():
         """
         """
 
+        nbins, _, this_slope, this_icept = self._get_modeling_param(modeling_space)
+        nbins = np.linspace(obs_co21.min(), obs_co21.max(), nbins)
+
+        # log co21 model distribution
+        mod_co21 = this_slope * modsn_co10 + this_icept
+
+        modsn_co10_final = []
+        modsn_co21_final = []
+        for i in range(len(nbins)-1):
+            # get this_obserr
+            this_cut    = np.where((obs_co21>=nbins[i]) & (obs_co21<nbins[i+1]))
+            this_obserr = np.nan_to_num(np.nanmedian(obs_co21err[this_cut])) + 0.0000000001
+            # get best this_scatter
+            for j in range(nloop):
+                _, this_scatter, _, _ = self._get_modeling_param(modeling_space)
+                this_cut        = np.where((mod_co21>=nbins[i]) & (mod_co21<nbins[i+1]))
+                this_modsn_co10 = modsn_co10[this_cut]
+                this_mod_co21   = mod_co21[this_cut]
+                this_modn_co21  = np.log10(10**this_mod_co21 + np.random.normal(0.0, 10**this_obserr, len(this_mod_co21)))
+                this_modsn_co21 = np.log10(10**this_modn_co21 + np.random.normal(0.0, 10**this_scatter, len(this_modn_co21)))
+
+                # chi2
+                this_chi2 = self._calc_chi2(obs_co21,this_modsn_co21)
+                if j==0:
+                    best_chi2       = this_chi2
+                    best_modsn_co21 = modsn_co21_final
+                if best_chi2>this_chi2:
+                    best_chi2       = this_chi2
+                    best_modsn_co21 = modsn_co21_final
+
+            modsn_co10_final.extend(this_modsn_co10)
+            modsn_co21_final.extend(best_modsn_co21)
+
+        """
         for j in range(nloop):
             if j%100==0:
                 print("# loop = " + str(j) + " / " + str(nloop))
@@ -751,19 +785,18 @@ class ToolsR21():
 
             modsn_co10_final = np.array(modsn_co10_final)
             this_chi2 = self._calc_chi2(obs_co21,modsn_co21_final)
-            #this_chi2 = self._calc_chi2(obs_co21/obs_co10,modsn_co21_final/modsn_co10_final,weight="wing")
-            #this_chi2 = np.sqrt(this_chi2**2 + that_chi2**2)
             if j==0:
                 best_chi2       = this_chi2
                 best_modsn_co21 = modsn_co21_final
             if best_chi2>this_chi2:
                 best_chi2       = this_chi2
                 best_modsn_co21 = modsn_co21_final
+        """
 
-        self._plot_obs_model_hist(obs_co21,best_modsn_co21,output)
-        self._plot_obs_model_hist(obs_co21/obs_co10,best_modsn_co21/modsn_co10_final,output.replace(".png","_r21.png"))
+        self._plot_obs_model_hist(obs_co21,modsn_co21_final,output)
+        self._plot_obs_model_hist(obs_co21/obs_co10,modsn_co21_final/modsn_co10_final,output.replace(".png","_r21.png"))
 
-        return modsn_co10_final, best_modsn_co21
+        return modsn_co10_final, modsn_co21_final
 
     ##############
     # _calc_chi2 #
@@ -835,7 +868,7 @@ class ToolsR21():
         """
         """
 
-        nbins         = int( (np.ceil(np.log2(len(obs))) + 1) + 1.5 )
+        nbins         = int( (np.ceil(np.log2(len(obs))) + 1) + 1.5 ) * 2
         range_scatter = [0.0, 1.0]
         range_slope   = [slope-0.001, slope+0.001]
         range_icept   = [icept-0.001, icept+0.001]
