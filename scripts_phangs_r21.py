@@ -874,8 +874,8 @@ class ToolsR21():
         ax1.scatter(modsn_co10, modsn_co21, alpha=0.1, color="tomato", lw=0)
         ax1.scatter(modsn_co10, mods_co21, alpha=0.1, color="deepskyblue", lw=0)
         ax1.plot(xfunc, yfunc)
-        ax1.set_xlim([0.4,1.8])
-        ax1.set_ylim([0.0,1.4])
+        ax1.set_xlim([np.min(obs_co10)-0.1,np.max(obs_co10)+0.1])
+        ax1.set_ylim([np.min(obs_co21)-0.1,np.max(obs_co21)+0.1])
         plt.savefig(outpng)
 
     ########################
