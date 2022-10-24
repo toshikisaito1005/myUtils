@@ -726,6 +726,7 @@ class ToolsR21():
         modsn_co10_final = []
         modsn_co21_final = []
         for i in range(len(nbins)-1):
+            print("# nbin = " + str(i))
             # get this_obserr
             this_cut    = np.where((obs_co21>=nbins[i]) & (obs_co21<nbins[i+1]))
             this_obserr = np.nan_to_num(np.nanmedian(obs_co21err[this_cut])) + 0.0000000001
@@ -751,6 +752,9 @@ class ToolsR21():
 
             modsn_co10_final.extend(this_modsn_co10)
             modsn_co21_final.extend(best_modsn_co21)
+
+        modsn_co10_final = np.array(modsn_co10_final)
+        modsn_co21_final = np.array(modsn_co21_final)
 
         """
         for j in range(nloop):
