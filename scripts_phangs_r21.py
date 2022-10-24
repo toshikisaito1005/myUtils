@@ -801,7 +801,7 @@ class ToolsR21():
             elif weight=="higher":
                 weights = abs(x - np.min(x))**1 # weight to histogram wings
             elif weight=="wing":
-                weights = abs(x - np.median(x))**2 # weight to histogram wings
+                weights = abs(x - np.median(x))**4 # weight to histogram wings
             chi2 = np.sqrt(np.average(diff,weights=weights)*len(diff))
         else:
             chi2 = 1e7
