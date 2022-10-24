@@ -741,6 +741,7 @@ class ToolsR21():
                 this_mod_co21   = mod_co21[this_cut]
                 this_mods_co21  = np.log10(10**mod_co21[this_cut] + np.random.normal(0.0, 10**this_obserr, len(mod_co21[this_cut])))
                 this_mods_co21  = np.log10(10**this_mods_co21 + np.random.normal(0.0, 10**this_scatter, len(this_mods_co21)))
+                
                 modsn_co10_final.extend(this_modsn_co10)
                 mods_co21_final.extend(this_mods_co21)
                 mod_co21_final.extend(this_mod_co21)
@@ -834,7 +835,7 @@ class ToolsR21():
         """
 
         nbins         = int( (np.ceil(np.log2(len(obs))) + 1) + 1.5 )
-        range_scatter = [0.0, 0.5]
+        range_scatter = [0.0, 1.0]
         range_slope   = [slope-0.001, slope+0.001]
         range_icept   = [icept-0.001, icept+0.001]
 
