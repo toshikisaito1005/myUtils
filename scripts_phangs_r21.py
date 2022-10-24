@@ -746,7 +746,7 @@ class ToolsR21():
                 modsn_co21_final.extend(this_modsn_co21)
                 mod_co21_final.extend(this_mod_co21)
 
-                if len(this_mods_co21)>0:
+                if len(this_modsn_co21)>0:
                     nbins_available+=1
 
             modsn_co10_final = np.array(modsn_co10_final)
