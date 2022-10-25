@@ -777,7 +777,7 @@ class ToolsR21():
         data_obs,
         data_modsn,
         weight=None,
-        bins=200,
+        bins=500,
         ):
         """
         """
