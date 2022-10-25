@@ -727,13 +727,12 @@ class ToolsR21():
                     print("# loop = " + str(j) + " / " + str(nloop))
 
                 _, this_scatter, _, _ = self._get_modeling_param(modeling_space)
-                this_cut        = np.where((mod_co21>=nbins[i]) & (mod_co21<nbins[i+1]))
+                this_cut2       = np.where((mod_co21>=nbins[i]) & (mod_co21<nbins[i+1]))
                 this_obs_co10   = obs_co10[this_cut]
                 this_obs_co21   = obs_co21[this_cut]
-                this_modsn_co10 = modsn_co10[this_cut]
-                this_mod_co21   = mod_co21[this_cut]
+                this_modsn_co10 = modsn_co10[this_cut2]
+                this_mod_co21   = mod_co21[this_cut2]
                 this_mods_co21  = np.log10(10**this_mod_co21 + np.random.normal(0.0, 10**this_scatter, len(this_mod_co21)))
-                #this_modsn_co21 = np.log10(10**this_mods_co21 + np.random.normal(0.0, 10**this_obserr, len(this_mods_co21)))
                 this_modsn_co21 = np.log10(10**this_mods_co21 + np.random.normal(0.0, 10**this_obserr, len(this_mods_co21)))
 
                 # chi2
