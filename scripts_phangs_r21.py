@@ -782,7 +782,7 @@ class ToolsR21():
         """
         """
 
-        histr   = [np.min(data_obs),np.max(data_obs)]
+        histr   = [np.percentile(data_obs,1),np.percentile(data_obs,99)]
         hist    = np.histogram(data_obs, bins=bins, range=histr)
         x       = hist[1][1:]
         y_obs   = hist[0] / float(np.sum(hist[0]))
@@ -840,7 +840,7 @@ class ToolsR21():
         """
 
         nbins         = int( (np.ceil(np.log2(len(obs))) + 1) + 1.5 ) * 2
-        range_scatter = [0.0,0.01] # [0.0, 1.0]
+        range_scatter = [0.0, 1.0]
         range_slope   = [slope-0.001, slope+0.001]
         range_icept   = [icept-0.001, icept+0.001]
 
