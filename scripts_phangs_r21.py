@@ -777,12 +777,12 @@ class ToolsR21():
         data_obs,
         data_modsn,
         weight=None,
-        bins=50,
+        bins=200,
         ):
         """
         """
 
-        histr   = [np.percentile(data_obs,1),np.percentile(data_obs,99)]
+        histr   = [np.min(data_obs),np.max(data_obs)]
         print(histr)
         hist    = np.histogram(data_obs, bins=bins, range=histr)
         x       = hist[1][1:]
