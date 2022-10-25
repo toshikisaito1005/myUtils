@@ -742,7 +742,10 @@ class ToolsR21():
                 #this_mod_co21   = this_mod_co21[this_cut]
                 #this_mods_co21  = this_mods_co21[this_cut]
                 #this_modsn_co21 = this_modsn_co21[this_cut]
-                this_chi2 = self._calc_chi2(10**this_obs_co10/10**this_obs_co10,10**this_modsn_co21/10**this_modsn_co10,weight="wing")
+                if len(this_obs_co10)!=0:
+                    this_chi2 = self._calc_chi2(10**this_obs_co10/10**this_obs_co10,10**this_modsn_co21/10**this_modsn_co10,weight="wing")
+                else:
+                    thid_chi2 = 1e44
                 #this_chi2 = np.sqrt( this_chi2**2 + self._calc_chi2(obs_co21,this_modsn_co21)**2 )
                 if j==0:
                     best_chi2       = this_chi2
