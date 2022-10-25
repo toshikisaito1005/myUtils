@@ -783,6 +783,7 @@ class ToolsR21():
         """
 
         histr   = [np.min(data_obs),np.max(data_obs)]
+        histr   = [0,2]
         print(histr)
         hist    = np.histogram(data_obs, bins=bins, range=histr)
         x       = hist[1][1:]
