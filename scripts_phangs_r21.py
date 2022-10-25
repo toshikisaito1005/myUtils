@@ -728,7 +728,7 @@ class ToolsR21():
 
                 _, this_scatter, _, _ = self._get_modeling_param(modeling_space)
                 this_cut        = np.where((mod_co21>=nbins[i]) & (mod_co21<nbins[i+1]))
-                print(len(this_cut))
+                print(len(this_cut), len(obs_co10))
                 this_obs_co10   = obs_co10[this_cut]
                 this_obs_co21   = obs_co21[this_cut]
                 this_modsn_co10 = modsn_co10[this_cut]
