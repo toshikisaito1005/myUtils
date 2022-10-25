@@ -783,6 +783,7 @@ class ToolsR21():
         """
 
         histr   = [np.percentile(data_obs,1),np.percentile(data_obs,99)]
+        print(histr)
         hist    = np.histogram(data_obs, bins=bins, range=histr)
         x       = hist[1][1:]
         y_obs   = hist[0] / float(np.sum(hist[0]))
