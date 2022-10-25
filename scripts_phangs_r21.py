@@ -728,6 +728,8 @@ class ToolsR21():
 
                 _, this_scatter, _, _ = self._get_modeling_param(modeling_space)
                 this_cut        = np.where((mod_co21>=nbins[i]) & (mod_co21<nbins[i+1]))
+                this_obs_co10   = obs_co10[this_cut]
+                this_obs_co21   = obs_co21[this_cut]
                 this_modsn_co10 = modsn_co10[this_cut]
                 this_mod_co21   = mod_co21[this_cut]
                 this_mods_co21  = np.log10(10**this_mod_co21 + np.random.normal(0.0, 10**this_scatter, len(this_mod_co21)))
@@ -740,7 +742,7 @@ class ToolsR21():
                 #this_mod_co21   = this_mod_co21[this_cut]
                 #this_mods_co21  = this_mods_co21[this_cut]
                 #this_modsn_co21 = this_modsn_co21[this_cut]
-                this_chi2 = self._calc_chi2(10**obs_co21/10**obs_co10,10**this_modsn_co21/10**this_modsn_co10,weight="wing")
+                this_chi2 = self._calc_chi2(10**this_obs_co10/10**this_obs_co10,10**this_modsn_co21/10**this_modsn_co10,weight="wing")
                 #this_chi2 = np.sqrt( this_chi2**2 + self._calc_chi2(obs_co21,this_modsn_co21)**2 )
                 if j==0:
                     best_chi2       = this_chi2
@@ -784,7 +786,6 @@ class ToolsR21():
 
         histr   = [np.min(data_obs),np.max(data_obs)]
         histr   = [0,2]
-        print(histr)
         hist    = np.histogram(data_obs, bins=bins, range=histr)
         x       = hist[1][1:]
         y_obs   = hist[0] / float(np.sum(hist[0]))
