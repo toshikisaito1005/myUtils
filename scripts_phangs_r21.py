@@ -568,7 +568,7 @@ class ToolsR21():
         """
 
         for i, this_beam in enumerate(beams):
-            if i!=1:
+            if i!=0:
                 continue
             this_beamstr    = str(this_beam).replace(".","p").zfill(4)
             this_txt        = inputtxt.replace("????",this_beamstr)
@@ -733,6 +733,7 @@ class ToolsR21():
                 this_modsn_co10 = modsn_co10[this_cut]
                 this_mod_co21   = mod_co21[this_cut]
                 this_mods_co21  = np.log10(10**this_mod_co21 + np.random.normal(0.0, 10**this_scatter, len(this_mod_co21)))
+                #this_modsn_co21 = np.log10(10**this_mods_co21 + np.random.normal(0.0, 10**this_obserr, len(this_mods_co21)))
                 this_modsn_co21 = np.log10(10**this_mods_co21 + np.random.normal(0.0, 10**this_obserr, len(this_mods_co21)))
 
                 # chi2
@@ -840,7 +841,7 @@ class ToolsR21():
         """
         """
 
-        nbins         = int( (np.ceil(np.log2(len(obs))) + 1) + 1.5 )
+        nbins         = int( (np.ceil(np.log2(len(obs))) + 1) + 1.5 ) * 2
         range_scatter = [0.0, 1.0]
         range_slope   = [slope-0.001, slope+0.001]
         range_icept   = [icept-0.001, icept+0.001]
