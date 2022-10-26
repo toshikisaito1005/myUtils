@@ -744,14 +744,14 @@ class ToolsR21():
                     #this_chi2 = self._calc_chi2(this_obs_co21,this_modsn_co21)
                     this_chi2 = self._calc_chi2(10**this_obs_co21/10**this_obs_co10,10**this_modsn_co21/10**this_modsn_co10,weight="wing")
                 else:
-                    this_chi2 = 0
+                    this_chi2 = 1
 
                 if j==0:
                     best_chi2       = this_chi2
                     best_mods_co21  = this_mods_co21
                     best_modsn_co21 = this_modsn_co21
                     best_scatter    = this_scatter
-                if best_chi2<this_chi2:
+                if best_chi2>this_chi2:
                     best_chi2       = this_chi2
                     best_mods_co21  = this_mods_co21
                     best_modsn_co21 = this_modsn_co21
