@@ -736,7 +736,7 @@ class ToolsR21():
                         this_chi2 = 1e44
                     else:
                         _, this_scatter, _, _ = self._get_modeling_param(modeling_space)
-                        this_cut        = np.where((mod_co21>=nbins[i]) & (mod_co21<nbins[i+1]))
+                        this_cut        = np.where((mod_co21>=nbins[j]) & (mod_co21<nbins[j+1]))
                         this_modsn_co10 = modsn_co10[this_cut]
                         this_mod_co21   = mod_co21[this_cut]
                         this_mods_co21  = np.log10(10**this_mod_co21 + np.random.normal(0.0, np.log(10)*10**this_mod_co21*this_scatter, len(this_mod_co21)))
