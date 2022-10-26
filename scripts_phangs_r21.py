@@ -842,7 +842,7 @@ class ToolsR21():
         """
         """
 
-        nbins         = int( (np.ceil(np.log2(len(obs))) + 1) + 1.5 ) * 2
+        nbins         = int( (np.ceil(np.log2(len(obs))) + 1) + 1.5 )
         range_scatter = [0.0, 2.0]
         range_slope   = [slope-0.3, slope+0.3]
         range_icept   = [icept-0.3, icept+0.3]
