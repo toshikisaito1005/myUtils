@@ -1067,7 +1067,7 @@ class ToolsR21():
         list_slope = []
         list_icept = []
         for i in range(100):
-            popt,_ = curve_fit(self._func2, logx, logy, p0=[np.random.rand()+1.0,np.random.rand()-0.5],
+            popt,_ = curve_fit(self._func2, logx, logy, p0=[np.random.rand()/2.0+1.0,np.random.rand()/2.0-0.5],
                 maxfev=10000, sigma=np.log(10)*10**logy*logyerr)
             list_slope.append(popt[0])
             list_icept.append(popt[1])
@@ -1108,7 +1108,6 @@ class ToolsR21():
 
         for this_beam in beams:
             this_beamstr = str(this_beam).replace(".","p").zfill(4)
-            print(this_beamstr)
             this_co10    = co10.replace("????",this_beamstr)
             this_co21    = co21.replace("????",this_beamstr)
             this_r21     = r21.replace("????",this_beamstr)
@@ -1116,8 +1115,6 @@ class ToolsR21():
             this_eco21   = eco21.replace("????",this_beamstr)
             this_er21    = er21.replace("????",this_beamstr)
             this_outtxt  = outtxt.replace("????",this_beamstr)
-            print(outtxt)
-            print(this_outtxt)
 
             done = glob.glob(this_outtxt)
             if not done:
