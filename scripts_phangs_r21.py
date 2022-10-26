@@ -592,7 +592,7 @@ class ToolsR21():
             modeling_space = self._get_modeling_space(this_slope,this_icept,this_logco21)
 
             # generate log10 co21 mods, modsn
-            this_logco10_modsn, this_logco21_modsn, this_logco21_mods = \
+            this_logco10_modsn, this_logco21_modsn, this_logco21_mods, this_slope, this_icept = \
                 self._get_modsn_co21(this_logco21,this_logco21err,this_logco10_modsn,modeling_space,this_logco10)
 
             # plot scatter: obs, mods, modsn
@@ -716,9 +716,9 @@ class ToolsR21():
         nbins, _, _, _ = self._get_modeling_param(modeling_space)
         nbins = np.linspace(obs_co21.min(), obs_co21.max(), nbins)
 
-        for i in range(200):
+        for i in range(100):
             if i%5==0:
-                print("# loop slope/icept = " + str(i) + " / " + str(200))
+                print("# loop slope/icept = " + str(i) + " / " + str(100))
             _, _, this_slope, this_icept = self._get_modeling_param(modeling_space)
 
             # log co21 model distribution
@@ -789,7 +789,7 @@ class ToolsR21():
         self._plot_obs_model_hist(obs_co21,mods_co21_final,modsn_co21_final,output)
         self._plot_obs_model_hist(obs_co21/obs_co10,mods_co21_final/modsn_co10_final,modsn_co21_final/modsn_co10_final,output.replace("co21","r21"))
 
-        return modsn_co10_final, modsn_co21_final, mods_co21_final
+        return modsn_co10_final, modsn_co21_final, mods_co21_final, best_slope, best_icept
 
         """
         nbins, _, this_slope, this_icept = self._get_modeling_param(modeling_space)
