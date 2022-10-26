@@ -712,7 +712,7 @@ class ToolsR21():
         nbins = np.linspace(obs_co21.min(), obs_co21.max(), nbins)
 
         for i in range(100):
-            if i%20==0:
+            if i%5==0:
                 print("# loop slope/icept = " + str(i) + " / " + str(100))
             _, _, this_slope, this_icept = self._get_modeling_param(modeling_space)
 
@@ -724,7 +724,6 @@ class ToolsR21():
             modsn_co21_candidate = []
             scatter_candidate    = []
             for j in range(len(nbins)-1):
-                print("# nbin = " + str(j) + " / " + str(len(nbins)-1))
                 # get this_obserr
                 this_cut      = np.where((obs_co21>=nbins[j]) & (obs_co21<nbins[j+1]))
                 this_obs_co10 = obs_co10[this_cut]
@@ -926,8 +925,8 @@ class ToolsR21():
 
         nbins         = int( (np.ceil(np.log2(len(obs))) + 1) + 1.5 )
         range_scatter = [0.0, 2.0]
-        range_slope   = [slope-0.001, slope+0.001]
-        range_icept   = [icept-0.001, icept+0.001]
+        range_slope   = [slope-0.3, slope+0.3]
+        range_icept   = [icept-0.5, icept+0.5]
 
         return [nbins, range_scatter, range_slope, range_icept]
 
