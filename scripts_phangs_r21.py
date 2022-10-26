@@ -786,6 +786,7 @@ class ToolsR21():
         """
         """
 
+        """
         histr   = [np.min(data_obs),np.max(data_obs)]
         #histr   = [0,2]
         hist    = np.histogram(data_obs, bins=bins, range=histr)
@@ -810,9 +811,10 @@ class ToolsR21():
             chi2 = np.sqrt(np.average(diff,weights=weights)*len(diff))
         else:
             chi2 = 1e7
+        """
 
-        #value = stats.ks_2samp(data_obs, data_modsn)
-        #print(value)
+        value = stats.ks_2samp(data_obs, data_modsn)
+        print(value)
 
         return chi2
 
@@ -844,8 +846,8 @@ class ToolsR21():
         """
         """
 
-        nbins         = int(int( (np.ceil(np.log2(len(obs))) + 1) + 1.5 ) / 2)
-        range_scatter = [0.0, 1.0]
+        nbins         = int( (np.ceil(np.log2(len(obs))) + 1) + 1.5 )
+        range_scatter = [0.0, 2.0]
         range_slope   = [slope-0.001, slope+0.001]
         range_icept   = [icept-0.001, icept+0.001]
 
