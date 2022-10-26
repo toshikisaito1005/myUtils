@@ -781,9 +781,9 @@ class ToolsR21():
         nbins, _, _, _ = self._get_modeling_param(modeling_space)
         nbins = np.linspace(obs_co21.min(), obs_co21.max(), nbins)
 
-        for i in range(300):
-            if i%100==0:
-                print("# loop slope/icept = " + str(i) + " / " + str(300))
+        for i in range(200):
+            if i%20==0:
+                print("# loop slope/icept = " + str(i) + " / " + str(200))
             _, this_scatter, this_slope, this_icept = self._get_modeling_param(modeling_space)
 
             # log co21 model distribution
