@@ -174,12 +174,12 @@ noise_vs_beam_co21_n4254 ,,,noise_vs_beam_co21_n4254.txt
 noise_vs_beam_co21_n4321 ,,,noise_vs_beam_co21_n4321.txt
 
 outtxt_obs_n0628         ,,,ngc0628_obs_04p0.txt
-outtxt_obs_n3627         ,,,ngc3627_obs_04p0.txt
-outtxt_obs_n4254         ,,,ngc4254_obs_04p0.txt
+outtxt_obs_n3627         ,,,ngc3627_obs_08p0.txt
+outtxt_obs_n4254         ,,,ngc4254_obs_08p0.txt
 outtxt_obs_n4321         ,,,ngc4321_obs_04p0.txt
 outtxt_model_n0628       ,,,ngc0628_model_04p0.txt
-outtxt_model_n3627       ,,,ngc3627_model_04p0.txt
-outtxt_model_n4254       ,,,ngc4254_model_04p0.txt
+outtxt_model_n3627       ,,,ngc3627_model_08p0.txt
+outtxt_model_n4254       ,,,ngc4254_model_08p0.txt
 outtxt_model_n4321       ,,,ngc4321_model_04p0.txt
 
 # png files
