@@ -570,8 +570,8 @@ class ToolsR21():
         start = time.time()
 
         for i, this_beam in enumerate(beams):
-            #if i!=0:
-            #    continue
+            if i!=0:
+                continue
             this_beamstr    = str(this_beam).replace(".","p").zfill(4)
             this_txt        = inputtxt.replace("????",this_beamstr)
             data            = np.loadtxt(this_txt)
@@ -928,7 +928,7 @@ class ToolsR21():
         nbins         = 3 #int( (np.ceil(np.log2(len(obs))) + 1) + 1.5 )
         range_scatter = [0.0, 2.0]
         range_slope   = [slope-0.3, slope+0.3]
-        range_icept   = [icept-0.5, icept+0.5]
+        range_icept   = [icept-1.0, icept+1.0]
 
         return [nbins, range_scatter, range_slope, range_icept]
 
@@ -965,7 +965,7 @@ class ToolsR21():
         ax1.scatter(modsn_co10, modsn_co21, alpha=0.3, color="tomato", lw=0)
         ax1.scatter(modsn_co10, mods_co21, alpha=0.3, color="deepskyblue", lw=0)
         ax1.plot(xfunc, yfunco, color="black", lw=3)
-        ax1.plot(xfunc, yfunc, color="grey", lw=1)
+        ax1.plot(xfunc, yfunc, color="blue", lw=3)
         ax1.set_xlim([np.min(obs_co10)-0.1,np.max(obs_co10)+0.1])
         ax1.set_ylim([np.min(obs_co21)-0.1,np.max(obs_co21)+0.1])
         ax1.text(0.05,0.95,str(slope)+", "+str(icept),transform=ax1.transAxes,weight="bold")
