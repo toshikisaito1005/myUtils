@@ -752,7 +752,7 @@ class ToolsR21():
                     else:
                         this_chi2 = 1e44
 
-                if k==0:
+                if i==0:
                     best_chi2       = this_chi2
                     best_mods_co21  = this_mods_co21
                     best_modsn_co21 = this_modsn_co21
