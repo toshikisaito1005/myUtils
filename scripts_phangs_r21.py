@@ -583,7 +583,7 @@ class ToolsR21():
             this_logr21err  = data[:,5]
 
             # get observed slope
-            this_slope,this_icept = self._get_observed_slope(this_logco10,this_logco21)
+            this_slope,this_icept = self._get_observed_slope(this_logco10,this_logco21,this_logco21err)
 
             # generate log10 co10 modsn
             this_logco10_modsn = self._get_modsn_co10(this_logco10)
@@ -1034,6 +1034,7 @@ class ToolsR21():
         self,
         logx,
         logy,
+        logyerr,
         ):
         """
         """
@@ -1042,7 +1043,7 @@ class ToolsR21():
         list_icept = []
         for i in range(100):
             popt,_ = curve_fit(self._func2, logx, logy, p0=[np.random.rand()+1.0,np.random.rand()-0.5],
-                maxfev=10000)#, sigma=10**logy)
+                maxfev=10000, sigma=np.log(10)*10**logy*logyerr)
             list_slope.append(popt[0])
             list_icept.append(popt[1])
 
