@@ -716,10 +716,10 @@ class ToolsR21():
         nbins, _, _, _ = self._get_modeling_param(modeling_space)
         nbins = np.linspace(obs_co21.min(), obs_co21.max(), nbins)
 
-        for i in range(100):
+        for i in range(2000):
             if i%5==0:
-                print("# loop slope/icept = " + str(i) + " / " + str(100))
-            _, _, this_slope, this_icept = self._get_modeling_param(modeling_space)
+                print("# loop slope/icept = " + str(i) + " / " + str(2000))
+            _, this_scatter, this_slope, this_icept = self._get_modeling_param(modeling_space)
 
             # log co21 model distribution
             mod_co21 = this_slope * modsn_co10 + this_icept
@@ -734,33 +734,34 @@ class ToolsR21():
                 this_obs_co10 = obs_co10[this_cut]
                 this_obs_co21 = obs_co21[this_cut]
                 this_obserr   = np.nan_to_num(np.nanmedian(obs_co21err[this_cut])) + 0.0000000001
-                # get best this_scatter
-                for k in range(nloop):
-                    if len(mod_co21)==0:
-                        this_chi2 = 1e44
-                    else:
-                        _, this_scatter, _, _ = self._get_modeling_param(modeling_space)
-                        this_cut        = np.where((mod_co21>=nbins[j]) & (mod_co21<nbins[j+1]))
-                        this_modsn_co10 = modsn_co10[this_cut]
-                        this_mod_co21   = mod_co21[this_cut]
-                        this_mods_co21  = np.log10(10**this_mod_co21 + np.random.normal(0.0, np.log(10)*10**this_mod_co21*this_scatter, len(this_mod_co21)))
-                        this_modsn_co21 = np.log10(10**this_mods_co21 + np.random.normal(0.0, np.log(10)*10**this_mods_co21*this_obserr, len(this_mods_co21)))
-                        # chi2
-                        if len(this_obs_co10)*len(this_obs_co21)!=0:
-                            this_chi2 = self._calc_chi2(10**this_obs_co21/10**this_obs_co10,10**this_modsn_co21/10**this_modsn_co10)
-                        else:
-                            this_chi2 = 1e44
 
-                    if k==0:
-                        best_chi2       = this_chi2
-                        best_mods_co21  = this_mods_co21
-                        best_modsn_co21 = this_modsn_co21
-                        best_scatter    = this_scatter
-                    if best_chi2>this_chi2:
-                        best_chi2       = this_chi2
-                        best_mods_co21  = this_mods_co21
-                        best_modsn_co21 = this_modsn_co21
-                        best_scatter    = this_scatter
+                # get best this_scatter
+                #for k in range(nloop):
+                if len(mod_co21)==0:
+                    this_chi2 = 1e44
+                else:
+                    #_, this_scatter, _, _ = self._get_modeling_param(modeling_space)
+                    this_cut        = np.where((mod_co21>=nbins[j]) & (mod_co21<nbins[j+1]))
+                    this_modsn_co10 = modsn_co10[this_cut]
+                    this_mod_co21   = mod_co21[this_cut]
+                    this_mods_co21  = np.log10(10**this_mod_co21 + np.random.normal(0.0, np.log(10)*10**this_mod_co21*this_scatter, len(this_mod_co21)))
+                    this_modsn_co21 = np.log10(10**this_mods_co21 + np.random.normal(0.0, np.log(10)*10**this_mods_co21*this_obserr, len(this_mods_co21)))
+                    # chi2
+                    if len(this_obs_co10)*len(this_obs_co21)!=0:
+                        this_chi2 = self._calc_chi2(10**this_obs_co21/10**this_obs_co10,10**this_modsn_co21/10**this_modsn_co10)
+                    else:
+                        this_chi2 = 1e44
+
+                if k==0:
+                    best_chi2       = this_chi2
+                    best_mods_co21  = this_mods_co21
+                    best_modsn_co21 = this_modsn_co21
+                    best_scatter    = this_scatter
+                if best_chi2>this_chi2:
+                    best_chi2       = this_chi2
+                    best_mods_co21  = this_mods_co21
+                    best_modsn_co21 = this_modsn_co21
+                    best_scatter    = this_scatter
 
                 modsn_co10_candidate.extend(this_modsn_co10)
                 mods_co21_candidate.extend(best_mods_co21)
