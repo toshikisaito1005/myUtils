@@ -1030,7 +1030,7 @@ class ToolsR21():
         list_icept = []
         for i in range(100):
             popt,_ = curve_fit(self._func2, logx, logy, p0=[np.random.rand()+1.0,np.random.rand()-0.5],
-                maxfev=10000)#, sigma=logy)
+                maxfev=10000, sigma=10**logy)
             list_slope.append(popt[0])
             list_icept.append(popt[1])
 
@@ -1129,8 +1129,6 @@ class ToolsR21():
                 np.savetxt(this_outtxt, output, header=header, fmt=fmt)
             else:
                 print("# skip _import_modeling for " + this_outtxt.split("/")[-1])
-
-
 
     #####################
     #####################
