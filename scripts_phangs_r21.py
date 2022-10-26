@@ -559,6 +559,7 @@ class ToolsR21():
 
         this_basebeam    = str(self.basebeam_n3627).replace(".","p").zfill(4)
         this_beams_n3627 = [s for s in self.beams_n3627 if s%4==0]
+        print(this_beams_n3627)
         this_co10        = self.outmom_co10_n3627.replace(this_basebeam,"????").replace("momX","mom0")
         this_co21        = self.outmom_co21_n3627.replace(this_basebeam,"????").replace("momX","mom0")
         this_r21         = self.outfits_r21_n3627.replace(this_basebeam,"????")
@@ -596,7 +597,6 @@ class ToolsR21():
             #if i!=0:
             #    continue
             this_beamstr    = str(this_beam).replace(".","p").zfill(4)
-            print(this_beamstr)
             this_txt        = inputtxt.replace("????",this_beamstr)
             data            = np.loadtxt(this_txt)
             this_logco10    = data[:,0]
@@ -1102,22 +1102,7 @@ class ToolsR21():
     # _loop_import_modeling #
     #########################
 
-    def _loop_import_modeling(
-        self,
-        beams,
-        co10,
-        co21,
-        r21,
-        eco10,
-        eco21,
-        er21,
-        outtxt,
-        ra,
-        dec,
-        scale,
-        pa,
-        incl,
-        ):
+    def _loop_import_modeling(self,beams,co10,co21,r21,eco10,eco21,er21,outtxt,ra,dec,scale,pa,incl):
         """
         modeling
         """
