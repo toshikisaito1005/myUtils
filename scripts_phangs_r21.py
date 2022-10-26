@@ -559,8 +559,6 @@ class ToolsR21():
 
         this_basebeam    = str(self.basebeam_n3627).replace(".","p").zfill(4)
         this_beams_n3627 = [s for s in self.beams_n3627 if s%4==0]
-        print(this_basebeam)
-        print(this_beams_n3627)
         this_co10        = self.outmom_co10_n3627.replace(this_basebeam,"????").replace("momX","mom0")
         this_co21        = self.outmom_co21_n3627.replace(this_basebeam,"????").replace("momX","mom0")
         this_r21         = self.outfits_r21_n3627.replace(this_basebeam,"????")
@@ -1118,6 +1116,7 @@ class ToolsR21():
             this_eco21   = eco21.replace("????",this_beamstr)
             this_er21    = er21.replace("????",this_beamstr)
             this_outtxt  = outtxt.replace("????",this_beamstr)
+            print(outtxt)
             print(this_outtxt)
 
             done = glob.glob(this_outtxt)
