@@ -568,8 +568,6 @@ class ToolsR21():
         """
 
         for i, this_beam in enumerate(beams):
-            if i!=0:
-                continue
             this_beamstr    = str(this_beam).replace(".","p").zfill(4)
             this_txt        = inputtxt.replace("????",this_beamstr)
             data            = np.loadtxt(this_txt)
@@ -740,7 +738,6 @@ class ToolsR21():
 
                 # chi2
                 if len(this_obs_co10)*len(this_obs_co21)!=0:
-                    #this_chi2 = self._calc_chi2(10**this_obs_co21/10**this_obs_co10,10**this_modsn_co21/10**this_modsn_co10,weight="wing")
                     this_chi2 = self._calc_chi2(this_obs_co21,this_modsn_co21)
                 else:
                     this_chi2 = 1e44
