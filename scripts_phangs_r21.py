@@ -956,7 +956,7 @@ class ToolsR21():
         ax1.plot(xfunc, yfunc, color="grey", lw=1)
         ax1.set_xlim([np.min(obs_co10)-0.1,np.max(obs_co10)+0.1])
         ax1.set_ylim([np.min(obs_co21)-0.1,np.max(obs_co21)+0.1])
-        ax1.text(0.05,0.95,str(slope)+", "+str(icept),transform=ax1.transAxes,self.legend_fontsize-2,weight="bold")
+        ax1.text(0.05,0.95,str(slope)+", "+str(icept),transform=ax1.transAxes,weight="bold")
         plt.savefig(outpng)
 
     ########################
