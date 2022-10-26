@@ -717,7 +717,7 @@ class ToolsR21():
         nbins = np.linspace(obs_co21.min(), obs_co21.max(), nbins)
 
         for i in range(2000):
-            if i%5==0:
+            if i%100==0:
                 print("# loop slope/icept = " + str(i) + " / " + str(2000))
             _, this_scatter, this_slope, this_icept = self._get_modeling_param(modeling_space)
 
