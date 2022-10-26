@@ -43,7 +43,7 @@ history:
 Toshiki Saito@NAOJ
 """
 
-import os, sys, glob
+import os, sys, glob, time
 import numpy as np
 from scipy.stats import gaussian_kde
 
@@ -567,6 +567,8 @@ class ToolsR21():
         modeling
         """
 
+        start = time.time()
+
         for i, this_beam in enumerate(beams):
             if i!=0:
                 continue
@@ -596,6 +598,9 @@ class ToolsR21():
             # plot scatter: obs, mods, modsn
             self._plot_obs_model_scatter(this_slope,this_icept,this_logco10,this_logco21,
                 this_logco10_modsn,this_logco21_modsn,this_logco21_mods,"scatter_modsn_obs_"+this_beamstr+".png")
+
+        print("# elapsed time (min.) = ",(time/time() - start)/60.)
+
 
         """
         for i, this_beam in enumerate(beams):
@@ -703,7 +708,7 @@ class ToolsR21():
         modeling_space,
         obs_co10,
         output="hist_modsn_obs_co21.png",
-        nloop=100,
+        nloop=250,
         ):
         """
         """
@@ -711,7 +716,7 @@ class ToolsR21():
         nbins, _, _, _ = self._get_modeling_param(modeling_space)
         nbins = np.linspace(obs_co21.min(), obs_co21.max(), nbins)
 
-        for i in range(100):
+        for i in range(400):
             if i%5==0:
                 print("# loop slope/icept = " + str(i) + " / " + str(100))
             _, _, this_slope, this_icept = self._get_modeling_param(modeling_space)
