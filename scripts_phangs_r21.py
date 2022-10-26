@@ -596,6 +596,7 @@ class ToolsR21():
             #if i!=0:
             #    continue
             this_beamstr    = str(this_beam).replace(".","p").zfill(4)
+            print(this_beamstr)
             this_txt        = inputtxt.replace("????",this_beamstr)
             data            = np.loadtxt(this_txt)
             this_logco10    = data[:,0]
