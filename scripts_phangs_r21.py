@@ -745,14 +745,14 @@ class ToolsR21():
                     print("# calc chi2")
                     this_chi2 = self._calc_chi2(10**this_obs_co21/10**this_obs_co10,10**this_modsn_co21/10**this_modsn_co10,weight="wing")
                 else:
-                    this_chi2 = 1e44
+                    this_chi2 = 0
 
                 if j==0:
                     best_chi2       = this_chi2
                     best_mods_co21  = this_mods_co21
                     best_modsn_co21 = this_modsn_co21
                     best_scatter    = this_scatter
-                if best_chi2>this_chi2:
+                if best_chi2<this_chi2:
                     best_chi2       = this_chi2
                     best_mods_co21  = this_mods_co21
                     best_modsn_co21 = this_modsn_co21
@@ -815,9 +815,8 @@ class ToolsR21():
         """
 
         value = stats.ks_2samp(data_obs, data_modsn)
-        print(value)
 
-        return chi2
+        return value.statistic
 
     #######################
     # _get_modeling_param #
