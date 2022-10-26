@@ -748,7 +748,7 @@ class ToolsR21():
                     this_modsn_co21 = np.log10(10**this_mods_co21 + np.random.normal(0.0, np.log(10)*10**this_mods_co21*this_obserr, len(this_mods_co21)))
 
                 modsn_co10_candidate.extend(this_modsn_co10)
-                mods_co21_candidate.extend(best_mods_co21)
+                mods_co21_candidate.extend(this_mods_co21)
                 modsn_co21_candidate.extend(this_modsn_co21)
                 scatter_candidate.append(this_scatter)
 
