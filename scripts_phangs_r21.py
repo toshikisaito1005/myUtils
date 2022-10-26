@@ -708,7 +708,7 @@ class ToolsR21():
         modeling_space,
         obs_co10,
         output="hist_modsn_obs_co21.png",
-        nloop=50,
+        nloop=500,
         ):
         """
         """
@@ -782,10 +782,10 @@ class ToolsR21():
         nbins, _, _, _ = self._get_modeling_param(modeling_space)
         nbins = np.linspace(obs_co21.min(), obs_co21.max(), nbins)
 
-        for i in range(50):
+        for i in range(1):
             if i%10==0:
                 print("# loop slope/icept = " + str(i) + " / " + str(50))
-            _, this_scatter, this_slope, this_icept = self._get_modeling_param(modeling_space)
+            _, _, this_slope, this_icept = self._get_modeling_param(modeling_space)
 
             # log co21 model distribution
             mod_co21 = this_slope * modsn_co10 + this_icept
@@ -927,8 +927,8 @@ class ToolsR21():
 
         nbins         = 2 #int( (np.ceil(np.log2(len(obs))) + 1) + 1.5 )
         range_scatter = [0.0, 2.0]
-        range_slope   = [slope-0.2, slope+0.2]
-        range_icept   = [icept-1.0, icept+0.5]
+        range_slope   = [slope-0.001, slope+0.001]
+        range_icept   = [icept-0.001, icept+0.001]
 
         return [nbins, range_scatter, range_slope, range_icept]
 
