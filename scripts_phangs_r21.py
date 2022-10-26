@@ -713,6 +713,7 @@ class ToolsR21():
         """
         """
 
+        """
         nbins, _, _, _ = self._get_modeling_param(modeling_space)
         nbins = np.linspace(obs_co21.min(), obs_co21.max(), nbins)
 
@@ -776,8 +777,8 @@ class ToolsR21():
         self._plot_obs_model_hist(10**obs_co21/10**obs_co10,10**mods_co21_final/10**modsn_co10_final,10**modsn_co21_final/10**modsn_co10_final,output.replace("co21","r21"))
 
         return modsn_co10_final, modsn_co21_final, mods_co21_final, best_slope, best_icept
-
         """
+
         nbins, _, _, _ = self._get_modeling_param(modeling_space)
         nbins = np.linspace(obs_co21.min(), obs_co21.max(), nbins)
 
@@ -850,7 +851,6 @@ class ToolsR21():
         self._plot_obs_model_hist(10**obs_co21/10**obs_co10,10**mods_co21_final/10**modsn_co10_final,10**modsn_co21_final/10**modsn_co10_final,output.replace("co21","r21"))
 
         return modsn_co10_final, modsn_co21_final, mods_co21_final, best_slope, best_icept
-        """
 
     ##############
     # _calc_chi2 #
@@ -925,7 +925,7 @@ class ToolsR21():
         """
         """
 
-        nbins         = 3 #int( (np.ceil(np.log2(len(obs))) + 1) + 1.5 )
+        nbins         = 2 #int( (np.ceil(np.log2(len(obs))) + 1) + 1.5 )
         range_scatter = [0.0, 2.0]
         range_slope   = [slope-0.2, slope+0.2]
         range_icept   = [icept-1.0, icept+0.5]
