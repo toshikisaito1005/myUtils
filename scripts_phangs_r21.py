@@ -766,6 +766,7 @@ class ToolsR21():
             if best_chi2>this_chi2:
                 best_chi2        = this_chi2
                 best_slope       = this_slope
+                print(best_slope)
                 best_icept       = this_icept
                 modsn_co10_final = modsn_co10_candidate
                 mods_co21_final  = mods_co21_candidate
