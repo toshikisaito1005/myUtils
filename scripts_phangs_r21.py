@@ -712,6 +712,8 @@ class ToolsR21():
         nbins = np.linspace(obs_co21.min(), obs_co21.max(), nbins)
 
         for i in range(100):
+            if i%20==0:
+                print("# loop slope/icept = " + str(i) + " / " + str(100))
             _, _, this_slope, this_icept = self._get_modeling_param(modeling_space)
 
             # log co21 model distribution
@@ -730,8 +732,6 @@ class ToolsR21():
                 this_obserr   = np.nan_to_num(np.nanmedian(obs_co21err[this_cut])) + 0.0000000001
                 # get best this_scatter
                 for k in range(nloop):
-                    if k%200==0:
-                        print("# loop = " + str(k) + " / " + str(nloop))
                     _, this_scatter, _, _ = self._get_modeling_param(modeling_space)
                     this_cut        = np.where((mod_co21>=nbins[i]) & (mod_co21<nbins[i+1]))
                     this_modsn_co10 = modsn_co10[this_cut]
@@ -766,11 +766,15 @@ class ToolsR21():
             this_chi2 = self._calc_chi2(10**obs_co21/10**obs_co10,10**modsn_co21_candidate/10**modsn_co10_candidate)
             if i==0:
                 best_chi2       = this_chi2
+                best_slope       = this_slope
+                best_icept       = this_icept
                 modsn_co10_final = modsn_co10_candidate
                 mods_co21_final  = mods_co21_candidate
                 modsn_co21_final = modsn_co21_candidate
             if best_chi2>this_chi2:
                 best_chi2       = this_chi2
+                best_slope       = this_slope
+                best_icept       = this_icept
                 modsn_co10_final = modsn_co10_candidate
                 mods_co21_final  = mods_co21_candidate
                 modsn_co21_final = modsn_co21_candidate
