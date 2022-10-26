@@ -713,7 +713,6 @@ class ToolsR21():
         """
         """
 
-        """
         nbins, _, _, _ = self._get_modeling_param(modeling_space)
         nbins = np.linspace(obs_co21.min(), obs_co21.max(), nbins)
 
@@ -776,8 +775,8 @@ class ToolsR21():
         self._plot_obs_model_hist(obs_co21/obs_co10,mods_co21_final/modsn_co10_final,modsn_co21_final/modsn_co10_final,output.replace("co21","r21"))
 
         return modsn_co10_final, modsn_co21_final, mods_co21_final, best_slope, best_icept
-        """
 
+        """
         nbins, _, _, _ = self._get_modeling_param(modeling_space)
         nbins = np.linspace(obs_co21.min(), obs_co21.max(), nbins)
 
@@ -850,6 +849,7 @@ class ToolsR21():
         self._plot_obs_model_hist(obs_co21/obs_co10,mods_co21_final/modsn_co10_final,modsn_co21_final/modsn_co10_final,output.replace("co21","r21"))
 
         return modsn_co10_final, modsn_co21_final, mods_co21_final, best_slope, best_icept
+        """
 
     ##############
     # _calc_chi2 #
