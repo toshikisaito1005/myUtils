@@ -576,6 +576,44 @@ class ToolsR21():
             this_outputs_obs,this_ra,this_dec,this_scale,this_pa,this_incl)
         self._loop_modeling(this_beams_n3627,this_outputs_obs,this_galname)
 
+        this_basebeam    = str(self.basebeam_n4254).replace(".","p").zfill(4)
+        this_beams_n4254 = [s for s in self.beams_n4254 if s%4==0]
+        this_co10        = self.outmom_co10_n4254.replace(this_basebeam,"????").replace("momX","mom0")
+        this_co21        = self.outmom_co21_n4254.replace(this_basebeam,"????").replace("momX","mom0")
+        this_r21         = self.outfits_r21_n4254.replace(this_basebeam,"????")
+        this_eco10       = self.outmom_co10_n4254.replace(this_basebeam,"????").replace("momX","emom0")
+        this_eco21       = self.outmom_co21_n4254.replace(this_basebeam,"????").replace("momX","emom0")
+        this_er21        = self.outfits_er21_n4254.replace(this_basebeam,"????")
+        this_ra          = float(self.ra_n4254)
+        this_dec         = float(self.dec_n4254)
+        this_scale       = self.scale_n4254
+        this_pa          = self.pa_n4254
+        this_incl        = self.incl_n4254
+        this_outputs_obs = self.outtxt_obs_n4254.replace(this_basebeam,"????")
+        this_galname     = "n4254"
+        self._loop_import_modeling(this_beams_n4254,this_co10,this_co21,this_r21,this_eco10,this_eco21,this_er21,
+            this_outputs_obs,this_ra,this_dec,this_scale,this_pa,this_incl)
+        self._loop_modeling(this_beams_n4254,this_outputs_obs,this_galname)
+
+        this_basebeam    = str(self.basebeam_n4321).replace(".","p").zfill(4)
+        this_beams_n4321 = [s for s in self.beams_n4321 if s%4==0]
+        this_co10        = self.outmom_co10_n4321.replace(this_basebeam,"????").replace("momX","mom0")
+        this_co21        = self.outmom_co21_n4321.replace(this_basebeam,"????").replace("momX","mom0")
+        this_r21         = self.outfits_r21_n4321.replace(this_basebeam,"????")
+        this_eco10       = self.outmom_co10_n4321.replace(this_basebeam,"????").replace("momX","emom0")
+        this_eco21       = self.outmom_co21_n4321.replace(this_basebeam,"????").replace("momX","emom0")
+        this_er21        = self.outfits_er21_n4321.replace(this_basebeam,"????")
+        this_ra          = float(self.ra_n4321)
+        this_dec         = float(self.dec_n4321)
+        this_scale       = self.scale_n4321
+        this_pa          = self.pa_n4321
+        this_incl        = self.incl_n4321
+        this_outputs_obs = self.outtxt_obs_n4321.replace(this_basebeam,"????")
+        this_galname     = "n4321"
+        self._loop_import_modeling(this_beams_n4321,this_co10,this_co21,this_r21,this_eco10,this_eco21,this_er21,
+            this_outputs_obs,this_ra,this_dec,this_scale,this_pa,this_incl)
+        self._loop_modeling(this_beams_n4321,this_outputs_obs,this_galname)
+
     ##################
     # _loop_modeling #
     ##################
