@@ -740,7 +740,7 @@ class ToolsR21():
 
                 # chi2
                 if len(this_obs_co10)*len(this_obs_co21)!=0:
-                    this_chi2 = self._calc_chi2(10**this_obs_co21/10**this_obs_co10,10**this_modsn_co21/10**this_modsn_co10)
+                    this_chi2 = self._calc_chi2(10**this_obs_co21/10**this_obs_co10,10**this_modsn_co21/10**this_modsn_co10,weight="wing")
                     #this_chi2 = np.sqrt(this_chi2**10 + self._calc_chi2(this_obs_co21,this_modsn_co21)**2)
                 else:
                     this_chi2 = 1e44
