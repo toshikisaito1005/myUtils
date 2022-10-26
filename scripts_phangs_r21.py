@@ -756,6 +756,7 @@ class ToolsR21():
                     best_mods_co21  = this_mods_co21
                     best_modsn_co21 = this_modsn_co21
                     best_scatter    = this_scatter
+                    print(best_chi2)
 
             modsn_co10_final.extend(this_modsn_co10)
             mods_co21_final.extend(best_mods_co21)
