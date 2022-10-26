@@ -784,7 +784,7 @@ class ToolsR21():
 
         for i in range(100):
             if i%10==0:
-                print("# loop slope/icept = " + str(i) + " / " + str(200))
+                print("# loop slope/icept = " + str(i) + " / " + str(100))
             _, this_scatter, this_slope, this_icept = self._get_modeling_param(modeling_space)
 
             # log co21 model distribution
@@ -818,7 +818,7 @@ class ToolsR21():
                         modsn_co10_best = this_modsn_co10
                         mods_co21_best  = this_mods_co21
                         modsn_co21_best = this_modsn_co21
-                    if best_chi2>this_chi2:
+                    if best_chi2<this_chi2:
                         best_chi2       = this_chi2
                         modsn_co10_best = this_modsn_co10
                         mods_co21_best  = this_mods_co21
@@ -839,7 +839,7 @@ class ToolsR21():
                 modsn_co10_final = modsn_co10_candidate
                 mods_co21_final  = mods_co21_candidate
                 modsn_co21_final = modsn_co21_candidate
-            if best_chi2>this_chi2:
+            if best_chi2<this_chi2:
                 best_chi2        = this_chi2
                 best_slope       = this_slope
                 best_icept       = this_icept
