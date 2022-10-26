@@ -1117,6 +1117,7 @@ class ToolsR21():
             this_eco21   = eco21.replace("????",this_beamstr)
             this_er21    = er21.replace("????",this_beamstr)
             this_outtxt  = outtxt.replace("????",this_beamstr)
+            print(this_outtxt)
 
             done = glob.glob(this_outtxt)
             if not done:
