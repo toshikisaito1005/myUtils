@@ -599,7 +599,7 @@ class ToolsR21():
             self._plot_obs_model_scatter(this_slope,this_icept,this_logco10,this_logco21,
                 this_logco10_modsn,this_logco21_modsn,this_logco21_mods,"scatter_modsn_obs_"+this_beamstr+".png")
 
-        print("# elapsed time (min.) = ",(time/time() - start)/60.)
+        print("# elapsed time (min.) = ",(time.time() - start)/60.)
 
 
         """
@@ -708,7 +708,7 @@ class ToolsR21():
         modeling_space,
         obs_co10,
         output="hist_modsn_obs_co21.png",
-        nloop=250,
+        nloop=100,
         ):
         """
         """
@@ -716,9 +716,9 @@ class ToolsR21():
         nbins, _, _, _ = self._get_modeling_param(modeling_space)
         nbins = np.linspace(obs_co21.min(), obs_co21.max(), nbins)
 
-        for i in range(400):
+        for i in range(200):
             if i%5==0:
-                print("# loop slope/icept = " + str(i) + " / " + str(100))
+                print("# loop slope/icept = " + str(i) + " / " + str(200))
             _, _, this_slope, this_icept = self._get_modeling_param(modeling_space)
 
             # log co21 model distribution
