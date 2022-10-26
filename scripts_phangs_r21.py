@@ -1109,6 +1109,7 @@ class ToolsR21():
 
         for this_beam in beams:
             this_beamstr = str(this_beam).replace(".","p").zfill(4)
+            print(this_beamstr)
             this_co10    = co10.replace("????",this_beamstr)
             this_co21    = co21.replace("????",this_beamstr)
             this_r21     = r21.replace("????",this_beamstr)
