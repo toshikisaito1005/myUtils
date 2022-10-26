@@ -570,8 +570,8 @@ class ToolsR21():
         start = time.time()
 
         for i, this_beam in enumerate(beams):
-            if i!=0:
-                continue
+            #if i!=0:
+            #    continue
             this_beamstr    = str(this_beam).replace(".","p").zfill(4)
             this_txt        = inputtxt.replace("????",this_beamstr)
             data            = np.loadtxt(this_txt)
