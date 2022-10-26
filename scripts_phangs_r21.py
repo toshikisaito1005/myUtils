@@ -536,6 +536,7 @@ class ToolsR21():
         # prepare #
         ###########
 
+        """
         this_basebeam    = str(self.basebeam_n0628).replace(".","p").zfill(4)
         this_beams_n0628 = [s for s in self.beams_n0628 if s%4==0]
         this_co10        = self.outmom_co10_n0628.replace(this_basebeam,"????").replace("momX","mom0")
@@ -549,10 +550,31 @@ class ToolsR21():
         this_scale       = self.scale_n0628
         this_pa          = self.pa_n0628
         this_incl        = self.incl_n0628
-        this_outputs     = self.outtxt_obs_n0628.replace(this_basebeam,"????")
+        this_outputs_obs = self.outtxt_obs_n0628.replace(this_basebeam,"????")
+        this_galname     = "n0628"
         self._loop_import_modeling(this_beams_n0628,this_co10,this_co21,this_r21,this_eco10,this_eco21,this_er21,
-            this_outputs,this_ra,this_dec,this_scale,this_pa,this_incl)
-        self._loop_modeling(this_beams_n0628,this_outputs,"n0628")
+            this_outputs_obs,this_ra,this_dec,this_scale,this_pa,this_incl)
+        self._loop_modeling(this_beams_n0628,this_outputs_obs,this_galname)
+        """
+
+        this_basebeam    = str(self.basebeam_n3627).replace(".","p").zfill(4)
+        this_beams_n3627 = [s for s in self.beams_n3627 if s%4==0]
+        this_co10        = self.outmom_co10_n3627.replace(this_basebeam,"????").replace("momX","mom0")
+        this_co21        = self.outmom_co21_n3627.replace(this_basebeam,"????").replace("momX","mom0")
+        this_r21         = self.outfits_r21_n3627.replace(this_basebeam,"????")
+        this_eco10       = self.outmom_co10_n3627.replace(this_basebeam,"????").replace("momX","emom0")
+        this_eco21       = self.outmom_co21_n3627.replace(this_basebeam,"????").replace("momX","emom0")
+        this_er21        = self.outfits_er21_n3627.replace(this_basebeam,"????")
+        this_ra          = float(self.ra_n3627)
+        this_dec         = float(self.dec_n3627)
+        this_scale       = self.scale_n3627
+        this_pa          = self.pa_n3627
+        this_incl        = self.incl_n3627
+        this_outputs_obs = self.outtxt_obs_n3627.replace(this_basebeam,"????")
+        this_galname     = "n3627"
+        self._loop_import_modeling(this_beams_n3627,this_co10,this_co21,this_r21,this_eco10,this_eco21,this_er21,
+            this_outputs_obs,this_ra,this_dec,this_scale,this_pa,this_incl)
+        self._loop_modeling(this_beams_n3627,this_outputs_obs,this_galname)
 
     ##################
     # _loop_modeling #
