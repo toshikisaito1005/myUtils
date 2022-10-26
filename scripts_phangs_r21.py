@@ -713,6 +713,7 @@ class ToolsR21():
         """
         """
 
+        """
         nbins, _, _, _ = self._get_modeling_param(modeling_space)
         nbins = np.linspace(obs_co21.min(), obs_co21.max(), nbins)
 
@@ -775,70 +776,79 @@ class ToolsR21():
         self._plot_obs_model_hist(obs_co21/obs_co10,mods_co21_final/modsn_co10_final,modsn_co21_final/modsn_co10_final,output.replace("co21","r21"))
 
         return modsn_co10_final, modsn_co21_final, mods_co21_final, best_slope, best_icept
-
         """
-        nbins, _, this_slope, this_icept = self._get_modeling_param(modeling_space)
+
+        nbins, _, _, _ = self._get_modeling_param(modeling_space)
         nbins = np.linspace(obs_co21.min(), obs_co21.max(), nbins)
 
-        # log co21 model distribution
-        mod_co21 = this_slope * modsn_co10 + this_icept
+        for i in range(500):
+            if i%100==0:
+                print("# loop slope/icept = " + str(i) + " / " + str(2000))
+            _, this_scatter, this_slope, this_icept = self._get_modeling_param(modeling_space)
 
-        modsn_co10_final = []
-        mods_co21_final  = []
-        modsn_co21_final = []
-        scatter_final    = []
-        for i in range(len(nbins)-1):
-            print("# nbin = " + str(i) + " / " + str(len(nbins)-1))
-            # get this_obserr
-            this_cut      = np.where((obs_co21>=nbins[i]) & (obs_co21<nbins[i+1]))
-            this_obs_co10 = obs_co10[this_cut]
-            this_obs_co21 = obs_co21[this_cut]
-            this_obserr   = np.nan_to_num(np.nanmedian(obs_co21err[this_cut])) + 0.0000000001
-            # get best this_scatter
-            for j in range(nloop):
-                if j%200==0:
-                    print("# loop = " + str(j) + " / " + str(nloop))
+            # log co21 model distribution
+            mod_co21 = this_slope * modsn_co10 + this_icept
 
-                _, this_scatter, _, _ = self._get_modeling_param(modeling_space)
-                this_cut        = np.where((mod_co21>=nbins[i]) & (mod_co21<nbins[i+1]))
-                this_modsn_co10 = modsn_co10[this_cut]
-                this_mod_co21   = mod_co21[this_cut]
-                this_mods_co21  = np.log10(10**this_mod_co21 + np.random.normal(0.0, np.log(10)*10**this_mod_co21*this_scatter, len(this_mod_co21)))
-                this_modsn_co21 = np.log10(10**this_mods_co21 + np.random.normal(0.0, np.log(10)*10**this_mods_co21*this_obserr, len(this_mods_co21)))
-                # chi2
-                if len(this_obs_co10)*len(this_obs_co21)!=0:
-                    #this_chi2 = self._calc_chi2(this_obs_co21,this_modsn_co21)
-                    this_chi2 = self._calc_chi2(10**this_obs_co21/10**this_obs_co10,10**this_modsn_co21/10**this_modsn_co10,weight="wing")
-                else:
-                    this_chi2 = 1e44
+            modsn_co10_candidate = []
+            mods_co21_candidate  = []
+            modsn_co21_candidate = []
+            for j in range(len(nbins)-1):
+                # get this_obserr
+                this_cut      = np.where((obs_co21>=nbins[j]) & (obs_co21<nbins[j+1]))
+                this_obs_co10 = obs_co10[this_cut]
+                this_obs_co21 = obs_co21[this_cut]
+                this_obserr   = np.nan_to_num(np.nanmedian(obs_co21err[this_cut])) + 0.0000000001
 
-                if j==0:
-                    best_chi2       = this_chi2
-                    best_mods_co21  = this_mods_co21
-                    best_modsn_co21 = this_modsn_co21
-                    best_scatter    = this_scatter
-                if best_chi2>this_chi2:
-                    best_chi2       = this_chi2
-                    best_mods_co21  = this_mods_co21
-                    best_modsn_co21 = this_modsn_co21
-                    best_scatter    = this_scatter
-                    print(best_chi2)
+                # get best this_scatter
+                for k in range(nloop):
+                    if len(mod_co21)==0:
+                        this_chi2 = 1e44
+                    else:
+                        _, this_scatter, _, _ = self._get_modeling_param(modeling_space)
+                        this_cut        = np.where((mod_co21>=nbins[j]) & (mod_co21<nbins[j+1]))
+                        this_modsn_co10 = modsn_co10[this_cut]
+                        this_mod_co21   = mod_co21[this_cut]
+                        this_mods_co21  = np.log10(10**this_mod_co21 + np.random.normal(0.0, np.log(10)*10**this_mod_co21*this_scatter, len(this_mod_co21)))
+                        this_modsn_co21 = np.log10(10**this_mods_co21 + np.random.normal(0.0, np.log(10)*10**this_mods_co21*this_obserr, len(this_mods_co21)))
 
-            modsn_co10_final.extend(this_modsn_co10)
-            mods_co21_final.extend(best_mods_co21)
-            modsn_co21_final.extend(best_modsn_co21)
-            scatter_final.append(this_scatter)
+                    if k==0:
+                        best_chi2       = this_chi2
+                        modsn_co10_best = this_modsn_co10
+                        mods_co21_best  = this_mods_co21
+                        modsn_co21_best = this_modsn_co21
+                    if best_chi2>this_chi2:
+                        best_chi2       = this_chi2
+                        modsn_co10_best = this_modsn_co10
+                        mods_co21_best  = this_mods_co21
+                        modsn_co21_best = this_modsn_co21
 
-        modsn_co10_final = np.array(modsn_co10_final)
-        mods_co21_final  = np.array(mods_co21_final)
-        modsn_co21_final = np.array(modsn_co21_final)
-        print(scatter_final)
+                    modsn_co10_candidate.extend(modsn_co10_best)
+                    mods_co21_candidate.extend(mods_co21_best)
+                    modsn_co21_candidate.extend(modsn_co21_best)
+
+            modsn_co10_candidate = np.array(modsn_co10_candidate)
+            mods_co21_candidate  = np.array(mods_co21_candidate)
+            modsn_co21_candidate = np.array(modsn_co21_candidate)
+            this_chi2 = self._calc_chi2(10**obs_co21/10**obs_co10,10**modsn_co21_candidate/10**modsn_co10_candidate)
+            if i==0:
+                best_chi2        = this_chi2
+                best_slope       = this_slope
+                best_icept       = this_icept
+                modsn_co10_final = modsn_co10_candidate
+                mods_co21_final  = mods_co21_candidate
+                modsn_co21_final = modsn_co21_candidate
+            if best_chi2>this_chi2:
+                best_chi2        = this_chi2
+                best_slope       = this_slope
+                best_icept       = this_icept
+                modsn_co10_final = modsn_co10_candidate
+                mods_co21_final  = mods_co21_candidate
+                modsn_co21_final = modsn_co21_candidate
 
         self._plot_obs_model_hist(obs_co21,mods_co21_final,modsn_co21_final,output)
         self._plot_obs_model_hist(obs_co21/obs_co10,mods_co21_final/modsn_co10_final,modsn_co21_final/modsn_co10_final,output.replace("co21","r21"))
 
-        return modsn_co10_final, modsn_co21_final, mods_co21_final
-        """
+        return modsn_co10_final, modsn_co21_final, mods_co21_final, best_slope, best_icept
 
     ##############
     # _calc_chi2 #
@@ -913,7 +923,7 @@ class ToolsR21():
         """
         """
 
-        nbins         = int( (np.ceil(np.log2(len(obs))) + 1) + 1.5 )
+        nbins         = 3 #int( (np.ceil(np.log2(len(obs))) + 1) + 1.5 )
         range_scatter = [0.0, 2.0]
         range_slope   = [slope-0.3, slope+0.3]
         range_icept   = [icept-0.5, icept+0.5]
@@ -1030,7 +1040,7 @@ class ToolsR21():
         list_icept = []
         for i in range(100):
             popt,_ = curve_fit(self._func2, logx, logy, p0=[np.random.rand()+1.0,np.random.rand()-0.5],
-                maxfev=10000, sigma=10**logy)
+                maxfev=10000)#, sigma=10**logy)
             list_slope.append(popt[0])
             list_icept.append(popt[1])
 
