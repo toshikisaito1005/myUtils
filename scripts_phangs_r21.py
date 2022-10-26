@@ -552,7 +552,7 @@ class ToolsR21():
         this_outputs     = self.outtxt_obs_n0628.replace(this_basebeam,"????")
         self._loop_import_modeling(this_beams_n0628,this_co10,this_co21,this_r21,this_eco10,this_eco21,this_er21,
             this_outputs,this_ra,this_dec,this_scale,this_pa,this_incl)
-        self._loop_modeling(this_beams_n0628,this_outputs)
+        self._loop_modeling(this_beams_n0628,this_outputs,"n0628")
 
     ##################
     # _loop_modeling #
@@ -562,6 +562,7 @@ class ToolsR21():
         self,
         beams,
         inputtxt,
+        galname,
         ):
         """
         modeling
@@ -593,11 +594,12 @@ class ToolsR21():
 
             # generate log10 co21 mods, modsn
             this_logco10_modsn, this_logco21_modsn, this_logco21_mods, this_slope2, this_icept2 = \
-                self._get_modsn_co21(this_logco21,this_logco21err,this_logco10_modsn,modeling_space,this_logco10)
+                self._get_modsn_co21(this_logco21,this_logco21err,this_logco10_modsn,modeling_space,this_logco10,
+                    output="hist_modsn_obs_co21_"+galname+"_"+this_beamstr+".png")
 
             # plot scatter: obs, mods, modsn
             self._plot_obs_model_scatter(this_slope2,this_icept2,this_slope,this_icept,this_logco10,this_logco21,
-                this_logco10_modsn,this_logco21_modsn,this_logco21_mods,"scatter_modsn_obs_"+this_beamstr+".png")
+                this_logco10_modsn,this_logco21_modsn,this_logco21_mods,"scatter_modsn_obs_"+galname+"_"+this_beamstr+".png")
 
         print("# elapsed time (min.) = ",(time.time() - start)/60.)
 
@@ -708,7 +710,8 @@ class ToolsR21():
         modeling_space,
         obs_co10,
         output="hist_modsn_obs_co21.png",
-        nloop=2000,
+        nloop_scatter=2000,
+        nloop_slope_icept=1,
         ):
         """
         """
@@ -782,9 +785,9 @@ class ToolsR21():
         nbins, _, _, _ = self._get_modeling_param(modeling_space)
         nbins = np.linspace(obs_co21.min(), obs_co21.max(), nbins)
 
-        for i in range(1):
+        for i in range(nloop_slope_icept):
             if i%10==0:
-                print("# loop slope/icept = " + str(i) + " / " + str(1))
+                print("# loop slope/icept = " + str(i) + " / " + str(nloop_slope_icept))
             _, _, this_slope, this_icept = self._get_modeling_param(modeling_space)
 
             # log co21 model distribution
@@ -801,7 +804,7 @@ class ToolsR21():
                 this_obserr   = np.nan_to_num(np.nanmedian(obs_co21err[this_cut])) + 0.0000000001
 
                 # get best this_scatter
-                for k in range(nloop):
+                for k in range(nloop_scatter):
                     if len(mod_co21)==0:
                         this_chi2 = 1e44
                     else:
