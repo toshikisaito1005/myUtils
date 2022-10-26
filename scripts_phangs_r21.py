@@ -717,10 +717,10 @@ class ToolsR21():
             # log co21 model distribution
             mod_co21 = this_slope * modsn_co10 + this_icept
 
-            modsn_co10_cadidate = []
-            mods_co21_cadidate  = []
-            modsn_co21_cadidate = []
-            scatter_cadidate    = []
+            modsn_co10_candidate = []
+            mods_co21_candidate  = []
+            modsn_co21_candidate = []
+            scatter_candidate    = []
             for j in range(len(nbins)-1):
                 print("# nbin = " + str(j) + " / " + str(len(nbins)-1))
                 # get this_obserr
