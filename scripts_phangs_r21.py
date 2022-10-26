@@ -708,7 +708,7 @@ class ToolsR21():
         modeling_space,
         obs_co10,
         output="hist_modsn_obs_co21.png",
-        nloop=500,
+        nloop=2000,
         ):
         """
         """
@@ -784,7 +784,7 @@ class ToolsR21():
 
         for i in range(1):
             if i%10==0:
-                print("# loop slope/icept = " + str(i) + " / " + str(50))
+                print("# loop slope/icept = " + str(i) + " / " + str(1))
             _, _, this_slope, this_icept = self._get_modeling_param(modeling_space)
 
             # log co21 model distribution
