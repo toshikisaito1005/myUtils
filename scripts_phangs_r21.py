@@ -803,7 +803,7 @@ class ToolsR21():
                 # get best this_scatter
                 for k in range(nloop):
                     if len(mod_co21)==0:
-                        this_chi2 = 1e44
+                        this_chi2 = 0 # 1e44
                     else:
                         _, this_scatter, _, _ = self._get_modeling_param(modeling_space)
                         this_cut        = np.where((mod_co21>=nbins[j]) & (mod_co21<nbins[j+1]))
