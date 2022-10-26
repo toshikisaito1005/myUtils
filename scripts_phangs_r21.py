@@ -721,28 +721,28 @@ class ToolsR21():
         for i in range(len(nbins)-1):
             print("# nbin = " + str(i) + " / " + str(len(nbins)-1))
             # get this_obserr
-            this_cut    = np.where((obs_co21>=nbins[i]) & (obs_co21<nbins[i+1]))
-            this_obserr = np.nan_to_num(np.nanmedian(obs_co21err[this_cut])) + 0.0000000001
+            this_cut      = np.where((obs_co21>=nbins[i]) & (obs_co21<nbins[i+1]))
+            this_obs_co10 = obs_co10[this_cut]
+            this_obs_co21 = obs_co21[this_cut]
+            this_obserr   = np.nan_to_num(np.nanmedian(obs_co21err[this_cut])) + 0.0000000001
             # get best this_scatter
             for j in range(nloop):
                 if j%200==0:
                     print("# loop = " + str(j) + " / " + str(nloop))
 
                 _, this_scatter, _, _ = self._get_modeling_param(modeling_space)
-                this_cut2       = np.where((mod_co21>=nbins[i]) & (mod_co21<nbins[i+1]))
-                this_obs_co10   = obs_co10[this_cut]
-                this_obs_co21   = obs_co21[this_cut]
-                this_modsn_co10 = modsn_co10[this_cut2]
-                this_mod_co21   = mod_co21[this_cut2]
+                this_cut        = np.where((mod_co21>=nbins[i]) & (mod_co21<nbins[i+1]))
+                this_modsn_co10 = modsn_co10[this_cut]
+                this_mod_co21   = mod_co21[this_cut]
                 this_mods_co21  = np.log10(10**this_mod_co21 + np.random.normal(0.0, 10**this_scatter, len(this_mod_co21)))
                 this_modsn_co21 = np.log10(10**this_mods_co21 + np.random.normal(0.0, 10**this_obserr, len(this_mods_co21)))
 
                 # chi2
-                if len(this_obs_co10)!=0:
-                    this_chi2 = self._calc_chi2(10**this_obs_co10/10**this_obs_co10,10**this_modsn_co21/10**this_modsn_co10)
+                if len(this_obs_co10)*len(this_obs_co21)!=0:
+                    this_chi2 = self._calc_chi2(this_obs_co21,this_modsn_co21)
                 else:
                     this_chi2 = 1e44
-                #this_chi2 = np.sqrt( this_chi2**2 + self._calc_chi2(obs_co21,this_modsn_co21)**2 )
+
                 if j==0:
                     best_chi2       = this_chi2
                     best_mods_co21  = this_mods_co21
