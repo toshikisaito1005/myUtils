@@ -854,6 +854,7 @@ class ToolsR21():
             mods_co21_candidate  = []
             modsn_co21_candidate = []
             scatter_candidate    = []
+            max_scatter          = 0.5
             for j in range(len(nbins)-1):
                 # get this_obserr
                 this_cut      = np.where((obs_co21>=nbins[j]) & (obs_co21<nbins[j+1]))
@@ -866,7 +867,7 @@ class ToolsR21():
                     if len(mod_co21)==0:
                         this_chi2 = 1e44
                     else:
-                        _, this_scatter, _, _ = self._get_modeling_param(modeling_space)
+                        _, this_scatter, _, _ = self._get_modeling_param(modeling_space,max_scatter)
                         this_cut        = np.where((mod_co21>=nbins[j]) & (mod_co21<nbins[j+1]))
                         this_modsn_co10 = modsn_co10[this_cut]
                         this_mod_co21   = mod_co21[this_cut]
@@ -891,6 +892,7 @@ class ToolsR21():
                 mods_co21_candidate.extend(mods_co21_best)
                 modsn_co21_candidate.extend(modsn_co21_best)
                 scatter_candidate.append(scatter_best)
+                max_scatter = scatter_best
 
             modsn_co10_candidate = np.array(modsn_co10_candidate)
             mods_co21_candidate  = np.array(mods_co21_candidate)
@@ -966,14 +968,17 @@ class ToolsR21():
     # _get_modeling_param #
     #######################
 
-    def _get_modeling_param(self,modeling_space):
+    def _get_modeling_param(self,modeling_space,max_scatter=0.5):
         """
         """
 
         nbins        = modeling_space[0]
-        this_scatter = (modeling_space[1][1]-modeling_space[1][0])*np.random.rand()+modeling_space[1][0]
         this_slope   = (modeling_space[2][1]-modeling_space[2][0])*np.random.rand()+modeling_space[2][0]
         this_icept   = (modeling_space[3][1]-modeling_space[3][0])*np.random.rand()+modeling_space[3][0]
+
+        this_scatter = (modeling_space[1][1]-modeling_space[1][0])*np.random.rand()+modeling_space[1][0]
+        while this_scatter>max_scatter:
+            this_scatter = (modeling_space[1][1]-modeling_space[1][0])*np.random.rand()+modeling_space[1][0]
 
         return nbins, this_scatter, this_slope, this_icept
 
@@ -991,7 +996,7 @@ class ToolsR21():
         """
 
         nbins         = 5 #int( (np.ceil(np.log2(len(obs))) + 1) + 1.5 )
-        range_scatter = [0.0, 0.2]
+        range_scatter = [0.0, 0.5]
         range_slope   = [slope-0.001, slope+0.001]
         range_icept   = [icept-0.001, icept+0.001]
 
