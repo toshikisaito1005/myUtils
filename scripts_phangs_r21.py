@@ -531,12 +531,12 @@ class ToolsR21():
 
         taskname = self.modname + sys._getframe().f_code.co_name
         check_first(self.outcube_co10_n0628,taskname)
+        start = time.time()
 
         ###########
         # prepare #
         ###########
 
-        """
         this_basebeam    = str(self.basebeam_n0628).replace(".","p").zfill(4)
         this_beams_n0628 = [s for s in self.beams_n0628 if s%4==0]
         this_co10        = self.outmom_co10_n0628.replace(this_basebeam,"????").replace("momX","mom0")
@@ -555,7 +555,6 @@ class ToolsR21():
         self._loop_import_modeling(this_beams_n0628,this_co10,this_co21,this_r21,this_eco10,this_eco21,this_er21,
             this_outputs_obs,this_ra,this_dec,this_scale,this_pa,this_incl)
         self._loop_modeling(this_beams_n0628,this_outputs_obs,this_galname)
-        """
 
         this_basebeam    = str(self.basebeam_n3627).replace(".","p").zfill(4)
         this_beams_n3627 = [s for s in self.beams_n3627 if s%4==0]
@@ -614,6 +613,8 @@ class ToolsR21():
             this_outputs_obs,this_ra,this_dec,this_scale,this_pa,this_incl)
         self._loop_modeling(this_beams_n4321,this_outputs_obs,this_galname)
 
+        print("# elapsed time (min.) = ",(time.time() - start)/60.)
+
     ##################
     # _loop_modeling #
     ##################
@@ -627,8 +628,6 @@ class ToolsR21():
         """
         modeling
         """
-
-        start = time.time()
 
         for i, this_beam in enumerate(beams):
             #if i!=0:
@@ -660,9 +659,6 @@ class ToolsR21():
             # plot scatter: obs, mods, modsn
             self._plot_obs_model_scatter(this_slope2,this_icept2,this_slope,this_icept,this_logco10,this_logco21,
                 this_logco10_modsn,this_logco21_modsn,this_logco21_mods,"scatter_modsn_obs_"+galname+"_"+this_beamstr+".png")
-
-        print("# elapsed time (min.) = ",(time.time() - start)/60.)
-
 
         """
         for i, this_beam in enumerate(beams):
