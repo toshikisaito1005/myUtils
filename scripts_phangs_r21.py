@@ -857,7 +857,7 @@ class ToolsR21():
             max_scatter          = 0.5
             for j in range(len(nbins)-1):
                 print("# loop nbins = " + str(j) + " / " + str(len(nbins)-1) \
-                    + ", nloop_scatter = " + str(nloop_scatter) + \
+                    + ", nloop_scatter = " + str(nloop_scatter) \
                     + ", max_scatter = " + str(max_scatter))
                 # get this_obserr
                 this_cut      = np.where((obs_co21>=nbins[j]) & (obs_co21<nbins[j+1]))
