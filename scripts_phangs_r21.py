@@ -766,7 +766,7 @@ class ToolsR21():
         modeling_space,
         obs_co10,
         output="hist_modsn_obs_co21.png",
-        nloop_scatter=2000,
+        nloop_scatter=4000,
         nloop_slope_icept=1,
         ):
         """
@@ -892,7 +892,9 @@ class ToolsR21():
                 mods_co21_candidate.extend(mods_co21_best)
                 modsn_co21_candidate.extend(modsn_co21_best)
                 scatter_candidate.append(scatter_best)
+
                 max_scatter = scatter_best
+                nloop_scatter = int(nloop_scatter / 1.2)
 
             modsn_co10_candidate = np.array(modsn_co10_candidate)
             mods_co21_candidate  = np.array(mods_co21_candidate)
