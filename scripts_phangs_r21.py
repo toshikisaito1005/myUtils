@@ -889,7 +889,7 @@ class ToolsR21():
                 modsn_co10_candidate.extend(modsn_co10_best)
                 mods_co21_candidate.extend(mods_co21_best)
                 modsn_co21_candidate.extend(modsn_co21_best)
-                scatter_candidate.extend(scatter_best)
+                scatter_candidate.append(scatter_best)
 
             modsn_co10_candidate = np.array(modsn_co10_candidate)
             mods_co21_candidate  = np.array(mods_co21_candidate)
