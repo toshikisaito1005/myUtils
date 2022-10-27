@@ -819,7 +819,7 @@ class ToolsR21():
                 best_chi2        = this_chi2
                 best_slope       = this_slope
                 best_icept       = this_icept
-                best_scatter     = this_scatter
+                best_scatter     = [this_scatter]
                 modsn_co10_final = modsn_co10_candidate
                 mods_co21_final  = mods_co21_candidate
                 modsn_co21_final = modsn_co21_candidate
@@ -827,7 +827,7 @@ class ToolsR21():
                 best_chi2        = this_chi2
                 best_slope       = this_slope
                 best_icept       = this_icept
-                best_scatter     = this_scatter
+                best_scatter     = [this_scatter]
                 modsn_co10_final = modsn_co10_candidate
                 mods_co21_final  = mods_co21_candidate
                 modsn_co21_final = modsn_co21_candidate
