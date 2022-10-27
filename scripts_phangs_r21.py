@@ -652,12 +652,12 @@ class ToolsR21():
             modeling_space = self._get_modeling_space(this_slope,this_icept,this_logco21)
 
             # generate log10 co21 mods, modsn
-            this_logco10_modsn, this_logco21_modsn, this_logco21_mods, this_slope2, this_icept2 = \
+            this_logco10_modsn, this_logco21_modsn, this_logco21_mods, this_slope2, this_icept2, this_scatters = \
                 self._get_modsn_co21(this_logco21,this_logco21err,this_logco10_modsn,modeling_space,this_logco10,
                     output="hist_modsn_obs_co21_"+galname+"_"+this_beamstr+".png")
 
             # plot scatter: obs, mods, modsn
-            self._plot_obs_model_scatter(this_slope2,this_icept2,this_slope,this_icept,this_logco10,this_logco21,
+            self._plot_obs_model_scatter(this_slope2,this_icept2,this_slope,this_icept,this_scatters,this_logco10,this_logco21,
                 this_logco10_modsn,this_logco21_modsn,this_logco21_mods,"scatter_modsn_obs_"+galname+"_"+this_beamstr+".png")
 
         """
@@ -852,6 +852,7 @@ class ToolsR21():
             modsn_co10_candidate = []
             mods_co21_candidate  = []
             modsn_co21_candidate = []
+            scatter_candidate    = []
             for j in range(len(nbins)-1):
                 # get this_obserr
                 this_cut      = np.where((obs_co21>=nbins[j]) & (obs_co21<nbins[j+1]))
@@ -874,11 +875,13 @@ class ToolsR21():
                     this_chi2 = self._calc_chi2(10**this_obs_co21/10**this_obs_co10,10**this_modsn_co21/10**this_modsn_co10)
                     if k==0:
                         best_chi2       = this_chi2
+                        scatter_best    = this_scatter
                         modsn_co10_best = this_modsn_co10
                         mods_co21_best  = this_mods_co21
                         modsn_co21_best = this_modsn_co21
                     if best_chi2>this_chi2:
                         best_chi2       = this_chi2
+                        scatter_best    = this_scatter
                         modsn_co10_best = this_modsn_co10
                         mods_co21_best  = this_mods_co21
                         modsn_co21_best = this_modsn_co21
@@ -886,10 +889,12 @@ class ToolsR21():
                 modsn_co10_candidate.extend(modsn_co10_best)
                 mods_co21_candidate.extend(mods_co21_best)
                 modsn_co21_candidate.extend(modsn_co21_best)
+                scatter_candidate.extend(scatter_best)
 
             modsn_co10_candidate = np.array(modsn_co10_candidate)
             mods_co21_candidate  = np.array(mods_co21_candidate)
             modsn_co21_candidate = np.array(modsn_co21_candidate)
+            scatter_candidate    = np.array(scatter_candidate)
             this_chi2 = self._calc_chi2(10**obs_co21/10**obs_co10,10**modsn_co21_candidate/10**modsn_co10_candidate)
             if i==0:
                 best_chi2        = this_chi2
@@ -909,7 +914,7 @@ class ToolsR21():
         self._plot_obs_model_hist(obs_co21,mods_co21_final,modsn_co21_final,output)
         self._plot_obs_model_hist(10**obs_co21/10**obs_co10,10**mods_co21_final/10**modsn_co10_final,10**modsn_co21_final/10**modsn_co10_final,output.replace("co21","r21"))
 
-        return modsn_co10_final, modsn_co21_final, mods_co21_final, best_slope, best_icept
+        return modsn_co10_final, modsn_co21_final, mods_co21_final, best_slope, best_icept, scatter_candidate
 
     ##############
     # _calc_chi2 #
@@ -1001,6 +1006,7 @@ class ToolsR21():
         icept,
         slope_orig,
         icept_orig,
+        this_scatters,
         obs_co10,
         obs_co21,
         modsn_co10,
@@ -1028,6 +1034,9 @@ class ToolsR21():
         ax1.set_xlim([np.min(obs_co10)-0.1,np.max(obs_co10)+0.1])
         ax1.set_ylim([np.min(obs_co21)-0.1,np.max(obs_co21)+0.1])
         ax1.text(0.05,0.95,str(slope)+", "+str(icept),transform=ax1.transAxes,weight="bold")
+        for i in range(len(this_scatters)):
+            this_scatter = this_scatters[i]
+            ax1.text(0.05,0.90-i*0.05,str(this_scatter),transform=ax1.transAxes)
         plt.savefig(outpng)
 
     ########################
