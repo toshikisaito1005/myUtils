@@ -856,7 +856,9 @@ class ToolsR21():
             scatter_candidate    = []
             max_scatter          = 0.5
             for j in range(len(nbins)-1):
-                print("# loop nbins = " + str(j) + " / " + str(len(nbins)-1) + ", nloop_scatter = " + str(nloop_scatter))
+                print("# loop nbins = " + str(j) + " / " + str(len(nbins)-1) \
+                    + ", nloop_scatter = " + str(nloop_scatter) + \
+                    + ", max_scatter = " + str(max_scatter))
                 # get this_obserr
                 this_cut      = np.where((obs_co21>=nbins[j]) & (obs_co21<nbins[j+1]))
                 this_obs_co10 = obs_co10[this_cut]
@@ -999,7 +1001,7 @@ class ToolsR21():
         """
         """
 
-        nbins         = int( (np.ceil(np.log2(len(obs))) + 1) + 1.5 )
+        nbins         = int( ((np.ceil(np.log2(len(obs))) + 1) + 1.5) / 2.0 )
         range_scatter = [0.0, 0.5]
         range_slope   = [slope-0.001, slope+0.001]
         range_icept   = [icept-0.001, icept+0.001]
@@ -1121,7 +1123,7 @@ class ToolsR21():
         list_icept = []
         for i in range(2000):
             popt,_ = curve_fit(self._func2, logx, logy, p0=[np.random.rand()+0.2,(np.random.rand()-0.5)*3],
-                maxfev=10000, sigma=np.log(10)*10**logy*logyerr)
+                maxfev=10000)#, sigma=np.log(10)*10**logy*logyerr)
             list_slope.append(popt[0])
             list_icept.append(popt[1])
 
