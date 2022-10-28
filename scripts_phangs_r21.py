@@ -1207,7 +1207,7 @@ class ToolsR21():
         xlabel     = r"log$_{10}$ $I_{\rm CO(1-0)}$"
         ylabel     = r"log$_{10}$ $R_{\rm 21}$"
         xlim       = [np.min(obs[:,0])-0.2, np.max(obs[:,0])+0.2]
-        ylim       = [np.min(np.log10(10**obs[:,1]/10**obs[:,0]))-0.2, np.max(np.log10(10**obs[:,1]/10**obs[:,0]))+0.2]
+        ylim       = [np.min(obs[:,1])-0.2, np.max(obs[:,1])+0.2] # [np.min(np.log10(10**obs[:,1]/10**obs[:,0]))-0.2, np.max(np.log10(10**obs[:,1]/10**obs[:,0]))+0.2]
         co10_modsn = mod[:,0]
         co21_modn  = mod[:,1]
         co21_mods  = mod[:,2]
@@ -1219,10 +1219,10 @@ class ToolsR21():
         co21_mods  = co21_mods[cut]
         co21_modsn = co21_modsn[cut]
 
-        r21_obs   = np.log10(10**obs[:,1]/10**obs[:,0])
-        r21_modn  = np.log10(10**co21_modn/10**co10_modsn)
-        r21_mods  = np.log10(10**co21_mods/10**co10_modsn)
-        r21_modsn = np.log10(10**co21_modsn/10**co10_modsn)
+        r21_obs   = obs[:,1] # np.log10(10**obs[:,1]/10**obs[:,0])
+        r21_modn  = co21_modn # np.log10(10**co21_modn/10**co10_modsn)
+        r21_mods  = co21_mods # np.log10(10**co21_mods/10**co10_modsn)
+        r21_modsn = co21_modsn # np.log10(10**co21_modsn/10**co10_modsn)
 
         # set plt, ax
         plt.figure(figsize=(15,9))
