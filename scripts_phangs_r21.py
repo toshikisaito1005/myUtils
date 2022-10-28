@@ -1224,7 +1224,7 @@ class ToolsR21():
 
         # ax3
         ax3.scatter(obs[:,0],obs[:,1], color="grey", lw=0)
-        ax3.scatter(co10_modsn,co21_mods, color="deepskyblue", lw=0, alpha=0.3)
+        ax3.scatter(co10_modsn,co21_mods, color="deepskyblue", lw=0, alpha=0.3, zorder=1e8)
         ax3.scatter(co10_modsn,co21_modsn, color="tomato", lw=0, alpha=0.3)
 
         # ax4
