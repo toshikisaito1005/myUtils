@@ -1172,13 +1172,23 @@ class ToolsR21():
         thistxt_obs   = self.outtxt_obs_n0628.replace("????",this_basebeam)
         thistxt_mod   = self.outtxt_mod_n0628.replace("????",this_basebeam)
         thistxt_param = self.outtxt_mod_n0628.replace("????",this_basebeam).replace("_model","_param")
-        self._plot_model_scatter(np.loadtxt(thistxt_obs),np.loadtxt(thistxt_mod),self.outpng_modeling_n0628)
+        self._plot_model_scatter(
+            np.loadtxt(thistxt_obs),
+            np.loadtxt(thistxt_mod),
+            np.loadtxt(thistxt_param),
+            self.outpng_modeling_n0628,
+            )
 
         this_basebeam = str(self.basebeam_n4321).replace(".","p").zfill(4)
         thistxt_obs   = self.outtxt_obs_n4321.replace("????",this_basebeam)
         thistxt_mod   = self.outtxt_mod_n4321.replace("????",this_basebeam)
         thistxt_param = self.outtxt_mod_n4321.replace("????",this_basebeam).replace("_model","_param")
-        self._plot_model_scatter(np.loadtxt(thistxt_obs),np.loadtxt(thistxt_mod),self.outpng_modeling_n4321)
+        self._plot_model_scatter(
+            np.loadtxt(thistxt_obs),
+            np.loadtxt(thistxt_mod),
+            np.loadtxt(thistxt_param),
+            self.outpng_modeling_n4321,
+            )
 
     #######################
     # _plot_model_scatter #
@@ -1188,6 +1198,7 @@ class ToolsR21():
         self,
         obs,
         mod,
+        param,
         outpng,
         ):
         """
