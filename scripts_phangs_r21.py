@@ -1175,12 +1175,12 @@ class ToolsR21():
         # set plt, ax
         plt.figure(figsize=(15,15))
         plt.subplots_adjust(bottom=0.05, left=0.09, right=0.98, top=0.97)
-        gs = gridspec.GridSpec(nrows=2, ncols=3)
-        ax1 = plt.subplot(gs[0:1,0:1])
-        ax2 = plt.subplot(gs[0:1,1:2])
-        ax3 = plt.subplot(gs[1:2,0:1])
-        ax4 = plt.subplot(gs[1:2,1:2])
-        ax5 = plt.subplot(gs[1:2,2:3])
+        gs = gridspec.GridSpec(nrows=5, ncols=9)
+        ax1 = plt.subplot(gs[0:1,0:4])
+        ax2 = plt.subplot(gs[0:1,4:8])
+        ax3 = plt.subplot(gs[1:5,0:4])
+        ax4 = plt.subplot(gs[1:5,4:8])
+        ax5 = plt.subplot(gs[1:5,8:9])
 
         myax_set(ax1, "both", None, None, None, None, None)
         myax_set(ax2, "both", None, None, None, None, None)
