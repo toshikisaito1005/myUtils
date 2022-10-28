@@ -1302,7 +1302,7 @@ class ToolsR21():
         ax4.plot([xlim[0],xlim[1]],[ylim[0],ylim[1]],"--",color="black", lw=3, zorder=1e10)
 
         # ax5
-        ax5.barh(h_co21_obs[:,0],h_co21_obs[:,1],height=h_co21_obs[:,0][1]-h_co21_obs[:,0][0],color="grey",lw=0,alpha=0.5,align="center")
+        ax5.barh(h_co21_obs[:,0],h_co21_obs[:,1],height=h_co21_obs[:,0][1]-h_co21_obs[:,0][0],color="grey",lw=0,alpha=0.5,align="edge")
         ax5.step(h_co21_obs[:,1],h_co21_obs[:,0],color="grey",lw=1)
 
         # save
