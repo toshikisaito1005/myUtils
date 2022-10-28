@@ -1240,6 +1240,12 @@ class ToolsR21():
         h = np.histogram(obs[:,1], bins=50, range=xlim, weights=None)
         h_co21_obs = np.c_[ np.delete(h[1],-1), h[0]/float(np.sum(h[0])) ]
 
+        h = np.histogram(r21_mods, bins=50, range=xlim, weights=None)
+        h_co21_mods = np.c_[ np.delete(h[1],-1), h[0]/float(np.sum(h[0])) ]
+
+        h = np.histogram(r21_modsn, bins=50, range=xlim, weights=None)
+        h_co21_modsn = np.c_[ np.delete(h[1],-1), h[0]/float(np.sum(h[0])) ]
+
         # set plt, ax
         plt.figure(figsize=(15,9))
         plt.subplots_adjust(bottom=0.11, left=0.09, right=0.91, top=0.89)
@@ -1304,6 +1310,12 @@ class ToolsR21():
         # ax5
         ax5.barh(h_co21_obs[:,0],h_co21_obs[:,1],height=h_co21_obs[:,0][1]-h_co21_obs[:,0][0],color="grey",lw=0,alpha=0.5,align="edge")
         ax5.step(h_co21_obs[:,1],h_co21_obs[:,0],color="grey",lw=1)
+
+        ax5.barh(h_co21_mods[:,0],h_co21_mods[:,1],height=h_co21_mods[:,0][1]-h_co21_mods[:,0][0],color="deepskyblue",lw=0,alpha=0.5,align="edge")
+        ax5.step(h_co21_mods[:,1],h_co21_mods[:,0],color="deepskyblue",lw=1)
+
+        ax5.barh(h_co21_modsn[:,0],h_co21_modsn[:,1],height=h_co21_modsn[:,0][1]-h_co21_modsn[:,0][0],color="tomato",lw=0,alpha=0.5,align="edge")
+        ax5.step(h_co21_modsn[:,1],h_co21_modsn[:,0],color="tomato",lw=1)
 
         # save
         plt.savefig(outpng, dpi=self.fig_dpi)
