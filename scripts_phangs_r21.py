@@ -1180,7 +1180,7 @@ class ToolsR21():
         ########
 
         xlabel     = r"log$_{10}$ $I_{\rm CO(1-0)}$"
-        xlabel     = r"log$_{10}$ $R_{\rm 21}$"
+        ylabel     = r"log$_{10}$ $R_{\rm 21}$"
         xlim       = [np.min(obs[:,0])-0.2, np.max(obs[:,0])+0.2]
         ylim       = [np.min(obs[:,1])-0.2, np.max(obs[:,1])+0.2]
         co10_modsn = mod[:,0]
@@ -1206,8 +1206,8 @@ class ToolsR21():
 
         myax_set(ax1, "x",    xlim, None, None, None, None, adjust=False)
         myax_set(ax2, "x",    xlim, None, None, None, None, adjust=False)
-        myax_set(ax3, "both", xlim, ylim, None, None, None, adjust=False)
-        myax_set(ax4, "both", xlim, ylim, None, None, None, adjust=False)
+        myax_set(ax3, "both", xlim, ylim, None, xlabel, ylabel, adjust=False)
+        myax_set(ax4, "both", xlim, ylim, None, xlabel, None, adjust=False)
         myax_set(ax5, "y",    None, ylim, None, None, None, adjust=False)
         ax1.tick_params(labelbottom=False,labelleft=False,labelright=False,labeltop=True)
         ax2.tick_params(labelbottom=False,labelleft=False,labelright=False,labeltop=True)
