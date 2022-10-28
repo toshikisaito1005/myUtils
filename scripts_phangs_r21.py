@@ -1192,6 +1192,11 @@ class ToolsR21():
         ax3.tick_params(labelbottom=True,labelleft=True,labelright=False,labeltop=False)
         ax4.tick_params(labelbottom=True,labelleft=False,labelright=False,labeltop=False)
         ax5.tick_params(labelbottom=False,labelleft=False,labelright=False,labeltop=False)
+        ax1.spines["left"].set_visible(False)
+        ax1.spines["right"].set_visible(False)
+        ax1.spines["bottom"].set_visible(False)
+        ax1.tick_params("x", length=0, which="major")
+        ax1.tick_params("y", length=0, which="major")
 
         # plot: scatter
 
