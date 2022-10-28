@@ -922,6 +922,7 @@ class ToolsR21():
 
         self._plot_obs_model_hist(obs_co21,mods_co21_final,modsn_co21_final,output)
         self._plot_obs_model_hist(10**obs_co21/10**obs_co10,10**mods_co21_final/10**modsn_co10_final,10**modsn_co21_final/10**modsn_co10_final,output.replace("co21","r21"))
+        print(len(mods_co21_final))
 
         return modsn_co10_final, modsn_co21_final, mods_co21_final, best_slope, best_icept, scatter_candidate
 
