@@ -1234,7 +1234,7 @@ class ToolsR21():
         h_co10_obs = np.c_[ np.delete(h[1],-1), h[0]/float(np.sum(h[0])) ]
 
         h = np.histogram(co10_modsn, bins=50, range=xlim, weights=None)
-        h_co10_mods = np.c_[ np.delete(h[1],-1), h[0]/float(np.sum(h[0])) ]
+        h_co10_modsn = np.c_[ np.delete(h[1],-1), h[0]/float(np.sum(h[0])) ]
 
         # set plt, ax
         plt.figure(figsize=(15,9))
@@ -1275,13 +1275,14 @@ class ToolsR21():
         # ax1
         ax1.bar(h_co10_obs[:,0],h_co10_obs[:,1],width=h_co10_obs[:,0][1]-h_co10_obs[:,0][0],color="grey",lw=0,alpha=0.5,align="center")
         ax1.step(h_co10_obs[:,0],h_co10_obs[:,1],color="grey",lw=1,where="mid")
-
         ax1.bar(h_co10_modsn[:,0],h_co10_modsn[:,1],width=h_co10_modsn[:,0][1]-h_co10_modsn[:,0][0],color="black",lw=0,alpha=0.5,align="center")
         ax1.step(h_co10_modsn[:,0],h_co10_modsn[:,1],color="black",lw=1,where="mid")
 
         # ax2
         ax2.bar(h_co10_obs[:,0],h_co10_obs[:,1],width=h_co10_obs[:,0][1]-h_co10_obs[:,0][0],color="grey",lw=0,alpha=0.5,align="center")
         ax2.step(h_co10_obs[:,0],h_co10_obs[:,1],color="grey",lw=1,where="mid")
+        ax2.bar(h_co10_modsn[:,0],h_co10_modsn[:,1],width=h_co10_modsn[:,0][1]-h_co10_modsn[:,0][0],color="black",lw=0,alpha=0.5,align="center")
+        ax2.step(h_co10_modsn[:,0],h_co10_modsn[:,1],color="black",lw=1,where="mid")
 
         # ax3
         ax3.scatter(obs[:,0],r21_obs, color="grey", lw=0)
