@@ -74,7 +74,7 @@ def myax_set(
     ):
     
     # adjust edge space
-    if adjust!=None:
+    if adjust!=False:
         plt.subplots_adjust(
             left=adjust[0],
             right=adjust[1],
