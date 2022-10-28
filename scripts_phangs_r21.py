@@ -1226,7 +1226,7 @@ class ToolsR21():
         r21_mods  = co21_mods # np.log10(10**co21_mods/10**co10_modsn)
         r21_modsn = co21_modsn # np.log10(10**co21_modsn/10**co10_modsn)
 
-        xfunc  = np.linspace(np.min(obs[:,0])+0.2, np.max(obs[:,0])-0.2, 100)
+        xfunc  = np.linspace(np.min(obs[:,0]), np.max(obs[:,0]), 100)
         yfunc  = xfunc * param[0] + param[1]
 
         # set plt, ax
