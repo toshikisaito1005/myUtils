@@ -1175,6 +1175,17 @@ class ToolsR21():
         obs = np.loadtxt(thistxt_obs)
         mod = np.loadtxt(thistxt_mod)
 
+        ########
+        # plot #
+        ########
+
+        xlim       = [np.min(obs[:,0]), np.max(obs[:,0])]
+        ylim       = [np.min(obs[:,1]), np.max(obs[:,1])]
+        co10_modsn = mod[:,0]
+        co21_modn  = mod[:,1]
+        co21_mods  = mod[:,2]
+        co21_modsn = mod[:,3]
+
         # set plt, ax
         plt.figure(figsize=(15,9))
         plt.subplots_adjust(bottom=0.11, left=0.09, right=0.91, top=0.89)
@@ -1185,11 +1196,11 @@ class ToolsR21():
         ax4 = plt.subplot(gs[1:5,4:8])
         ax5 = plt.subplot(gs[1:5,8:9])
 
-        myax_set(ax1, "x", None, None, None, None, None, adjust=False)
-        myax_set(ax2, "x", None, None, None, None, None, adjust=False)
-        myax_set(ax3, "both", None, None, None, None, None, adjust=False)
-        myax_set(ax4, "both", None, None, None, None, None, adjust=False)
-        myax_set(ax5, "y", None, None, None, None, None, adjust=False)
+        myax_set(ax1, "x",    xlim, None, None, None, None, adjust=False)
+        myax_set(ax2, "x",    xlim, None, None, None, None, adjust=False)
+        myax_set(ax3, "both", xlim, ylim, None, None, None, adjust=False)
+        myax_set(ax4, "both", xlim, ylim, None, None, None, adjust=False)
+        myax_set(ax5, "y",    None, ylim, None, None, None, adjust=False)
         ax1.tick_params(labelbottom=False,labelleft=False,labelright=False,labeltop=True)
         ax2.tick_params(labelbottom=False,labelleft=False,labelright=False,labeltop=True)
         ax3.tick_params(labelbottom=True,labelleft=True,labelright=False,labeltop=False)
@@ -1211,10 +1222,16 @@ class ToolsR21():
         ax5.tick_params("x", length=0, which="major")
         ax5.tick_params("y", length=0, which="major")
 
-        # plot: scatter
+        # ax3
         ax3.scatter(obs[:,0],obs[:,1], color="grey", lw=0)
-        ax4.scatter(obs[:,0],obs[:,1], color="grey", lw=0)
+        ax3.scatter(co10_modsn,co21_mods, color="deepskyblue", lw=0)
+        ax3.scatter(co10_modsn,co21_modsn, color="tomato", lw=0)
 
+        # ax4
+        ax4.scatter(obs[:,0],obs[:,1], color="grey", lw=0)
+        ax3.scatter(co10_modsn,co21_modn, color="tomato", lw=0)
+
+        # save
         plt.savefig(self.outpng_modeling_n0628, dpi=self.fig_dpi)
 
     #
