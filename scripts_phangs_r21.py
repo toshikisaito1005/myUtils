@@ -410,6 +410,8 @@ class ToolsR21():
         self.outtxt_mod_n4321         = self.dir_products + self._read_key("outtxt_model_n4321")
 
         self.outpng_modeling_n0628    = self.dir_products + self._read_key("outpng_modeling_n0628")
+        self.outpng_modeling_n4254    = self.dir_products + self._read_key("outpng_modeling_n4254")
+        self.outpng_modeling_n3627    = self.dir_products + self._read_key("outpng_modeling_n3627")
         self.outpng_modeling_n4321    = self.dir_products + self._read_key("outpng_modeling_n4321")
 
     ##################
@@ -1164,10 +1166,6 @@ class ToolsR21():
         check_first(self.outcube_co10_n0628,taskname)
         start = time.time()
 
-        ###########
-        # prepare #
-        ###########
-
         this_basebeam = str(self.basebeam_n0628).replace(".","p").zfill(4)
         thistxt_obs   = self.outtxt_obs_n0628.replace("????",this_basebeam)
         thistxt_mod   = self.outtxt_mod_n0628.replace("????",this_basebeam)
@@ -1177,6 +1175,28 @@ class ToolsR21():
             np.loadtxt(thistxt_mod),
             np.loadtxt(thistxt_param),
             self.outpng_modeling_n0628,
+            )
+
+        this_basebeam = str(self.basebeam_n3627).replace(".","p").zfill(4)
+        thistxt_obs   = self.outtxt_obs_n3627.replace("????",this_basebeam)
+        thistxt_mod   = self.outtxt_mod_n3627.replace("????",this_basebeam)
+        thistxt_param = self.outtxt_mod_n3627.replace("????",this_basebeam).replace("_model","_param")
+        self._plot_model_scatter(
+            np.loadtxt(thistxt_obs),
+            np.loadtxt(thistxt_mod),
+            np.loadtxt(thistxt_param),
+            self.outpng_modeling_n3627,
+            )
+
+        this_basebeam = str(self.basebeam_n4254).replace(".","p").zfill(4)
+        thistxt_obs   = self.outtxt_obs_n4254.replace("????",this_basebeam)
+        thistxt_mod   = self.outtxt_mod_n4254.replace("????",this_basebeam)
+        thistxt_param = self.outtxt_mod_n4254.replace("????",this_basebeam).replace("_model","_param")
+        self._plot_model_scatter(
+            np.loadtxt(thistxt_obs),
+            np.loadtxt(thistxt_mod),
+            np.loadtxt(thistxt_param),
+            self.outpng_modeling_n4254,
             )
 
         this_basebeam = str(self.basebeam_n4321).replace(".","p").zfill(4)
@@ -1233,20 +1253,16 @@ class ToolsR21():
         # hist x
         h = np.histogram(obs[:,0], bins=50, range=xlim, weights=None)
         h_co10_obs = np.c_[ np.delete(h[1],-1), h[0]/float(np.sum(h[0])) ]
-
         h = np.histogram(co10_modsn, bins=50, range=xlim, weights=None)
         h_co10_modsn = np.c_[ np.delete(h[1],-1), h[0]/float(np.sum(h[0])) ]
 
         # hist y
         h = np.histogram(r21_obs, bins=50, range=ylim, weights=None)
         h_co21_obs = np.c_[ np.delete(h[1],-1), h[0]/float(np.sum(h[0])) ]
-
         h = np.histogram(r21_mods, bins=50, range=ylim, weights=None)
         h_co21_mods = np.c_[ np.delete(h[1],-1), h[0]/float(np.sum(h[0])) ]
-
         h = np.histogram(r21_modsn, bins=50, range=ylim, weights=None)
         h_co21_modsn = np.c_[ np.delete(h[1],-1), h[0]/float(np.sum(h[0])) ]
-
         h = np.histogram(r21_modn, bins=50, range=ylim, weights=None)
         h_co21_modn = np.c_[ np.delete(h[1],-1), h[0]/float(np.sum(h[0])) ]
 
