@@ -404,10 +404,10 @@ class ToolsR21():
         self.outtxt_obs_n4254         = self.dir_products + self._read_key("outtxt_obs_n4254")
         self.outtxt_obs_n4321         = self.dir_products + self._read_key("outtxt_obs_n4321")
 
-        self.outtxt_model_n0628       = self.dir_products + self._read_key("outtxt_model_n0628")
-        self.outtxt_model_n3627       = self.dir_products + self._read_key("outtxt_model_n3627")
-        self.outtxt_model_n4254       = self.dir_products + self._read_key("outtxt_model_n4254")
-        self.outtxt_model_n4321       = self.dir_products + self._read_key("outtxt_model_n4321")
+        self.outtxt_mod_n0628         = self.dir_products + self._read_key("outtxt_model_n0628")
+        self.outtxt_mod_n3627         = self.dir_products + self._read_key("outtxt_model_n3627")
+        self.outtxt_mod_n4254         = self.dir_products + self._read_key("outtxt_model_n4254")
+        self.outtxt_mod_n4321         = self.dir_products + self._read_key("outtxt_model_n4321")
 
     ##################
     # run_phangs_r21 #
@@ -551,10 +551,11 @@ class ToolsR21():
         this_pa          = self.pa_n0628
         this_incl        = self.incl_n0628
         this_outputs_obs = self.outtxt_obs_n0628.replace(this_basebeam,"????")
+        this_outputs_mod = self.outtxt_mod_n0628.replace(this_basebeam,"????")
         this_galname     = "n0628"
         self._loop_import_modeling(this_beams_n0628,this_co10,this_co21,this_r21,this_eco10,this_eco21,this_er21,
             this_outputs_obs,this_ra,this_dec,this_scale,this_pa,this_incl)
-        self._loop_modeling(this_beams_n0628,this_outputs_obs,this_galname)
+        self._loop_modeling(this_beams_n0628,this_outputs_obs,this_outputs_mod,this_galname)
 
         this_basebeam    = str(self.basebeam_n3627).replace(".","p").zfill(4)
         this_beams_n3627 = [s for s in self.beams_n3627 if s%4==0]
@@ -570,10 +571,11 @@ class ToolsR21():
         this_pa          = self.pa_n3627
         this_incl        = self.incl_n3627
         this_outputs_obs = self.outtxt_obs_n3627.replace(this_basebeam,"????")
+        this_outputs_mod = self.outtxt_mod_n3627.replace(this_basebeam,"????")
         this_galname     = "n3627"
         self._loop_import_modeling(this_beams_n3627,this_co10,this_co21,this_r21,this_eco10,this_eco21,this_er21,
             this_outputs_obs,this_ra,this_dec,this_scale,this_pa,this_incl)
-        self._loop_modeling(this_beams_n3627,this_outputs_obs,this_galname)
+        self._loop_modeling(this_beams_n3627,this_outputs_obs,this_outputs_mod,this_galname)
 
         this_basebeam    = str(self.basebeam_n4254).replace(".","p").zfill(4)
         this_beams_n4254 = [s for s in self.beams_n4254 if s%4==0]
@@ -589,10 +591,11 @@ class ToolsR21():
         this_pa          = self.pa_n4254
         this_incl        = self.incl_n4254
         this_outputs_obs = self.outtxt_obs_n4254.replace(this_basebeam,"????")
+        this_outputs_mod = self.outtxt_mod_n4254.replace(this_basebeam,"????")
         this_galname     = "n4254"
         self._loop_import_modeling(this_beams_n4254,this_co10,this_co21,this_r21,this_eco10,this_eco21,this_er21,
             this_outputs_obs,this_ra,this_dec,this_scale,this_pa,this_incl)
-        self._loop_modeling(this_beams_n4254,this_outputs_obs,this_galname)
+        self._loop_modeling(this_beams_n4254,this_outputs_obs,this_outputs_mod,this_galname)
 
         this_basebeam    = str(self.basebeam_n4321).replace(".","p").zfill(4)
         this_beams_n4321 = [s for s in self.beams_n4321 if s%4==0]
@@ -608,10 +611,11 @@ class ToolsR21():
         this_pa          = self.pa_n4321
         this_incl        = self.incl_n4321
         this_outputs_obs = self.outtxt_obs_n4321.replace(this_basebeam,"????")
+        this_outputs_mod = self.outtxt_mod_n4321.replace(this_basebeam,"????")
         this_galname     = "n4321"
         self._loop_import_modeling(this_beams_n4321,this_co10,this_co21,this_r21,this_eco10,this_eco21,this_er21,
             this_outputs_obs,this_ra,this_dec,this_scale,this_pa,this_incl)
-        self._loop_modeling(this_beams_n4321,this_outputs_obs,this_galname)
+        self._loop_modeling(this_beams_n4321,this_outputs_obs,this_outputs_mod,this_galname)
 
         print("# elapsed time (min.) = ",(time.time() - start)/60.)
 
@@ -623,6 +627,7 @@ class ToolsR21():
         self,
         beams,
         inputtxt,
+        outputtxt,
         galname,
         ):
         """
@@ -634,6 +639,8 @@ class ToolsR21():
             #    continue
             this_beamstr    = str(this_beam).replace(".","p").zfill(4)
             this_txt        = inputtxt.replace("????",this_beamstr)
+            this_output_mod = outputtxt.replace("????",this_beamstr)
+            this_output_param = outputtxt.replace("????",this_beamstr).replace("_model","_param")
             data            = np.loadtxt(this_txt)
             this_logco10    = data[:,0]
             this_logco21    = data[:,1]
@@ -652,13 +659,20 @@ class ToolsR21():
             modeling_space = self._get_modeling_space(this_slope,this_icept,this_logco21)
 
             # generate log10 co21 mods, modsn
-            this_logco10_modsn, this_logco21_modsn, this_logco21_mods, this_slope2, this_icept2, this_scatters = \
+            this_logco10_modsn, this_logco21_modsn, this_logco21_mods, this_logco21_modn, this_slope2, this_icept2, this_scatters = \
                 self._get_modsn_co21(this_logco21,this_logco21err,this_logco10_modsn,modeling_space,this_logco10,
                     output="hist_modsn_obs_co21_"+galname+"_"+this_beamstr+".png")
 
             # plot scatter: obs, mods, modsn
             self._plot_obs_model_scatter(this_slope2,this_icept2,this_slope,this_icept,this_scatters,this_logco10,this_logco21,
                 this_logco10_modsn,this_logco21_modsn,this_logco21_mods,"scatter_modsn_obs_"+galname+"_"+this_beamstr+".png")
+
+            # save
+            this_outmod = np.c_[this_logco10_modsn,this_logco21_modn,this_logco21_mods,this_logco21_modsn]
+            np.savetxt(this_output_mod, this_outmod)
+
+            this_outparam = np.c_[this_slope,this_icept]
+            np.savetxt(this_output_param, this_outparam)
 
         """
         for i, this_beam in enumerate(beams):
@@ -876,6 +890,7 @@ class ToolsR21():
                         this_mod_co21   = mod_co21[this_cut]
                         this_mods_co21  = np.log10(10**this_mod_co21 + np.random.normal(0.0, np.log(10)*10**this_mod_co21*this_scatter, len(this_mod_co21)))
                         this_modsn_co21 = np.log10(10**this_mods_co21 + np.random.normal(0.0, np.log(10)*10**this_mods_co21*this_obserr, len(this_mods_co21)))
+                        this_modn_co21  = np.log10(10**this_mod_co21 + np.random.normal(0.0, np.log(10)*10**this_mod_co21*this_obserr, len(this_mod_co21)))
 
                     this_chi2 = self._calc_chi2(10**this_obs_co21/10**this_obs_co10,10**this_modsn_co21/10**this_modsn_co10)
                     if k==0:
@@ -884,16 +899,19 @@ class ToolsR21():
                         modsn_co10_best = this_modsn_co10
                         mods_co21_best  = this_mods_co21
                         modsn_co21_best = this_modsn_co21
+                        modn_co21_best  = this_modn_co21
                     if best_chi2>this_chi2:
                         best_chi2       = this_chi2
                         scatter_best    = this_scatter
                         modsn_co10_best = this_modsn_co10
                         mods_co21_best  = this_mods_co21
                         modsn_co21_best = this_modsn_co21
+                        modn_co21_best  = this_modn_co21
 
                 modsn_co10_candidate.extend(modsn_co10_best)
                 mods_co21_candidate.extend(mods_co21_best)
                 modsn_co21_candidate.extend(modsn_co21_best)
+                modn_co21_candidate.extend(modn_co21_best)
                 scatter_candidate.append(scatter_best)
 
                 nloop_scatter = int(nloop_scatter / 1.3)
@@ -903,6 +921,7 @@ class ToolsR21():
             modsn_co10_candidate = np.array(modsn_co10_candidate)
             mods_co21_candidate  = np.array(mods_co21_candidate)
             modsn_co21_candidate = np.array(modsn_co21_candidate)
+            modn_co21_candidate  = np.array(modn_co21_candidate)
             scatter_candidate    = np.array(scatter_candidate)
             this_chi2 = self._calc_chi2(10**obs_co21/10**obs_co10,10**modsn_co21_candidate/10**modsn_co10_candidate)
             if i==0:
@@ -912,6 +931,7 @@ class ToolsR21():
                 modsn_co10_final = modsn_co10_candidate
                 mods_co21_final  = mods_co21_candidate
                 modsn_co21_final = modsn_co21_candidate
+                modn_co21_final  = modn_co21_candidate
             if best_chi2>this_chi2:
                 best_chi2        = this_chi2
                 best_slope       = this_slope
@@ -919,12 +939,12 @@ class ToolsR21():
                 modsn_co10_final = modsn_co10_candidate
                 mods_co21_final  = mods_co21_candidate
                 modsn_co21_final = modsn_co21_candidate
+                modn_co21_final  = modn_co21_candidate
 
         self._plot_obs_model_hist(obs_co21,mods_co21_final,modsn_co21_final,output)
         self._plot_obs_model_hist(10**obs_co21/10**obs_co10,10**mods_co21_final/10**modsn_co10_final,10**modsn_co21_final/10**modsn_co10_final,output.replace("co21","r21"))
-        print(len(mods_co21_final))
 
-        return modsn_co10_final, modsn_co21_final, mods_co21_final, best_slope, best_icept, scatter_candidate
+        return modsn_co10_final, modsn_co21_final, mods_co21_final, modn_co21_final, best_slope, best_icept, scatter_candidate
 
     ##############
     # _calc_chi2 #
