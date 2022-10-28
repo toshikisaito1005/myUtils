@@ -1270,12 +1270,12 @@ class ToolsR21():
         ax5.tick_params("y", length=0, which="major")
 
         # ax1
-        ax1.bar(h_co10[0],h_co10[1],width=h_co10[0][1]-h_co10[0][0],color="grey",lw=0,alpha=0.5,align="center")
-        ax1.step(h_co10[0],h_co10[1],color="grey",lw=1,where="mid")
+        ax1.bar(h_co10[:,0],h_co10[:,1],width=h_co10[:,0][1]-h_co10[:,0][0],color="grey",lw=0,alpha=0.5,align="center")
+        ax1.step(h_co10[:,0],h_co10[:,1],color="grey",lw=1,where="mid")
 
         # ax2
-        ax2.bar(h_co10[0],h_co10[1],width=h_co10[0][1]-h_co10[0][0],color="grey",lw=0,alpha=0.5,align="center")
-        ax2.step(h_co10[0],h_co10[1],color="grey",lw=1,where="mid")
+        ax2.bar(h_co10[:,0],h_co10[:,1],width=h_co10[:,0][1]-h_co10[:,0][0],color="grey",lw=0,alpha=0.5,align="center")
+        ax2.step(h_co10[:,0],h_co10[:,1],color="grey",lw=1,where="mid")
 
         # ax3
         ax3.scatter(obs[:,0],r21_obs, color="grey", lw=0)
