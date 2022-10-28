@@ -1174,7 +1174,7 @@ class ToolsR21():
 
         # set plt, ax
         plt.figure(figsize=(15,9))
-        plt.subplots_adjust(bottom=0.05, left=0.09, right=0.98, top=0.97)
+        plt.subplots_adjust(bottom=0.05, left=0.09, right=0.93, top=0.97)
         gs = gridspec.GridSpec(nrows=5, ncols=9)
         ax1 = plt.subplot(gs[0:1,0:4])
         ax2 = plt.subplot(gs[0:1,4:8])
@@ -1187,11 +1187,11 @@ class ToolsR21():
         myax_set(ax3, "both", None, None, None, None, None)
         myax_set(ax4, "both", None, None, None, None, None)
         myax_set(ax5, "y", None, None, None, None, None)
-        ax1.tick_params(labelbottom=False,labelleft=False,labelright=False,labeltop=False)
-        ax2.tick_params(labelbottom=False,labelleft=False,labelright=False,labeltop=False)
+        ax1.tick_params(labelbottom=False,labelleft=False,labelright=False,labeltop=True)
+        ax2.tick_params(labelbottom=False,labelleft=False,labelright=False,labeltop=True)
         ax3.tick_params(labelbottom=True,labelleft=True,labelright=False,labeltop=False)
         ax4.tick_params(labelbottom=True,labelleft=False,labelright=False,labeltop=False)
-        ax5.tick_params(labelbottom=False,labelleft=False,labelright=False,labeltop=False)
+        ax5.tick_params(labelbottom=False,labelleft=False,labelright=True,labeltop=False)
         ax1.spines["left"].set_visible(False)
         ax1.spines["right"].set_visible(False)
         ax1.spines["bottom"].set_visible(False)
