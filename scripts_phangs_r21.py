@@ -1204,8 +1204,11 @@ class ToolsR21():
         """
         """
 
+        xfunc  = np.linspace(np.min(obs), np.max(obs), 100)
+        yfunc  = xfunc * param[0] + param[1]
+
         xlabel     = r"log$_{10}$ $I_{\rm CO(1-0)}$"
-        ylabel     = r"log$_{10}$ $R_{\rm 21}$"
+        ylabel     = r"log$_{10}$ $I_{\rm CO(2-1)}$" # r"log$_{10}$ $R_{\rm 21}$"
         xlim       = [np.min(obs[:,0])-0.2, np.max(obs[:,0])+0.2]
         ylim       = [np.min(obs[:,1])-0.2, np.max(obs[:,1])+0.2] # [np.min(np.log10(10**obs[:,1]/10**obs[:,0]))-0.2, np.max(np.log10(10**obs[:,1]/10**obs[:,0]))+0.2]
         co10_modsn = mod[:,0]
@@ -1264,10 +1267,12 @@ class ToolsR21():
         ax3.scatter(obs[:,0],r21_obs, color="grey", lw=0)
         ax3.scatter(co10_modsn,r21_mods, color="deepskyblue", lw=0, alpha=0.3, zorder=1e8)
         ax3.scatter(co10_modsn,r21_modsn, color="tomato", lw=0, alpha=0.3)
+        ax3.plot(xfunc, yfunc, color="black", lw=3, zorder=1e9)
 
         # ax4
         ax4.scatter(obs[:,0],r21_obs, color="grey", lw=0)
         ax4.scatter(co10_modsn,r21_modn, color="green", lw=0, alpha=0.3)
+        ax4.plot(xfunc, yfunc, color="black", lw=3, zorder=1e9)
 
         # save
         plt.savefig(outpng, dpi=self.fig_dpi)
