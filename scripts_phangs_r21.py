@@ -410,6 +410,7 @@ class ToolsR21():
         self.outtxt_mod_n4321         = self.dir_products + self._read_key("outtxt_model_n4321")
 
         self.outpng_modeling_n0628    = self.dir_products + self._read_key("outpng_modeling_n0628")
+        self.outpng_modeling_n4321    = self.dir_products + self._read_key("outpng_modeling_n4321")
 
     ##################
     # run_phangs_r21 #
@@ -1167,10 +1168,10 @@ class ToolsR21():
         # prepare #
         ###########
 
-        this_basebeam = str(self.basebeam_n0628).replace(".","p").zfill(4)
-        thistxt_obs   = self.outtxt_obs_n0628.replace("????",this_basebeam)
-        thistxt_mod   = self.outtxt_mod_n0628.replace("????",this_basebeam)
-        thistxt_param = self.outtxt_mod_n0628.replace("????",this_basebeam).replace("_model","_param")
+        this_basebeam = str(self.basebeam_n4321).replace(".","p").zfill(4)
+        thistxt_obs   = self.outtxt_obs_n4321.replace("????",this_basebeam)
+        thistxt_mod   = self.outtxt_mod_n4321.replace("????",this_basebeam)
+        thistxt_param = self.outtxt_mod_n4321.replace("????",this_basebeam).replace("_model","_param")
 
         obs = np.loadtxt(thistxt_obs)
         mod = np.loadtxt(thistxt_mod)
@@ -1245,7 +1246,7 @@ class ToolsR21():
         ax4.scatter(co10_modsn,r21_modn, color="tomato", lw=0, alpha=0.3)
 
         # save
-        plt.savefig(self.outpng_modeling_n0628, dpi=self.fig_dpi)
+        plt.savefig(self.outpng_modeling_n4321, dpi=self.fig_dpi)
 
     #
 
