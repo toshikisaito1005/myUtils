@@ -1168,17 +1168,30 @@ class ToolsR21():
         # prepare #
         ###########
 
+        this_basebeam = str(self.basebeam_n0628).replace(".","p").zfill(4)
+        thistxt_obs   = self.outtxt_obs_n0628.replace("????",this_basebeam)
+        thistxt_mod   = self.outtxt_mod_n0628.replace("????",this_basebeam)
+        thistxt_param = self.outtxt_mod_n0628.replace("????",this_basebeam).replace("_model","_param")
+        self._plot_model_scatter(np.loadtxt(thistxt_obs),np.loadtxt(thistxt_mod),self.outpng_modeling_n0628)
+
         this_basebeam = str(self.basebeam_n4321).replace(".","p").zfill(4)
         thistxt_obs   = self.outtxt_obs_n4321.replace("????",this_basebeam)
         thistxt_mod   = self.outtxt_mod_n4321.replace("????",this_basebeam)
         thistxt_param = self.outtxt_mod_n4321.replace("????",this_basebeam).replace("_model","_param")
+        self._plot_model_scatter(np.loadtxt(thistxt_obs),np.loadtxt(thistxt_mod),self.outpng_modeling_n4321)
 
-        obs = np.loadtxt(thistxt_obs)
-        mod = np.loadtxt(thistxt_mod)
+    #######################
+    # _plot_model_scatter #
+    #######################
 
-        ########
-        # plot #
-        ########
+    def _plot_model_scatter(
+        self,
+        obs,
+        mod,
+        outpng,
+        ):
+        """
+        """
 
         xlabel     = r"log$_{10}$ $I_{\rm CO(1-0)}$"
         ylabel     = r"log$_{10}$ $R_{\rm 21}$"
@@ -1246,7 +1259,7 @@ class ToolsR21():
         ax4.scatter(co10_modsn,r21_modn, color="green", lw=0, alpha=0.3)
 
         # save
-        plt.savefig(self.outpng_modeling_n4321, dpi=self.fig_dpi)
+        plt.savefig(outpng, dpi=self.fig_dpi)
 
     #
 
