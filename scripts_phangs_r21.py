@@ -1204,9 +1204,6 @@ class ToolsR21():
         """
         """
 
-        xfunc  = np.linspace(np.min(obs), np.max(obs), 100)
-        yfunc  = xfunc * param[0] + param[1]
-
         xlabel     = r"log$_{10}$ $I_{\rm CO(1-0)}$"
         ylabel     = r"log$_{10}$ $I_{\rm CO(2-1)}$" # r"log$_{10}$ $R_{\rm 21}$"
         xlim       = [np.min(obs[:,0])-0.2, np.max(obs[:,0])+0.2]
@@ -1226,6 +1223,9 @@ class ToolsR21():
         r21_modn  = co21_modn # np.log10(10**co21_modn/10**co10_modsn)
         r21_mods  = co21_mods # np.log10(10**co21_mods/10**co10_modsn)
         r21_modsn = co21_modsn # np.log10(10**co21_modsn/10**co10_modsn)
+
+        xfunc  = np.linspace(xlim[0], xlim[1], 100)
+        yfunc  = xfunc * param[0] + param[1]
 
         # set plt, ax
         plt.figure(figsize=(15,9))
