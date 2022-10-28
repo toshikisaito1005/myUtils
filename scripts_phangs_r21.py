@@ -1303,7 +1303,7 @@ class ToolsR21():
 
         # ax5
         ax5.barh(h_co21_obs[:,0],h_co21_obs[:,1],height=h_co21_obs[:,0][1]-h_co21_obs[:,0][0],color="grey",lw=0,alpha=0.5,align="center")
-        ax5.step(h_co21_obs[:,1],h_co21_obs[:,0],color="grey",lw=1,where="mid")
+        ax5.step(h_co21_obs[:,1],h_co21_obs[:,0],color="grey",lw=1)
 
         # save
         plt.savefig(outpng, dpi=self.fig_dpi)
