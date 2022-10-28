@@ -1229,6 +1229,12 @@ class ToolsR21():
         xfunc  = np.linspace(np.min(obs[:,0]), np.max(obs[:,0]), 100)
         yfunc  = xfunc * param[0] + param[1]
 
+        # hist
+        h = np.histogram(co10_modsn, bins=50, range=xlim, weights=None)
+        h_co10 = np.c_[ np.delete(h[1],-1), h[0]/float(np.sum(h[0])) ]
+        h = np.histogram(r21_obs, bins=50, range=xlim, weights=None)
+        h_r21_obs = np.c_[ np.delete(h[1],-1), h[0]/float(np.sum(h[0])) ]
+
         # set plt, ax
         plt.figure(figsize=(15,9))
         plt.subplots_adjust(bottom=0.11, left=0.09, right=0.91, top=0.89)
@@ -1264,6 +1270,14 @@ class ToolsR21():
         ax5.spines["bottom"].set_visible(False)
         ax5.tick_params("x", length=0, which="major")
         ax5.tick_params("y", length=0, which="major")
+
+        # ax1
+        ax1.bar(h_co10[0],h_co10[1],width=h_co10[0][1]-h_co10[0][0],color="grey",lw=0,alpha=0.5,align="center")
+        ax1.step(h_co10[0],h_co10[1],color="grey",lw=1,where="mid")
+
+        # ax2
+        ax2.bar(h_co10[0],h_co10[1],width=h_co10[0][1]-h_co10[0][0],color="grey",lw=0,alpha=0.5,align="center")
+        ax2.step(h_co10[0],h_co10[1],color="grey",lw=1,where="mid")
 
         # ax3
         ax3.scatter(obs[:,0],r21_obs, color="grey", lw=0)
