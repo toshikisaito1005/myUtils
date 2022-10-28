@@ -1181,10 +1181,10 @@ class ToolsR21():
 
         xlim       = [np.min(obs[:,0])-0.2, np.max(obs[:,0])+0.2]
         ylim       = [np.min(obs[:,1])-0.2, np.max(obs[:,1])+0.2]
-        co10_modsn = mod[:,0]
-        co21_modn  = mod[:,1]
-        co21_mods  = mod[:,2]
-        co21_modsn = mod[:,3]
+        co10_modsn = mod[:,0][mod[:,0]>=xlim[0]]
+        co21_modn  = mod[:,1][mod[:,1]>=ylim[0]]
+        co21_mods  = mod[:,2][mod[:,2]>=ylim[0]]
+        co21_modsn = mod[:,3][mod[:,3]>=ylim[0]]
 
         # set plt, ax
         plt.figure(figsize=(15,9))
