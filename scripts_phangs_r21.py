@@ -1206,16 +1206,16 @@ class ToolsR21():
 
         xlabel     = r"log$_{10}$ $I_{\rm CO(1-0)}$"
         ylabel     = r"log$_{10}$ $I_{\rm CO(2-1)}$" # r"log$_{10}$ $R_{\rm 21}$"
-        #xlim       = [np.min(obs[:,0])-0.2, np.max(obs[:,0])+0.2]
-        #ylim       = [np.min(np.log10(10**obs[:,1]/10**obs[:,0]))-0.2, np.max(np.log10(10**obs[:,1]/10**obs[:,0]))+0.2]
-        xlim       = [np.min([np.min(obs[:,0]),np.min(obs[:,1])])-0.2, np.max([np.max(obs[:,0]),np.max(obs[:,1])])+0.2]
+        #xlim       = [np.min(obs[:,0])-0.1, np.max(obs[:,0])+0.1]
+        #ylim       = [np.min(np.log10(10**obs[:,1]/10**obs[:,0]))-0.1, np.max(np.log10(10**obs[:,1]/10**obs[:,0]))+0.1]
+        xlim       = [np.min([np.min(obs[:,0]),np.min(obs[:,1])])-0.1, np.max([np.max(obs[:,0]),np.max(obs[:,1])])+0.1]
         ylim       = xlim
         co10_modsn = mod[:,0]
         co21_modn  = mod[:,1]
         co21_mods  = mod[:,2]
         co21_modsn = mod[:,3]
 
-        cut = np.where((co10_modsn>=xlim[0]+0.2) & (co21_modn>=ylim[0]+0.2) & (co21_mods>=ylim[0]+0.2) & (co21_modsn>=ylim[0]+0.2))
+        cut = np.where((co10_modsn>=xlim[0]+0.1) & (co21_modn>=ylim[0]+0.1) & (co21_mods>=ylim[0]+0.1) & (co21_modsn>=ylim[0]+0.1))
         co10_modsn = co10_modsn[cut]
         co21_modn  = co21_modn[cut]
         co21_mods  = co21_mods[cut]
