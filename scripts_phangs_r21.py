@@ -1197,6 +1197,16 @@ class ToolsR21():
         ax1.spines["bottom"].set_visible(False)
         ax1.tick_params("x", length=0, which="major")
         ax1.tick_params("y", length=0, which="major")
+        ax2.spines["left"].set_visible(False)
+        ax2.spines["right"].set_visible(False)
+        ax2.spines["bottom"].set_visible(False)
+        ax2.tick_params("x", length=0, which="major")
+        ax2.tick_params("y", length=0, which="major")
+        ax5.spines["left"].set_visible(False)
+        ax5.spines["top"].set_visible(False)
+        ax5.spines["bottom"].set_visible(False)
+        ax5.tick_params("x", length=0, which="major")
+        ax5.tick_params("y", length=0, which="major")
 
         # plot: scatter
 
