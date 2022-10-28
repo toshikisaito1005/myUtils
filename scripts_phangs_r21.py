@@ -1179,8 +1179,8 @@ class ToolsR21():
         # plot #
         ########
 
-        xlim       = [np.min(obs[:,0]), np.max(obs[:,0])]
-        ylim       = [np.min(obs[:,1]), np.max(obs[:,1])]
+        xlim       = [np.min(obs[:,0])-0.2, np.max(obs[:,0])+0.2]
+        ylim       = [np.min(obs[:,1])-0.2, np.max(obs[:,1])+0.2]
         co10_modsn = mod[:,0]
         co21_modn  = mod[:,1]
         co21_mods  = mod[:,2]
@@ -1224,12 +1224,12 @@ class ToolsR21():
 
         # ax3
         ax3.scatter(obs[:,0],obs[:,1], color="grey", lw=0)
-        ax3.scatter(co10_modsn,co21_mods, color="deepskyblue", lw=0)
-        ax3.scatter(co10_modsn,co21_modsn, color="tomato", lw=0)
+        ax3.scatter(co10_modsn,co21_mods, color="deepskyblue", lw=0, alpha=0.3)
+        ax3.scatter(co10_modsn,co21_modsn, color="tomato", lw=0, alpha=0.3)
 
         # ax4
         ax4.scatter(obs[:,0],obs[:,1], color="grey", lw=0)
-        ax3.scatter(co10_modsn,co21_modn, color="tomato", lw=0)
+        ax3.scatter(co10_modsn,co21_modn, color="tomato", lw=0, alpha=0.3)
 
         # save
         plt.savefig(self.outpng_modeling_n0628, dpi=self.fig_dpi)
