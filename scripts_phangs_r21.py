@@ -1274,7 +1274,7 @@ class ToolsR21():
 
         # ax4
         ax4.scatter(obs[:,0],r21_obs, color="grey", lw=0)
-        ax4.scatter(co10_modsn,r21_modn, color="green", lw=0, alpha=0.3)
+        ax4.scatter(co10_modsn,r21_modn, color="limegreen", lw=0, alpha=0.3)
         ax4.plot(xfunc, yfunc, color="black", lw=2, zorder=1e9)
         ax4.plot([xlim[0],xlim[1]],[ylim[0],ylim[1]],"--",color="black", lw=3, zorder=1e10)
 
