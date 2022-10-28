@@ -1229,12 +1229,16 @@ class ToolsR21():
         xfunc  = np.linspace(np.min(obs[:,0]), np.max(obs[:,0]), 100)
         yfunc  = xfunc * param[0] + param[1]
 
-        # hist
+        # hist x
         h = np.histogram(obs[:,0], bins=50, range=xlim, weights=None)
         h_co10_obs = np.c_[ np.delete(h[1],-1), h[0]/float(np.sum(h[0])) ]
 
         h = np.histogram(co10_modsn, bins=50, range=xlim, weights=None)
         h_co10_modsn = np.c_[ np.delete(h[1],-1), h[0]/float(np.sum(h[0])) ]
+
+        # hist y
+        h = np.histogram(obs[:,1], bins=50, range=xlim, weights=None)
+        h_co21_obs = np.c_[ np.delete(h[1],-1), h[0]/float(np.sum(h[0])) ]
 
         # set plt, ax
         plt.figure(figsize=(15,9))
@@ -1296,6 +1300,10 @@ class ToolsR21():
         ax4.scatter(co10_modsn,r21_modn, color="limegreen", lw=0, alpha=0.3)
         ax4.plot(xfunc, yfunc, color="black", lw=2, zorder=1e9)
         ax4.plot([xlim[0],xlim[1]],[ylim[0],ylim[1]],"--",color="black", lw=3, zorder=1e10)
+
+        # ax5
+        ax5.barh(h_co21_obs[:,0],h_co21_obs[:,1],height=h_co21_obs[:,0][1]-h_co21_obs[:,0][0],color="grey",lw=0,alpha=0.5,align="center")
+        ax5.step(h_co21_obs[:,1],h_co21_obs[:,0],color="grey",lw=1,where="mid")
 
         # save
         plt.savefig(outpng, dpi=self.fig_dpi)
