@@ -1238,7 +1238,7 @@ class ToolsR21():
         h_co10_modsn = np.c_[ np.delete(h[1],-1), h[0]/float(np.sum(h[0])) ]
 
         # hist y
-        h = np.histogram(obs[:,1]/obs[:,0], bins=50, range=ylim, weights=None)
+        h = np.histogram(r21_obs, bins=50, range=ylim, weights=None)
         h_co21_obs = np.c_[ np.delete(h[1],-1), h[0]/float(np.sum(h[0])) ]
 
         h = np.histogram(r21_mods, bins=50, range=ylim, weights=None)
