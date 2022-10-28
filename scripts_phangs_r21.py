@@ -409,6 +409,8 @@ class ToolsR21():
         self.outtxt_mod_n4254         = self.dir_products + self._read_key("outtxt_model_n4254")
         self.outtxt_mod_n4321         = self.dir_products + self._read_key("outtxt_model_n4321")
 
+        self.outpng_modeling_n0628    = self.dir_products + self._read_key("outpng_modeling_n0628")
+
     ##################
     # run_phangs_r21 #
     ##################
@@ -432,7 +434,8 @@ class ToolsR21():
         plot_masks       = False,
         plot_masked_hist = False,
         plot_scatters    = False,
-        # supplement
+        # appendix
+        appendix_model   = False,
         ):
         """
         This method runs all the methods which will create figures in the paper.
@@ -512,6 +515,9 @@ class ToolsR21():
 
         if plot_scatters==True:
             self.plot_scatters()
+
+        if appendix_model==True:
+            self.appendix_model()
 
     #####################
     #####################
@@ -673,100 +679,6 @@ class ToolsR21():
 
             this_outparam = np.c_[this_slope,this_icept]
             np.savetxt(this_output_param, this_outparam)
-
-        """
-        for i, this_beam in enumerate(beams):
-            for i in range(npoint):
-
-                # generate model
-                list_data = self._gen_models(this_logco10,this_logco21,this_logco10err,this_logco21err,
-                    this_mean,this_sigma,this_scatter_co10,this_scatter_co21,this_slope,this_icept,nbins_co10,nbins_co21)
-                listlist_data.append(list_data)
-
-            # calc diff_rms of r21
-            r21_obs   = np.log10(10**list_data[4]/10**list_data[0])
-            r21_modsn = np.log10(10**list_data[7]/10**list_data[3])
-
-            # compare histograms
-            # https://docs.opencv.org/3.4/d8/dc8/tutorial_histogram_comparison.html
-            if len(list_data[3])*len(list_data[7])>0:
-                weight="wing"
-                chi2_r21  = self._calc_chi2(r21_obs, r21_modsn, weight)
-                weight="higher"
-                chi2_co10 = self._calc_chi2(list_data[0], list_data[3], weight)
-                chi2_co21 = self._calc_chi2(list_data[4], list_data[7], weight)
-            else:
-                chi2_r21  = 1e7
-                chi2_co10 = 1e7
-                chi2_co21 = 1e7
-
-            # compare 2d histograms
-            histr       = [ [np.min(list_data[0]),np.max(list_data[0])], [np.min(list_data[4]),np.max(list_data[4])] ]
-            obs2d,_,_   = np.histogram2d(list_data[0], list_data[4], bins=(50,50), range=histr)
-            modsn2d,_,_ = np.histogram2d(list_data[3], list_data[7], bins=(50,50), range=histr)
-            modsn2d     = (modsn2d/np.sum(modsn2d)).flatten()
-            obs2d       = (obs2d/np.sum(obs2d)).flatten()
-            diff        = (modsn2d - obs2d)**2 / obs2d
-            diff        = diff[obs2d!=0]
-            obs2d       = obs2d[obs2d!=0]
-            diff[np.isnan(diff)] = -1e7
-            diff[np.isinf(diff)] = -1e7
-            diff        = diff[diff!=-1e7]
-            obs2d       = obs2d[diff!=-1e7]
-
-            if len(obs2d)>1:
-                weights = ( 1./np.array(obs2d) )**2
-                chi2_2d = np.average(diff,weights=weights) * len(diff)
-            else:
-                chi2_2d = 1e7
-
-            # dispersion of the scatter plot
-            histr = [np.min(this_logco10),np.max(this_logco10)]
-            std_modsn = self._get_binned_std(list_data[3], list_data[7], histr)
-            std_obs = self._get_binned_std(list_data[0], list_data[4], histr)
-            if std_modsn[4]==0:
-                chi2_std = 1e7
-            else:
-                diff = (std_modsn - std_obs)**2 / std_obs
-                weights = ( np.array(diff) )**2
-                chi2_std = np.average(diff,weights=weights) * len(diff)
-
-            # combine diff
-            # chi2_r21, chi2_co10, chi2_co21, chi2_2d, chi2_std
-            list_diff    = [chi2_std, chi2_r21, chi2_co10]
-            list_weights = [1./3, 1./3, 1./3]
-            diff_rms     = np.average(list_diff, weights=list_weights)
-
-            # output
-            this_params = [this_beam, this_mean, this_sigma, this_scatter_co10,
-                this_scatter_co21, this_slope, this_icept, diff_rms]
-            if np.isnan(this_params[7])==True:
-                this_params = [this_beam, this_mean, this_sigma, this_scatter_co10,
-                    this_scatter_co21, this_slope, this_icept, 1e7]
-            list_params.append(this_params)
-
-            # plot
-            this_rms = diff_rms
-            #if num%100==0:
-            #    if len(list_data[1])>10:
-            #        outpng = this_txt.replace(".txt","_"+str(num)+".png")
-            #        os.system("rm -rf " + outpng)
-            #        self._plot_modeling_scatter(list_data,outpng,this_params)
-
-            bestpng = this_txt.replace(".txt",".png")
-            if len(list_data[1])!=0:
-                if this_rms<tmp_lowest_rms:
-                    tmp_lowest_rms = this_rms
-                    os.system("rm -rf " + bestpng)
-                    self._plot_modeling_scatter(list_data,bestpng,this_params)
-            #
-            del histr
-            del obs2d
-            del_get_modeling_space(self,modeling_space) modsn2d
-            del diff
-            del diff_rms
-            #
-        """
 
     ###################
     # _get_modsn_co21 #
@@ -1236,6 +1148,56 @@ class ToolsR21():
     #####################
     #####################
 
+    ##################
+    # appendix_model #
+    ##################
+
+    def appendix_model(
+        self,
+        ):
+        """
+        """
+
+        taskname = self.modname + sys._getframe().f_code.co_name
+        check_first(self.outcube_co10_n0628,taskname)
+        start = time.time()
+
+        ###########
+        # prepare #
+        ###########
+
+        this_basebeam = str(self.basebeam_n0628).replace(".","p").zfill(4)
+        thistxt_obs   = self.outtxt_obs_n0628.replace("????",this_beamstr)
+        thistxt_mod   = self.outtxt_mod_n0628.replace("????",this_beamstr)
+        thistxt_param = self.outtxt_mod_n0628.replace("????",this_beamstr).replace("_model","_param")
+
+        # set plt, ax
+        plt.figure(figsize=(15,15))
+        plt.subplots_adjust(bottom=0.05, left=0.09, right=0.98, top=0.97)
+        gs = gridspec.GridSpec(nrows=3, ncols=2)
+        ax1 = plt.subplot(gs[0:1,0:1])
+        ax2 = plt.subplot(gs[1:2,0:1])
+        ax3 = plt.subplot(gs[0:1,1:2])
+        ax4 = plt.subplot(gs[1:2,1:2])
+        ax5 = plt.subplot(gs[2:3,1:2])
+
+        myax_set(ax1, "both", None, None, None, None, None)
+        myax_set(ax2, "both", None, None, None, None, None)
+        myax_set(ax3, "both", None, None, None, None, None)
+        myax_set(ax4, "both", None, None, None, None, None)
+        myax_set(ax5, "both", None, None, None, None, None)
+        ax1.tick_params(labelbottom=True,labelleft=True,labelright=False,labeltop=False)
+        ax2.tick_params(labelbottom=True,labelleft=False,labelright=False,labeltop=False)
+        ax3.tick_params(labelbottom=True,labelleft=False,labelright=False,labeltop=False)
+        ax4.tick_params(labelbottom=True,labelleft=True,labelright=False,labeltop=False)
+        ax5.tick_params(labelbottom=True,labelleft=False,labelright=False,labeltop=False)
+
+        # plot: scatter
+
+        plt.savefig(self.outpng_modeling_n0628, dpi=self.fig_dpi)
+
+    #
+
     #################
     # plot_scatters #
     #################
@@ -1498,7 +1460,7 @@ class ToolsR21():
         t=ax8.text(0.05, 0.90, title8, color="black", horizontalalignment="left", transform=ax8.transAxes, size=self.legend_fontsize)
         t.set_bbox(dict(facecolor="white", alpha=self.text_back_alpha, lw=0))
 
-        plt.savefig(self.outpng_scatters, dpi=self.fig_dpi)  
+        plt.savefig(self.outpng_scatters, dpi=self.fig_dpi)
 
     ######################
     # _plot_contours_gal #

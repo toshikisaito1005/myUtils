@@ -234,6 +234,8 @@ outpng_masked_hist   ,,,fig_masked_hist.png
 
 outpng_scatters      ,,,fig_scatters.png
 
+outpng_modeling_n0628 ,,,fig_model_n0628.png
+
 #######
 # end #
 #######
