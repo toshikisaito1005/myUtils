@@ -1179,6 +1179,8 @@ class ToolsR21():
         # plot #
         ########
 
+        xlabel     = r"log$_{10}$ $I_{\rm CO(1-0)}$"
+        xlabel     = r"log$_{10}$ $R_{\rm 21}$"
         xlim       = [np.min(obs[:,0])-0.2, np.max(obs[:,0])+0.2]
         ylim       = [np.min(obs[:,1])-0.2, np.max(obs[:,1])+0.2]
         co10_modsn = mod[:,0]
