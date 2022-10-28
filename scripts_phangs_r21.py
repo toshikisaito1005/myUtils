@@ -1183,6 +1183,7 @@ class ToolsR21():
         ylabel     = r"log$_{10}$ $R_{\rm 21}$"
         xlim       = [np.min(obs[:,0])-0.2, np.max(obs[:,0])+0.2]
         ylim       = [np.min(obs[:,1])-0.2, np.max(obs[:,1])+0.2]
+        xlim2      = [np.min(xlim[0],ylim[0]),np.max(xlim[1],ylim[1])]
         co10_modsn = mod[:,0]
         co21_modn  = mod[:,1]
         co21_mods  = mod[:,2]
@@ -1204,11 +1205,11 @@ class ToolsR21():
         ax4 = plt.subplot(gs[1:5,4:8])
         ax5 = plt.subplot(gs[1:5,8:9])
 
-        myax_set(ax1, "x",    xlim, None, None, None, None, adjust=False)
-        myax_set(ax2, "x",    xlim, None, None, None, None, adjust=False)
-        myax_set(ax3, "both", xlim, ylim, None, xlabel, ylabel, adjust=False)
-        myax_set(ax4, "both", xlim, ylim, None, xlabel, None, adjust=False)
-        myax_set(ax5, "y",    None, ylim, None, None, None, adjust=False)
+        myax_set(ax1, "x",    xlim2,  None, None, None, None, adjust=False)
+        myax_set(ax2, "x",    xlim2,  None, None, None, None, adjust=False)
+        myax_set(ax3, "both", xlim2, ylim2, None, xlabel, ylabel, adjust=False)
+        myax_set(ax4, "both", xlim2, ylim2, None, xlabel, None, adjust=False)
+        myax_set(ax5, "y",     None, ylim2, None, None, None, adjust=False)
         ax1.tick_params(labelbottom=False,labelleft=False,labelright=False,labeltop=True)
         ax2.tick_params(labelbottom=False,labelleft=False,labelright=False,labeltop=True)
         ax3.tick_params(labelbottom=True,labelleft=True,labelright=False,labeltop=False)
