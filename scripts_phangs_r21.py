@@ -1186,7 +1186,7 @@ class ToolsR21():
         co21_mods  = mod[:,2]
         co21_modsn = mod[:,3]
 
-        cut = np.where((co10_modsn>=xlim[0]) & (co21_modn>=ylim[0]) & (co21_mods>=ylim[0]) & (co21_modsn>=ylim[0]))
+        cut = np.where((co10_modsn>=xlim[0]+0.2) & (co21_modn>=ylim[0]+0.2) & (co21_mods>=ylim[0]+0.2) & (co21_modsn>=ylim[0]+0.2))
         co10_modsn = co10_modsn[cut]
         co21_modn  = co21_modn[cut]
         co21_mods  = co21_mods[cut]
