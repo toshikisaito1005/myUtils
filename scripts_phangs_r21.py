@@ -1182,7 +1182,7 @@ class ToolsR21():
         xlabel     = r"log$_{10}$ $I_{\rm CO(1-0)}$"
         ylabel     = r"log$_{10}$ $R_{\rm 21}$"
         xlim       = [np.min(obs[:,0])-0.2, np.max(obs[:,0])+0.2]
-        ylim       = [np.min(obs[:,1])-0.2, np.max(obs[:,1])+0.2]
+        ylim       = [np.min(obs[:,1]/obs[:,0])-0.2, np.max(obs[:,1]/obs[:,0])+0.2]
         co10_modsn = mod[:,0]
         co21_modn  = mod[:,1]
         co21_mods  = mod[:,2]
@@ -1236,12 +1236,12 @@ class ToolsR21():
         ax5.tick_params("y", length=0, which="major")
 
         # ax3
-        ax3.scatter(obs[:,0],obs[:,1], color="grey", lw=0)
+        ax3.scatter(obs[:,0],r21_obs, color="grey", lw=0)
         ax3.scatter(co10_modsn,r21_mods, color="deepskyblue", lw=0, alpha=0.3, zorder=1e8)
         ax3.scatter(co10_modsn,r21_modsn, color="tomato", lw=0, alpha=0.3)
 
         # ax4
-        ax4.scatter(obs[:,0],obs[:,1], color="grey", lw=0)
+        ax4.scatter(obs[:,0],r21_obs, color="grey", lw=0)
         ax4.scatter(co10_modsn,r21_modn, color="tomato", lw=0, alpha=0.3)
 
         # save
