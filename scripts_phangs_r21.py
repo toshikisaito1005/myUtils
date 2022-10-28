@@ -896,7 +896,7 @@ class ToolsR21():
                 modsn_co21_candidate.extend(modsn_co21_best)
                 scatter_candidate.append(scatter_best)
 
-                nloop_scatter = int(nloop_scatter / 1.2)
+                nloop_scatter = int(nloop_scatter / 1.3)
                 if j>=2:
                     max_scatter = scatter_best * 1.1
 
