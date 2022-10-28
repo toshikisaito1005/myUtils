@@ -74,12 +74,13 @@ def myax_set(
     ):
     
     # adjust edge space
-    plt.subplots_adjust(
-        left=adjust[0],
-        right=adjust[1],
-        bottom=adjust[2],
-        top=adjust[3],
-        )
+    if adjust!=None:
+        plt.subplots_adjust(
+            left=adjust[0],
+            right=adjust[1],
+            bottom=adjust[2],
+            top=adjust[3],
+            )
 
     # font
     plt.rcParams["font.size"] = fsize
