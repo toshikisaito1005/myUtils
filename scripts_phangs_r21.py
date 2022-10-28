@@ -1229,7 +1229,7 @@ class ToolsR21():
 
         # ax4
         ax4.scatter(obs[:,0],obs[:,1], color="grey", lw=0)
-        ax3.scatter(co10_modsn,co21_modn, color="tomato", lw=0, alpha=0.3)
+        ax4.scatter(co10_modsn,co21_modn, color="tomato", lw=0, alpha=0.3)
 
         # save
         plt.savefig(self.outpng_modeling_n0628, dpi=self.fig_dpi)
