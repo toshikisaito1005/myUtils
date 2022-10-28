@@ -545,6 +545,7 @@ class ToolsR21():
         # prepare #
         ###########
 
+        """
         this_basebeam    = str(self.basebeam_n0628).replace(".","p").zfill(4)
         this_beams_n0628 = [s for s in self.beams_n0628 if s%4==0]
         this_co10        = self.outmom_co10_n0628.replace(this_basebeam,"????").replace("momX","mom0")
@@ -604,6 +605,7 @@ class ToolsR21():
         self._loop_import_modeling(this_beams_n4254,this_co10,this_co21,this_r21,this_eco10,this_eco21,this_er21,
             this_outputs_obs,this_ra,this_dec,this_scale,this_pa,this_incl)
         self._loop_modeling(this_beams_n4254,this_outputs_obs,this_outputs_mod,this_galname)
+        """
 
         this_basebeam    = str(self.basebeam_n4321).replace(".","p").zfill(4)
         this_beams_n4321 = [s for s in self.beams_n4321 if s%4==0]
