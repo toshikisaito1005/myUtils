@@ -1230,10 +1230,8 @@ class ToolsR21():
         yfunc  = xfunc * param[0] + param[1]
 
         # hist
-        h = np.histogram(co10_modsn, bins=50, range=xlim, weights=None)
+        h = np.histogram(obs[:,0], bins=50, range=xlim, weights=None)
         h_co10 = np.c_[ np.delete(h[1],-1), h[0]/float(np.sum(h[0])) ]
-        h = np.histogram(r21_obs, bins=50, range=xlim, weights=None)
-        h_r21_obs = np.c_[ np.delete(h[1],-1), h[0]/float(np.sum(h[0])) ]
 
         # set plt, ax
         plt.figure(figsize=(15,9))
