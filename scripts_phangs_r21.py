@@ -1172,6 +1172,9 @@ class ToolsR21():
         thistxt_mod   = self.outtxt_mod_n0628.replace("????",this_basebeam)
         thistxt_param = self.outtxt_mod_n0628.replace("????",this_basebeam).replace("_model","_param")
 
+        obs = np.loadtxt(thistxt_obs)
+        mod = np.loadtxt(thistxt_mod)
+
         # set plt, ax
         plt.figure(figsize=(15,9))
         plt.subplots_adjust(bottom=0.11, left=0.09, right=0.91, top=0.89)
@@ -1209,6 +1212,8 @@ class ToolsR21():
         ax5.tick_params("y", length=0, which="major")
 
         # plot: scatter
+        ax3.scatter(obs[:,0],obs[:,1], color="grey", lw=0)
+        ax4.scatter(obs[:,0],obs[:,1], color="grey", lw=0)
 
         plt.savefig(self.outpng_modeling_n0628, dpi=self.fig_dpi)
 
