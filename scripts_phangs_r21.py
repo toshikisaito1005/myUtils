@@ -1182,16 +1182,16 @@ class ToolsR21():
         ax4 = plt.subplot(gs[1:5,4:8])
         ax5 = plt.subplot(gs[1:5,8:9])
 
-        myax_set(ax1, "both", None, None, None, None, None)
-        myax_set(ax2, "both", None, None, None, None, None)
+        myax_set(ax1, "x", None, None, None, None, None)
+        myax_set(ax2, "x", None, None, None, None, None)
         myax_set(ax3, "both", None, None, None, None, None)
         myax_set(ax4, "both", None, None, None, None, None)
-        myax_set(ax5, "both", None, None, None, None, None)
-        ax1.tick_params(labelbottom=True,labelleft=True,labelright=False,labeltop=False)
-        ax2.tick_params(labelbottom=True,labelleft=False,labelright=False,labeltop=False)
-        ax3.tick_params(labelbottom=True,labelleft=False,labelright=False,labeltop=False)
-        ax4.tick_params(labelbottom=True,labelleft=True,labelright=False,labeltop=False)
-        ax5.tick_params(labelbottom=True,labelleft=False,labelright=False,labeltop=False)
+        myax_set(ax5, "y", None, None, None, None, None)
+        ax1.tick_params(labelbottom=False,labelleft=False,labelright=False,labeltop=False)
+        ax2.tick_params(labelbottom=False,labelleft=False,labelright=False,labeltop=False)
+        ax3.tick_params(labelbottom=True,labelleft=True,labelright=False,labeltop=False)
+        ax4.tick_params(labelbottom=True,labelleft=False,labelright=False,labeltop=False)
+        ax5.tick_params(labelbottom=False,labelleft=False,labelright=False,labeltop=False)
 
         # plot: scatter
 
