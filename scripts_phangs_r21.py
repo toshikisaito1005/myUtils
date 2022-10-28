@@ -867,6 +867,7 @@ class ToolsR21():
             modsn_co10_candidate = []
             mods_co21_candidate  = []
             modsn_co21_candidate = []
+            modn_co21_candidate  = []
             scatter_candidate    = []
             max_scatter          = 0.5
             for j in range(len(nbins)-1):
