@@ -1228,7 +1228,7 @@ class ToolsR21():
 
         xfunc  = np.linspace(np.min(obs[:,0]), np.max(obs[:,0]), 100)
         yfunc  = xfunc * param[0] + param[1]
-        yfunc  = yfunc / xfunc
+        yfunc  = np.log10(10**yfunc/10**xfunc)
 
         # hist x
         h = np.histogram(obs[:,0], bins=50, range=xlim, weights=None)
