@@ -1184,6 +1184,7 @@ class ToolsR21():
         xlim       = [np.min(obs[:,0])-0.2, np.max(obs[:,0])+0.2]
         ylim       = [np.min(obs[:,1])-0.2, np.max(obs[:,1])+0.2]
         xlim2      = [np.min([xlim[0],ylim[0]]),np.max([xlim[1],ylim[1]])]
+        ylim2      = [np.min([xlim[0],ylim[0]]),np.max([xlim[1],ylim[1]])]
         co10_modsn = mod[:,0]
         co21_modn  = mod[:,1]
         co21_mods  = mod[:,2]
