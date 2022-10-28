@@ -1228,6 +1228,7 @@ class ToolsR21():
 
         xfunc  = np.linspace(np.min(obs[:,0]), np.max(obs[:,0]), 100)
         yfunc  = xfunc * param[0] + param[1]
+        yfunc  = yfunc / xfunc
 
         # hist x
         h = np.histogram(obs[:,0], bins=50, range=xlim, weights=None)
@@ -1237,16 +1238,16 @@ class ToolsR21():
         h_co10_modsn = np.c_[ np.delete(h[1],-1), h[0]/float(np.sum(h[0])) ]
 
         # hist y
-        h = np.histogram(obs[:,1], bins=50, range=xlim, weights=None)
+        h = np.histogram(obs[:,1]/obs[:,0], bins=50, range=ylim, weights=None)
         h_co21_obs = np.c_[ np.delete(h[1],-1), h[0]/float(np.sum(h[0])) ]
 
-        h = np.histogram(r21_mods, bins=50, range=xlim, weights=None)
+        h = np.histogram(r21_mods, bins=50, range=ylim, weights=None)
         h_co21_mods = np.c_[ np.delete(h[1],-1), h[0]/float(np.sum(h[0])) ]
 
-        h = np.histogram(r21_modsn, bins=50, range=xlim, weights=None)
+        h = np.histogram(r21_modsn, bins=50, range=ylim, weights=None)
         h_co21_modsn = np.c_[ np.delete(h[1],-1), h[0]/float(np.sum(h[0])) ]
 
-        h = np.histogram(r21_modn, bins=50, range=xlim, weights=None)
+        h = np.histogram(r21_modn, bins=50, range=ylim, weights=None)
         h_co21_modn = np.c_[ np.delete(h[1],-1), h[0]/float(np.sum(h[0])) ]
 
         # set plt, ax
@@ -1302,13 +1303,13 @@ class ToolsR21():
         ax3.scatter(co10_modsn,r21_mods, color="deepskyblue", lw=0, alpha=0.3, zorder=1e8)
         ax3.scatter(co10_modsn,r21_modsn, color="tomato", lw=0, alpha=0.3)
         ax3.plot(xfunc, yfunc, color="black", lw=2, zorder=1e9)
-        ax3.plot([xlim[0],xlim[1]],[ylim[0],ylim[1]],"--",color="black", lw=3, zorder=1e10)
+        #ax3.plot([xlim[0],xlim[1]],[ylim[0],ylim[1]],"--",color="black", lw=3, zorder=1e10)
 
         # ax4
         ax4.scatter(obs[:,0],r21_obs, color="grey", lw=0)
         ax4.scatter(co10_modsn,r21_modn, color="limegreen", lw=0, alpha=0.3)
         ax4.plot(xfunc, yfunc, color="black", lw=2, zorder=1e9)
-        ax4.plot([xlim[0],xlim[1]],[ylim[0],ylim[1]],"--",color="black", lw=3, zorder=1e10)
+        #ax4.plot([xlim[0],xlim[1]],[ylim[0],ylim[1]],"--",color="black", lw=3, zorder=1e10)
 
         # ax5
         ax5.barh(h_co21_obs[:,0],h_co21_obs[:,1],height=h_co21_obs[:,0][1]-h_co21_obs[:,0][0],color="grey",lw=0,alpha=0.5,align="edge")
