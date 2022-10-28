@@ -465,6 +465,7 @@ class ToolsR21():
             plot_masks       = True
             plot_masked_hist = True
             plot_scatters    = True
+            appendix_model   = True
 
         # analysis
         if do_align==True:
@@ -1167,9 +1168,9 @@ class ToolsR21():
         ###########
 
         this_basebeam = str(self.basebeam_n0628).replace(".","p").zfill(4)
-        thistxt_obs   = self.outtxt_obs_n0628.replace("????",this_beamstr)
-        thistxt_mod   = self.outtxt_mod_n0628.replace("????",this_beamstr)
-        thistxt_param = self.outtxt_mod_n0628.replace("????",this_beamstr).replace("_model","_param")
+        thistxt_obs   = self.outtxt_obs_n0628.replace("????",this_basebeam)
+        thistxt_mod   = self.outtxt_mod_n0628.replace("????",this_basebeam)
+        thistxt_param = self.outtxt_mod_n0628.replace("????",this_basebeam).replace("_model","_param")
 
         # set plt, ax
         plt.figure(figsize=(15,15))
