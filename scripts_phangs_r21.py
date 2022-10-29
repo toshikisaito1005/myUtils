@@ -939,7 +939,7 @@ class ToolsR21():
         """
         """
 
-        nbins         = int( ((np.ceil(np.log2(len(obs))) + 1) + 1.5) / 2.0 )
+        nbins         = int( ((np.ceil(np.log2(len(obs))) + 1) + 1.5) / 1.5 )
         range_scatter = [0.0, 0.5]
         range_slope   = [slope-0.001, slope+0.001]
         range_icept   = [icept-0.001, icept+0.001]
@@ -1339,6 +1339,8 @@ class ToolsR21():
 
         ax5.barh(h_co21_modn[:,0],h_co21_modn[:,1],height=h_co21_modn[:,0][1]-h_co21_modn[:,0][0],color="limegreen",lw=0,alpha=0.5,align="edge")
         ax5.step(h_co21_modn[:,1],h_co21_modn[:,0],color="limegreen",lw=1)
+
+        # text
 
         # save
         plt.savefig(outpng, dpi=self.fig_dpi)
