@@ -1354,9 +1354,9 @@ class ToolsR21():
         t=ax3.text(0.95, 0.05, "model+scatter+noise", color="tomato", horizontalalignment="right", transform=ax3.transAxes, size=self.legend_fontsize, fontweight="bold")
         t.set_bbox(dict(facecolor="white", alpha=self.text_back_alpha, lw=0))
 
-        t=ax4.text(0.95, 0.10, "observation", color="grey", horizontalalignment="right", transform=ax3.transAxes, size=self.legend_fontsize, fontweight="bold")
+        t=ax4.text(0.95, 0.10, "observation", color="grey", horizontalalignment="right", transform=ax4.transAxes, size=self.legend_fontsize, fontweight="bold")
         t.set_bbox(dict(facecolor="white", alpha=self.text_back_alpha, lw=0))
-        t=ax4.text(0.95, 0.05, "model+noise", color="limegreen", horizontalalignment="right", transform=ax3.transAxes, size=self.legend_fontsize, fontweight="bold")
+        t=ax4.text(0.95, 0.05, "model+noise", color="limegreen", horizontalalignment="right", transform=ax4.transAxes, size=self.legend_fontsize, fontweight="bold")
         t.set_bbox(dict(facecolor="white", alpha=self.text_back_alpha, lw=0))
 
         # save
