@@ -588,21 +588,21 @@ class ToolsR21():
         ylim   = [np.min(r21)-0.1, np.max(r21)+0.1]
 
         # mask
-        r21_cloud      = r21[cprops==1]
-        r21_noncloud   = r21[cprops==0]
-        r21_interarm   = r21[env==0]
-        r21_arm        = r21[env==1]
-        r21_bar        = r21[env==2]
-        r21_halpha     = r21[halpha==1]
-        r21_nonhalpha  = r21[halpha==0]
+        r21_cloud      = np.log10(r21[cprops==1])
+        r21_noncloud   = np.log10(r21[cprops==0])
+        r21_interarm   = np.log10(r21[env==0])
+        r21_arm        = np.log10(r21[env==1])
+        r21_bar        = np.log10(r21[env==2])
+        r21_halpha     = np.log10(r21[halpha==1])
+        r21_nonhalpha  = np.log10(r21[halpha==0])
 
-        co21_cloud     = co21[cprops==1]
-        co21_noncloud  = co21[cprops==0]
-        co21_interarm  = co21[env==0]
-        co21_arm       = co21[env==1]
-        co21_bar       = co21[env==2]
-        co21_halpha    = co21[halpha==1]
-        co21_nonhalpha = co21[halpha==0]
+        co21_cloud     = np.log10(co21[cprops==1])
+        co21_noncloud  = np.log10(co21[cprops==0])
+        co21_interarm  = np.log10(co21[env==0])
+        co21_arm       = np.log10(co21[env==1])
+        co21_bar       = np.log10(co21[env==2])
+        co21_halpha    = np.log10(co21[halpha==1])
+        co21_nonhalpha = np.log10(co21[halpha==0])
 
         # hist x
         #h = np.histogram(obs[:,0], bins=50, range=xlim, weights=None)
@@ -873,7 +873,9 @@ class ToolsR21():
         t=ax3.text(0.95, 0.05, "model+scatter+noise", color="tomato", horizontalalignment="right", transform=ax3.transAxes, size=self.legend_fontsize, fontweight="bold")
         t.set_bbox(dict(facecolor="white", alpha=self.text_back_alpha, lw=0))
 
-        t=ax4.text(0.95, 0.10, "observation", color="grey", horizontalalignment="right", transform=ax4.transAxes, size=self.legend_fontsize, fontweight="bold")
+        t=ax4.text(0.95, 0.15, "observation", color="grey", horizontalalignment="right", transform=ax4.transAxes, size=self.legend_fontsize, fontweight="bold")
+        t.set_bbox(dict(facecolor="white", alpha=self.text_back_alpha, lw=0))
+        t=ax4.text(0.95, 0.10, "model", color="black", horizontalalignment="right", transform=ax4.transAxes, size=self.legend_fontsize, fontweight="bold")
         t.set_bbox(dict(facecolor="white", alpha=self.text_back_alpha, lw=0))
         t=ax4.text(0.95, 0.05, "model+noise", color="limegreen", horizontalalignment="right", transform=ax4.transAxes, size=self.legend_fontsize, fontweight="bold")
         t.set_bbox(dict(facecolor="white", alpha=self.text_back_alpha, lw=0))
