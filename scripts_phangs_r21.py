@@ -582,28 +582,29 @@ class ToolsR21():
         """
         """
 
+        r21    = np.log10(r21)
+        co21   = np.log10(co21)
         xlabel = r"log$_{10}$ $I_{\rm CO(2-1)}$"
         ylabel = r"log$_{10}$ $R_{\rm 21}$"
-
-        # mask
-        r21_cloud      = np.log10(r21[cprops==1])
-        r21_noncloud   = np.log10(r21[cprops==0])
-        r21_interarm   = np.log10(r21[env==0])
-        r21_arm        = np.log10(r21[env==1])
-        r21_bar        = np.log10(r21[env==2])
-        r21_halpha     = np.log10(r21[halpha==1])
-        r21_nonhalpha  = np.log10(r21[halpha==0])
-
-        co21_cloud     = np.log10(co21[cprops==1])
-        co21_noncloud  = np.log10(co21[cprops==0])
-        co21_interarm  = np.log10(co21[env==0])
-        co21_arm       = np.log10(co21[env==1])
-        co21_bar       = np.log10(co21[env==2])
-        co21_halpha    = np.log10(co21[halpha==1])
-        co21_nonhalpha = np.log10(co21[halpha==0])
-
         xlim   = [np.min(co21)-0.1, np.max(co21)+0.1]
         ylim   = [np.min(r21)-0.1, np.max(r21)+0.1]
+
+        # mask
+        r21_cloud      = r21[cprops==1]
+        r21_noncloud   = r21[cprops==0]
+        r21_interarm   = r21[env==0]
+        r21_arm        = r21[env==1]
+        r21_bar        = r21[env==2]
+        r21_halpha     = r21[halpha==1]
+        r21_nonhalpha  = r21[halpha==0]
+
+        co21_cloud     = co21[cprops==1]
+        co21_noncloud  = co21[cprops==0]
+        co21_interarm  = co21[env==0]
+        co21_arm       = co21[env==1]
+        co21_bar       = co21[env==2]
+        co21_halpha    = co21[halpha==1]
+        co21_nonhalpha = co21[halpha==0]
 
         # hist x
         #h = np.histogram(obs[:,0], bins=50, range=xlim, weights=None)
