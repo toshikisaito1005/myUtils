@@ -570,15 +570,7 @@ class ToolsR21():
     # _plot_scattter_masked #
     #########################
 
-    def _plot_scattter_masked(
-        self,
-        r21,
-        co21,
-        cprops,
-        env,
-        halpha,
-        outpng,
-        ):
+    def _plot_scattter_masked(self,r21,co21,cprops,env,halpha,outpng):
         """
         """
 
@@ -660,6 +652,8 @@ class ToolsR21():
 
         # ax3
         ax3.scatter(co21,r21, color="grey", lw=0)
+        ax3.scatter(co21_halpha,r21_halpha, color=cm.PiYG(1.2/1.4), lw=0)
+        ax3.scatter(co21_nonhalpha,r21_nonhalpha, color=cm.PiYG(0.2/1.4), lw=0)
 
         # ax4
         ax4.scatter(co21,r21, color="grey", lw=0)
