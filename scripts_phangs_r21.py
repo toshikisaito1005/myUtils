@@ -651,12 +651,11 @@ class ToolsR21():
         #ax2.step(h_co10_obs[:,0],h_co10_obs[:,1],color="grey",lw=1,where="mid")
 
         # ax3
-        ax3.scatter(co21,r21, color="grey", lw=0)
-        ax3.scatter(co21_halpha,r21_halpha, color=cm.PiYG(1.2/1.4), lw=0)
+        ax3.scatter(co21_halpha,r21_halpha, color=cm.PiYG(1.2/1.4), lw=0, alpha=0.2)
+        ax3.scatter(co21_nonhalpha,r21_nonhalpha, color=cm.PiYG(0.2/1.4), lw=0, alpha=0.2)
 
         # ax4
         ax4.scatter(co21,r21, color="grey", lw=0)
-        ax4.scatter(co21_nonhalpha,r21_nonhalpha, color=cm.PiYG(0.2/1.4), lw=0)
 
         # ax5
         #ax5.barh(h_co21_obs[:,0],h_co21_obs[:,1],height=h_co21_obs[:,0][1]-h_co21_obs[:,0][0],color="grey",lw=0,alpha=0.5,align="edge")
