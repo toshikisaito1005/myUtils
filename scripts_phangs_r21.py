@@ -1184,8 +1184,8 @@ class ToolsR21():
         cor = "r=" + str(np.round(np.corrcoef(xdata,ydata)[0,1], 2)).replace("-","$-$").ljust(4, "0")
 
         # plot
-        ax.contourf(contour, levels=[20,100], extent=extent, colors=color, zorder=1, linewidths=2.5, alpha=0.3)
-        ax.contour( contour, levels=[20,100], extent=extent, colors=color, zorder=1, linewidths=2.5, alpha=1.0)
+        ax.contourf(contour, levels=[10,100], extent=extent, colors=color, zorder=1, linewidths=2.5, alpha=0.3)
+        ax.contour( contour, levels=[10,100], extent=extent, colors=color, zorder=1, linewidths=2.5, alpha=1.0)
 
         # text
         if do_text==True:
