@@ -454,11 +454,13 @@ class ToolsR21():
             self.do_ngc3627  = True
             self.do_ngc4254  = True
             self.do_ngc4321  = True
+            # analysis
             do_align         = True
             do_multismooth   = True
             do_moments       = True
             do_align_other   = True
             do_modeling      = True
+            # plot figures in paper
             plot_noise       = True
             plot_recovery    = True
             plot_showcase    = True
@@ -468,6 +470,7 @@ class ToolsR21():
             plot_masks       = True
             plot_masked_hist = True
             plot_scatters    = True
+            # appendix
             appendix_model   = True
 
         # analysis
@@ -520,6 +523,7 @@ class ToolsR21():
         if plot_scatters==True:
             self.plot_scatters()
 
+        # appendix
         if appendix_model==True:
             self.appendix_model()
 
@@ -1251,19 +1255,19 @@ class ToolsR21():
         yfunc  = np.log10(10**yfunc/10**xfunc)
 
         # hist x
-        h = np.histogram(obs[:,0], bins=50, range=xlim, weights=None)
+        h = np.histogram(obs[:,0], bins=50, range=xlim, weights=10**obs[:,1])
         h_co10_obs = np.c_[ np.delete(h[1],-1), h[0]/float(np.sum(h[0])) ]
-        h = np.histogram(co10_modsn, bins=50, range=xlim, weights=None)
+        h = np.histogram(co10_modsn, bins=50, range=xlim, weights=10**co21_modn)
         h_co10_modsn = np.c_[ np.delete(h[1],-1), h[0]/float(np.sum(h[0])) ]
 
         # hist y
-        h = np.histogram(r21_obs, bins=50, range=ylim, weights=None)
+        h = np.histogram(r21_obs, bins=50, range=ylim, weights=10**obs[:,1])
         h_co21_obs = np.c_[ np.delete(h[1],-1), h[0]/float(np.sum(h[0])) ]
-        h = np.histogram(r21_mods, bins=50, range=ylim, weights=None)
+        h = np.histogram(r21_mods, bins=50, range=ylim, weights=10**co21_mods)
         h_co21_mods = np.c_[ np.delete(h[1],-1), h[0]/float(np.sum(h[0])) ]
-        h = np.histogram(r21_modsn, bins=50, range=ylim, weights=None)
+        h = np.histogram(r21_modsn, bins=50, range=ylim, weights=10**co21_modsn)
         h_co21_modsn = np.c_[ np.delete(h[1],-1), h[0]/float(np.sum(h[0])) ]
-        h = np.histogram(r21_modn, bins=50, range=ylim, weights=None)
+        h = np.histogram(r21_modn, bins=50, range=ylim, weights=10**co21_modn)
         h_co21_modn = np.c_[ np.delete(h[1],-1), h[0]/float(np.sum(h[0])) ]
 
         # set plt, ax
