@@ -414,6 +414,7 @@ class ToolsR21():
         self.outpng_modeling_n3627    = self.dir_products + self._read_key("outpng_modeling_n3627")
         self.outpng_modeling_n4321    = self.dir_products + self._read_key("outpng_modeling_n4321")
 
+        self.outpng_masked_scatter_n0628 = self.dir_products + self._read_key("outpng_masked_scatter_n0628")
         self.outpng_masked_scatter_n4321 = self.dir_products + self._read_key("outpng_masked_scatter_n4321")
 
     ##################
@@ -550,21 +551,21 @@ class ToolsR21():
         """
         """
 
-        this_r21    = self.outfits_r21_n4321
-        this_er21   = self.outfits_er21_n4321
-        this_co21   = self.outmom_co21_n4321.replace("momX","mom0")
-        this_cprops = self.outfits_cprops_n4321
-        this_env    = self.outfits_env_n4321
-        this_halpha = self.outfits_halpha_n4321
-        this_ra     = float(self.ra_n4321)
-        this_dec    = float(self.dec_n4321)
-        this_scale  = self.scale_n4321
-        this_pa     = self.pa_n4321
-        this_incl   = self.incl_n4321
-        this_output = self.outpng_masked_scatter_n4321
-        r21_n4321, co21_n4321, cprops_n4321, env_n4321, halpha_n4321 = self._import_masked_hist(this_co21,this_r21,this_er21,
+        this_r21    = self.outfits_r21_n0628
+        this_er21   = self.outfits_er21_n0628
+        this_co21   = self.outmom_co21_n0628.replace("momX","mom0")
+        this_cprops = self.outfits_cprops_n0628
+        this_env    = self.outfits_env_n0628
+        this_halpha = self.outfits_halpha_n0628
+        this_ra     = float(self.ra_n0628)
+        this_dec    = float(self.dec_n0628)
+        this_scale  = self.scale_n0628
+        this_pa     = self.pa_n0628
+        this_incl   = self.incl_n0628
+        this_output = self.outpng_masked_scatter_n0628
+        r21, co21, cprops, env, halpha = self._import_masked_hist(this_co21,this_r21,this_er21,
             this_cprops,this_env,this_halpha,this_ra,this_dec,this_scale,this_pa,this_incl,norm=False)
-        self._plot_scattter_masked(r21_n4321,co21_n4321,cprops_n4321,env_n4321,halpha_n4321,this_output)
+        self._plot_scattter_masked(r211,co211,cprops1,env1,halpha1,this_output)
 
     #########################
     # _plot_scattter_masked #
@@ -660,11 +661,11 @@ class ToolsR21():
         self._plot_contours_gal(ax3,co21_halpha,r21_halpha,xlim,ylim,[cm.PiYG(1.2/1.4)],do_text=False)
 
         # ax4
-        ax4.scatter(co21,r21, color="grey", lw=0, alpha=1.0)
         #ax4.scatter(co21_interarm, r21_interarm, color=cm.gnuplot(0/3.5), lw=0, alpha=0.4)
         #ax4.scatter(co21_arm, r21_arm, color=cm.gnuplot(1/3.5), lw=0, alpha=0.4)
         #ax4.scatter(co21_bar, r21_bar, color=cm.gnuplot(2/3.5), lw=0, alpha=0.4)
         #ax4.scatter(co21_bulge, r21_bulge, color=cm.gnuplot(3/3.5), lw=0, alpha=0.4)
+        ax4.scatter(co21,r21, color="grey", lw=0, alpha=1.0)
         self._plot_contours_gal(ax4,co21_interarm,r21_interarm,xlim,ylim,[cm.gnuplot(0/3.5)],do_text=False)
         self._plot_contours_gal(ax4,co21_arm,r21_arm,xlim,ylim,[cm.gnuplot(1/3.5)],do_text=False)
         self._plot_contours_gal(ax4,co21_bar,r21_bar,xlim,ylim,[cm.gnuplot(2/3.5)],do_text=False)
