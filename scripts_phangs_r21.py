@@ -1255,19 +1255,19 @@ class ToolsR21():
         yfunc  = np.log10(10**yfunc/10**xfunc)
 
         # hist x
-        h = np.histogram(obs[:,0], bins=50, range=xlim, weights=10**obs[:,1])
+        h = np.histogram(obs[:,0], bins=50, range=xlim, weights=None)
         h_co10_obs = np.c_[ np.delete(h[1],-1), h[0]/float(np.sum(h[0])) ]
-        h = np.histogram(co10_modsn, bins=50, range=xlim, weights=10**co21_modn)
+        h = np.histogram(co10_modsn, bins=50, range=xlim, weights=None)
         h_co10_modsn = np.c_[ np.delete(h[1],-1), h[0]/float(np.sum(h[0])) ]
 
         # hist y
-        h = np.histogram(r21_obs, bins=50, range=ylim, weights=10**obs[:,1])
+        h = np.histogram(r21_obs, bins=50, range=ylim, weights=None)
         h_co21_obs = np.c_[ np.delete(h[1],-1), h[0]/float(np.sum(h[0])) ]
-        h = np.histogram(r21_mods, bins=50, range=ylim, weights=10**co21_mods)
+        h = np.histogram(r21_mods, bins=50, range=ylim, weights=None)
         h_co21_mods = np.c_[ np.delete(h[1],-1), h[0]/float(np.sum(h[0])) ]
-        h = np.histogram(r21_modsn, bins=50, range=ylim, weights=10**co21_modsn)
+        h = np.histogram(r21_modsn, bins=50, range=ylim, weights=None)
         h_co21_modsn = np.c_[ np.delete(h[1],-1), h[0]/float(np.sum(h[0])) ]
-        h = np.histogram(r21_modn, bins=50, range=ylim, weights=10**co21_modn)
+        h = np.histogram(r21_modn, bins=50, range=ylim, weights=None)
         h_co21_modn = np.c_[ np.delete(h[1],-1), h[0]/float(np.sum(h[0])) ]
 
         # set plt, ax
