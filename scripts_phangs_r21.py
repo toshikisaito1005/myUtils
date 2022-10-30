@@ -653,8 +653,10 @@ class ToolsR21():
         #ax2.step(h_co10_obs[:,0],h_co10_obs[:,1],color="grey",lw=1,where="mid")
 
         # ax3
-        ax3.scatter(co21_nonhalpha,r21_nonhalpha, color=cm.PiYG(0.2/1.4), lw=0, alpha=0.4)
-        ax3.scatter(co21_halpha,r21_halpha, color=cm.PiYG(1.2/1.4), lw=0, alpha=0.4)
+        #ax3.scatter(co21_nonhalpha,r21_nonhalpha, color=cm.PiYG(0.2/1.4), lw=0, alpha=0.4)
+        #ax3.scatter(co21_halpha,r21_halpha, color=cm.PiYG(1.2/1.4), lw=0, alpha=0.4)
+        self._plot_contours_gal(ax3,co21_nonhalpha,r21_nonhalpha,xlim,ylim,cm.PiYG(0.2/1.4),do_text=False)
+        self._plot_contours_gal(ax3,co21_halpha,r21_halpha,xlim,ylim,cm.PiYG(1.2/1.4),do_text=False)
 
         # ax4
         ax4.scatter(co21_interarm,r21_interarm, color=cm.gnuplot(0/3.5), lw=0, alpha=0.4)
@@ -1161,6 +1163,7 @@ class ToolsR21():
         xlim,
         ylim,
         color,
+        do_text=True,
         ):
         """
         """
@@ -1179,8 +1182,9 @@ class ToolsR21():
         ax.contour( contour, levels=[20,100], extent=extent, colors=color, zorder=1, linewidths=2.5, alpha=1.0)
 
         # text
-        t=ax.text(0.95, 0.05, cor, color="grey", horizontalalignment="right", transform=ax.transAxes, size=self.legend_fontsize-1, fontweight="bold")
-        t.set_bbox(dict(facecolor="white", alpha=self.text_back_alpha, lw=0))
+        if do_text==True:
+            t=ax.text(0.95, 0.05, cor, color="grey", horizontalalignment="right", transform=ax.transAxes, size=self.legend_fontsize-1, fontweight="bold")
+            t.set_bbox(dict(facecolor="white", alpha=self.text_back_alpha, lw=0))
 
     ####################
     # _import_scatters #
