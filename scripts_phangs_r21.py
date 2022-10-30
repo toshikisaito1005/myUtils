@@ -414,6 +414,8 @@ class ToolsR21():
         self.outpng_modeling_n3627    = self.dir_products + self._read_key("outpng_modeling_n3627")
         self.outpng_modeling_n4321    = self.dir_products + self._read_key("outpng_modeling_n4321")
 
+        self.outpng_masked_scatter_n4321 = self.dir_products + self._read_key("outpng_masked_scatter_n4321")
+
     ##################
     # run_phangs_r21 #
     ##################
@@ -437,6 +439,7 @@ class ToolsR21():
         plot_masks       = False,
         plot_masked_hist = False,
         plot_scatters    = False,
+        plot_masked_scat = False,
         # appendix
         appendix_model   = False,
         ):
@@ -470,6 +473,7 @@ class ToolsR21():
             plot_masks       = True
             plot_masked_hist = True
             plot_scatters    = True
+            plot_masked_scat = True
             # appendix
             appendix_model   = True
 
@@ -523,638 +527,153 @@ class ToolsR21():
         if plot_scatters==True:
             self.plot_scatters()
 
+        if plot_masked_scat==True:
+            self.plot_masked_scat()
+
         # appendix
         if appendix_model==True:
             self.appendix_model()
 
     #####################
     #####################
-    ### modeling part ###
-    #####################
-    #####################
-
-    ############
-    # modeling #
-    ############
-
-    def modeling(
-        self,
-        ):
-        """
-        """
-
-        taskname = self.modname + sys._getframe().f_code.co_name
-        check_first(self.outcube_co10_n0628,taskname)
-        start = time.time()
-
-        ###########
-        # prepare #
-        ###########
-
-        this_basebeam    = str(self.basebeam_n0628).replace(".","p").zfill(4)
-        this_beams_n0628 = [s for s in self.beams_n0628 if s%4==0]
-        this_co10        = self.outmom_co10_n0628.replace(this_basebeam,"????").replace("momX","mom0")
-        this_co21        = self.outmom_co21_n0628.replace(this_basebeam,"????").replace("momX","mom0")
-        this_r21         = self.outfits_r21_n0628.replace(this_basebeam,"????")
-        this_eco10       = self.outmom_co10_n0628.replace(this_basebeam,"????").replace("momX","emom0")
-        this_eco21       = self.outmom_co21_n0628.replace(this_basebeam,"????").replace("momX","emom0")
-        this_er21        = self.outfits_er21_n0628.replace(this_basebeam,"????")
-        this_ra          = float(self.ra_n0628)
-        this_dec         = float(self.dec_n0628)
-        this_scale       = self.scale_n0628
-        this_pa          = self.pa_n0628
-        this_incl        = self.incl_n0628
-        this_outputs_obs = self.outtxt_obs_n0628.replace(this_basebeam,"????")
-        this_outputs_mod = self.outtxt_mod_n0628.replace(this_basebeam,"????")
-        this_galname     = "n0628"
-        self._loop_import_modeling(this_beams_n0628,this_co10,this_co21,this_r21,this_eco10,this_eco21,this_er21,
-            this_outputs_obs,this_ra,this_dec,this_scale,this_pa,this_incl)
-        self._loop_modeling(this_beams_n0628,this_outputs_obs,this_outputs_mod,this_galname)
-
-        this_basebeam    = str(self.basebeam_n3627).replace(".","p").zfill(4)
-        this_beams_n3627 = [s for s in self.beams_n3627 if s%4==0]
-        this_co10        = self.outmom_co10_n3627.replace(this_basebeam,"????").replace("momX","mom0")
-        this_co21        = self.outmom_co21_n3627.replace(this_basebeam,"????").replace("momX","mom0")
-        this_r21         = self.outfits_r21_n3627.replace(this_basebeam,"????")
-        this_eco10       = self.outmom_co10_n3627.replace(this_basebeam,"????").replace("momX","emom0")
-        this_eco21       = self.outmom_co21_n3627.replace(this_basebeam,"????").replace("momX","emom0")
-        this_er21        = self.outfits_er21_n3627.replace(this_basebeam,"????")
-        this_ra          = float(self.ra_n3627)
-        this_dec         = float(self.dec_n3627)
-        this_scale       = self.scale_n3627
-        this_pa          = self.pa_n3627
-        this_incl        = self.incl_n3627
-        this_outputs_obs = self.outtxt_obs_n3627.replace(this_basebeam,"????")
-        this_outputs_mod = self.outtxt_mod_n3627.replace(this_basebeam,"????")
-        this_galname     = "n3627"
-        self._loop_import_modeling(this_beams_n3627,this_co10,this_co21,this_r21,this_eco10,this_eco21,this_er21,
-            this_outputs_obs,this_ra,this_dec,this_scale,this_pa,this_incl)
-        self._loop_modeling(this_beams_n3627,this_outputs_obs,this_outputs_mod,this_galname)
-
-        this_basebeam    = str(self.basebeam_n4254).replace(".","p").zfill(4)
-        this_beams_n4254 = [s for s in self.beams_n4254 if s%4==0]
-        this_co10        = self.outmom_co10_n4254.replace(this_basebeam,"????").replace("momX","mom0")
-        this_co21        = self.outmom_co21_n4254.replace(this_basebeam,"????").replace("momX","mom0")
-        this_r21         = self.outfits_r21_n4254.replace(this_basebeam,"????")
-        this_eco10       = self.outmom_co10_n4254.replace(this_basebeam,"????").replace("momX","emom0")
-        this_eco21       = self.outmom_co21_n4254.replace(this_basebeam,"????").replace("momX","emom0")
-        this_er21        = self.outfits_er21_n4254.replace(this_basebeam,"????")
-        this_ra          = float(self.ra_n4254)
-        this_dec         = float(self.dec_n4254)
-        this_scale       = self.scale_n4254
-        this_pa          = self.pa_n4254
-        this_incl        = self.incl_n4254
-        this_outputs_obs = self.outtxt_obs_n4254.replace(this_basebeam,"????")
-        this_outputs_mod = self.outtxt_mod_n4254.replace(this_basebeam,"????")
-        this_galname     = "n4254"
-        self._loop_import_modeling(this_beams_n4254,this_co10,this_co21,this_r21,this_eco10,this_eco21,this_er21,
-            this_outputs_obs,this_ra,this_dec,this_scale,this_pa,this_incl)
-        self._loop_modeling(this_beams_n4254,this_outputs_obs,this_outputs_mod,this_galname)
-
-        this_basebeam    = str(self.basebeam_n4321).replace(".","p").zfill(4)
-        this_beams_n4321 = [s for s in self.beams_n4321 if s%4==0]
-        this_co10        = self.outmom_co10_n4321.replace(this_basebeam,"????").replace("momX","mom0")
-        this_co21        = self.outmom_co21_n4321.replace(this_basebeam,"????").replace("momX","mom0")
-        this_r21         = self.outfits_r21_n4321.replace(this_basebeam,"????")
-        this_eco10       = self.outmom_co10_n4321.replace(this_basebeam,"????").replace("momX","emom0")
-        this_eco21       = self.outmom_co21_n4321.replace(this_basebeam,"????").replace("momX","emom0")
-        this_er21        = self.outfits_er21_n4321.replace(this_basebeam,"????")
-        this_ra          = float(self.ra_n4321)
-        this_dec         = float(self.dec_n4321)
-        this_scale       = self.scale_n4321
-        this_pa          = self.pa_n4321
-        this_incl        = self.incl_n4321
-        this_outputs_obs = self.outtxt_obs_n4321.replace(this_basebeam,"????")
-        this_outputs_mod = self.outtxt_mod_n4321.replace(this_basebeam,"????")
-        this_galname     = "n4321"
-        self._loop_import_modeling(this_beams_n4321,this_co10,this_co21,this_r21,this_eco10,this_eco21,this_er21,
-            this_outputs_obs,this_ra,this_dec,this_scale,this_pa,this_incl)
-        self._loop_modeling(this_beams_n4321,this_outputs_obs,this_outputs_mod,this_galname)
-
-        print("# elapsed time (min.) = ",(time.time() - start)/60.)
-
-    ##################
-    # _loop_modeling #
-    ##################
-
-    def _loop_modeling(
-        self,
-        beams,
-        inputtxt,
-        outputtxt,
-        galname,
-        ):
-        """
-        modeling
-        """
-
-        for i, this_beam in enumerate(beams):
-            #if i!=0:
-            #    continue
-            this_beamstr    = str(this_beam).replace(".","p").zfill(4)
-            this_txt        = inputtxt.replace("????",this_beamstr)
-            this_output_mod = outputtxt.replace("????",this_beamstr)
-            this_output_param = outputtxt.replace("????",this_beamstr).replace("_model","_param")
-            data            = np.loadtxt(this_txt)
-            this_logco10    = data[:,0]
-            this_logco21    = data[:,1]
-            this_logr21     = data[:,2]
-            this_logco10err = data[:,3]
-            this_logco21err = data[:,4]
-            this_logr21err  = data[:,5]
-
-            # get observed slope
-            this_slope,this_icept = self._get_observed_slope(this_logco10,this_logco21,this_logco21err)
-
-            # generate log10 co10 modsn
-            this_logco10_modsn = self._get_modsn_co10(this_logco10)
-
-            # determine modeling space
-            modeling_space = self._get_modeling_space(this_slope,this_icept,this_logco21)
-
-            # generate log10 co21 mods, modsn
-            this_logco10_modsn, this_logco21_modsn, this_logco21_mods, this_logco21_modn, this_slope2, this_icept2, this_scatters = \
-                self._get_modsn_co21(this_logco21,this_logco21err,this_logco10_modsn,modeling_space,this_logco10,
-                    output="hist_modsn_obs_co21_"+galname+"_"+this_beamstr+".png")
-
-            # plot scatter: obs, mods, modsn
-            self._plot_obs_model_scatter(this_slope2,this_icept2,this_slope,this_icept,this_scatters,this_logco10,this_logco21,
-                this_logco10_modsn,this_logco21_modsn,this_logco21_mods,"scatter_modsn_obs_"+galname+"_"+this_beamstr+".png")
-
-            # save
-            this_outmod = np.c_[this_logco10_modsn,this_logco21_modn,this_logco21_mods,this_logco21_modsn]
-            np.savetxt(this_output_mod, this_outmod)
-
-            this_outparam = np.c_[this_slope,this_icept]
-            np.savetxt(this_output_param, this_outparam)
-
-    ###################
-    # _get_modsn_co21 #
-    ###################
-
-    def _get_modsn_co21(
-        self,
-        obs_co21,
-        obs_co21err,
-        modsn_co10,
-        modeling_space,
-        obs_co10,
-        output="hist_modsn_obs_co21.png",
-        nloop_scatter=4000,
-        nloop_slope_icept=1,
-        ):
-        """
-        """
-
-        """
-        nbins, _, _, _ = self._get_modeling_param(modeling_space)
-        nbins = np.linspace(obs_co21.min(), obs_co21.max(), nbins)
-
-        for i in range(2000):
-            if i%100==0:
-                print("# loop slope/icept = " + str(i) + " / " + str(2000))
-            _, this_scatter, this_slope, this_icept = self._get_modeling_param(modeling_space)
-
-            # log co21 model distribution
-            mod_co21 = this_slope * modsn_co10 + this_icept
-
-            modsn_co10_candidate = []
-            mods_co21_candidate  = []
-            modsn_co21_candidate = []
-            scatter_candidate    = []
-            for j in range(len(nbins)-1):
-                # get this_obserr
-                this_cut      = np.where((obs_co21>=nbins[j]) & (obs_co21<nbins[j+1]))
-                this_obs_co10 = obs_co10[this_cut]
-                this_obs_co21 = obs_co21[this_cut]
-                this_obserr   = np.nan_to_num(np.nanmedian(obs_co21err[this_cut])) + 0.0000000001
-
-                # get best this_scatter
-                #for k in range(nloop):
-                if len(mod_co21)==0:
-                    this_chi2 = 1e44
-                else:
-                    #_, this_scatter, _, _ = self._get_modeling_param(modeling_space)
-                    this_cut        = np.where((mod_co21>=nbins[j]) & (mod_co21<nbins[j+1]))
-                    this_modsn_co10 = modsn_co10[this_cut]
-                    this_mod_co21   = mod_co21[this_cut]
-                    this_mods_co21  = np.log10(10**this_mod_co21 + np.random.normal(0.0, np.log(10)*10**this_mod_co21*this_scatter, len(this_mod_co21)))
-                    this_modsn_co21 = np.log10(10**this_mods_co21 + np.random.normal(0.0, np.log(10)*10**this_mods_co21*this_obserr, len(this_mods_co21)))
-
-                modsn_co10_candidate.extend(this_modsn_co10)
-                mods_co21_candidate.extend(this_mods_co21)
-                modsn_co21_candidate.extend(this_modsn_co21)
-                scatter_candidate.append(this_scatter)
-
-            modsn_co10_candidate = np.array(modsn_co10_candidate)
-            mods_co21_candidate  = np.array(mods_co21_candidate)
-            modsn_co21_candidate = np.array(modsn_co21_candidate)
-            this_chi2 = self._calc_chi2(10**obs_co21/10**obs_co10,10**modsn_co21_candidate/10**modsn_co10_candidate)
-            if i==0:
-                best_chi2        = this_chi2
-                best_slope       = this_slope
-                best_icept       = this_icept
-                best_scatter     = [this_scatter]
-                modsn_co10_final = modsn_co10_candidate
-                mods_co21_final  = mods_co21_candidate
-                modsn_co21_final = modsn_co21_candidate
-            if best_chi2>this_chi2:
-                best_chi2        = this_chi2
-                best_slope       = this_slope
-                best_icept       = this_icept
-                best_scatter     = [this_scatter]
-                modsn_co10_final = modsn_co10_candidate
-                mods_co21_final  = mods_co21_candidate
-                modsn_co21_final = modsn_co21_candidate
-
-        self._plot_obs_model_hist(obs_co21,mods_co21_final,modsn_co21_final,output)
-        self._plot_obs_model_hist(10**obs_co21/10**obs_co10,10**mods_co21_final/10**modsn_co10_final,10**modsn_co21_final/10**modsn_co10_final,output.replace("co21","r21"))
-
-        return modsn_co10_final, modsn_co21_final, mods_co21_final, best_slope, best_icept, best_scatter
-        """
-
-        nbins, _, _, _ = self._get_modeling_param(modeling_space)
-        nbins = np.linspace(obs_co21.min(), obs_co21.max(), nbins)
-
-        for i in range(nloop_slope_icept):
-            if i%10==0:
-                print("# loop slope/icept = " + str(i) + " / " + str(nloop_slope_icept))
-            _, _, this_slope, this_icept = self._get_modeling_param(modeling_space)
-
-            # log co21 model distribution
-            mod_co21 = this_slope * modsn_co10 + this_icept
-
-            modsn_co10_candidate = []
-            mods_co21_candidate  = []
-            modsn_co21_candidate = []
-            modn_co21_candidate  = []
-            scatter_candidate    = []
-            max_scatter          = 0.5
-            for j in range(len(nbins)-1):
-                print("# loop nbins = " + str(j) + " / " + str(len(nbins)-1) \
-                    + ", nloop_scatter = " + str(nloop_scatter) \
-                    + ", max_scatter = " + str(max_scatter))
-                # get this_obserr
-                this_cut      = np.where((obs_co21>=nbins[j]) & (obs_co21<nbins[j+1]))
-                this_obs_co10 = obs_co10[this_cut]
-                this_obs_co21 = obs_co21[this_cut]
-                this_obserr   = np.nan_to_num(np.nanmedian(obs_co21err[this_cut])) + 0.0000000001
-
-                # get best this_scatter
-                for k in range(nloop_scatter):
-                    if len(mod_co21)==0:
-                        this_chi2 = 1e44
-                    else:
-                        _, this_scatter, _, _ = self._get_modeling_param(modeling_space,max_scatter)
-                        this_cut        = np.where((mod_co21>=nbins[j]) & (mod_co21<nbins[j+1]))
-                        this_modsn_co10 = modsn_co10[this_cut]
-                        this_mod_co21   = mod_co21[this_cut]
-                        this_mods_co21  = np.log10(10**this_mod_co21 + np.random.normal(0.0, np.log(10)*10**this_mod_co21*this_scatter, len(this_mod_co21)))
-                        this_modsn_co21 = np.log10(10**this_mods_co21 + np.random.normal(0.0, np.log(10)*10**this_mods_co21*this_obserr, len(this_mods_co21)))
-                        this_modn_co21  = np.log10(10**this_mod_co21 + np.random.normal(0.0, np.log(10)*10**this_mod_co21*this_obserr, len(this_mod_co21)))
-
-                    this_chi2 = self._calc_chi2(10**this_obs_co21/10**this_obs_co10,10**this_modsn_co21/10**this_modsn_co10)
-                    if k==0:
-                        best_chi2       = this_chi2
-                        scatter_best    = this_scatter
-                        modsn_co10_best = this_modsn_co10
-                        mods_co21_best  = this_mods_co21
-                        modsn_co21_best = this_modsn_co21
-                        modn_co21_best  = this_modn_co21
-                    if best_chi2>this_chi2:
-                        best_chi2       = this_chi2
-                        scatter_best    = this_scatter
-                        modsn_co10_best = this_modsn_co10
-                        mods_co21_best  = this_mods_co21
-                        modsn_co21_best = this_modsn_co21
-                        modn_co21_best  = this_modn_co21
-
-                modsn_co10_candidate.extend(modsn_co10_best)
-                mods_co21_candidate.extend(mods_co21_best)
-                modsn_co21_candidate.extend(modsn_co21_best)
-                modn_co21_candidate.extend(modn_co21_best)
-                scatter_candidate.append(scatter_best)
-
-                nloop_scatter = int(nloop_scatter / 1.3)
-                if j>=2:
-                    max_scatter = scatter_best * 1.1
-
-            modsn_co10_candidate = np.array(modsn_co10_candidate)
-            mods_co21_candidate  = np.array(mods_co21_candidate)
-            modsn_co21_candidate = np.array(modsn_co21_candidate)
-            modn_co21_candidate  = np.array(modn_co21_candidate)
-            scatter_candidate    = np.array(scatter_candidate)
-            this_chi2 = self._calc_chi2(10**obs_co21/10**obs_co10,10**modsn_co21_candidate/10**modsn_co10_candidate)
-            if i==0:
-                best_chi2        = this_chi2
-                best_slope       = this_slope
-                best_icept       = this_icept
-                modsn_co10_final = modsn_co10_candidate
-                mods_co21_final  = mods_co21_candidate
-                modsn_co21_final = modsn_co21_candidate
-                modn_co21_final  = modn_co21_candidate
-            if best_chi2>this_chi2:
-                best_chi2        = this_chi2
-                best_slope       = this_slope
-                best_icept       = this_icept
-                modsn_co10_final = modsn_co10_candidate
-                mods_co21_final  = mods_co21_candidate
-                modsn_co21_final = modsn_co21_candidate
-                modn_co21_final  = modn_co21_candidate
-
-        self._plot_obs_model_hist(obs_co21,mods_co21_final,modsn_co21_final,output)
-        self._plot_obs_model_hist(10**obs_co21/10**obs_co10,10**mods_co21_final/10**modsn_co10_final,10**modsn_co21_final/10**modsn_co10_final,output.replace("co21","r21"))
-
-        return modsn_co10_final, modsn_co21_final, mods_co21_final, modn_co21_final, best_slope, best_icept, scatter_candidate
-
-    ##############
-    # _calc_chi2 #
-    ##############
-
-    def _calc_chi2(
-        self,
-        data_obs,
-        data_modsn,
-        weight=None,
-        bins=100,
-        ):
-        """
-        """
-
-        """
-        histr   = [np.min(data_obs),np.max(data_obs)]
-        #histr   = [0,2]
-        hist    = np.histogram(data_obs, bins=bins, range=histr)
-        x       = hist[1][1:]
-        y_obs   = hist[0] / float(np.sum(hist[0]))
-        hist    = np.histogram(data_modsn, bins=bins, range=histr)
-        y_modsn = hist[0] / float(np.sum(hist[0]))
-        diff    = (y_obs - y_modsn)**2 / y_obs
-        diff[np.isnan(diff)] = -1e7
-        diff[np.isinf(diff)] = -1e7
-        diff    = diff[diff!=-1e7]
-        x       = x[diff!=-1e7]
-        #
-        if len(x)>0:
-            if weight==None:
-                weights = None
-            elif weight=="higher":
-                weights = abs(x - np.min(x))**1 # weight to histogram wings
-            elif weight=="wing":
-                weights = abs(x - np.median(x))**2 # weight to histogram wings
-            #cut = np.where((x<=np.percentile(x,16)) & (x>=np.percentile(x,84)))
-            chi2 = np.sqrt(np.average(diff,weights=weights)*len(diff))
-        else:
-            chi2 = 1e7
-        """
-
-        value = stats.ks_2samp(data_obs, data_modsn)
-
-        return value.statistic
-
-    #######################
-    # _get_modeling_param #
-    #######################
-
-    def _get_modeling_param(self,modeling_space,max_scatter=0.5):
-        """
-        """
-
-        nbins        = modeling_space[0]
-        this_slope   = (modeling_space[2][1]-modeling_space[2][0])*np.random.rand()+modeling_space[2][0]
-        this_icept   = (modeling_space[3][1]-modeling_space[3][0])*np.random.rand()+modeling_space[3][0]
-
-        this_scatter = (modeling_space[1][1]-modeling_space[1][0])*np.random.rand()+modeling_space[1][0]
-        while this_scatter>max_scatter:
-            this_scatter = (modeling_space[1][1]-modeling_space[1][0])*np.random.rand()+modeling_space[1][0]
-
-        return nbins, this_scatter, this_slope, this_icept
-
-    #######################
-    # _get_modeling_space #
-    #######################
-
-    def _get_modeling_space(
-        self,
-        slope,
-        icept,
-        obs,
-        ):
-        """
-        """
-
-        nbins         = int( ((np.ceil(np.log2(len(obs))) + 1) + 1.5) / 1.5 )
-        range_scatter = [0.0, 0.5]
-        range_slope   = [slope-0.001, slope+0.001]
-        range_icept   = [icept-0.001, icept+0.001]
-
-        return [nbins, range_scatter, range_slope, range_icept]
-
-    ###########################
-    # _plot_obs_model_scatter #
-    ###########################
-
-    def _plot_obs_model_scatter(
-        self,
-        slope,
-        icept,
-        slope_orig,
-        icept_orig,
-        this_scatters,
-        obs_co10,
-        obs_co21,
-        modsn_co10,
-        modsn_co21,
-        mods_co21,
-        outpng,
-        ):
-        """
-        """
-
-        xfunc  = np.linspace(np.min(obs_co10), np.max(obs_co10), 100)
-        yfunc  = xfunc * slope + icept
-        yfunco = xfunc * slope_orig + icept_orig
-
-        fig = plt.figure(figsize=(10,10))
-        plt.subplots_adjust(bottom=0.10, left=0.13, right=0.91, top=0.94)
-        gs  = gridspec.GridSpec(nrows=16, ncols=16)
-        ax1 = plt.subplot(gs[0:16,0:16])
-        myax_set(ax1, "both", None, None, None, None, None)
-        ax1.scatter(obs_co10, obs_co21, alpha=1.0, color="grey", lw=0)
-        ax1.scatter(modsn_co10, modsn_co21, alpha=0.3, color="tomato", lw=0)
-        ax1.scatter(modsn_co10, mods_co21, alpha=0.3, color="deepskyblue", lw=0)
-        ax1.plot(xfunc, yfunco, color="black", lw=3)
-        ax1.plot(xfunc, yfunc, color="blue", lw=3)
-        ax1.set_xlim([np.min(obs_co10)-0.1,np.max(obs_co10)+0.1])
-        ax1.set_ylim([np.min(obs_co21)-0.1,np.max(obs_co21)+0.1])
-        ax1.text(0.05,0.95,str(slope)+", "+str(icept),transform=ax1.transAxes,weight="bold")
-        for i in range(len(this_scatters)):
-            this_scatter = this_scatters[i]
-            ax1.text(0.05,0.90-i*0.05,str(this_scatter),transform=ax1.transAxes)
-        plt.savefig(outpng)
-
-    ########################
-    # _plot_obs_model_hist #
-    ########################
-
-    def _plot_obs_model_hist(
-        self,
-        obs,
-        mods,
-        modsn,
-        outpng,
-        ):
-        """
-        """
-
-        hrange    = [np.min(obs), np.max(obs)]
-        histobs   = np.histogram(obs, bins=50, range=hrange)
-        histobs   = [np.delete(histobs[1],-1), histobs[0] / float(np.sum(histobs[0]))]
-        if mods!=None:
-            histmods  = np.histogram(mods, bins=50, range=hrange)
-            histmods  = [np.delete(histmods[1],-1), histmods[0] / float(np.sum(histmods[0]))]
-        histmodsn = np.histogram(modsn, bins=50, range=hrange)
-        histmodsn = [np.delete(histmodsn[1],-1), histmodsn[0] / float(np.sum(histmodsn[0]))]
-        hwidth    = histobs[0][1] - histobs[0][0]
-
-        fig = plt.figure(figsize=(10,10))
-        plt.subplots_adjust(bottom=0.10, left=0.13, right=0.91, top=0.94)
-        gs  = gridspec.GridSpec(nrows=16, ncols=16)
-        ax1 = plt.subplot(gs[0:16,0:16])
-        myax_set(ax1, "both", hrange, None, None, None, None)
-        ax1.bar(histobs[0],histobs[1],width=hwidth,color="black",alpha=0.5,lw=0,align="center")
-        if mods!=None:
-            ax1.bar(histmods[0],histmods[1],width=hwidth,color="deepskyblue",alpha=0.5,lw=0,align="center")
-        ax1.bar(histmodsn[0],histmodsn[1],width=hwidth,color="tomato",alpha=0.5,lw=0,align="center")
-        plt.savefig(outpng)
-
-    ###################
-    # _get_modsn_co10 #
-    ###################
-
-    def _get_modsn_co10(
-        self,
-        obs,
-        output="hist_modsn_obs_co10.png",
-        ):
-        """
-        """
-
-        h,e = np.histogram(obs, bins=1000, density=True, weights=None)
-        x = np.linspace(e.min(), e.max())
-        modsn = np.random.choice((e[:-1] + e[1:])/2, size=len(obs)*5, p=h/h.sum())
-
-        self._plot_obs_model_hist(obs,None,modsn,output)
-
-        return modsn
-
-    #######################
-    # _get_observed_slope #
-    #######################
-
-    def _get_observed_slope(
-        self,
-        logx,
-        logy,
-        logyerr,
-        ):
-        """
-        """
-
-        list_slope = []
-        list_icept = []
-        for i in range(2000):
-            popt,_ = curve_fit(self._func2, logx, logy, p0=[np.random.rand()/2.0+0.75,(np.random.rand()-0.5)*3],
-                maxfev=10000, sigma=(np.log(10)*10**logy*logyerr)/10**logy, absolute_sigma=False)
-            list_slope.append(popt[0])
-            list_icept.append(popt[1])
-
-        list_slope = np.array(list_slope)
-        list_icept = np.array(list_icept)
-
-        p16_slope = np.percentile(list_slope,16)
-        p50_slope = np.percentile(list_slope,50)
-        p84_slope = np.percentile(list_slope,84)
-
-        p16_icept = np.percentile(list_icept,16)
-        p50_icept = np.percentile(list_icept,50)
-        p84_icept = np.percentile(list_icept,84)
-
-        print("observed p16_slope     = " + str(p16_slope))
-        print("observed p50_slope     = " + str(p50_slope))
-        print("observed p84_slope     = " + str(p84_slope))
-        print("observed p16_intercept = " + str(p16_icept))
-        print("observed p50_intercept = " + str(p50_icept))
-        print("observed p84_intercept = " + str(p84_icept))
-
-        return p50_slope, p50_icept
-
-    def _func2(self, x, a, b):
-        """
-        """
-        return a*x + b
-
-    #########################
-    # _loop_import_modeling #
-    #########################
-
-    def _loop_import_modeling(self,beams,co10,co21,r21,eco10,eco21,er21,outtxt,ra,dec,scale,pa,incl):
-        """
-        modeling
-        """
-
-        for this_beam in beams:
-            this_beamstr = str(this_beam).replace(".","p").zfill(4)
-            this_co10    = co10.replace("????",this_beamstr)
-            this_co21    = co21.replace("????",this_beamstr)
-            this_r21     = r21.replace("????",this_beamstr)
-            this_eco10   = eco10.replace("????",this_beamstr)
-            this_eco21   = eco21.replace("????",this_beamstr)
-            this_er21    = er21.replace("????",this_beamstr)
-            this_outtxt  = outtxt.replace("????",this_beamstr)
-
-            done = glob.glob(this_outtxt)
-            if not done:
-                print("# run _import_modeling for " + this_outtxt.split("/")[-1])
-                # import
-                shape         = imhead(this_co21,mode="list")["shape"]
-                box           = "0,0," + str(shape[0]-1) + "," + str(shape[1]-1)
-                ra_deg        = imval(this_co21,box=box)["coords"][:,:,0] * 180/np.pi
-                dec_deg       = imval(this_co21,box=box)["coords"][:,:,1] * 180/np.pi
-                this_co21     = imval(this_co21,box=box)["data"]
-                this_co10     = imval(this_co10,box=box)["data"]
-                this_r21      = imval(this_r21,box=box)["data"]
-                this_co21_err = imval(this_eco21,box=box)["data"]
-                this_co10_err = imval(this_eco10,box=box)["data"]
-                this_r21_err  = imval(this_er21,box=box)["data"]
-
-                dist_pc, _    = self._get_rel_dist_pc(ra_deg, dec_deg, ra, dec, scale, pa, incl)
-                dist_kpc      = dist_pc / 1000.
-
-                cut = np.where( (~np.isnan(this_co10)) & (~np.isinf(this_co10)) & (this_co10!=0) \
-                    & (~np.isnan(this_co21)) & (~np.isinf(this_co21)) & (this_co21!=0) \
-                    & (~np.isnan(this_r21)) & (~np.isinf(this_r21)) & (this_r21!=0) \
-                    & (this_r21!=this_r21_err*self.snr_ratio) & (dist_kpc > self.hist_550pc_cnter_radius) )
-
-                header = "log10_co10(K), log10_co21(K), log10_r21, log10_co10err(K), log10_co21err(K), log10_r21err"
-                output = np.c_[
-                    np.log10(this_co10[cut]),
-                    np.log10(this_co21[cut]),
-                    np.log10(this_r21[cut]),
-                    this_co10_err[cut] / (np.log(10) * this_co10[cut]),
-                    this_co21_err[cut] / (np.log(10) * this_co21[cut]),
-                    this_r21_err[cut] / (np.log(10) * this_r21[cut]),
-                    ]
-                fmt    = "%6.3f %6.3f %6.3f %6.3f %6.3f %6.3f"
-                np.savetxt(this_outtxt, output, header=header, fmt=fmt)
-            else:
-                print("# skip _import_modeling for " + this_outtxt.split("/")[-1])
-
-    #####################
-    #####################
     ### plotting part ###
     #####################
     #####################
+
+    ####################
+    # plot_masked_scat #
+    ####################
+
+    def plot_masked_scat(
+        self,
+        ):
+        """
+        """
+
+        this_r21    = self.outfits_r21_n4321
+        this_er21   = self.outfits_er21_n4321
+        this_co21   = self.outmom_co21_n4321.replace("momX","mom0")
+        this_cprops = self.outfits_cprops_n4321
+        this_env    = self.outfits_env_n4321
+        this_halpha = self.outfits_halpha_n4321
+        this_ra     = float(self.ra_n4321)
+        this_dec    = float(self.dec_n4321)
+        this_scale  = self.scale_n4321
+        this_pa     = self.pa_n4321
+        this_incl   = self.incl_n4321
+        this_output = self.outpng_masked_scatter_n4321
+        r21_n4321, co21_n4321, cprops_n4321, env_n4321, halpha_n4321 = self._import_masked_hist(this_co21,this_r21,this_er21,
+            this_cprops,this_env,this_halpha,this_ra,this_dec,this_scale,this_pa,this_incl,norm=False)
+        self._plot_scattter_masked(r21_n4321,co21_n4321,cprops_n4321,env_n4321,halpha_n4321,this_output)
+
+    #########################
+    # _plot_scattter_masked #
+    #########################
+
+    def _plot_scattter_masked(
+        self,
+        r21,
+        co21,
+        cprops,
+        env,
+        halpha,
+        outpng,
+        ):
+        """
+        """
+
+        xlabel = r"log$_{10}$ $I_{\rm CO(2-1)}$"
+        ylabel = r"log$_{10}$ $R_{\rm 21}$"
+        xlim   = [np.min(co21)-0.1, np.max(co21)+0.1]
+        ylim   = [np.min(r21)-0.1, np.max(r21)+0.1]
+
+        # mask
+        r21_cloud      = r21[cprops==1]
+        r21_noncloud   = r21[cprops==0]
+        r21_interarm   = r21[env==0]
+        r21_arm        = r21[env==1]
+        r21_bar        = r21[env==2]
+        r21_halpha     = r21[halpha==1]
+        r21_nonhalpha  = r21[halpha==0]
+
+        co21_cloud     = co21[cprops==1]
+        co21_noncloud  = co21[cprops==0]
+        co21_interarm  = co21[env==0]
+        co21_arm       = co21[env==1]
+        co21_bar       = co21[env==2]
+        co21_halpha    = co21[halpha==1]
+        co21_nonhalpha = co21[halpha==0]
+
+        # hist x
+        #h = np.histogram(obs[:,0], bins=50, range=xlim, weights=None)
+        #h_co10_obs = np.c_[ np.delete(h[1],-1), h[0]/float(np.sum(h[0])) ]
+
+        # hist y
+        #h = np.histogram(r21_obs, bins=50, range=ylim, weights=None)
+        #h_co21_obs = np.c_[ np.delete(h[1],-1), h[0]/float(np.sum(h[0])) ]
+
+        # set plt, ax
+        plt.figure(figsize=(15,9))
+        plt.subplots_adjust(bottom=0.11, left=0.09, right=0.91, top=0.89)
+        gs = gridspec.GridSpec(nrows=5, ncols=9)
+        ax1 = plt.subplot(gs[0:1,0:4])
+        ax2 = plt.subplot(gs[0:1,4:8])
+        ax3 = plt.subplot(gs[1:5,0:4])
+        ax4 = plt.subplot(gs[1:5,4:8])
+        ax5 = plt.subplot(gs[1:5,8:9])
+
+        myax_set(ax1, "x",    xlim, None, None, None, None, adjust=False)
+        myax_set(ax2, "x",    xlim, None, None, None, None, adjust=False)
+        myax_set(ax3, "both", xlim, ylim, None, xlabel, ylabel, adjust=False)
+        myax_set(ax4, "both", xlim, ylim, None, xlabel, None, adjust=False)
+        myax_set(ax5, "y",    None, ylim, None, None, None, adjust=False)
+        ax1.tick_params(labelbottom=False,labelleft=False,labelright=False,labeltop=True)
+        ax2.tick_params(labelbottom=False,labelleft=False,labelright=False,labeltop=True)
+        ax3.tick_params(labelbottom=True,labelleft=True,labelright=False,labeltop=False)
+        ax4.tick_params(labelbottom=True,labelleft=False,labelright=False,labeltop=False)
+        ax5.tick_params(labelbottom=False,labelleft=False,labelright=True,labeltop=False)
+        ax1.spines["left"].set_visible(False)
+        ax1.spines["right"].set_visible(False)
+        ax1.spines["bottom"].set_visible(False)
+        ax1.tick_params("x", length=0, which="major")
+        ax1.tick_params("y", length=0, which="major")
+        ax2.spines["left"].set_visible(False)
+        ax2.spines["right"].set_visible(False)
+        ax2.spines["bottom"].set_visible(False)
+        ax2.tick_params("x", length=0, which="major")
+        ax2.tick_params("y", length=0, which="major")
+        ax5.spines["left"].set_visible(False)
+        ax5.spines["top"].set_visible(False)
+        ax5.spines["bottom"].set_visible(False)
+        ax5.tick_params("x", length=0, which="major")
+        ax5.tick_params("y", length=0, which="major")
+
+        # ax1
+        #ax1.bar(h_co10_obs[:,0],h_co10_obs[:,1],width=h_co10_obs[:,0][1]-h_co10_obs[:,0][0],color="grey",lw=0,alpha=0.5,align="center")
+        #ax1.step(h_co10_obs[:,0],h_co10_obs[:,1],color="grey",lw=1,where="mid")
+
+        # ax2
+        #ax2.bar(h_co10_obs[:,0],h_co10_obs[:,1],width=h_co10_obs[:,0][1]-h_co10_obs[:,0][0],color="grey",lw=0,alpha=0.5,align="center")
+        #ax2.step(h_co10_obs[:,0],h_co10_obs[:,1],color="grey",lw=1,where="mid")
+
+        # ax3
+        ax3.scatter(co21,r21, color="grey", lw=0)
+
+        # ax4
+        ax4.scatter(co21,r21, color="grey", lw=0)
+
+        # ax5
+        #ax5.barh(h_co21_obs[:,0],h_co21_obs[:,1],height=h_co21_obs[:,0][1]-h_co21_obs[:,0][0],color="grey",lw=0,alpha=0.5,align="edge")
+        #ax5.step(h_co21_obs[:,1],h_co21_obs[:,0],color="grey",lw=1)
+
+        # text
+        #t=ax3.text(0.95, 0.20, "observation", color="grey", horizontalalignment="right", transform=ax3.transAxes, size=self.legend_fontsize, fontweight="bold")
+        #t.set_bbox(dict(facecolor="white", alpha=self.text_back_alpha, lw=0))
+
+        # save
+        plt.savefig(outpng, dpi=self.fig_dpi)
+
+    #
 
     ##################
     # appendix_model #
@@ -1915,7 +1434,7 @@ class ToolsR21():
     # _import_masked_hist #
     #######################
 
-    def _import_masked_hist(self,co21,r21,er21,cprops,env,halpha,ra,dec,scale,pa,incl):
+    def _import_masked_hist(self,co21,r21,er21,cprops,env,halpha,ra,dec,scale,pa,incl,norm=True):
         """
         plot_masked_hist
         """
@@ -1941,8 +1460,12 @@ class ToolsR21():
             & (~np.isnan(this_r21)) & (~np.isinf(this_r21)) & (this_r21!=0) \
             & (this_r21!=this_r21_err*self.snr_ratio) & (dist_kpc > self.hist_550pc_cnter_radius) ) 
 
-        this_co21   = this_co21[cut].flatten() / np.median(this_co21[cut].flatten())
-        this_r21    = this_r21[cut].flatten() / np.median(this_r21[cut].flatten())
+        if norm==True:
+            this_co21   = this_co21[cut].flatten() / np.median(this_co21[cut].flatten())
+            this_r21    = this_r21[cut].flatten() / np.median(this_r21[cut].flatten())
+        else:
+            this_co21   = this_co21[cut].flatten()
+            this_r21    = this_r21[cut].flatten() 
         this_cprops = this_cprops[cut].flatten()
         this_env    = this_env[cut].flatten()
         this_halpha = this_halpha[cut].flatten()
@@ -3995,6 +3518,629 @@ class ToolsR21():
         """
         """
         return a*np.exp(-(x)**2/(2*c**2))
+
+    #####################
+    #####################
+    ### modeling part ###
+    #####################
+    #####################
+
+    ############
+    # modeling #
+    ############
+
+    def modeling(
+        self,
+        ):
+        """
+        """
+
+        taskname = self.modname + sys._getframe().f_code.co_name
+        check_first(self.outcube_co10_n0628,taskname)
+        start = time.time()
+
+        ###########
+        # prepare #
+        ###########
+
+        this_basebeam    = str(self.basebeam_n0628).replace(".","p").zfill(4)
+        this_beams_n0628 = [s for s in self.beams_n0628 if s%4==0]
+        this_co10        = self.outmom_co10_n0628.replace(this_basebeam,"????").replace("momX","mom0")
+        this_co21        = self.outmom_co21_n0628.replace(this_basebeam,"????").replace("momX","mom0")
+        this_r21         = self.outfits_r21_n0628.replace(this_basebeam,"????")
+        this_eco10       = self.outmom_co10_n0628.replace(this_basebeam,"????").replace("momX","emom0")
+        this_eco21       = self.outmom_co21_n0628.replace(this_basebeam,"????").replace("momX","emom0")
+        this_er21        = self.outfits_er21_n0628.replace(this_basebeam,"????")
+        this_ra          = float(self.ra_n0628)
+        this_dec         = float(self.dec_n0628)
+        this_scale       = self.scale_n0628
+        this_pa          = self.pa_n0628
+        this_incl        = self.incl_n0628
+        this_outputs_obs = self.outtxt_obs_n0628.replace(this_basebeam,"????")
+        this_outputs_mod = self.outtxt_mod_n0628.replace(this_basebeam,"????")
+        this_galname     = "n0628"
+        self._loop_import_modeling(this_beams_n0628,this_co10,this_co21,this_r21,this_eco10,this_eco21,this_er21,
+            this_outputs_obs,this_ra,this_dec,this_scale,this_pa,this_incl)
+        self._loop_modeling(this_beams_n0628,this_outputs_obs,this_outputs_mod,this_galname)
+
+        this_basebeam    = str(self.basebeam_n3627).replace(".","p").zfill(4)
+        this_beams_n3627 = [s for s in self.beams_n3627 if s%4==0]
+        this_co10        = self.outmom_co10_n3627.replace(this_basebeam,"????").replace("momX","mom0")
+        this_co21        = self.outmom_co21_n3627.replace(this_basebeam,"????").replace("momX","mom0")
+        this_r21         = self.outfits_r21_n3627.replace(this_basebeam,"????")
+        this_eco10       = self.outmom_co10_n3627.replace(this_basebeam,"????").replace("momX","emom0")
+        this_eco21       = self.outmom_co21_n3627.replace(this_basebeam,"????").replace("momX","emom0")
+        this_er21        = self.outfits_er21_n3627.replace(this_basebeam,"????")
+        this_ra          = float(self.ra_n3627)
+        this_dec         = float(self.dec_n3627)
+        this_scale       = self.scale_n3627
+        this_pa          = self.pa_n3627
+        this_incl        = self.incl_n3627
+        this_outputs_obs = self.outtxt_obs_n3627.replace(this_basebeam,"????")
+        this_outputs_mod = self.outtxt_mod_n3627.replace(this_basebeam,"????")
+        this_galname     = "n3627"
+        self._loop_import_modeling(this_beams_n3627,this_co10,this_co21,this_r21,this_eco10,this_eco21,this_er21,
+            this_outputs_obs,this_ra,this_dec,this_scale,this_pa,this_incl)
+        self._loop_modeling(this_beams_n3627,this_outputs_obs,this_outputs_mod,this_galname)
+
+        this_basebeam    = str(self.basebeam_n4254).replace(".","p").zfill(4)
+        this_beams_n4254 = [s for s in self.beams_n4254 if s%4==0]
+        this_co10        = self.outmom_co10_n4254.replace(this_basebeam,"????").replace("momX","mom0")
+        this_co21        = self.outmom_co21_n4254.replace(this_basebeam,"????").replace("momX","mom0")
+        this_r21         = self.outfits_r21_n4254.replace(this_basebeam,"????")
+        this_eco10       = self.outmom_co10_n4254.replace(this_basebeam,"????").replace("momX","emom0")
+        this_eco21       = self.outmom_co21_n4254.replace(this_basebeam,"????").replace("momX","emom0")
+        this_er21        = self.outfits_er21_n4254.replace(this_basebeam,"????")
+        this_ra          = float(self.ra_n4254)
+        this_dec         = float(self.dec_n4254)
+        this_scale       = self.scale_n4254
+        this_pa          = self.pa_n4254
+        this_incl        = self.incl_n4254
+        this_outputs_obs = self.outtxt_obs_n4254.replace(this_basebeam,"????")
+        this_outputs_mod = self.outtxt_mod_n4254.replace(this_basebeam,"????")
+        this_galname     = "n4254"
+        self._loop_import_modeling(this_beams_n4254,this_co10,this_co21,this_r21,this_eco10,this_eco21,this_er21,
+            this_outputs_obs,this_ra,this_dec,this_scale,this_pa,this_incl)
+        self._loop_modeling(this_beams_n4254,this_outputs_obs,this_outputs_mod,this_galname)
+
+        this_basebeam    = str(self.basebeam_n4321).replace(".","p").zfill(4)
+        this_beams_n4321 = [s for s in self.beams_n4321 if s%4==0]
+        this_co10        = self.outmom_co10_n4321.replace(this_basebeam,"????").replace("momX","mom0")
+        this_co21        = self.outmom_co21_n4321.replace(this_basebeam,"????").replace("momX","mom0")
+        this_r21         = self.outfits_r21_n4321.replace(this_basebeam,"????")
+        this_eco10       = self.outmom_co10_n4321.replace(this_basebeam,"????").replace("momX","emom0")
+        this_eco21       = self.outmom_co21_n4321.replace(this_basebeam,"????").replace("momX","emom0")
+        this_er21        = self.outfits_er21_n4321.replace(this_basebeam,"????")
+        this_ra          = float(self.ra_n4321)
+        this_dec         = float(self.dec_n4321)
+        this_scale       = self.scale_n4321
+        this_pa          = self.pa_n4321
+        this_incl        = self.incl_n4321
+        this_outputs_obs = self.outtxt_obs_n4321.replace(this_basebeam,"????")
+        this_outputs_mod = self.outtxt_mod_n4321.replace(this_basebeam,"????")
+        this_galname     = "n4321"
+        self._loop_import_modeling(this_beams_n4321,this_co10,this_co21,this_r21,this_eco10,this_eco21,this_er21,
+            this_outputs_obs,this_ra,this_dec,this_scale,this_pa,this_incl)
+        self._loop_modeling(this_beams_n4321,this_outputs_obs,this_outputs_mod,this_galname)
+
+        print("# elapsed time (min.) = ",(time.time() - start)/60.)
+
+    ##################
+    # _loop_modeling #
+    ##################
+
+    def _loop_modeling(
+        self,
+        beams,
+        inputtxt,
+        outputtxt,
+        galname,
+        ):
+        """
+        modeling
+        """
+
+        for i, this_beam in enumerate(beams):
+            #if i!=0:
+            #    continue
+            this_beamstr    = str(this_beam).replace(".","p").zfill(4)
+            this_txt        = inputtxt.replace("????",this_beamstr)
+            this_output_mod = outputtxt.replace("????",this_beamstr)
+            this_output_param = outputtxt.replace("????",this_beamstr).replace("_model","_param")
+            data            = np.loadtxt(this_txt)
+            this_logco10    = data[:,0]
+            this_logco21    = data[:,1]
+            this_logr21     = data[:,2]
+            this_logco10err = data[:,3]
+            this_logco21err = data[:,4]
+            this_logr21err  = data[:,5]
+
+            # get observed slope
+            this_slope,this_icept = self._get_observed_slope(this_logco10,this_logco21,this_logco21err)
+
+            # generate log10 co10 modsn
+            this_logco10_modsn = self._get_modsn_co10(this_logco10)
+
+            # determine modeling space
+            modeling_space = self._get_modeling_space(this_slope,this_icept,this_logco21)
+
+            # generate log10 co21 mods, modsn
+            this_logco10_modsn, this_logco21_modsn, this_logco21_mods, this_logco21_modn, this_slope2, this_icept2, this_scatters = \
+                self._get_modsn_co21(this_logco21,this_logco21err,this_logco10_modsn,modeling_space,this_logco10,
+                    output="hist_modsn_obs_co21_"+galname+"_"+this_beamstr+".png")
+
+            # plot scatter: obs, mods, modsn
+            self._plot_obs_model_scatter(this_slope2,this_icept2,this_slope,this_icept,this_scatters,this_logco10,this_logco21,
+                this_logco10_modsn,this_logco21_modsn,this_logco21_mods,"scatter_modsn_obs_"+galname+"_"+this_beamstr+".png")
+
+            # save
+            this_outmod = np.c_[this_logco10_modsn,this_logco21_modn,this_logco21_mods,this_logco21_modsn]
+            np.savetxt(this_output_mod, this_outmod)
+
+            this_outparam = np.c_[this_slope,this_icept]
+            np.savetxt(this_output_param, this_outparam)
+
+    ###################
+    # _get_modsn_co21 #
+    ###################
+
+    def _get_modsn_co21(
+        self,
+        obs_co21,
+        obs_co21err,
+        modsn_co10,
+        modeling_space,
+        obs_co10,
+        output="hist_modsn_obs_co21.png",
+        nloop_scatter=4000,
+        nloop_slope_icept=1,
+        ):
+        """
+        """
+
+        """
+        nbins, _, _, _ = self._get_modeling_param(modeling_space)
+        nbins = np.linspace(obs_co21.min(), obs_co21.max(), nbins)
+
+        for i in range(2000):
+            if i%100==0:
+                print("# loop slope/icept = " + str(i) + " / " + str(2000))
+            _, this_scatter, this_slope, this_icept = self._get_modeling_param(modeling_space)
+
+            # log co21 model distribution
+            mod_co21 = this_slope * modsn_co10 + this_icept
+
+            modsn_co10_candidate = []
+            mods_co21_candidate  = []
+            modsn_co21_candidate = []
+            scatter_candidate    = []
+            for j in range(len(nbins)-1):
+                # get this_obserr
+                this_cut      = np.where((obs_co21>=nbins[j]) & (obs_co21<nbins[j+1]))
+                this_obs_co10 = obs_co10[this_cut]
+                this_obs_co21 = obs_co21[this_cut]
+                this_obserr   = np.nan_to_num(np.nanmedian(obs_co21err[this_cut])) + 0.0000000001
+
+                # get best this_scatter
+                #for k in range(nloop):
+                if len(mod_co21)==0:
+                    this_chi2 = 1e44
+                else:
+                    #_, this_scatter, _, _ = self._get_modeling_param(modeling_space)
+                    this_cut        = np.where((mod_co21>=nbins[j]) & (mod_co21<nbins[j+1]))
+                    this_modsn_co10 = modsn_co10[this_cut]
+                    this_mod_co21   = mod_co21[this_cut]
+                    this_mods_co21  = np.log10(10**this_mod_co21 + np.random.normal(0.0, np.log(10)*10**this_mod_co21*this_scatter, len(this_mod_co21)))
+                    this_modsn_co21 = np.log10(10**this_mods_co21 + np.random.normal(0.0, np.log(10)*10**this_mods_co21*this_obserr, len(this_mods_co21)))
+
+                modsn_co10_candidate.extend(this_modsn_co10)
+                mods_co21_candidate.extend(this_mods_co21)
+                modsn_co21_candidate.extend(this_modsn_co21)
+                scatter_candidate.append(this_scatter)
+
+            modsn_co10_candidate = np.array(modsn_co10_candidate)
+            mods_co21_candidate  = np.array(mods_co21_candidate)
+            modsn_co21_candidate = np.array(modsn_co21_candidate)
+            this_chi2 = self._calc_chi2(10**obs_co21/10**obs_co10,10**modsn_co21_candidate/10**modsn_co10_candidate)
+            if i==0:
+                best_chi2        = this_chi2
+                best_slope       = this_slope
+                best_icept       = this_icept
+                best_scatter     = [this_scatter]
+                modsn_co10_final = modsn_co10_candidate
+                mods_co21_final  = mods_co21_candidate
+                modsn_co21_final = modsn_co21_candidate
+            if best_chi2>this_chi2:
+                best_chi2        = this_chi2
+                best_slope       = this_slope
+                best_icept       = this_icept
+                best_scatter     = [this_scatter]
+                modsn_co10_final = modsn_co10_candidate
+                mods_co21_final  = mods_co21_candidate
+                modsn_co21_final = modsn_co21_candidate
+
+        self._plot_obs_model_hist(obs_co21,mods_co21_final,modsn_co21_final,output)
+        self._plot_obs_model_hist(10**obs_co21/10**obs_co10,10**mods_co21_final/10**modsn_co10_final,10**modsn_co21_final/10**modsn_co10_final,output.replace("co21","r21"))
+
+        return modsn_co10_final, modsn_co21_final, mods_co21_final, best_slope, best_icept, best_scatter
+        """
+
+        nbins, _, _, _ = self._get_modeling_param(modeling_space)
+        nbins = np.linspace(obs_co21.min(), obs_co21.max(), nbins)
+
+        for i in range(nloop_slope_icept):
+            if i%10==0:
+                print("# loop slope/icept = " + str(i) + " / " + str(nloop_slope_icept))
+            _, _, this_slope, this_icept = self._get_modeling_param(modeling_space)
+
+            # log co21 model distribution
+            mod_co21 = this_slope * modsn_co10 + this_icept
+
+            modsn_co10_candidate = []
+            mods_co21_candidate  = []
+            modsn_co21_candidate = []
+            modn_co21_candidate  = []
+            scatter_candidate    = []
+            max_scatter          = 0.5
+            for j in range(len(nbins)-1):
+                print("# loop nbins = " + str(j) + " / " + str(len(nbins)-1) \
+                    + ", nloop_scatter = " + str(nloop_scatter) \
+                    + ", max_scatter = " + str(max_scatter))
+                # get this_obserr
+                this_cut      = np.where((obs_co21>=nbins[j]) & (obs_co21<nbins[j+1]))
+                this_obs_co10 = obs_co10[this_cut]
+                this_obs_co21 = obs_co21[this_cut]
+                this_obserr   = np.nan_to_num(np.nanmedian(obs_co21err[this_cut])) + 0.0000000001
+
+                # get best this_scatter
+                for k in range(nloop_scatter):
+                    if len(mod_co21)==0:
+                        this_chi2 = 1e44
+                    else:
+                        _, this_scatter, _, _ = self._get_modeling_param(modeling_space,max_scatter)
+                        this_cut        = np.where((mod_co21>=nbins[j]) & (mod_co21<nbins[j+1]))
+                        this_modsn_co10 = modsn_co10[this_cut]
+                        this_mod_co21   = mod_co21[this_cut]
+                        this_mods_co21  = np.log10(10**this_mod_co21 + np.random.normal(0.0, np.log(10)*10**this_mod_co21*this_scatter, len(this_mod_co21)))
+                        this_modsn_co21 = np.log10(10**this_mods_co21 + np.random.normal(0.0, np.log(10)*10**this_mods_co21*this_obserr, len(this_mods_co21)))
+                        this_modn_co21  = np.log10(10**this_mod_co21 + np.random.normal(0.0, np.log(10)*10**this_mod_co21*this_obserr, len(this_mod_co21)))
+
+                    this_chi2 = self._calc_chi2(10**this_obs_co21/10**this_obs_co10,10**this_modsn_co21/10**this_modsn_co10)
+                    if k==0:
+                        best_chi2       = this_chi2
+                        scatter_best    = this_scatter
+                        modsn_co10_best = this_modsn_co10
+                        mods_co21_best  = this_mods_co21
+                        modsn_co21_best = this_modsn_co21
+                        modn_co21_best  = this_modn_co21
+                    if best_chi2>this_chi2:
+                        best_chi2       = this_chi2
+                        scatter_best    = this_scatter
+                        modsn_co10_best = this_modsn_co10
+                        mods_co21_best  = this_mods_co21
+                        modsn_co21_best = this_modsn_co21
+                        modn_co21_best  = this_modn_co21
+
+                modsn_co10_candidate.extend(modsn_co10_best)
+                mods_co21_candidate.extend(mods_co21_best)
+                modsn_co21_candidate.extend(modsn_co21_best)
+                modn_co21_candidate.extend(modn_co21_best)
+                scatter_candidate.append(scatter_best)
+
+                nloop_scatter = int(nloop_scatter / 1.3)
+                if j>=2:
+                    max_scatter = scatter_best * 1.1
+
+            modsn_co10_candidate = np.array(modsn_co10_candidate)
+            mods_co21_candidate  = np.array(mods_co21_candidate)
+            modsn_co21_candidate = np.array(modsn_co21_candidate)
+            modn_co21_candidate  = np.array(modn_co21_candidate)
+            scatter_candidate    = np.array(scatter_candidate)
+            this_chi2 = self._calc_chi2(10**obs_co21/10**obs_co10,10**modsn_co21_candidate/10**modsn_co10_candidate)
+            if i==0:
+                best_chi2        = this_chi2
+                best_slope       = this_slope
+                best_icept       = this_icept
+                modsn_co10_final = modsn_co10_candidate
+                mods_co21_final  = mods_co21_candidate
+                modsn_co21_final = modsn_co21_candidate
+                modn_co21_final  = modn_co21_candidate
+            if best_chi2>this_chi2:
+                best_chi2        = this_chi2
+                best_slope       = this_slope
+                best_icept       = this_icept
+                modsn_co10_final = modsn_co10_candidate
+                mods_co21_final  = mods_co21_candidate
+                modsn_co21_final = modsn_co21_candidate
+                modn_co21_final  = modn_co21_candidate
+
+        self._plot_obs_model_hist(obs_co21,mods_co21_final,modsn_co21_final,output)
+        self._plot_obs_model_hist(10**obs_co21/10**obs_co10,10**mods_co21_final/10**modsn_co10_final,10**modsn_co21_final/10**modsn_co10_final,output.replace("co21","r21"))
+
+        return modsn_co10_final, modsn_co21_final, mods_co21_final, modn_co21_final, best_slope, best_icept, scatter_candidate
+
+    ##############
+    # _calc_chi2 #
+    ##############
+
+    def _calc_chi2(
+        self,
+        data_obs,
+        data_modsn,
+        weight=None,
+        bins=100,
+        ):
+        """
+        """
+
+        """
+        histr   = [np.min(data_obs),np.max(data_obs)]
+        #histr   = [0,2]
+        hist    = np.histogram(data_obs, bins=bins, range=histr)
+        x       = hist[1][1:]
+        y_obs   = hist[0] / float(np.sum(hist[0]))
+        hist    = np.histogram(data_modsn, bins=bins, range=histr)
+        y_modsn = hist[0] / float(np.sum(hist[0]))
+        diff    = (y_obs - y_modsn)**2 / y_obs
+        diff[np.isnan(diff)] = -1e7
+        diff[np.isinf(diff)] = -1e7
+        diff    = diff[diff!=-1e7]
+        x       = x[diff!=-1e7]
+        #
+        if len(x)>0:
+            if weight==None:
+                weights = None
+            elif weight=="higher":
+                weights = abs(x - np.min(x))**1 # weight to histogram wings
+            elif weight=="wing":
+                weights = abs(x - np.median(x))**2 # weight to histogram wings
+            #cut = np.where((x<=np.percentile(x,16)) & (x>=np.percentile(x,84)))
+            chi2 = np.sqrt(np.average(diff,weights=weights)*len(diff))
+        else:
+            chi2 = 1e7
+        """
+
+        value = stats.ks_2samp(data_obs, data_modsn)
+
+        return value.statistic
+
+    #######################
+    # _get_modeling_param #
+    #######################
+
+    def _get_modeling_param(self,modeling_space,max_scatter=0.5):
+        """
+        """
+
+        nbins        = modeling_space[0]
+        this_slope   = (modeling_space[2][1]-modeling_space[2][0])*np.random.rand()+modeling_space[2][0]
+        this_icept   = (modeling_space[3][1]-modeling_space[3][0])*np.random.rand()+modeling_space[3][0]
+
+        this_scatter = (modeling_space[1][1]-modeling_space[1][0])*np.random.rand()+modeling_space[1][0]
+        while this_scatter>max_scatter:
+            this_scatter = (modeling_space[1][1]-modeling_space[1][0])*np.random.rand()+modeling_space[1][0]
+
+        return nbins, this_scatter, this_slope, this_icept
+
+    #######################
+    # _get_modeling_space #
+    #######################
+
+    def _get_modeling_space(
+        self,
+        slope,
+        icept,
+        obs,
+        ):
+        """
+        """
+
+        nbins         = int( ((np.ceil(np.log2(len(obs))) + 1) + 1.5) / 1.5 )
+        range_scatter = [0.0, 0.5]
+        range_slope   = [slope-0.001, slope+0.001]
+        range_icept   = [icept-0.001, icept+0.001]
+
+        return [nbins, range_scatter, range_slope, range_icept]
+
+    ###########################
+    # _plot_obs_model_scatter #
+    ###########################
+
+    def _plot_obs_model_scatter(
+        self,
+        slope,
+        icept,
+        slope_orig,
+        icept_orig,
+        this_scatters,
+        obs_co10,
+        obs_co21,
+        modsn_co10,
+        modsn_co21,
+        mods_co21,
+        outpng,
+        ):
+        """
+        """
+
+        xfunc  = np.linspace(np.min(obs_co10), np.max(obs_co10), 100)
+        yfunc  = xfunc * slope + icept
+        yfunco = xfunc * slope_orig + icept_orig
+
+        fig = plt.figure(figsize=(10,10))
+        plt.subplots_adjust(bottom=0.10, left=0.13, right=0.91, top=0.94)
+        gs  = gridspec.GridSpec(nrows=16, ncols=16)
+        ax1 = plt.subplot(gs[0:16,0:16])
+        myax_set(ax1, "both", None, None, None, None, None)
+        ax1.scatter(obs_co10, obs_co21, alpha=1.0, color="grey", lw=0)
+        ax1.scatter(modsn_co10, modsn_co21, alpha=0.3, color="tomato", lw=0)
+        ax1.scatter(modsn_co10, mods_co21, alpha=0.3, color="deepskyblue", lw=0)
+        ax1.plot(xfunc, yfunco, color="black", lw=3)
+        ax1.plot(xfunc, yfunc, color="blue", lw=3)
+        ax1.set_xlim([np.min(obs_co10)-0.1,np.max(obs_co10)+0.1])
+        ax1.set_ylim([np.min(obs_co21)-0.1,np.max(obs_co21)+0.1])
+        ax1.text(0.05,0.95,str(slope)+", "+str(icept),transform=ax1.transAxes,weight="bold")
+        for i in range(len(this_scatters)):
+            this_scatter = this_scatters[i]
+            ax1.text(0.05,0.90-i*0.05,str(this_scatter),transform=ax1.transAxes)
+        plt.savefig(outpng)
+
+    ########################
+    # _plot_obs_model_hist #
+    ########################
+
+    def _plot_obs_model_hist(
+        self,
+        obs,
+        mods,
+        modsn,
+        outpng,
+        ):
+        """
+        """
+
+        hrange    = [np.min(obs), np.max(obs)]
+        histobs   = np.histogram(obs, bins=50, range=hrange)
+        histobs   = [np.delete(histobs[1],-1), histobs[0] / float(np.sum(histobs[0]))]
+        if mods!=None:
+            histmods  = np.histogram(mods, bins=50, range=hrange)
+            histmods  = [np.delete(histmods[1],-1), histmods[0] / float(np.sum(histmods[0]))]
+        histmodsn = np.histogram(modsn, bins=50, range=hrange)
+        histmodsn = [np.delete(histmodsn[1],-1), histmodsn[0] / float(np.sum(histmodsn[0]))]
+        hwidth    = histobs[0][1] - histobs[0][0]
+
+        fig = plt.figure(figsize=(10,10))
+        plt.subplots_adjust(bottom=0.10, left=0.13, right=0.91, top=0.94)
+        gs  = gridspec.GridSpec(nrows=16, ncols=16)
+        ax1 = plt.subplot(gs[0:16,0:16])
+        myax_set(ax1, "both", hrange, None, None, None, None)
+        ax1.bar(histobs[0],histobs[1],width=hwidth,color="black",alpha=0.5,lw=0,align="center")
+        if mods!=None:
+            ax1.bar(histmods[0],histmods[1],width=hwidth,color="deepskyblue",alpha=0.5,lw=0,align="center")
+        ax1.bar(histmodsn[0],histmodsn[1],width=hwidth,color="tomato",alpha=0.5,lw=0,align="center")
+        plt.savefig(outpng)
+
+    ###################
+    # _get_modsn_co10 #
+    ###################
+
+    def _get_modsn_co10(
+        self,
+        obs,
+        output="hist_modsn_obs_co10.png",
+        ):
+        """
+        """
+
+        h,e = np.histogram(obs, bins=1000, density=True, weights=None)
+        x = np.linspace(e.min(), e.max())
+        modsn = np.random.choice((e[:-1] + e[1:])/2, size=len(obs)*5, p=h/h.sum())
+
+        self._plot_obs_model_hist(obs,None,modsn,output)
+
+        return modsn
+
+    #######################
+    # _get_observed_slope #
+    #######################
+
+    def _get_observed_slope(
+        self,
+        logx,
+        logy,
+        logyerr,
+        ):
+        """
+        """
+
+        list_slope = []
+        list_icept = []
+        for i in range(2000):
+            popt,_ = curve_fit(self._func2, logx, logy, p0=[np.random.rand()/2.0+0.75,(np.random.rand()-0.5)*3],
+                maxfev=10000, sigma=(np.log(10)*10**logy*logyerr)/10**logy, absolute_sigma=False)
+            list_slope.append(popt[0])
+            list_icept.append(popt[1])
+
+        list_slope = np.array(list_slope)
+        list_icept = np.array(list_icept)
+
+        p16_slope = np.percentile(list_slope,16)
+        p50_slope = np.percentile(list_slope,50)
+        p84_slope = np.percentile(list_slope,84)
+
+        p16_icept = np.percentile(list_icept,16)
+        p50_icept = np.percentile(list_icept,50)
+        p84_icept = np.percentile(list_icept,84)
+
+        print("observed p16_slope     = " + str(p16_slope))
+        print("observed p50_slope     = " + str(p50_slope))
+        print("observed p84_slope     = " + str(p84_slope))
+        print("observed p16_intercept = " + str(p16_icept))
+        print("observed p50_intercept = " + str(p50_icept))
+        print("observed p84_intercept = " + str(p84_icept))
+
+        return p50_slope, p50_icept
+
+    def _func2(self, x, a, b):
+        """
+        """
+        return a*x + b
+
+    #########################
+    # _loop_import_modeling #
+    #########################
+
+    def _loop_import_modeling(self,beams,co10,co21,r21,eco10,eco21,er21,outtxt,ra,dec,scale,pa,incl):
+        """
+        modeling
+        """
+
+        for this_beam in beams:
+            this_beamstr = str(this_beam).replace(".","p").zfill(4)
+            this_co10    = co10.replace("????",this_beamstr)
+            this_co21    = co21.replace("????",this_beamstr)
+            this_r21     = r21.replace("????",this_beamstr)
+            this_eco10   = eco10.replace("????",this_beamstr)
+            this_eco21   = eco21.replace("????",this_beamstr)
+            this_er21    = er21.replace("????",this_beamstr)
+            this_outtxt  = outtxt.replace("????",this_beamstr)
+
+            done = glob.glob(this_outtxt)
+            if not done:
+                print("# run _import_modeling for " + this_outtxt.split("/")[-1])
+                # import
+                shape         = imhead(this_co21,mode="list")["shape"]
+                box           = "0,0," + str(shape[0]-1) + "," + str(shape[1]-1)
+                ra_deg        = imval(this_co21,box=box)["coords"][:,:,0] * 180/np.pi
+                dec_deg       = imval(this_co21,box=box)["coords"][:,:,1] * 180/np.pi
+                this_co21     = imval(this_co21,box=box)["data"]
+                this_co10     = imval(this_co10,box=box)["data"]
+                this_r21      = imval(this_r21,box=box)["data"]
+                this_co21_err = imval(this_eco21,box=box)["data"]
+                this_co10_err = imval(this_eco10,box=box)["data"]
+                this_r21_err  = imval(this_er21,box=box)["data"]
+
+                dist_pc, _    = self._get_rel_dist_pc(ra_deg, dec_deg, ra, dec, scale, pa, incl)
+                dist_kpc      = dist_pc / 1000.
+
+                cut = np.where( (~np.isnan(this_co10)) & (~np.isinf(this_co10)) & (this_co10!=0) \
+                    & (~np.isnan(this_co21)) & (~np.isinf(this_co21)) & (this_co21!=0) \
+                    & (~np.isnan(this_r21)) & (~np.isinf(this_r21)) & (this_r21!=0) \
+                    & (this_r21!=this_r21_err*self.snr_ratio) & (dist_kpc > self.hist_550pc_cnter_radius) )
+
+                header = "log10_co10(K), log10_co21(K), log10_r21, log10_co10err(K), log10_co21err(K), log10_r21err"
+                output = np.c_[
+                    np.log10(this_co10[cut]),
+                    np.log10(this_co21[cut]),
+                    np.log10(this_r21[cut]),
+                    this_co10_err[cut] / (np.log(10) * this_co10[cut]),
+                    this_co21_err[cut] / (np.log(10) * this_co21[cut]),
+                    this_r21_err[cut] / (np.log(10) * this_r21[cut]),
+                    ]
+                fmt    = "%6.3f %6.3f %6.3f %6.3f %6.3f %6.3f"
+                np.savetxt(this_outtxt, output, header=header, fmt=fmt)
+            else:
+                print("# skip _import_modeling for " + this_outtxt.split("/")[-1])
 
     #####################
     #####################
