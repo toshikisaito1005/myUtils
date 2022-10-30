@@ -565,7 +565,7 @@ class ToolsR21():
         this_output = self.outpng_masked_scatter_n0628
         r21, co21, cprops, env, halpha = self._import_masked_hist(this_co21,this_r21,this_er21,
             this_cprops,this_env,this_halpha,this_ra,this_dec,this_scale,this_pa,this_incl,norm=False)
-        self._plot_scattter_masked(r211,co211,cprops1,env1,halpha1,this_output)
+        self._plot_scattter_masked(r21,co21,cprops,env,halpha,this_output)
 
     #########################
     # _plot_scattter_masked #
