@@ -584,8 +584,6 @@ class ToolsR21():
 
         xlabel = r"log$_{10}$ $I_{\rm CO(2-1)}$"
         ylabel = r"log$_{10}$ $R_{\rm 21}$"
-        xlim   = [np.min(co21)-0.1, np.max(co21)+0.1]
-        ylim   = [np.min(r21)-0.1, np.max(r21)+0.1]
 
         # mask
         r21_cloud      = np.log10(r21[cprops==1])
@@ -603,6 +601,9 @@ class ToolsR21():
         co21_bar       = np.log10(co21[env==2])
         co21_halpha    = np.log10(co21[halpha==1])
         co21_nonhalpha = np.log10(co21[halpha==0])
+
+        xlim   = [np.min(co21)-0.1, np.max(co21)+0.1]
+        ylim   = [np.min(r21)-0.1, np.max(r21)+0.1]
 
         # hist x
         #h = np.histogram(obs[:,0], bins=50, range=xlim, weights=None)
