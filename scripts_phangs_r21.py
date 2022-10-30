@@ -1345,6 +1345,10 @@ class ToolsR21():
         ax5.step(h_co21_modn[:,1],h_co21_modn[:,0],color="limegreen",lw=1)
 
         # text
+        ax3.text(0.95, 0.20, "pbservation", color="grey", horizontalalignment="right", transform=ax3.transAxes, size=self.legend_fontsize, fontweight="bold")
+        ax3.text(0.95, 0.15, "model", color="black", horizontalalignment="right", transform=ax3.transAxes, size=self.legend_fontsize, fontweight="bold")
+        ax3.text(0.95, 0.10, "model+scatter", color="deepskyblue", horizontalalignment="right", transform=ax3.transAxes, size=self.legend_fontsize, fontweight="bold")
+        ax3.text(0.95, 0.05, "model+scatter+noise", color="tomato", horizontalalignment="right", transform=ax3.transAxes, size=self.legend_fontsize, fontweight="bold")
 
         # save
         plt.savefig(outpng, dpi=self.fig_dpi)
