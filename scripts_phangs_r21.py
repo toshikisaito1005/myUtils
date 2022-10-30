@@ -655,8 +655,8 @@ class ToolsR21():
         # ax3
         #ax3.scatter(co21_nonhalpha,r21_nonhalpha, color=cm.PiYG(0.2/1.4), lw=0, alpha=0.4)
         #ax3.scatter(co21_halpha,r21_halpha, color=cm.PiYG(1.2/1.4), lw=0, alpha=0.4)
-        self._plot_contours_gal(ax3,co21_nonhalpha,r21_nonhalpha,xlim,ylim,cm.PiYG(0.2/1.4),do_text=False)
-        self._plot_contours_gal(ax3,co21_halpha,r21_halpha,xlim,ylim,cm.PiYG(1.2/1.4),do_text=False)
+        self._plot_contours_gal(ax3,co21_nonhalpha,r21_nonhalpha,xlim,ylim,[cm.PiYG(0.2/1.4)],do_text=False)
+        self._plot_contours_gal(ax3,co21_halpha,r21_halpha,xlim,ylim,[cm.PiYG(1.2/1.4)],do_text=False)
 
         # ax4
         ax4.scatter(co21_interarm,r21_interarm, color=cm.gnuplot(0/3.5), lw=0, alpha=0.4)
