@@ -587,6 +587,7 @@ class ToolsR21():
         r21_interarm   = r21[env==0]
         r21_arm        = r21[env==1]
         r21_bar        = r21[env==2]
+        r21_bulge      = r21[env==3]
         r21_halpha     = r21[halpha==0]
         r21_nonhalpha  = r21[halpha==1]
 
@@ -595,6 +596,7 @@ class ToolsR21():
         co21_interarm  = co21[env==0]
         co21_arm       = co21[env==1]
         co21_bar       = co21[env==2]
+        co21_bulge     = co21[env==3]
         co21_halpha    = co21[halpha==0]
         co21_nonhalpha = co21[halpha==1]
 
@@ -658,6 +660,7 @@ class ToolsR21():
         ax4.scatter(co21_interarm,r21_interarm, color=cm.gnuplot(0/3.5), lw=0, alpha=0.4)
         ax4.scatter(co21_arm,r21_arm, color=cm.gnuplot(1/3.5), lw=0, alpha=0.4)
         ax4.scatter(co21_bar,r21_bar, color=cm.gnuplot(2/3.5), lw=0, alpha=0.4)
+        ax4.scatter(co21_bulge,r21_bulge, color=cm.gnuplot(3/3.5), lw=0, alpha=0.4)
 
         # ax5
         #ax5.barh(h_co21_obs[:,0],h_co21_obs[:,1],height=h_co21_obs[:,0][1]-h_co21_obs[:,0][0],color="grey",lw=0,alpha=0.5,align="edge")
