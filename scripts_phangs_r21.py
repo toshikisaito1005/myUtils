@@ -703,7 +703,7 @@ class ToolsR21():
         mean = sy / n
         std = np.sqrt(sy2/n - mean*mean)
 
-        ax.errorbar(_[1:]+_[:-1])/2, mean, std, capsize=0, color=color, lw=3)
+        ax.errorbar((_[1:]+_[:-1])/2, mean, std, capsize=0, color=color, lw=3)
 
     #
 
