@@ -701,16 +701,18 @@ class ToolsR21():
         color,
         nbins=8,
         ):
-        if histrange==None:
-            histrange = [np.min(x),np.max(x)]
-        
-        n, _ = np.histogram(x, bins=nbins, range=histrange)
-        sy, _ = np.histogram(x, bins=nbins, weights=y, range=histrange)
-        sy2, _ = np.histogram(x, bins=nbins, weights=y*y, range=histrange)
-        mean = sy / n
-        std = np.sqrt(sy2/n - mean*mean)
+        if len(x)!=0:
 
-        ax.errorbar((_[1:]+_[:-1])/2, mean, std, capsize=0, color=color, lw=3)
+            if histrange==None:
+                histrange = [np.min(x),np.max(x)]
+
+            n, _ = np.histogram(x, bins=nbins, range=histrange)
+            sy, _ = np.histogram(x, bins=nbins, weights=y, range=histrange)
+            sy2, _ = np.histogram(x, bins=nbins, weights=y*y, range=histrange)
+            mean = sy / n
+            std = np.sqrt(sy2/n - mean*mean)
+
+            ax.errorbar((_[1:]+_[:-1])/2, mean, std, capsize=0, color=color, lw=3)
 
     #
 
