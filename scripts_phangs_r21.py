@@ -601,6 +601,8 @@ class ToolsR21():
         co21_halpha    = co21[halpha==0]
         co21_nonhalpha = co21[halpha==1]
 
+        binx_nonha, biny_nonha, binyerr_nonha = self._get_binned_dist(co21_nonhalpha,r21_nonhalpha,xlim)
+
         # hist x
         #h = np.histogram(obs[:,0], bins=50, range=xlim, weights=None)
         #h_co10_obs = np.c_[ np.delete(h[1],-1), h[0]/float(np.sum(h[0])) ]
@@ -654,22 +656,23 @@ class ToolsR21():
         #ax2.step(h_co10_obs[:,0],h_co10_obs[:,1],color="grey",lw=1,where="mid")
 
         # ax3
-        #ax3.scatter(co21_nonhalpha,r21_nonhalpha, color=cm.PiYG(0.2/1.4), lw=0, alpha=0.4)
-        #ax3.scatter(co21_halpha,r21_halpha, color=cm.PiYG(1.2/1.4), lw=0, alpha=0.4)
-        ax3.scatter(co21,r21, color="grey", lw=0, alpha=1.0)
-        self._plot_contours_gal(ax3,co21_nonhalpha,r21_nonhalpha,xlim,ylim,[cm.PiYG(0.2/1.4)],do_text=False)
-        self._plot_contours_gal(ax3,co21_halpha,r21_halpha,xlim,ylim,[cm.PiYG(1.2/1.4)],do_text=False)
+        ax3.scatter(co21_nonhalpha,r21_nonhalpha, color=cm.PiYG(0.2/1.4), lw=0, alpha=0.4)
+        ax3.scatter(co21_halpha,r21_halpha, color=cm.PiYG(1.2/1.4), lw=0, alpha=0.4)
+        ax3.errorbar(binx_nonha, biny_nonha, binyerr_nonha, capsize=0, color=cm.PiYG(0.2/1.4))
+        #ax3.scatter(co21,r21, color="grey", lw=0, alpha=1.0)
+        #self._plot_contours_gal(ax3,co21_nonhalpha,r21_nonhalpha,xlim,ylim,[cm.PiYG(0.2/1.4)],do_text=False)
+        #self._plot_contours_gal(ax3,co21_halpha,r21_halpha,xlim,ylim,[cm.PiYG(1.2/1.4)],do_text=False)
 
         # ax4
-        #ax4.scatter(co21_interarm, r21_interarm, color=cm.gnuplot(0/3.5), lw=0, alpha=0.4)
-        #ax4.scatter(co21_arm, r21_arm, color=cm.gnuplot(1/3.5), lw=0, alpha=0.4)
-        #ax4.scatter(co21_bar, r21_bar, color=cm.gnuplot(2/3.5), lw=0, alpha=0.4)
-        #ax4.scatter(co21_bulge, r21_bulge, color=cm.gnuplot(3/3.5), lw=0, alpha=0.4)
-        ax4.scatter(co21,r21, color="grey", lw=0, alpha=1.0)
-        self._plot_contours_gal(ax4,co21_interarm,r21_interarm,xlim,ylim,[cm.gnuplot(0/3.5)],do_text=False)
-        self._plot_contours_gal(ax4,co21_arm,r21_arm,xlim,ylim,[cm.gnuplot(1/3.5)],do_text=False)
-        self._plot_contours_gal(ax4,co21_bar,r21_bar,xlim,ylim,[cm.gnuplot(2/3.5)],do_text=False)
-        self._plot_contours_gal(ax4,co21_bulge,r21_bulge,xlim,ylim,[cm.gnuplot(3/3.5)],do_text=False)
+        ax4.scatter(co21_interarm, r21_interarm, color=cm.gnuplot(0/3.5), lw=0, alpha=0.4)
+        ax4.scatter(co21_arm, r21_arm, color=cm.gnuplot(1/3.5), lw=0, alpha=0.4)
+        ax4.scatter(co21_bar, r21_bar, color=cm.gnuplot(2/3.5), lw=0, alpha=0.4)
+        ax4.scatter(co21_bulge, r21_bulge, color=cm.gnuplot(3/3.5), lw=0, alpha=0.4)
+        #ax4.scatter(co21,r21, color="grey", lw=0, alpha=1.0)
+        #self._plot_contours_gal(ax4,co21_interarm,r21_interarm,xlim,ylim,[cm.gnuplot(0/3.5)],do_text=False)
+        #self._plot_contours_gal(ax4,co21_arm,r21_arm,xlim,ylim,[cm.gnuplot(1/3.5)],do_text=False)
+        #self._plot_contours_gal(ax4,co21_bar,r21_bar,xlim,ylim,[cm.gnuplot(2/3.5)],do_text=False)
+        #self._plot_contours_gal(ax4,co21_bulge,r21_bulge,xlim,ylim,[cm.gnuplot(3/3.5)],do_text=False)
 
         # ax5
         #ax5.barh(h_co21_obs[:,0],h_co21_obs[:,1],height=h_co21_obs[:,0][1]-h_co21_obs[:,0][0],color="grey",lw=0,alpha=0.5,align="edge")
@@ -681,6 +684,25 @@ class ToolsR21():
 
         # save
         plt.savefig(outpng, dpi=self.fig_dpi)
+
+    ####################
+    # _get_binned_dist #
+    ####################
+
+    def _get_binned_dist(
+        self,
+        x,
+        y,
+        histrange,
+        nbins=8,
+        ):
+        n, _ = np.histogram(x, bins=nbins, range=histrange)
+        sy, _ = np.histogram(x, bins=nbins, weights=y, range=histrange)
+        sy2, _ = np.histogram(x, bins=nbins, weights=y*y, range=histrange)
+        mean = sy / n
+        std = np.sqrt(sy2/n - mean*mean)
+
+        return (_[1:]+_[:-1])/2, mean, std
 
     #
 
