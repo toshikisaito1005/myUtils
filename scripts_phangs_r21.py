@@ -663,15 +663,19 @@ class ToolsR21():
         self._plot_binned_dist(ax3,co21_halpha,r21_halpha,[xlim[0]+0.1,xlim[1]-0.1],cm.PiYG(1.2/1.4))
 
         # ax4
-        ax4.scatter(co21_interarm, r21_interarm, color=cm.gnuplot(0/3.5), lw=0, alpha=0.4)
-        ax4.scatter(co21_arm, r21_arm, color=cm.gnuplot(1/3.5), lw=0, alpha=0.4)
-        ax4.scatter(co21_bar, r21_bar, color=cm.gnuplot(2/3.5), lw=0, alpha=0.4)
-        ax4.scatter(co21_bulge, r21_bulge, color=cm.gnuplot(3/3.5), lw=0, alpha=0.4)
-        #ax4.scatter(co21,r21, color="grey", lw=0, alpha=1.0)
-        #self._plot_contours_gal(ax4,co21_interarm,r21_interarm,xlim,ylim,[cm.gnuplot(0/3.5)],do_text=False)
-        #self._plot_contours_gal(ax4,co21_arm,r21_arm,xlim,ylim,[cm.gnuplot(1/3.5)],do_text=False)
-        #self._plot_contours_gal(ax4,co21_bar,r21_bar,xlim,ylim,[cm.gnuplot(2/3.5)],do_text=False)
-        #self._plot_contours_gal(ax4,co21_bulge,r21_bulge,xlim,ylim,[cm.gnuplot(3/3.5)],do_text=False)
+        #ax4.scatter(co21_interarm, r21_interarm, color=cm.gnuplot(0/3.5), lw=0, alpha=0.4)
+        #ax4.scatter(co21_arm, r21_arm, color=cm.gnuplot(1/3.5), lw=0, alpha=0.4)
+        #ax4.scatter(co21_bar, r21_bar, color=cm.gnuplot(2/3.5), lw=0, alpha=0.4)
+        #ax4.scatter(co21_bulge, r21_bulge, color=cm.gnuplot(3/3.5), lw=0, alpha=0.4)
+        ax4.scatter(co21,r21, color="grey", lw=0, alpha=1.0)
+        self._plot_contours_gal(ax4,co21_interarm,r21_interarm,xlim,ylim,[cm.gnuplot(0/3.5)],do_text=False)
+        self._plot_contours_gal(ax4,co21_arm,r21_arm,xlim,ylim,[cm.gnuplot(1/3.5)],do_text=False)
+        self._plot_contours_gal(ax4,co21_bar,r21_bar,xlim,ylim,[cm.gnuplot(2/3.5)],do_text=False)
+        self._plot_contours_gal(ax4,co21_bulge,r21_bulge,xlim,ylim,[cm.gnuplot(3/3.5)],do_text=False)
+        self._plot_binned_dist(ax4,co21_interarm,r21_interarm,[xlim[0]+0.1,xlim[1]-0.1],cm.gnuplot(0/3.5))
+        self._plot_binned_dist(ax4,co21_arm,r21_arm,[xlim[0]+0.1,xlim[1]-0.1],cm.gnuplot(1/3.5))
+        self._plot_binned_dist(ax4,co21_bar,r21_bar,[xlim[0]+0.1,xlim[1]-0.1],cm.gnuplot(2/3.5))
+        self._plot_binned_dist(ax4,co21_bulge,r21_bulge,[xlim[0]+0.1,xlim[1]-0.1],cm.gnuplot(3/3.5))
 
         # ax5
         #ax5.barh(h_co21_obs[:,0],h_co21_obs[:,1],height=h_co21_obs[:,0][1]-h_co21_obs[:,0][0],color="grey",lw=0,alpha=0.5,align="edge")
