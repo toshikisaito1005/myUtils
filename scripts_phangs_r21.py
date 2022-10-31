@@ -601,9 +601,6 @@ class ToolsR21():
         co21_halpha    = co21[halpha==0]
         co21_nonhalpha = co21[halpha==1]
 
-        binx_nonha, biny_nonha, binyerr_nonha = self._get_binned_dist(co21_nonhalpha,r21_nonhalpha,[xlim[0]+0.1,xlim[1]-0.1])
-        binx_ha, biny_ha, binyerr_ha = self._get_binned_dist(co21_halpha,r21_halpha,[xlim[0]+0.1,xlim[1]-0.1])
-
         # hist x
         #h = np.histogram(obs[:,0], bins=50, range=xlim, weights=None)
         #h_co10_obs = np.c_[ np.delete(h[1],-1), h[0]/float(np.sum(h[0])) ]
@@ -662,8 +659,8 @@ class ToolsR21():
         ax3.scatter(co21,r21, color="grey", lw=0, alpha=1.0)
         self._plot_contours_gal(ax3,co21_nonhalpha,r21_nonhalpha,xlim,ylim,[cm.PiYG(0.2/1.4)],do_text=False)
         self._plot_contours_gal(ax3,co21_halpha,r21_halpha,xlim,ylim,[cm.PiYG(1.2/1.4)],do_text=False)
-        ax3.errorbar(binx_nonha, biny_nonha, binyerr_nonha, capsize=0, color=cm.PiYG(0.2/1.4), lw=3)
-        ax3.errorbar(binx_ha, biny_ha, binyerr_ha, capsize=0, color=cm.PiYG(1.2/1.4), lw=3)
+        self._plot_binned_dist(ax3,co21_nonhalpha,r21_nonhalpha,[xlim[0]+0.1,xlim[1]-0.1],cm.PiYG(0.2/1.4))
+        self._plot_binned_dist(ax3,co21_halpha,r21_halpha,[xlim[0]+0.1,xlim[1]-0.1],cm.PiYG(1.2/1.4))
 
         # ax4
         ax4.scatter(co21_interarm, r21_interarm, color=cm.gnuplot(0/3.5), lw=0, alpha=0.4)
@@ -687,15 +684,17 @@ class ToolsR21():
         # save
         plt.savefig(outpng, dpi=self.fig_dpi)
 
-    ####################
-    # _get_binned_dist #
-    ####################
+    #####################
+    # _plot_binned_dist #
+    #####################
 
-    def _get_binned_dist(
+    def _plot_binned_dist(
         self,
+        ax,
         x,
         y,
         histrange,
+        color,
         nbins=8,
         ):
         n, _ = np.histogram(x, bins=nbins, range=histrange)
@@ -704,7 +703,7 @@ class ToolsR21():
         mean = sy / n
         std = np.sqrt(sy2/n - mean*mean)
 
-        return (_[1:]+_[:-1])/2, mean, std
+        ax.errorbar(_[1:]+_[:-1])/2, mean, std, capsize=0, color=color, lw=3)
 
     #
 
