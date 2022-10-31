@@ -601,7 +601,8 @@ class ToolsR21():
         co21_halpha    = co21[halpha==0]
         co21_nonhalpha = co21[halpha==1]
 
-        binx_nonha, biny_nonha, binyerr_nonha = self._get_binned_dist(co21_nonhalpha,r21_nonhalpha,xlim)
+        binx_nonha, biny_nonha, binyerr_nonha = self._get_binned_dist(co21_nonhalpha,r21_nonhalpha,[xlim[0]+0.1,xlim[1]-0.1])
+        binx_ha, biny_ha, binyerr_ha = self._get_binned_dist(co21_halpha,r21_halpha,[xlim[0]+0.1,xlim[1]-0.1])
 
         # hist x
         #h = np.histogram(obs[:,0], bins=50, range=xlim, weights=None)
@@ -658,7 +659,8 @@ class ToolsR21():
         # ax3
         ax3.scatter(co21_nonhalpha,r21_nonhalpha, color=cm.PiYG(0.2/1.4), lw=0, alpha=0.4)
         ax3.scatter(co21_halpha,r21_halpha, color=cm.PiYG(1.2/1.4), lw=0, alpha=0.4)
-        ax3.errorbar(binx_nonha, biny_nonha, binyerr_nonha, capsize=0, color=cm.PiYG(0.2/1.4))
+        ax3.errorbar(binx_nonha, biny_nonha, binyerr_nonha, capsize=0, color=cm.PiYG(0.2/1.4), lw=3)
+        ax3.errorbar(binx_ha, biny_ha, binyerr_ha, capsize=0, color=cm.PiYG(1.2/1.4), lw=3)
         #ax3.scatter(co21,r21, color="grey", lw=0, alpha=1.0)
         #self._plot_contours_gal(ax3,co21_nonhalpha,r21_nonhalpha,xlim,ylim,[cm.PiYG(0.2/1.4)],do_text=False)
         #self._plot_contours_gal(ax3,co21_halpha,r21_halpha,xlim,ylim,[cm.PiYG(1.2/1.4)],do_text=False)
