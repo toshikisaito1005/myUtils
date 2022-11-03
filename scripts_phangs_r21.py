@@ -3537,6 +3537,7 @@ class ToolsR21():
             [-1.6425,-1.8671,-2.0529,-2.2274,-2.3942,-2.5509,-2.6902,-2.8125,-2.9112,-2.9929]])
 
         print(len(beams_new_n0628))
+        print(list_rms_co10_n0628[:,index])
         print(beams_new_n0628)
         print(np.shape(list_rms_co10_n0628))
 
