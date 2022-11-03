@@ -423,7 +423,7 @@ class ToolsR21():
         """
 
         # final
-        self.box_map          = "3000x3000+50+50"
+        self.box_map          = "3000x3000+50+0"
         self.final_mom0_n4321 = self.dir_final + self._read_key("final_mom0_n4321")
 
     ##################
@@ -581,7 +581,7 @@ class ToolsR21():
                 self.final_mom0_n4321,
                 "100000x100000+0+0",
                 self.box_map,
-                axis="column",
+                #axis="column",
                 delin=delin,
                 )
             os.system("rm -rf " + self.final_mom0_n4321 + "_tmp1")
