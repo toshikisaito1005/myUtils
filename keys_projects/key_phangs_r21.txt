@@ -15,7 +15,10 @@ dir_final           ,,,images/
 ##################
 # final products #
 ##################
+# main
 final_mom0_n4321    ,,,fig_n4321.png
+# appendix
+final_noise         ,,,fig_noise.png
 final_mom0_all      ,,,fig_all.png
 
 ############
