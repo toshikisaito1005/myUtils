@@ -425,6 +425,7 @@ class ToolsR21():
         # final
         self.box_map_co10     = "1900x2100+290+190"
         self.box_map_co21     = "1640x2100+550+190"
+        self.box_map_r21      = "1790x2100+550+190"
         self.final_mom0_n4321 = self.dir_final + self._read_key("final_mom0_n4321")
 
     ##################
@@ -581,7 +582,7 @@ class ToolsR21():
                 self.outpng_r21_n4321,
                 self.final_mom0_n4321,
                 "100000x100000+0+0",
-                self.box_map_co21,
+                self.box_map_r21,
                 #axis="column",
                 delin=delin,
                 )
