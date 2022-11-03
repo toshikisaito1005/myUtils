@@ -3449,6 +3449,7 @@ class ToolsR21():
         beams_new_n3627 = [s for s in self.beams_n3627[:-1]]
         beams_new_n4254 = [s for s in self.beams_n4254[:-1] if not "8.7" in str(s)]
         beams_new_n4321 = [s for s in self.beams_n4321[:-1] if not "7.5" in str(s)]
+
         """
         list_rms_co10_n0628 = self._loop_measure_log_rms(
             self.outcube_co10_n0628.replace(str(self.basebeam_n0628).replace(".","p").zfill(4),"????").replace(".image","_k.image"),
@@ -3560,13 +3561,13 @@ class ToolsR21():
 
         # text
         t=ax.text(0.95, 0.93, "NGC 0628", color=self.c_n0628, horizontalalignment="right", transform=ax.transAxes, size=self.legend_fontsize, fontweight="bold")
-        t.set_bbox(dict(facecolor="white", alpha=self.self.text_back_alpha, lw=0))
+        t.set_bbox(dict(facecolor="white", alpha=self.text_back_alpha, lw=0))
         t=ax.text(0.95, 0.88, "NGC 3627", color=self.c_n3627, horizontalalignment="right", transform=ax.transAxes, size=self.legend_fontsize, fontweight="bold")
-        t.set_bbox(dict(facecolor="white", alpha=self.self.text_back_alpha, lw=0))
+        t.set_bbox(dict(facecolor="white", alpha=self.text_back_alpha, lw=0))
         t=ax.text(0.95, 0.83, "NGC 4254", color=self.c_n4254, horizontalalignment="right", transform=ax.transAxes, size=self.legend_fontsize, fontweight="bold")
-        t.set_bbox(dict(facecolor="white", alpha=self.self.text_back_alpha, lw=0))
+        t.set_bbox(dict(facecolor="white", alpha=self.text_back_alpha, lw=0))
         t=ax.text(0.95, 0.78, "NGC 4321", color=self.c_n4321, horizontalalignment="right", transform=ax.transAxes, size=self.legend_fontsize, fontweight="bold")
-        t.set_bbox(dict(facecolor="white", alpha=self.self.text_back_alpha, lw=0))
+        t.set_bbox(dict(facecolor="white", alpha=self.text_back_alpha, lw=0))
 
         ax.text(0.55, 0.90, "CO(1-0) datacubes", color="black", horizontalalignment="right", transform=ax.transAxes, size=self.legend_fontsize, fontweight="bold")
         ax.text(0.48, 0.25, "CO(2-1) datacubes", color="black", horizontalalignment="right", transform=ax.transAxes, size=self.legend_fontsize, fontweight="bold")
