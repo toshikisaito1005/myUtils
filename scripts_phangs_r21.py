@@ -428,6 +428,8 @@ class ToolsR21():
         self.box_map_r21      = "1990x2100+550+170"
         self.final_mom0_n4321 = self.dir_final + self._read_key("final_mom0_n4321")
 
+        self.final_mom0_all   = self.dir_final + self._read_key("final_mom0_all")
+
     ##################
     # run_phangs_r21 #
     ##################
@@ -559,7 +561,8 @@ class ToolsR21():
         self,
         delin         = False,
         do_all        = False,
-        do_mom0_n4321 = True,
+        do_mom0_n4321 = False,
+        do_mom0_all   = True,
         ):
         """
         """
@@ -583,10 +586,80 @@ class ToolsR21():
                 self.final_mom0_n4321,
                 "100000x100000+0+0",
                 self.box_map_r21,
-                #axis="column",
                 delin=delin,
                 )
             os.system("rm -rf " + self.final_mom0_n4321 + "_tmp1")
+
+        if do_mom0_all==True:
+            print("#########################")
+            print("# create final_mom0_all #")
+            print("#########################")
+
+            combine_two_png(
+                self.outpng_co10_n0628,
+                self.outpng_co21_n0628,
+                self.final_mom0_all+"_tmp1",
+                self.box_map_co10,
+                self.box_map_co21,
+                delin=delin,
+                )
+            combine_two_png(
+                self.final_mom0_all+"_tmp1",
+                self.outpng_r21_n0628,
+                self.final_mom0_all+"_n0628",
+                "100000x100000+0+0",
+                self.box_map_r21,
+                delin=delin,
+                )
+            os.system("rm -rf " + self.final_mom0_all + "_tmp1")
+
+            combine_two_png(
+                self.outpng_co10_n3627,
+                self.outpng_co21_n3627,
+                self.final_mom0_all+"_tmp1",
+                self.box_map_co10,
+                self.box_map_co21,
+                delin=delin,
+                )
+            combine_two_png(
+                self.final_mom0_all+"_tmp1",
+                self.outpng_r21_n3627,
+                self.final_mom0_all+"_n3627",
+                "100000x100000+0+0",
+                self.box_map_r21,
+                delin=delin,
+                )
+            os.system("rm -rf " + self.final_mom0_all + "_tmp1")
+
+            combine_two_png(
+                self.outpng_co10_n4254,
+                self.outpng_co21_n4254,
+                self.final_mom0_all+"_tmp1",
+                self.box_map_co10,
+                self.box_map_co21,
+                delin=delin,
+                )
+            combine_two_png(
+                self.final_mom0_all+"_tmp1",
+                self.outpng_r21_n4254,
+                self.final_mom0_all+"_n4254",
+                "100000x100000+0+0",
+                self.box_map_r21,
+                delin=delin,
+                )
+            os.system("rm -rf " + self.final_mom0_all + "_tmp1")
+
+            combine_three_png(
+                self.final_mom0_all+"_n0628",
+                self.final_mom0_all+"_n3627",
+                self.final_mom0_all+"_n4254",
+                self.final_mom0_all,
+                "100000x100000+0+0",
+                "100000x100000+0+0",
+                "100000x100000+0+0",
+                axis="column",
+                delin=True,
+                )
 
     #####################
     #####################
