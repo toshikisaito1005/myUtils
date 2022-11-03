@@ -579,7 +579,7 @@ class ToolsR21():
                 self.final_mom0_n4321+"_tmp1",
                 self.outpng_r21_n4321,
                 self.final_mom0_n4321,
-                self.box_map,
+                "100000x100000+0+0",
                 self.box_map,
                 axis="column",
                 delin=delin,
