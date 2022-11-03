@@ -578,25 +578,34 @@ class ToolsR21():
             print("###########################")
 
             combine_two_png(
+                self.outpng_co10_n4321,
+                self.outpng_co21_n4321,
+                self.final_mom0_n4321+"_tmp1",
+                self.box_map_co10,
+                self.box_map_co21,
+                delin=delin,
+                )
+            combine_two_png(
+                self.final_mom0_n4321+"_tmp1",
+                self.outpng_r21_n4321,
+                self.final_mom0_n4321,
+                "100000x100000+0+0",
+                self.box_map_r21,
+                delin=delin,
+                )
+            os.system("rm -rf " + self.final_mom0_n4321 + "_tmp1")
+
+        if do_noise==True:
+            print("######################")
+            print("# create final_noise #")
+            print("######################")
+
+            combine_two_png(
                 self.outpng_noise_hist,
                 self.outpng_noise_vs_beam,
                 self.final_noise,
                 self.box_map_co10,
                 self.box_map_co10,
-                delin=delin,
-                )
-
-        if do_noise==True:
-            print("#########################")
-            print("# create final_mom0_all #")
-            print("#########################")
-
-            combine_two_png(
-                self.outpng_co10_n0628,
-                self.outpng_co21_n0628,
-                self.final_mom0_all+"_tmp1",
-                self.box_map_co10,
-                self.box_map_co21,
                 delin=delin,
                 )
 
