@@ -517,7 +517,7 @@ class ToolsR21():
         # plot figures in paper
         if plot_noise==True:
             self.plot_noise_hist()
-            self.plot_noise_vs_beam() # ngc4254 co21 rms curve is strange.
+            self.plot_noise_vs_beam()
 
         if plot_recovery==True:
             self.plot_recovery()
@@ -562,6 +562,7 @@ class ToolsR21():
         delin         = False,
         do_all        = False,
         do_mom0_n4321 = False,
+        # appendix
         do_mom0_all   = True,
         ):
         """
@@ -3445,6 +3446,10 @@ class ToolsR21():
         ###########
 
         beams_new_n0628 = [s for s in self.beams_n0628[:-1] if not "11.5" in str(s)]
+        beams_new_n3627 = [s for s in self.beams_n3627[:-1]]
+        beams_new_n4254 = [s for s in self.beams_n4254[:-1] if not "8.7" in str(s)]
+        beams_new_n4321 = [s for s in self.beams_n4321[:-1] if not "7.5" in str(s)]
+        """
         list_rms_co10_n0628 = self._loop_measure_log_rms(
             self.outcube_co10_n0628.replace(str(self.basebeam_n0628).replace(".","p").zfill(4),"????").replace(".image","_k.image"),
             beams_new_n0628,
@@ -3455,8 +3460,6 @@ class ToolsR21():
             beams_new_n0628,
             self.noise_vs_beam_co21_n0628,
             )
-
-        beams_new_n3627 = [s for s in self.beams_n3627[:-1]]
         list_rms_co10_n3627 = self._loop_measure_log_rms(
             self.outcube_co10_n3627.replace(str(self.basebeam_n3627).replace(".","p").zfill(4),"????").replace(".image","_k.image"),
             beams_new_n3627,
@@ -3467,8 +3470,6 @@ class ToolsR21():
             beams_new_n3627,
             self.noise_vs_beam_co21_n3627,
             )
-
-        beams_new_n4254 = [s for s in self.beams_n4254[:-1] if not "8.7" in str(s)]
         list_rms_co10_n4254 = self._loop_measure_log_rms(
             self.outcube_co10_n4254.replace(str(self.basebeam_n4254).replace(".","p").zfill(4),"????").replace(".image","_k.image"),
             beams_new_n4254,
@@ -3479,8 +3480,6 @@ class ToolsR21():
             beams_new_n4254,
             self.noise_vs_beam_co21_n4254,
             )
-
-        beams_new_n4321 = [s for s in self.beams_n4321[:-1] if not "7.5" in str(s)]
         list_rms_co10_n4321 = self._loop_measure_log_rms(
             self.outcube_co10_n4321.replace(str(self.basebeam_n4321).replace(".","p").zfill(4),"????").replace(".image","_k.image"),
             beams_new_n4321,
@@ -3491,6 +3490,7 @@ class ToolsR21():
             beams_new_n4321,
             self.noise_vs_beam_co21_n4321,
             )
+            """
 
         xlim   = [2,28]
         ylim   = [-3.6,-0.8]
@@ -3498,6 +3498,43 @@ class ToolsR21():
         xlabel = "Beam size (arcsec)"
         ylabel = "log rms per voxel (K)"
         index  = 1
+
+        ##########
+        # import #
+        ##########
+        list_rms_co10_n0628 = np.array([
+            [    4.0,    6.0,    8.0,   10.0,   12.0,   14.0,   16.0,   18.0,   20.0,   22.0],
+            [-1.1367,-1.2676,-1.3565,-1.4318,-1.5086,-1.5686,-1.6383,-1.6990,-1.7696,-1.8239],
+            [-1.2012,-1.3431,-1.4410,-1.5333,-1.6224,-1.7088,-1.7873,-1.8675,-1.9421,-2.0118]])
+        list_rms_co10_n3627 = np.array([
+            [    8.0,   10.0,   12.0,   14.0,   16.0,   18.0,   20.0,   22.0,   24.0,   26.0],
+            [-1.2518,-1.3768,-1.4559,-1.5086,-1.5850,-1.6198,-1.6990,-1.7447,-1.7696,-1.7959],
+            [-1.1662,-1.3079,-1.4018,-1.4753,-1.5441,-1.6012,-1.6562,-1.7030,-1.7444,-1.7820]])
+        list_rms_co10_n4254 = np.array([
+            [    8.0,   10.0,   12.0,   14.0,   16.0,   18.0,   20.0,   22.0,   24.0,   26.0],
+            [-1.2924,-1.4089,-1.4949,-1.5686,-1.6383,-1.6778,-1.7447,-1.7959,-1.8239,-1.8539],
+            [-1.3060,-1.4284,-1.5169,-1.5976,-1.6680,-1.7355,-1.7979,-1.8668,-1.9352,-1.9956]])
+        list_rms_co10_n4254 = np.array([
+            [    4.0,    6.0,    8.0,   10.0,   12.0,   14.0,   16.0,   18.0,   20.0,   22.0],
+            [-1.0458,-1.2366,-1.3372,-1.4318,-1.5086,-1.6021,-1.6778,-1.7696,-1.8239,-1.8861],
+            [-1.0808,-1.2658,-1.3717,-1.4725,-1.5664,-1.6620,-1.7513,-1.8441,-1.9276,-2.0096]])
+
+        list_rms_co21_n0628 = np.array([
+            [    4.0,    6.0,    8.0,   10.0,   12.0,   14.0,   16.0,   18.0,   20.0,   22.0],
+            [-1.6021,-1.7959,-1.9586,-2.0969,-2.2218,-2.3010,-2.3979,-2.5229,-2.5229,-2.6990],
+            [-1.6759,-1.9053,-2.0912,-2.2547,-2.4051,-2.5384,-2.6577,-2.7608,-2.8499,-2.9276]])
+        list_rms_co21_n3627 = np.array([
+            [    8.0,   10.0,   12.0,   14.0,   16.0,   18.0,   20.0,   22.0,   24.0,   26.0],
+            [-1.9586,-2.1549,-2.3010,-2.3979,-2.5229,-2.5229,-2.6990,-2.6990,-2.6990,-3.0000],
+            [-2.1403,-2.3478,-2.5188,-2.6758,-2.8188,-2.9520,-3.0758,-3.1860,-3.2721,-3.3576]])
+        list_rms_co21_n4254 = np.array([
+            [    8.0,   10.0,   12.0,   14.0,   16.0,   18.0,   20.0,   22.0,   24.0,   26.0],
+            [-2.0458,-2.2218,-2.3010,-2.3979,-2.5229,-2.6990,-2.6990,-2.6990,-2.6990,-2.6990],
+            [-2.2000,-2.4149,-2.5964,-2.7678,-2.9181,-3.0714,-3.1966,-3.3206,-3.4046,-3.5074]])
+        list_rms_co21_n4254 = np.array([
+            [    4.0,    6.0,    8.0,   10.0,   12.0,   14.0,   16.0,   18.0,   20.0,   22.0],
+            [-1.5686,-1.7696,-1.9208,-2.0969,-2.2218,-2.3979,-2.3979,-2.5229,-2.6990,-2.6990],
+            [-1.6425,-1.8671,-2.0529,-2.2274,-2.3942,-2.5509,-2.6902,-2.8125,-2.9112,-2.9929]])
 
         ########
         # plot #
