@@ -428,8 +428,10 @@ class ToolsR21():
         self.box_map_r21      = "1990x2100+550+170"
         self.final_mom0_n4321 = self.dir_final + self._read_key("final_mom0_n4321")
 
+        self.final_integ_vs_peak = self.dir_final + self._read_key("final_integ_vs_peak")
+
         # appendix
-        self.box_noise        = "1900x2270+290+0"
+        self.box              = "1900x2270+290+0"
         self.final_noise      = self.dir_final + self._read_key("final_noise")
 
         self.final_mom0_all   = self.dir_final + self._read_key("final_mom0_all")
@@ -563,12 +565,13 @@ class ToolsR21():
 
     def immagick_figures(
         self,
-        delin         = False,
-        do_all        = False,
-        do_mom0_n4321 = False,
+        delin            = False,
+        do_all           = False,
+        do_mom0_n4321    = False,
+        do_integ_vs_peak = True,
         # appendix
-        do_noise      = True,
-        do_mom0_all   = False,
+        do_noise         = False,
+        do_mom0_all      = False,
         ):
         """
         """
@@ -596,6 +599,19 @@ class ToolsR21():
                 )
             os.system("rm -rf " + self.final_mom0_n4321 + "_tmp1")
 
+        if do_integ_vs_peak==True:
+            print("######################")
+            print("# create final_noise #")
+            print("######################")
+
+            immagick_crop(
+                self.outpng_m0_vs_m8,
+                self.final_integ_vs_peak,
+                self.box,
+                delin=delin,
+                )
+
+        # appendix
         if do_noise==True:
             print("######################")
             print("# create final_noise #")
@@ -605,8 +621,8 @@ class ToolsR21():
                 self.outpng_noise_hist,
                 self.outpng_noise_vs_beam,
                 self.final_noise,
-                self.box_noise,
-                self.box_noise,
+                self.box,
+                self.box,
                 delin=delin,
                 )
 
