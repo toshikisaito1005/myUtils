@@ -429,6 +429,7 @@ class ToolsR21():
         self.final_mom0_n4321 = self.dir_final + self._read_key("final_mom0_n4321")
 
         # appendix
+        self.box_noise        = "1900x2270+290+0"
         self.final_noise      = self.dir_final + self._read_key("final_noise")
 
         self.final_mom0_all   = self.dir_final + self._read_key("final_mom0_all")
@@ -604,8 +605,8 @@ class ToolsR21():
                 self.outpng_noise_hist,
                 self.outpng_noise_vs_beam,
                 self.final_noise,
-                self.box_map_co10,
-                self.box_map_co10,
+                self.box_noise,
+                self.box_noise,
                 delin=delin,
                 )
 
