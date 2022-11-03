@@ -423,9 +423,9 @@ class ToolsR21():
         """
 
         # final
-        self.box_map_co10     = "1900x2100+290+180"
-        self.box_map_co21     = "1640x2100+550+180"
-        self.box_map_r21      = "1990x2100+550+180"
+        self.box_map_co10     = "1900x2100+290+170"
+        self.box_map_co21     = "1640x2100+550+170"
+        self.box_map_r21      = "1990x2100+550+170"
         self.final_mom0_n4321 = self.dir_final + self._read_key("final_mom0_n4321")
 
     ##################
