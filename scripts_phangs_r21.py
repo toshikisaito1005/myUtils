@@ -3537,7 +3537,7 @@ class ToolsR21():
             [-1.6425,-1.8671,-2.0529,-2.2274,-2.3942,-2.5509,-2.6902,-2.8125,-2.9112,-2.9929]])
 
         print(len(beams_new_n0628))
-        print(list_rms_co10_n0628[:,index])
+        print(list_rms_co10_n0628[index])
         print(beams_new_n0628)
         print(np.shape(list_rms_co10_n0628))
 
@@ -3553,15 +3553,15 @@ class ToolsR21():
         myax_set(ax, "both", xlim, ylim, title, xlabel, ylabel, adjust=ad)
 
         # plot co10 rms
-        ax.plot(beams_new_n0628, list_rms_co10_n0628[:,index], "o-", color=self.c_n0628, markeredgewidth=0, markersize = 20, lw=3, label = "NGC 0628 CO(1-0)")
-        ax.plot(beams_new_n3627, list_rms_co10_n3627[:,index], "o-", color=self.c_n3627, markeredgewidth=0, markersize = 20, lw=3, label = "NGC 3627 CO(1-0)")
-        ax.plot(beams_new_n4254, list_rms_co10_n4254[:,index], "o-", color=self.c_n4254, markeredgewidth=0, markersize = 20, lw=3, label = "NGC 4254 CO(1-0)")
-        ax.plot(beams_new_n4321, list_rms_co10_n4321[:,index], "o-", color=self.c_n4321, markeredgewidth=0, markersize = 20, lw=3, label = "NGC 4321 CO(1-0)")
+        ax.plot(beams_new_n0628, list_rms_co10_n0628[index], "o-", color=self.c_n0628, markeredgewidth=0, markersize = 20, lw=3, label = "NGC 0628 CO(1-0)")
+        ax.plot(beams_new_n3627, list_rms_co10_n3627[index], "o-", color=self.c_n3627, markeredgewidth=0, markersize = 20, lw=3, label = "NGC 3627 CO(1-0)")
+        ax.plot(beams_new_n4254, list_rms_co10_n4254[index], "o-", color=self.c_n4254, markeredgewidth=0, markersize = 20, lw=3, label = "NGC 4254 CO(1-0)")
+        ax.plot(beams_new_n4321, list_rms_co10_n4321[index], "o-", color=self.c_n4321, markeredgewidth=0, markersize = 20, lw=3, label = "NGC 4321 CO(1-0)")
         # plot co21 rms
-        ax.plot(beams_new_n0628, list_rms_co21_n0628[:,index], "s--", color=self.c_n0628, markeredgewidth=0, markersize = 20, lw=3, label = "NGC 0628 CO(2-1)")
-        ax.plot(beams_new_n3627, list_rms_co21_n3627[:,index], "s--", color=self.c_n3627, markeredgewidth=0, markersize = 20, lw=3, label = "NGC 3627 CO(2-1)")
-        ax.plot(beams_new_n4254, list_rms_co21_n4254[:,index], "s--", color=self.c_n4254, markeredgewidth=0, markersize = 20, lw=3, label = "NGC 4254 CO(2-1)")
-        ax.plot(beams_new_n4321, list_rms_co21_n4321[:,index], "s--", color=self.c_n4321, markeredgewidth=0, markersize = 20, lw=3, label = "NGC 4321 CO(2-1)")
+        ax.plot(beams_new_n0628, list_rms_co21_n0628[index], "s--", color=self.c_n0628, markeredgewidth=0, markersize = 20, lw=3, label = "NGC 0628 CO(2-1)")
+        ax.plot(beams_new_n3627, list_rms_co21_n3627[index], "s--", color=self.c_n3627, markeredgewidth=0, markersize = 20, lw=3, label = "NGC 3627 CO(2-1)")
+        ax.plot(beams_new_n4254, list_rms_co21_n4254[index], "s--", color=self.c_n4254, markeredgewidth=0, markersize = 20, lw=3, label = "NGC 4254 CO(2-1)")
+        ax.plot(beams_new_n4321, list_rms_co21_n4321[index], "s--", color=self.c_n4321, markeredgewidth=0, markersize = 20, lw=3, label = "NGC 4321 CO(2-1)")
 
         # text
         t=ax.text(0.95, 0.93, "NGC 0628", color=self.c_n0628, horizontalalignment="right", transform=ax.transAxes, size=self.legend_fontsize, fontweight="bold")
