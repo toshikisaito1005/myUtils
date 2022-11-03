@@ -573,7 +573,7 @@ class ToolsR21():
                 self.outpng_co21_n4321,
                 self.final_mom0_n4321+"_tmp1",
                 self.box_map_co10,
-                self.box_map,
+                self.box_map_co21,
                 delin=delin,
                 )
             combine_two_png(
@@ -581,7 +581,7 @@ class ToolsR21():
                 self.outpng_r21_n4321,
                 self.final_mom0_n4321,
                 "100000x100000+0+0",
-                self.box_map,
+                self.box_map_co21,
                 #axis="column",
                 delin=delin,
                 )
