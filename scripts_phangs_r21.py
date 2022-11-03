@@ -98,6 +98,7 @@ class ToolsR21():
             self._set_output_fits()    # output maps
             self._set_input_param()    # input parameters
             self._set_output_txt_png() # output txt and png
+            self._set_final()          # final pdf products
 
     def _set_dir(self):
         """
@@ -417,6 +418,14 @@ class ToolsR21():
         self.outpng_masked_scatter_n0628 = self.dir_products + self._read_key("outpng_masked_scatter_n0628")
         self.outpng_masked_scatter_n4321 = self.dir_products + self._read_key("outpng_masked_scatter_n4321")
 
+    def _set_final(self):
+        """
+        """
+
+        # final
+        self.box_map          = "950x920+50+50"
+        self.final_mom0_n4321 = self.dir_final + self._read_key("final_mom0_n4321")
+
     ##################
     # run_phangs_r21 #
     ##################
@@ -443,6 +452,7 @@ class ToolsR21():
         plot_masked_scat = False,
         # appendix
         appendix_model   = False,
+        do_imagemagick   = False,
         ):
         """
         This method runs all the methods which will create figures in the paper.
@@ -477,6 +487,7 @@ class ToolsR21():
             plot_masked_scat = True
             # appendix
             appendix_model   = True
+            do_imagemagick   = True
 
         # analysis
         if do_align==True:
@@ -534,6 +545,46 @@ class ToolsR21():
         # appendix
         if appendix_model==True:
             self.appendix_model()
+
+        if do_imagemagick==True:
+            self.immagick_figures()
+
+    ####################
+    # immagick_figures #
+    ####################
+
+    def immagick_figures(
+        self,
+        delin         = False,
+        do_all        = False,
+        do_mom0_n4321 = False,
+        ):
+        """
+        """
+
+        if do_mom0_n4321==True:
+            print("#####################")
+            print("# create  #")
+            print("#####################")
+
+            combine_two_png(
+                self.outpng_co10_n4321,
+                self.outpng_co21_n4321,
+                self.final_mom0_n4321+"_tmp1",
+                self.box_map,
+                self.box_map,
+                delin=delin,
+                )
+            combine_two_png(
+                self.final_mom0_n4321+"_tmp1",
+                self.outpng_r21_n4321,
+                self.final_mom0_n4321,
+                self.box_map,
+                self.box_map,
+                axis="column",
+                delin=delin,
+                )
+            os.system("rm -rf " + self.final_mom0_n4321 + "_tmp1")
 
     #####################
     #####################

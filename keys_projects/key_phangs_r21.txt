@@ -15,6 +15,7 @@ dir_final           ,,,images/
 ##################
 # final products #
 ##################
+final_mom0_n4321    ,,,fig_n4321.pdf
 
 ############
 # raw maps #
