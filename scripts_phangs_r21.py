@@ -2888,7 +2888,7 @@ class ToolsR21():
 
         xlim   = [-1.1,0.45]
         ylim   = [-1.1,0.45]
-        title  = "Peak Temperature Ratio vs. Intensity Ratio"
+        title  = "Peak Ratio vs. Intensity Ratio"
         xlabel = "log Integrated intensity ratio"
         ylabel = "log Peak temperature ratio"
 
