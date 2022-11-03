@@ -3498,7 +3498,7 @@ class ToolsR21():
         title  = "(b) Sensitivity vs. Beam Size"
         xlabel = "Beam size (arcsec)"
         ylabel = "log rms per voxel (K)"
-        index  = 1
+        index  = 2
 
         ##########
         # import #
