@@ -567,6 +567,7 @@ class ToolsR21():
         self,
         delin            = False,
         do_all           = False,
+        # main
         do_mom0_n4321    = False,
         do_integ_vs_peak = True,
         # appendix
@@ -576,6 +577,13 @@ class ToolsR21():
         """
         """
 
+        if do_all==True:
+            do_mom0_n4321    = True
+            do_integ_vs_peak = True
+            do_noise         = True
+            do_mom0_all      = True
+
+        # main
         if do_mom0_n4321==True:
             print("###########################")
             print("# create final_mom0_n4321 #")
@@ -2939,26 +2947,26 @@ class ToolsR21():
 
         # text
         t=ax.text(0.95, 0.25, "All"+cor_all, color="black", horizontalalignment="right", transform=ax.transAxes, size=self.legend_fontsize, fontweight="bold")
-        t.set_bbox(dict(facecolor="white", alpha=self.self.text_back_alpha, lw=0))
+        t.set_bbox(dict(facecolor="white", alpha=self.text_back_alpha, lw=0))
         t=ax.text(0.95, 0.20, "NGC 0628"+cor_n0628, color=self.c_n0628, horizontalalignment="right", transform=ax.transAxes, size=self.legend_fontsize, fontweight="bold")
-        t.set_bbox(dict(facecolor="white", alpha=self.self.text_back_alpha, lw=0))
+        t.set_bbox(dict(facecolor="white", alpha=self.text_back_alpha, lw=0))
         t=ax.text(0.95, 0.15, "NGC 3627"+cor_n3627, color=self.c_n3627, horizontalalignment="right", transform=ax.transAxes, size=self.legend_fontsize, fontweight="bold")
-        t.set_bbox(dict(facecolor="white", alpha=self.self.text_back_alpha, lw=0))
+        t.set_bbox(dict(facecolor="white", alpha=self.text_back_alpha, lw=0))
         t=ax.text(0.95, 0.10, "NGC 4254"+cor_n4254, color=self.c_n4254, horizontalalignment="right", transform=ax.transAxes, size=self.legend_fontsize, fontweight="bold")
-        t.set_bbox(dict(facecolor="white", alpha=self.self.text_back_alpha, lw=0))
+        t.set_bbox(dict(facecolor="white", alpha=self.text_back_alpha, lw=0))
         t=ax.text(0.95, 0.05, "NGC 4321"+cor_n4321, color=self.c_n4321, horizontalalignment="right", transform=ax.transAxes, size=self.legend_fontsize, fontweight="bold")
-        t.set_bbox(dict(facecolor="white", alpha=self.self.text_back_alpha, lw=0))
+        t.set_bbox(dict(facecolor="white", alpha=self.text_back_alpha, lw=0))
 
         ax.text(0.02, 0.13, "84$^{th}$ pctl.", horizontalalignment="left", verticalalignment="bottom", rotation=45, transform=ax.transAxes, size=self.legend_fontsize)
         ax.text(0.02, 0.05, "50$^{th}$ pctl.", horizontalalignment="left", verticalalignment="bottom", rotation=45, transform=ax.transAxes, size=self.legend_fontsize)
         ax.text(0.08, 0.01, "16$^{th}$ pctl.", horizontalalignment="left", verticalalignment="bottom", rotation=45, transform=ax.transAxes, size=self.legend_fontsize)
 
         t=ax.text(0.02, 0.93, "84$^{th}$ percentile = " + str(np.round(ratio_p84,2)).ljust(4,"0"), horizontalalignment="left", transform=ax.transAxes, size=self.legend_fontsize)
-        t.set_bbox(dict(facecolor="white", alpha=self.self.text_back_alpha, lw=0))
+        t.set_bbox(dict(facecolor="white", alpha=self.text_back_alpha, lw=0))
         t=ax.text(0.02, 0.88, "50$^{th}$ percentile = " + str(np.round(ratio_p50,2)).ljust(4,"0"), horizontalalignment="left", transform=ax.transAxes, size=self.legend_fontsize)
-        t.set_bbox(dict(facecolor="white", alpha=self.self.text_back_alpha, lw=0))
+        t.set_bbox(dict(facecolor="white", alpha=self.text_back_alpha, lw=0))
         t=ax.text(0.02, 0.83, "16$^{th}$ percentile = " + str(np.round(ratio_p16,2)).ljust(4,"0"), horizontalalignment="left", transform=ax.transAxes, size=self.legend_fontsize)
-        t.set_bbox(dict(facecolor="white", alpha=self.self.text_back_alpha, lw=0))
+        t.set_bbox(dict(facecolor="white", alpha=self.text_back_alpha, lw=0))
 
         plt.savefig(self.outpng_m0_vs_m8, dpi=self.fig_dpi)
 
@@ -3406,13 +3414,13 @@ class ToolsR21():
 
         # text
         t=ax.text(0.95, 0.93, "NGC 0628", color=self.c_n0628, horizontalalignment="right", transform=ax.transAxes, size=self.legend_fontsize, fontweight="bold")
-        t.set_bbox(dict(facecolor="white", alpha=self.self.text_back_alpha, lw=0))
+        t.set_bbox(dict(facecolor="white", alpha=self.text_back_alpha, lw=0))
         t=ax.text(0.95, 0.88, "NGC 3627", color=self.c_n3627, horizontalalignment="right", transform=ax.transAxes, size=self.legend_fontsize, fontweight="bold")
-        t.set_bbox(dict(facecolor="white", alpha=self.self.text_back_alpha, lw=0))
+        t.set_bbox(dict(facecolor="white", alpha=self.text_back_alpha, lw=0))
         t=ax.text(0.95, 0.83, "NGC 4254", color=self.c_n4254, horizontalalignment="right", transform=ax.transAxes, size=self.legend_fontsize, fontweight="bold")
-        t.set_bbox(dict(facecolor="white", alpha=self.self.text_back_alpha, lw=0))
+        t.set_bbox(dict(facecolor="white", alpha=self.text_back_alpha, lw=0))
         t=ax.text(0.95, 0.78, "NGC 4321", color=self.c_n4321, horizontalalignment="right", transform=ax.transAxes, size=self.legend_fontsize, fontweight="bold")
-        t.set_bbox(dict(facecolor="white", alpha=self.self.text_back_alpha, lw=0))
+        t.set_bbox(dict(facecolor="white", alpha=self.text_back_alpha, lw=0))
 
         xtext   = 0.68
         xmarker = xtext-0.23
