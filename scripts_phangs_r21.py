@@ -423,7 +423,7 @@ class ToolsR21():
         """
 
         # final
-        self.box_map          = "3000x3000+250+50"
+        self.box_map          = "2500x3000+250+100"
         self.final_mom0_n4321 = self.dir_final + self._read_key("final_mom0_n4321")
 
     ##################
