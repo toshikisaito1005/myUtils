@@ -660,16 +660,16 @@ class ToolsR21():
             print("###########################")
 
             combine_two_png(
-                self.outfits_r21hl_n4321,
-                self.outfits_cprops_n4321,
+                self.outpng_r21hl_n4321,
+                self.outpng_cprops_n4321,
                 self.final_mask_n4321+"_tmp1",
                 self.box_map_co10,
                 self.box_map_co21,
                 delin=delin,
                 )
             combine_two_png(
-                self.outfits_env_n4321,
-                self.outfits_halpha_n4321,
+                self.outpng_env_n4321,
+                self.outpng_halpha_n4321,
                 self.final_mask_n4321+"_tmp2",
                 self.box_map_co10,
                 self.box_map_co21,
