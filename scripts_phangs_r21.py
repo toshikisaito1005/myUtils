@@ -933,17 +933,32 @@ class ToolsR21():
 
         # set plt, ax
         plt.figure(figsize=(15,5))
-        plt.subplots_adjust(bottom=0.10, left=0.09, right=0.98, top=0.97)
+        plt.subplots_adjust(bottom=0.15, left=0.09, right=0.98, top=0.97)
         gs = gridspec.GridSpec(nrows=3, ncols=3)
         ax1 = plt.subplot(gs[0:3,0:1])
         ax2 = plt.subplot(gs[0:3,1:2])
         ax3 = plt.subplot(gs[0:3,2:3])
+        myax_set(ax1, "both", None, None, None, "co10", "co21")
+        myax_set(ax2, "both", None, None, None, "co10", "r21")
+        myax_set(ax3, "both", None, None, None, "co10", "r21")
 
         # ax1
         ax1.plot(data_vs_co10_n0628[:,0],data_vs_co10_n0628[:,1],color=self.c_n0628,lw=3)
         ax1.plot(data_vs_co10_n3627[:,0],data_vs_co10_n3627[:,1],color=self.c_n3627,lw=3)
         ax1.plot(data_vs_co10_n4254[:,0],data_vs_co10_n4254[:,1],color=self.c_n4254,lw=3)
         ax1.plot(data_vs_co10_n4321[:,0],data_vs_co10_n4321[:,1],color=self.c_n4321,lw=3)
+
+        # ax2
+        ax2.plot(data_vs_co10_n0628[:,0],data_vs_co10_n0628[:,2],color=self.c_n0628,lw=3)
+        ax2.plot(data_vs_co10_n3627[:,0],data_vs_co10_n3627[:,2],color=self.c_n3627,lw=3)
+        ax2.plot(data_vs_co10_n4254[:,0],data_vs_co10_n4254[:,2],color=self.c_n4254,lw=3)
+        ax2.plot(data_vs_co10_n4321[:,0],data_vs_co10_n4321[:,2],color=self.c_n4321,lw=3)
+
+        # ax3
+        ax3.plot(data_vs_co21_n0628[:,0],data_vs_co21_n0628[:,1],color=self.c_n0628,lw=3)
+        ax3.plot(data_vs_co21_n3627[:,0],data_vs_co21_n3627[:,1],color=self.c_n3627,lw=3)
+        ax3.plot(data_vs_co21_n4254[:,0],data_vs_co21_n4254[:,1],color=self.c_n4254,lw=3)
+        ax3.plot(data_vs_co21_n4321[:,0],data_vs_co21_n4321[:,1],color=self.c_n4321,lw=3)
 
         plt.savefig(self.outpng_model_std, dpi=self.fig_dpi)
 
