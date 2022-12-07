@@ -936,15 +936,16 @@ class ToolsR21():
         label4 = r"S.D. of log$_{10}$ $R_{\rm 21}$"
 
         # set plt, ax
+        ad = [0.20,0.03,0.97,0.97]
         plt.figure(figsize=(20,7))
         plt.subplots_adjust(bottom=0.20, left=0.03, right=0.97, top=0.97)
         gs = gridspec.GridSpec(nrows=3, ncols=3)
         ax1 = plt.subplot(gs[0:3,0:1])
         ax2 = plt.subplot(gs[0:3,1:2])
         ax3 = plt.subplot(gs[0:3,2:3])
-        myax_set(ax1, "both", None, None, None, label1, label3)
-        myax_set(ax2, "both", None, None, None, label1, label4)
-        myax_set(ax3, "both", None, None, None, label2, label4)
+        myax_set(ax1, "both", None, None, None, label1, label3, ad=ad)
+        myax_set(ax2, "both", None, None, None, label1, label4, ad=ad)
+        myax_set(ax3, "both", None, None, None, label2, label4, ad=ad)
 
         # ax1
         ax1.plot(data_vs_co10_n0628[:,0],data_vs_co10_n0628[:,1],color=self.c_n0628,lw=3)
