@@ -415,8 +415,10 @@ class ToolsR21():
         self.outpng_modeling_n3627    = self.dir_products + self._read_key("outpng_modeling_n3627")
         self.outpng_modeling_n4321    = self.dir_products + self._read_key("outpng_modeling_n4321")
 
-        self.outpng_masked_scatter_n0628 = self.dir_products + self._read_key("outpng_masked_scatter_n0628")
-        self.outpng_masked_scatter_n4321 = self.dir_products + self._read_key("outpng_masked_scatter_n4321")
+        self.outpng_model_std         = self.dir_products + self._read_key("outpng_model_std")
+
+        #self.outpng_masked_scatter_n0628 = self.dir_products + self._read_key("outpng_masked_scatter_n0628")
+        #self.outpng_masked_scatter_n4321 = self.dir_products + self._read_key("outpng_masked_scatter_n4321")
 
     def _set_final(self):
         """
@@ -911,6 +913,50 @@ class ToolsR21():
 
         this_obs = self.outtxt_obs_n0628
         this_mod = self.outtxt_mod_n0628
+        data_vs_co10_n0628, data_vs_co21_n0628 = self._get_mod_std(this_obs,this_mod)
+
+        this_obs = self.outtxt_obs_n3627
+        this_mod = self.outtxt_mod_n3627
+        data_vs_co10_n3627, data_vs_co21_n3627 = self._get_mod_std(this_obs,this_mod)
+
+        this_obs = self.outtxt_obs_n4254
+        this_mod = self.outtxt_mod_n4254
+        data_vs_co10_n4254, data_vs_co21_n4254 = self._get_mod_std(this_obs,this_mod)
+
+        this_obs = self.outtxt_obs_n4321
+        this_mod = self.outtxt_mod_n4321
+        data_vs_co10_n4321, data_vs_co21_n4321 = self._get_mod_std(this_obs,this_mod)
+
+        ########
+        # plot #
+        ########
+
+        # set plt, ax
+        plt.figure(figsize=(7,15))
+        plt.subplots_adjust(bottom=0.05, left=0.09, right=0.98, top=0.97)
+        gs = gridspec.GridSpec(nrows=3, ncols=3)
+        ax1 = plt.subplot(gs[0:3,0:1])
+        ax2 = plt.subplot(gs[0:3,1:2])
+        ax3 = plt.subplot(gs[0:3,2:3])
+
+        ax1.plot(data_vs_co10_n0628[:,0],data_vs_co10_n0628[:,1],color=self.c_n0628,lw=3)
+        ax1.plot(data_vs_co10_n3627[:,0],data_vs_co10_n3627[:,1],color=self.c_n3627,lw=3)
+        ax1.plot(data_vs_co10_n4254[:,0],data_vs_co10_n4254[:,1],color=self.c_n4254,lw=3)
+        ax1.plot(data_vs_co10_n4321[:,0],data_vs_co10_n4321[:,1],color=self.c_n4321,lw=3)
+
+        plt.savefig(self.outpng_model_std, dpi=self.fig_dpi)
+
+    ################
+    # _get_mod_std #
+    ################
+
+    def _get_mod_std(
+        self,
+        this_obs,
+        this_mod,
+        ):
+        """
+        """
 
         # import obs
         data_obs = np.loadtxt(this_obs)
@@ -949,8 +995,8 @@ class ToolsR21():
 
         list_co21 = (range_co21 + (range_co21[1]-range_co21[0])*0.5)[0:-1]
         output_vs_co21 = np.c_[list_co21,list_std_r21_vs_co21]
-        print(output_vs_co10)
-        print(output_vs_co21)
+
+        return output_vs_co10, output_vs_co21
 
     #
 
