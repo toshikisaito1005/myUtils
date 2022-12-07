@@ -434,11 +434,15 @@ class ToolsR21():
 
         self.final_violins    = self.dir_final + self._read_key("final_violins")
 
+        self.final_mask_n4321 = self.dir_final + self._read_key("final_mask_n4321")
+
         # appendix
         self.box              = "1900x2270+290+0"
         self.final_noise      = self.dir_final + self._read_key("final_noise")
 
         self.final_mom0_all   = self.dir_final + self._read_key("final_mom0_all")
+
+        self.final_mask_all   = self.dir_final + self._read_key("final_mask_all")
 
     ##################
     # run_phangs_r21 #
@@ -572,13 +576,14 @@ class ToolsR21():
         delin            = False,
         do_all           = False,
         # main
-        do_mom0_n4321    = True,
+        do_mom0_n4321    = False,
         do_integ_vs_peak = False,
         do_hist_550pc    = False,
         do_violins       = False,
+        do_mask_n4321    = True,
         # appendix
         do_noise         = False,
-        do_mom0_all      = True,
+        do_mom0_all      = False,
         ):
         """
         """
@@ -648,6 +653,39 @@ class ToolsR21():
                 "100000x100000+0+0",
                 delin=delin,
                 )
+
+        if do_mask_n4321==True:
+            print("###########################")
+            print("# create final_mask_n4321 #")
+            print("###########################")
+
+            combine_two_png(
+                self.outfits_r21hl_n4321,
+                self.outfits_cprops_n4321,
+                self.final_mask_n4321+"_tmp1",
+                self.box_map_co10,
+                self.box_map_co21,
+                delin=delin,
+                )
+            combine_two_png(
+                self.outfits_env_n4321,
+                self.outfits_halpha_n4321,
+                self.final_mask_n4321+"_tmp2",
+                self.box_map_co10,
+                self.box_map_co21,
+                delin=delin,
+                )
+            combine_two_png(
+                self.final_mask_n4321+"_tmp1",
+                self.final_mask_n4321+"_tmp2",
+                self.final_mask_n4321,
+                "100000x100000+0+0",
+                "100000x100000+0+0",
+                delin=delin,
+                axis="column",
+                )
+            os.system("rm -rf " + self.final_mask_n4321 + "_tmp1")
+            os.system("rm -rf " + self.final_mask_n4321 + "_tmp2")
 
         # appendix
         if do_noise==True:
