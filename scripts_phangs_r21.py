@@ -435,6 +435,7 @@ class ToolsR21():
         self.final_mask_n4321    = self.dir_final + self._read_key("final_mask_n4321")
         self.final_masked_hist   = self.dir_final + self._read_key("final_masked_hist")
         self.final_scatters      = self.dir_final + self._read_key("final_scatters")
+        self.final_model_std     = self.dir_final + self._read_key("final_model_std")
 
         # appendix
         self.box                 = "1900x2270+290+0"
@@ -584,7 +585,8 @@ class ToolsR21():
         do_violins       = False,
         do_mask_n4321    = False,
         do_masked_hist   = False,
-        do_scatters      = True,
+        do_scatters      = False,
+        do_model_std     = True,
         # appendix
         do_noise         = False,
         do_mom0_all      = False,
@@ -710,6 +712,18 @@ class ToolsR21():
             immagick_crop(
                 self.outpng_scatters,
                 self.final_scatters,
+                "100000x100000+0+0",
+                delin=delin,
+                )
+
+        if do_model_std==True:
+            print("##########################")
+            print("# create final_model_std #")
+            print("##########################")
+
+            immagick_crop(
+                self.outpng_model_std,
+                self.final_model_std,
                 "100000x100000+0+0",
                 delin=delin,
                 )
