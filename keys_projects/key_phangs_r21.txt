@@ -19,6 +19,7 @@ dir_final           ,,,images/
 final_mom0_n4321    ,,,fig_n4321.png
 final_integ_vs_peak ,,,fig_integ_vs_peak.png
 final_hist_550pc    ,,,fig_hist_550pc.png
+final_violins       ,,,fig_violins.png
 # appendix
 final_noise         ,,,fig_noise.png
 final_mom0_all      ,,,fig_all.png

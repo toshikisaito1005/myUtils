@@ -432,6 +432,8 @@ class ToolsR21():
 
         self.final_hist_550pc = self.dir_final + self._read_key("final_hist_550pc")
 
+        self.final_violins    = self.dir_final + self._read_key("final_violins")
+
         # appendix
         self.box              = "1900x2270+290+0"
         self.final_noise      = self.dir_final + self._read_key("final_noise")
@@ -572,7 +574,8 @@ class ToolsR21():
         # main
         do_mom0_n4321    = False,
         do_integ_vs_peak = False,
-        do_hist_550pc    = True,
+        do_hist_550pc    = False,
+        do_violins       = True,
         # appendix
         do_noise         = False,
         do_mom0_all      = False,
@@ -630,6 +633,18 @@ class ToolsR21():
             immagick_crop(
                 self.outpng_hist_550pc,
                 self.final_hist_550pc,
+                "100000x100000+0+0",
+                delin=delin,
+                )
+
+        if do_violins==True:
+            print("########################")
+            print("# create final_violins #")
+            print("########################")
+
+            immagick_crop(
+                self.outpng_violins,
+                self.final_violins,
                 "100000x100000+0+0",
                 delin=delin,
                 )
