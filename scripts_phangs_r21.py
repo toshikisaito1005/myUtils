@@ -553,7 +553,7 @@ class ToolsR21():
         if plot_scatters==True:
             self.plot_scatters()
 
-        if plot_model_std=True:
+        if plot_model_std==True:
             self.plot_model_std()
 
         # appendix
