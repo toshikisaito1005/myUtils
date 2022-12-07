@@ -932,7 +932,7 @@ class ToolsR21():
         ########
 
         # set plt, ax
-        plt.figure(figsize=(30,10))
+        plt.figure(figsize=(20,7))
         plt.subplots_adjust(bottom=0.15, left=0.09, right=0.98, top=0.97)
         gs = gridspec.GridSpec(nrows=3, ncols=3)
         ax1 = plt.subplot(gs[0:3,0:1])
@@ -988,8 +988,8 @@ class ToolsR21():
         mod_r21_modn   = mod_co21_modn / mod_co10_modsn
 
         # range
-        range_co10 = np.linspace(np.min(obs_co10), np.max(obs_co10), 15)
-        range_co21 = np.linspace(np.min(obs_co21), np.max(obs_co21), 15)
+        range_co10 = np.linspace(np.min(obs_co10), np.max(obs_co10), 10)
+        range_co21 = np.linspace(np.min(obs_co21), np.max(obs_co21), 10)
 
         list_std_co21_vs_co10 = []
         list_std_r21_vs_co10  = []
