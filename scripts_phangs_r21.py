@@ -932,7 +932,7 @@ class ToolsR21():
         list_std_co21_vs_co10 = []
         list_std_r21_vs_co10  = []
         for i in range(len(range_co10)-1):
-            cut       = np.where((mod_co10_modsn>=range_co10[0]) & (mod_co10_modsn<range_co10[1]))
+            cut       = np.where((mod_co10_modsn>=range_co10[i]) & (mod_co10_modsn<range_co10[i+1]))
             this_co21 = mod_co21_modn[cut]
             this_r21  = mod_r21_modn[cut]
             list_std_co21_vs_co10.append(np.std(this_co21))
@@ -940,7 +940,7 @@ class ToolsR21():
 
         list_std_r21_vs_co21  = []
         for i in range(len(range_co21)-1):
-            cut       = np.where((mod_co21_modsn>=range_co21[0]) & (mod_co21_modsn<range_co21[1]))
+            cut       = np.where((mod_co21_modsn>=range_co21[i]) & (mod_co21_modsn<range_co21[i+1]))
             this_r21  = mod_r21_modn[cut]
             list_std_r21_vs_co21.append(np.std(this_r21))
 
