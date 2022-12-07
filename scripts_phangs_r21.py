@@ -564,8 +564,8 @@ class ToolsR21():
             self.immagick_figures()
 
         # will be deprecated
-        if plot_masked_scat==True:
-            self.plot_masked_scat()
+        #if plot_masked_scat==True:
+        #    self.plot_masked_scat()
 
     ####################
     # immagick_figures #
