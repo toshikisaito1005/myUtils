@@ -430,6 +430,8 @@ class ToolsR21():
 
         self.final_integ_vs_peak = self.dir_final + self._read_key("final_integ_vs_peak")
 
+        self.final_hist_550pc = self.dir_final + self._read_key("final_hist_550pc")
+
         # appendix
         self.box              = "1900x2270+290+0"
         self.final_noise      = self.dir_final + self._read_key("final_noise")
@@ -569,7 +571,8 @@ class ToolsR21():
         do_all           = False,
         # main
         do_mom0_n4321    = False,
-        do_integ_vs_peak = True,
+        do_integ_vs_peak = False,
+        do_hist_550pc    = True,
         # appendix
         do_noise         = False,
         do_mom0_all      = False,
@@ -616,6 +619,18 @@ class ToolsR21():
                 self.outpng_m0_vs_m8,
                 self.final_integ_vs_peak,
                 self.box,
+                delin=delin,
+                )
+
+        if do_hist_550pc==True:
+            print("###########################")
+            print("# create final_hist_550pc #")
+            print("###########################")
+
+            immagick_crop(
+                self.outpng_hist_550pc,
+                self.final_hist_550pc,
+                "100000x100000+0+0",
                 delin=delin,
                 )
 
