@@ -944,10 +944,10 @@ class ToolsR21():
             this_r21  = mod_r21_modn[cut]
             list_std_r21_vs_co21.append(np.std(this_r21))
 
-        list_co10 = range_co10 + (range_co10[1]-range_co10[0])*0.5
+        list_co10 = (range_co10 + (range_co10[1]-range_co10[0])*0.5)[0:-1]
         output_vs_co10 = np.c_[list_co10,list_std_co21_vs_co10,list_std_r21_vs_co10]
 
-        list_co21 = range_co21 + (range_co21[1]-range_co21[0])*0.5
+        list_co21 = (range_co21 + (range_co21[1]-range_co21[0])*0.5)[0:-1]
         output_vs_co21 = np.c_[list_co21,list_std_r21_vs_co21]
         print(output_vs_co10)
         print(output_vs_co21)
