@@ -932,7 +932,7 @@ class ToolsR21():
         ########
 
         # set plt, ax
-        plt.figure(figsize=(15,5))
+        plt.figure(figsize=(30,10))
         plt.subplots_adjust(bottom=0.15, left=0.09, right=0.98, top=0.97)
         gs = gridspec.GridSpec(nrows=3, ncols=3)
         ax1 = plt.subplot(gs[0:3,0:1])
@@ -940,7 +940,7 @@ class ToolsR21():
         ax3 = plt.subplot(gs[0:3,2:3])
         myax_set(ax1, "both", None, None, None, "co10", "co21")
         myax_set(ax2, "both", None, None, None, "co10", "r21")
-        myax_set(ax3, "both", None, None, None, "co10", "r21")
+        myax_set(ax3, "both", None, None, None, "co21", "r21")
 
         # ax1
         ax1.plot(data_vs_co10_n0628[:,0],data_vs_co10_n0628[:,1],color=self.c_n0628,lw=3)
