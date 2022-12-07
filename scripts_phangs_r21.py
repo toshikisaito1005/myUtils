@@ -463,7 +463,7 @@ class ToolsR21():
         plot_masks       = False,
         plot_masked_hist = False,
         plot_scatters    = False,
-        plot_masked_scat = False,
+        plot_model_std   = False,
         # appendix
         appendix_model   = False,
         do_imagemagick   = False,
@@ -498,7 +498,7 @@ class ToolsR21():
             plot_masks       = True
             plot_masked_hist = True
             plot_scatters    = True
-            plot_masked_scat = True
+            plot_model_std   = True
             # appendix
             appendix_model   = True
             do_imagemagick   = True
@@ -553,8 +553,8 @@ class ToolsR21():
         if plot_scatters==True:
             self.plot_scatters()
 
-        if plot_masked_scat==True:
-            self.plot_masked_scat()
+        if plot_model_std=True:
+            self.plot_model_std()
 
         # appendix
         if appendix_model==True:
@@ -562,6 +562,10 @@ class ToolsR21():
 
         if do_imagemagick==True:
             self.immagick_figures()
+
+        # will be deprecated
+        if plot_masked_scat==True:
+            self.plot_masked_scat()
 
     ####################
     # immagick_figures #
@@ -892,178 +896,61 @@ class ToolsR21():
     #####################
     #####################
 
-    ####################
-    # plot_masked_scat #
-    ####################
+    ##################
+    # plot_model_std #
+    ##################
 
-    def plot_masked_scat(
+    def plot_model_std(
         self,
         ):
         """
         """
 
-        this_r21    = self.outfits_r21_n0628
-        this_er21   = self.outfits_er21_n0628
-        this_co21   = self.outmom_co21_n0628.replace("momX","mom0")
-        this_cprops = self.outfits_cprops_n0628
-        this_env    = self.outfits_env_n0628
-        this_halpha = self.outfits_halpha_n0628
-        this_ra     = float(self.ra_n0628)
-        this_dec    = float(self.dec_n0628)
-        this_scale  = self.scale_n0628
-        this_pa     = self.pa_n0628
-        this_incl   = self.incl_n0628
-        this_output = self.outpng_masked_scatter_n0628
-        r21, co21, cprops, env, halpha = self._import_masked_hist(this_co21,this_r21,this_er21,
-            this_cprops,this_env,this_halpha,this_ra,this_dec,this_scale,this_pa,this_incl,norm=False)
-        self._plot_scattter_masked(r21,co21,cprops,env,halpha,this_output)
+        taskname = self.modname + sys._getframe().f_code.co_name
+        check_first(self.outcube_co10_n0628,taskname)
 
-    #########################
-    # _plot_scattter_masked #
-    #########################
+        this_obs = self.outtxt_obs_n0628
+        this_mod = self.outtxt_mod_n0628
 
-    def _plot_scattter_masked(self,r21,co21,cprops,env,halpha,outpng):
-        """
-        """
+        # import obs
+        data_obs = np.loadtxt(this_obs)
+        obs_co10 = data_obs[:,0]
+        obs_co21 = data_obs[:,1]
+        obs_r21  = data_obs[:,2]
 
-        r21    = np.log10(r21)
-        co21   = np.log10(co21)
-        xlabel = r"log$_{10}$ $I_{\rm CO(2-1)}$"
-        ylabel = r"log$_{10}$ $R_{\rm 21}$"
-        xlim   = [np.min(co21)-0.1, np.max(co21)+0.1]
-        ylim   = [np.min(r21)-0.1, np.max(r21)+0.1]
+        # import model
+        data_mod       = np.loadtxt(this_mod)
+        mod_co10_modsn = data_mod[:,0]
+        mod_co21_modn  = data_mod[:,1]
+        mod_co21_modsn = data_mod[:,3]
+        mod_r21_modn   = mod_co21_modn / mod_co10_modsn
 
-        # mask
-        r21_cloud      = r21[cprops==1]
-        r21_noncloud   = r21[cprops==0]
-        r21_interarm   = r21[env==0]
-        r21_arm        = r21[env==1]
-        r21_bar        = r21[env==2]
-        r21_bulge      = r21[env==3]
-        r21_halpha     = r21[halpha==0]
-        r21_nonhalpha  = r21[halpha==1]
+        # range
+        range_co10 = np.linspace(np.min(obs_co10), np.max(obs_co10), 15)
+        range_co21 = np.linspace(np.min(obs_co21), np.max(obs_co21), 15)
 
-        co21_cloud     = co21[cprops==1]
-        co21_noncloud  = co21[cprops==0]
-        co21_interarm  = co21[env==0]
-        co21_arm       = co21[env==1]
-        co21_bar       = co21[env==2]
-        co21_bulge     = co21[env==3]
-        co21_halpha    = co21[halpha==0]
-        co21_nonhalpha = co21[halpha==1]
+        list_std_co21_vs_co10 = []
+        list_std_r21_vs_co10  = []
+        for i in range(len(range_co10)-1):
+            cut       = np.where((mod_co10_modsn>=range_co10[0]) & (mod_co10_modsn<range_co10[1]))
+            this_co21 = mod_co21_modn[cut]
+            this_r21  = mod_r21_modn[cut]
+            list_std_co21_vs_co10.append(np.std(this_co21))
+            list_std_r21_vs_co10.append(np.std(this_r21))
 
-        # hist x
-        #h = np.histogram(obs[:,0], bins=50, range=xlim, weights=None)
-        #h_co10_obs = np.c_[ np.delete(h[1],-1), h[0]/float(np.sum(h[0])) ]
+        list_std_r21_vs_co21  = []
+        for i in range(len(range_co21)-1):
+            cut       = np.where((mod_co21_modsn>=range_co21[0]) & (mod_co21_modsn<range_co21[1]))
+            this_r21  = mod_r21_modn[cut]
+            list_std_r21_vs_co21.append(np.std(this_r21))
 
-        # hist y
-        #h = np.histogram(r21_obs, bins=50, range=ylim, weights=None)
-        #h_co21_obs = np.c_[ np.delete(h[1],-1), h[0]/float(np.sum(h[0])) ]
+        list_co10 = range_co10 + (range_co10[1]-range_co10[0])*0.5
+        output_vs_co10 = np.c_[list_co10,list_std_co21_vs_co10,list_std_r21_vs_co10]
 
-        # set plt, ax
-        plt.figure(figsize=(15,9))
-        plt.subplots_adjust(bottom=0.11, left=0.09, right=0.91, top=0.89)
-        gs = gridspec.GridSpec(nrows=5, ncols=9)
-        ax1 = plt.subplot(gs[0:1,0:4])
-        ax2 = plt.subplot(gs[0:1,4:8])
-        ax3 = plt.subplot(gs[1:5,0:4])
-        ax4 = plt.subplot(gs[1:5,4:8])
-        ax5 = plt.subplot(gs[1:5,8:9])
-
-        myax_set(ax1, "x",    xlim, None, None, None, None, adjust=False)
-        myax_set(ax2, "x",    xlim, None, None, None, None, adjust=False)
-        myax_set(ax3, "both", xlim, ylim, None, xlabel, ylabel, adjust=False)
-        myax_set(ax4, "both", xlim, ylim, None, xlabel, None, adjust=False)
-        myax_set(ax5, "y",    None, ylim, None, None, None, adjust=False)
-        ax1.tick_params(labelbottom=False,labelleft=False,labelright=False,labeltop=True)
-        ax2.tick_params(labelbottom=False,labelleft=False,labelright=False,labeltop=True)
-        ax3.tick_params(labelbottom=True,labelleft=True,labelright=False,labeltop=False)
-        ax4.tick_params(labelbottom=True,labelleft=False,labelright=False,labeltop=False)
-        ax5.tick_params(labelbottom=False,labelleft=False,labelright=True,labeltop=False)
-        ax1.spines["left"].set_visible(False)
-        ax1.spines["right"].set_visible(False)
-        ax1.spines["bottom"].set_visible(False)
-        ax1.tick_params("x", length=0, which="major")
-        ax1.tick_params("y", length=0, which="major")
-        ax2.spines["left"].set_visible(False)
-        ax2.spines["right"].set_visible(False)
-        ax2.spines["bottom"].set_visible(False)
-        ax2.tick_params("x", length=0, which="major")
-        ax2.tick_params("y", length=0, which="major")
-        ax5.spines["left"].set_visible(False)
-        ax5.spines["top"].set_visible(False)
-        ax5.spines["bottom"].set_visible(False)
-        ax5.tick_params("x", length=0, which="major")
-        ax5.tick_params("y", length=0, which="major")
-
-        # ax1
-        #ax1.bar(h_co10_obs[:,0],h_co10_obs[:,1],width=h_co10_obs[:,0][1]-h_co10_obs[:,0][0],color="grey",lw=0,alpha=0.5,align="center")
-        #ax1.step(h_co10_obs[:,0],h_co10_obs[:,1],color="grey",lw=1,where="mid")
-
-        # ax2
-        #ax2.bar(h_co10_obs[:,0],h_co10_obs[:,1],width=h_co10_obs[:,0][1]-h_co10_obs[:,0][0],color="grey",lw=0,alpha=0.5,align="center")
-        #ax2.step(h_co10_obs[:,0],h_co10_obs[:,1],color="grey",lw=1,where="mid")
-
-        # ax3
-        #ax3.scatter(co21_nonhalpha,r21_nonhalpha, color=cm.PiYG(0.2/1.4), lw=0, alpha=0.4)
-        #ax3.scatter(co21_halpha,r21_halpha, color=cm.PiYG(1.2/1.4), lw=0, alpha=0.4)
-        ax3.scatter(co21,r21, color="grey", lw=0, alpha=1.0)
-        self._plot_contours_gal(ax3,co21_nonhalpha,r21_nonhalpha,xlim,ylim,[cm.PiYG(0.2/1.4)],do_text=False)
-        self._plot_contours_gal(ax3,co21_halpha,r21_halpha,xlim,ylim,[cm.PiYG(1.2/1.4)],do_text=False)
-        self._plot_binned_dist(ax3,co21_nonhalpha,r21_nonhalpha,None,cm.PiYG(0.2/1.4))
-        self._plot_binned_dist(ax3,co21_halpha,r21_halpha,None,cm.PiYG(1.2/1.4))
-
-        # ax4
-        #ax4.scatter(co21_interarm, r21_interarm, color=cm.gnuplot(0/3.5), lw=0, alpha=0.4)
-        #ax4.scatter(co21_arm, r21_arm, color=cm.gnuplot(1/3.5), lw=0, alpha=0.4)
-        #ax4.scatter(co21_bar, r21_bar, color=cm.gnuplot(2/3.5), lw=0, alpha=0.4)
-        #ax4.scatter(co21_bulge, r21_bulge, color=cm.gnuplot(3/3.5), lw=0, alpha=0.4)
-        ax4.scatter(co21,r21, color="grey", lw=0, alpha=1.0)
-        self._plot_contours_gal(ax4,co21_interarm,r21_interarm,xlim,ylim,[cm.gnuplot(0/3.5)],do_text=False)
-        self._plot_contours_gal(ax4,co21_arm,r21_arm,xlim,ylim,[cm.gnuplot(1/3.5)],do_text=False)
-        self._plot_contours_gal(ax4,co21_bar,r21_bar,xlim,ylim,[cm.gnuplot(2/3.5)],do_text=False)
-        self._plot_contours_gal(ax4,co21_bulge,r21_bulge,xlim,ylim,[cm.gnuplot(3/3.5)],do_text=False)
-        self._plot_binned_dist(ax4,co21_interarm,r21_interarm,None,cm.gnuplot(0/3.5))
-        self._plot_binned_dist(ax4,co21_arm,r21_arm,None,cm.gnuplot(1/3.5))
-        self._plot_binned_dist(ax4,co21_bar,r21_bar,None,cm.gnuplot(2/3.5))
-        self._plot_binned_dist(ax4,co21_bulge,r21_bulge,None,cm.gnuplot(3/3.5))
-
-        # ax5
-        #ax5.barh(h_co21_obs[:,0],h_co21_obs[:,1],height=h_co21_obs[:,0][1]-h_co21_obs[:,0][0],color="grey",lw=0,alpha=0.5,align="edge")
-        #ax5.step(h_co21_obs[:,1],h_co21_obs[:,0],color="grey",lw=1)
-
-        # text
-        #t=ax3.text(0.95, 0.20, "observation", color="grey", horizontalalignment="right", transform=ax3.transAxes, size=self.legend_fontsize, fontweight="bold")
-        #t.set_bbox(dict(facecolor="white", alpha=self.text_back_alpha, lw=0))
-
-        # save
-        plt.savefig(outpng, dpi=self.fig_dpi)
-
-    #####################
-    # _plot_binned_dist #
-    #####################
-
-    def _plot_binned_dist(
-        self,
-        ax,
-        x,
-        y,
-        histrange,
-        color,
-        nbins=8,
-        ):
-        if len(x)!=0:
-
-            if histrange==None:
-                histrange = [np.min(x),np.max(x)]
-
-            n, _ = np.histogram(x, bins=nbins, range=histrange)
-            sy, _ = np.histogram(x, bins=nbins, weights=y, range=histrange)
-            sy2, _ = np.histogram(x, bins=nbins, weights=y*y, range=histrange)
-            mean = sy / n
-            std = np.sqrt(sy2/n - mean*mean)
-
-            ax.errorbar((_[1:]+_[:-1])/2, mean, std, capsize=0, color=color, lw=3)
+        list_co21 = range_co21 + (range_co21[1]-range_co21[0])*0.5
+        output_vs_co21 = np.c_[list_co21,list_std_r21_vs_co21]
+        print(output_vs_co10)
+        print(output_vs_co21)
 
     #
 
@@ -5824,6 +5711,187 @@ class ToolsR21():
         value    = values[np.where(keywords==key)[0][0]]
 
         return value
+
+    #
+
+    ##########################
+    ##########################
+    ### will be deprecated ###
+    ##########################
+    ##########################
+
+    ####################
+    # plot_masked_scat #
+    ####################
+
+    def plot_masked_scat(
+        self,
+        ):
+        """
+        """
+
+        this_r21    = self.outfits_r21_n0628
+        this_er21   = self.outfits_er21_n0628
+        this_co21   = self.outmom_co21_n0628.replace("momX","mom0")
+        this_cprops = self.outfits_cprops_n0628
+        this_env    = self.outfits_env_n0628
+        this_halpha = self.outfits_halpha_n0628
+        this_ra     = float(self.ra_n0628)
+        this_dec    = float(self.dec_n0628)
+        this_scale  = self.scale_n0628
+        this_pa     = self.pa_n0628
+        this_incl   = self.incl_n0628
+        this_output = self.outpng_masked_scatter_n0628
+        r21, co21, cprops, env, halpha = self._import_masked_hist(this_co21,this_r21,this_er21,
+            this_cprops,this_env,this_halpha,this_ra,this_dec,this_scale,this_pa,this_incl,norm=False)
+        self._plot_scattter_masked(r21,co21,cprops,env,halpha,this_output)
+
+    #########################
+    # _plot_scattter_masked #
+    #########################
+
+    def _plot_scattter_masked(self,r21,co21,cprops,env,halpha,outpng):
+        """
+        """
+
+        r21    = np.log10(r21)
+        co21   = np.log10(co21)
+        xlabel = r"log$_{10}$ $I_{\rm CO(2-1)}$"
+        ylabel = r"log$_{10}$ $R_{\rm 21}$"
+        xlim   = [np.min(co21)-0.1, np.max(co21)+0.1]
+        ylim   = [np.min(r21)-0.1, np.max(r21)+0.1]
+
+        # mask
+        r21_cloud      = r21[cprops==1]
+        r21_noncloud   = r21[cprops==0]
+        r21_interarm   = r21[env==0]
+        r21_arm        = r21[env==1]
+        r21_bar        = r21[env==2]
+        r21_bulge      = r21[env==3]
+        r21_halpha     = r21[halpha==0]
+        r21_nonhalpha  = r21[halpha==1]
+
+        co21_cloud     = co21[cprops==1]
+        co21_noncloud  = co21[cprops==0]
+        co21_interarm  = co21[env==0]
+        co21_arm       = co21[env==1]
+        co21_bar       = co21[env==2]
+        co21_bulge     = co21[env==3]
+        co21_halpha    = co21[halpha==0]
+        co21_nonhalpha = co21[halpha==1]
+
+        # hist x
+        #h = np.histogram(obs[:,0], bins=50, range=xlim, weights=None)
+        #h_co10_obs = np.c_[ np.delete(h[1],-1), h[0]/float(np.sum(h[0])) ]
+
+        # hist y
+        #h = np.histogram(r21_obs, bins=50, range=ylim, weights=None)
+        #h_co21_obs = np.c_[ np.delete(h[1],-1), h[0]/float(np.sum(h[0])) ]
+
+        # set plt, ax
+        plt.figure(figsize=(15,9))
+        plt.subplots_adjust(bottom=0.11, left=0.09, right=0.91, top=0.89)
+        gs = gridspec.GridSpec(nrows=5, ncols=9)
+        ax1 = plt.subplot(gs[0:1,0:4])
+        ax2 = plt.subplot(gs[0:1,4:8])
+        ax3 = plt.subplot(gs[1:5,0:4])
+        ax4 = plt.subplot(gs[1:5,4:8])
+        ax5 = plt.subplot(gs[1:5,8:9])
+
+        myax_set(ax1, "x",    xlim, None, None, None, None, adjust=False)
+        myax_set(ax2, "x",    xlim, None, None, None, None, adjust=False)
+        myax_set(ax3, "both", xlim, ylim, None, xlabel, ylabel, adjust=False)
+        myax_set(ax4, "both", xlim, ylim, None, xlabel, None, adjust=False)
+        myax_set(ax5, "y",    None, ylim, None, None, None, adjust=False)
+        ax1.tick_params(labelbottom=False,labelleft=False,labelright=False,labeltop=True)
+        ax2.tick_params(labelbottom=False,labelleft=False,labelright=False,labeltop=True)
+        ax3.tick_params(labelbottom=True,labelleft=True,labelright=False,labeltop=False)
+        ax4.tick_params(labelbottom=True,labelleft=False,labelright=False,labeltop=False)
+        ax5.tick_params(labelbottom=False,labelleft=False,labelright=True,labeltop=False)
+        ax1.spines["left"].set_visible(False)
+        ax1.spines["right"].set_visible(False)
+        ax1.spines["bottom"].set_visible(False)
+        ax1.tick_params("x", length=0, which="major")
+        ax1.tick_params("y", length=0, which="major")
+        ax2.spines["left"].set_visible(False)
+        ax2.spines["right"].set_visible(False)
+        ax2.spines["bottom"].set_visible(False)
+        ax2.tick_params("x", length=0, which="major")
+        ax2.tick_params("y", length=0, which="major")
+        ax5.spines["left"].set_visible(False)
+        ax5.spines["top"].set_visible(False)
+        ax5.spines["bottom"].set_visible(False)
+        ax5.tick_params("x", length=0, which="major")
+        ax5.tick_params("y", length=0, which="major")
+
+        # ax1
+        #ax1.bar(h_co10_obs[:,0],h_co10_obs[:,1],width=h_co10_obs[:,0][1]-h_co10_obs[:,0][0],color="grey",lw=0,alpha=0.5,align="center")
+        #ax1.step(h_co10_obs[:,0],h_co10_obs[:,1],color="grey",lw=1,where="mid")
+
+        # ax2
+        #ax2.bar(h_co10_obs[:,0],h_co10_obs[:,1],width=h_co10_obs[:,0][1]-h_co10_obs[:,0][0],color="grey",lw=0,alpha=0.5,align="center")
+        #ax2.step(h_co10_obs[:,0],h_co10_obs[:,1],color="grey",lw=1,where="mid")
+
+        # ax3
+        #ax3.scatter(co21_nonhalpha,r21_nonhalpha, color=cm.PiYG(0.2/1.4), lw=0, alpha=0.4)
+        #ax3.scatter(co21_halpha,r21_halpha, color=cm.PiYG(1.2/1.4), lw=0, alpha=0.4)
+        ax3.scatter(co21,r21, color="grey", lw=0, alpha=1.0)
+        self._plot_contours_gal(ax3,co21_nonhalpha,r21_nonhalpha,xlim,ylim,[cm.PiYG(0.2/1.4)],do_text=False)
+        self._plot_contours_gal(ax3,co21_halpha,r21_halpha,xlim,ylim,[cm.PiYG(1.2/1.4)],do_text=False)
+        self._plot_binned_dist(ax3,co21_nonhalpha,r21_nonhalpha,None,cm.PiYG(0.2/1.4))
+        self._plot_binned_dist(ax3,co21_halpha,r21_halpha,None,cm.PiYG(1.2/1.4))
+
+        # ax4
+        #ax4.scatter(co21_interarm, r21_interarm, color=cm.gnuplot(0/3.5), lw=0, alpha=0.4)
+        #ax4.scatter(co21_arm, r21_arm, color=cm.gnuplot(1/3.5), lw=0, alpha=0.4)
+        #ax4.scatter(co21_bar, r21_bar, color=cm.gnuplot(2/3.5), lw=0, alpha=0.4)
+        #ax4.scatter(co21_bulge, r21_bulge, color=cm.gnuplot(3/3.5), lw=0, alpha=0.4)
+        ax4.scatter(co21,r21, color="grey", lw=0, alpha=1.0)
+        self._plot_contours_gal(ax4,co21_interarm,r21_interarm,xlim,ylim,[cm.gnuplot(0/3.5)],do_text=False)
+        self._plot_contours_gal(ax4,co21_arm,r21_arm,xlim,ylim,[cm.gnuplot(1/3.5)],do_text=False)
+        self._plot_contours_gal(ax4,co21_bar,r21_bar,xlim,ylim,[cm.gnuplot(2/3.5)],do_text=False)
+        self._plot_contours_gal(ax4,co21_bulge,r21_bulge,xlim,ylim,[cm.gnuplot(3/3.5)],do_text=False)
+        self._plot_binned_dist(ax4,co21_interarm,r21_interarm,None,cm.gnuplot(0/3.5))
+        self._plot_binned_dist(ax4,co21_arm,r21_arm,None,cm.gnuplot(1/3.5))
+        self._plot_binned_dist(ax4,co21_bar,r21_bar,None,cm.gnuplot(2/3.5))
+        self._plot_binned_dist(ax4,co21_bulge,r21_bulge,None,cm.gnuplot(3/3.5))
+
+        # ax5
+        #ax5.barh(h_co21_obs[:,0],h_co21_obs[:,1],height=h_co21_obs[:,0][1]-h_co21_obs[:,0][0],color="grey",lw=0,alpha=0.5,align="edge")
+        #ax5.step(h_co21_obs[:,1],h_co21_obs[:,0],color="grey",lw=1)
+
+        # text
+        #t=ax3.text(0.95, 0.20, "observation", color="grey", horizontalalignment="right", transform=ax3.transAxes, size=self.legend_fontsize, fontweight="bold")
+        #t.set_bbox(dict(facecolor="white", alpha=self.text_back_alpha, lw=0))
+
+        # save
+        plt.savefig(outpng, dpi=self.fig_dpi)
+
+    #####################
+    # _plot_binned_dist #
+    #####################
+
+    def _plot_binned_dist(
+        self,
+        ax,
+        x,
+        y,
+        histrange,
+        color,
+        nbins=8,
+        ):
+        if len(x)!=0:
+
+            if histrange==None:
+                histrange = [np.min(x),np.max(x)]
+
+            n, _ = np.histogram(x, bins=nbins, range=histrange)
+            sy, _ = np.histogram(x, bins=nbins, weights=y, range=histrange)
+            sy2, _ = np.histogram(x, bins=nbins, weights=y*y, range=histrange)
+            mean = sy / n
+            std = np.sqrt(sy2/n - mean*mean)
+
+            ax.errorbar((_[1:]+_[:-1])/2, mean, std, capsize=0, color=color, lw=3)
 
 ###################
 # end of ToolsR21 #
