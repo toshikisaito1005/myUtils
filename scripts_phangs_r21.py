@@ -938,7 +938,7 @@ class ToolsR21():
         # set plt, ax
         ad = [0.03,0.97,0.20,0.97]
         plt.figure(figsize=(20,7))
-        plt.subplots_adjust(bottom=0.20, left=0.03, right=0.97, top=0.97)
+        plt.subplots_adjust(bottom=0.10, left=0.10, right=0.97, top=0.97)
         gs = gridspec.GridSpec(nrows=3, ncols=3)
         ax1 = plt.subplot(gs[0:3,0:1])
         ax2 = plt.subplot(gs[0:3,1:2])
