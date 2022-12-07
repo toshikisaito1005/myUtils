@@ -789,7 +789,7 @@ class ToolsR21():
                 self.outpng_env_n0628,
                 self.outpng_halpha_n0628,
                 self.final_mask_all+"_n0628_tmp2",
-                self.box_map_co10,
+                self.box_map_co21,
                 self.box_map_co21,
                 delin=delin,
                 )
@@ -814,7 +814,7 @@ class ToolsR21():
                 self.outpng_env_n3627,
                 self.outpng_halpha_n3627,
                 self.final_mask_all+"_n3627_tmp2",
-                self.box_map_co10,
+                self.box_map_co21,
                 self.box_map_co21,
                 delin=delin,
                 )
@@ -839,7 +839,7 @@ class ToolsR21():
                 self.outpng_env_n4254,
                 self.outpng_halpha_n4254,
                 self.final_mask_all+"_n4254_tmp2",
-                self.box_map_co10,
+                self.box_map_co21,
                 self.box_map_co21,
                 delin=delin,
                 )
