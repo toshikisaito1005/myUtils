@@ -966,13 +966,13 @@ class ToolsR21():
         ax3.plot(data_vs_co21_n4321[:,0],data_vs_co21_n4321[:,1],color=self.c_n4321,lw=5)
 
         # text
-        t=ax1.text(0.95, 0.93, "NGC 0628", color=self.c_n0628, horizontalalignment="right", transform=ax1.transAxes, size=self.legend_fontsize, fontweight="bold")
+        t=ax1.text(0.95, 0.93, "NGC 0628 4.0$^{\prime}$$^{\prime}$", color=self.c_n0628, horizontalalignment="right", transform=ax1.transAxes, size=self.legend_fontsize, fontweight="bold")
         t.set_bbox(dict(facecolor="white", alpha=self.text_back_alpha, lw=0))
-        t=ax1.text(0.95, 0.88, "NGC 3627", color=self.c_n3627, horizontalalignment="right", transform=ax1.transAxes, size=self.legend_fontsize, fontweight="bold")
+        t=ax1.text(0.95, 0.88, "NGC 3627 8.0$^{\prime}$$^{\prime}$", color=self.c_n3627, horizontalalignment="right", transform=ax1.transAxes, size=self.legend_fontsize, fontweight="bold")
         t.set_bbox(dict(facecolor="white", alpha=self.text_back_alpha, lw=0))
-        t=ax1.text(0.95, 0.83, "NGC 4254", color=self.c_n4254, horizontalalignment="right", transform=ax1.transAxes, size=self.legend_fontsize, fontweight="bold")
+        t=ax1.text(0.95, 0.83, "NGC 4254 8.0$^{\prime}$$^{\prime}$", color=self.c_n4254, horizontalalignment="right", transform=ax1.transAxes, size=self.legend_fontsize, fontweight="bold")
         t.set_bbox(dict(facecolor="white", alpha=self.text_back_alpha, lw=0))
-        t=ax1.text(0.95, 0.78, "NGC 4321", color=self.c_n4321, horizontalalignment="right", transform=ax1.transAxes, size=self.legend_fontsize, fontweight="bold")
+        t=ax1.text(0.95, 0.78, "NGC 4321 4.0$^{\prime}$$^{\prime}$", color=self.c_n4321, horizontalalignment="right", transform=ax1.transAxes, size=self.legend_fontsize, fontweight="bold")
         t.set_bbox(dict(facecolor="white", alpha=self.text_back_alpha, lw=0))
 
         plt.savefig(self.outpng_model_std, dpi=self.fig_dpi)
