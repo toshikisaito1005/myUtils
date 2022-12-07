@@ -427,23 +427,17 @@ class ToolsR21():
         self.box_map_co21        = "1640x2100+550+170"
         self.box_map_r21         = "1990x2100+550+170"
         self.final_mom0_n4321    = self.dir_final + self._read_key("final_mom0_n4321")
-
         self.final_integ_vs_peak = self.dir_final + self._read_key("final_integ_vs_peak")
-
         self.final_hist_550pc    = self.dir_final + self._read_key("final_hist_550pc")
-
         self.final_violins       = self.dir_final + self._read_key("final_violins")
-
         self.final_mask_n4321    = self.dir_final + self._read_key("final_mask_n4321")
-
         self.final_masked_hist   = self.dir_final + self._read_key("final_masked_hist")
+        self.final_scatters      = self.dir_final + self._read_key("final_scatters")
 
         # appendix
         self.box                 = "1900x2270+290+0"
         self.final_noise         = self.dir_final + self._read_key("final_noise")
-
         self.final_mom0_all      = self.dir_final + self._read_key("final_mom0_all")
-
         self.final_mask_all      = self.dir_final + self._read_key("final_mask_all")
 
     ##################
@@ -583,7 +577,8 @@ class ToolsR21():
         do_hist_550pc    = False,
         do_violins       = False,
         do_mask_n4321    = False,
-        do_masked_hist   = True,
+        do_masked_hist   = False,
+        do_scatters      = True,
         # appendix
         do_noise         = False,
         do_mom0_all      = False,
@@ -697,6 +692,18 @@ class ToolsR21():
             immagick_crop(
                 self.outpng_masked_hist,
                 self.final_masked_hist,
+                "100000x100000+0+0",
+                delin=delin,
+                )
+
+        if do_scatters==True:
+            print("#########################")
+            print("# create final_scatters #")
+            print("#########################")
+
+            immagick_crop(
+                self.outpng_scatters,
+                self.final_scatters,
                 "100000x100000+0+0",
                 delin=delin,
                 )
