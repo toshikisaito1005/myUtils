@@ -943,27 +943,27 @@ class ToolsR21():
         ax1 = plt.subplot(gs[0:3,0:1])
         ax2 = plt.subplot(gs[0:3,1:2])
         ax3 = plt.subplot(gs[0:3,2:3])
-        myax_set(ax1, "both", None, [0.001,0.30], None, label1, label3, adjust=ad)
-        myax_set(ax2, "both", None, [0.001,0.30], None, label1, label4, adjust=ad)
-        myax_set(ax3, "both", None, [0.001,0.30], None, label2, label4, adjust=ad)
+        myax_set(ax1, "both", None, [0.001,0.ww], None, label1, label3, adjust=ad)
+        myax_set(ax2, "both", None, [0.001,0.ww], None, label1, label4, adjust=ad)
+        myax_set(ax3, "both", None, [0.001,0.ww], None, label2, label4, adjust=ad)
 
         # ax1
-        ax1.plot(data_vs_co10_n0628[:,0],data_vs_co10_n0628[:,1],color=self.c_n0628,lw=3)
-        ax1.plot(data_vs_co10_n3627[:,0],data_vs_co10_n3627[:,1],color=self.c_n3627,lw=3)
-        ax1.plot(data_vs_co10_n4254[:,0],data_vs_co10_n4254[:,1],color=self.c_n4254,lw=3)
-        ax1.plot(data_vs_co10_n4321[:,0],data_vs_co10_n4321[:,1],color=self.c_n4321,lw=3)
+        ax1.plot(data_vs_co10_n0628[:,0],data_vs_co10_n0628[:,1],color=self.c_n0628,lw=5)
+        ax1.plot(data_vs_co10_n3627[:,0],data_vs_co10_n3627[:,1],color=self.c_n3627,lw=5)
+        ax1.plot(data_vs_co10_n4254[:,0],data_vs_co10_n4254[:,1],color=self.c_n4254,lw=5)
+        ax1.plot(data_vs_co10_n4321[:,0],data_vs_co10_n4321[:,1],color=self.c_n4321,lw=5)
 
         # ax2
-        ax2.plot(data_vs_co10_n0628[:,0],data_vs_co10_n0628[:,2],color=self.c_n0628,lw=3)
-        ax2.plot(data_vs_co10_n3627[:,0],data_vs_co10_n3627[:,2],color=self.c_n3627,lw=3)
-        ax2.plot(data_vs_co10_n4254[:,0],data_vs_co10_n4254[:,2],color=self.c_n4254,lw=3)
-        ax2.plot(data_vs_co10_n4321[:,0],data_vs_co10_n4321[:,2],color=self.c_n4321,lw=3)
+        ax2.plot(data_vs_co10_n0628[:,0],data_vs_co10_n0628[:,2],color=self.c_n0628,lw=5)
+        ax2.plot(data_vs_co10_n3627[:,0],data_vs_co10_n3627[:,2],color=self.c_n3627,lw=5)
+        ax2.plot(data_vs_co10_n4254[:,0],data_vs_co10_n4254[:,2],color=self.c_n4254,lw=5)
+        ax2.plot(data_vs_co10_n4321[:,0],data_vs_co10_n4321[:,2],color=self.c_n4321,lw=5)
 
         # ax3
-        ax3.plot(data_vs_co21_n0628[:,0],data_vs_co21_n0628[:,1],color=self.c_n0628,lw=3)
-        ax3.plot(data_vs_co21_n3627[:,0],data_vs_co21_n3627[:,1],color=self.c_n3627,lw=3)
-        ax3.plot(data_vs_co21_n4254[:,0],data_vs_co21_n4254[:,1],color=self.c_n4254,lw=3)
-        ax3.plot(data_vs_co21_n4321[:,0],data_vs_co21_n4321[:,1],color=self.c_n4321,lw=3)
+        ax3.plot(data_vs_co21_n0628[:,0],data_vs_co21_n0628[:,1],color=self.c_n0628,lw=5)
+        ax3.plot(data_vs_co21_n3627[:,0],data_vs_co21_n3627[:,1],color=self.c_n3627,lw=5)
+        ax3.plot(data_vs_co21_n4254[:,0],data_vs_co21_n4254[:,1],color=self.c_n4254,lw=5)
+        ax3.plot(data_vs_co21_n4321[:,0],data_vs_co21_n4321[:,1],color=self.c_n4321,lw=5)
 
         plt.savefig(self.outpng_model_std, dpi=self.fig_dpi)
 
