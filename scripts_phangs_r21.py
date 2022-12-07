@@ -580,10 +580,11 @@ class ToolsR21():
         do_integ_vs_peak = False,
         do_hist_550pc    = False,
         do_violins       = False,
-        do_mask_n4321    = True,
+        do_mask_n4321    = False,
         # appendix
         do_noise         = False,
         do_mom0_all      = False,
+        do_mask_all      = True,
         ):
         """
         """
@@ -681,11 +682,9 @@ class ToolsR21():
                 self.final_mask_n4321,
                 "100000x100000+0+0",
                 "100000x100000+0+0",
-                delin=delin,
+                delin=True,
                 axis="column",
                 )
-            os.system("rm -rf " + self.final_mask_n4321 + "_tmp1")
-            os.system("rm -rf " + self.final_mask_n4321 + "_tmp2")
 
         # appendix
         if do_noise==True:
@@ -766,6 +765,98 @@ class ToolsR21():
                 self.final_mom0_all+"_n3627",
                 self.final_mom0_all+"_n4254",
                 self.final_mom0_all,
+                "100000x100000+0+0",
+                "100000x100000+0+0",
+                "100000x100000+0+0",
+                axis="column",
+                delin=True,
+                )
+
+        if do_mask_all==True:
+            print("#########################")
+            print("# create final_mask_all #")
+            print("#########################")
+
+            combine_two_png(
+                self.outpng_r21hl_n0628,
+                self.outpng_cprops_n0628,
+                self.final_mask_all+"_n0628_tmp1",
+                self.box_map_co10,
+                self.box_map_co21,
+                delin=delin,
+                )
+            combine_two_png(
+                self.outpng_env_n0628,
+                self.outpng_halpha_n0628,
+                self.final_mask_all+"_n0628_tmp2",
+                self.box_map_co10,
+                self.box_map_co21,
+                delin=delin,
+                )
+            combine_two_png(
+                self.final_mask_all+"_n0628_tmp1",
+                self.final_mask_all+"_n0628_tmp2",
+                self.final_mask_all+"_n0628",
+                "100000x100000+0+0",
+                "100000x100000+0+0",
+                delin=True,
+                )
+
+            combine_two_png(
+                self.outpng_r21hl_n3627,
+                self.outpng_cprops_n3627,
+                self.final_mask_all+"_n3627_tmp1",
+                self.box_map_co10,
+                self.box_map_co21,
+                delin=delin,
+                )
+            combine_two_png(
+                self.outpng_env_n3627,
+                self.outpng_halpha_n3627,
+                self.final_mask_all+"_n3627_tmp2",
+                self.box_map_co10,
+                self.box_map_co21,
+                delin=delin,
+                )
+            combine_two_png(
+                self.final_mask_all+"_n3627_tmp1",
+                self.final_mask_all+"_n3627_tmp2",
+                self.final_mask_all+"_n3627",
+                "100000x100000+0+0",
+                "100000x100000+0+0",
+                delin=True,
+                )
+
+            combine_two_png(
+                self.outpng_r21hl_n4254,
+                self.outpng_cprops_n4254,
+                self.final_mask_all+"_n4254_tmp1",
+                self.box_map_co10,
+                self.box_map_co21,
+                delin=delin,
+                )
+            combine_two_png(
+                self.outpng_env_n4254,
+                self.outpng_halpha_n4254,
+                self.final_mask_all+"_n4254_tmp2",
+                self.box_map_co10,
+                self.box_map_co21,
+                delin=delin,
+                )
+            combine_two_png(
+                self.final_mask_all+"_n4254_tmp1",
+                self.final_mask_all+"_n4254_tmp2",
+                self.final_mask_all+"_n4254",
+                "100000x100000+0+0",
+                "100000x100000+0+0",
+                delin=True,
+                )
+
+            combine_three_png(
+                self.final_mask_all+"_n0628",
+                self.final_mask_all+"_n3627",
+                self.final_mask_all+"_n4254",
+                self.final_mask_all,
                 "100000x100000+0+0",
                 "100000x100000+0+0",
                 "100000x100000+0+0",
