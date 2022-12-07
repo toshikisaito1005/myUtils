@@ -943,9 +943,9 @@ class ToolsR21():
         ax1 = plt.subplot(gs[0:3,0:1])
         ax2 = plt.subplot(gs[0:3,1:2])
         ax3 = plt.subplot(gs[0:3,2:3])
-        myax_set(ax1, "both", None, [0.001,0.ww], None, label1, label3, adjust=ad)
-        myax_set(ax2, "both", None, [0.001,0.ww], None, label1, label4, adjust=ad)
-        myax_set(ax3, "both", None, [0.001,0.ww], None, label2, label4, adjust=ad)
+        myax_set(ax1, "both", None, [0.001,0.22], None, label1, label3, adjust=ad)
+        myax_set(ax2, "both", None, [0.001,0.22], None, label1, label4, adjust=ad)
+        myax_set(ax3, "both", None, [0.001,0.22], None, label2, label4, adjust=ad)
 
         # ax1
         ax1.plot(data_vs_co10_n0628[:,0],data_vs_co10_n0628[:,1],color=self.c_n0628,lw=5)
