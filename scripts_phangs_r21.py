@@ -585,7 +585,7 @@ class ToolsR21():
         do_hist_550pc    = False,
         do_violins       = False,
         do_mask_n4321    = False,
-        do_masked_hist   = False,
+        do_masked_hist   = True,
         do_scatters      = False,
         do_model_std     = False,
         # appendix
