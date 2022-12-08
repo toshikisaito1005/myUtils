@@ -1716,7 +1716,7 @@ class ToolsR21():
         plt.figure(figsize=(15,7))
         plt.subplots_adjust(bottom=0.09, left=0.07, right=0.99, top=0.95)
         gs   = gridspec.GridSpec(nrows=12, ncols=9)
-        ax1  = plt.subplot(gs[0:12,0:9])
+        ax1  = plt.subplot(gs[0:11,0:9])
 
         # set ax param
         myax_set(ax1,  "y", xlim, ylim, None, None, ylabel)
