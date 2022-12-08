@@ -243,7 +243,8 @@ outpng_cprops_n4321  ,,,fig_cprops_n4321.png
 outpng_env_n4321     ,,,fig_env_n4321.png
 outpng_halpha_n4321  ,,,fig_halpha_n4321.png
 
-outpng_masked_hist   ,,,fig_masked_hist.png
+outpng_masked_hist_r21  ,,,fig_masked_hist_r21.png
+outpng_masked_hist_co21 ,,,fig_masked_hist_co21.png
 
 outpng_scatters      ,,,fig_scatters.png
 

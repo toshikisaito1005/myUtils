@@ -396,7 +396,8 @@ class ToolsR21():
         self.outpng_env_n4321         = self.dir_products + self._read_key("outpng_env_n4321")
         self.outpng_halpha_n4321      = self.dir_products + self._read_key("outpng_halpha_n4321")
 
-        self.outpng_masked_hist       = self.dir_products + self._read_key("outpng_masked_hist")
+        self.outpng_masked_hist_r21   = self.dir_products + self._read_key("outpng_masked_hist_r21")
+        self.outpng_masked_hist_co21  = self.dir_products + self._read_key("outpng_masked_hist_co21")
 
         self.outpng_scatters          = self.dir_products + self._read_key("outpng_scatters")
 
@@ -579,7 +580,7 @@ class ToolsR21():
         delin            = False,
         do_all           = False,
         # main
-        do_mom0_n4321    = True,
+        do_mom0_n4321    = False,
         do_integ_vs_peak = False,
         do_hist_550pc    = False,
         do_violins       = False,
@@ -698,11 +699,14 @@ class ToolsR21():
             print("# create final_masked_hist #")
             print("############################")
 
-            immagick_crop(
-                self.outpng_masked_hist,
+            combine_two_png(
+                self.outpng_masked_hist_r21,
+                self.outpng_masked_hist_co21,
                 self.final_masked_hist,
                 "100000x100000+0+0",
+                "100000x100000+0+0",
                 delin=delin,
+                axis="column",
                 )
 
         if do_scatters==True:
@@ -1700,13 +1704,13 @@ class ToolsR21():
         env    = np.r_[env_n0628,env_n3627,env_n4254,env_n4321]
         halpha = np.r_[halpha_n0628,halpha_n3627,halpha_n4254,halpha_n4321]
 
+        ############
+        # plot r21 #
+        ############
+
         xlim   = [0,21]
         ylim   = [0.0,2.5]
         ylabel = "Median-normalized $R_{21}$"
-
-        ########
-        # plot #
-        ########
 
         # set plt, ax
         plt.figure(figsize=(15,7))
@@ -1732,7 +1736,41 @@ class ToolsR21():
 
         # text
 
-        plt.savefig(self.outpng_masked_hist, dpi=self.fig_dpi)
+        plt.savefig(self.outpng_masked_hist_r21, dpi=self.fig_dpi)
+
+        #############
+        # plot co21 #
+        #############
+
+        xlim   = [0,21]
+        ylim   = [0.0,2.5]
+        ylabel = "Median-normalized $I_{\rm CO(2-1)}$"
+
+        # set plt, ax
+        plt.figure(figsize=(15,7))
+        plt.subplots_adjust(bottom=0.09, left=0.07, right=0.99, top=0.95)
+        gs   = gridspec.GridSpec(nrows=12, ncols=9)
+        ax1  = plt.subplot(gs[0:12,0:9])
+
+        # set ax param
+        myax_set(ax1,  "y", xlim, ylim, None, None, ylabel)
+        ax1.axes.xaxis.set_ticklabels([])
+
+        # plot
+        self._ax_masked_violin(ax1,co21,co21,cprops,1,2,ylim,cm.bwr(1.2/1.4))
+        self._ax_masked_violin(ax1,co21,co21,cprops,0,4,ylim,cm.bwr(0.2/1.4))
+
+        self._ax_masked_violin(ax1,co21,co21,env,3,6,ylim,cm.gnuplot(3/3.5))
+        self._ax_masked_violin(ax1,co21,co21,env,2,8,ylim,cm.gnuplot(2/3.5))
+        self._ax_masked_violin(ax1,co21,co21,env,1,10,ylim,cm.gnuplot(1/3.5))
+        self._ax_masked_violin(ax1,co21,co21,env,0,12,ylim,cm.gnuplot(0/3.5))
+
+        self._ax_masked_violin(ax1,co21,co21,halpha,1,14,ylim,cm.PiYG(0.2/1.4))
+        self._ax_masked_violin(ax1,co21,co21,halpha,0,16,ylim,cm.PiYG(1.2/1.4))
+
+        # text
+
+        plt.savefig(self.outpng_masked_hist_co21, dpi=self.fig_dpi)
 
     #####################
     # _ax_masked_violin #
