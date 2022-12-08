@@ -1743,7 +1743,7 @@ class ToolsR21():
         #############
 
         xlim   = [0,21]
-        ylim   = [-1.5,5.0]
+        ylim   = [-2.0,7.0]
         ylabel = "Median-normalized $I_{\rm CO(2-1)}$"
 
         # set plt, ax
@@ -1757,16 +1757,16 @@ class ToolsR21():
         ax1.axes.xaxis.set_ticklabels([])
 
         # plot
-        self._ax_masked_violin(ax1,co21,co21,cprops,1,2,ylim,cm.bwr(1.2/1.4))
-        self._ax_masked_violin(ax1,co21,co21,cprops,0,4,ylim,cm.bwr(0.2/1.4))
+        self._ax_masked_violin(ax1,co21,co21,cprops,1,2,ylim,cm.bwr(1.2/1.4),vmin=-1.2,vmax=6.0)
+        self._ax_masked_violin(ax1,co21,co21,cprops,0,4,ylim,cm.bwr(0.2/1.4),vmin=-0.7,vmax=6.0)
 
-        self._ax_masked_violin(ax1,co21,co21,env,3,6,ylim,cm.gnuplot(3/3.5))
-        self._ax_masked_violin(ax1,co21,co21,env,2,8,ylim,cm.gnuplot(2/3.5))
-        self._ax_masked_violin(ax1,co21,co21,env,1,10,ylim,cm.gnuplot(1/3.5))
-        self._ax_masked_violin(ax1,co21,co21,env,0,12,ylim,cm.gnuplot(0/3.5))
+        self._ax_masked_violin(ax1,co21,co21,env,3,6,ylim,cm.gnuplot(3/3.5),vmin=-2.0,vmax=7.0)
+        self._ax_masked_violin(ax1,co21,co21,env,2,8,ylim,cm.gnuplot(2/3.5),vmin=-1.2,vmax=6.0)
+        self._ax_masked_violin(ax1,co21,co21,env,1,10,ylim,cm.gnuplot(1/3.5),vmin=-0.5,vmax=6.0)
+        self._ax_masked_violin(ax1,co21,co21,env,0,12,ylim,cm.gnuplot(0/3.5),vmin=-0.3,vmax=5.0)
 
-        self._ax_masked_violin(ax1,co21,co21,halpha,1,14,ylim,cm.PiYG(0.2/1.4))
-        self._ax_masked_violin(ax1,co21,co21,halpha,0,16,ylim,cm.PiYG(1.2/1.4))
+        self._ax_masked_violin(ax1,co21,co21,halpha,1,14,ylim,cm.PiYG(0.2/1.4),vmin=-1.2,vmax=6.0)
+        self._ax_masked_violin(ax1,co21,co21,halpha,0,16,ylim,cm.PiYG(1.2/1.4),vmin=-0.3,vmax=6.0)
 
         # text
 
