@@ -579,14 +579,14 @@ class ToolsR21():
         delin            = False,
         do_all           = False,
         # main
-        do_mom0_n4321    = False,
+        do_mom0_n4321    = True,
         do_integ_vs_peak = False,
         do_hist_550pc    = False,
         do_violins       = False,
         do_mask_n4321    = False,
         do_masked_hist   = False,
         do_scatters      = False,
-        do_model_std     = True,
+        do_model_std     = False,
         # appendix
         do_noise         = False,
         do_mom0_all      = False,
@@ -622,6 +622,7 @@ class ToolsR21():
                 "100000x100000+0+0",
                 self.box_map_r21,
                 delin=delin,
+                axis="column",
                 )
             os.system("rm -rf " + self.final_mom0_n4321 + "_tmp1")
 
