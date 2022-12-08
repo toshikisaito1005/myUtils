@@ -700,8 +700,8 @@ class ToolsR21():
             print("############################")
 
             combine_two_png(
-                self.outpng_masked_hist_r21,
                 self.outpng_masked_hist_co21,
+                self.outpng_masked_hist_r21,
                 self.final_masked_hist,
                 "100000x100000+0+0",
                 "100000x100000+0+0",
@@ -1812,7 +1812,10 @@ class ToolsR21():
         left = shift-data
         cut = np.where((ygrid<vmax)&(ygrid>vmin))
         ax.plot(left[cut], ygrid[cut], lw=1, color=color)
-        ax.fill_betweenx(ygrid, left, shift, facecolor=color, alpha=0.2, lw=0)
+        if co21!=None:
+            ax.fill_betweenx(ygrid, left, shift, facecolor=color, alpha=0.2, lw=0)
+        else:
+            ax.fill_betweenx(ygrid, left, shift, facecolor=color, alpha=0.8, lw=0)
 
         # plot weighted kde
         h,e = np.histogram(r21, bins=1000, density=True, weights=co21)
@@ -1846,9 +1849,7 @@ class ToolsR21():
             ax.plot([x_weight,x_weight],    [p16_weight,p84_weight],"-",color=color,alpha=0.8,lw=2)
         else:
             ax.plot(x_noweight,p50_noweight,"s",color=color,alpha=0.8,lw=0)
-            ax.plot(x_weight,  p50_weight,"o",color=color,alpha=0.8,lw=0)
-            ax.plot([x_noweight,x_noweight],[p16_noweight,p84_noweight],"-",color=color,alpha=0.8,lw=2)
-            ax.plot([x_weight,x_weight],    [p16_weight,p84_weight],"-",color=color,alpha=0.8,lw=2)        
+            ax.plot([x_noweight,x_noweight],[p16_noweight,p84_noweight],"-",color=color,alpha=0.8,lw=2)       
 
     #######################
     # _import_masked_hist #
