@@ -1709,7 +1709,7 @@ class ToolsR21():
         ############
 
         xlim   = [0,21]
-        ylim   = [0.0,2.5]
+        ylim   = [0.0,2.0]
         ylabel = "Median-normalized $R_{21}$"
 
         # set plt, ax
@@ -1743,7 +1743,7 @@ class ToolsR21():
         #############
 
         xlim   = [0,21]
-        ylim   = [-1.0,3.5]
+        ylim   = [-1.5,5.0]
         ylabel = "Median-normalized $I_{\rm CO(2-1)}$"
 
         # set plt, ax
