@@ -196,7 +196,7 @@ class ProposalsALMA():
 
         # CH3OH/13CO line ratio
         run_immath_two(self.image_ch3oh_150pc+"_regrid",self.image_13co10_150pc+"_regrid",self.outfits_mask+"_ch3oh_13co","iif(IM1>0.2,IM0/IM1,0)",delin=False)
-        os.system("rm -rf " + self.image_ch3oh + "_regrid")
+        os.system("rm -rf " + self.image_ch3oh_150pc + "_regrid")
 
         # masking
         run_immath_one(template,self.outfits_mask+"_tmp1","iif(IM0>=1,1,0)",delin=False)
