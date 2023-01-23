@@ -16,11 +16,12 @@ final_mask ,,,final_mask.png
 ##############
 # input data #
 ##############
-image_12co10  ,,,ngc1068_b3_12m+7m_co10_60pc_strict_mom0.fits
-image_13co10  ,,,ngc1068_b3_12m_13co10_60pc_strict_mom0.fits
-image_ch3oh   ,,,ngc1068_b3_12m_ch3oh21_130pc_strict_mom0.fits
-image_h13cn   ,,,ngc1068_b3_12m_h13cn10_60pc_strict_mom0.fits
-image_oiiioii ,,,n1068_siiisii_ratio.fits
+image_12co10       ,,,ngc1068_b3_12m+7m_co10_60pc_strict_mom0.fits
+image_13co10       ,,,ngc1068_b3_12m_13co10_60pc_strict_mom0.fits
+image_13co10_150pc ,,,ngc1068_b3_12m_13co10_60pc_strict_mom0.fits
+image_ch3oh_150pc  ,,,ngc1068_b3_12m_ch3oh21_130pc_strict_mom0.fits
+image_h13cn        ,,,ngc1068_b3_12m_h13cn10_60pc_strict_mom0.fits
+image_oiiioii      ,,,n1068_siiisii_ratio.fits
 
 ##########################################
 # input parameters and target properties #
