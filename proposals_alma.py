@@ -124,10 +124,10 @@ class ProposalsALMA():
         # input data
         self.image_12co10       = self.dir_raw + self._read_key("image_12co10")
         self.image_13co10       = self.dir_raw + self._read_key("image_13co10")
-        self.image_13co10_150pc = self.dir_raw + self._read_key("image_13co10_150pc")
-        self.image_ch3oh_150pc  = self.dir_raw + self._read_key("image_ch3oh_150pc")
         self.image_h13cn        = self.dir_raw + self._read_key("image_h13cn")
         self.image_oiiioii      = self.dir_raw + self._read_key("image_oiiioii")
+        self.image_13co10_150pc = self.dir_raw + self._read_key("image_13co10_150pc")
+        self.image_ch3oh_150pc  = self.dir_raw + self._read_key("image_ch3oh_150pc")
 
         # ngc1068
         self.z             = float(self._read_key("z"))
