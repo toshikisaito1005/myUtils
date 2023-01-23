@@ -185,7 +185,7 @@ class ProposalsALMA():
         os.system("rm -rf template.image")
         template = "template.image"
         run_importfits(self.image_12co10,template,defaultaxes=True,defaultaxesvalues=["RA","Dec","1GHz","Stokes"])
-        run_importfits(self.image_oiiioii,self.image_oiiioii+"_tmp1",defaultaxes=True,defaultaxesvalues=["RA","Dec","1GHz","Stokes"])
+        run_importfits(self.image_oiiioii,self.image_oiiioii+"_tmp1",defaultaxes=True,defaultaxesvalues=["RA","Dec"])
         run_imregrid(self.image_13co10,          template, self.image_13co10+"_regrid",  delin=False)
         run_imregrid(self.image_ch3oh,           template, self.image_ch3oh+"_regrid",   delin=False)
         run_imregrid(self.image_h13cn,           template, self.image_h13cn+"_regrid",   delin=False)
@@ -195,8 +195,8 @@ class ProposalsALMA():
         run_immath_two(self.image_13co10+"_regrid",self.image_ch3oh+"_regrid",self.outfits_mask+"_ch3oh_13co","iif(IM1>0,IM0/IM1,0)",delin=False)
         os.system("rm -rf " + self.image_ch3oh + "_regrid")
 
-        # mask: outflow
-        run_immath_one(self.image_12co10,self.outfits_mask+"_tmp1","iif(IM0>=1,1,0)",delin=True)
+        # masking
+        run_immath_one(template,self.outfits_mask+"_tmp1","iif(IM0>=1,1,0)",delin=False)
         run_immath_two(self.image_13co10+"_regrid",self.outfits_mask+"_tmp1",self.outfits_mask+"_tmp2","iif(IM0>=20,2,IM1)",delin=True)
         run_immath_two(self.outfits_mask+"_ch3oh_13co",self.outfits_mask+"_tmp2",self.outfits_mask+"_tmp3","iif(IM0>=1,3,IM1)",delin=False) # check!
         run_immath_two(self.image_oiiioii+"_regrid",self.outfits_mask+"_tmp3",self.outfits_mask+"_tmp4","iif(IM0>=2.2,4,IM1)",delin=True)
