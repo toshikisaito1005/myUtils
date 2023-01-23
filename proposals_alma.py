@@ -183,7 +183,7 @@ class ProposalsALMA():
 
         # regrid
         os.system("rm -rf template.image")
-        template = "template.image"
+        template = "template.image" 
         run_importfits(self.image_12co10,template,defaultaxes=True,defaultaxesvalues=["RA","Dec","1GHz","Stokes"])
         run_importfits(self.image_oiiioii,self.image_oiiioii+"_tmp1")
         run_imregrid(self.image_13co10,          template, self.image_13co10+"_regrid",  delin=False)
