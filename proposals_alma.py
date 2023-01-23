@@ -122,11 +122,11 @@ class ProposalsALMA():
         """
 
         # input data
-        self.image_12co10  = dir_raw + self._read_key("image_12co10")
-        self.image_13co10  = dir_raw + self._read_key("image_13co10")
-        self.image_ch3oh   = dir_raw + self._read_key("image_ch3oh")
-        self.image_h13cn   = dir_raw + self._read_key("image_h13cn")
-        self.image_oiiioii = dir_raw + self._read_key("image_oiiioii")
+        self.image_12co10  = self.dir_raw + self._read_key("image_12co10")
+        self.image_13co10  = self.dir_raw + self._read_key("image_13co10")
+        self.image_ch3oh   = self.dir_raw + self._read_key("image_ch3oh")
+        self.image_h13cn   = self.dir_raw + self._read_key("image_h13cn")
+        self.image_oiiioii = self.dir_raw + self._read_key("image_oiiioii")
 
         # ngc1068
         self.z             = float(self._read_key("z"))
@@ -198,7 +198,7 @@ class ProposalsALMA():
         run_immath_two(self.outfits_mask+"_ch3oh_13co",self.outfits_mask+"_tmp2",self.outfits_mask+"_tmp3","iif(IM0>=1,3,IM1)",delin=False) # check!
         run_immath_two(self.image_oiiioii+"_regrid",self.outfits_mask+"_tmp3",self.outfits_mask+"_tmp4","iif(IM0>=2.2,4,IM1)",delin=True)
         run_immath_two(self.image_h13cn+"_regrid",self.outfits_mask+"_tmp4",self.outfits_mask+"_tmp5","iif(IM0>=11,5,IM1)",delin=True)
-        run_exportfits(self.outfits_mask+"_tmp5",self.outfits_mask,True,True,False)
+        run_exportfits(self.outfits_mask+"_tmp5",self.dir_ready+self.outfits_mask,True,True,False)
 
     ############################################################################################
     ############################################################################################
@@ -1116,6 +1116,7 @@ class ProposalsALMA():
 
         self.dir_proj     = self._read_key("dir_proj")
         dir_raw           = self.dir_proj + self._read_key("dir_raw") + self.cycle + "/"
+        self.dir_raw      = self.dir_proj + self._read_key("dir_raw") + self.cycle + "/"
         self.dir_ready    = self.dir_proj + self._read_key("dir_ready") + self.cycle + "/"
         self.dir_products = self.dir_proj + self._read_key("dir_products") + self.cycle + "/"
         self.dir_final    = self.dir_proj + self._read_key("dir_final") + self.cycle + "/"
