@@ -182,6 +182,7 @@ class ProposalsALMA():
         scalebar = 500 / self.scale
 
         # regrid
+        os.system("rm -rf template.image")
         template = "template.image"
         run_importfits(self.image_12co10,template,defaultaxes=True,defaultaxesvalues=["RA","Dec","1GHz","Stokes"])
         run_importfits(self.image_oiiioii,self.image_oiiioii+"_tmp1",defaultaxes=True,defaultaxesvalues=["RA","Dec","1GHz","Stokes"])
