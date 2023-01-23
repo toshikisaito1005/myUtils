@@ -186,10 +186,11 @@ class ProposalsALMA():
         template = "template.image" 
         run_importfits(self.image_12co10,template)
         run_importfits(self.image_oiiioii,self.image_oiiioii+"_tmp1")
-        run_imregrid(self.image_13co10,          template, self.image_13co10+"_regrid",  delin=False)
-        run_imregrid(self.image_ch3oh,           template, self.image_ch3oh+"_regrid",   delin=False)
-        run_imregrid(self.image_h13cn,           template, self.image_h13cn+"_regrid",   delin=False)
-        run_imregrid(self.image_oiiioii+"_tmp1", template, self.image_oiiioii+"_regrid", delin=False)
+        run_exportfits(self.image_oiiioii+"_tmp1",self.image_oiiioii+"_tmp2.fits",True,True,False)
+        run_imregrid(self.image_13co10,               template, self.image_13co10+"_regrid",  delin=False)
+        run_imregrid(self.image_ch3oh,                template, self.image_ch3oh+"_regrid",   delin=False)
+        run_imregrid(self.image_h13cn,                template, self.image_h13cn+"_regrid",   delin=False)
+        run_imregrid(self.image_oiiioii+"_tmp2.fits", template, self.image_oiiioii+"_regrid", delin=False)
 
         # CH3OH/13CO line ratio
         run_immath_two(self.image_13co10+"_regrid",self.image_ch3oh+"_regrid",self.outfits_mask+"_ch3oh_13co","iif(IM1>0,IM0/IM1,0)",delin=False)
