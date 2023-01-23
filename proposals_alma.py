@@ -202,7 +202,7 @@ class ProposalsALMA():
         run_immath_two(self.outfits_mask+"_ch3oh_13co",self.outfits_mask+"_tmp2",self.outfits_mask+"_tmp3","iif(IM0>=1,3,IM1)",delin=False) # check!
         run_immath_two(self.image_oiiioii+"_regrid",self.outfits_mask+"_tmp3",self.outfits_mask+"_tmp4","iif(IM0>=2.2,4,IM1)",delin=True)
         run_immath_two(self.image_h13cn+"_regrid",self.outfits_mask+"_tmp4",self.outfits_mask+"_tmp5","iif(IM0>=11,5,IM1)",delin=True)
-        run_exportfits(self.outfits_mask+"_tmp5",self.dir_ready+self.outfits_mask,True,True,False)
+        run_exportfits(self.outfits_mask+"_tmp5",self.outfits_mask,True,True,False)
 
     ############################################################################################
     ############################################################################################
