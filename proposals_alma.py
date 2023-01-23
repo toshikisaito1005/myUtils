@@ -182,7 +182,8 @@ class ProposalsALMA():
         scalebar = 500 / self.scale
 
         # regrid
-        template = self.image_12co10
+        template = "template.image"
+        run_importfits(self.image_12co10,template,defaultaxes=True,defaultaxesvalues=["RA","Dec","1GHz","Stokes"])
         run_imregrid(self.image_13co10,  template, self.image_13co10+"_regrid",  delin=False)
         run_imregrid(self.image_ch3oh,   template, self.image_ch3oh+"_regrid",   delin=False)
         run_imregrid(self.image_h13cn,   template, self.image_h13cn+"_regrid",   delin=False)
