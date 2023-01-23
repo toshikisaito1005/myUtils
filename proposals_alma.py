@@ -11,11 +11,17 @@ ALMA timeline:
 cycle    release date         deadline
 C8supp   2021-08-08 15:00UT   2021-10-06 15:00UT
 outcome  2021-12-16 15:59UT
-C9main   2022-??-?? 15:00UT   2022-??-?? 15:00UT
+C10main  2023-05-?? 15:00UT   2023-??-?? 15:00UT
+
+Submitted project:
+cycle   project code    outcome  rank
+c8supp  2021.2.00049.S  grade C  1,1,1,1,2,2,3,4,4,6
+c10     N/A             N/A      N/A
 
 history:
-2021-09-21   start by TS
+2021-09-21   start Cycle 8.5
 2021-10-05   submit the 8p5a proposal (see run_cycle_8p5a_specscan)
+2023-01-23   start Cycle 10
 Toshiki Saito@Nichidai/NAOJ
 """
 
@@ -67,28 +73,32 @@ class ProposalsALMA():
             # set directories
             self._set_dir()
 
-            # cycle 8p5
-            if self.cycle=="cycle08p5":
-                self._set_cycle_8p5a_specscan()
-                self._set_cycle_8p5b_catom21()
+            # cycle 10
+            if self.cycle=="cycle10":
+                self._set_cycle_10()
 
             # cycle 9
             if self.cycle=="cycle09":
                 self._set_cycle_9()
 
-    ############################################################################################
-    ############################################################################################
-    ##################################                        ##################################
-    ################################## ALMA cycle 9 main call ##################################
-    ##################################                        ##################################
-    ############################################################################################
-    ############################################################################################
+            # cycle 8p5
+            if self.cycle=="cycle08p5":
+                self._set_cycle_8p5a_specscan()
+                self._set_cycle_8p5b_catom21()
 
-    ################
-    # _set_cycle_9 #
-    ################
+    ##############################################################################################
+    ##############################################################################################
+    ##################################                         ###################################
+    ################################## ALMA cycle 10 main call ###################################
+    ##################################                         ###################################
+    ##############################################################################################
+    ##############################################################################################
 
-    def _set_cycle_9(
+    #################
+    # _set_cycle_10 #
+    #################
+
+    def _set_cycle_10(
         self,
         ):
         """
@@ -97,20 +107,98 @@ class ProposalsALMA():
         
         dir_proj = /home02/saitots/myUtils/keys_alma_proposal/
         
-        ### Cycle 9 main call
+        ### Cycle 10 main call
         # 2022.1.?????.S
         # [explain]
         tl = tools(
             refresh     = False,
             keyfile_fig = dir_proj + "key_cyle09.txt",
             )
-        tl.run_cycle_9(
+        tl.run_cycle_10(
             ??? = True,
             )
         
         os.system("rm -rf *.last")
         """
-        print("# write _set_cycle for cycle09 first")
+
+        # input data
+        self.image_12co10  = dir_raw + self._read_key("image_12co10")
+        self.image_13co10  = dir_raw + self._read_key("image_13co10")
+        self.image_ch3oh   = dir_raw + self._read_key("image_ch3oh")
+        self.image_h13cn   = dir_raw + self._read_key("image_h13cn")
+        self.image_oiiioii = dir_raw + self._read_key("image_oiiioii")
+
+        # ngc1068
+        self.z             = float(self._read_key("z"))
+        self.scale         = float(self._read_key("scale"))
+        self.ra            = self._read_key("ra")
+        self.dec           = self._read_key("dec")
+        self.ra_agn        = self._read_key("ra_agn")
+        self.dec_agn       = self._read_key("dec_agn")
+
+        # output fits
+        self.outfits_mask  = self.dir_ready + self._read_key("outfits_mask")
+
+        # output png
+        self.png_mask_map  = self.dir_products + self._read_key("png_mask_map")
+
+        # final products
+        self.final_mask    = self.dir_final + self._read_key("final_mask")
+
+    ################
+    # run_cycle_10 #
+    ################
+
+    def run_cycle_10_band1(
+        self,
+        plot_mask_map = False,
+        ):
+        """
+        Content: Band 1 spectral scans with 12m+7m toward NGC 1068.
+        Status:  preparing
+        Code:    N/A
+        Outcome: N/A
+        Rank:    N/A
+        Note:    N/A
+        """
+
+        if plot_mask_map==True:
+            self.c10_plot_mask_map()
+
+    #####################
+    # c10_plot_mask_map #
+    #####################
+
+    def c10_plot_mask_map(
+        self,
+        ):
+        """
+        """
+
+        taskname = self.modname + sys._getframe().f_code.co_name
+        check_first(self.image_12co10,taskname)
+
+        # param
+        scalebar = 500 / self.scale
+
+        # regrid
+        template = self.image_12co10
+        run_imregrid(self.image_13co10,  template, self.image_13co10+"_regrid",  delin=False)
+        run_imregrid(self.image_ch3oh,   template, self.image_ch3oh+"_regrid",   delin=False)
+        run_imregrid(self.image_h13cn,   template, self.image_h13cn+"_regrid",   delin=False)
+        run_imregrid(self.image_oiiioii, template, self.image_oiiioii+"_regrid", delin=False)
+
+        # CH3OH/13CO line ratio
+        run_immath_two(self.image_13co10+"_regrid",self.image_ch3oh+"_regrid",self.outfits_mask+"_ch3oh_13co","iif(IM1>0,IM0/IM1,0)",delin=False)
+        os.system("rm -rf " + self.image_ch3oh + "_regrid")
+
+        # mask: outflow
+        run_immath_one(self.image_12co10,self.outfits_mask+"_tmp1","iif(IM0>=1,1,0)",delin=True)
+        run_immath_two(self.image_13co10+"_regrid",self.outfits_mask+"_tmp1",self.outfits_mask+"_tmp2","iif(IM0>=20,2,IM1)",delin=True)
+        run_immath_two(self.outfits_mask+"_ch3oh_13co",self.outfits_mask+"_tmp2",self.outfits_mask+"_tmp3","iif(IM0>=1,3,IM1)",delin=False) # check!
+        run_immath_two(self.image_oiiioii+"_regrid",self.outfits_mask+"_tmp3",self.outfits_mask+"_tmp4","iif(IM0>=2.2,4,IM1)",delin=True)
+        run_immath_two(self.image_h13cn+"_regrid",self.outfits_mask+"_tmp4",self.outfits_mask+"_tmp5","iif(IM0>=11,5,IM1)",delin=True)
+        run_exportfits(self.outfits_mask+"_tmp5",self.outfits_mask,True,True,False)
 
     ############################################################################################
     ############################################################################################
