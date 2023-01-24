@@ -204,11 +204,8 @@ class ProposalsALMA():
         run_roundsmooth(self.image_oiiioii+"_regrid2",self.image_oiiioii+"_regrid3",1.6,inputbeam=0.8,delin=True)
         run_immath_one(self.image_oiiioii+"_regrid3",self.image_oiiioii+"_regrid4","iif(IM0>=0.5,1,0)",delin=True)
         makemask(
-            mode      = "copy",
-            inpimage  = self.image_oiiioii+"_regrid4",
-            inpmask   = self.image_oiiioii+"_regrid4",
-            output    = self.image_oiiioii+"_regrid4:mask1",
-            overwrite = True,
+            mode      = "delete",
+            inpmask   = self.image_oiiioii+"_regrid4:mask0",
             )
 
         # smooth 12CO
