@@ -225,7 +225,7 @@ class ProposalsALMA():
             fig_dpi=self.fig_dpi,
             set_grid=None,
             set_title="NGC 1068 environments",
-            clim=[0,5],
+            clim=[1,5],
             set_cmap="Set1_r",
             showzero=False,
             showbeam=False,
