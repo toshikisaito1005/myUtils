@@ -284,6 +284,7 @@ class ProposalsALMA():
             color_scalebar="black",
             colorlog  = True,
             set_cmap  = "Greys",
+            textann   = False,
             )
 
     ########################
