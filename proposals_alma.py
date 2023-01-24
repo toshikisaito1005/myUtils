@@ -207,7 +207,7 @@ class ProposalsALMA():
         # smooth 12CO
         run_immath_one(template,self.outfits_mask+"_tmp1","iif(IM0>=1,1,0)",delin=False)
         os.system("rm -rf template.image")
-        run_roundsmooth(self.outfits_mask+"_tmp1",self.outfits_mask+"_tmp1b",2.4,inputbeam=0.8,delin=True)
+        run_roundsmooth(self.outfits_mask+"_tmp1",self.outfits_mask+"_tmp1b",2.4,delin=True)
         run_immath_one(self.outfits_mask+"_tmp1b",self.outfits_mask+"_tmp1c","iif(IM0>=0.4,1,0)",delin=True)
 
         # masking
