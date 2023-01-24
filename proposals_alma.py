@@ -142,6 +142,7 @@ class ProposalsALMA():
 
         # output png
         self.png_mask_map  = self.dir_products + self._read_key("png_mask_map")
+        self.imsize_as     = float(self._read_key("imsize_as"))
 
         # final products
         self.final_mask    = self.dir_final + self._read_key("final_mask")
@@ -211,6 +212,30 @@ class ProposalsALMA():
         run_immath_two(self.image_oiiioii+"_regrid4",self.outfits_mask+"_tmp3",self.outfits_mask+"_tmp4","iif(IM0==1,4,IM1)",delin=True)
         run_immath_two(self.image_h13cn+"_regrid",self.outfits_mask+"_tmp4",self.outfits_mask+"_tmp5","iif(IM0>=11,5,IM1)",delin=True)
         run_exportfits(self.outfits_mask+"_tmp5",self.outfits_mask,True,True,True)
+
+        # plot
+        myfig_fits2png(
+            # general
+            self.outfits_mask,
+            self.png_mask_map,
+            imsize_as=self.imsize_as,
+            ra_cnt=self.ra_agn,
+            dec_cnt=self.dec_agn,
+            # imshow
+            fig_dpi=self.fig_dpi,
+            set_grid=None,
+            set_title="NGC 1068 environments",
+            clim=[0,6],
+            set_cmap="rainbow",
+            showzero=False,
+            showbeam=False,
+            scalebar=scalebar,
+            label_scalebar="0.5 kpc",
+            color_scalebar="black",
+            # annotation
+            #numann=4,
+            #textann=False,
+            )
 
     ############################################################################################
     ############################################################################################
