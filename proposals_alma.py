@@ -226,7 +226,7 @@ class ProposalsALMA():
             set_grid=None,
             set_title="NGC 1068 environments",
             clim=[0,6],
-            set_cmap="rainbow",
+            set_cmap="brg",
             showzero=False,
             showbeam=False,
             scalebar=scalebar,
