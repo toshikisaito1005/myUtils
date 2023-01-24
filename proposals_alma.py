@@ -128,6 +128,7 @@ class ProposalsALMA():
         self.image_oiiioii      = self.dir_raw + self._read_key("image_oiiioii")
         self.image_13co10_150pc = self.dir_raw + self._read_key("image_13co10_150pc")
         self.image_ch3oh_150pc  = self.dir_raw + self._read_key("image_ch3oh_150pc")
+        self.cprops_co10        = self.dir_raw + self._read_key("cprops_co10")
 
         # ngc1068
         self.z             = float(self._read_key("z"))
@@ -142,6 +143,7 @@ class ProposalsALMA():
 
         # output png
         self.png_mask_map  = self.dir_products + self._read_key("png_mask_map")
+        self.png_cprops    = self.dir_products + self._read_key("png_cprops")
         self.imsize_as     = float(self._read_key("imsize_as"))
 
         # final products
@@ -154,6 +156,7 @@ class ProposalsALMA():
     def run_cycle_10_band1(
         self,
         plot_mask_map = False,
+        plot_cprops   = False,
         ):
         """
         Content: Band 1 spectral scans with 12m+7m toward NGC 1068.
@@ -166,6 +169,9 @@ class ProposalsALMA():
 
         if plot_mask_map==True:
             self.c10_plot_mask_map()
+
+        if plot_cprops==True:
+            self.map_cprops()
 
     #####################
     # c10_plot_mask_map #
@@ -241,6 +247,120 @@ class ProposalsALMA():
             #numann=4,
             #textann=False,
             )
+
+    ##############
+    # map_cprops #
+    ##############
+
+    def map_cprops(
+        self,
+        delin=False,
+        ):
+        """
+        """
+
+        taskname = self.modname + sys._getframe().f_code.co_name
+        check_first(self.image_12co10,taskname)
+
+        # param
+        scalebar = 500 / self.scale
+
+        # import fits table
+        f = pyfits.open(self.cprops_co10)
+        tb_co10 = f[1].data
+
+        # plot
+        myfig_fits2png(
+            self.image_12co10,
+            self.png_cprops,
+            imsize_as = self.imsize_as,
+            ra_cnt=self.ra_agn,
+            dec_cnt=self.dec_agn,
+            numann    = "ci-gmc",
+            txtfiles  = tb_co10,
+            set_title = "Cloud Catalog",
+            scalebar  = scalebar,
+            label_scalebar="0.5 kpc",
+            color_scalebar="black",
+            colorlog  = True,
+            set_cmap  = "Greys",
+            )
+
+    ########################
+    # _import_cprops_table #
+    ########################
+
+    def _import_cprops_table(
+        self,
+        table,
+        ):
+        """
+        """
+
+        # import cprops table
+        f = pyfits.open(table)
+        tb = f[1].data
+
+        # extract parameters
+        x      = (tb["XCTR_DEG"] - self.ra_agn) * -3600.
+        y      = (tb["YCTR_DEG"] - self.dec_agn) * 3600.
+        s2n    = tb["S2N"]
+        radius = tb["RAD_NODC_NOEX"]
+        sigv   = tb["SIGV_NODC_NOEX"]
+        mvir   = tb["MVIR_MSUN"]
+        tpeak  = tb["TMAX_K"]
+        mci    = tb["MLUM_MSUN"]
+        x_fov2 = (tb["XCTR_DEG"] - self.ra_fov2) * -3600.
+        y_fov2 = (tb["YCTR_DEG"] - self.dec_fov2) * -3600.
+        x_fov3 = (tb["XCTR_DEG"] - self.ra_fov3) * -3600.
+        y_fov3 = (tb["YCTR_DEG"] - self.dec_fov3) * -3600.
+
+        cut    = np.where(~np.isnan(radius) & ~np.isnan(sigv) & ~np.isnan(mvir) & ~np.isnan(tpeak))
+        x      = x[cut]
+        y      = y[cut]
+        s2n    = s2n[cut]
+        radius = radius[cut]
+        sigv   = sigv[cut]
+        mvir   = np.log10(mvir[cut])
+        tpeak  = tpeak[cut]
+        mci    = mci[cut]
+        r_fov2 = np.sqrt(x_fov2[cut]**2 + y_fov2[cut]**2)
+        r_fov3 = np.sqrt(x_fov3[cut]**2 + y_fov3[cut]**2)
+
+        # bicone definition
+        r          = np.sqrt(x**2 + y**2)
+        theta      = np.degrees(np.arctan2(x, y)) + 90
+        theta      = np.where(theta>0,theta,theta+360)
+        cut_cone   = np.where((s2n>=self.snr_cprops) & (r<self.fov_diamter/2.0) & (theta>=self.theta2) & (theta<self.theta1) | (s2n>=self.snr_cprops) & (r<self.fov_diamter/2.0) & (theta>=self.theta2+180) & (theta<self.theta1+180))
+        cut_nocone = np.where((s2n>=self.snr_cprops) & (r<self.fov_diamter/2.0) & (theta>=self.theta1) & (theta<self.theta2+180) | (s2n>=self.snr_cprops) & (r<self.fov_diamter/2.0) & (theta>=self.theta1+180) & (theta<self.theta2+360) | (s2n>=self.snr_cprops) & (r<self.fov_diamter/2.0) & (theta<self.theta1+180) & (theta<self.theta2))
+        cut_sbr    = np.where((s2n>=self.snr_cprops) & (r>=self.fov_diamter/2.0) & (r_fov2<=self.fov_diamter/2.0) | (s2n>=self.snr_cprops) & (r>=self.fov_diamter/2.0) & (r_fov3<=self.fov_diamter/2.0))
+
+        # data
+        x_cone      = x[cut_cone]
+        y_cone      = y[cut_cone]
+        radius_cone = radius[cut_cone]
+        sigv_cone   = sigv[cut_cone]
+        mvir_cone   = mvir[cut_cone]
+        tpeak_cone  = tpeak[cut_cone]
+        mci_cone    = mci[cut_cone]
+
+        x_nocone      = x[cut_nocone]
+        y_nocone      = y[cut_nocone]
+        radius_nocone = radius[cut_nocone]
+        sigv_nocone   = sigv[cut_nocone]
+        mvir_nocone   = mvir[cut_nocone]
+        tpeak_nocone  = tpeak[cut_nocone]
+        mci_nocone    = mci[cut_nocone]
+
+        x_sbr      = x[cut_sbr]
+        y_sbr      = y[cut_sbr]
+        radius_sbr = radius[cut_sbr]
+        sigv_sbr   = sigv[cut_sbr]
+        mvir_sbr   = mvir[cut_sbr]
+        tpeak_sbr  = tpeak[cut_sbr]
+        mci_sbr    = mci[cut_sbr]
+
+        return x_cone, y_cone, radius_cone, sigv_cone, mvir_cone, tpeak_cone, mci_cone, x_nocone, y_nocone, radius_nocone, sigv_nocone, mvir_nocone, tpeak_nocone, mci_nocone, x_sbr, y_sbr, radius_sbr, sigv_sbr, mvir_sbr, tpeak_sbr, mci_sbr
 
     ############################################################################################
     ############################################################################################
