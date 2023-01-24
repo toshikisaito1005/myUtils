@@ -206,8 +206,8 @@ class ProposalsALMA():
         makemask(
             mode      = "copy",
             inpimage  = self.image_oiiioii+"_regrid4",
-            inpmask   = self.image_oiiioii+"_regrid4" + ":mask0",
-            #output    = self.image_oiiioii+"_regrid4",
+            inpmask   = self.image_oiiioii+"_regrid4:mask0",
+            output    = self.image_oiiioii+"_regrid4",
             overwrite = True,
             )
 
