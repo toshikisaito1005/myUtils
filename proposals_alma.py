@@ -202,11 +202,8 @@ class ProposalsALMA():
         # smooth OIII/OII ratio
         run_immath_one(self.image_oiiioii+"_regrid",self.image_oiiioii+"_regrid2","iif(IM0>=2.2,1,0)",delin=True)
         run_roundsmooth(self.image_oiiioii+"_regrid2",self.image_oiiioii+"_regrid3",1.2,inputbeam=0.8,delin=True)
-        run_immath_one(self.image_oiiioii+"_regrid3",self.image_oiiioii+"_regrid4","iif(IM0>=0.6,1,0)",delin=True)
-        makemask(
-            mode      = "delete",
-            inpmask   = self.image_oiiioii+"_regrid4:mask0",
-            )
+        run_immath_one(self.image_oiiioii+"_regrid3",self.image_oiiioii+"_regrid4","iif(IM0>=0.8,1,0)",delin=True)
+        makemask(mode="delete",inpmask=self.image_oiiioii+"_regrid4:mask0")
 
         # smooth 12CO
         run_immath_one(template,self.outfits_mask+"_tmp1","iif(IM0>=1,1,0)",delin=False)
@@ -217,8 +214,8 @@ class ProposalsALMA():
         # masking
         run_immath_two(self.image_13co10+"_regrid",self.outfits_mask+"_tmp1c",self.outfits_mask+"_tmp2","iif(IM0>=20,2,IM1)",delin=True)
         run_immath_two(self.outfits_mask+"_ch3oh_13co",self.outfits_mask+"_tmp2",self.outfits_mask+"_tmp3","iif(IM0>=0.15,3,IM1)",delin=True)
-        run_immath_two(self.image_oiiioii+"_regrid4",self.outfits_mask+"_tmp3",self.outfits_mask+"_tmp4","iif(IM0>0,4,IM1)",delin=False)
-        run_immath_two(self.image_h13cn+"_regrid",self.outfits_mask+"_tmp4",self.outfits_mask+"_tmp5","iif(IM0>=11,5,IM1)",delin=False)
+        run_immath_two(self.image_oiiioii+"_regrid4",self.outfits_mask+"_tmp3",self.outfits_mask+"_tmp4","iif(IM0>0,4,IM1)",delin=True)
+        run_immath_two(self.image_h13cn+"_regrid",self.outfits_mask+"_tmp4",self.outfits_mask+"_tmp5","iif(IM0>=11,5,IM1)",delin=True)
         run_exportfits(self.outfits_mask+"_tmp5",self.outfits_mask,True,True,True)
 
         # plot
