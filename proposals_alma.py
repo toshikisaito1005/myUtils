@@ -201,15 +201,15 @@ class ProposalsALMA():
 
         # smooth OIII/OII ratio
         run_immath_one(self.image_oiiioii+"_regrid",self.image_oiiioii+"_regrid2","iif(IM0>=2.2,1,0)",delin=True)
-        run_roundsmooth(self.image_oiiioii+"_regrid2",self.image_oiiioii+"_regrid3",1.2,inputbeam=0.8,delin=True)
-        run_immath_one(self.image_oiiioii+"_regrid3",self.image_oiiioii+"_regrid4","iif(IM0>=0.8,1,0)",delin=True)
+        run_roundsmooth(self.image_oiiioii+"_regrid2",self.image_oiiioii+"_regrid3",2.4,inputbeam=0.8,delin=True)
+        run_immath_one(self.image_oiiioii+"_regrid3",self.image_oiiioii+"_regrid4","iif(IM0>=0.5,1,0)",delin=True)
         makemask(mode="delete",inpmask=self.image_oiiioii+"_regrid4:mask0")
 
         # smooth 12CO
         run_immath_one(template,self.outfits_mask+"_tmp1","iif(IM0>=1,1,0)",delin=False)
         os.system("rm -rf template.image")
-        run_roundsmooth(self.outfits_mask+"_tmp1",self.outfits_mask+"_tmp1b",2.4,delin=True)
-        run_immath_one(self.outfits_mask+"_tmp1b",self.outfits_mask+"_tmp1c","iif(IM0>=0.4,1,0)",delin=True)
+        run_roundsmooth(self.outfits_mask+"_tmp1",self.outfits_mask+"_tmp1b",1.2,delin=True)
+        run_immath_one(self.outfits_mask+"_tmp1b",self.outfits_mask+"_tmp1c","iif(IM0>=0.5,1,0)",delin=True)
 
         # masking
         run_immath_two(self.image_13co10+"_regrid",self.outfits_mask+"_tmp1c",self.outfits_mask+"_tmp2","iif(IM0>=20,2,IM1)",delin=True)
