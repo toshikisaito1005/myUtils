@@ -276,7 +276,7 @@ class ProposalsALMA():
             imsize_as = self.imsize_as,
             ra_cnt=self.ra_agn,
             dec_cnt=self.dec_agn,
-            numann    = "ci-gmc2",
+            numann    = "ci-gmc",
             txtfiles  = tb_co10,
             set_title = "Cloud Catalog",
             scalebar  = scalebar,
