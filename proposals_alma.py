@@ -208,7 +208,7 @@ class ProposalsALMA():
         run_immath_one(template,self.outfits_mask+"_tmp1","iif(IM0>=1,1,0)",delin=False)
         os.system("rm -rf template.image")
         run_roundsmooth(self.outfits_mask+"_tmp1",self.outfits_mask+"_tmp1b",2.4,inputbeam=0.8,delin=True)
-        run_immath_one(self.outfits_mask+"_tmp1b",self.outfits_mask+"_tmp1c","iif(IM0>=0.5,1,0)",delin=True)
+        run_immath_one(self.outfits_mask+"_tmp1b",self.outfits_mask+"_tmp1c","iif(IM0>=0.4,1,0)",delin=True)
 
         # masking
         run_immath_two(self.image_13co10+"_regrid",self.outfits_mask+"_tmp1c",self.outfits_mask+"_tmp2","iif(IM0>=20,2,IM1)",delin=True)
