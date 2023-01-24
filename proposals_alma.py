@@ -200,8 +200,8 @@ class ProposalsALMA():
 
         # regrid OIII/OII ratio
         run_immath_one(self.image_oiiioii+"_regrid",self.image_oiiioii+"_regrid2","iif(IM0>=2.2,1,0)",delin=True)
-        run_roundsmooth(self.image_oiiioii+"_regrid2",self.image_oiiioii+"_regrid3",1.6,inputbeam=0.8,delin=True)
-        run_immath_one(self.image_oiiioii+"_regrid3",self.image_oiiioii+"_regrid4","iif(IM0>=0.5,1,0)",delin=True)
+        run_roundsmooth(self.image_oiiioii+"_regrid2",self.image_oiiioii+"_regrid3",2.4,inputbeam=0.8,delin=True)
+        run_immath_one(self.image_oiiioii+"_regrid3",self.image_oiiioii+"_regrid4","iif(IM0>=0.3,1,0)",delin=True)
 
         # masking
         run_immath_one(template,self.outfits_mask+"_tmp1","iif(IM0>=1,1,0)",delin=False)
