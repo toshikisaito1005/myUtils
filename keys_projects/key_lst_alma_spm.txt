@@ -17,8 +17,8 @@ dir_tp2vis    ,,,/home02/saitots/scripts/analysis_scripts/
 ############
 # raw maps #
 ############
-gmaur_template_file ,,,ngc1068_b3_12m_co10.fits
-gmaur_template_mask ,,,ngc1068_b3_12m_co10_strictmask.fits
+gmaur_template_file ,,,GM_Aur_Band6_SpMimage.fits
+gmaur_template_mask ,,,GM_Aur_Band6_SpMimage_mask.fits
 
 ###############
 # output maps #
