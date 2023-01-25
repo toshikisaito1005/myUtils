@@ -186,7 +186,7 @@ class ToolsLSTSpMSim():
         """
 
         taskname = self.modname + sys._getframe().f_code.co_name
-        check_first(self.torus_template_file,taskname)
+        check_first(self.gmaur_template_noshrunk,taskname)
 
         run_simobserve(
             working_dir = self.dir_ready,
