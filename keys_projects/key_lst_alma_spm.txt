@@ -1,7 +1,7 @@
 ###############
 # directories #
 ###############
-dir_proj      ,,,/lfs13/saitots/proj_lst_wp/
+dir_proj      ,,,/lfs13/saitots/proj_lst_alma_spm/
 dir_raw       ,,,data_raw/
 dir_ready     ,,,data_ready/
 dir_other     ,,,data_other/
