@@ -52,7 +52,6 @@ def gen_cont(
     # Convert the template to Jansky/pixel units #
     ##############################################
 
-    print(template_dir+template_file)
     bmaj = imhead(template_dir+template_file)["restoringbeam"]["major"]["value"]
     bmin = imhead(template_dir+template_file)["restoringbeam"]["minor"]["value"]
     obsfreq = imhead(template_dir+template_file)["refval"][2] / 1e9 # GHz
@@ -114,8 +113,8 @@ def gen_cont(
     old_cdelt2 = imhead(imagename = template_shurnk2 + "_tmp1", mode="get", hdkey="cdelt2")
     new_cdelt1 = old_cdelt1
     new_cdelt2 = old_cdelt2
-    new_cdelt1['value'] = old_cdelt1['value']*2
-    new_cdelt2['value'] = old_cdelt2['value']*2
+    new_cdelt1['value'] = old_cdelt1['value']/2.0
+    new_cdelt2['value'] = old_cdelt2['value']/2.0
     imhead(imagename = template_shurnk2 + "_tmp1", mode="put", hdkey="cdelt1", hdvalue=new_cdelt1)
     imhead(imagename = template_shurnk2 + "_tmp1", mode="put", hdkey="cdelt2", hdvalue=new_cdelt2)
 
@@ -125,8 +124,8 @@ def gen_cont(
     old_cdelt2 = imhead(imagename = template_shurnk4 + "_tmp1", mode="get", hdkey="cdelt2")
     new_cdelt1 = old_cdelt1
     new_cdelt2 = old_cdelt2
-    new_cdelt1['value'] = old_cdelt1['value']*4
-    new_cdelt2['value'] = old_cdelt2['value']*4
+    new_cdelt1['value'] = old_cdelt1['value']/4.0
+    new_cdelt2['value'] = old_cdelt2['value']/4.0
     imhead(imagename = template_shurnk4 + "_tmp1", mode="put", hdkey="cdelt1", hdvalue=new_cdelt1)
     imhead(imagename = template_shurnk4 + "_tmp1", mode="put", hdkey="cdelt2", hdvalue=new_cdelt2)
 
