@@ -909,7 +909,7 @@ def myax_fig2png_ann(ax,number,ra_cnt,dec_cnt,add_text=True,txtfiles=None):
 
         theta1      = -10.0 # degree
         theta2      = 70.0 # degree
-        fov_diamter =32#16.5 # arcsec (12m+7m Band 8)
+        fov_diamter = 32#16.5 # arcsec (12m+7m Band 8)
 
         efov1 = patches.Ellipse(xy=(-0,0), width=fov_diamter,
             height=fov_diamter, angle=0, fill=False, edgecolor="black",
