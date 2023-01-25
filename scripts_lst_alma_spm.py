@@ -152,6 +152,7 @@ class ToolsLSTSpMSim():
         tinteg_GMaursim      = 24,    # 12m total observing time
         observed_freq        = 230.0, # GHz, determine LST and TP beam sizes
         do_template_GMaursim = False, # create template simobserve
+        do_simint_GMaursim   = False, # sim C-10 at observed_freq
         ):
         """
         This method runs all the methods which will create figures in the white paper.
@@ -172,6 +173,38 @@ class ToolsLSTSpMSim():
 
         if do_template_GMaursim==True:
             self.prepare_template_gmaursim()
+
+        if do_simint_GMaursim==True:
+            self.simobs_gmaursim(tinteg_12m,tintegstr_12m)
+
+    ###################
+    # simobs_gmaursim #
+    ###################
+
+    def simobs_gmaursim(self,totaltime="2.0h",totaltimetint="2p0h"):
+        """
+        """
+
+        taskname = self.modname + sys._getframe().f_code.co_name
+        check_first(self.torus_template_file,taskname)
+
+        run_simobserve(
+            working_dir = self.dir_ready,
+            template    = self.gmaur_template_noshrunk,
+            antennalist = self.config_c9,
+            project     = self.project_gmaur+"_12m_"+totaltimetint,
+            totaltime   = totaltime,
+            incenter    = self.incenter,
+            )
+
+        run_simobserve(
+            working_dir = self.dir_ready,
+            template    = self.gmaur_template_noshrunk,
+            antennalist = self.config_c9_lst,
+            project     = self.project_gmaur+"_12m_lst_"+totaltimetint,
+            totaltime   = totaltime,
+            incenter    = self.incenter,
+            )
 
     #############################
     # prepare_template_gmaursim #
