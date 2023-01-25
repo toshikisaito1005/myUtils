@@ -1,0 +1,21 @@
+##########################################################################
+# CONFIG_DEFINITIONS KEY
+##########################################################################
+line_product    ci10      {'line_tag':'ci10','channel_kms':5.0}
+cont_product    cont      {'lines_to_flag':['ci10']}
+#
+interf_config   7m        {'array_tags':['7m']}
+interf_config   7m        {'res_min_arcsec':5.0,'res_max_arcsec':15.0,'res_step_factor':1.1}
+interf_config   7m        {'clean_scales_arcsec':[0,5.0,10.0]}
+
+interf_config   12m       {'array_tags':['12m']}
+interf_config   12m       {'res_min_arcsec':0.01,'res_max_arcsec':7.5,'res_step_factor':1.1}
+interf_config   12m       {'clean_scales_arcsec':[0,0.1,0.25,1,2.5,5.0,10.0]}
+
+interf_config   all       {'array_tags':['all']}
+interf_config   all       {'res_min_arcsec':0.1,'res_max_arcsec':7.5,'res_step_factor':1.1}
+interf_config   all       {'clean_scales_arcsec':[0,1,2.5,5.0,10.0]}
+
+interf_config   12m+7m    {'array_tags':['12m','7m']}
+interf_config   12m+7m    {'res_min_arcsec':0.1,'res_max_arcsec':7.5,'res_step_factor':1.1}
+interf_config   12m+7m    {'clean_scales_arcsec':[0,1,2.5,5.0,10.0]}

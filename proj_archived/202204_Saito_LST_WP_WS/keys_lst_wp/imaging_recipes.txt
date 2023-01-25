@@ -1,0 +1,5 @@
+##########################################################################
+# IMAGING RECIPES KEY
+##########################################################################
+all   all_line all   cube_mosaic.clean
+all   cont     all   continuum_mosaic.clean

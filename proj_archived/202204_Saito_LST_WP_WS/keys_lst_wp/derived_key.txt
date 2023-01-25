@@ -1,0 +1,41 @@
+##########################################################################
+# DERIVED PRODUCT DEFINITION KEY
+##########################################################################
+all        all    convolve_kw    {}
+all	       all    noise_kw       {'spec_box':5,'iterations':3}
+all	       all    strictmask_kw  {'hi_thresh':4.0,'hi_nchan':2,'lo_thresh':2.0,'lo_nchan':2}
+all	       all    strictmask_kw  {'grow_xy':0,'grow_v':0}
+all	       all    strictmask_kw  {'min_pix':None,'min_area':None}
+all        all    broadmask_kw   {}
+# {'350pc':350.0}
+7m         all    phys_res       {}
+7m         all    ang_res        {}
+7m         cont   ang_res        {}
+7m         all    mask_configs   ['7m+tp']
+7m         all    moments        ['strictmom0','broadmom0']
+7m         all    moments        ['strictmom1','strictmom2','strictew','broadtpeak']
+#
+12m        all    phys_res       {}
+12m        all    ang_res        {}
+12m        cont   ang_res        {}
+12m        all    mask_configs   ['12m+7m','12m+7m+tp','7m','7m+tp']
+12m        all    moments        ['strictmom0','broadmom0']
+12m        all    moments        ['strictmom1','strictmom2','strictew','broadtpeak']
+#
+12m+7m     all    phys_res       {}
+12m+7m     all    ang_res        {}
+12m+7m     cont   ang_res        {}
+12m+7m     all    mask_configs   ['12m+7m+tp','7m','7m+tp']
+12m+7m     all    moments        ['strictmom0','broadmom0']
+12m+7m     all    moments        ['strictmom1','strictmom2','strictew','broadtpeak']
+#
+12m+7m+tp  all    phys_res       {}
+12m+7m+tp  all    ang_res        {}
+12m+7m+tp  all    mask_configs   ['7m','7m+tp']
+12m+7m+tp  all    moments        ['strictmom0','broadmom0']
+12m+7m+tp  all    moments        ['strictmom1','strictmom2','strictew','broadtpeak']
+#
+7m+tp      all    phys_res       {}
+7m+tp      all    ang_res        {}
+7m+tp      all    moments        ['strictmom0','strictmom1','strictmom2','strictew']
+7m+tp      all    moments        ['broadmom0','broadtpeak','broadtpeak12p5']

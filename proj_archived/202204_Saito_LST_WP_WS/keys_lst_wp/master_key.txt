@@ -1,0 +1,29 @@
+##########################################################################
+# MASTER KEY
+##########################################################################
+key_dir              /home02/saitots/myUtils/keys_projects/keys_lst_wp/
+ms_root              /lfs13/saitots/proj_lst_wp/data_ready/ms/
+cleanmask_root       /lfs13/saitots/proj_lst_wp/data_ready/outputs/
+singledish_root      /lfs13/saitots/proj_lst_wp/data_ready/outputs/
+imaging_root         /lfs13/saitots/proj_lst_wp/data_ready/outputs/imaging/
+postprocess_root     /lfs13/saitots/proj_lst_wp/data_ready/outputs/postprocess/
+derived_root         /lfs13/saitots/proj_lst_wp/data_ready/outputs/derived/
+release_root         /lfs13/saitots/proj_lst_wp/data_ready/outputs/release/
+
+# 
+
+ms_key               ms_file_key.txt
+singledish_key       singledish_key.txt
+cleanmask_key        cleanmask_key.txt
+distance_key         distance_key.txt
+
+# 
+
+config_key           config_definitions.txt
+target_key           target_definitions.txt
+imaging_key          imaging_recipes.txt
+linmos_key           linearmosaic_definitions.txt
+derived_key          derived_key.txt
+moment_key           moment_key.txt
+override_key         overrides.txt
+dir_key              dir_key.txt

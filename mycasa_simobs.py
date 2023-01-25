@@ -14,6 +14,141 @@ import shutil
 exec(open(os.environ["HOME"]+"/myUtils/stuff_casa.py").read())
 
 ############
+# gen_cont #
+############
+
+def gen_cont(
+    template_dir,
+    template_file,
+    template_mask,
+    working_dir,
+    template_noshrunk,
+    template_shurnk2,
+    template_shurnk4,
+    ):
+    """
+    version from phangs-alma pipeline (sim_ngc3059.py)
+    """
+
+    # cleanup directories
+    input_dir  = working_dir + "inputs/"
+    output_dir = working_dir + "outputs/"
+    ms_dir     = working_dir + "ms/"
+    #os.system("rm -rf " + input_dir)
+    #os.system("rm -rf " + output_dir)
+    #os.system("rm -rf " + ms_dir)
+    if not glob.glob(input_dir):
+        os.mkdir(input_dir)
+    if not glob.glob(output_dir):
+        os.mkdir(output_dir)
+    if not glob.glob(ms_dir):
+        os.mkdir(ms_dir)
+
+    template_noshrunk = input_dir + template_noshrunk
+    template_shurnk2  = input_dir + template_shurnk2
+    template_shurnk4  = input_dir + template_shurnk4
+
+    ##############################################
+    # Convert the template to Jansky/pixel units #
+    ##############################################
+
+    bmaj = imhead(template_dir+template_file)["restoringbeam"]["major"]["value"]
+    bmin = imhead(template_dir+template_file)["restoringbeam"]["minor"]["value"]
+    obsfreq = imhead(template_dir+template_file)["refval"][2] / 1e9 # GHz
+
+    # ... calculate Kelvin-to-Jy per beam using GHz and arcsec
+    ktoj = str(8.18255e-7*(obsfreq**2)*(bmaj*bmin))
+
+    # ... calculate pixel scale in arcsec
+    pix_arcsec = abs(imhead(template_dir+template_file)["incr"][0])*3600*180/np.pi
+
+    # ... calculate beam area in pixels
+    pix_arcsec2 = pix_arcsec**2
+    pix_per_beam = str((bmaj/2.*bmin/2.) * np.pi / np.log(2) / pix_arcsec2)
+
+    # ... scale the template to units of Jy per pixel
+    os.system("rm -rf " + template_noshrunk + "_tmp1")
+    immath(
+        imagename=template_dir+template_file, 
+        expr="IM0*"+ktoj+"/"+pix_per_beam,
+        outfile=template_noshrunk + "_tmp1",
+        )
+    imhead(imagename=template_noshrunk + "_tmp1",
+        mode="put",
+        hdkey="bunit",
+        hdvalue="Jy/pixel",
+        )
+
+    ###############################
+    # Apply the mask to the image #
+    ###############################
+
+    os.system("rm -rf " + template_noshrunk)
+
+    importfits(
+        template_dir + template_mask,
+        imagename=template_mask + "_tmp1",
+        overwrite=True,
+        )
+    immath(
+        imagename=[template_noshrunk + "_tmp1",template_mask + "_tmp1"],
+        expr="IM0*IM1",
+        outfile=template_noshrunk,
+        )
+    exportfits(
+        imagename=template_noshrunk,
+        fitsimage=template_noshrunk.replace(".image",".fits"),
+        overwrite=True,
+        )
+    os.system("rm -rf " + template_noshrunk + "_tmp1")
+    os.system("rm -rf " + template_mask + "_tmp1")
+
+    #######################################
+    # Shrink the pixel scale of the image #
+    #######################################
+
+    os.system("rm -rf " + template_shurnk2 + "_tmp1")
+    os.system("cp -r " + template_noshrunk + " " + template_shurnk2 + "_tmp1")
+    old_cdelt1 = imhead(imagename = template_shurnk2 + "_tmp1", mode="get", hdkey="cdelt1")
+    old_cdelt2 = imhead(imagename = template_shurnk2 + "_tmp1", mode="get", hdkey="cdelt2")
+    new_cdelt1 = old_cdelt1
+    new_cdelt2 = old_cdelt2
+    new_cdelt1['value'] = old_cdelt1['value']*2
+    new_cdelt2['value'] = old_cdelt2['value']*2
+    imhead(imagename = template_shurnk2 + "_tmp1", mode="put", hdkey="cdelt1", hdvalue=new_cdelt1)
+    imhead(imagename = template_shurnk2 + "_tmp1", mode="put", hdkey="cdelt2", hdvalue=new_cdelt2)
+
+    os.system("rm -rf " + template_shurnk4 + "_tmp1")
+    os.system("cp -r " + template_noshrunk + " " + template_shurnk4 + "_tmp1")
+    old_cdelt1 = imhead(imagename = template_shurnk4 + "_tmp1", mode="get", hdkey="cdelt1")
+    old_cdelt2 = imhead(imagename = template_shurnk4 + "_tmp1", mode="get", hdkey="cdelt2")
+    new_cdelt1 = old_cdelt1
+    new_cdelt2 = old_cdelt2
+    new_cdelt1['value'] = old_cdelt1['value']*4
+    new_cdelt2['value'] = old_cdelt2['value']*4
+    imhead(imagename = template_shurnk4 + "_tmp1", mode="put", hdkey="cdelt1", hdvalue=new_cdelt1)
+    imhead(imagename = template_shurnk4 + "_tmp1", mode="put", hdkey="cdelt2", hdvalue=new_cdelt2)
+
+    ################################
+    # Make several scaled versions #
+    ################################
+
+    os.system("rm -rf " + template_shurnk2)
+    os.system("rm -rf " + template_shurnk4)
+    immath(imagename=template_shurnk2 + "_tmp1", expr="IM0/2.0/2.0", outfile=template_shurnk2)
+    immath(imagename=template_shurnk4 + "_tmp1", expr="IM0/4.0/4.0", outfile=template_shurnk4)
+    os.system("rm -rf " + template_shurnk2 + "_tmp1")
+    os.system("rm -rf " + template_shurnk4 + "_tmp1")
+
+    #######################
+    ### Drop back to FITS #
+    #######################
+
+    exportfits(imagename=template_noshrunk, fitsimage=template_noshrunk.replace('.image','.fits'), dropstokes=True, overwrite=True)
+    exportfits(imagename=template_shurnk2, fitsimage=template_shurnk2.replace('.image','.fits'), dropstokes=True, overwrite=True)
+    exportfits(imagename=template_shurnk4, fitsimage=template_shurnk4.replace('.image','.fits'), dropstokes=True, overwrite=True)
+
+############
 # gen_cube #
 ############
 

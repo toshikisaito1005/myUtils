@@ -98,14 +98,9 @@ class ToolsULIRG():
 
         self.dir_proj     = self._read_key("dir_proj")
         self.dir_raw      = self.dir_proj + self._read_key("dir_raw")
-        self.dir_cprops   = self.dir_proj + self._read_key("dir_cprops")
-        self.dir_env      = self.dir_proj + self._read_key("dir_env")
-        self.dir_piechart = self.dir_proj + self._read_key("dir_piechart")
-        self.dir_wise     = self.dir_proj + self._read_key("dir_wise")
         self.dir_ready    = self.dir_proj + self._read_key("dir_ready")
         self.dir_products = self.dir_proj + self._read_key("dir_products")
         self.dir_final    = self.dir_proj + self._read_key("dir_final")
-
         self._create_dir(self.dir_ready)
         self._create_dir(self.dir_products)
         self._create_dir(self.dir_final)
@@ -114,30 +109,8 @@ class ToolsULIRG():
         """
         """
 
-        self.cube_co10_n0628 = self.dir_raw + self._read_key("cube_co10_n0628")
-        self.cube_co10_n3627 = self.dir_raw + self._read_key("cube_co10_n3627")
-        self.cube_co10_n4254 = self.dir_raw + self._read_key("cube_co10_n4254")
-        self.cube_co10_n4321 = self.dir_raw + self._read_key("cube_co10_n4321")
-
-        self.cube_co21_n0628 = self.dir_raw + self._read_key("cube_co21_n0628")
-        self.cube_co21_n3627 = self.dir_raw + self._read_key("cube_co21_n3627")
-        self.cube_co21_n4254 = self.dir_raw + self._read_key("cube_co21_n4254")
-        self.cube_co21_n4321 = self.dir_raw + self._read_key("cube_co21_n4321")
-
-        self.wise1_n0628     = self.dir_wise + self._read_key("wise1_n0628")
-        self.wise1_n3627     = self.dir_wise + self._read_key("wise1_n3627")
-        self.wise1_n4254     = self.dir_wise + self._read_key("wise1_n4254")
-        self.wise1_n4321     = self.dir_wise + self._read_key("wise1_n4321")
-
-        self.wise2_n0628     = self.dir_wise + self._read_key("wise2_n0628")
-        self.wise2_n3627     = self.dir_wise + self._read_key("wise2_n3627")
-        self.wise2_n4254     = self.dir_wise + self._read_key("wise2_n4254")
-        self.wise2_n4321     = self.dir_wise + self._read_key("wise2_n4321")
-
-        self.wise3_n0628     = self.dir_wise + self._read_key("wise3_n0628")
-        self.wise3_n3627     = self.dir_wise + self._read_key("wise3_n3627")
-        self.wise3_n4254     = self.dir_wise + self._read_key("wise3_n4254")
-        self.wise3_n4321     = self.dir_wise + self._read_key("wise3_n4321")
+        self.mom0_150pc_maps = self.dir_raw + self._read_key("mom0_maps")
+        self.ew_150pc_maps   = self.dir_raw + self._read_key("ew_150pc_maps")
 
     def _set_output_fits(self):
         """
@@ -227,174 +200,46 @@ class ToolsULIRG():
         # analysis
         if do_prepare==True:
             self.align_cubes()
-            self.multismooth()
 
         # plot figures in paper
-        #if plot_showcase==True:
-        #    self.showcase()
+        if plot_showcase==True:
+            self.showcase()
 
-    ###############
-    # multismooth #
-    ###############
+    ############
+    # showcase #
+    ############
 
-    def multismooth(
-        self,
-        ):
-        """
-        """
+    #################
+    # _one_showcase #
+    #################
 
-        taskname = self.modname + sys._getframe().f_code.co_name
-        check_first(self.outcube_co10_n0628,taskname)
+        scalebar = 100. / self.scale_pc
+        label_scalebar = "100 pc"
 
-        # line 710 of scripts_phangs_r21_tasks.py
-        outcube_template = self.outcube_co10_n0628.replace("04p0","????")
+        levels_cont1 = [0.05, 0.1, 0.2, 0.4, 0.8, 0.96]
+        width_cont1  = [1.0]
+        set_bg_color = "white" # cm.rainbow(0)
 
-    ###############
-    # align_cubes #
-    ###############
-
-    def align_cubes(
-        self,
-        ):
-        """
-        """
-
-        taskname = self.modname + sys._getframe().f_code.co_name
-        check_first(self.cube_co10_n0628,taskname)
-
-        self._align_cube_gal(self.cube_co10_n0628,self.cube_co21_n0628,
-            self.outcube_co10_n0628,self.outcube_co21_n0628,self.basebeam_n0628,
-            self.imsize_n0628,self.ra_n0628,self.dec_n0628,self.chans_n0628)
-
-        self._align_cube_gal(self.cube_co10_n3627,self.cube_co21_n3627,
-            self.outcube_co10_n3627,self.outcube_co21_n3627,self.basebeam_n3627,
-            self.imsize_n3627,self.ra_n3627,self.dec_n3627,self.chans_n3627)
-
-        self._align_cube_gal(self.cube_co10_n4254,self.cube_co21_n4254,
-            self.outcube_co10_n4254,self.outcube_co21_n4254,self.basebeam_n4254,
-            self.imsize_n4254,self.ra_n4254,self.dec_n4254,self.chans_n4254)
-
-        self._align_cube_gal(self.cube_co10_n4321,self.cube_co21_n4321,
-            self.outcube_co10_n4321,self.outcube_co21_n4321,self.basebeam_n4321,
-            self.imsize_n4321,self.ra_n4321,self.dec_n4321,self.chans_n4321)
-
-    ###################
-    # _align_cube_gal #
-    ###################
-
-    def _align_cube_gal(
-        self,
-        incube1,
-        incube2,
-        outcube1,
-        outcube2,
-        beam,
-        imsize,
-        ra,
-        dec,
-        chans,
-        ):
-        """
-        align_cubes
-        """
-
-        taskname = self.modname + sys._getframe().f_code.co_name
-        check_first(incube1,taskname)
-
-        # staging cubes
-        self._stage_cube(incube1,outcube1+"_tmp1",beam,imsize,ra,dec,115.27120)
-        self._stage_cube(incube2,outcube2+"_tmp1",beam,imsize,ra,dec,230.53800)
-
-        # align cubes
-        make_gridtemplate(outcube1+"_tmp1",outcube1+"_tmp2",imsize,ra,dec,beam)
-        print(outcube1+"_tmp2")
-        print(glob.glob(outcube1+"_tmp2"))
-        run_imregrid(outcube2+"_tmp1",outcube1+"_tmp2",outcube2+"_tmp1p5",
-            axes=[0,1])
-        os.system("rm -rf " + outcube2 + "_tmp1")
-        run_imregrid(outcube2+"_tmp1p5",outcube1+"_tmp2",outcube2+"_tmp2")
-        os.system("rm -rf " + outcube2 + "_tmp1p5")
-
-        # clip edge channels
-        run_immath_one(outcube1+"_tmp2",outcube1+"_tmp3","IM0",chans,delin=True)
-        run_immath_one(outcube2+"_tmp2",outcube2+"_tmp3","IM0",chans,delin=True)
-
-        # masking
-        run_immath_one(outcube1+"_tmp3",outcube1+"_tmp4","iif(IM0>-10000000.0,1,0)", "")
-        run_immath_one(outcube2+"_tmp3",outcube2+"_tmp4","iif(IM0>-10000000.0,1,0)", "")
-        run_immath_two(outcube1+"_tmp4",outcube2+"_tmp4",outcube1+"_combined_mask",
-            "IM0*IM1",delin=True)
-
-        run_immath_two(outcube1+"_tmp3",outcube1+"_combined_mask",outcube1+"_tmp4","iif(IM1>0,IM0,0)")
-        run_immath_two(outcube2+"_tmp3",outcube1+"_combined_mask",outcube2+"_tmp4","iif(IM1>0,IM0,0)",
-            delin=True)
-
-        imhead(outcube1+"_tmp4",mode="put",hdkey="beamminor",hdvalue=str(beam)+"arcsec")
-        imhead(outcube1+"_tmp4",mode="put",hdkey="beammajor",hdvalue=str(beam)+"arcsec")
-        imhead(outcube2+"_tmp4",mode="put",hdkey="beamminor",hdvalue=str(beam)+"arcsec")
-        imhead(outcube2+"_tmp4",mode="put",hdkey="beammajor",hdvalue=str(beam)+"arcsec")
-
-        unitconv_Jyb_K(outcube1+"_tmp4",outcube1,115.27120,unitto="Jy/beam",delin=True)
-        unitconv_Jyb_K(outcube2+"_tmp4",outcube2,230.53800,unitto="Jy/beam",delin=True)
-
-    ###############
-    # _stage_cube #
-    ###############
-
-    def _stage_cube(
-        self,
-        incube,
-        outcube,
-        beam,
-        imsize,
-        ra,
-        dec,
-        restfreq=115.27120,
-        ):
-        """
-        _align_cube_gal
-        """
-
-        taskname = self.modname + sys._getframe().f_code.co_name
-        check_first(incube,taskname)
-
-        run_importfits(incube,outcube+"_tmp1")
-        run_roundsmooth(outcube+"_tmp1",outcube+"_tmp2",
-            beam,delin=True)
-        unitconv_Jyb_K(outcube+"_tmp2",outcube+"_tmp3",restfreq,delin=True)
-        self._mask_fov_edges(outcube+"_tmp3",outcube+"_fovmask")
-        run_immath_two(outcube+"_tmp3",outcube+"_fovmask",outcube,
-            "iif(IM1>0,IM0,0)",delin=True)
-        imhead(outcube,mode="put",hdkey="beamminor",hdvalue=str(beam)+"arcsec")
-        imhead(outcube,mode="put",hdkey="beammajor",hdvalue=str(beam)+"arcsec")
-
-    ###################
-    # _mask_fov_edges #
-    ###################
-
-    def _mask_fov_edges(
-        self,
-        imagename,
-        outfile,
-        delin=False,
-        ):
-        """
-        _stage_cube
-        """
-
-        taskname = self.modname + sys._getframe().f_code.co_name
-        check_first(imagename,taskname)
-
-        expr1 = "iif(IM0>=-100000000., 1, 0)"
-        run_immath_one(imagename,imagename+"_mask_fov_edges_tmp1",expr1,"")
-        run_roundsmooth(imagename+"_mask_fov_edges_tmp1",
-            imagename+"_mask_fov_edges_tmp2",55.0,delin=True)
-
-        maxval = imstat(imagename+"_mask_fov_edges_tmp2")["max"][0]
-        expr2 = "iif(IM0>=" + str(maxval*0.6) + ", 1, 0)"
-        run_immath_one(imagename+"_mask_fov_edges_tmp2",
-            outfile,expr2,"",delin=True)
-        #boolean_masking(imagename+"_mask_fov_edges_tmp3",outfile,delin=True)
+        # plot
+        myfig_fits2png(
+            imcolor=imcolor,
+            outfile=outfile,
+            imcontour1=imcontour1,
+            imsize_as=self.imsize,
+            ra_cnt=self.ra_agn_str,
+            dec_cnt=self.dec_agn_str,
+            levels_cont1=levels_cont1,
+            width_cont1=width_cont1,
+            set_title=set_title,
+            colorlog=False,
+            scalebar=scalebar,
+            label_scalebar=label_scalebar,
+            set_cbar=True,
+            label_cbar=label_cbar,
+            clim=clim,
+            set_bg_color=set_bg_color,
+            numann="13co",
+            )
 
     ###############
     # _create_dir #

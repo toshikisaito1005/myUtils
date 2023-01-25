@@ -1,0 +1,44 @@
+###############
+# directories #
+###############
+dir_proj      ,,,/lfs13/saitots/proj_lst_wp/
+dir_raw       ,,,data_raw/
+dir_ready     ,,,data_ready/
+dir_other     ,,,data_other/
+dir_products  ,,,products_png/
+dir_final     ,,,images/
+dir_pipeline  ,,,/home02/saitots/myUtils/keys_projects/keys_lst_wp/
+dir_tp2vis    ,,,/home02/saitots/scripts/analysis_scripts/
+
+##################
+# final products #
+##################
+
+############
+# raw maps #
+############
+gmaur_template_file ,,,ngc1068_b3_12m_co10.fits
+gmaur_template_mask ,,,ngc1068_b3_12m_co10_strictmask.fits
+
+###############
+# output maps #
+###############
+
+###################
+# input paramters #
+###################
+project_gmaur ,,,gmaursim
+config_c1     ,,,alma-configuration-files/alma.cycle7.1.cfg
+config_c9     ,,,alma-configuration-files/alma.cycle7.9.cfg
+config_c9_lst ,,,alma-configuration-files/alma.cycle7.9_lst.cfg
+config_c10    ,,,alma-configuration-files/alma.cycle7.10.cfg
+config_7m     ,,,alma-configuration-files/aca.cycle7.cfg
+config_lst    ,,,alma-configuration-files/lst.cfg
+
+######################
+# output png and txt #
+######################
+
+#######
+# end #
+#######
