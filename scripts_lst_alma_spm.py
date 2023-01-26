@@ -104,15 +104,6 @@ class ToolsLSTSpMSim():
         self._create_dir(self.dir_products)
         self._create_dir(self.dir_final)
 
-        # simobserve
-        self.project_gmaur = self._read_key("project_gmaur")
-        self.config_c1     = self.dir_keyfile + self._read_key("config_c1")
-        self.config_c9     = self.dir_keyfile + self._read_key("config_c9")
-        self.config_c9_lst = self.dir_keyfile + self._read_key("config_c9_lst")
-        self.config_c10    = self.dir_keyfile + self._read_key("config_c10")
-        self.config_7m     = self.dir_keyfile + self._read_key("config_7m")
-        self.config_lst    = self.dir_keyfile + self._read_key("config_lst")
-
         # phangs-alma pipeline
         self.dir_pipeline = self._read_key("dir_pipeline")
 
@@ -134,6 +125,16 @@ class ToolsLSTSpMSim():
     def _set_input_param(self):
         """
         """
+
+        # simobserve
+        self.project_gmaur  = self._read_key("project_gmaur")
+        self.config_c1      = self.dir_keyfile + self._read_key("config_c1")
+        self.config_c9      = self.dir_keyfile + self._read_key("config_c9")
+        self.config_c9_lst  = self.dir_keyfile + self._read_key("config_c9_lst")
+        self.config_c10     = self.dir_keyfile + self._read_key("config_c10")
+        self.config_c10_lst = self.dir_keyfile + self._read_key("config_c10_lst")
+        self.config_7m      = self.dir_keyfile + self._read_key("config_7m")
+        self.config_lst     = self.dir_keyfile + self._read_key("config_lst")
 
     def _set_output_txt_png(self):
         """
@@ -180,7 +181,7 @@ class ToolsLSTSpMSim():
 
         if do_imaging_GMaursim==True:
             # stage instead of pipeline
-            msname  = self.project_gmaur + "_12m_" + tintegstr_12m + "."+self.config_c9.split("/")[-1].split(".cfg")[0]+".noisy.ms"
+            msname  = self.project_gmaur + "_12m_" + tintegstr_12m + "."+self.config_10.split("/")[-1].split(".cfg")[0]+".noisy.ms"
             ms_from = self.dir_ready + "ms/" + self.project_gmaur + "_12m_" + tintegstr_12m + "/" + msname
             dir_to  = self.dir_ready + "outputs/imaging/" + this_target + "/"
             ms_to   = dir_to + this_target + "_12m_cont.ms"
@@ -197,7 +198,7 @@ class ToolsLSTSpMSim():
                 )
 
             # stage instead of pipeline
-            msname  = self.project_gmaur + "_12m_lst_" + tintegstr_12m + "."+self.config_c9_lst.split("/")[-1].split(".cfg")[0]+".noisy.ms"
+            msname  = self.project_gmaur + "_12m_lst_" + tintegstr_12m + "."+self.config_c10_lst.split("/")[-1].split(".cfg")[0]+".noisy.ms"
             ms_from = self.dir_ready + "ms/" + self.project_gmaur + "_12m_lst_" + tintegstr_12m + "/" + msname
             dir_to  = self.dir_ready + "outputs/imaging/" + this_target_lst + "/"
             ms_to   = dir_to + this_target_lst + "_12m_cont.ms"
@@ -328,7 +329,7 @@ class ToolsLSTSpMSim():
         run_simobserve(
             working_dir = self.dir_ready,
             template    = self.gmaur_template_noshrunk,
-            antennalist = self.config_c9,
+            antennalist = self.config_c10,
             project     = self.project_gmaur+"_12m_"+totaltimetint,
             totaltime   = totaltime,
             incenter    = self.incenter,
@@ -338,7 +339,7 @@ class ToolsLSTSpMSim():
         run_simobserve(
             working_dir = self.dir_ready,
             template    = self.gmaur_template_noshrunk,
-            antennalist = self.config_c9_lst,
+            antennalist = self.config_c10_lst,
             project     = self.project_gmaur+"_12m_lst_"+totaltimetint,
             totaltime   = totaltime,
             incenter    = self.incenter,
