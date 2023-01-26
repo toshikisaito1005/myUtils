@@ -81,9 +81,11 @@ def gen_cont(
             hdvalue="Jy/pixel",
             )
     else:
-        os.system("rm -rf " + template_noshrunk + "_tmp1")
-        os.system("cp -r  + " + template_dir+template_file + " " + template_noshrunk + "_tmp1")
-        print("cp -r  + " + template_dir+template_file + " " + template_noshrunk + "_tmp1")
+        importfits(
+            template_dir + template_mask,
+            imagename=template_noshrunk + "_tmp1",
+            overwrite=True,
+            )
 
     ###############################
     # Apply the mask to the image #
