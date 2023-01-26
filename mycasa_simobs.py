@@ -25,6 +25,7 @@ def gen_cont(
     template_noshrunk,
     template_shurnk2,
     template_shurnk4,
+    convert_tojypixel=False,
     ):
     """
     version from phangs-alma pipeline (sim_ngc3059.py)
@@ -52,32 +53,35 @@ def gen_cont(
     # Convert the template to Jansky/pixel units #
     ##############################################
 
-    bmaj = imhead(template_dir+template_file)["restoringbeam"]["major"]["value"]
-    bmin = imhead(template_dir+template_file)["restoringbeam"]["minor"]["value"]
-    obsfreq = imhead(template_dir+template_file)["refval"][2] / 1e9 # GHz
+    if convert_tojypixel==True:
+        bmaj = imhead(template_dir+template_file)["restoringbeam"]["major"]["value"]
+        bmin = imhead(template_dir+template_file)["restoringbeam"]["minor"]["value"]
+        obsfreq = imhead(template_dir+template_file)["refval"][2] / 1e9 # GHz
 
-    # ... calculate Kelvin-to-Jy per beam using GHz and arcsec
-    ktoj = str(8.18255e-7*(obsfreq**2)*(bmaj*bmin))
+        # ... calculate Kelvin-to-Jy per beam using GHz and arcsec
+        ktoj = str(8.18255e-7*(obsfreq**2)*(bmaj*bmin))
 
-    # ... calculate pixel scale in arcsec
-    pix_arcsec = abs(imhead(template_dir+template_file)["incr"][0])*3600*180/np.pi
+        # ... calculate pixel scale in arcsec
+        pix_arcsec = abs(imhead(template_dir+template_file)["incr"][0])*3600*180/np.pi
 
-    # ... calculate beam area in pixels
-    pix_arcsec2 = pix_arcsec**2
-    pix_per_beam = str((bmaj/2.*bmin/2.) * np.pi / np.log(2) / pix_arcsec2)
+        # ... calculate beam area in pixels
+        pix_arcsec2 = pix_arcsec**2
+        pix_per_beam = str((bmaj/2.*bmin/2.) * np.pi / np.log(2) / pix_arcsec2)
 
-    # ... scale the template to units of Jy per pixel
-    os.system("rm -rf " + template_noshrunk + "_tmp1")
-    immath(
-        imagename=template_dir+template_file, 
-        expr="IM0*"+ktoj+"/"+pix_per_beam,
-        outfile=template_noshrunk + "_tmp1",
-        )
-    imhead(imagename=template_noshrunk + "_tmp1",
-        mode="put",
-        hdkey="bunit",
-        hdvalue="Jy/pixel",
-        )
+        # ... scale the template to units of Jy per pixel
+        os.system("rm -rf " + template_noshrunk + "_tmp1")
+        immath(
+            imagename=template_dir+template_file, 
+            expr="IM0*"+ktoj+"/"+pix_per_beam,
+            outfile=template_noshrunk + "_tmp1",
+            )
+        imhead(imagename=template_noshrunk + "_tmp1",
+            mode="put",
+            hdkey="bunit",
+            hdvalue="Jy/pixel",
+            )
+    else:
+        os.system("cp -r  + " + template_dir+template_file + " " + template_noshrunk + "_tmp1")
 
     ###############################
     # Apply the mask to the image #
