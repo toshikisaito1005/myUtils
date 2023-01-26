@@ -450,27 +450,28 @@ class ToolsR21():
 
     def run_phangs_r21(
         self,
-        do_all           = False,
+        do_all             = False,
         # analysis
-        do_align         = False,
-        do_multismooth   = False,
-        do_moments       = False,
-        do_align_other   = False,
-        do_modeling      = False,
+        do_align           = False,
+        do_multismooth     = False,
+        do_moments         = False,
+        do_align_other     = False,
+        do_modeling        = False,
         # plot figures in paper
-        plot_noise       = False,
-        plot_recovery    = False,
-        plot_showcase    = False,
-        plot_m0_vs_m8    = False,
-        plot_hist_550pc  = False,
-        plot_violins     = False,
-        plot_masks       = False,
-        plot_masked_hist = False,
-        plot_scatters    = False,
-        plot_model_std   = False,
+        plot_noise         = False,
+        plot_recovery      = False,
+        plot_showcase      = False,
+        plot_m0_vs_m8      = False,
+        plot_hist_550pc    = False,
+        plot_violins       = False,
+        plot_masks         = False,
+        plot_masked_hist   = False,
+        plot_scatters      = False,
+        plot_model_std     = False,
+        plot_slope_vs_beam = False,
         # appendix
-        appendix_model   = False,
-        do_imagemagick   = False,
+        appendix_model     = False,
+        do_imagemagick     = False,
         ):
         """
         This method runs all the methods which will create figures in the paper.
@@ -482,30 +483,31 @@ class ToolsR21():
         self.do_ngc4321 = True
 
         if do_all==True:
-            self.do_ngc0628  = True
-            self.do_ngc3627  = True
-            self.do_ngc4254  = True
-            self.do_ngc4321  = True
+            self.do_ngc0628    = True
+            self.do_ngc3627    = True
+            self.do_ngc4254    = True
+            self.do_ngc4321    = True
             # analysis
-            do_align         = True
-            do_multismooth   = True
-            do_moments       = True
-            do_align_other   = True
-            do_modeling      = True
+            do_align           = True
+            do_multismooth     = True
+            do_moments         = True
+            do_align_other     = True
+            do_modeling        = True
             # plot figures in paper
-            plot_noise       = True
-            plot_recovery    = True
-            plot_showcase    = True
-            plot_m0_vs_m8    = True
-            plot_hist_550pc  = True
-            plot_violins     = True
-            plot_masks       = True
-            plot_masked_hist = True
-            plot_scatters    = True
-            plot_model_std   = True
+            plot_noise         = True
+            plot_recovery      = True
+            plot_showcase      = True
+            plot_m0_vs_m8      = True
+            plot_hist_550pc    = True
+            plot_violins       = True
+            plot_masks         = True
+            plot_masked_hist   = True
+            plot_scatters      = True
+            plot_model_std     = True
+            plot_slope_vs_beam = True
             # appendix
-            appendix_model   = True
-            do_imagemagick   = True
+            appendix_model     = True
+            do_imagemagick     = True
 
         # analysis
         if do_align==True:
@@ -559,6 +561,9 @@ class ToolsR21():
 
         if plot_model_std==True:
             self.plot_model_std()
+
+        if plot_slope_vs_beam==True:
+            self.plot_slope_vs_beam()
 
         # appendix
         if appendix_model==True:
@@ -916,6 +921,21 @@ class ToolsR21():
     ### plotting part ###
     #####################
     #####################
+
+    ######################
+    # plot_slope_vs_beam #
+    ######################
+
+    def plot_slope_vs_beam(
+        self,
+        ):
+        """
+        """
+
+        taskname = self.modname + sys._getframe().f_code.co_name
+        check_first(self.outcube_co10_n0628,taskname)
+
+        print("TBE.")
 
     ##################
     # plot_model_std #

@@ -196,6 +196,23 @@ class ToolsLSTSpMSim():
                 only_dirty=False,
                 )
 
+            # stage instead of pipeline
+            msname  = self.project_gmaur + "_12m_lst_" + tintegstr_12m + "."+self.config_c9_lst.split("/")[-1].split(".cfg")[0]+".noisy.ms"
+            ms_from = self.dir_ready + "ms/" + self.project_gmaur + "_12m_lst_" + tintegstr_12m + "/" + msname
+            dir_to  = self.dir_ready + "outputs/imaging/" + this_target_lst + "/"
+            ms_to   = dir_to + this_target_lst + "_12m_cont.ms"
+            os.system("rm -rf " + ms_to)
+            os.system("rm -rf " + dir_to)
+            os.makedirs(dir_to)
+            os.system("cp -r " + ms_from + " " + ms_to)
+
+            self.phangs_pipeline_imaging(
+                this_proj=self.project_gmaur,
+                this_array="12m",
+                this_target=this_target_lst,
+                only_dirty=False,
+                )
+
     ###########################
     # phangs_pipeline_imaging #
     ###########################
@@ -296,7 +313,6 @@ class ToolsLSTSpMSim():
                 # feather_before_mosaic = False,
                 # feather_after_mosaic  = False,
                 )
-
 
     ###################
     # simobs_gmaursim #
