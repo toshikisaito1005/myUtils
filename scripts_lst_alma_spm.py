@@ -105,7 +105,8 @@ class ToolsLSTSpMSim():
         self._create_dir(self.dir_final)
 
         # phangs-alma pipeline
-        self.dir_pipeline = self._read_key("dir_pipeline")
+        self.dir_pipeline  = self._read_key("dir_pipeline")
+        self.project_gmaur = self._read_key("project_gmaur")
 
     def _set_input_fits(self):
         """
@@ -127,7 +128,6 @@ class ToolsLSTSpMSim():
         """
 
         # simobserve
-        self.project_gmaur  = self._read_key("project_gmaur")
         self.config_c1      = self.dir_keyfile + self._read_key("config_c1")
         self.config_c9      = self.dir_keyfile + self._read_key("config_c9")
         self.config_c9_lst  = self.dir_keyfile + self._read_key("config_c9_lst")
