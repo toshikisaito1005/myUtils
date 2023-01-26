@@ -30,9 +30,9 @@ Date         Filename                To
 2022-??-??
 
 history:
-2022-03-08   created
-2022-03-19   CASA tools sm and vp for heterogenous array sim
-Toshiki Saito@Nichidai/NAOJ
+2023-01-25   created
+2023-01-26   simulations and imaging with GM Aur
+Toshiki Saito@NAOJ
 """
 
 import os, sys, glob
@@ -180,8 +180,11 @@ class ToolsLSTSpMSim():
             self.simobs_gmaursim(tinteg_12m,tintegstr_12m)
 
         if do_imaging_GMaursim==True:
+            #############
+            # config 10 #
+            #############
             # stage instead of pipeline
-            msname  = self.project_gmaur + "_12m_" + tintegstr_12m + "."+self.config_10.split("/")[-1].split(".cfg")[0]+".noisy.ms"
+            msname  = self.project_gmaur + "_12m_" + tintegstr_12m + "."+self.config_c10.split("/")[-1].split(".cfg")[0]+".noisy.ms"
             ms_from = self.dir_ready + "ms/" + self.project_gmaur + "_12m_" + tintegstr_12m + "/" + msname
             dir_to  = self.dir_ready + "outputs/imaging/" + this_target + "/"
             ms_to   = dir_to + this_target + "_12m_cont.ms"
@@ -190,6 +193,7 @@ class ToolsLSTSpMSim():
             os.makedirs(dir_to)
             os.system("cp -r " + ms_from + " " + ms_to)
 
+            # imaging
             self.phangs_pipeline_imaging(
                 this_proj=self.project_gmaur,
                 this_array="12m",
@@ -197,6 +201,9 @@ class ToolsLSTSpMSim():
                 only_dirty=False,
                 )
 
+            #######################
+            # config 10 + LST 50m #
+            #######################
             # stage instead of pipeline
             msname  = self.project_gmaur + "_12m_lst_" + tintegstr_12m + "."+self.config_c10_lst.split("/")[-1].split(".cfg")[0]+".noisy.ms"
             ms_from = self.dir_ready + "ms/" + self.project_gmaur + "_12m_lst_" + tintegstr_12m + "/" + msname
@@ -207,6 +214,7 @@ class ToolsLSTSpMSim():
             os.makedirs(dir_to)
             os.system("cp -r " + ms_from + " " + ms_to)
 
+            # imaging
             self.phangs_pipeline_imaging(
                 this_proj=self.project_gmaur,
                 this_array="12m",
