@@ -14,5 +14,5 @@ torussim_12p0h      lst_wp        all  12m  1  torussim_12m_12p0h/torussim_12m_1
 torussim_lst_12p0h  lst_wp        all  12m  1  torussim_12m_lst_12p0h/torussim_12m_lst_12p0h.alma.cycle7.9_lst.noisy.ms
 #
 # gmaurim
-gmaursim_12p0h      lst_alma_spm  all  12m  1  gmaursim_12m_12p0h/gmaursim_12m_12p0h.alma.cycle7.9.noisy.ms.split
-gmaursim_lst_12p0h  lst_alma_spm  all  12m  1  gmaursim_12m_lst_12p0h/gmaursim_12m_lst_12p0h.alma.cycle7.9_lst.noisy.ms.split
+gmaursim_6p0h      lst_alma_spm  all  12m  1  gmaursim_12m_6p0h/gmaursim_12m_6p0h.alma.cycle7.9.noisy.ms.split
+gmaursim_lst_6p0h  lst_alma_spm  all  12m  1  gmaursim_12m_lst_6p0h/gmaursim_12m_lst_6p0h.alma.cycle7.9_lst.noisy.ms.split
