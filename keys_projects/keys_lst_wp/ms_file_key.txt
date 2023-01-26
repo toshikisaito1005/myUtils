@@ -2,13 +2,16 @@
 # MEASUREMENT SET FILE/INPUT KEY
 ##########################################################################
 # ngc1097sim
-ngc1097sim_11p4h     lst_wp  all  7m   1  ngc1097sim_7m_11p4h/ngc1097sim_7m_11p4h.aca.cycle7.noisy.ms
+ngc1097sim_11p4h    lst_wp        all  7m   1  ngc1097sim_7m_11p4h/ngc1097sim_7m_11p4h.aca.cycle7.noisy.ms
 #
 # checksim
-checksim_1p0h        lst_wp  all  12m  1  checksim_12m_1p0h/checksim_12m_1p0h.alma.cycle7.1.noisy.ms
+checksim_1p0h       lst_wp        all  12m  1  checksim_12m_1p0h/checksim_12m_1p0h.alma.cycle7.1.noisy.ms
 #
 # torussim
-torussim_12p0h       lst_wp  all  12m  1  torussim_12m_12p0h/torussim_12m_12p0h.alma.cycle7.10.noisy.ms
-torussim_24p0h       lst_wp  all  12m  1  torussim_12m_24p0h/torussim_12m_24p0h.alma.cycle7.10.noisy.ms
-torussim_12p0h       lst_wp  all  12m  1  torussim_12m_12p0h/torussim_12m_12p0h.alma.cycle7.9.noisy.ms
-torussim_lst_12p0h   lst_wp  all  12m  1  torussim_12m_lst_12p0h/torussim_12m_lst_12p0h.alma.cycle7.9_lst.noisy.ms
+torussim_12p0h      lst_wp        all  12m  1  torussim_12m_12p0h/torussim_12m_12p0h.alma.cycle7.10.noisy.ms
+torussim_24p0h      lst_wp        all  12m  1  torussim_12m_24p0h/torussim_12m_24p0h.alma.cycle7.10.noisy.ms
+torussim_12p0h      lst_wp        all  12m  1  torussim_12m_12p0h/torussim_12m_12p0h.alma.cycle7.9.noisy.ms
+torussim_lst_12p0h  lst_wp        all  12m  1  torussim_12m_lst_12p0h/torussim_12m_lst_12p0h.alma.cycle7.9_lst.noisy.ms
+#
+# gmaurim
+gmaur_12p0h         lst_alma_spm  all  12m  1  gmaursim_12m_12p0h/gmaursim_12m_12p0h.alma.cycle7.9.noisy.ms

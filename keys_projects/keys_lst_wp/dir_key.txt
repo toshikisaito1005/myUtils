@@ -3,3 +3,4 @@
 ##########################################################################
 torussim      torussim
 ngc1097sim    ngc1097sim
+gmaursim      gmaursim

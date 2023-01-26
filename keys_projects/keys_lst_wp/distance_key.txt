@@ -18,3 +18,4 @@
 # schema: astropy-2.0
 torussim,13.97
 ngc1097sim,13.97
+gmaursim,0.0001596

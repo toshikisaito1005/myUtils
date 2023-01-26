@@ -153,6 +153,7 @@ class ToolsLSTSpMSim():
         observed_freq        = 230.0, # GHz, determine LST and TP beam sizes
         do_template_GMaursim = False, # create template simobserve
         do_simint_GMaursim   = False, # sim C-10 at observed_freq
+        do_imaging_GMaursim  = False,
         ):
         """
         This method runs all the methods which will create figures in the white paper.
@@ -177,6 +178,126 @@ class ToolsLSTSpMSim():
         if do_simint_GMaursim==True:
             self.simobs_gmaursim(tinteg_12m,tintegstr_12m)
 
+        if do_imaging_GMaursim==True:
+            # stage instead of pipeline
+            msname  = self.project_gmaur + "_12m_" + tintegstr_12m + "."+self.config_c9.split("/")[-1].split(".cfg")[0]+".noisy.ms"
+            ms_from = self.dir_ready + "ms/" + self.project_gmaur + "_12m_" + tintegstr_12m + "/" + msname
+            dir_to  = self.dir_ready + "outputs/imaging/" + this_target + "/"
+            ms_to   = dir_to + this_target + "_12m_cont.ms"
+            os.system("rm -rf " + ms_to)
+            os.system("rm -rf " + dir_to)
+            os.makedirs(dir_to)
+            os.system("cp -r " + ms_from + " " + ms_to)
+
+            self.phangs_pipeline_imaging(
+                this_proj=self.project_gmaur,
+                this_array="12m",
+                this_target=this_target,
+                only_dirty=False,
+                )
+
+    ###########################
+    # phangs_pipeline_imaging #
+    ###########################
+
+    def phangs_pipeline_imaging(
+        self,
+        this_proj,
+        this_array,
+        this_target,
+        only_dirty=False,
+        ):
+        """
+        """
+
+        taskname = self.modname + sys._getframe().f_code.co_name
+
+        # prepare dir_cleanmask = dir_singledish
+        dir_cleanmask = self.dir_ready + "outputs/"
+        if not glob.glob(dir_cleanmask):
+            os.mkdir(dir_cleanmask)
+
+        # set piepline
+        master_key = self.dir_pipeline + "master_key_lst_alma_spm.txt"
+
+        pipepath = os.environ.get('PHANGSPIPE')
+        if pipepath is not None:
+            sys.path.append(os.environ.get('PHANGSPIPE'))
+        else:
+            sys.path.append(os.getcwd())
+
+        # Check casa environment by importing CASA-only packages
+        try:
+            import taskinit
+        except ImportError:
+            print('Please run this script inside CASA!')
+            sys.exit()
+
+        # Set the logging
+        from phangsPipeline import phangsLogger as pl
+        reload(pl)
+        pl.setup_logger(level='DEBUG', logfile=None)
+        # Imports
+
+        from phangsPipeline import handlerKeys as kh
+        from phangsPipeline import handlerVis as uvh
+        from phangsPipeline import handlerImaging as imh
+        from phangsPipeline import handlerPostprocess as pph
+
+        # Reloads for debugging
+        reload(kh)
+        reload(uvh)
+        reload(imh)
+        reload(pph)
+
+        # Initialize key handler
+        this_kh  = kh.KeyHandler(master_key = master_key)
+        this_uvh = uvh.VisHandler(key_handler = this_kh)
+        this_imh = imh.ImagingHandler(key_handler = this_kh)
+        this_pph = pph.PostProcessHandler(key_handler= this_kh)
+        dry_run_key = False
+        this_uvh.set_dry_run(dry_run_key)
+        this_imh.set_dry_run(dry_run_key)
+        this_pph.set_dry_run(dry_run_key)
+
+        # set handlers
+        for this_hander in [this_uvh,this_imh,this_pph]:
+            this_hander.set_targets(only=[this_target])
+            this_hander.set_no_cont_products(False)
+            this_hander.set_no_line_products(True)
+            this_hander.set_interf_configs(only=[this_array])
+
+        if only_dirty==True:
+            do_singlescale_clean = False
+        else:
+            do_singlescale_clean = True
+
+        this_imh.loop_imaging(\
+                do_dirty_image          = True,
+                do_revert_to_dirty      = False,
+                do_read_clean_mask      = False,
+                do_multiscale_clean     = False,
+                do_revert_to_multiscale = False,
+                do_singlescale_mask     = True,
+                do_singlescale_clean    = do_singlescale_clean,
+                do_export_to_fits       = False,
+                extra_ext_in            = '',
+                extra_ext_out           = '',
+                )
+
+        this_pph.loop_postprocess(\
+                do_prep               = True,
+                do_feather            = False,
+                do_mosaic             = True,
+                do_cleanup            = True,
+                do_summarize          = True,
+                # feather_apod          = True,
+                feather_noapod        = True,
+                # feather_before_mosaic = False,
+                # feather_after_mosaic  = False,
+                )
+
+
     ###################
     # simobs_gmaursim #
     ###################
@@ -195,7 +316,7 @@ class ToolsLSTSpMSim():
             project     = self.project_gmaur+"_12m_"+totaltimetint,
             totaltime   = totaltime,
             incenter    = self.incenter,
-            pointingspacing = "1arcsec",
+            pointingspacing = "5arcsec",
             )
 
         run_simobserve(
@@ -205,7 +326,7 @@ class ToolsLSTSpMSim():
             project     = self.project_gmaur+"_12m_lst_"+totaltimetint,
             totaltime   = totaltime,
             incenter    = self.incenter,
-            pointingspacing = "1arcsec",
+            pointingspacing = "5arcsec",
             )
 
     #############################

@@ -5,3 +5,4 @@ ngc1097sim_11p4h     02h46m18.3s  -30d16m37.12s  0  1000
 checksim_1p0h        02h42m40.71s -00d00m48.00s  0  1000
 torussim_12p0h       02h42m40.71s -00d00m48.00s  0  1000
 torussim_lst_12p0h   02h42m40.71s -00d00m48.00s  0  1000
+gmaursim_12m_12p0h   04h55m10.99s  30d21m58.94s  0  1000
