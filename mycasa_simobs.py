@@ -82,7 +82,7 @@ def gen_cont(
             )
     else:
         importfits(
-            template_dir + template_mask,
+            template_dir + template_file,
             imagename=template_noshrunk + "_tmp1",
             overwrite=True,
             )
