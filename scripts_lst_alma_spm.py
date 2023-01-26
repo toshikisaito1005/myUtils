@@ -195,7 +195,7 @@ class ToolsLSTSpMSim():
             project     = self.project_gmaur+"_12m_"+totaltimetint,
             totaltime   = totaltime,
             incenter    = self.incenter,
-            pointingspacing = "0.1arcsec",
+            pointingspacing = "20arcsec",
             )
 
         run_simobserve(
@@ -205,7 +205,7 @@ class ToolsLSTSpMSim():
             project     = self.project_gmaur+"_12m_lst_"+totaltimetint,
             totaltime   = totaltime,
             incenter    = self.incenter,
-            pointingspacing = "0.1arcsec",
+            pointingspacing = "20arcsec",
             )
 
     #############################
