@@ -1,6 +1,6 @@
 vis                =  ""
 selectdata         =  True
-field              =  ""
+field              =  "0"
 spw                =  ""
 timerange          =  ""
 uvrange            =  ""
