@@ -249,6 +249,7 @@ class ToolsLSTSpMSim():
         z_12m   = data[:,2].astype(np.float32) / 1000.
 
         data    = np.loadtxt(self.config_lstI,"str")
+        print(data)
         x_lstI  = data[:,0].astype(np.float32) / 1000.
         y_lstI  = data[:,1].astype(np.float32) / 1000. 
         z_lstI  = data[:,2].astype(np.float32) / 1000.
