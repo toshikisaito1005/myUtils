@@ -227,7 +227,7 @@ class ToolsLSTSpMSim():
                 )
 
         if plot_config:
-            self.plotconfig()
+            self.plot_config()
 
     ###############
     # plot_config #
