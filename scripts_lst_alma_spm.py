@@ -249,15 +249,14 @@ class ToolsLSTSpMSim():
         z_12m   = data[:,2].astype(np.float32) / 1000.
 
         data    = np.loadtxt(self.config_lstI,"str")
-        print(data)
-        x_lstI  = data[:,0].astype(np.float32) / 1000.
-        y_lstI  = data[:,1].astype(np.float32) / 1000. 
-        z_lstI  = data[:,2].astype(np.float32) / 1000.
+        x_lstI  = data[0].astype(np.float32) / 1000.
+        y_lstI  = data[1].astype(np.float32) / 1000. 
+        z_lstI  = data[2].astype(np.float32) / 1000.
 
         data    = np.loadtxt(self.config_lstII,"str")
-        x_lstII = data[:,0].astype(np.float32) / 1000.
-        y_lstII = data[:,1].astype(np.float32) / 1000. 
-        z_lstII = data[:,2].astype(np.float32) / 1000.
+        x_lstII = data[0].astype(np.float32) / 1000.
+        y_lstII = data[1].astype(np.float32) / 1000. 
+        z_lstII = data[2].astype(np.float32) / 1000.
 
         ##############################
         # plot: C-9 antenna position #
