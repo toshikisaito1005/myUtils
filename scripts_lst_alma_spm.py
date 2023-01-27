@@ -48,7 +48,7 @@ from mycasa_simobs import *
 ##################
 class ToolsLSTSpMSim():
     """
-    Class for the LST white paper 2022 project.
+    Class for the ALMA+LST+SpM paper
     """
 
     ############
@@ -152,21 +152,22 @@ class ToolsLSTSpMSim():
         ############
         # GMAursim #
         ############
-        # prepare
+        # sim
         tinteg_GMaursim      = 24,    # 12m total observing time
         observed_freq        = 230.0, # GHz, determine LST and TP beam sizes
         do_template_GMaursim = False, # create template simobserve
         do_simint_GMaursim   = False, # sim C-10 at observed_freq
         do_imaging_GMaursim  = False,
+        # plot
         plot_config          = False,
         ):
         """
         This method runs all the methods which will create figures in the white paper.
         """
 
-        ###########################
-        # set GMAursim parameters #
-        ###########################
+        ############
+        # GMAursim #
+        ############
         # observed frequency
         self.observed_freq = observed_freq
         self.incenter      = str(observed_freq)+"GHz"
@@ -205,9 +206,9 @@ class ToolsLSTSpMSim():
                 only_dirty=False,
                 )
 
-            #######################
-            # config 10 + LST 50m #
-            #######################
+            #########################
+            # config 10 + LST-I 50m #
+            #########################
             # stage instead of pipeline
             msname  = self.project_gmaur + "_12m_lstI_" + tintegstr_12m + "."+self.config_c10_lstI.split("/")[-1].split(".cfg")[0]+".noisy.ms"
             ms_from = self.dir_ready + "ms/" + self.project_gmaur + "_12m_lstI_" + tintegstr_12m + "/" + msname
@@ -226,6 +227,30 @@ class ToolsLSTSpMSim():
                 only_dirty=False,
                 )
 
+            ##########################
+            # config 10 + LST-II 50m #
+            ##########################
+            # stage instead of pipeline
+            msname  = self.project_gmaur + "_12m_lstII_" + tintegstr_12m + "."+self.config_c10_lstII.split("/")[-1].split(".cfg")[0]+".noisy.ms"
+            ms_from = self.dir_ready + "ms/" + self.project_gmaur + "_12m_lstII_" + tintegstr_12m + "/" + msname
+            dir_to  = self.dir_ready + "outputs/imaging/" + this_target_lst + "/"
+            ms_to   = dir_to + this_target_lst + "_12m_cont.ms"
+            os.system("rm -rf " + ms_to)
+            os.system("rm -rf " + dir_to)
+            os.makedirs(dir_to)
+            os.system("cp -r " + ms_from + " " + ms_to)
+
+            # imaging
+            self.phangs_pipeline_imaging(
+                this_proj=self.project_gmaur,
+                this_array="12m",
+                this_target=this_target_lst,
+                only_dirty=False,
+                )
+
+        ########
+        # plot #
+        ########
         if plot_config:
             self.plot_config()
 
@@ -302,7 +327,6 @@ class ToolsLSTSpMSim():
         plt.subplots_adjust(hspace=.0)
         os.system("rm -rf " + self.outpng_config_12m)
         plt.savefig(self.outpng_config_12m, dpi=self.fig_dpi)
-
 
     ###########################
     # phangs_pipeline_imaging #
@@ -431,6 +455,16 @@ class ToolsLSTSpMSim():
             template    = self.gmaur_template_noshrunk,
             antennalist = self.config_c10_lstI,
             project     = self.project_gmaur+"_12m_lstI_"+totaltimetint,
+            totaltime   = totaltime,
+            incenter    = self.incenter,
+            pointingspacing = "3arcsec",
+            )
+
+        run_simobserve(
+            working_dir = self.dir_ready,
+            template    = self.gmaur_template_noshrunk,
+            antennalist = self.config_c10_lstII,
+            project     = self.project_gmaur+"_12m_lstII_"+totaltimetint,
             totaltime   = totaltime,
             incenter    = self.incenter,
             pointingspacing = "3arcsec",
