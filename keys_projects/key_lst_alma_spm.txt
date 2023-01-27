@@ -27,14 +27,15 @@ gmaur_template_mask ,,,GM_Aur_Band6_SpMimage_mask.fits
 ###################
 # input paramters #
 ###################
-project_gmaur  ,,,gmaursim
-config_c1      ,,,alma-configuration-files/alma.cycle7.1.cfg
-config_c9      ,,,alma-configuration-files/alma.cycle7.9.cfg
-config_c9_lst  ,,,alma-configuration-files/alma.cycle7.9_lst.cfg
-config_c10     ,,,alma-configuration-files/alma.cycle7.10.cfg
-config_c10_lst ,,,alma-configuration-files/alma.cycle7.10_lst.cfg
-config_7m      ,,,alma-configuration-files/aca.cycle7.cfg
-config_lst     ,,,alma-configuration-files/lst.cfg
+project_gmaur    ,,,gmaursim
+config_c1        ,,,alma-configuration-files/alma.cycle7.1.cfg
+config_c9        ,,,alma-configuration-files/alma.cycle7.9.cfg
+config_c10       ,,,alma-configuration-files/alma.cycle7.10.cfg
+config_c10_lstI  ,,,alma-configuration-files/alma.cycle7.10_lstI.cfg
+config_c10_lstII ,,,alma-configuration-files/alma.cycle7.10_lstII.cfg
+config_7m        ,,,alma-configuration-files/aca.cycle7.cfg
+config_lstI      ,,,alma-configuration-files/lstI.cfg
+config_lstII     ,,,alma-configuration-files/lstII.cfg
 
 ######################
 # output png and txt #
