@@ -14,9 +14,9 @@ torussim_12p0h      lst_wp        all  12m  1  torussim_12m_12p0h/torussim_12m_1
 torussim_lst_12p0h  lst_wp        all  12m  1  torussim_12m_lst_12p0h/torussim_12m_lst_12p0h.alma.cycle7.9_lst.noisy.ms
 #
 # gmaurim 6.0h
-gmaursim_6p0h      lst_alma_spm  all  12m  1  gmaursim_12m_6p0h/gmaursim_12m_6p0h.alma.cycle7.10.noisy.ms.split
-gmaursim_lst_6p0h  lst_alma_spm  all  12m  1  gmaursim_12m_lst_6p0h/gmaursim_12m_lst_6p0h.alma.cycle7.10_lst.noisy.ms.split
+gmaursim_6p0h       lst_alma_spm  all  12m  1  gmaursim_12m_6p0h/gmaursim_12m_6p0h.alma.cycle7.10.noisy.ms.split
+gmaursim_lstI_6p0h  lst_alma_spm  all  12m  1  gmaursim_12m_lstI_6p0h/gmaursim_12m_lstI_6p0h.alma.cycle7.10_lstI.noisy.ms.split
 #
 # gmaurim 2.0h
-gmaursim_2p0h      lst_alma_spm  all  12m  1  gmaursim_12m_2p0h/gmaursim_12m_2p0h.alma.cycle7.10.noisy.ms.split
-gmaursim_lst_2p0h  lst_alma_spm  all  12m  1  gmaursim_12m_lst_2p0h/gmaursim_12m_lst_2p0h.alma.cycle7.10_lst.noisy.ms.split
+gmaursim_2p0h       lst_alma_spm  all  12m  1  gmaursim_12m_2p0h/gmaursim_12m_2p0h.alma.cycle7.10.noisy.ms.split
+gmaursim_lstI_2p0h  lst_alma_spm  all  12m  1  gmaursim_12m_lstI_2p0h/gmaursim_12m_lstI_2p0h.alma.cycle7.10_lstI.noisy.ms.split

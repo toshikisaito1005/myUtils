@@ -39,6 +39,7 @@ config_lst     ,,,alma-configuration-files/lst.cfg
 ######################
 # output png and txt #
 ######################
+outpng_config_12m ,,,fig_config.png
 
 #######
 # end #

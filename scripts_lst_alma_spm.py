@@ -128,17 +128,20 @@ class ToolsLSTSpMSim():
         """
 
         # simobserve
-        self.config_c1      = self.dir_keyfile + self._read_key("config_c1")
-        self.config_c9      = self.dir_keyfile + self._read_key("config_c9")
-        self.config_c9_lst  = self.dir_keyfile + self._read_key("config_c9_lst")
-        self.config_c10     = self.dir_keyfile + self._read_key("config_c10")
-        self.config_c10_lst = self.dir_keyfile + self._read_key("config_c10_lst")
-        self.config_7m      = self.dir_keyfile + self._read_key("config_7m")
-        self.config_lst     = self.dir_keyfile + self._read_key("config_lst")
+        self.config_c1        = self.dir_keyfile + self._read_key("config_c1")
+        self.config_c9        = self.dir_keyfile + self._read_key("config_c9")
+        self.config_c10       = self.dir_keyfile + self._read_key("config_c10")
+        self.config_c10_lstI  = self.dir_keyfile + self._read_key("config_c10_lstI")
+        self.config_c10_lstII = self.dir_keyfile + self._read_key("config_c10_lstII")
+        self.config_7m        = self.dir_keyfile + self._read_key("config_7m")
+        self.config_lstI      = self.dir_keyfile + self._read_key("config_lstI")
+        self.config_lstII     = self.dir_keyfile + self._read_key("config_lstII")
 
     def _set_output_txt_png(self):
         """
         """
+
+        self.outpng_config_12m = self.dir_products + self._read_key("outpng_config_12m")
 
     ####################
     # run_sim_lst_alma #
@@ -155,6 +158,7 @@ class ToolsLSTSpMSim():
         do_template_GMaursim = False, # create template simobserve
         do_simint_GMaursim   = False, # sim C-10 at observed_freq
         do_imaging_GMaursim  = False,
+        plot_config          = False,
         ):
         """
         This method runs all the methods which will create figures in the white paper.
@@ -171,7 +175,7 @@ class ToolsLSTSpMSim():
         tinteg_12m      = str(float(tinteg_GMaursim))+"h"
         tintegstr_12m   = tinteg_12m.replace(".","p")
         this_target     = self.project_gmaur+"_"+tintegstr_12m
-        this_target_lst = self.project_gmaur+"_lst_"+tintegstr_12m
+        this_target_lst = self.project_gmaur+"_lstI_"+tintegstr_12m
 
         if do_template_GMaursim==True:
             self.prepare_template_gmaursim()
@@ -205,8 +209,8 @@ class ToolsLSTSpMSim():
             # config 10 + LST 50m #
             #######################
             # stage instead of pipeline
-            msname  = self.project_gmaur + "_12m_lst_" + tintegstr_12m + "."+self.config_c10_lst.split("/")[-1].split(".cfg")[0]+".noisy.ms"
-            ms_from = self.dir_ready + "ms/" + self.project_gmaur + "_12m_lst_" + tintegstr_12m + "/" + msname
+            msname  = self.project_gmaur + "_12m_lstI_" + tintegstr_12m + "."+self.config_c10_lstI.split("/")[-1].split(".cfg")[0]+".noisy.ms"
+            ms_from = self.dir_ready + "ms/" + self.project_gmaur + "_12m_lstI_" + tintegstr_12m + "/" + msname
             dir_to  = self.dir_ready + "outputs/imaging/" + this_target_lst + "/"
             ms_to   = dir_to + this_target_lst + "_12m_cont.ms"
             os.system("rm -rf " + ms_to)
@@ -221,6 +225,84 @@ class ToolsLSTSpMSim():
                 this_target=this_target_lst,
                 only_dirty=False,
                 )
+
+        if plot_config:
+            self.plotconfig()
+
+    ###############
+    # plot_config #
+    ###############
+
+    def plot_config(self):
+        """
+        Reference:
+        http://math_research.uct.ac.za/~siphelo/admin/interferometry/4_Visibility_Space/4_4_1_UV_Coverage_UV_Tracks.html
+        """
+
+        taskname = self.modname + sys._getframe().f_code.co_name
+        check_first(self.config_c10,taskname)
+
+        # get data
+        data    = np.loadtxt(self.config_c10,"str")
+        x_12m   = data[:,0].astype(np.float32) / 1000.
+        y_12m   = data[:,1].astype(np.float32) / 1000. 
+        z_12m   = data[:,2].astype(np.float32) / 1000.
+
+        data    = np.loadtxt(self.config_lstI,"str")
+        x_lstI  = data[:,0].astype(np.float32) / 1000.
+        y_lstI  = data[:,1].astype(np.float32) / 1000. 
+        z_lstI  = data[:,2].astype(np.float32) / 1000.
+
+        data    = np.loadtxt(self.config_lstII,"str")
+        x_lstII = data[:,0].astype(np.float32) / 1000.
+        y_lstII = data[:,1].astype(np.float32) / 1000. 
+        z_lstII = data[:,2].astype(np.float32) / 1000.
+
+        ##############################
+        # plot: C-9 antenna position #
+        ##############################
+        ad    = [0.215,0.83,0.10,0.90]
+        xlim  = [-8,8]
+        ylim  = [-8,8]
+        title = "ALMA 12-m array and LST$_{\mathrm{sim,50m}}$ positions"
+        xlabel = "East-West (km)"
+        ylabel = "North-South (km)"
+
+        fig = plt.figure(figsize=(13,10))
+        gs  = gridspec.GridSpec(nrows=10, ncols=10)
+        ax1 = plt.subplot(gs[0:10,0:10])
+        plt.subplots_adjust(left=ad[0], right=ad[1], bottom=ad[2], top=ad[3])
+        myax_set(ax1, None, xlim, ylim, title, xlabel, ylabel, adjust=ad)
+
+        # LST I
+        antenna = patches.Ellipse(xy=(x_lstI, y_lstI, z_lstI), width=0.8,
+            height=0.8, angle=0, fill=True, color="tomato", edgecolor="tomato",
+            alpha=0.7, lw=0)
+        ax1.add_patch(antenna)
+
+        # LST II
+        antenna = patches.Ellipse(xy=(x_lstII, y_lstII, z_lstII), width=0.8,
+            height=0.8, angle=0, fill=True, color="tomato", edgecolor="tomato",
+            alpha=0.7, lw=0)
+        ax1.add_patch(antenna)
+
+        for i in range(len(x_12m)):
+            this_x = x_12m[i]
+            this_y = y_12m[i]
+            antenna = patches.Ellipse(xy=(this_x,this_y), width=0.3,
+                height=0.3, angle=0, fill=True, color="deepskyblue", edgecolor="deepskyblue",
+                alpha=1.0, lw=0)
+            ax1.add_patch(antenna)
+
+        # text
+        ax1.text(0.05,0.92, "ALMA 12-m array", color="deepskyblue", weight="bold", transform=ax1.transAxes)
+        ax1.text(0.05,0.87, "two LST$_{\mathrm{sim,50m}}$ positions", color="tomato", weight="bold", transform=ax1.transAxes)
+
+        # save
+        plt.subplots_adjust(hspace=.0)
+        os.system("rm -rf " + self.outpng_config_12m)
+        plt.savefig(self.outpng_config_12m, dpi=self.fig_dpi)
+
 
     ###########################
     # phangs_pipeline_imaging #
@@ -347,8 +429,8 @@ class ToolsLSTSpMSim():
         run_simobserve(
             working_dir = self.dir_ready,
             template    = self.gmaur_template_noshrunk,
-            antennalist = self.config_c10_lst,
-            project     = self.project_gmaur+"_12m_lst_"+totaltimetint,
+            antennalist = self.config_c10_lstI,
+            project     = self.project_gmaur+"_12m_lstI_"+totaltimetint,
             totaltime   = totaltime,
             incenter    = self.incenter,
             pointingspacing = "3arcsec",
