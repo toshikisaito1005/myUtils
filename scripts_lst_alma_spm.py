@@ -185,6 +185,7 @@ class ToolsLSTSpMSim():
             self.simobs_gmaursim(tinteg_12m,tintegstr_12m)
 
         if do_imaging_GMaursim==True:
+            """
             #############
             # config 10 #
             #############
@@ -205,6 +206,7 @@ class ToolsLSTSpMSim():
                 this_target=this_target,
                 only_dirty=False,
                 )
+            """
 
             #########################
             # config 10 + LST-I 50m #

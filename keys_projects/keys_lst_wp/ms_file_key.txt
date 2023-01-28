@@ -20,4 +20,5 @@ gmaursim_lstII_6p0h lst_alma_spm  all  12m  1  gmaursim_12m_lstII_6p0h/gmaursim_
 #
 # gmaurim 2.0h
 gmaursim_2p0h       lst_alma_spm  all  12m  1  gmaursim_12m_2p0h/gmaursim_12m_2p0h.alma.cycle7.10.noisy.ms.split
+gmaursim_lstI_2p0h  lst_alma_spm  all  12m  1  gmaursim_12m_lstI_2p0h/gmaursim_12m_lstI_2p0h.alma.cycle7.10_lstI.noisy.ms.split
 gmaursim_lstII_2p0h lst_alma_spm  all  12m  1  gmaursim_12m_lstII_2p0h/gmaursim_12m_lstII_2p0h.alma.cycle7.10_lstII.noisy.ms.split
