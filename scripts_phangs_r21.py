@@ -418,6 +418,8 @@ class ToolsR21():
 
         self.outpng_model_std         = self.dir_products + self._read_key("outpng_model_std")
 
+        self.outpng_slope_vs_beam     = self.dir_products + self._read_key("outpng_slope_vs_beam")
+
         #self.outpng_masked_scatter_n0628 = self.dir_products + self._read_key("outpng_masked_scatter_n0628")
         #self.outpng_masked_scatter_n4321 = self.dir_products + self._read_key("outpng_masked_scatter_n4321")
 
@@ -937,29 +939,60 @@ class ToolsR21():
 
         this_basebeam = str(self.basebeam_n0628).replace(".","p").zfill(4)
         this_params   = self.outtxt_mod_n0628.replace(this_basebeam,"*").replace("_model","_param")
+        this_files    = glob.glob(this_params)
+        beams_n0628   = self.beams_n0628
+        slopes_n0628  = [np.loadtxt(s)[0] for s in this_files]
+        print(beams_n0628,slopes_n0628)
 
         this_basebeam = str(self.basebeam_n3627).replace(".","p").zfill(4)
         this_params   = self.outtxt_mod_n3627.replace(this_basebeam,"*").replace("_model","_param")
         this_files    = glob.glob(this_params)
-
-        for this_file in this_files:
-            print(np.loadtxt(this_file)[0])
+        files_n3627   = glob.glob(this_params)
 
         this_basebeam = str(self.basebeam_n4254).replace(".","p").zfill(4)
         this_params   = self.outtxt_mod_n4254.replace(this_basebeam,"*").replace("_model","_param")
         this_files    = glob.glob(this_params)
-
-        for this_file in this_files:
-            print(np.loadtxt(this_file)[0])
+        files_n4254   = glob.glob(this_params)
 
         this_basebeam = str(self.basebeam_n4321).replace(".","p").zfill(4)
         this_params   = self.outtxt_mod_n4321.replace(this_basebeam,"*").replace("_model","_param")
         this_files    = glob.glob(this_params)
+        files_n4321   = glob.glob(this_params)
 
-        for this_file in this_files:
-            print(np.loadtxt(this_file)[0])
+        ########
+        # plot #
+        ########
+        """
+        title  = "Slope vs. Beam"
+        xlabel = r"log$_{10}$ $I_{\rm CO(1-0)}$ (K km s$^{-1}$)"
+        ylabel = r"log$_{10}$ $I_{\rm CO(2-1)}$ (K km s$^{-1}$)"
 
-        print("TBE.")
+        # set plt, ax
+        plt.figure(figsize=(13,10))
+        gs = gridspec.GridSpec(nrows=10, ncols=10)
+        ax = plt.subplot(gs[0:10,0:10])
+
+        ad = [0.215,0.83,0.10,0.90]
+        myax_set(ax, "both", None, None, title, xlabel, ylabel, adjust=ad)
+
+        # ax1
+        ax.plot(data_vs_co10_n0628[:,0],data_vs_co10_n0628[:,1],color=self.c_n0628,lw=5)
+        ax.plot(data_vs_co10_n3627[:,0],data_vs_co10_n3627[:,1],color=self.c_n3627,lw=5)
+        ax.plot(data_vs_co10_n4254[:,0],data_vs_co10_n4254[:,1],color=self.c_n4254,lw=5)
+        ax.plot(data_vs_co10_n4321[:,0],data_vs_co10_n4321[:,1],color=self.c_n4321,lw=5)
+
+        # text
+        t=ax.text(0.95, 0.93, "NGC 0628 4.0$^{\prime}$$^{\prime}$", color=self.c_n0628, horizontalalignment="right", transform=ax.transAxes, size=self.legend_fontsize, fontweight="bold")
+        t.set_bbox(dict(facecolor="white", alpha=self.text_back_alpha, lw=0))
+        t=ax.text(0.95, 0.88, "NGC 3627 8.0$^{\prime}$$^{\prime}$", color=self.c_n3627, horizontalalignment="right", transform=ax.transAxes, size=self.legend_fontsize, fontweight="bold")
+        t.set_bbox(dict(facecolor="white", alpha=self.text_back_alpha, lw=0))
+        t=ax.text(0.95, 0.83, "NGC 4254 8.0$^{\prime}$$^{\prime}$", color=self.c_n4254, horizontalalignment="right", transform=ax.transAxes, size=self.legend_fontsize, fontweight="bold")
+        t.set_bbox(dict(facecolor="white", alpha=self.text_back_alpha, lw=0))
+        t=ax.text(0.95, 0.78, "NGC 4321 4.0$^{\prime}$$^{\prime}$", color=self.c_n4321, horizontalalignment="right", transform=ax.transAxes, size=self.legend_fontsize, fontweight="bold")
+        t.set_bbox(dict(facecolor="white", alpha=self.text_back_alpha, lw=0))
+
+        plt.savefig(self.outpng_slope_vs_beam, dpi=self.fig_dpi)
+        """
 
     ##################
     # plot_model_std #

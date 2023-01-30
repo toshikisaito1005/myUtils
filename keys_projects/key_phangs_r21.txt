@@ -255,6 +255,8 @@ outpng_modeling_n4321 ,,,fig_model_n4321.png
 
 outpng_model_std      ,,,fig_model_std.png
 
+outpng_slope_vs_beam  ,,,fig_slope_vs_beam.png
+
 #outpng_masked_scatter_n0628 ,,,fig_masked_scatter_n0628.png
 #outpng_masked_scatter_n4321 ,,,fig_masked_scatter_n4321.png
 
