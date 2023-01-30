@@ -439,6 +439,7 @@ class ToolsR21():
         self.final_masked_hist   = self.dir_final + self._read_key("final_masked_hist")
         self.final_scatters      = self.dir_final + self._read_key("final_scatters")
         self.final_model_std     = self.dir_final + self._read_key("final_model_std")
+        self.final_slope_vs_beam = self.dir_final + self._read_key("final_slope_vs_beam")
 
         # appendix
         self.box                 = "1900x2270+290+0"
@@ -592,9 +593,10 @@ class ToolsR21():
         do_hist_550pc    = False,
         do_violins       = False,
         do_mask_n4321    = False,
-        do_masked_hist   = True,
+        do_masked_hist   = False,
         do_scatters      = False,
         do_model_std     = False,
+        do_slope_vs_beam = True,
         # appendix
         do_noise         = False,
         do_mom0_all      = False,
@@ -737,6 +739,18 @@ class ToolsR21():
                 self.outpng_model_std,
                 self.final_model_std,
                 "100000x100000+0+0",
+                delin=delin,
+                )
+
+        if do_slope_vs_beam==True:
+            print("##############################")
+            print("# create final_slope_vs_beam #")
+            print("##############################")
+
+            immagick_crop(
+                self.outpng_slope_vs_beam,
+                self.final_slope_vs_beam,
+                self.box,
                 delin=delin,
                 )
 
@@ -965,8 +979,8 @@ class ToolsR21():
         # plot #
         ########
         title  = "Slope vs. Beam"
-        xlabel = r"log$_{10}$ $I_{\rm CO(1-0)}$ (K km s$^{-1}$)"
-        ylabel = r"log$_{10}$ $I_{\rm CO(2-1)}$ (K km s$^{-1}$)"
+        xlabel = r"Beam Size (arcsec)"
+        ylabel = r"Slope"
 
         # set plt, ax
         plt.figure(figsize=(13,10))
