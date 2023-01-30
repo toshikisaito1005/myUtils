@@ -938,8 +938,8 @@ class ToolsR21():
         this_basebeam = str(self.basebeam_n0628).replace(".","p").zfill(4)
         this_params   = self.outtxt_mod_n0628.replace(this_basebeam,"*").replace("_model","_param")
 
-        this_basebeam = str(self.basebeam_n3672).replace(".","p").zfill(4)
-        this_params   = self.outtxt_mod_n3672.replace(this_basebeam,"*").replace("_model","_param")
+        this_basebeam = str(self.basebeam_n3627).replace(".","p").zfill(4)
+        this_params   = self.outtxt_mod_n3627.replace(this_basebeam,"*").replace("_model","_param")
         this_files    = glob.glob(this_params)
 
         for this_file in this_files:
