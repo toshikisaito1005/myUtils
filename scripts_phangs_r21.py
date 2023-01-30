@@ -940,29 +940,30 @@ class ToolsR21():
         this_basebeam = str(self.basebeam_n0628).replace(".","p").zfill(4)
         this_params   = self.outtxt_mod_n0628.replace(this_basebeam,"*").replace("_model","_param")
         this_files    = glob.glob(this_params)
-        beams_n0628   = self.beams_n0628
-        slopes_n0628  = [np.loadtxt(s)[0] for s in this_files]
-        print(beams_n0628,slopes_n0628)
+        x_n0628       = [s for s in self.beams_n0628 if s%4==0]
+        y_n0628       = [np.loadtxt(s)[0] for s in this_files]
 
         this_basebeam = str(self.basebeam_n3627).replace(".","p").zfill(4)
         this_params   = self.outtxt_mod_n3627.replace(this_basebeam,"*").replace("_model","_param")
         this_files    = glob.glob(this_params)
-        files_n3627   = glob.glob(this_params)
+        x_n3627       = [s for s in self.beams_n3627 if s%4==0]
+        y_n3627       = [np.loadtxt(s)[0] for s in this_files]
 
         this_basebeam = str(self.basebeam_n4254).replace(".","p").zfill(4)
         this_params   = self.outtxt_mod_n4254.replace(this_basebeam,"*").replace("_model","_param")
         this_files    = glob.glob(this_params)
-        files_n4254   = glob.glob(this_params)
+        x_n4254       = [s for s in self.beams_n4254 if s%4==0]
+        y_n4254       = [np.loadtxt(s)[0] for s in this_files]
 
         this_basebeam = str(self.basebeam_n4321).replace(".","p").zfill(4)
         this_params   = self.outtxt_mod_n4321.replace(this_basebeam,"*").replace("_model","_param")
         this_files    = glob.glob(this_params)
-        files_n4321   = glob.glob(this_params)
+        x_n4321       = [s for s in self.beams_n4321 if s%4==0]
+        y_n4321       = [np.loadtxt(s)[0] for s in this_files]
 
         ########
         # plot #
         ########
-        """
         title  = "Slope vs. Beam"
         xlabel = r"log$_{10}$ $I_{\rm CO(1-0)}$ (K km s$^{-1}$)"
         ylabel = r"log$_{10}$ $I_{\rm CO(2-1)}$ (K km s$^{-1}$)"
@@ -976,10 +977,10 @@ class ToolsR21():
         myax_set(ax, "both", None, None, title, xlabel, ylabel, adjust=ad)
 
         # ax1
-        ax.plot(data_vs_co10_n0628[:,0],data_vs_co10_n0628[:,1],color=self.c_n0628,lw=5)
-        ax.plot(data_vs_co10_n3627[:,0],data_vs_co10_n3627[:,1],color=self.c_n3627,lw=5)
-        ax.plot(data_vs_co10_n4254[:,0],data_vs_co10_n4254[:,1],color=self.c_n4254,lw=5)
-        ax.plot(data_vs_co10_n4321[:,0],data_vs_co10_n4321[:,1],color=self.c_n4321,lw=5)
+        ax.plot(x_n0628,y_n0628,color=self.c_n0628,lw=5)
+        ax.plot(x_n3627,y_n3627,color=self.c_n3627,lw=5)
+        ax.plot(x_n4254,y_n4254,color=self.c_n4254,lw=5)
+        ax.plot(x_n4321,y_n4321,color=self.c_n4321,lw=5)
 
         # text
         t=ax.text(0.95, 0.93, "NGC 0628 4.0$^{\prime}$$^{\prime}$", color=self.c_n0628, horizontalalignment="right", transform=ax.transAxes, size=self.legend_fontsize, fontweight="bold")
@@ -992,7 +993,6 @@ class ToolsR21():
         t.set_bbox(dict(facecolor="white", alpha=self.text_back_alpha, lw=0))
 
         plt.savefig(self.outpng_slope_vs_beam, dpi=self.fig_dpi)
-        """
 
     ##################
     # plot_model_std #
