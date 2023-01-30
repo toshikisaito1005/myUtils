@@ -173,10 +173,10 @@ class ToolsLSTSpMSim():
         self.incenter      = str(observed_freq)+"GHz"
 
         # GMaursim_12m from tinteg_GMaursim
-        tinteg_12m      = str(float(tinteg_GMaursim))+"h"
-        tintegstr_12m   = tinteg_12m.replace(".","p")
-        this_target     = self.project_gmaur+"_"+tintegstr_12m
-        this_target_lstI = self.project_gmaur+"_lstI_"+tintegstr_12m
+        tinteg_12m        = str(float(tinteg_GMaursim))+"h"
+        tintegstr_12m     = tinteg_12m.replace(".","p")
+        this_target       = self.project_gmaur+"_"+tintegstr_12m
+        this_target_lstI  = self.project_gmaur+"_lstI_"+tintegstr_12m
         this_target_lstII = self.project_gmaur+"_lstII_"+tintegstr_12m
 
         if do_template_GMaursim==True:

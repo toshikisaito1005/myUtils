@@ -935,6 +935,9 @@ class ToolsR21():
         taskname = self.modname + sys._getframe().f_code.co_name
         check_first(self.outcube_co10_n0628,taskname)
 
+        this_params = self.outtxt_mod_n0628.replace(this_basebeam,"*").replace("_model","_param")
+        print(glob.glob(this_params))
+
         print("TBE.")
 
     ##################
