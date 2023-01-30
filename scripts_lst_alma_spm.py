@@ -176,7 +176,8 @@ class ToolsLSTSpMSim():
         tinteg_12m      = str(float(tinteg_GMaursim))+"h"
         tintegstr_12m   = tinteg_12m.replace(".","p")
         this_target     = self.project_gmaur+"_"+tintegstr_12m
-        this_target_lst = self.project_gmaur+"_lstI_"+tintegstr_12m
+        this_target_lstI = self.project_gmaur+"_lstI_"+tintegstr_12m
+        this_target_lstII = self.project_gmaur+"_lstII_"+tintegstr_12m
 
         if do_template_GMaursim==True:
             self.prepare_template_gmaursim()
@@ -214,8 +215,8 @@ class ToolsLSTSpMSim():
             # stage instead of pipeline
             msname  = self.project_gmaur + "_12m_lstI_" + tintegstr_12m + "."+self.config_c10_lstI.split("/")[-1].split(".cfg")[0]+".noisy.ms"
             ms_from = self.dir_ready + "ms/" + self.project_gmaur + "_12m_lstI_" + tintegstr_12m + "/" + msname
-            dir_to  = self.dir_ready + "outputs/imaging/" + this_target_lst + "/"
-            ms_to   = dir_to + this_target_lst + "_12m_cont.ms"
+            dir_to  = self.dir_ready + "outputs/imaging/" + this_target_lstI + "/"
+            ms_to   = dir_to + this_target_lstI + "_12m_cont.ms"
             os.system("rm -rf " + ms_to)
             os.system("rm -rf " + dir_to)
             os.makedirs(dir_to)
@@ -225,7 +226,7 @@ class ToolsLSTSpMSim():
             self.phangs_pipeline_imaging(
                 this_proj=self.project_gmaur,
                 this_array="12m",
-                this_target=this_target_lst,
+                this_target=this_target_lstI,
                 only_dirty=False,
                 )
 
@@ -235,8 +236,8 @@ class ToolsLSTSpMSim():
             # stage instead of pipeline
             msname  = self.project_gmaur + "_12m_lstII_" + tintegstr_12m + "."+self.config_c10_lstII.split("/")[-1].split(".cfg")[0]+".noisy.ms"
             ms_from = self.dir_ready + "ms/" + self.project_gmaur + "_12m_lstII_" + tintegstr_12m + "/" + msname
-            dir_to  = self.dir_ready + "outputs/imaging/" + this_target_lst + "/"
-            ms_to   = dir_to + this_target_lst + "_12m_cont.ms"
+            dir_to  = self.dir_ready + "outputs/imaging/" + this_target_lstII + "/"
+            ms_to   = dir_to + this_target_lstII + "_12m_cont.ms"
             os.system("rm -rf " + ms_to)
             os.system("rm -rf " + dir_to)
             os.makedirs(dir_to)
@@ -246,7 +247,7 @@ class ToolsLSTSpMSim():
             self.phangs_pipeline_imaging(
                 this_proj=self.project_gmaur,
                 this_array="12m",
-                this_target=this_target_lst,
+                this_target=this_target_lstII,
                 only_dirty=False,
                 )
 
