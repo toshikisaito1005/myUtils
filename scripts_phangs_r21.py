@@ -590,7 +590,7 @@ class ToolsR21():
         delin            = False,
         do_all           = False,
         # main
-        do_mom0_n4321    = False,
+        do_mom0_n4321    = True,
         do_integ_vs_peak = False,
         do_hist_550pc    = False,
         do_violins       = False,
@@ -598,7 +598,7 @@ class ToolsR21():
         do_masked_hist   = False,
         do_scatters      = False,
         do_model_std     = False,
-        do_slope_vs_beam = True,
+        do_slope_vs_beam = False,
         # appendix
         do_noise         = False,
         do_mom0_all      = False,
