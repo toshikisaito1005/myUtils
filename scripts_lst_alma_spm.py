@@ -25,9 +25,11 @@ usage:
 >
 > os.system("rm -rf *.last")
 
-white paper drafts:
+drafts:
 Date         Filename                To
 2022-??-??
+
+https://github.com/urvashirau/Simulation-in-CASA/blob/master/Heterogeneous_Array_Simulation_and_Imaging/Sim_Heterogeneous_Array_Demo.ipynb
 
 history:
 2023-01-25   created
@@ -431,6 +433,25 @@ class ToolsLSTSpMSim():
                 # feather_before_mosaic = False,
                 # feather_after_mosaic  = False,
                 )
+
+    ###########################
+    ###########################
+    ##### simulation part #####
+    ###########################
+    ###########################
+
+    ####################
+    # simobs_gmaursim2 #
+    ####################
+
+    def simobs_gmaursim2(self,totaltime="2.0h",totaltimetint="2p0h"):
+        """
+        """
+
+        taskname = self.modname + sys._getframe().f_code.co_name
+        check_first(self.gmaur_template_noshrunk,taskname)
+
+        # follow Urvashi's note
 
     ###################
     # simobs_gmaursim #

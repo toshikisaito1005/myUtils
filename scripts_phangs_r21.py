@@ -40,6 +40,8 @@ history:
 2022-10-11   constructed multimoments
 2022-10-14   constrcuted do_align_other
 2022-10-17   constrcuted plot_noise, plot_recovery
+2022-12-07   constructed simulation part
+2023-01-30   constructed slope_vs_beam
 Toshiki Saito@NAOJ
 """
 
@@ -430,7 +432,7 @@ class ToolsR21():
         # final
         self.box_map_co10        = "1900x2100+290+170"
         self.box_map_co21        = "1640x2100+550+170"
-        self.box_map_r21         = "1990x2100+550+170"
+        self.box_map_r21         = "2250x2100+290+170"
         self.final_mom0_n4321    = self.dir_final + self._read_key("final_mom0_n4321")
         self.final_integ_vs_peak = self.dir_final + self._read_key("final_integ_vs_peak")
         self.final_hist_550pc    = self.dir_final + self._read_key("final_hist_550pc")

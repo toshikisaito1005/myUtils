@@ -24,7 +24,7 @@ final_mask_n4321    ,,,fig_masks_n4321.png
 final_masked_hist   ,,,fig_masked_hist.png
 final_scatters      ,,,fig_scatters.png
 final_model_std     ,,,fig_model_std.png
-final_slope_vs_beam ,,,final_slope_vs_beam.png
+final_slope_vs_beam ,,,fig_slope_vs_beam.png
 # appendix
 final_noise         ,,,fig_noise.png
 final_mom0_all      ,,,fig_co_maps_all.png
