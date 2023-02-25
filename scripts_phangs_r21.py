@@ -476,6 +476,7 @@ class ToolsR21():
         plot_slope_vs_beam = False,
         # appendix
         appendix_model     = False,
+        appendix_series    = False,
         do_imagemagick     = False,
         ):
         """
@@ -573,6 +574,9 @@ class ToolsR21():
         # appendix
         if appendix_model==True:
             self.appendix_model()
+
+        if appendix_series==True:
+            self.appendix_series()
 
         if do_imagemagick==True:
             self.immagick_figures()
@@ -939,6 +943,21 @@ class ToolsR21():
     ### plotting part ###
     #####################
     #####################
+
+    ###################
+    # appendix_series #
+    ###################
+
+    def appendix_series(
+        self,
+        ):
+        """
+        """
+
+        taskname = self.modname + sys._getframe().f_code.co_name
+        check_first(self.outcube_co10_n0628,taskname)
+
+    #
 
     ######################
     # plot_slope_vs_beam #
