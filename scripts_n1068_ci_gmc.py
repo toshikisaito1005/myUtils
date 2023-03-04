@@ -401,7 +401,7 @@ class ToolsCIGMC():
             y_left   = y_center - this_r_co_cone*2
             y_right  = y_center + this_r_co_cone*2 + 2
 
-            print([x_left:x_right,y_left:y_right])
+            print([x_left,x_right,y_left,y_right])
 
     ############
     # plot_map #
