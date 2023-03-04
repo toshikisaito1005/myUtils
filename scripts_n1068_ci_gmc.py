@@ -366,13 +366,29 @@ class ToolsCIGMC():
         x_ci_sbr, y_ci_sbr, v_ci_sbr, radius_ci_sbr, sigv_ci_sbr \
             = self._import_cprops_table(self.cprops_ci10,addv=True)
 
-        shape = imhead(self.cube_co10,mode="list")["shape"]
-        box   = "0,0," + str(shape[0]-1) + "," + str(shape[1]-1)
-        data  = imval(self.cube_co10,box=box)
-        coords_co = data["coords"]
-        data_co   = data["data"]
+        """
+        shape   = imhead(self.cube_co10,mode="list")["shape"]
+        box     = "0,0," + str(shape[0]-1) + "," + str(shape[1]-1)
+        data    = imval(self.cube_co10,box=box)
+        coords  = data["coords"]
+        co_data = data["data"]
+        co_x    = coords[:,0,0,0]
+        co_y    = coords[0,:,0,1]
+        co_freq = coords[0,0,:,2]
 
-        print(coords_co)
+        shape   = imhead(self.cube_ci10,mode="list")["shape"]
+        box     = "0,0," + str(shape[0]-1) + "," + str(shape[1]-1)
+        data    = imval(self.cube_ci10,box=box)
+        coords  = data["coords"]
+        ci_data = data["data"]
+        ci_x    = coords[:,0,0,0]
+        ci_y    = coords[0,:,0,1]
+        ci_freq = coords[0,0,:,2]
+        """
+
+        #
+        print(x_co_cone)
+
 
     ############
     # plot_map #
