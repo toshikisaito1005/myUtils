@@ -359,12 +359,12 @@ class ToolsCIGMC():
         x_co_cone, y_co_cone, v_co_cone, radius_co_cone, sigv_co_cone, \
         x_co_nocone, y_co_nocone, v_co_nocone, radius_co_nocone, sigv_co_nocone, \
         x_co_sbr, y_co_sbr, v_co_sbr, radius_co_sbr, sigv_co_sbr \
-            = self._import_cprops_table(self.cprops_co10)
+            = self._import_cprops_table(self.cprops_co10,addv=True)
 
         x_ci_cone, y_ci_cone, v_ci_cone, radius_ci_cone, sigv_ci_cone, \
         x_ci_nocone, y_ci_nocone, v_ci_nocone, radius_ci_nocone, sigv_ci_nocone, \
         x_ci_sbr, y_ci_sbr, v_ci_sbr, radius_ci_sbr, sigv_ci_sbr \
-            = self._import_cprops_table(self.cprops_ci10)
+            = self._import_cprops_table(self.cprops_ci10,addv=True)
 
         shape = imhead(self.cube_co10,mode="list")["shape"]
         box   = "0,0," + str(shape[0]-1) + "," + str(shape[1]-1)
