@@ -366,7 +366,6 @@ class ToolsCIGMC():
         x_ci_sbr, y_ci_sbr, v_ci_sbr, radius_ci_sbr, sigv_ci_sbr \
             = self._import_cprops_table(self.cprops_ci10,addv=True)
 
-        """
         shape   = imhead(self.cube_co10,mode="list")["shape"]
         box     = "0,0," + str(shape[0]-1) + "," + str(shape[1]-1)
         data    = imval(self.cube_co10,box=box)
@@ -376,6 +375,7 @@ class ToolsCIGMC():
         co_y    = coords[0,:,0,1]
         co_freq = coords[0,0,:,2]
 
+        """
         shape   = imhead(self.cube_ci10,mode="list")["shape"]
         box     = "0,0," + str(shape[0]-1) + "," + str(shape[1]-1)
         data    = imval(self.cube_ci10,box=box)
@@ -387,8 +387,21 @@ class ToolsCIGMC():
         """
 
         #
-        print(x_co_cone)
+        for i in range(len(x_co_cone)):
+            this_x_co_cone = x_co_cone[i]
+            this_y_co_cone = y_co_cone[i]
+            this_v_co_cone = v_co_cone[i]
+            this_r_co_cone = int(radius_co_cone[i] / self.scale_pc)
+            this_s_co_cone = sigv_co_cone[i]
 
+            x_center = np.argmin(np.abs((co_x-this_x_co_cone)))
+            x_left   = x_center - this_r_co_cone*2
+            x_right  = x_center + this_r_co_cone*2 + 2
+            y_center = np.argmin(np.abs((co_y-this_y_co_cone)))
+            y_left   = y_center - this_r_co_cone*2
+            y_right  = y_center + this_r_co_cone*2 + 2
+
+            print([x_left:x_right,y_left:y_right])
 
     ############
     # plot_map #
