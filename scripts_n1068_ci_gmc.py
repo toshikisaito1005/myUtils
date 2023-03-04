@@ -401,6 +401,10 @@ class ToolsCIGMC():
             y_left   = y_center - this_r_co_cone*2
             y_right  = y_center + this_r_co_cone*2 + 2
 
+            print(this_x_co_cone)
+            print(this_y_co_cone)
+            print(x_center)
+            print(y_center)
             print([x_left,x_right,y_left,y_right])
 
     ############
