@@ -11,8 +11,23 @@ import matplotlib.patches as patches
 import matplotlib.gridspec as gridspec
 
 d_today = datetime.date.today()
-file_csv = '/Users/saitonu/Desktop/observations_1677244219917.csv'
+file_csv = 'observations_1677244219917.csv'
 dir_plot = '/Users/saitonu/Desktop/n1068_archive_for_cycle10/'
+galname  = 'n1068'
+z        = 0.00379
+file_csv = 'observations_1677474209457.csv'
+dir_plot = '/Users/saitonu/Desktop/n253_archive_for_cycle10/'
+galname  = 'n253'
+z        = 0.00379
+file_csv = 'observations_1677480120762.csv'
+dir_plot = '/Users/saitonu/Desktop/vv114_archive_for_cycle10/'
+galname  = 'vv114'
+z        = 0.020067
+
+file_csv = 'observations_1677738010563.csv'
+dir_plot = '/Users/saitonu/Desktop/circinus_archive_for_cycle10/'
+galname  = 'circinus'
+z        = 0.00145
 
 #  0 'Project code'
 #  1 'ALMA source name'
@@ -66,6 +81,7 @@ def plot_band(
     color='tomato',
     xlim=[84.0,116.0],
     outpng='/Users/saitonu/Desktop/n1068_archive_b3.png',
+    z=0,
     ):
     """
     """
@@ -73,6 +89,9 @@ def plot_band(
 
     # data
     this_band        = selected_data[selected_data[:,4]==band]
+    if len(this_band)==0:
+        return None
+
     this_freq_list   = this_band[:,6]
     x_freq           = []
     for i in range(len(this_freq_list)):
@@ -124,7 +143,7 @@ def plot_band(
     ax.set_xlabel('Observed Freq (GHz)')
     ax.set_ylabel('log Angular Resolution (arcsec) [72 pc/arcsec]')
 
-    plot_lines(ax,ylim)
+    plot_lines(ax,ylim,z)
 
     plt.savefig(outpng, dpi=200)
 
@@ -271,12 +290,16 @@ def plot_proj(
     color='tomato',
     xlim=[84.0,116.0],
     outpng='/Users/saitonu/Desktop/n1068_archive_b3_proj.png',
+    z=0,
     ):
     """
     """
 
     # data
     this_band      = selected_data[selected_data[:,4]==band]
+    if len(this_band)==0:
+        return None
+        
     this_freq_list = this_band[:,6]
     x_freq         = []
     z_proj         = []
@@ -311,7 +334,7 @@ def plot_proj(
     ax.set_xlabel('Observed Frequency (GHz)')
     ax.set_ylabel('Project Code')
 
-    plot_lines(ax,[0,len(z_proj)+1])
+    plot_lines(ax,[0,len(z_proj)+1],z)
 
     plt.savefig(outpng, dpi=200)
 
@@ -322,23 +345,23 @@ if not done:
 ########
 # plot #
 ########
-"""
-plot_band(data,'3',cm.rainbow(6/6.),[84,116],dir_plot+'n1068_archive_b3.png')
-plot_band(data,'4',cm.rainbow(5/6.),[125,163],dir_plot+'n1068_archive_b4.png')
-plot_band(data,'5',cm.rainbow(4/6.),[163,211],dir_plot+'n1068_archive_b5.png')
-plot_band(data,'6',cm.rainbow(3/6.),[211,275],dir_plot+'n1068_archive_b6.png')
-plot_band(data,'7',cm.rainbow(2/6.),[275,373],dir_plot+'n1068_archive_b7.png')
-plot_band(data,'8',cm.rainbow(1/6.),[385,500],dir_plot+'n1068_archive_b8.png')
-plot_band(data,'9',cm.rainbow(0/6.),[602,720],dir_plot+'n1068_archive_b9.png')
-"""
+plot_band(data,'3',cm.rainbow(6/6.),[84,116],dir_plot+galname+'_archive_b3.png',z)
+plot_band(data,'4',cm.rainbow(5/6.),[125,163],dir_plot+galname+'_archive_b4.png',z)
+plot_band(data,'5',cm.rainbow(4/6.),[163,211],dir_plot+galname+'_archive_b5.png',z)
+plot_band(data,'6',cm.rainbow(3/6.),[211,275],dir_plot+galname+'_archive_b6.png',z)
+plot_band(data,'7',cm.rainbow(2/6.),[275,373],dir_plot+galname+'_archive_b7.png',z)
+plot_band(data,'8',cm.rainbow(1/6.),[385,500],dir_plot+galname+'_archive_b8.png',z)
+plot_band(data,'9',cm.rainbow(0/6.),[602,720],dir_plot+galname+'_archive_b9.png',z)
+plot_band(data,'10',cm.rainbow(0/6.),[787,950],dir_plot+galname+'_archive_b10.png',z)
 
-plot_proj(data,'3',cm.rainbow(6/6.),[84,116],dir_plot+'n1068_archive_b3_proj.png')
-plot_proj(data,'4',cm.rainbow(5/6.),[125,163],dir_plot+'n1068_archive_b4_proj.png')
-plot_proj(data,'5',cm.rainbow(4/6.),[163,211],dir_plot+'n1068_archive_b5_proj.png')
-plot_proj(data,'6',cm.rainbow(3/6.),[211,275],dir_plot+'n1068_archive_b6_proj.png')
-plot_proj(data,'7',cm.rainbow(2/6.),[275,373],dir_plot+'n1068_archive_b7_proj.png')
-plot_proj(data,'8',cm.rainbow(1/6.),[385,500],dir_plot+'n1068_archive_b8_proj.png')
-plot_proj(data,'9',cm.rainbow(0/6.),[602,720],dir_plot+'n1068_archive_b9_proj.png')
+plot_proj(data,'3',cm.rainbow(6/6.),[84,116],dir_plot+galname+'_archive_b3_proj.png',z)
+plot_proj(data,'4',cm.rainbow(5/6.),[125,163],dir_plot+galname+'_archive_b4_proj.png',z)
+plot_proj(data,'5',cm.rainbow(4/6.),[163,211],dir_plot+galname+'_archive_b5_proj.png',z)
+plot_proj(data,'6',cm.rainbow(3/6.),[211,275],dir_plot+galname+'_archive_b6_proj.png',z)
+plot_proj(data,'7',cm.rainbow(2/6.),[275,373],dir_plot+galname+'_archive_b7_proj.png',z)
+plot_proj(data,'8',cm.rainbow(1/6.),[385,500],dir_plot+galname+'_archive_b8_proj.png',z)
+plot_proj(data,'9',cm.rainbow(0/6.),[602,720],dir_plot+galname+'_archive_b9_proj.png',z)
+plot_proj(data,'10',cm.rainbow(0/6.),[787,950],dir_plot+galname+'_archive_b10_proj.png',z)
 
 #######
 # end #

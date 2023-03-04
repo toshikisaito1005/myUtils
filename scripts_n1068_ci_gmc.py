@@ -230,6 +230,7 @@ class ToolsCIGMC():
         # analysis
         do_prepare   = False,
         print_cprops = False,
+        do_stack     = False,
         # plot figures in paper
         map_cprops   = False,
         plot_cprops  = False,
@@ -338,6 +339,37 @@ class ToolsCIGMC():
             delin=delin,
             )
         """
+
+    ############
+    # do_stack #
+    ############
+
+    def do_stack(
+        self,
+        ):
+        """
+        """
+
+        taskname = self.modname + sys._getframe().f_code.co_name
+        check_first(self.cprops_co10,taskname)
+
+        x_co_cone, y_co_cone, v_co_cone, radius_co_cone, sigv_co_cone, \
+        x_co_nocone, y_co_nocone, v_co_nocone, radius_co_nocone, sigv_co_nocone, \
+        x_co_sbr, y_co_sbr, v_co_sbr, radius_co_sbr, sigv_co_sbr \
+            = self._import_cprops_table(self.cprops_co10)
+
+        x_ci_cone, y_ci_cone, v_ci_cone, radius_ci_cone, sigv_ci_cone, \
+        x_ci_nocone, y_ci_nocone, v_ci_nocone, radius_ci_nocone, sigv_ci_nocone, \
+        x_ci_sbr, y_ci_sbr, v_ci_sbr, radius_ci_sbr, sigv_ci_sbr \
+            = self._import_cprops_table(self.cprops_ci10)
+
+        shape = imhead(self.cube_co10,mode="list")["shape"]
+        box   = "0,0," + str(shape[0]-1) + "," + str(shape[1]-1)
+        data  = imval(imagename,box=box)
+        coords_co = data["coords"]
+        data_co   = data["data"]
+
+        print(coords_co)
 
     ############
     # plot_map #
@@ -935,6 +967,7 @@ class ToolsCIGMC():
     def _import_cprops_table(
         self,
         table,
+        addv=False,
         ):
         """
         """
@@ -946,12 +979,15 @@ class ToolsCIGMC():
         # extract parameters
         x      = (tb["XCTR_DEG"] - self.ra_agn) * -3600.
         y      = (tb["YCTR_DEG"] - self.dec_agn) * 3600.
+        v      = tb["VCTR_KMS"]
         s2n    = tb["S2N"]
         radius = tb["RAD_NODC_NOEX"]
         sigv   = tb["SIGV_NODC_NOEX"]
         mvir   = tb["MVIR_MSUN"]
         tpeak  = tb["TMAX_K"]
         mci    = tb["MLUM_MSUN"]
+        xdeg   = tb["XCTR_DEG"]
+        ydeg   = tb["YCTR_DEG"]
         x_fov2 = (tb["XCTR_DEG"] - self.ra_fov2) * -3600.
         y_fov2 = (tb["YCTR_DEG"] - self.dec_fov2) * -3600.
         x_fov3 = (tb["XCTR_DEG"] - self.ra_fov3) * -3600.
@@ -980,29 +1016,41 @@ class ToolsCIGMC():
         # data
         x_cone      = x[cut_cone]
         y_cone      = y[cut_cone]
+        v_cone      = v[cut_cone]
         radius_cone = radius[cut_cone]
         sigv_cone   = sigv[cut_cone]
         mvir_cone   = mvir[cut_cone]
         tpeak_cone  = tpeak[cut_cone]
         mci_cone    = mci[cut_cone]
+        xdeg_cone   = xdeg[cut_cone]
+        ydeg_cone   = ydeg[cut_cone]
 
         x_nocone      = x[cut_nocone]
         y_nocone      = y[cut_nocone]
+        v_nocone      = v[cut_nocone]
         radius_nocone = radius[cut_nocone]
         sigv_nocone   = sigv[cut_nocone]
         mvir_nocone   = mvir[cut_nocone]
         tpeak_nocone  = tpeak[cut_nocone]
         mci_nocone    = mci[cut_nocone]
+        xdeg_nocone   = xdeg[cut_nocone]
+        ydeg_nocone   = ydeg[cut_nocone]
 
         x_sbr      = x[cut_sbr]
         y_sbr      = y[cut_sbr]
+        v_sbr      = v[cut_sbr]
         radius_sbr = radius[cut_sbr]
         sigv_sbr   = sigv[cut_sbr]
         mvir_sbr   = mvir[cut_sbr]
         tpeak_sbr  = tpeak[cut_sbr]
         mci_sbr    = mci[cut_sbr]
+        xdeg_sbr   = xdeg[cut_sbr]
+        ydeg_sbr   = ydeg[cut_sbr]
 
-        return x_cone, y_cone, radius_cone, sigv_cone, mvir_cone, tpeak_cone, mci_cone, x_nocone, y_nocone, radius_nocone, sigv_nocone, mvir_nocone, tpeak_nocone, mci_nocone, x_sbr, y_sbr, radius_sbr, sigv_sbr, mvir_sbr, tpeak_sbr, mci_sbr
+        if addv==False:
+            return x_cone, y_cone, radius_cone, sigv_cone, mvir_cone, tpeak_cone, mci_cone, x_nocone, y_nocone, radius_nocone, sigv_nocone, mvir_nocone, tpeak_nocone, mci_nocone, x_sbr, y_sbr, radius_sbr, sigv_sbr, mvir_sbr, tpeak_sbr, mci_sbr
+        else:
+            return xdeg_cone, ydeg_cone, v_cone, radius_cone, sigv_cone, xdeg_nocone, ydeg_nocone, v_nocone, radius_nocone, sigv_nocone, xdeg_sbr, ydeg_sbr, v_sbr, radius_sbr, sigv_sbr
 
     ##############
     # map_cprops #
