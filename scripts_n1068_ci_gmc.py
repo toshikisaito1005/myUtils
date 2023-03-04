@@ -294,6 +294,9 @@ class ToolsCIGMC():
             print("        )")
             print("    os.system('mv ' + cubefile[:-5]+'.props.fits' + ' ' + outfile)")
 
+        if do_stack==True:
+            self.do_stack()
+
         if map_cprops==True:
             self.map_cprops()
 
