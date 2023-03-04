@@ -368,7 +368,7 @@ class ToolsCIGMC():
 
         shape = imhead(self.cube_co10,mode="list")["shape"]
         box   = "0,0," + str(shape[0]-1) + "," + str(shape[1]-1)
-        data  = imval(imagename,box=box)
+        data  = imval(self.cube_co10,box=box)
         coords_co = data["coords"]
         data_co   = data["data"]
 
