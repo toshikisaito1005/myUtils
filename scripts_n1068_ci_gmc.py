@@ -245,6 +245,7 @@ class ToolsCIGMC():
         # analysis
         if do_prepare==True:
             self.do_align()
+            self.do_align_cube()
 
         if print_cprops==True:
             print("### conda activate cprops")
@@ -1286,6 +1287,24 @@ class ToolsCIGMC():
             colorlog  = True,
             set_cmap  = "Greys",
             )
+
+    #################
+    # do_align_cube #
+    #################
+
+    def do_align_cube(
+        self,
+        ):
+        """
+        """
+
+        taskname = self.modname + sys._getframe().f_code.co_name
+        check_first(self.cube_co10,taskname)
+
+        # regrid co10 to ci10
+        run_imregrid(self.cube_co10,template,self.cube_co10+"_tmp1",axes=[0,1])
+        run_imregrid(self.ncube_co10,template,self.ncube_co10+"_tmp1",axes=[0,1])
+        os.system("rm -rf " + template)        
 
     ############
     # do_align #
