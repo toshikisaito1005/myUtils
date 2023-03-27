@@ -1316,8 +1316,11 @@ class ToolsCIGMC():
         run_importfits("mask.fits","mask.image",delin=True)
         run_immath_two(self.cube_co10+"_tmp1","mask.image",self.cube_co10+"_tmp2","IM0*IM1")
         os.system("rm -rf " + template)
-        #os.system("rm -rf mask.image")
+        os.system("rm -rf mask.image")
         os.system("rm -rf " + self.cube_co10 + "_tmp1")
+
+        # exportfits
+        run_exportfits(self.cube_co10+"_tmp2",self.cube_co10.replce(".fits","_aligned.fits"),delin=True)
 
     ############
     # do_align #
