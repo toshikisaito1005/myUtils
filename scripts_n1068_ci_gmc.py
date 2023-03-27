@@ -1320,7 +1320,7 @@ class ToolsCIGMC():
         os.system("rm -rf " + self.cube_co10 + "_tmp1")
 
         # exportfits
-        run_exportfits(self.cube_co10+"_tmp2",self.cube_co10.replce(".fits","_aligned.fits"),delin=True)
+        run_exportfits(self.cube_co10+"_tmp2",self.cube_co10.replace(".fits","_aligned.fits"),delin=True)
 
     ############
     # do_align #
