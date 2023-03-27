@@ -1310,9 +1310,11 @@ class ToolsCIGMC():
         run_imregrid(self.ncube_co10,template,self.ncube_co10+"_tmp1",axes=[0,1])
 
         # mask
-        makemask(mode="copy", inpimage=template, inpmask=template+":mask0", output="mask.image", overwrite=False)     
+        makemask(mode="copy", inpimage=template, inpmask=template+":mask0", output="mask.image", overwrite=False)
+        run_immath_two(self.cube_co10+"_tmp1","mask.image",self.cube_co10+"_tmp2","IM0*IM1")
         os.system("rm -rf " + template)
-
+        os.system("rm -rf mask.image")
+        os.system("rm -rf " + self.cube_co10 + "_tmp1")
 
     ############
     # do_align #
