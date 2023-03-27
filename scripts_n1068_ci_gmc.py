@@ -1312,7 +1312,7 @@ class ToolsCIGMC():
         # mask
         os.system("rm -rf mask.image")
         makemask(mode="copy", inpimage=template, inpmask=template+":mask0", output="mask.image", overwrite=False)
-        run_exportfits("mask.image","mask.fits",delin=True)
+        run_exportfits("mask.image","mask.fits",dropstokes=True,delin=True)
         run_importfits("mask.fits","mask.image",delin=True)
         run_immath_two(self.cube_co10+"_tmp1","mask.image",self.cube_co10+"_tmp2","IM0*IM1")
         os.system("rm -rf " + template)
