@@ -1303,7 +1303,7 @@ class ToolsCIGMC():
 
         # read template
         template = "template.image"
-        run_importfits(self.cube_ci10,template)
+        run_importfits(self.cube_ci10,template,defaultaxes=True)
 
         # regrid co10 to ci10
         run_imregrid(self.cube_co10,template,self.cube_co10+"_tmp1",axes=[0,1])
