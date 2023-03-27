@@ -1301,6 +1301,10 @@ class ToolsCIGMC():
         taskname = self.modname + sys._getframe().f_code.co_name
         check_first(self.cube_co10,taskname)
 
+        # read template
+        template = "template.image"
+        run_importfits(self.cube_ci10,template)
+
         # regrid co10 to ci10
         run_imregrid(self.cube_co10,template,self.cube_co10+"_tmp1",axes=[0,1])
         run_imregrid(self.ncube_co10,template,self.ncube_co10+"_tmp1",axes=[0,1])
