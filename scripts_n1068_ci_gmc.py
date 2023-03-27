@@ -1308,10 +1308,10 @@ class ToolsCIGMC():
         # regrid co10 to ci10
         run_imregrid(self.cube_co10,template,self.cube_co10+"_tmp1",axes=[0,1])
         run_imregrid(self.ncube_co10,template,self.ncube_co10+"_tmp1",axes=[0,1])
-        os.system("rm -rf " + template)
 
         # mask
-        makemask(mode="copy", inpimage=self.cube_ci10, inpmask=self.cube_ci10+":mask0", output="mask.image", overwrite=False)     
+        makemask(mode="copy", inpimage=template, inpmask=template+":mask0", output="mask.image", overwrite=False)     
+        os.system("rm -rf " + template)
 
 
     ############
