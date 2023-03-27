@@ -18,19 +18,19 @@ final_             ,,,fig_.png
 # raw maps #
 ############
 cube_co10          ,,,ngc1068_b3_12m+7m_co10_0p8as.fits
-cube_ci10          ,,,ngc1068_b8_12m+7m_ci10.fits
+cube_ci10          ,,,ngc1068_b8_12m+7m_ci10_0p8as.fits
 #
 ncube_co10         ,,,ngc1068_b3_12m+7m_co10_0p8as_noise.fits
-ncube_ci10         ,,,ngc1068_b8_12m+7m_ci10_noise.fits
+ncube_ci10         ,,,ngc1068_b8_12m+7m_ci10_0p8as_noise.fits
 #
 mask_co10          ,,,ngc1068_b3_12m+7m_co10_0p8as_strictmask.fits
-mask_ci10          ,,,ngc1068_b8_12m+7m_ci10_strictmask.fits
+mask_ci10          ,,,ngc1068_b8_12m+7m_ci10_0p8as_strictmask.fits
 #
 mom0_co10          ,,,ngc1068_b3_12m+7m_co10_0p8as_strict_mom0.fits
-mom0_ci10          ,,,ngc1068_b8_12m+7m_ci10_strict_mom0.fits
+mom0_ci10          ,,,ngc1068_b8_12m+7m_ci10_0p8as_strict_mom0.fits
 #
 emom0_co10         ,,,ngc1068_b3_12m+7m_co10_0p8as_strict_emom0.fits
-emom0_ci10         ,,,ngc1068_b8_12m+7m_ci10_strict_emom0.fits
+emom0_ci10         ,,,ngc1068_b8_12m+7m_ci10_0p8as_strict_emom0.fits
 # cprops fits table
 cprops_co10        ,,,ngc1068_co10_cprops.fits
 cprops_ci10        ,,,ngc1068_ci10_cprops.fits
