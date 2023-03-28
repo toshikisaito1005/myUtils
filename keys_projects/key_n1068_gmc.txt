@@ -31,6 +31,9 @@ mom0_ci10          ,,,ngc1068_b8_12m+7m_ci10_0p8as_strict_mom0.fits
 #
 emom0_co10         ,,,ngc1068_b3_12m+7m_co10_0p8as_strict_emom0.fits
 emom0_ci10         ,,,ngc1068_b8_12m+7m_ci10_0p8as_strict_emom0.fits
+#
+tpeak_co10         ,,,ngc1068_b3_12m+7m_co10_0p8as_broad_tpeak.fits
+tpeak_ci10         ,,,ngc1068_b8_12m+7m_ci10_0p8as_broad_tpeak.fits
 # cprops fits table
 cprops_co10        ,,,ngc1068_co10_cprops.fits
 cprops_ci10        ,,,ngc1068_ci10_cprops.fits

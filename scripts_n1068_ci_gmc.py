@@ -132,6 +132,9 @@ class ToolsCIGMC():
         self.emom0_co10  = self.dir_raw + self._read_key("emom0_co10")
         self.emom0_ci10  = self.dir_raw + self._read_key("emom0_ci10")
 
+        self.tpeak_co10  = self.dir_raw + self._read_key("tpeak_co10")
+        self.tpeak_ci10  = self.dir_raw + self._read_key("tpeak_ci10")
+
         self.cprops_co10 = self.dir_raw + self._read_key("cprops_co10")
         self.cprops_ci10 = self.dir_raw + self._read_key("cprops_ci10")
 
@@ -1112,7 +1115,7 @@ class ToolsCIGMC():
 
         # extract tag
         self._plot_cprops_map(
-            self.outfits_mom0_co10,
+            self.tpeak_co10,#self.outfits_mom0_co10,
             tb_co10,
             "CO(1-0)",
             self.outpng_cprops_co10_agn,
@@ -1120,7 +1123,7 @@ class ToolsCIGMC():
             self.outpng_cprops_co10_fov3,
             )
         self._plot_cprops_map(
-            self.outfits_mom0_ci10,
+            self.tpeak_ci10,#self.outfits_mom0_ci10,
             tb_ci10,
             "[CI](1-0)",
             self.outpng_cprops_ci10_agn,
@@ -1128,7 +1131,7 @@ class ToolsCIGMC():
             self.outpng_cprops_ci10_fov3,
             )
         self._plot_cprops_map2(
-            self.outfits_mom0_ci10,
+            self.tpeak_ci10,#self.outfits_mom0_ci10,
             tb_co10,
             tb_ci10,
             "[CI](1-0)+CO(1-0)",
