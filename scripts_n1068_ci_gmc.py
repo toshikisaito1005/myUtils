@@ -582,9 +582,11 @@ class ToolsCIGMC():
         ad  = [0.215,0.83,0.10,0.90]
         myax_set(ax1, "both", xlim, ylim, title, xlabel, ylabel, adjust=ad)
 
+        alpha=1.0#0.3
+        size=200#100
         ax1.scatter(np.log10(radius_co_cone*2.0), np.log10(sigv_co_cone), lw=0, s=200, color="deepskyblue", alpha=1.0)
-        ax1.scatter(np.log10(radius_co_nocone*2.0), np.log10(sigv_co_nocone), lw=0, s=100, color="deepskyblue", alpha=0.3)
-        ax1.scatter(np.log10(radius_co_sbr*2.0), np.log10(sigv_co_sbr), lw=0, s=100, color="deepskyblue", alpha=0.3)
+        ax1.scatter(np.log10(radius_co_nocone*2.0), np.log10(sigv_co_nocone), lw=0, s=size, color="deepskyblue", alpha=alpha)
+        ax1.scatter(np.log10(radius_co_sbr*2.0), np.log10(sigv_co_sbr), lw=0, s=size, color="deepskyblue", alpha=alpha)
 
         X, Y, Z = density_estimation(
             np.r_[np.log10(radius_co_cone*2.0),np.log10(radius_co_nocone*2.0),np.log10(radius_co_sbr*2.0)],
@@ -593,8 +595,8 @@ class ToolsCIGMC():
         ax1.contour(X, Y, Z, colors="blue")
 
         ax1.scatter(np.log10(radius_ci_cone*2.0), np.log10(sigv_ci_cone), lw=0, s=200, color="tomato", alpha=1.0)
-        ax1.scatter(np.log10(radius_ci_nocone*2.0), np.log10(sigv_ci_nocone), lw=0, s=100, color="tomato", alpha=0.3)
-        ax1.scatter(np.log10(radius_ci_sbr*2.0), np.log10(sigv_ci_sbr), lw=0, s=100, color="tomato", alpha=0.3)
+        ax1.scatter(np.log10(radius_ci_nocone*2.0), np.log10(sigv_ci_nocone), lw=0, s=size, color="tomato", alpha=alpha)
+        ax1.scatter(np.log10(radius_ci_sbr*2.0), np.log10(sigv_ci_sbr), lw=0, s=size, color="tomato", alpha=alpha)
 
         X, Y, Z = density_estimation(
             np.r_[np.log10(radius_ci_cone*2.0),np.log10(radius_ci_nocone*2.0),np.log10(radius_ci_sbr*2.0)],

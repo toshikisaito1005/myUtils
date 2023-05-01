@@ -1,0 +1,42 @@
+# %ECSV 0.9
+# ---
+# datatype:
+# - {name: target, datatype: string}
+# - {name: dist, datatype: float32}
+# delimiter: ','
+# schema: astropy-2.0
+#target,dist
+arp220,81.2
+arp256n,122.6
+arp256s,122.6
+eso267,78.2
+eso297g011,76.6
+eso297g012,76.6
+eso319,72.1
+eso507,95.0
+eso557,94.9
+ic4518e,67.5
+ic4518w,67.5
+ic5179,49.4
+iras06592,99.6
+iras08355,113.4
+iras13120,136.6
+irasf10409,94.9
+irasf13182,104.1
+irasf17138,76.6
+irasf17207,192.9
+irasf18293,81.2
+irasf18341,67.5
+irasf23007,72.1
+mcg02-33-098,67.5
+ngc1614,67.5
+ngc2369,44.9
+ngc3110,72.1
+ngc3256,40.3
+ngc5257,99.6
+ngc5258,99.6
+ngc5331n,150.4
+ngc5331s,150.4
+ngc5331,150.4
+ngc6240,108.7
+ngc7130,72.0
