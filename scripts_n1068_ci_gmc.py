@@ -126,11 +126,11 @@ class ToolsCIGMC():
         self.mask_co10   = self.dir_raw + self._read_key("mask_co10")
         self.mask_ci10   = self.dir_raw + self._read_key("mask_ci10")
 
-        self.mom0_co10   = self.dir_raw + self._read_key("mom2_co10")
-        self.mom0_ci10   = self.dir_raw + self._read_key("mom2_ci10")
+        self.mom0_co10   = self.dir_raw + self._read_key("mom0_co10")
+        self.mom0_ci10   = self.dir_raw + self._read_key("mom0_ci10")
 
-        self.emom0_co10  = self.dir_raw + self._read_key("emom2_co10")
-        self.emom0_ci10  = self.dir_raw + self._read_key("emom2_ci10")
+        self.emom0_co10  = self.dir_raw + self._read_key("emom0_co10")
+        self.emom0_ci10  = self.dir_raw + self._read_key("emom0_ci10")
 
         self.tpeak_co10  = self.dir_raw + self._read_key("tpeak_co10")
         self.tpeak_ci10  = self.dir_raw + self._read_key("tpeak_ci10")
