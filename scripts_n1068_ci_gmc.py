@@ -514,7 +514,7 @@ class ToolsCIGMC():
 
         xlim     = [0, 10*rms]
         ylim     = [0, np.max(histy)*1.05]
-        title    = "CO(1-0) Cube"
+        title    = "[CI](1-0) Cube"
         xlabel   = "Absolute voxel value (K)"
         ylabel   = "Count"
         binwidth = (histrange[1]-histrange[0]) / 1000.
@@ -569,7 +569,7 @@ class ToolsCIGMC():
 
         xlim     = [0, 10*rms]
         ylim     = [0, np.max(histy)*1.05]
-        title    = "CO(1-0) SNR Cube"
+        title    = "[CI](1-0) SNR Cube"
         xlabel   = "Absolute voxel SNR"
         ylabel   = "Count"
         binwidth = (histrange[1]-histrange[0]) / 1000.
