@@ -448,7 +448,7 @@ class ToolsCIGMC():
         xlim     = [0, 10*rms]
         ylim     = [0, np.max(histy)*1.05]
         title    = "CO(1-0) SNR Cube"
-        xlabel   = "Absolute voxel value (K)"
+        xlabel   = "Absolute voxel SNR"
         ylabel   = "Count"
         binwidth = (histrange[1]-histrange[0]) / 1000.
         c_pos    = "tomato"
@@ -483,11 +483,11 @@ class ToolsCIGMC():
         ax.text(0.95, 0.83, "best-fit Gaussian", color="black", horizontalalignment="right", transform=ax.transAxes, size=self.legend_fontsize, fontweight="bold")
         #
         x    = rms / (xlim[1]-xlim[0]) + 0.01
-        text = r"1$\sigma$ = "+str(rms).ljust(5, "0") + " K"
+        text = r"1$\sigma$ = "+str(rms).ljust(5, "0")
         ax.text(x, 0.96, text, color="black", horizontalalignment="left", verticalalignment="top", transform=ax.transAxes, rotation=90)
         #
         x    = rms*2.5 / (xlim[1]-xlim[0]) + 0.01
-        text = str(2.5)+r"$\sigma$ = "+str(np.round(rms*2.5,3)).ljust(5, "0") + " K"
+        text = str(2.5)+r"$\sigma$ = "+str(np.round(rms*2.5,3)).ljust(5, "0")
         ax.text(x, 0.96, text, color="black", horizontalalignment="left", verticalalignment="top", transform=ax.transAxes, rotation=90)
 
         plt.savefig(self.outpng_hist_co10_snr, dpi=self.fig_dpi)
