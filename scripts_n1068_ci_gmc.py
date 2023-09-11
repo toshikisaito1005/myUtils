@@ -299,7 +299,7 @@ class ToolsCIGMC():
             print("        )")
             print("    os.system('mv ' + cubefile[:-5]+'.props.fits' + ' ' + outfile)")
 
-        if do_stack==True:
+        if data_stats==True:
             self.data_stats()
 
         """
