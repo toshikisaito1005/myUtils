@@ -385,14 +385,14 @@ class ToolsCIGMC():
         ndata   = ndata["data"].flatten()
         data    = data[data/ndata>-10000]
 
-        histx, histy, histrange, peak, rms, x_bestfit, y_bestfit, _ = self._gaussfit_noise(data)
+        histx, histy, histrange, peak, rms, x_bestfit, y_bestfit, _ = self._gaussfit_noise(data,bins=100)
 
         xlim     = [0, 10*rms]
         ylim     = [0, np.max(histy)*2.02]
         title    = "CO(1-0) Cube"
         xlabel   = "Absolute voxel value (K)"
         ylabel   = "Count"
-        binwidth = (histrange[1]-histrange[0]) / 30.
+        binwidth = (histrange[1]-histrange[0]) / 100.
         c_pos    = "tomato"
         c_neg    = "deepskyblue"
 
