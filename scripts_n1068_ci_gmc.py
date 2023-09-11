@@ -375,11 +375,6 @@ class ToolsCIGMC():
         taskname = self.modname + sys._getframe().f_code.co_name
         check_first(self.cprops_co10,taskname)
 
-        #c_ci,_  = imval_all(self.cube_ci10)
-        #nc_ci,_ = imval_all(self.ncube_ci10)
-        #c_co,_  = imval_all(self.cube_co10.replace(".fits","_aligned.fits"))
-        #nc_co,_ = imval_all(self.ncube_co10.replace(".fits","_aligned.fits"))
-
         ###########
         # CO(1-0) #
         ###########
@@ -393,7 +388,6 @@ class ToolsCIGMC():
         ndata,_ = imval_all(self.ncube_co10.replace(".fits","_aligned.fits"))
         ndata   = ndata["data"].flatten()
         data_co10  = data[data/ndata>-10000]
-        ndata_co10 = ndata[data/ndata>-10000]
 
         histx, histy, histrange, peak, rms, x_bestfit, y_bestfit, _ = self._gaussfit_noise(data_co10,bins=1000)
 
@@ -512,7 +506,6 @@ class ToolsCIGMC():
         ndata,_ = imval_all(self.ncube_ci10)
         ndata   = ndata["data"].flatten()
         data_ci10  = data[data/ndata>-10000]
-        ndata_ci10 = data[data/ndata>-10000]
 
         histx, histy, histrange, peak, rms, x_bestfit, y_bestfit, _ = self._gaussfit_noise(data_ci10,bins=1000)
 
@@ -625,6 +618,22 @@ class ToolsCIGMC():
         ###########
         # prepare #
         ###########
+
+        data,_  = imval_all(self.cube_co10.replace(".fits","_aligned.fits"))
+        data    = data["data"].flatten()
+        ndata,_ = imval_all(self.ncube_co10.replace(".fits","_aligned.fits"))
+        ndata   = ndata["data"].flatten()
+
+        data2,_  = imval_all(self.cube_ci10)
+        data2    = data["data"].flatten()
+        ndata2,_ = imval_all(self.ncube_ci10)
+        ndata2   = ndata["data"].flatten()
+
+        cut        = np.where((data>-100000) & (ndata>-100000) & (data2>-100000) & (ndata2>-100000))
+        data_co10  = data[cut]
+        ndata_co10 = ndata[cut]
+        data_ci10  = data2[cut]
+        ndata_ci10 = ndata2[cut]
 
         data_ratio = data_ci10 / data_co10
 
