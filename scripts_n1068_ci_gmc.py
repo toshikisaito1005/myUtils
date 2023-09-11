@@ -441,13 +441,13 @@ class ToolsCIGMC():
         # prepare #
         ###########
 
-        snr_co10 = data[data/ndata>-10000] / data[data/ndata>-10000]
+        snr_co10 = data[data/ndata>-10000] / ndata[data/ndata>-10000]
 
         histx, histy, histrange, peak, rms, x_bestfit, y_bestfit, _ = self._gaussfit_noise(snr_co10,bins=1000)
 
         xlim     = [0, 10*rms]
         ylim     = [0, np.max(histy)*1.05]
-        title    = "CO(1-0) Cube"
+        title    = "CO(1-0) SNR Cube"
         xlabel   = "Absolute voxel value (K)"
         ylabel   = "Count"
         binwidth = (histrange[1]-histrange[0]) / 1000.
