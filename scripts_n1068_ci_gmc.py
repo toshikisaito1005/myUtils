@@ -371,10 +371,10 @@ class ToolsCIGMC():
         c_co,_  = imval_all(self.cube_co10.replace(".fits","_aligned.fits"))
         nc_co,_ = imval_all(self.ncube_co10.replace(".fits","_aligned.fits"))
 
-        print(np.median(c_ci["data"]))
-        print(np.median(nc_ci["data"]))
-        print(np.median(c_co["data"]))
-        print(np.median(nc_co["data"]))
+        print(np.nanmedian(c_ci["data"]))
+        print(np.nanmedian(nc_ci["data"]))
+        print(np.nanmedian(c_co["data"]))
+        print(np.nanmedian(nc_co["data"]))
 
     ############
     # do_stack #
