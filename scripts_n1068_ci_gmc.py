@@ -764,6 +764,7 @@ class ToolsCIGMC():
 
         # data
         histrange    = [data.min(), data.max()]
+        print(histrange)
         p84_data     = np.percentile(data, 16) * -1  # 84th percentile of the inversed histogram
         histogram    = np.histogram(data, bins=bins, range=histrange)
         histx, histy = histogram[1][:-1], histogram[0]
