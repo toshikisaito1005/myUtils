@@ -233,13 +233,14 @@ class ToolsCIGMC():
         # analysis
         do_prepare   = False,
         print_cprops = False,
-        do_stack     = False,
+        data_stats   = False,
         # plot figures in paper
+        # supplement
+        do_stack     = False,
         map_cprops   = False,
         plot_cprops  = False,
         plot_larson  = False,
         plot_map     = False,
-        # supplement
         ):
         """
         This method runs all the methods which will create figures in the paper.
@@ -299,6 +300,10 @@ class ToolsCIGMC():
             print("    os.system('mv ' + cubefile[:-5]+'.props.fits' + ' ' + outfile)")
 
         if do_stack==True:
+            self.data_stats()
+
+        """
+        if do_stack==True:
             self.do_stack()
 
         if map_cprops==True:
@@ -315,6 +320,7 @@ class ToolsCIGMC():
 
         if plot_map==True:
             self.plot_map()
+        """
 
     ####################
     # immagick_figures #
@@ -346,6 +352,29 @@ class ToolsCIGMC():
             delin=delin,
             )
         """
+
+    ##############
+    # data_stats #
+    ##############
+
+    def data_stats(
+        self,
+        ):
+        """
+        """
+
+        taskname = self.modname + sys._getframe().f_code.co_name
+        check_first(self.cprops_co10,taskname)
+
+        c_ci,_  = imval_all(self.cube_ci10)
+        nc_ci,_ = imval_all(self.ncube_ci10)
+        c_co,_  = imval_all(self.cube_co10.replace(".fits","_aligned.fits"))
+        nc_co,_ = imval_all(self.ncube_co10.replace(".fits","_aligned.fits"))
+
+        print(np.median(c_ci["data"]))
+        print(np.median(nc_ci["data"]))
+        print(np.median(c_co["data"]))
+        print(np.median(nc_co["data"]))
 
     ############
     # do_stack #
