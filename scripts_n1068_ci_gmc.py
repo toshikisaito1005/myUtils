@@ -695,14 +695,14 @@ class ToolsCIGMC():
         ndata_ratio = np.abs(data_ci10 / data_co10 * np.sqrt((ndata_ci10/data_ci10)**2 + (ndata_co10/data_co10)**2))
         snr_ratio   = data_ratio / ndata_ratio
 
-        histx, histy, histrange, peak, rms, x_bestfit, y_bestfit, _ = self._gaussfit_noise(snr_ratio,bins=5000)
+        histx, histy, histrange, peak, rms, x_bestfit, y_bestfit, _ = self._gaussfit_noise(snr_ratio,bins=500)
 
         xlim     = [0, 10*rms]
         ylim     = [0, np.max(histy)*1.05]
         title    = "Ratio SNR Cube"
         xlabel   = "Absolute voxel SNR"
         ylabel   = "Count"
-        binwidth = (histrange[1]-histrange[0]) / 5000.
+        binwidth = (histrange[1]-histrange[0]) / 500.
         c_pos    = "tomato"
         c_neg    = "deepskyblue"
 
