@@ -50,7 +50,11 @@ outfits_mom0_ratio ,,,n1068_ratio_mom0.fits
 ######################
 # text files
 
-# png files
+# png giles
+outpng_hist_co10_pix       ,,,outpng_stats_co10_pix.png
+outpng_hist_ci10_pix       ,,,outpng_stats_ci10_pix.png
+
+# png files tentative
 outpng_cprops_co10_agn       ,,,fig_co10_mom0_gmc_fov1.png
 outpng_cprops_ci10_agn       ,,,fig_ci10_mom0_gmc_fov1.png
 outpng_cprops_ci10_co10_agn  ,,,fig_ci10_co10_mom0_gmc_fov1.png

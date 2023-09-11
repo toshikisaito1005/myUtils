@@ -188,6 +188,9 @@ class ToolsCIGMC():
         """
         """
 
+        self.outpng_hist_co10_pix = self.dir_products + self._read_key("outpng_hist_co10_pix")
+        self.outpng_hist_ci10_pix = self.dir_products + self._read_key("outpng_hist_ci10_pix")
+
         # output png
         self.outpng_cprops_co10_agn       = self.dir_products + self._read_key("outpng_cprops_co10_agn")
         self.outpng_cprops_ci10_agn       = self.dir_products + self._read_key("outpng_cprops_ci10_agn")
@@ -366,15 +369,105 @@ class ToolsCIGMC():
         taskname = self.modname + sys._getframe().f_code.co_name
         check_first(self.cprops_co10,taskname)
 
-        c_ci,_  = imval_all(self.cube_ci10)
-        nc_ci,_ = imval_all(self.ncube_ci10)
-        c_co,_  = imval_all(self.cube_co10.replace(".fits","_aligned.fits"))
-        nc_co,_ = imval_all(self.ncube_co10.replace(".fits","_aligned.fits"))
+        #c_ci,_  = imval_all(self.cube_ci10)
+        #nc_ci,_ = imval_all(self.ncube_ci10)
+        #c_co,_  = imval_all(self.cube_co10.replace(".fits","_aligned.fits"))
+        #nc_co,_ = imval_all(self.ncube_co10.replace(".fits","_aligned.fits"))
 
-        print(np.nanmedian(c_ci["data"]))
-        print(np.nanmedian(nc_ci["data"]))
-        print(np.nanmedian(c_co["data"]))
-        print(np.nanmedian(nc_co["data"]))
+        ###########
+        # prepare #
+        ###########
+
+        data,_ = imval_all(self.cube_ci10)
+        data   = data["data"].flatten()
+        histx, histy, histrange, peak, rms, x_bestfit, y_bestfit, _ = self._gaussfit_noise(data)
+
+        xlim     = [0, 10*rms]
+        ylim     = [0, np.max(histy)*1.02]
+        title    = "(a) 4.0\" CO(1-0) Cube (NGC 0628)"
+        xlabel   = "Absolute voxel value (K)"
+        ylabel   = "Count"
+        binwidth = (histrange[1]-histrange[0]) / 30.
+        c_pos    = "tomato"
+        c_neg    = "deepskyblue"
+
+        ########
+        # plot #
+        ########
+
+        plt.figure(figsize=(13,10))
+        gs = gridspec.GridSpec(nrows=10, ncols=10)
+        ax = plt.subplot(gs[0:10,0:10])
+
+        ad = [0.215,0.83,0.10,0.90]
+        myax_set(ax, None, xlim, ylim, title, xlabel, ylabel, adjust=ad)
+        ax.set_yticks(np.linspace(0,20000,3)[1:])
+
+        # plot hists
+        ax.bar(histx, histy, width=binwidth, align="center", lw=0, color=c_pos)
+        ax.bar(-1*histx, histy, width=binwidth, align="center", lw=0, color=c_neg)
+
+        # plot bestfit
+        ax.plot(x_bestfit, y_bestfit, "-", c="black", lw=5)
+
+        # # plot 1 sigma and 2.5sigma dashed vertical lines
+        ax.plot([rms, rms], ylim, "--", color='black', lw=2)
+        ax.plot([rms*2.5, rms*2.5], ylim, "--", color='black', lw=2)
+
+        # legend
+        ax.text(0.95, 0.93, "positive voxel histogram", color=c_pos, horizontalalignment="right", transform=ax.transAxes, size=self.legend_fontsize, fontweight="bold")
+        ax.text(0.95, 0.88, "negative voxel histogram", color=c_neg, horizontalalignment="right", transform=ax.transAxes, size=self.legend_fontsize, fontweight="bold")
+        ax.text(0.95, 0.83, "best-fit Gaussian", color="black", horizontalalignment="right", transform=ax.transAxes, size=self.legend_fontsize, fontweight="bold")
+        #
+        x    = rms / (xlim[1]-xlim[0]) + 0.01
+        text = r"1$\sigma$ = "+str(rms).ljust(5, "0") + " K"
+        ax.text(x, 0.96, text, color="black", horizontalalignment="left", verticalalignment="top", transform=ax.transAxes, rotation=90)
+        #
+        x    = rms*2.5 / (xlim[1]-xlim[0]) + 0.01
+        text = str(2.5)+r"$\sigma$ = "+str(np.round(rms*2.5,3)).ljust(5, "0") + " K"
+        ax.text(x, 0.96, text, color="black", horizontalalignment="left", verticalalignment="top", transform=ax.transAxes, rotation=90)
+
+        plt.savefig(self.outpng_hist_co10_pix, dpi=self.fig_dpi)
+
+    ###################
+    # _gaussfit_noise #
+    ###################
+
+    def _gaussfit_noise(
+        self,
+        data,
+        bins=500,
+        snr=0.5,
+        ):
+        """
+        plot_noise
+        """
+
+        data[np.isnan(data)] = 0
+        data[np.isinf(data)] = 0
+        data = data[data!=0]
+
+        # data
+        histrange    = [data.min(), data.max()]
+        p84_data     = np.percentile(data, 16) * -1  # 84th percentile of the inversed histogram
+        histogram    = np.histogram(data, bins=bins, range=histrange)
+        histx, histy = histogram[1][:-1], histogram[0]
+        histx4fit    = histx[histx<p84_data*snr]
+        histy4fit    = histy[histx<p84_data*snr]
+
+        # fit
+        x_bestfit    = np.linspace(histrange[0], histrange[1], bins)
+        popt,_       = curve_fit(self._func1, histx4fit, histy4fit, p0=[np.max(histy4fit),p84_data], maxfev=10000)
+        peak         = popt[0]
+        rms          = abs(np.round(popt[1], 5))
+        y_bestfit    = self._func1(x_bestfit, peak, rms)
+
+        return histx, histy, histrange, peak, rms, x_bestfit, y_bestfit, p84_data
+
+    def _func1(self, x, a, c):
+        """
+        """
+        return a*np.exp(-(x)**2/(2*c**2))
 
     ############
     # do_stack #
