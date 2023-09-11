@@ -382,7 +382,7 @@ class ToolsCIGMC():
         data,_  = imval_all(self.cube_ci10)
         data    = data["data"].flatten()
         ndata,_ = imval_all(self.ncube_ci10)
-        ndata   = data["data"].flatten()
+        ndata   = ndata["data"].flatten()
         data    = data[data/ndata>-10000]
 
         histx, histy, histrange, peak, rms, x_bestfit, y_bestfit, _ = self._gaussfit_noise(data)
