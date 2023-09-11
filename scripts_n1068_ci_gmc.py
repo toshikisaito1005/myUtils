@@ -631,7 +631,7 @@ class ToolsCIGMC():
         ndata2,_ = imval_all(self.ncube_ci10)
         ndata2   = ndata2["data"].flatten()
 
-        cut        = np.where((data>-100000) & (ndata>-100000) & (data2>-100000) & (ndata2>-100000) & (data2>-1000*data) & (data2<1000*data))
+        cut        = np.where((data>-100000) & (ndata>-100000) & (data2>-100000) & (ndata2>-100000) & (data2>-50*data) & (data2<50*data))
         data_co10  = data[cut]
         ndata_co10 = ndata[cut]
         data_ci10  = data2[cut]
