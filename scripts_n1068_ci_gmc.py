@@ -625,9 +625,9 @@ class ToolsCIGMC():
         ndata   = ndata["data"].flatten()
 
         data2,_  = imval_all(self.cube_ci10)
-        data2    = data["data"].flatten()
+        data2    = data2["data"].flatten()
         ndata2,_ = imval_all(self.ncube_ci10)
-        ndata2   = ndata["data"].flatten()
+        ndata2   = ndata2["data"].flatten()
 
         cut        = np.where((data>-100000) & (ndata>-100000) & (data2>-100000) & (ndata2>-100000))
         data_co10  = data[cut]
@@ -690,7 +690,6 @@ class ToolsCIGMC():
         # prepare #
         ###########
 
-        data_ratio  = data_ci10 / data_co10
         ndata_ratio = data_ci10 / data_co10 * np.sqrt((ndata_ci10/data_ci10)**2 + (ndata_co10/data_co10)**2)
         snr_ratio   = data_ratio / ndata_ratio
 
