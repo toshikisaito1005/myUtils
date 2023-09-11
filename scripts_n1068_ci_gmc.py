@@ -88,6 +88,7 @@ class ToolsCIGMC():
         self.dir_other    = None
         self.dir_products = None
         self.fig_dpi      = 200
+        self.legend_fontsize = 20
 
         # import parameters
         if keyfile_fig is not None:
