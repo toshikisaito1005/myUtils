@@ -375,6 +375,7 @@ class ToolsCIGMC():
         taskname = self.modname + sys._getframe().f_code.co_name
         check_first(self.cprops_co10,taskname)
 
+        """
         ###########
         # CO(1-0) #
         ###########
@@ -610,6 +611,7 @@ class ToolsCIGMC():
         ax.text(x, 0.96, text, color="black", horizontalalignment="left", verticalalignment="top", transform=ax.transAxes, rotation=90)
 
         plt.savefig(self.outpng_hist_ci10_snr, dpi=self.fig_dpi)
+        """
 
         ###################
         # CI(1-0)/CO(1-0) #
@@ -639,8 +641,8 @@ class ToolsCIGMC():
 
         histx, histy, histrange, peak, rms, x_bestfit, y_bestfit, _ = self._gaussfit_noise(data_ratio,bins=1000)
 
-        xlim     = [0, 1] #10*rms]
-        ylim     = [0, 100000] #np.max(histy)*1.05]
+        xlim     = [0, 10*rms]
+        ylim     = [0, np.max(histy)*1.05]
         title    = "Ratio Cube"
         xlabel   = "Absolute voxel value"
         ylabel   = "Count"
