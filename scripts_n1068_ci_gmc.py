@@ -639,14 +639,14 @@ class ToolsCIGMC():
 
         data_ratio = data_ci10 / data_co10
 
-        histx, histy, histrange, peak, rms, x_bestfit, y_bestfit, _ = self._gaussfit_noise(data_ratio,bins=1000)
+        histx, histy, histrange, peak, rms, x_bestfit, y_bestfit, _ = self._gaussfit_noise(data_ratio,bins=10000)
 
         xlim     = [0, 10*rms]
         ylim     = [0, np.max(histy)*1.05]
         title    = "Ratio Cube"
         xlabel   = "Absolute voxel value"
         ylabel   = "Count"
-        binwidth = (histrange[1]-histrange[0]) / 1000.
+        binwidth = (histrange[1]-histrange[0]) / 10000.
         c_pos    = "tomato"
         c_neg    = "deepskyblue"
 
