@@ -189,11 +189,13 @@ class ToolsCIGMC():
         """
         """
 
-        self.outpng_hist_co10_pix = self.dir_products + self._read_key("outpng_hist_co10_pix")
-        self.outpng_hist_ci10_pix = self.dir_products + self._read_key("outpng_hist_ci10_pix")
+        self.outpng_hist_co10_pix  = self.dir_products + self._read_key("outpng_hist_co10_pix")
+        self.outpng_hist_ci10_pix  = self.dir_products + self._read_key("outpng_hist_ci10_pix")
+        self.outpng_hist_ratio_pix = self.dir_products + self._read_key("outpng_hist_ratio_pix")
 
-        self.outpng_hist_co10_snr = self.dir_products + self._read_key("outpng_hist_co10_snr")
-        self.outpng_hist_ci10_snr = self.dir_products + self._read_key("outpng_hist_ci10_snr")
+        self.outpng_hist_co10_snr  = self.dir_products + self._read_key("outpng_hist_co10_snr")
+        self.outpng_hist_ci10_snr  = self.dir_products + self._read_key("outpng_hist_ci10_snr")
+        self.outpng_hist_ratio_snr = self.dir_products + self._read_key("outpng_hist_ratio_snr")
 
         # output png
         self.outpng_cprops_co10_agn       = self.dir_products + self._read_key("outpng_cprops_co10_agn")
@@ -390,7 +392,8 @@ class ToolsCIGMC():
         data    = data["data"].flatten()
         ndata,_ = imval_all(self.ncube_co10.replace(".fits","_aligned.fits"))
         ndata   = ndata["data"].flatten()
-        data_co10 = data[data/ndata>-10000]
+        data_co10  = data[data/ndata>-10000]
+        ndata_co10 = ndata[data/ndata>-10000]
 
         histx, histy, histrange, peak, rms, x_bestfit, y_bestfit, _ = self._gaussfit_noise(data_co10,bins=1000)
 
@@ -508,7 +511,8 @@ class ToolsCIGMC():
         data    = data["data"].flatten()
         ndata,_ = imval_all(self.ncube_ci10)
         ndata   = ndata["data"].flatten()
-        data_ci10 = data[data/ndata>-10000]
+        data_ci10  = data[data/ndata>-10000]
+        ndata_ci10 = data[data/ndata>-10000]
 
         histx, histy, histrange, peak, rms, x_bestfit, y_bestfit, _ = self._gaussfit_noise(data_ci10,bins=1000)
 
@@ -613,6 +617,122 @@ class ToolsCIGMC():
         ax.text(x, 0.96, text, color="black", horizontalalignment="left", verticalalignment="top", transform=ax.transAxes, rotation=90)
 
         plt.savefig(self.outpng_hist_ci10_snr, dpi=self.fig_dpi)
+
+        ###################
+        # CI(1-0)/CO(1-0) #
+        ###################
+
+        ###########
+        # prepare #
+        ###########
+
+        data_ratio = data_ci10 / data_co10
+
+        histx, histy, histrange, peak, rms, x_bestfit, y_bestfit, _ = self._gaussfit_noise(data_ratio,bins=1000)
+
+        xlim     = [0, 10*rms]
+        ylim     = [0, np.max(histy)*1.05]
+        title    = "Ratio Cube"
+        xlabel   = "Absolute voxel value"
+        ylabel   = "Count"
+        binwidth = (histrange[1]-histrange[0]) / 1000.
+        c_pos    = "tomato"
+        c_neg    = "deepskyblue"
+
+        ########
+        # plot #
+        ########
+
+        plt.figure(figsize=(13,10))
+        gs = gridspec.GridSpec(nrows=10, ncols=10)
+        ax = plt.subplot(gs[0:10,0:10])
+
+        ad = [0.215,0.83,0.10,0.90]
+        myax_set(ax, None, xlim, ylim, title, xlabel, ylabel, adjust=ad)
+        #ax.set_yticks(np.linspace(0,20000,3)[1:])
+
+        # plot hists
+        ax.bar(histx, histy, width=binwidth, align="center", lw=0, color=c_pos, alpha=1.0)
+        ax.bar(-1*histx, histy, width=binwidth, align="center", lw=0, color=c_neg, alpha=1.0)
+
+        # plot bestfit
+        ax.plot(x_bestfit, y_bestfit, "-", c="black", lw=5)
+
+        # # plot 1 sigma and 2.5sigma dashed vertical lines
+        ax.plot([rms, rms], ylim, "--", color='black', lw=2)
+        ax.plot([rms*2.5, rms*2.5], ylim, "--", color='black', lw=2)
+
+        # legend
+        ax.text(0.95, 0.93, "positive voxel histogram", color=c_pos, horizontalalignment="right", transform=ax.transAxes, size=self.legend_fontsize, fontweight="bold")
+        ax.text(0.95, 0.88, "negative voxel histogram", color=c_neg, horizontalalignment="right", transform=ax.transAxes, size=self.legend_fontsize, fontweight="bold")
+        ax.text(0.95, 0.83, "best-fit Gaussian", color="black", horizontalalignment="right", transform=ax.transAxes, size=self.legend_fontsize, fontweight="bold")
+        #
+        x    = rms / (xlim[1]-xlim[0]) + 0.01
+        text = r"1$\sigma$ = "+str(rms).ljust(5, "0")
+        ax.text(x, 0.96, text, color="black", horizontalalignment="left", verticalalignment="top", transform=ax.transAxes, rotation=90)
+        #
+        x    = rms*2.5 / (xlim[1]-xlim[0]) + 0.01
+        text = str(2.5)+r"$\sigma$ = "+str(np.round(rms*2.5,3)).ljust(5, "0")
+        ax.text(x, 0.96, text, color="black", horizontalalignment="left", verticalalignment="top", transform=ax.transAxes, rotation=90)
+
+        plt.savefig(self.outpng_hist_ratio_pix, dpi=self.fig_dpi)
+
+        ###########
+        # prepare #
+        ###########
+
+        data_ratio  = data_ci10 / data_co10
+        ndata_ratio = data_ci10 / data_co10 * np.sqrt((ndata_ci10/data_ci10)**2 + (ndata_co10/data_co10)**2)
+        snr_ratio   = data_ratio / ndata_ratio
+
+        histx, histy, histrange, peak, rms, x_bestfit, y_bestfit, _ = self._gaussfit_noise(snr_ratio,bins=1000)
+
+        xlim     = [0, 10*rms]
+        ylim     = [0, np.max(histy)*1.05]
+        title    = "Ratio SNR Cube"
+        xlabel   = "Absolute voxel SNR"
+        ylabel   = "Count"
+        binwidth = (histrange[1]-histrange[0]) / 1000.
+        c_pos    = "tomato"
+        c_neg    = "deepskyblue"
+
+        ########
+        # plot #
+        ########
+
+        plt.figure(figsize=(13,10))
+        gs = gridspec.GridSpec(nrows=10, ncols=10)
+        ax = plt.subplot(gs[0:10,0:10])
+
+        ad = [0.215,0.83,0.10,0.90]
+        myax_set(ax, None, xlim, ylim, title, xlabel, ylabel, adjust=ad)
+        #ax.set_yticks(np.linspace(0,20000,3)[1:])
+
+        # plot hists
+        ax.bar(histx, histy, width=binwidth, align="center", lw=0, color=c_pos, alpha=1.0)
+        ax.bar(-1*histx, histy, width=binwidth, align="center", lw=0, color=c_neg, alpha=1.0)
+
+        # plot bestfit
+        ax.plot(x_bestfit, y_bestfit, "-", c="black", lw=5)
+
+        # # plot 1 sigma and 2.5sigma dashed vertical lines
+        ax.plot([rms, rms], ylim, "--", color='black', lw=2)
+        ax.plot([rms*2.5, rms*2.5], ylim, "--", color='black', lw=2)
+
+        # legend
+        ax.text(0.95, 0.93, "positive voxel histogram", color=c_pos, horizontalalignment="right", transform=ax.transAxes, size=self.legend_fontsize, fontweight="bold")
+        ax.text(0.95, 0.88, "negative voxel histogram", color=c_neg, horizontalalignment="right", transform=ax.transAxes, size=self.legend_fontsize, fontweight="bold")
+        ax.text(0.95, 0.83, "best-fit Gaussian", color="black", horizontalalignment="right", transform=ax.transAxes, size=self.legend_fontsize, fontweight="bold")
+        #
+        x    = rms / (xlim[1]-xlim[0]) + 0.01
+        text = r"1$\sigma$ = "+str(rms).ljust(5, "0")
+        ax.text(x, 0.96, text, color="black", horizontalalignment="left", verticalalignment="top", transform=ax.transAxes, rotation=90)
+        #
+        x    = rms*2.5 / (xlim[1]-xlim[0]) + 0.01
+        text = str(2.5)+r"$\sigma$ = "+str(np.round(rms*2.5,3)).ljust(5, "0")
+        ax.text(x, 0.96, text, color="black", horizontalalignment="left", verticalalignment="top", transform=ax.transAxes, rotation=90)
+
+        plt.savefig(self.outpng_hist_ratio_snr, dpi=self.fig_dpi)
 
     ###################
     # _gaussfit_noise #
