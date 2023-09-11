@@ -385,7 +385,7 @@ class ToolsCIGMC():
 
         xlim     = [0, 10*rms]
         ylim     = [0, np.max(histy)*1.02]
-        title    = "(a) 4.0\" CO(1-0) Cube (NGC 0628)"
+        title    = "CO(1-0) Cube"
         xlabel   = "Absolute voxel value (K)"
         ylabel   = "Count"
         binwidth = (histrange[1]-histrange[0]) / 30.
@@ -402,7 +402,7 @@ class ToolsCIGMC():
 
         ad = [0.215,0.83,0.10,0.90]
         myax_set(ax, None, xlim, ylim, title, xlabel, ylabel, adjust=ad)
-        ax.set_yticks(np.linspace(0,20000,3)[1:])
+        #ax.set_yticks(np.linspace(0,20000,3)[1:])
 
         # plot hists
         ax.bar(histx, histy, width=binwidth, align="center", lw=0, color=c_pos)
