@@ -631,7 +631,7 @@ class ToolsCIGMC():
         ndata2,_ = imval_all(self.ncube_ci10)
         ndata2   = ndata2["data"].flatten()
 
-        cut        = np.where((data>-100000) & (ndata>-100000) & (data2>-100000) & (ndata2>-100000) & (data2>-50*data) & (data2<50*data))
+        cut        = np.where((data>-100000) & (ndata>-100000) & (data2>-100000) & (ndata2>-100000) & (data2>-30*data) & (data2<30*data))
         data_co10  = data[cut]
         ndata_co10 = ndata[cut]
         data_ci10  = data2[cut]
@@ -639,14 +639,14 @@ class ToolsCIGMC():
 
         data_ratio = data_ci10 / data_co10
 
-        histx, histy, histrange, peak, rms, x_bestfit, y_bestfit, _ = self._gaussfit_noise(data_ratio,bins=10000)
+        histx, histy, histrange, peak, rms, x_bestfit, y_bestfit, _ = self._gaussfit_noise(data_ratio,bins=5000)
 
         xlim     = [0, 10*rms]
         ylim     = [0, np.max(histy)*1.05]
         title    = "Ratio Cube"
         xlabel   = "Absolute voxel value"
         ylabel   = "Count"
-        binwidth = (histrange[1]-histrange[0]) / 10000.
+        binwidth = (histrange[1]-histrange[0]) / 5000.
         c_pos    = "tomato"
         c_neg    = "deepskyblue"
 
@@ -692,17 +692,17 @@ class ToolsCIGMC():
         # prepare #
         ###########
 
-        ndata_ratio = data_ci10 / data_co10 * np.sqrt((ndata_ci10/data_ci10)**2 + (ndata_co10/data_co10)**2)
+        ndata_ratio = np.abs(data_ci10 / data_co10 * np.sqrt((ndata_ci10/data_ci10)**2 + (ndata_co10/data_co10)**2))
         snr_ratio   = data_ratio / ndata_ratio
 
-        histx, histy, histrange, peak, rms, x_bestfit, y_bestfit, _ = self._gaussfit_noise(snr_ratio,bins=1000)
+        histx, histy, histrange, peak, rms, x_bestfit, y_bestfit, _ = self._gaussfit_noise(snr_ratio,bins=5000)
 
         xlim     = [0, 10*rms]
         ylim     = [0, np.max(histy)*1.05]
         title    = "Ratio SNR Cube"
         xlabel   = "Absolute voxel SNR"
         ylabel   = "Count"
-        binwidth = (histrange[1]-histrange[0]) / 1000.
+        binwidth = (histrange[1]-histrange[0]) / 5000.
         c_pos    = "tomato"
         c_neg    = "deepskyblue"
 
