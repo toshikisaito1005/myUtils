@@ -388,7 +388,7 @@ class ToolsCIGMC():
         histx, histy, histrange, peak, rms, x_bestfit, y_bestfit, _ = self._gaussfit_noise(data,bins=1000)
 
         xlim     = [0, 10*rms]
-        ylim     = [0, np.max(histy)*2.02]
+        ylim     = [0, np.max(histy)*1.05]
         title    = "CO(1-0) Cube"
         xlabel   = "Absolute voxel value (K)"
         ylabel   = "Count"
@@ -409,8 +409,8 @@ class ToolsCIGMC():
         #ax.set_yticks(np.linspace(0,20000,3)[1:])
 
         # plot hists
-        ax.bar(histx, histy, width=binwidth, align="center", lw=0, color=c_pos, alpha=0.5)
-        ax.bar(-1*histx, histy, width=binwidth, align="center", lw=0, color=c_neg, alpha=0.5)
+        ax.bar(histx, histy, width=binwidth, align="center", lw=0, color=c_pos, alpha=1.0)
+        ax.bar(-1*histx, histy, width=binwidth, align="center", lw=0, color=c_neg, alpha=1.0)
 
         # plot bestfit
         ax.plot(x_bestfit, y_bestfit, "-", c="black", lw=5)
