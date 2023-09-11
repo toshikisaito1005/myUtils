@@ -616,7 +616,7 @@ class ToolsCIGMC():
         ###################
 
         ###########
-        # prepare # 
+        # prepare #
         ###########
 
         data,_  = imval_all(self.cube_co10.replace(".fits","_aligned.fits"))
@@ -639,8 +639,8 @@ class ToolsCIGMC():
 
         histx, histy, histrange, peak, rms, x_bestfit, y_bestfit, _ = self._gaussfit_noise(data_ratio,bins=1000)
 
-        xlim     = [0, 10*rms]
-        ylim     = [0, np.max(histy)*1.05]
+        xlim     = [0, 1] #10*rms]
+        ylim     = [0, 100000] #np.max(histy)*1.05]
         title    = "Ratio Cube"
         xlabel   = "Absolute voxel value"
         ylabel   = "Count"
