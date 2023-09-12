@@ -454,8 +454,8 @@ class ToolsCIGMC():
         ax1.text(0.03, 0.88, "[CI](1-0)", color="tomato", transform=ax1.transAxes, weight="bold", fontsize=24)
 
         # fill
-        ax1.axvspan(xlim[0], np.log10(55), color='grey', alpha=.5, lw=0)
-        ax1.axvspan(np.log10(55), xlim[1], 0, (np.log10(2.6*2)-ylim[0]) / (ylim[1]-ylim[0]), color='grey', alpha=.5, lw=0)
+        ax1.plot(xlim, [np.log10(55),np.log10(55)], color='grey', alpha=.5, lw=1)
+        ax1.plot([np.log10(2.39),np.log10(2.39)], ylim, color='grey', alpha=.5, lw=1)
 
         # save
         os.system("rm -rf " + self.outpng_cico_larson_1st)
