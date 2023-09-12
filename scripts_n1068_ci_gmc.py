@@ -918,8 +918,8 @@ class ToolsCIGMC():
         fig = plt.figure(figsize=(13,10))
         gs  = gridspec.GridSpec(nrows=10, ncols=10)
         ax1 = plt.subplot(gs[0:10,0:10])
-        myax_set(ax1, "x", xlim, ylim, title, xlabel, ylabel, adjust=ad)
         ad  = [0.215,0.83,0.10,0.90]
+        myax_set(ax1, "x", xlim, ylim, title, xlabel, ylabel, adjust=ad)
 
         ax1.bar(x_rad_cone, y_rad_cone, lw=0, color="red", width=x_rad_cone[1]-x_rad_cone[0], alpha=0.5)
         ax1.bar(x_rad_nocone, y_rad_nocone, lw=0, color="blue", width=x_rad_nocone[1]-x_rad_nocone[0], alpha=0.5)
