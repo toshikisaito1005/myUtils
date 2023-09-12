@@ -178,8 +178,8 @@ class ToolsCIGMC():
 
         self.imsize_as  = 18
 
-        self.xlim_larson_1st = [1.2,2.6]
-        self.ylim_larson_1st = [0.4,1.8]
+        self.xlim_larson_1st = [1.1,2.7]
+        self.ylim_larson_1st = [0.3,1.9]
         self.xlim_larson_2nd = [6.5,9.0]
         self.ylim_larson_2nd = [0.4,1.6]
         self.xlim_larson_3rd = [1.9,2.65]
@@ -440,14 +440,14 @@ class ToolsCIGMC():
         myax_set(ax1, "both", xlim, ylim, title, xlabel, ylabel, adjust=ad)
 
         # co10
-        ax1.scatter(x_co10, y_co10, lw=0, s=200, color="deepskyblue", alpha=1.0)
+        ax1.scatter(x_co10, y_co10, lw=0, s=size, color="deepskyblue", alpha=1.0)
         X, Y, Z = density_estimation(x_co10, y_co10, xlim, ylim)
-        ax1.contour(X, Y, Z, colors="blue")
+        ax1.contour(X, Y, Z, colors="blue", lw=2)
 
         # ci10
-        ax1.scatter(x_ci10, y_ci10, lw=0, s=200, color="tomato", alpha=1.0)
+        ax1.scatter(x_ci10, y_ci10, lw=0, s=size, color="tomato", alpha=1.0)
         X, Y, Z = density_estimation(x_ci10, y_ci10, xlim, ylim)
-        ax1.contour(X, Y, Z, colors="red")
+        ax1.contour(X, Y, Z, colors="red", lw=2)
 
         # text
         ax1.text(0.03, 0.93, "CO(1-0)", color="deepskyblue", transform=ax1.transAxes, weight="bold", fontsize=24)
