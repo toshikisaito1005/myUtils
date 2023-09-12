@@ -443,7 +443,7 @@ class ToolsCIGMC():
 
         # radius dist
         self._plot_hist_cprops(
-            xlim      = [0,105],
+            xlim      = [0,300],
             ylim      = None,
             title     = "Cloud Radius",
             xlabel    = "Radius (pc)",
