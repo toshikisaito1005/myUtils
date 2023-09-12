@@ -1039,8 +1039,8 @@ class ToolsCIGMC():
         y      = (tb["YCTR_DEG"] - self.dec_agn) * 3600.
         v      = tb["VCTR_KMS"]
         s2n    = tb["S2N"]
-        radius = tb["RAD"] # tb["RAD_NODC_NOEX"]
-        sigv   = tb["SIGV"] # tb["SIGV_NODC_NOEX"]
+        radius = tb["RAD_PC"] # tb["RAD_NODC_NOEX"]
+        sigv   = tb["SIGV_KMS"] # tb["SIGV_NODC_NOEX"]
         mvir   = tb["MVIR_MSUN"]
         tpeak  = tb["TMAX_K"]
         mci    = tb["MLUM_MSUN"]
