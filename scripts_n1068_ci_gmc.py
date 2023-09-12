@@ -417,13 +417,13 @@ class ToolsCIGMC():
         ####################
         x_co10 = radius_co10[s2n_co10>self.snr_cprops]
         y_co10 = sigv_co10[s2n_co10>self.snr_cprops]
-        x_co10 = np.nan_to_num(x_co10)
-        y_co10 = np.nan_to_num(y_co10)
+        x_co10 = np.nan_to_num(np.log10(x_co10))
+        y_co10 = np.nan_to_num(np.log10(y_co10))
 
         x_ci10 = radius_ci10[s2n_ci10>self.snr_cprops]
         y_ci10 = sigv_ci10[s2n_ci10>self.snr_cprops]
-        x_ci10 = np.nan_to_num(x_ci10)
-        y_ci10 = np.nan_to_num(y_ci10)
+        x_ci10 = np.nan_to_num(np.log10(x_ci10))
+        y_ci10 = np.nan_to_num(np.log10(y_ci10))
 
         xlim   = self.xlim_larson_1st
         ylim   = self.ylim_larson_1st
@@ -439,8 +439,8 @@ class ToolsCIGMC():
 
         alpha=1.0#0.3
         size=200#100
-        ax1.scatter(np.log10(x_co10), np.log10(y_co10), lw=0, s=200, color="deepskyblue", alpha=1.0)
-        X, Y, Z = density_estimation(np.log10(x_co10), np.log10(y_co10), xlim, ylim)
+        ax1.scatter(x_co10, y_co10, lw=0, s=200, color="deepskyblue", alpha=1.0)
+        X, Y, Z = density_estimation(x_co10, y_co10, xlim, ylim)
         ax1.contour(X, Y, Z, colors="blue")
 
         # text
