@@ -178,7 +178,7 @@ class ToolsCIGMC():
 
         self.imsize_as  = 18
 
-        self.xlim_larson_1st = [1.4,2.6]
+        self.xlim_larson_1st = [1.2,2.6]
         self.ylim_larson_1st = [0.4,1.8]
         self.xlim_larson_2nd = [6.5,9.0]
         self.ylim_larson_2nd = [0.4,1.6]
@@ -454,8 +454,8 @@ class ToolsCIGMC():
         ax1.text(0.03, 0.88, "[CI](1-0)", color="tomato", transform=ax1.transAxes, weight="bold", fontsize=24)
 
         # fill
-        ax1.plot(xlim, [np.log10(55),np.log10(55)], color='grey', alpha=.5, lw=1)
-        ax1.plot([np.log10(2.39),np.log10(2.39)], ylim, color='grey', alpha=.5, lw=1)
+        ax1.plot(xlim, [np.log10(2.39),np.log10(2.39)], color='grey', alpha=.5, lw=2)
+        ax1.plot([np.log10(55),np.log10(55)], ylim, color='grey', alpha=.5, lw=2)
 
         # save
         os.system("rm -rf " + self.outpng_cico_larson_1st)
