@@ -761,9 +761,7 @@ class ToolsCIGMC():
         taskname = self.modname + sys._getframe().f_code.co_name
         check_first(self.cprops_co10,taskname)
 
-        x_cone, y_cone, radius_cone, sigv_cone, mvir_cone, tpeak_cone, mci_cone, \
-            x_nocone, y_nocone, radius_nocone, sigv_nocone, mvir_nocone, tpeak_nocone, mci_nocone, \
-            x_sbr, y_sbr, radius_sbr, sigv_sbr, mvir_sbr, tpeak_sbr, mci_sbr, s2n_cone, s2n_nocone, s2n_sbr = self._import_cprops_table(self.cprops_co10)
+        cone_list, nocone_list, sbr_list = self._import_cprops_table(self.cprops_co10)
 
         #############
         # plot: snr #
@@ -774,11 +772,11 @@ class ToolsCIGMC():
         xlabel = "SNR"
         ylabel = "Count density"
 
-        h = np.histogram(s2n_cone, bins=10, range=xlim)
+        h = np.histogram(cone_list[10], bins=10, range=xlim)
         x_rad_cone, y_rad_cone = h[1][:-1], h[0]/float(np.sum(h[0]))
-        h = np.histogram(s2n_nocone, bins=10, range=xlim)
+        h = np.histogram(nocone_list[10], bins=10, range=xlim)
         x_rad_nocone, y_rad_nocone = h[1][:-1], h[0]/float(np.sum(h[0]))
-        h = np.histogram(s2n_sbr, bins=10, range=xlim)
+        h = np.histogram(sbr_list[10], bins=10, range=xlim)
         x_rad_sbr, y_rad_sbr = h[1][:-1], h[0]/float(np.sum(h[0]))
 
         fig = plt.figure(figsize=(13,10))
@@ -804,11 +802,11 @@ class ToolsCIGMC():
         xlabel = "Radius (pc)"
         ylabel = "Count density"
 
-        h = np.histogram(radius_cone, bins=10, range=xlim)
+        h = np.histogram(cone_list[3], bins=10, range=xlim)
         x_rad_cone, y_rad_cone = h[1][:-1], h[0]/float(np.sum(h[0]))
-        h = np.histogram(radius_nocone, bins=10, range=xlim)
+        h = np.histogram(nocone_list[3], bins=10, range=xlim)
         x_rad_nocone, y_rad_nocone = h[1][:-1], h[0]/float(np.sum(h[0]))
-        h = np.histogram(radius_sbr, bins=10, range=xlim)
+        h = np.histogram(sbr_list[3], bins=10, range=xlim)
         x_rad_sbr, y_rad_sbr = h[1][:-1], h[0]/float(np.sum(h[0]))
 
         fig = plt.figure(figsize=(13,10))
@@ -834,11 +832,11 @@ class ToolsCIGMC():
         xlabel = "Velocity dispersion (km s$^{-1}$)"
         ylabel = "Count density"
 
-        h = np.histogram(sigv_cone, bins=10, range=xlim)
+        h = np.histogram(cone_list[4], bins=10, range=xlim)
         x_sigv_cone, y_sigv_cone = h[1][:-1], h[0]/float(np.sum(h[0]))
-        h = np.histogram(sigv_nocone, bins=10, range=xlim)
+        h = np.histogram(nocone_list[4], bins=10, range=xlim)
         x_sigv_nocone, y_sigv_nocone = h[1][:-1], h[0]/float(np.sum(h[0]))
-        h = np.histogram(sigv_sbr, bins=10, range=xlim)
+        h = np.histogram(sbr_list[4], bins=10, range=xlim)
         x_sigv_sbr, y_sigv_sbr = h[1][:-1], h[0]/float(np.sum(h[0]))
 
         fig = plt.figure(figsize=(13,10))
@@ -864,11 +862,11 @@ class ToolsCIGMC():
         xlabel = "Virial mass ($M_{\odot}$)"
         ylabel = "Count density"
 
-        h = np.histogram(mvir_cone, bins=10, range=xlim)
+        h = np.histogram(cone_list[5], bins=10, range=xlim)
         x_mvir_cone, y_mvir_cone = h[1][:-1], h[0]/float(np.sum(h[0]))
-        h = np.histogram(mvir_nocone, bins=10, range=xlim)
+        h = np.histogram(nocone_list[5], bins=10, range=xlim)
         x_mvir_nocone, y_mvir_nocone = h[1][:-1], h[0]/float(np.sum(h[0]))
-        h = np.histogram(mvir_sbr, bins=10, range=xlim)
+        h = np.histogram(sbr_list[5], bins=10, range=xlim)
         x_mvir_sbr, y_mvir_sbr = h[1][:-1], h[0]/float(np.sum(h[0]))
 
         fig = plt.figure(figsize=(13,10))
@@ -898,9 +896,8 @@ class ToolsCIGMC():
         taskname = self.modname + sys._getframe().f_code.co_name
         check_first(self.cprops_ci10,taskname)
 
-        x_cone, y_cone, radius_cone, sigv_cone, mvir_cone, tpeak_cone, mci_cone, \
-            x_nocone, y_nocone, radius_nocone, sigv_nocone, mvir_nocone, tpeak_nocone, mci_nocone, \
-            x_sbr, y_sbr, radius_sbr, sigv_sbr, mvir_sbr, tpeak_sbr, mci_sbr, s2n_cone, s2n_nocone, s2n_sbr = self._import_cprops_table(self.cprops_ci10)
+        cone_list, nocone_list, sbr_list = self._import_cprops_table(self.cprops_ci10)
+        # [x_cone, y_cone, v_cone, radius_cone, sigv_cone, mvir_cone, tpeak_cone, mci_cone, xdeg_cone, ydeg_cone, s2n_cone]
 
         #############
         # plot: snr #
@@ -911,11 +908,11 @@ class ToolsCIGMC():
         xlabel = "SNR"
         ylabel = "Count density"
 
-        h = np.histogram(s2n_cone, bins=10, range=xlim)
+        h = np.histogram(cone_list[10], bins=10, range=xlim)
         x_rad_cone, y_rad_cone = h[1][:-1], h[0]/float(np.sum(h[0]))
-        h = np.histogram(s2n_nocone, bins=10, range=xlim)
+        h = np.histogram(nocone_list[10], bins=10, range=xlim)
         x_rad_nocone, y_rad_nocone = h[1][:-1], h[0]/float(np.sum(h[0]))
-        h = np.histogram(s2n_sbr, bins=10, range=xlim)
+        h = np.histogram(sbr_list[10], bins=10, range=xlim)
         x_rad_sbr, y_rad_sbr = h[1][:-1], h[0]/float(np.sum(h[0]))
 
         fig = plt.figure(figsize=(13,10))
@@ -941,11 +938,11 @@ class ToolsCIGMC():
         xlabel = "Radius (pc)"
         ylabel = "Count density"
 
-        h = np.histogram(radius_cone, bins=10, range=xlim)
+        h = np.histogram(cone_list[3], bins=10, range=xlim)
         x_rad_cone, y_rad_cone = h[1][:-1], h[0]/float(np.sum(h[0]))
-        h = np.histogram(radius_nocone, bins=10, range=xlim)
+        h = np.histogram(nocone_list[3], bins=10, range=xlim)
         x_rad_nocone, y_rad_nocone = h[1][:-1], h[0]/float(np.sum(h[0]))
-        h = np.histogram(radius_sbr, bins=10, range=xlim)
+        h = np.histogram(sbr_list[3], bins=10, range=xlim)
         x_rad_sbr, y_rad_sbr = h[1][:-1], h[0]/float(np.sum(h[0]))
 
         fig = plt.figure(figsize=(13,10))
@@ -971,11 +968,11 @@ class ToolsCIGMC():
         xlabel = "Velocity dispersion (km s$^{-1}$)"
         ylabel = "Count density"
 
-        h = np.histogram(sigv_cone, bins=10, range=xlim)
+        h = np.histogram(cone_list[4], bins=10, range=xlim)
         x_sigv_cone, y_sigv_cone = h[1][:-1], h[0]/float(np.sum(h[0]))
-        h = np.histogram(sigv_nocone, bins=10, range=xlim)
+        h = np.histogram(nocone_list[4], bins=10, range=xlim)
         x_sigv_nocone, y_sigv_nocone = h[1][:-1], h[0]/float(np.sum(h[0]))
-        h = np.histogram(sigv_sbr, bins=10, range=xlim)
+        h = np.histogram(sbr_list[4], bins=10, range=xlim)
         x_sigv_sbr, y_sigv_sbr = h[1][:-1], h[0]/float(np.sum(h[0]))
 
         fig = plt.figure(figsize=(13,10))
@@ -1001,11 +998,11 @@ class ToolsCIGMC():
         xlabel = "Virial mass ($M_{\odot}$)"
         ylabel = "Count density"
 
-        h = np.histogram(mvir_cone, bins=10, range=xlim)
+        h = np.histogram(cone_list[5], bins=10, range=xlim)
         x_mvir_cone, y_mvir_cone = h[1][:-1], h[0]/float(np.sum(h[0]))
-        h = np.histogram(mvir_nocone, bins=10, range=xlim)
+        h = np.histogram(nocone_list[5], bins=10, range=xlim)
         x_mvir_nocone, y_mvir_nocone = h[1][:-1], h[0]/float(np.sum(h[0]))
-        h = np.histogram(mvir_sbr, bins=10, range=xlim)
+        h = np.histogram(sbr_list[5], bins=10, range=xlim)
         x_mvir_sbr, y_mvir_sbr = h[1][:-1], h[0]/float(np.sum(h[0]))
 
         fig = plt.figure(figsize=(13,10))
@@ -1029,7 +1026,6 @@ class ToolsCIGMC():
     def _import_cprops_table(
         self,
         table,
-        addv=False,
         ):
         """
         """
@@ -1087,6 +1083,7 @@ class ToolsCIGMC():
         xdeg_cone   = xdeg[cut_cone]
         ydeg_cone   = ydeg[cut_cone]
         s2n_cone    = s2n[cut_cone]
+        cone_list = [x_cone, y_cone, v_cone, radius_cone, sigv_cone, mvir_cone, tpeak_cone, mci_cone, xdeg_cone, ydeg_cone, s2n_cone]
 
         x_nocone      = x[cut_nocone]
         y_nocone      = y[cut_nocone]
@@ -1099,6 +1096,7 @@ class ToolsCIGMC():
         xdeg_nocone   = xdeg[cut_nocone]
         ydeg_nocone   = ydeg[cut_nocone]
         s2n_nocone    = s2n[cut_nocone]
+        nocone_list = [x_nocone, y_nocone, v_nocone, radius_nocone, sigv_nocone, mvir_nocone, tpeak_nocone, mci_nocone, xdeg_nocone, ydeg_nocone, s2n_nocone]
 
         x_sbr      = x[cut_sbr]
         y_sbr      = y[cut_sbr]
@@ -1111,11 +1109,9 @@ class ToolsCIGMC():
         xdeg_sbr   = xdeg[cut_sbr]
         ydeg_sbr   = ydeg[cut_sbr]
         s2n_sbr    = s2n[cut_sbr]
+        sbr_list = [x_sbr, y_sbr, v_sbr, radius_sbr, sigv_sbr, mvir_sbr, tpeak_sbr, mci_sbr, xdeg_sbr, ydeg_sbr, s2n_sbr]
 
-        if addv==False:
-            return x_cone, y_cone, radius_cone, sigv_cone, mvir_cone, tpeak_cone, mci_cone, x_nocone, y_nocone, radius_nocone, sigv_nocone, mvir_nocone, tpeak_nocone, mci_nocone, x_sbr, y_sbr, radius_sbr, sigv_sbr, mvir_sbr, tpeak_sbr, mci_sbr
-        else:
-            return xdeg_cone, ydeg_cone, v_cone, radius_cone, sigv_cone, xdeg_nocone, ydeg_nocone, v_nocone, radius_nocone, sigv_nocone, xdeg_sbr, ydeg_sbr, v_sbr, radius_sbr, sigv_sbr, s2n_cone, s2n_nocone, s2n_sbr
+        return cone_list, nocone_list, sbr_list
 
     #########################################################
 
