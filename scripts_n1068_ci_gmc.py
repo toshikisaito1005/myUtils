@@ -412,7 +412,7 @@ class ToolsCIGMC():
         ########
 
         self._plot_hist_cprops(
-            xlim      = [5,100],
+            xlim      = [5,140],
             ylim      = None,
             title     = "Cloud SNR",
             xlabel    = "SNR",
@@ -446,7 +446,7 @@ class ToolsCIGMC():
 
         # import co10
         this_co10 = data_co10[s2n_co10>self.snr_cprops]
-        h = np.histogram(this_co10, bins=10, range=xlim)
+        h = np.histogram(this_co10, bins=20, range=xlim)
         x_co10, y_co10 = h[1][:-1], h[0]/float(np.sum(h[0]))
 
         # import ci10
