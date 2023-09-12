@@ -51,12 +51,18 @@ outfits_mom0_ratio ,,,n1068_ratio_mom0.fits
 # text files
 
 # png giles: noise stats
-outpng_hist_co10_pix       ,,,outpng_stats_co10_pix.png
-outpng_hist_ci10_pix       ,,,outpng_stats_ci10_pix.png
-outpng_hist_ratio_pix      ,,,outpng_stats_ratio_pix.png
-outpng_hist_co10_snr       ,,,outpng_stats_co10_snr.png
-outpng_hist_ci10_snr       ,,,outpng_stats_ci10_snr.png
-outpng_hist_ratio_snr      ,,,outpng_stats_ratio_snr.png
+outpng_hist_co10_pix  ,,,outpng_stats_co10_pix.png
+outpng_hist_ci10_pix  ,,,outpng_stats_ci10_pix.png
+outpng_hist_ratio_pix ,,,outpng_stats_ratio_pix.png
+outpng_hist_co10_snr  ,,,outpng_stats_co10_snr.png
+outpng_hist_ci10_snr  ,,,outpng_stats_ci10_snr.png
+outpng_hist_ratio_snr ,,,outpng_stats_ratio_snr.png
+# png files: cprops stats
+outpng_hist_snr       ,,,outpng_hist_snr.png
+
+
+
+
 # png files: cprops stats (ci10)
 outpng_ci_hist_rad           ,,,outpng_ci_hist_rad.png
 outpng_ci_hist_sigv          ,,,outpng_ci_hist_sigv.png
@@ -67,7 +73,6 @@ outpng_co_hist_rad           ,,,outpng_co_hist_rad.png
 outpng_co_hist_sigv          ,,,outpng_co_hist_sigv.png
 outpng_co_hist_mvir          ,,,outpng_co_hist_mvir.png
 outpng_co_hist_snr           ,,,outpng_co_hist_snr.png
-
 # png files tentative
 outpng_cprops_co10_agn       ,,,fig_co10_mom0_gmc_fov1.png
 outpng_cprops_ci10_agn       ,,,fig_ci10_mom0_gmc_fov1.png

@@ -197,6 +197,9 @@ class ToolsCIGMC():
         self.outpng_hist_ci10_snr  = self.dir_products + self._read_key("outpng_hist_ci10_snr")
         self.outpng_hist_ratio_snr = self.dir_products + self._read_key("outpng_hist_ratio_snr")
 
+        self.outpng_hist_snr       = self.dir_products + self._read_key("outpng_hist_snr")
+
+        # supplement
         self.outpng_ci_hist_rad           = self.dir_products + self._read_key("outpng_ci_hist_rad")
         self.outpng_ci_hist_sigv          = self.dir_products + self._read_key("outpng_ci_hist_sigv")
         self.outpng_ci_hist_mvir          = self.dir_products + self._read_key("outpng_ci_hist_mvir")
@@ -207,7 +210,6 @@ class ToolsCIGMC():
         self.outpng_co_hist_mvir          = self.dir_products + self._read_key("outpng_co_hist_mvir")
         self.outpng_co_hist_snr           = self.dir_products + self._read_key("outpng_co_hist_snr")
 
-        # supplement
         self.outpng_cprops_co10_agn       = self.dir_products + self._read_key("outpng_cprops_co10_agn")
         self.outpng_cprops_ci10_agn       = self.dir_products + self._read_key("outpng_cprops_ci10_agn")
         self.outpng_cprops_ci10_co10_agn  = self.dir_products + self._read_key("outpng_cprops_ci10_co10_agn")
@@ -316,8 +318,7 @@ class ToolsCIGMC():
             self.data_stats()
 
         if plot_cprops==True:
-            self.plot_ci_cprops()
-            self.plot_co_cprops()
+            self.hist_cprops()
 
         if map_cprops==True:
             self.map_cprops()
@@ -325,6 +326,10 @@ class ToolsCIGMC():
         """
         if do_stack==True:
             self.do_stack()
+
+        if plot_cprops==True:
+            self.plot_ci_cprops()
+            self.plot_co_cprops()
 
         if plot_larson==True:
             self.plot_ci_larson()
@@ -365,6 +370,103 @@ class ToolsCIGMC():
             delin=delin,
             )
         """
+
+    ###############
+    # hist_cprops #
+    ###############
+
+    def hist_cprops(
+        self,
+        ):
+        """
+        """
+
+        taskname = self.modname + sys._getframe().f_code.co_name
+        check_first(self.cprops_co10,taskname)
+
+
+        # import cprops table
+        f = pyfits.open(self.cprops_co10)
+        tb = f[1].data
+
+        # extract parameters
+        s2n_co10    = tb["S2N"]
+        radius_co10 = tb["RAD_PC"] # tb["RAD_NODC_NOEX"]
+        sigv_co10   = tb["SIGV_KMS"] # tb["SIGV_NODC_NOEX"]
+        mvir_co10   = tb["MVIR_MSUN"]
+        tpeak_co10  = tb["TMAX_K"]
+
+        # import cprops table
+        f = pyfits.open(self.cprops_ci10)
+        tb = f[1].data
+
+        # extract parameters
+        s2n_ci10    = tb["S2N"]
+        radius_ci10 = tb["RAD_PC"]
+        sigv_ci10   = tb["SIGV_KMS"]
+        mvir_ci10   = tb["MVIR_MSUN"]
+        tpeak_ci10  = tb["TMAX_K"]
+
+        ########
+        # plot #
+        ########
+
+        _plot_hist_cprops(
+            xlim      = [5,100],
+            ylim      = None,
+            title     = "Cloud SNR",
+            xlabel    = "SNR",
+            ylabel    = "Count density",
+            outpng    = self.outpng_hist_snr,
+            data_co10 = s2n_co10,
+            data_ci10 = s2n_ci10,
+            s2n_co10  = s2n_co10,
+            s2n_ci10  = s2n_ci10,
+            )
+
+    #####################
+    # _plot_hist_cprops #
+    #####################
+
+    def _plot_hist_cprops(
+        self,
+        xlim,
+        ylim,
+        title,
+        xlabel,
+        ylabel,
+        outpng,
+        data_co10,
+        data_ci10,
+        s2n_co10,
+        s2n_ci10,
+        ):
+        """
+        """
+
+        # import co10
+        this_co10 = data_co10[s2n_co10>self.snr_cprops]
+        h = np.histogram(this_co10, bins=10, range=xlim)
+        x_co10, y_co10 = h[1][:-1], h[0]/float(np.sum(h[0]))
+
+        # import ci10
+        this_ci10 = data_ci10[s2n_ci10>self.snr_cprops]
+        h = np.histogram(this_ci10, bins=10, range=xlim)
+        x_ci10, y_ci10 = h[1][:-1], h[0]/float(np.sum(h[0]))
+
+        # plot
+        fig = plt.figure(figsize=(13,10))
+        gs  = gridspec.GridSpec(nrows=10, ncols=10)
+        ax1 = plt.subplot(gs[0:10,0:10])
+        ad  = [0.215,0.83,0.10,0.90]
+        myax_set(ax1, "x", xlim, ylim, title, xlabel, ylabel, adjust=ad)
+
+        ax1.bar(x_co10, y_co10, lw=0, color="deepskyblue", width=x_co10[1]-x_co10[0], alpha=0.5)
+        ax1.bar(x_ci10, y_ci10, lw=0, color="tomato", width=x_ci10[1]-x_ci10[0], alpha=0.5)
+
+        # save
+        os.system("rm -rf " + outpng)
+        plt.savefig(outpng, dpi=self.fig_dpi)
 
     ##############
     # data_stats #
@@ -748,6 +850,207 @@ class ToolsCIGMC():
 
         plt.savefig(self.outpng_hist_ratio_snr, dpi=self.fig_dpi)
 
+    ##############
+    # map_cprops #
+    ##############
+
+    def map_cprops(
+        self,
+        delin=False,
+        ):
+        """
+        """
+
+        taskname = self.modname + sys._getframe().f_code.co_name
+        check_first(self.cprops_co10,taskname)
+
+        # import fits table
+        f = pyfits.open(self.cprops_co10)
+        tb_co10 = f[1].data
+
+        f = pyfits.open(self.cprops_ci10)
+        tb_ci10 = f[1].data
+
+        # extract tag
+        self._plot_cprops_map(
+            self.tpeak_co10,#self.outfits_mom0_co10,
+            tb_co10,
+            "CO(1-0)",
+            self.outpng_cprops_co10_agn,
+            self.outpng_cprops_co10_fov2,
+            self.outpng_cprops_co10_fov3,
+            )
+        self._plot_cprops_map(
+            self.tpeak_ci10,#self.outfits_mom0_ci10,
+            tb_ci10,
+            "[CI](1-0)",
+            self.outpng_cprops_ci10_agn,
+            self.outpng_cprops_ci10_fov2,
+            self.outpng_cprops_ci10_fov3,
+            )
+        self._plot_cprops_map2(
+            self.tpeak_ci10,#self.outfits_mom0_ci10,
+            tb_co10,
+            tb_ci10,
+            "[CI](1-0)+CO(1-0)",
+            self.outpng_cprops_ci10_co10_agn,
+            self.outpng_cprops_ci10_co10_fov2,
+            self.outpng_cprops_ci10_co10_fov3,
+            )
+
+    ####################
+    # _plot_cprops_map #
+    ####################
+
+    def _plot_cprops_map(
+        self,
+        imagename,
+        this_tb,
+        linename,
+        outpng_agn,
+        outpng_fov2,
+        outpng_fov3,
+        ):
+        """
+        # CLOUDNUM
+        # XCTR_DEG
+        # YCTR_DEG
+        # VCTR_KMS
+        # RAD_PC
+        # SIGV_KMS
+        # FLUX_KKMS_PC2
+        # MVIR_MSUN
+        # S2N
+        """
+
+        scalebar = 100. / self.scale_pc
+        label_scalebar = "100 pc"
+
+        myfig_fits2png(
+            imagename,
+            outpng_agn,
+            imsize_as = 18.0,
+            ra_cnt    = str(self.ra_agn) + "deg",
+            dec_cnt   = str(self.dec_agn) + "deg",
+            numann    = "ci-gmc",
+            txtfiles  = this_tb,
+            set_title = linename + " Cloud Catalog",
+            scalebar  = scalebar,
+            label_scalebar = label_scalebar,
+            colorlog  = True,
+            set_cmap  = "Greys",
+            )
+
+        myfig_fits2png(
+            imagename,
+            outpng_fov2,
+            imsize_as = 18.0,
+            ra_cnt    = str(self.ra_fov2) + "deg",
+            dec_cnt   = str(self.dec_fov2) + "deg",
+            numann    = "ci-gmc",
+            textann   = False,
+            txtfiles  = this_tb,
+            set_title = linename + " Cloud Catalog",
+            scalebar  = scalebar,
+            label_scalebar = label_scalebar,
+            colorlog  = True,
+            set_cmap  = "Greys",
+            )
+
+        myfig_fits2png(
+            imagename,
+            outpng_fov3,
+            imsize_as = 18.0,
+            ra_cnt    = str(self.ra_fov3) + "deg",
+            dec_cnt   = str(self.dec_fov3) + "deg",
+            numann    = "ci-gmc",
+            textann   = False,
+            txtfiles  = this_tb,
+            set_title = linename + " Cloud Catalog",
+            scalebar  = scalebar,
+            label_scalebar = label_scalebar,
+            colorlog  = True,
+            set_cmap  = "Greys",
+            )
+
+    #####################
+    # _plot_cprops_map2 #
+    #####################
+
+    def _plot_cprops_map2(
+        self,
+        imagename,
+        this_tb1,
+        this_tb2,
+        linename,
+        outpng_agn,
+        outpng_fov2,
+        outpng_fov3,
+        ):
+        """
+        # CLOUDNUM
+        # XCTR_DEG
+        # YCTR_DEG
+        # VCTR_KMS
+        # RAD_PC
+        # SIGV_KMS
+        # FLUX_KKMS_PC2
+        # MVIR_MSUN
+        # S2N
+        """
+
+        scalebar = 100. / self.scale_pc
+        label_scalebar = "100 pc"
+
+        myfig_fits2png(
+            imagename,
+            outpng_agn,
+            imsize_as = 18.0,
+            ra_cnt    = str(self.ra_agn) + "deg",
+            dec_cnt   = str(self.dec_agn) + "deg",
+            numann    = "ci-gmc2",
+            txtfiles  = [this_tb1,this_tb2],
+            set_title = linename + " Cloud Catalog",
+            scalebar  = scalebar,
+            label_scalebar = label_scalebar,
+            colorlog  = True,
+            set_cmap  = "Greys",
+            )
+
+        myfig_fits2png(
+            imagename,
+            outpng_fov2,
+            imsize_as = 18.0,
+            ra_cnt    = str(self.ra_fov2) + "deg",
+            dec_cnt   = str(self.dec_fov2) + "deg",
+            numann    = "ci-gmc2",
+            textann   = False,
+            txtfiles  = [this_tb1,this_tb2],
+            set_title = linename + " Cloud Catalog",
+            scalebar  = scalebar,
+            label_scalebar = label_scalebar,
+            colorlog  = True,
+            set_cmap  = "Greys",
+            )
+
+        myfig_fits2png(
+            imagename,
+            outpng_fov3,
+            imsize_as = 18.0,
+            ra_cnt    = str(self.ra_fov3) + "deg",
+            dec_cnt   = str(self.dec_fov3) + "deg",
+            numann    = "ci-gmc2",
+            textann   = False,
+            txtfiles  = [this_tb1,this_tb2],
+            set_title = linename + " Cloud Catalog",
+            scalebar  = scalebar,
+            label_scalebar = label_scalebar,
+            colorlog  = True,
+            set_cmap  = "Greys",
+            )
+
+    #########################################################
+
     ##################
     # plot_co_cprops #
     ##################
@@ -772,17 +1075,12 @@ class ToolsCIGMC():
         xlabel = "SNR"
         ylabel = "Count density"
 
-        """
         h = np.histogram(cone_list[10], bins=10, range=xlim)
         x_rad_cone, y_rad_cone = h[1][:-1], h[0]/float(np.sum(h[0]))
         h = np.histogram(nocone_list[10], bins=10, range=xlim)
         x_rad_nocone, y_rad_nocone = h[1][:-1], h[0]/float(np.sum(h[0]))
         h = np.histogram(sbr_list[10], bins=10, range=xlim)
         x_rad_sbr, y_rad_sbr = h[1][:-1], h[0]/float(np.sum(h[0]))
-        """
-        all_list = np.r_[cone_list[10], nocone_list[10], sbr_list[10]]
-        h = np.histogram(all_list, bins=10, range=xlim)
-        x_all, y_all = h[1][:-1], h[0]/float(np.sum(h[0]))
 
         fig = plt.figure(figsize=(13,10))
         gs  = gridspec.GridSpec(nrows=10, ncols=10)
@@ -790,12 +1088,9 @@ class ToolsCIGMC():
         ad  = [0.215,0.83,0.10,0.90]
         myax_set(ax1, "x", xlim, ylim, title, xlabel, ylabel, adjust=ad)
 
-        """
         ax1.bar(x_rad_cone, y_rad_cone, lw=0, color="red", width=x_rad_cone[1]-x_rad_cone[0], alpha=0.5)
         ax1.bar(x_rad_nocone, y_rad_nocone, lw=0, color="blue", width=x_rad_nocone[1]-x_rad_nocone[0], alpha=0.5)
         ax1.bar(x_rad_sbr, y_rad_sbr, lw=0, color="grey", width=x_rad_sbr[1]-x_rad_sbr[0], alpha=0.5)
-        """
-        ax1.bar(x_all, y_all, lw=0, color="tomato", width=x_all[1]-x_all[0], alpha=1.0)
 
         # save
         os.system("rm -rf " + self.outpng_co_hist_snr)
@@ -1120,207 +1415,6 @@ class ToolsCIGMC():
         sbr_list = [x_sbr, y_sbr, v_sbr, radius_sbr, sigv_sbr, mvir_sbr, tpeak_sbr, mci_sbr, xdeg_sbr, ydeg_sbr, s2n_sbr]
 
         return cone_list, nocone_list, sbr_list
-
-    ##############
-    # map_cprops #
-    ##############
-
-    def map_cprops(
-        self,
-        delin=False,
-        ):
-        """
-        """
-
-        taskname = self.modname + sys._getframe().f_code.co_name
-        check_first(self.cprops_co10,taskname)
-
-        # import fits table
-        f = pyfits.open(self.cprops_co10)
-        tb_co10 = f[1].data
-
-        f = pyfits.open(self.cprops_ci10)
-        tb_ci10 = f[1].data
-
-        # extract tag
-        self._plot_cprops_map(
-            self.tpeak_co10,#self.outfits_mom0_co10,
-            tb_co10,
-            "CO(1-0)",
-            self.outpng_cprops_co10_agn,
-            self.outpng_cprops_co10_fov2,
-            self.outpng_cprops_co10_fov3,
-            )
-        self._plot_cprops_map(
-            self.tpeak_ci10,#self.outfits_mom0_ci10,
-            tb_ci10,
-            "[CI](1-0)",
-            self.outpng_cprops_ci10_agn,
-            self.outpng_cprops_ci10_fov2,
-            self.outpng_cprops_ci10_fov3,
-            )
-        self._plot_cprops_map2(
-            self.tpeak_ci10,#self.outfits_mom0_ci10,
-            tb_co10,
-            tb_ci10,
-            "[CI](1-0)+CO(1-0)",
-            self.outpng_cprops_ci10_co10_agn,
-            self.outpng_cprops_ci10_co10_fov2,
-            self.outpng_cprops_ci10_co10_fov3,
-            )
-
-    #####################
-    # _plot_cprops_map2 #
-    #####################
-
-    def _plot_cprops_map2(
-        self,
-        imagename,
-        this_tb1,
-        this_tb2,
-        linename,
-        outpng_agn,
-        outpng_fov2,
-        outpng_fov3,
-        ):
-        """
-        # CLOUDNUM
-        # XCTR_DEG
-        # YCTR_DEG
-        # VCTR_KMS
-        # RAD_PC
-        # SIGV_KMS
-        # FLUX_KKMS_PC2
-        # MVIR_MSUN
-        # S2N
-        """
-
-        scalebar = 100. / self.scale_pc
-        label_scalebar = "100 pc"
-
-        myfig_fits2png(
-            imagename,
-            outpng_agn,
-            imsize_as = 18.0,
-            ra_cnt    = str(self.ra_agn) + "deg",
-            dec_cnt   = str(self.dec_agn) + "deg",
-            numann    = "ci-gmc2",
-            txtfiles  = [this_tb1,this_tb2],
-            set_title = linename + " Cloud Catalog",
-            scalebar  = scalebar,
-            label_scalebar = label_scalebar,
-            colorlog  = True,
-            set_cmap  = "Greys",
-            )
-
-        myfig_fits2png(
-            imagename,
-            outpng_fov2,
-            imsize_as = 18.0,
-            ra_cnt    = str(self.ra_fov2) + "deg",
-            dec_cnt   = str(self.dec_fov2) + "deg",
-            numann    = "ci-gmc2",
-            textann   = False,
-            txtfiles  = [this_tb1,this_tb2],
-            set_title = linename + " Cloud Catalog",
-            scalebar  = scalebar,
-            label_scalebar = label_scalebar,
-            colorlog  = True,
-            set_cmap  = "Greys",
-            )
-
-        myfig_fits2png(
-            imagename,
-            outpng_fov3,
-            imsize_as = 18.0,
-            ra_cnt    = str(self.ra_fov3) + "deg",
-            dec_cnt   = str(self.dec_fov3) + "deg",
-            numann    = "ci-gmc2",
-            textann   = False,
-            txtfiles  = [this_tb1,this_tb2],
-            set_title = linename + " Cloud Catalog",
-            scalebar  = scalebar,
-            label_scalebar = label_scalebar,
-            colorlog  = True,
-            set_cmap  = "Greys",
-            )
-
-    ####################
-    # _plot_cprops_map #
-    ####################
-
-    def _plot_cprops_map(
-        self,
-        imagename,
-        this_tb,
-        linename,
-        outpng_agn,
-        outpng_fov2,
-        outpng_fov3,
-        ):
-        """
-        # CLOUDNUM
-        # XCTR_DEG
-        # YCTR_DEG
-        # VCTR_KMS
-        # RAD_PC
-        # SIGV_KMS
-        # FLUX_KKMS_PC2
-        # MVIR_MSUN
-        # S2N
-        """
-
-        scalebar = 100. / self.scale_pc
-        label_scalebar = "100 pc"
-
-        myfig_fits2png(
-            imagename,
-            outpng_agn,
-            imsize_as = 18.0,
-            ra_cnt    = str(self.ra_agn) + "deg",
-            dec_cnt   = str(self.dec_agn) + "deg",
-            numann    = "ci-gmc",
-            txtfiles  = this_tb,
-            set_title = linename + " Cloud Catalog",
-            scalebar  = scalebar,
-            label_scalebar = label_scalebar,
-            colorlog  = True,
-            set_cmap  = "Greys",
-            )
-
-        myfig_fits2png(
-            imagename,
-            outpng_fov2,
-            imsize_as = 18.0,
-            ra_cnt    = str(self.ra_fov2) + "deg",
-            dec_cnt   = str(self.dec_fov2) + "deg",
-            numann    = "ci-gmc",
-            textann   = False,
-            txtfiles  = this_tb,
-            set_title = linename + " Cloud Catalog",
-            scalebar  = scalebar,
-            label_scalebar = label_scalebar,
-            colorlog  = True,
-            set_cmap  = "Greys",
-            )
-
-        myfig_fits2png(
-            imagename,
-            outpng_fov3,
-            imsize_as = 18.0,
-            ra_cnt    = str(self.ra_fov3) + "deg",
-            dec_cnt   = str(self.dec_fov3) + "deg",
-            numann    = "ci-gmc",
-            textann   = False,
-            txtfiles  = this_tb,
-            set_title = linename + " Cloud Catalog",
-            scalebar  = scalebar,
-            label_scalebar = label_scalebar,
-            colorlog  = True,
-            set_cmap  = "Greys",
-            )
-
-    #########################################################
 
     ###################
     # _gaussfit_noise #
