@@ -429,7 +429,7 @@ class ToolsCIGMC():
 
         # velocity dispersion dist
         self._plot_hist_cprops(
-            xlim      = [0,105],
+            xlim      = [0,80],
             ylim      = None,
             title     = "Cloud Dispersion",
             xlabel    = "Velocity Dispersion (km s$^{-1}$)",
@@ -449,8 +449,8 @@ class ToolsCIGMC():
             xlabel    = "Radius (pc)",
             ylabel    = "Count density",
             outpng    = self.outpng_hist_rad,
-            data_co10 = sigv_co10,
-            data_ci10 = sigv_ci10,
+            data_co10 = radius_co10,
+            data_ci10 = radius_ci10,
             s2n_co10  = s2n_co10,
             s2n_ci10  = s2n_ci10,
             )
