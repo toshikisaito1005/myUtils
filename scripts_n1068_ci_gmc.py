@@ -411,7 +411,7 @@ class ToolsCIGMC():
         # plot #
         ########
 
-        _plot_hist_cprops(
+        self._plot_hist_cprops(
             xlim      = [5,100],
             ylim      = None,
             title     = "Cloud SNR",
