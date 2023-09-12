@@ -388,14 +388,29 @@ class ToolsCIGMC():
         """
 
         taskname = self.modname + sys._getframe().f_code.co_name
-        check_first(self.cprops_ci10,taskname)
+        check_first(self.cprops_co10,taskname)
 
-        x_ci_cone, y_ci_cone, radius_ci_cone, sigv_ci_cone, mvir_ci_cone, tpeak_ci_cone, lci_ci_cone, \
-            x_ci_nocone, y_ci_nocone, radius_ci_nocone, sigv_ci_nocone, mvir_ci_nocone, tpeak_ci_nocone, lci_ci_nocone, \
-            x_ci_sbr, y_ci_sbr, radius_ci_sbr, sigv_ci_sbr, mvir_ci_sbr, tpeak_ci_sbr, lci_ci_sbr,_,_,_ = self._import_cprops_table(self.cprops_ci10)
-        x_co_cone, y_co_cone, radius_co_cone, sigv_co_cone, mvir_co_cone, tpeak_co_cone, lci_co_cone, \
-            x_co_nocone, y_co_nocone, radius_co_nocone, sigv_co_nocone, mvir_co_nocone, tpeak_co_nocone, lci_co_nocone, \
-            x_co_sbr, y_co_sbr, radius_co_sbr, sigv_co_sbr, mvir_co_sbr, tpeak_co_sbr, lci_co_sbr,_,_,_ = self._import_cprops_table(self.cprops_co10)
+        # import cprops table
+        f = pyfits.open(self.cprops_co10)
+        tb = f[1].data
+
+        # extract parameters
+        s2n_co10    = tb["S2N"]
+        radius_co10 = tb["RAD_PC"] # tb["RAD_NODC_NOEX"]
+        sigv_co10   = tb["SIGV_KMS"] # tb["SIGV_NODC_NOEX"]
+        mvir_co10   = tb["MVIR_MSUN"]
+        tpeak_co10  = tb["TMAX_K"]
+
+        # import cprops table
+        f = pyfits.open(self.cprops_ci10)
+        tb = f[1].data
+
+        # extract parameters
+        s2n_ci10    = tb["S2N"]
+        radius_ci10 = tb["RAD_PC"]
+        sigv_ci10   = tb["SIGV_KMS"]
+        mvir_ci10   = tb["MVIR_MSUN"]
+        tpeak_ci10  = tb["TMAX_K"]
 
         ####################
         # plot: larson 1st #
@@ -403,7 +418,7 @@ class ToolsCIGMC():
         xlim   = self.xlim_larson_1st
         ylim   = self.ylim_larson_1st
         title  = "Larson's 1st law"
-        xlabel = "log Diameter (pc)"
+        xlabel = "log Radius (pc)"
         ylabel = "log velocity dispersion (km s$^{-1}$)"
 
         fig = plt.figure(figsize=(13,10))
@@ -414,47 +429,23 @@ class ToolsCIGMC():
 
         alpha=1.0#0.3
         size=200#100
-        ax1.scatter(np.log10(radius_co_cone*2.0), np.log10(sigv_co_cone), lw=0, s=200, color="deepskyblue", alpha=1.0)
-        ax1.scatter(np.log10(radius_co_nocone*2.0), np.log10(sigv_co_nocone), lw=0, s=size, color="deepskyblue", alpha=alpha)
-        ax1.scatter(np.log10(radius_co_sbr*2.0), np.log10(sigv_co_sbr), lw=0, s=size, color="deepskyblue", alpha=alpha)
-
-        X, Y, Z = density_estimation(
-            np.r_[np.log10(radius_co_cone*2.0),np.log10(radius_co_nocone*2.0),np.log10(radius_co_sbr*2.0)],
-            np.r_[np.log10(sigv_co_cone),np.log10(sigv_co_nocone),np.log10(sigv_co_sbr)],
-            xlim, ylim)
+        ax1.scatter(np.log10(radius_co10), np.log10(sigv_co10), lw=0, s=200, color="deepskyblue", alpha=1.0)
+        X, Y, Z = density_estimation(np.log10(radius_co10), np.log10(sigv_co10), xlim, ylim)
         ax1.contour(X, Y, Z, colors="blue")
 
-        ax1.scatter(np.log10(radius_ci_cone*2.0), np.log10(sigv_ci_cone), lw=0, s=200, color="tomato", alpha=1.0)
-        ax1.scatter(np.log10(radius_ci_nocone*2.0), np.log10(sigv_ci_nocone), lw=0, s=size, color="tomato", alpha=alpha)
-        ax1.scatter(np.log10(radius_ci_sbr*2.0), np.log10(sigv_ci_sbr), lw=0, s=size, color="tomato", alpha=alpha)
-
-        X, Y, Z = density_estimation(
-            np.r_[np.log10(radius_ci_cone*2.0),np.log10(radius_ci_nocone*2.0),np.log10(radius_ci_sbr*2.0)],
-            np.r_[np.log10(sigv_ci_cone),np.log10(sigv_ci_nocone),np.log10(sigv_ci_sbr)],
-            xlim, ylim)
-        ax1.contour(X, Y, Z, colors="red")
-
-        # plot larson
-        x1 = xlim[0]
-        x2 = xlim[1]
-        y1 = np.log10(1.10 * (10**x1)**0.38)
-        y2 = np.log10(1.10 * (10**x2)**0.38)
-        ax1.plot([x1,x2],[y1,y2],"--",lw=3,color="grey")
-
         # text
-        ax1.text(0.03, 0.93, "[CI] (outflow)", color="tomato", transform=ax1.transAxes, weight="bold", fontsize=24)
-        ax1.text(0.03, 0.88, "[CI] (non-outflow)", color="tomato", transform=ax1.transAxes, fontsize=24)
-        ax1.text(0.03, 0.83, "CO (outflow)", color="deepskyblue", transform=ax1.transAxes, weight="bold", fontsize=24)
-        ax1.text(0.03, 0.78, "CO (non-outflow)", color="deepskyblue", transform=ax1.transAxes, fontsize=24)
+        ax1.text(0.03, 0.93, "CO(1-0)", color="deepskyblue", transform=ax1.transAxes, weight="bold", fontsize=24)
+        ax1.text(0.03, 0.88, "[CI](1-0)", color="tomato", transform=ax1.transAxes, weight="bold", fontsize=24)
 
         # fill
-        ax1.axvspan(xlim[0], np.log10(55*2), color='grey', alpha=.5, lw=0)
-        ax1.axvspan(np.log10(55*2), xlim[1], 0, (np.log10(2.6*2)-ylim[0]) / (ylim[1]-ylim[0]), color='grey', alpha=.5, lw=0)
+        ax1.axvspan(xlim[0], np.log10(55), color='grey', alpha=.5, lw=0)
+        ax1.axvspan(np.log10(55), xlim[1], 0, (np.log10(2.6*2)-ylim[0]) / (ylim[1]-ylim[0]), color='grey', alpha=.5, lw=0)
 
         # save
         os.system("rm -rf " + self.outpng_cico_larson_1st)
         plt.savefig(self.outpng_cico_larson_1st, dpi=self.fig_dpi)
 
+        """
         ####################
         # plot: larson 2nd #
         ####################
@@ -515,6 +506,7 @@ class ToolsCIGMC():
         # save
         os.system("rm -rf " + self.outpng_cico_larson_3rd)
         plt.savefig(self.outpng_cico_larson_3rd, dpi=self.fig_dpi)
+        """
 
     ###############
     # hist_cprops #
@@ -528,7 +520,6 @@ class ToolsCIGMC():
 
         taskname = self.modname + sys._getframe().f_code.co_name
         check_first(self.cprops_co10,taskname)
-
 
         # import cprops table
         f = pyfits.open(self.cprops_co10)
