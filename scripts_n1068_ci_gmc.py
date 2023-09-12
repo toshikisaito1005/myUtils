@@ -918,8 +918,8 @@ class ToolsCIGMC():
         fig = plt.figure(figsize=(13,10))
         gs  = gridspec.GridSpec(nrows=10, ncols=10)
         ax1 = plt.subplot(gs[0:10,0:10])
-        ad  = [0.215,0.83,0.10,0.90]
         myax_set(ax1, "x", xlim, ylim, title, xlabel, ylabel, adjust=ad)
+        ad  = [0.215,0.83,0.10,0.90]
 
         ax1.bar(x_rad_cone, y_rad_cone, lw=0, color="red", width=x_rad_cone[1]-x_rad_cone[0], alpha=0.5)
         ax1.bar(x_rad_nocone, y_rad_nocone, lw=0, color="blue", width=x_rad_nocone[1]-x_rad_nocone[0], alpha=0.5)
@@ -1039,8 +1039,8 @@ class ToolsCIGMC():
         y      = (tb["YCTR_DEG"] - self.dec_agn) * 3600.
         v      = tb["VCTR_KMS"]
         s2n    = tb["S2N"]
-        radius = tb["RAD_NODC_NOEX"]
-        sigv   = tb["SIGV_NODC_NOEX"]
+        radius = tb["RAD"] # tb["RAD_NODC_NOEX"]
+        sigv   = tb["SIGV"] # tb["SIGV_NODC_NOEX"]
         mvir   = tb["MVIR_MSUN"]
         tpeak  = tb["TMAX_K"]
         mci    = tb["MLUM_MSUN"]
