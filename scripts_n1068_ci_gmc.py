@@ -178,7 +178,7 @@ class ToolsCIGMC():
 
         self.imsize_as  = 18
 
-        self.xlim_larson_1st = [1.9,2.65]
+        self.xlim_larson_1st = [1.0,2.5]
         self.ylim_larson_1st = [0.4,1.6]
         self.xlim_larson_2nd = [6.5,9.0]
         self.ylim_larson_2nd = [0.4,1.6]
@@ -430,8 +430,8 @@ class ToolsCIGMC():
         title  = "Larson's 1st law"
         xlabel = "log Radius (pc)"
         ylabel = "log velocity dispersion (km s$^{-1}$)"
-        alpha=1.0
-        size=200
+        alpha  = 1.0
+        size   = 200
 
         fig = plt.figure(figsize=(13,10))
         gs  = gridspec.GridSpec(nrows=10, ncols=10)
@@ -447,7 +447,7 @@ class ToolsCIGMC():
         # ci10
         ax1.scatter(x_ci10, y_ci10, lw=0, s=200, color="tomato", alpha=1.0)
         X, Y, Z = density_estimation(x_ci10, y_ci10, xlim, ylim)
-        ax1.contour(X, Y, Z, colors="blue")
+        ax1.contour(X, Y, Z, colors="red")
 
         # text
         ax1.text(0.03, 0.93, "CO(1-0)", color="deepskyblue", transform=ax1.transAxes, weight="bold", fontsize=24)
