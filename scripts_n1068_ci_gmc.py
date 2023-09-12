@@ -772,12 +772,17 @@ class ToolsCIGMC():
         xlabel = "SNR"
         ylabel = "Count density"
 
+        """
         h = np.histogram(cone_list[10], bins=10, range=xlim)
         x_rad_cone, y_rad_cone = h[1][:-1], h[0]/float(np.sum(h[0]))
         h = np.histogram(nocone_list[10], bins=10, range=xlim)
         x_rad_nocone, y_rad_nocone = h[1][:-1], h[0]/float(np.sum(h[0]))
         h = np.histogram(sbr_list[10], bins=10, range=xlim)
         x_rad_sbr, y_rad_sbr = h[1][:-1], h[0]/float(np.sum(h[0]))
+        """
+        all_list = np.r_[cone_list[10], nocone_list[10], sbr_list[10]]
+        h = np.histogram(all_list, bins=10, range=xlim)
+        x_all, y_all = h[1][:-1], h[0]/float(np.sum(h[0]))
 
         fig = plt.figure(figsize=(13,10))
         gs  = gridspec.GridSpec(nrows=10, ncols=10)
@@ -785,9 +790,12 @@ class ToolsCIGMC():
         ad  = [0.215,0.83,0.10,0.90]
         myax_set(ax1, "x", xlim, ylim, title, xlabel, ylabel, adjust=ad)
 
+        """
         ax1.bar(x_rad_cone, y_rad_cone, lw=0, color="red", width=x_rad_cone[1]-x_rad_cone[0], alpha=0.5)
         ax1.bar(x_rad_nocone, y_rad_nocone, lw=0, color="blue", width=x_rad_nocone[1]-x_rad_nocone[0], alpha=0.5)
         ax1.bar(x_rad_sbr, y_rad_sbr, lw=0, color="grey", width=x_rad_sbr[1]-x_rad_sbr[0], alpha=0.5)
+        """
+        ax1.bar(x_all, y_all, lw=0, color="tomato", width=x_rad_cone[1]-x_rad_cone[0], alpha=1.0)
 
         # save
         os.system("rm -rf " + self.outpng_co_hist_snr)
