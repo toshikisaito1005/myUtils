@@ -458,7 +458,7 @@ class ToolsCIGMC():
 
         # tpeak dist
         self._plot_hist_cprops(
-            xlim      = [0,300],
+            xlim      = [0,40],
             ylim      = None,
             title     = "Cloud Peak Temperature",
             xlabel    = "Peak Temperature (K)",
