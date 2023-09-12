@@ -415,6 +415,11 @@ class ToolsCIGMC():
         ####################
         # plot: larson 1st #
         ####################
+        x_co10 = radius_co10[s2n_co10>self.snr_cprops]
+        y_co10 = sigv_co10[s2n_co10>self.snr_cprops]
+        x_ci10 = radius_ci10[s2n_ci10>self.snr_cprops]
+        y_ci10 = sigv_ci10[s2n_ci10>self.snr_cprops]
+
         xlim   = self.xlim_larson_1st
         ylim   = self.ylim_larson_1st
         title  = "Larson's 1st law"
@@ -429,8 +434,8 @@ class ToolsCIGMC():
 
         alpha=1.0#0.3
         size=200#100
-        ax1.scatter(np.log10(radius_co10), np.log10(sigv_co10), lw=0, s=200, color="deepskyblue", alpha=1.0)
-        X, Y, Z = density_estimation(np.log10(radius_co10), np.log10(sigv_co10), xlim, ylim)
+        ax1.scatter(np.log10(x_co10), np.log10(y_co10), lw=0, s=200, color="deepskyblue", alpha=1.0)
+        X, Y, Z = density_estimation(np.log10(x_co10), np.log10(y_co10), xlim, ylim)
         ax1.contour(X, Y, Z, colors="blue")
 
         # text
@@ -663,7 +668,6 @@ class ToolsCIGMC():
         taskname = self.modname + sys._getframe().f_code.co_name
         check_first(self.cprops_co10,taskname)
 
-        """
         ###########
         # CO(1-0) #
         ###########
@@ -899,7 +903,6 @@ class ToolsCIGMC():
         ax.text(x, 0.96, text, color="black", horizontalalignment="left", verticalalignment="top", transform=ax.transAxes, rotation=90)
 
         plt.savefig(self.outpng_hist_ci10_snr, dpi=self.fig_dpi)
-        """
 
         ###################
         # CI(1-0)/CO(1-0) #
