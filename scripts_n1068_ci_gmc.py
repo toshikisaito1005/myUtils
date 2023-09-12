@@ -417,13 +417,13 @@ class ToolsCIGMC():
         ####################
         x_co10 = radius_co10[s2n_co10>self.snr_cprops]
         y_co10 = sigv_co10[s2n_co10>self.snr_cprops]
-        x_co10 = np.where(x_co10>0,x_co10,0)
-        y_co10 = np.where(y_co10>0,y_co10,0)
+        x_co10 = np.nan_to_num(x_co10)
+        y_co10 = np.nan_to_num(y_co10)
 
         x_ci10 = radius_ci10[s2n_ci10>self.snr_cprops]
         y_ci10 = sigv_ci10[s2n_ci10>self.snr_cprops]
-        x_ci10 = np.where(x_ci10>0,x_ci10,0)
-        y_ci10 = np.where(y_ci10>0,y_ci10,0)
+        x_ci10 = np.nan_to_num(x_ci10)
+        y_ci10 = np.nan_to_num(y_ci10)
 
         xlim   = self.xlim_larson_1st
         ylim   = self.ylim_larson_1st
