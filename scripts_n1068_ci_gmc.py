@@ -464,8 +464,8 @@ class ToolsCIGMC():
         ax1.bar(x_co10, y_co10, lw=0, color="deepskyblue", width=x_co10[1]-x_co10[0], alpha=0.5)
         ax1.bar(x_ci10, y_ci10, lw=0, color="tomato", width=x_ci10[1]-x_ci10[0], alpha=0.5)
 
-        ax1.text(0.95, 0.93, "CO(1-0)", color="deepskyblue", horizontalalignment="right", transform=ax.transAxes, size=self.legend_fontsize, fontweight="bold")
-        ax1.text(0.95, 0.88, "[CI](1-0)", color="tomato", horizontalalignment="right", transform=ax.transAxes, size=self.legend_fontsize, fontweight="bold")
+        ax1.text(0.95, 0.93, "CO(1-0)", color="deepskyblue", horizontalalignment="right", transform=ax1.transAxes, size=self.legend_fontsize, fontweight="bold")
+        ax1.text(0.95, 0.88, "[CI](1-0)", color="tomato", horizontalalignment="right", transform=ax1.transAxes, size=self.legend_fontsize, fontweight="bold")
 
         # save
         os.system("rm -rf " + outpng)
