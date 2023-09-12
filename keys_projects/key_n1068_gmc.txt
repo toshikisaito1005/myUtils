@@ -59,8 +59,8 @@ outpng_hist_ci10_snr  ,,,outpng_stats_ci10_snr.png
 outpng_hist_ratio_snr ,,,outpng_stats_ratio_snr.png
 # png files: cprops stats
 outpng_hist_snr       ,,,outpng_hist_snr.png
-
-
+outpng_hist_sigv      ,,,outpng_hist_sigv.png
+outpng_hist_rad       ,,,outpng_hist_rad.png
 
 
 # png files: cprops stats (ci10)

@@ -198,6 +198,8 @@ class ToolsCIGMC():
         self.outpng_hist_ratio_snr = self.dir_products + self._read_key("outpng_hist_ratio_snr")
 
         self.outpng_hist_snr       = self.dir_products + self._read_key("outpng_hist_snr")
+        self.outpng_hist_sigv      = self.dir_products + self._read_key("outpng_hist_sigv")
+        self.outpng_hist_rad       = self.dir_products + self._read_key("outpng_hist_rad")
 
         # supplement
         self.outpng_ci_hist_rad           = self.dir_products + self._read_key("outpng_ci_hist_rad")
@@ -411,6 +413,7 @@ class ToolsCIGMC():
         # plot #
         ########
 
+        # SNR dist
         self._plot_hist_cprops(
             xlim      = [5,105],
             ylim      = None,
@@ -420,6 +423,34 @@ class ToolsCIGMC():
             outpng    = self.outpng_hist_snr,
             data_co10 = s2n_co10,
             data_ci10 = s2n_ci10,
+            s2n_co10  = s2n_co10,
+            s2n_ci10  = s2n_ci10,
+            )
+
+        # velocity dispersion dist
+        self._plot_hist_cprops(
+            xlim      = [0,105],
+            ylim      = None,
+            title     = "Cloud Dispersion",
+            xlabel    = "Velocity Dispersion (km s$^{-1}$)",
+            ylabel    = "Count density",
+            outpng    = self.outpng_hist_sigv,
+            data_co10 = sigv_co10,
+            data_ci10 = sigv_ci10,
+            s2n_co10  = s2n_co10,
+            s2n_ci10  = s2n_ci10,
+            )
+
+        # radius dist
+        self._plot_hist_cprops(
+            xlim      = [0,105],
+            ylim      = None,
+            title     = "Cloud Radius",
+            xlabel    = "Radius (pc)",
+            ylabel    = "Count density",
+            outpng    = self.outpng_hist_rad,
+            data_co10 = sigv_co10,
+            data_ci10 = sigv_ci10,
             s2n_co10  = s2n_co10,
             s2n_ci10  = s2n_ci10,
             )
