@@ -795,7 +795,7 @@ class ToolsCIGMC():
         ax1.bar(x_rad_nocone, y_rad_nocone, lw=0, color="blue", width=x_rad_nocone[1]-x_rad_nocone[0], alpha=0.5)
         ax1.bar(x_rad_sbr, y_rad_sbr, lw=0, color="grey", width=x_rad_sbr[1]-x_rad_sbr[0], alpha=0.5)
         """
-        ax1.bar(x_all, y_all, lw=0, color="tomato", width=x_rad_cone[1]-x_rad_cone[0], alpha=1.0)
+        ax1.bar(x_all, y_all, lw=0, color="tomato", width=x_all[1]-x_all[0], alpha=1.0)
 
         # save
         os.system("rm -rf " + self.outpng_co_hist_snr)
