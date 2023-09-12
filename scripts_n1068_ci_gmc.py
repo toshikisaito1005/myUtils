@@ -432,7 +432,7 @@ class ToolsCIGMC():
         ylabel = "log velocity dispersion (km s$^{-1}$)"
         alpha  = 1.0
         size   = 50
-        levels = np.arange(0.1, 1+0.2, 0.2)
+        levels = np.arange(0.5, 10+2, 2)
 
         # plot
         fig = plt.figure(figsize=(13,10))
