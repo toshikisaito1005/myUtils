@@ -200,12 +200,12 @@ class ToolsCIGMC():
         self.outpng_ci_hist_rad           = self.dir_products + self._read_key("outpng_ci_hist_rad")
         self.outpng_ci_hist_sigv          = self.dir_products + self._read_key("outpng_ci_hist_sigv")
         self.outpng_ci_hist_mvir          = self.dir_products + self._read_key("outpng_ci_hist_mvir")
-        self.outpng_co_hist_snr           = self.dir_products + self._read_key("outpng_ci_hist_snr")
+        self.outpng_ci_hist_snr           = self.dir_products + self._read_key("outpng_ci_hist_snr")
 
         self.outpng_co_hist_rad           = self.dir_products + self._read_key("outpng_co_hist_rad")
         self.outpng_co_hist_sigv          = self.dir_products + self._read_key("outpng_co_hist_sigv")
         self.outpng_co_hist_mvir          = self.dir_products + self._read_key("outpng_co_hist_mvir")
-        self.outpng_co_hist_snr           = self.dir_products + self._read_key("outpng_ci_hist_snr")
+        self.outpng_co_hist_snr           = self.dir_products + self._read_key("outpng_co_hist_snr")
 
         # supplement
         self.outpng_cprops_co10_agn       = self.dir_products + self._read_key("outpng_cprops_co10_agn")
