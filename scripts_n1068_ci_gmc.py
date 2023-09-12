@@ -432,7 +432,9 @@ class ToolsCIGMC():
         ylabel = "log velocity dispersion (km s$^{-1}$)"
         alpha  = 1.0
         size   = 50
+        levels = np.arange(0.1, 1+0.2, 0.2)
 
+        # plot
         fig = plt.figure(figsize=(13,10))
         gs  = gridspec.GridSpec(nrows=10, ncols=10)
         ax1 = plt.subplot(gs[0:10,0:10])
@@ -442,12 +444,12 @@ class ToolsCIGMC():
         # co10
         ax1.scatter(x_co10, y_co10, lw=0, s=size, color="deepskyblue", alpha=1.0)
         X, Y, Z = density_estimation(x_co10, y_co10, xlim, ylim)
-        ax1.contourf(X, Y, Z, colors="blue", lw=2)
+        ax1.contourf(X, Y, Z, colors="blue", lw=2, levels=levels)
 
         # ci10
         ax1.scatter(x_ci10, y_ci10, lw=0, s=size, color="tomato", alpha=1.0)
         X, Y, Z = density_estimation(x_ci10, y_ci10, xlim, ylim)
-        ax1.contourf(X, Y, Z, colors="red", lw=2)
+        ax1.contourf(X, Y, Z, colors="red", lw=2, levels=levels)
 
         # text
         ax1.text(0.03, 0.93, "CO(1-0)", color="deepskyblue", transform=ax1.transAxes, weight="bold", fontsize=24)
