@@ -178,7 +178,7 @@ class ToolsCIGMC():
 
         self.imsize_as  = 18
 
-        self.xlim_larson_1st = [1.3,2.5]
+        self.xlim_larson_1st = [1.4,2.6]
         self.ylim_larson_1st = [0.4,1.8]
         self.xlim_larson_2nd = [6.5,9.0]
         self.ylim_larson_2nd = [0.4,1.6]
@@ -431,7 +431,7 @@ class ToolsCIGMC():
         xlabel = "log Radius (pc)"
         ylabel = "log velocity dispersion (km s$^{-1}$)"
         alpha  = 1.0
-        size   = 200
+        size   = 50
 
         fig = plt.figure(figsize=(13,10))
         gs  = gridspec.GridSpec(nrows=10, ncols=10)
