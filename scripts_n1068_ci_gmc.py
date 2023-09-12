@@ -429,7 +429,7 @@ class ToolsCIGMC():
         ylim   = self.ylim_larson_1st
         title  = "Larson's 1st law"
         xlabel = "log Radius (pc)"
-        ylabel = "log velocity dispersion (km s$^{-1}$)"
+        ylabel = "log Velocity Dispersion (km s$^{-1}$)"
         alpha  = 1.0
         size   = 50
         levels = np.arange(0.5, 10+2, 2)
@@ -444,12 +444,12 @@ class ToolsCIGMC():
         # co10
         ax1.scatter(x_co10, y_co10, lw=0, s=size, color="deepskyblue", alpha=1.0)
         X, Y, Z = density_estimation(x_co10, y_co10, xlim, ylim)
-        ax1.contour(X, Y, Z, colors="blue", lw=2, alpha=0.3)
+        ax1.contour(X, Y, Z, colors="blue", lw=4, alpha=0.3)
 
         # ci10
         ax1.scatter(x_ci10, y_ci10, lw=0, s=size, color="tomato", alpha=1.0)
         X, Y, Z = density_estimation(x_ci10, y_ci10, xlim, ylim)
-        ax1.contour(X, Y, Z, colors="red", lw=2, alpha=0.3)
+        ax1.contour(X, Y, Z, colors="red", lw=4, alpha=0.3)
 
         # text
         ax1.text(0.03, 0.93, "CO(1-0)", color="deepskyblue", transform=ax1.transAxes, weight="bold", fontsize=24)
