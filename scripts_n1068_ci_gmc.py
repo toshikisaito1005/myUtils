@@ -412,7 +412,7 @@ class ToolsCIGMC():
         ########
 
         self._plot_hist_cprops(
-            xlim      = [5,120],
+            xlim      = [5,105],
             ylim      = None,
             title     = "Cloud SNR",
             xlabel    = "SNR",
