@@ -396,8 +396,8 @@ class ToolsCIGMC():
 
         # extract parameters
         s2n_co10    = tb["S2N"]
-        radius_co10 = tb["RAD_PC"] # tb["RAD_NODC_NOEX"]
-        sigv_co10   = tb["SIGV_KMS"] # tb["SIGV_NODC_NOEX"]
+        radius_co10 = tb["RAD_PC"]
+        sigv_co10   = tb["SIGV_KMS"]
         mvir_co10   = tb["MVIR_MSUN"]
         tpeak_co10  = tb["TMAX_K"]
 
@@ -417,8 +417,13 @@ class ToolsCIGMC():
         ####################
         x_co10 = radius_co10[s2n_co10>self.snr_cprops]
         y_co10 = sigv_co10[s2n_co10>self.snr_cprops]
+        x_co10 = np.where(x_co10>0,x_co10,0)
+        y_co10 = np.where(y_co10>0,y_co10,0)
+
         x_ci10 = radius_ci10[s2n_ci10>self.snr_cprops]
         y_ci10 = sigv_ci10[s2n_ci10>self.snr_cprops]
+        x_ci10 = np.where(x_ci10>0,x_ci10,0)
+        y_ci10 = np.where(y_ci10>0,y_ci10,0)
 
         xlim   = self.xlim_larson_1st
         ylim   = self.ylim_larson_1st
