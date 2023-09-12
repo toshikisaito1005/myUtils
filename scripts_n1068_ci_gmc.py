@@ -200,6 +200,7 @@ class ToolsCIGMC():
         self.outpng_hist_snr       = self.dir_products + self._read_key("outpng_hist_snr")
         self.outpng_hist_sigv      = self.dir_products + self._read_key("outpng_hist_sigv")
         self.outpng_hist_rad       = self.dir_products + self._read_key("outpng_hist_rad")
+        self.outpng_hist_tpeak     = self.dir_products + self._read_key("outpng_hist_tpeak")
 
         # supplement
         self.outpng_ci_hist_rad           = self.dir_products + self._read_key("outpng_ci_hist_rad")
@@ -451,6 +452,20 @@ class ToolsCIGMC():
             outpng    = self.outpng_hist_rad,
             data_co10 = radius_co10,
             data_ci10 = radius_ci10,
+            s2n_co10  = s2n_co10,
+            s2n_ci10  = s2n_ci10,
+            )
+
+        # tpeak dist
+        self._plot_hist_cprops(
+            xlim      = [0,300],
+            ylim      = None,
+            title     = "Cloud Peak Temperature",
+            xlabel    = "Peak Temperature (K)",
+            ylabel    = "Count density",
+            outpng    = self.outpng_hist_tpeak,
+            data_co10 = tpeak_co10,
+            data_ci10 = tpeak_ci10,
             s2n_co10  = s2n_co10,
             s2n_ci10  = s2n_ci10,
             )
