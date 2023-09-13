@@ -434,7 +434,7 @@ class ToolsCIGMC():
         size   = 50
 
         # plot
-        fig = plt.figure(figsize=(13,10))
+        fig = plt.figure(figsize=(10,10))
         gs  = gridspec.GridSpec(nrows=10, ncols=10)
         ax1 = plt.subplot(gs[2:10,0:8])
         ax2 = plt.subplot(gs[0:2,0:8])
