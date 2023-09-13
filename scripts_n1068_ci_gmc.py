@@ -441,8 +441,8 @@ class ToolsCIGMC():
         ax3 = plt.subplot(gs[0:8,8:10])
         ad  = [0.215,0.83,0.10,0.90]
         myax_set(ax1, None, xlim, ylim, title, xlabel, ylabel, adjust=ad)
-        myax_set(ax2, None, xlim, ylim, None, None, None, adjust=None)
-        myax_set(ax3, None, xlim, ylim, None, None, None, adjust=None)
+        myax_set(ax2, None, xlim, ylim, None, None, None)
+        myax_set(ax3, None, xlim, ylim, None, None, None)
 
         # co10
         #ax1.scatter(x_co10, y_co10, lw=0, s=size, color="deepskyblue", alpha=1.0)
