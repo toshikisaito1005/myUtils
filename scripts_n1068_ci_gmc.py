@@ -440,7 +440,7 @@ class ToolsCIGMC():
         ax2 = plt.subplot(gs[0:4,0:16])
         ax3 = plt.subplot(gs[4:20,16:20])
         ad  = [0.215,0.83,0.10,0.90]
-        myax_set(ax1, None, xlim, ylim, title, xlabel, ylabel, adjust=ad)
+        myax_set(ax1, None, xlim, ylim, None, xlabel, ylabel, adjust=ad)
         myax_set(ax2, None, xlim, None, None, None, None)
         myax_set(ax3, None, None, ylim, None, None, None)
 
@@ -477,8 +477,8 @@ class ToolsCIGMC():
         self._scatter_hist(x_ci10, y_ci10, ax1, ax2, ax3, "tomato", xlim, ylim)
 
         # text
-        ax1.text(0.03, 0.93, "CO(1-0) Clouds", color="deepskyblue", transform=ax1.transAxes, weight="bold", fontsize=24)
-        ax1.text(0.03, 0.88, "[CI](1-0) Clouds", color="tomato", transform=ax1.transAxes, weight="bold", fontsize=24)
+        ax1.text(0.03, 0.93, "CO(1-0) Clouds (S/N > 5)", color="deepskyblue", transform=ax1.transAxes, weight="bold", fontsize=24)
+        ax1.text(0.03, 0.88, "[CI](1-0) Clouds (S/N > 5)", color="tomato", transform=ax1.transAxes, weight="bold", fontsize=24)
 
         # line
         ax1.plot(xlim, [np.log10(2.39),np.log10(2.39)], linestyle='dashed', color='grey', alpha=.5, lw=2)
