@@ -506,12 +506,12 @@ class ToolsCIGMC():
         ax_histy.hist(y, bins=bins, color=color, lw=0, alpha=0.5, orientation='horizontal')
 
         # kde
-        x_grid = np.arrange(xlim[0], xlim[1], (xlim[1]-xlim[0])/20.)
+        x_grid = np.arange(xlim[0], xlim[1], (xlim[1]-xlim[0])/20.)
         xkde = gaussian_kde(x)
         x2 = kde_model(x_grid)
         ax_histx.plot(x_grid, ax_histx)
 
-        y_grid = np.arrange(ylim[0], ylim[1], (ylim[1]-ylim[0])/20.)
+        y_grid = np.arange(ylim[0], ylim[1], (ylim[1]-ylim[0])/20.)
         ykde = gaussian_kde(y)
         y2 = kde_model(y_grid)
         ax_histy.plot(y_grid, ax_histy)
