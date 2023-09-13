@@ -488,13 +488,13 @@ class ToolsCIGMC():
         os.system("rm -rf " + self.outpng_cico_larson_1st)
         plt.savefig(self.outpng_cico_larson_1st, dpi=self.fig_dpi)
 
-    def _scatter_hist(self, x, y, ax, ax_histx, ax_histy, color, marker):
+    def _scatter_hist(self, x, y, ax, ax_histx, ax_histy, color, marker="."):
         # no labels
         ax_histx.tick_params(axis="x", labelbottom=False)
         ax_histy.tick_params(axis="y", labelleft=False)
 
         # the scatter plot:
-        ax.scatter(x, y, c=color, lw=0, s=50, marker=".")
+        ax.scatter(x, y, c=color, lw=0, s=50, marker=marker)
 
         # now determine nice limits by hand:
         binwidth = 0.05
