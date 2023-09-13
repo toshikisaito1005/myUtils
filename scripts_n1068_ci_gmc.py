@@ -436,9 +436,9 @@ class ToolsCIGMC():
         # plot
         fig = plt.figure(figsize=(13,10))
         gs  = gridspec.GridSpec(nrows=10, ncols=10)
-        ax1 = plt.subplot(gs[0:8,0:8])
+        ax1 = plt.subplot(gs[0:8,2:10])
         ax2 = plt.subplot(gs[8:10,0:8])
-        ax3 = plt.subplot(gs[0:8,8:10])
+        ax3 = plt.subplot(gs[0:8,0:2])
         ad  = [0.215,0.83,0.10,0.90]
         myax_set(ax1, None, xlim, ylim, title, xlabel, ylabel, adjust=ad)
 
@@ -453,7 +453,7 @@ class ToolsCIGMC():
         ax1.contour(X, Y, Z, colors="red", linewidths=[3], alpha=0.2)
 
         # scatterhist
-        self._scatter_hist(x_co10, y_co10, ax1, ax3, ax2)
+        self._scatter_hist(x_co10, y_co10, ax1, ax2, ax3)
 
         # text
         ax1.text(0.03, 0.93, "CO(1-0)", color="deepskyblue", transform=ax1.transAxes, weight="bold", fontsize=24)
