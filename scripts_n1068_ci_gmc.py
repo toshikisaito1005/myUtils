@@ -477,14 +477,14 @@ class ToolsCIGMC():
         self._scatter_hist(x_ci10, y_ci10, ax1, ax2, ax3, "tomato", xlim, ylim)
 
         # text
-        ax1.text(0.03, 0.93, "CO(1-0) Clouds (Peak S/N > 5)", color="deepskyblue", transform=ax1.transAxes, weight="bold", fontsize=24)
-        ax1.text(0.03, 0.88, "[CI](1-0) Clouds (Peak S/N > 5)", color="tomato", transform=ax1.transAxes, weight="bold", fontsize=24)
+        txt = ax1.text(0.03, 0.93, "CO(1-0) Clouds (Peak S/N > 5)", color="deepskyblue", transform=ax1.transAxes, weight="bold", fontsize=24)
+        txt.set_path_effects([PathEffects.withStroke(linewidth=2, foreground='w')])
+        txt = ax1.text(0.03, 0.88, "[CI](1-0) Clouds (Peak S/N > 5)", color="tomato", transform=ax1.transAxes, weight="bold", fontsize=24)
+        txt.set_path_effects([PathEffects.withStroke(linewidth=2, foreground='w')])
 
         # line
-        txt = ax1.plot(xlim, [np.log10(2.39),np.log10(2.39)], linestyle='dashed', color='grey', alpha=.5, lw=2)
-        txt.set_path_effects([PathEffects.withStroke(linewidth=2, foreground='w')])
-        txt = ax1.plot([np.log10(55),np.log10(55)], ylim, linestyle='dashed', color='grey', alpha=.5, lw=2)
-        txt.set_path_effects([PathEffects.withStroke(linewidth=2, foreground='w')])
+        ax1.plot(xlim, [np.log10(2.39),np.log10(2.39)], linestyle='dashed', color='grey', alpha=.5, lw=2)
+        ax1.plot([np.log10(55),np.log10(55)], ylim, linestyle='dashed', color='grey', alpha=.5, lw=2)
 
         # save
         os.system("rm -rf " + self.outpng_cico_larson_1st)
