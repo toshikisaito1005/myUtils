@@ -478,10 +478,11 @@ class ToolsCIGMC():
         self._scatter_hist(x_ci10, y_ci10, ax1, ax2, ax3, "tomato", xlim, ylim)
 
         # text
-        txt = ax1.text(0.03, 0.93, "CO(1-0) Clouds (Peak S/N > 5)", color="deepskyblue", transform=ax1.transAxes, weight="bold", fontsize=24)
+        txt = ax1.text(0.03, 0.93, "CO(1-0) Clouds", color="deepskyblue", transform=ax1.transAxes, weight="bold", fontsize=24)
         txt.set_path_effects([PathEffects.withStroke(linewidth=2, foreground='w')])
-        txt = ax1.text(0.03, 0.88, "[CI](1-0) Clouds (Peak S/N > 5)", color="tomato", transform=ax1.transAxes, weight="bold", fontsize=24)
+        txt = ax1.text(0.03, 0.88, "[CI](1-0) Clouds", color="tomato", transform=ax1.transAxes, weight="bold", fontsize=24)
         txt.set_path_effects([PathEffects.withStroke(linewidth=2, foreground='w')])
+        txt = ax1.text(0.03, 0.78, "Clouds with peak S/N > 5", color="black", transform=ax1.transAxes, fontsize=20)
 
         # line
         ax1.plot(xlim, [np.log10(2.39),np.log10(2.39)], linestyle='dashed', color='grey', alpha=.5, lw=2)
