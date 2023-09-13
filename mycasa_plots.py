@@ -34,6 +34,7 @@ import matplotlib.pyplot as plt
 import matplotlib.gridspec as gridspec
 plt.ioff()
 
+from scipy.stats import gaussian_kde
 import numpy.linalg as LA
 from matplotlib.colors import Normalize
 
