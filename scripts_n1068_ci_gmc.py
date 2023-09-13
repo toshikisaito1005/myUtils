@@ -501,9 +501,9 @@ class ToolsCIGMC():
         xymax = max(np.max(np.abs(x)), np.max(np.abs(y)))
         lim = (int(xymax/binwidth) + 1) * binwidth
 
-        bins = np.arange(-lim, lim + binwidth, binwidth)
-        ax_histx.hist(x, bins=bins, color=color, lw=0, alpha=0.5)
-        ax_histy.hist(y, bins=bins, color=color, lw=0, alpha=0.5, orientation='horizontal')
+        #bins = np.arange(-lim, lim + binwidth, binwidth)
+        #ax_histx.hist(x, bins=bins, color=color, lw=0, alpha=0.5)
+        #x_histy.hist(y, bins=bins, color=color, lw=0, alpha=0.5, orientation='horizontal')
 
         # kde
         x_grid = np.arange(xlim[0], xlim[1], (xlim[1]-xlim[0])/50.)
