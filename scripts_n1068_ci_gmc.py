@@ -501,23 +501,23 @@ class ToolsCIGMC():
         xymax = max(np.max(np.abs(x)), np.max(np.abs(y)))
         lim = (int(xymax/binwidth) + 1) * binwidth
 
-        #bins = np.arange(-lim, lim + binwidth, binwidth)
-        #ax_histx.hist(x, bins=bins, color=color, lw=0, alpha=0.5)
-        #ax_histy.hist(y, bins=bins, color=color, lw=0, alpha=0.5, orientation='horizontal')
+        bins = np.arange(-lim, lim + binwidth, binwidth)
+        ax_histx.hist(x, bins=bins, color=color, lw=0, alpha=0.5)
+        ax_histy.hist(y, bins=bins, color=color, lw=0, alpha=0.5, orientation='horizontal')
 
         # kde
-        x_grid = np.arange(xlim[0], xlim[1], (xlim[1]-xlim[0])/40.)
+        x_grid = np.arange(xlim[0], xlim[1], (xlim[1]-xlim[0])/50.)
         xkde = stats.gaussian_kde(x)
         x2 = xkde(x_grid)
         ax_histx.plot(x_grid, x2, color=color)
 
-        y_grid = np.arange(ylim[0], ylim[1], (ylim[1]-ylim[0])/40.)
+        y_grid = np.arange(ylim[0], ylim[1], (ylim[1]-ylim[0])/50.)
         ykde = stats.gaussian_kde(y)
         y2 = ykde(y_grid)
         ax_histy.plot(y2, y_grid, color=color)
 
         ax_histx.set_xlim(xlim)
-        ax_histy.set_xlim(ylim)
+        ax_histy.set_ylim(ylim)
 
     ###############
     # hist_cprops #
