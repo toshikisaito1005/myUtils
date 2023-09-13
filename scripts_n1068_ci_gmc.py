@@ -431,7 +431,7 @@ class ToolsCIGMC():
         xlabel = "log$_{10}$ Radius (pc)"
         ylabel = "log$_{10}$ Velocity Dispersion (km s$^{-1}$)"
         alpha  = 1.0
-        size   = 50
+        size   = 30
 
         # plot
         fig = plt.figure(figsize=(10,10))
@@ -501,6 +501,7 @@ class ToolsCIGMC():
         xymax = max(np.max(np.abs(x)), np.max(np.abs(y)))
         lim = (int(xymax/binwidth) + 1) * binwidth
 
+        # hist
         #bins = np.arange(-lim, lim + binwidth, binwidth)
         #ax_histx.hist(x, bins=bins, color=color, lw=0, alpha=0.5)
         #x_histy.hist(y, bins=bins, color=color, lw=0, alpha=0.5, orientation='horizontal')
