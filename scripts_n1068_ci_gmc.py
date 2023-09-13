@@ -438,7 +438,7 @@ class ToolsCIGMC():
         gs  = gridspec.GridSpec(nrows=10, ncols=10)
         ax1 = plt.subplot(gs[2:10,0:8])
         ax2 = plt.subplot(gs[0:2,0:8])
-        ax3 = plt.subplot(gs[0:8,8:10])
+        ax3 = plt.subplot(gs[2:10,8:10])
         ad  = [0.215,0.83,0.10,0.90]
         myax_set(ax1, None, xlim, ylim, title, xlabel, ylabel, adjust=ad)
         myax_set(ax2, None, xlim, None, None, None, None)
@@ -475,7 +475,7 @@ class ToolsCIGMC():
         ax_histy.tick_params(axis="y", labelleft=False)
 
         # the scatter plot:
-        ax.scatter(x, y, c=color)
+        ax.scatter(x, y, c=color, lw=0)
 
         # now determine nice limits by hand:
         binwidth = 0.05
