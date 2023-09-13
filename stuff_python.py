@@ -3,6 +3,7 @@ import numpy as np
 import scipy.ndimage
 from scipy.optimize import curve_fit
 from scipy.interpolate import interp1d
+from scipy.stats import gaussian_kde
 #
 
 ### astropy

@@ -473,8 +473,8 @@ class ToolsCIGMC():
         ax1.contour(X, Y, Z, colors="red", linewidths=[3], alpha=0.2)
 
         # scatterhist
-        self._scatter_hist(x_co10, y_co10, ax1, ax2, ax3, "deepskyblue", "s")
-        self._scatter_hist(x_ci10, y_ci10, ax1, ax2, ax3, "tomato")
+        self._scatter_hist(x_co10, y_co10, ax1, ax2, ax3, "deepskyblue", xlim, ylim, "s")
+        self._scatter_hist(x_ci10, y_ci10, ax1, ax2, ax3, "tomato", xlim, ylim)
 
         # text
         ax1.text(0.03, 0.93, "CO(1-0) Clouds", color="deepskyblue", transform=ax1.transAxes, weight="bold", fontsize=24)
@@ -488,7 +488,7 @@ class ToolsCIGMC():
         os.system("rm -rf " + self.outpng_cico_larson_1st)
         plt.savefig(self.outpng_cico_larson_1st, dpi=self.fig_dpi)
 
-    def _scatter_hist(self, x, y, ax, ax_histx, ax_histy, color, marker="o"):
+    def _scatter_hist(self, x, y, ax, ax_histx, ax_histy, color, xlim, ylim, marker="o"):
         # no labels
         ax_histx.tick_params(axis="x", labelbottom=False)
         ax_histy.tick_params(axis="y", labelleft=False)
@@ -504,6 +504,20 @@ class ToolsCIGMC():
         bins = np.arange(-lim, lim + binwidth, binwidth)
         ax_histx.hist(x, bins=bins, color=color, lw=0, alpha=0.5)
         ax_histy.hist(y, bins=bins, color=color, lw=0, alpha=0.5, orientation='horizontal')
+
+        # kde
+        x_grid = np.arrange(xlim[0], xlim[1], (xlim[1]-xlim[0])/20.)
+        xkde = gaussian_kde(x)
+        x2 = kde_model(x_grid)
+        ax_histx.plot(x_grid, ax_histx)
+
+        y_grid = np.arrange(ylim[0], ylim[1], (ylim[1]-ylim[0])/20.)
+        ykde = gaussian_kde(y)
+        y2 = kde_model(y_grid)
+        ax_histy.plot(y_grid, ax_histy)
+
+        ax_histx.set_xlim(xlim)
+        ax_histy.set_xlim(ylim)
 
     ###############
     # hist_cprops #
