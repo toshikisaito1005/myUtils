@@ -488,7 +488,7 @@ class ToolsCIGMC():
         os.system("rm -rf " + self.outpng_cico_larson_1st)
         plt.savefig(self.outpng_cico_larson_1st, dpi=self.fig_dpi)
 
-    def _scatter_hist(self, x, y, ax, ax_histx, ax_histy, color, marker="."):
+    def _scatter_hist(self, x, y, ax, ax_histx, ax_histy, color, marker="o"):
         # no labels
         ax_histx.tick_params(axis="x", labelbottom=False)
         ax_histy.tick_params(axis="y", labelleft=False)
