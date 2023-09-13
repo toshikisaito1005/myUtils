@@ -507,12 +507,12 @@ class ToolsCIGMC():
 
         # kde
         x_grid = np.arange(xlim[0], xlim[1], (xlim[1]-xlim[0])/20.)
-        xkde = gaussian_kde(x)
+        xkde = stats.gaussian_kde(x)
         x2 = stats.kde_model(x_grid)
         ax_histx.plot(x_grid, ax_histx)
 
         y_grid = np.arange(ylim[0], ylim[1], (ylim[1]-ylim[0])/20.)
-        ykde = gaussian_kde(y)
+        ykde = stats.gaussian_kde(y)
         y2 = stats.kde_model(y_grid)
         ax_histy.plot(y_grid, ax_histy)
 
