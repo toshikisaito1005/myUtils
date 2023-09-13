@@ -428,8 +428,8 @@ class ToolsCIGMC():
         xlim   = self.xlim_larson_1st
         ylim   = self.ylim_larson_1st
         title  = "Larson's 1st law"
-        xlabel = "log Radius (pc)"
-        ylabel = "log Velocity Dispersion (km s$^{-1}$)"
+        xlabel = "log$_{10}$ Radius (pc)"
+        ylabel = "log$_{10}$ Velocity Dispersion (km s$^{-1}$)"
         alpha  = 1.0
         size   = 50
 
@@ -516,7 +516,7 @@ class ToolsCIGMC():
         ykde = stats.gaussian_kde(y)
         y2 = ykde(y_grid)
         ax_histy.plot(y2, y_grid, color=color, lw=1)
-        #ax_histy.fill_between(0, y2, y_grid, color=color, alpha=0.5)
+        ax_histy.fill_between(y2, 0, y_grid, color=color, alpha=0.5)
 
         ax_histx.set_xlim(xlim)
         ax_histy.set_ylim(ylim)
