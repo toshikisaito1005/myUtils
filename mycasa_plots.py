@@ -961,8 +961,8 @@ def myax_fig2png_ann(ax,number,ra_cnt,dec_cnt,add_text=True,txtfiles=None):
                     height=this_h,
                     angle=this_pos,
                     fill=True,
-                    edgecolor="blue",
-                    facecolor="blue",
+                    edgecolor="deepskyblue",
+                    facecolor="deepskyblue",
                     alpha=0.5,
                     lw=1.0)
 
@@ -990,8 +990,8 @@ def myax_fig2png_ann(ax,number,ra_cnt,dec_cnt,add_text=True,txtfiles=None):
                     height=this_h,
                     angle=this_pos,
                     fill=True,
-                    edgecolor="red",
-                    facecolor="red",
+                    edgecolor="tomato",
+                    facecolor="tomato",
                     alpha=0.5,
                     lw=1.0)
 
