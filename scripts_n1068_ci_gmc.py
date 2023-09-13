@@ -441,8 +441,8 @@ class ToolsCIGMC():
         ax3 = plt.subplot(gs[0:8,8:10])
         ad  = [0.215,0.83,0.10,0.90]
         myax_set(ax1, None, xlim, ylim, title, xlabel, ylabel, adjust=ad)
-        myax_set(ax2, None, xlim, ylim, None, None, None)
-        myax_set(ax3, None, xlim, ylim, None, None, None)
+        myax_set(ax2, None, None, ylim, None, None, None)
+        myax_set(ax3, None, xlim, None, None, None, None)
 
         # co10
         #ax1.scatter(x_co10, y_co10, lw=0, s=size, color="deepskyblue", alpha=1.0)
@@ -483,8 +483,8 @@ class ToolsCIGMC():
         lim = (int(xymax/binwidth) + 1) * binwidth
 
         bins = np.arange(-lim, lim + binwidth, binwidth)
-        ax_histx.hist(x, bins=bins, c=color, lw=0)
-        ax_histy.hist(y, bins=bins, c=color, lw=0, orientation='horizontal')
+        ax_histx.hist(x, bins=bins, color=color, lw=0)
+        ax_histy.hist(y, bins=bins, color=color, lw=0, orientation='horizontal')
 
     ###############
     # hist_cprops #
