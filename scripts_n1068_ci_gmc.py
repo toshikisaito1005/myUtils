@@ -1213,6 +1213,7 @@ class ToolsCIGMC():
             label_scalebar = label_scalebar,
             colorlog  = True,
             set_cmap  = "Greys",
+            set_grid  = None,
             )
 
         myfig_fits2png(
@@ -1229,6 +1230,7 @@ class ToolsCIGMC():
             label_scalebar = label_scalebar,
             colorlog  = True,
             set_cmap  = "Greys",
+            set_grid  = None,
             )
 
         myfig_fits2png(
@@ -1245,6 +1247,7 @@ class ToolsCIGMC():
             label_scalebar = label_scalebar,
             colorlog  = True,
             set_cmap  = "Greys",
+            set_grid  = None,
             )
 
     #########################################################
