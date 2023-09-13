@@ -452,7 +452,7 @@ class ToolsCIGMC():
         ax2.tick_params('x', length=0, which='major')
         ax2.tick_params('y', length=0, which='major')
         ax2.set_xticks([])
-        ax2.set_yticks([]])
+        ax2.set_yticks([])
 
         # ax3 ticks
         ax3.spines['right'].set_visible(False)
