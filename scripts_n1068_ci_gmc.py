@@ -514,7 +514,7 @@ class ToolsCIGMC():
         y_grid = np.arange(ylim[0], ylim[1], (ylim[1]-ylim[0])/20.)
         ykde = stats.gaussian_kde(y)
         y2 = ykde(y_grid)
-        ax_histy.plot(y2. y_grid, color=color)
+        ax_histy.plot(y2, y_grid, color=color)
 
         ax_histx.set_xlim(xlim)
         ax_histy.set_xlim(ylim)
