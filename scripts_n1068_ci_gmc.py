@@ -474,6 +474,7 @@ class ToolsCIGMC():
 
         # scatterhist
         self._scatter_hist(x_co10, y_co10, ax1, ax2, ax3, "deepskyblue")
+        self._scatter_hist(x_ci10, y_ci10, ax1, ax2, ax3, "tomato")
 
         # text
         ax1.text(0.03, 0.93, "CO(1-0)", color="deepskyblue", transform=ax1.transAxes, weight="bold", fontsize=24)
