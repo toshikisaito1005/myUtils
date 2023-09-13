@@ -436,11 +436,13 @@ class ToolsCIGMC():
         # plot
         fig = plt.figure(figsize=(13,10))
         gs  = gridspec.GridSpec(nrows=10, ncols=10)
-        ax1 = plt.subplot(gs[0:8,2:10])
+        ax1 = plt.subplot(gs[0:8,0:8])
         ax2 = plt.subplot(gs[8:10,0:8])
-        ax3 = plt.subplot(gs[0:8,0:2])
+        ax3 = plt.subplot(gs[0:8,8:10])
         ad  = [0.215,0.83,0.10,0.90]
         myax_set(ax1, None, xlim, ylim, title, xlabel, ylabel, adjust=ad)
+        myax_set(ax2, None, xlim, ylim, None, None, None, adjust=None)
+        myax_set(ax3, None, xlim, ylim, None, None, None, adjust=None)
 
         # co10
         #ax1.scatter(x_co10, y_co10, lw=0, s=size, color="deepskyblue", alpha=1.0)
