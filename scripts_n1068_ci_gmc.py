@@ -451,6 +451,8 @@ class ToolsCIGMC():
         ax2.spines['left'].set_visible(False)
         ax2.tick_params('x', length=0, which='major')
         ax2.tick_params('y', length=0, which='major')
+        ax2.set_xticks(color="None")
+        ax2.set_yticks(color="None")
 
         # ax3 ticks
         ax3.spines['right'].set_visible(False)
@@ -459,6 +461,8 @@ class ToolsCIGMC():
         ax3.spines['left'].set_visible(False)
         ax3.tick_params('x', length=0, which='major')
         ax3.tick_params('y', length=0, which='major')
+        ax3.set_xticks(color="None")
+        ax3.set_yticks(color="None")
 
         # co10
         X, Y, Z = density_estimation(x_co10, y_co10, xlim, ylim)
@@ -497,8 +501,8 @@ class ToolsCIGMC():
         lim = (int(xymax/binwidth) + 1) * binwidth
 
         bins = np.arange(-lim, lim + binwidth, binwidth)
-        ax_histx.hist(x, bins=bins, color=color, lw=0)
-        ax_histy.hist(y, bins=bins, color=color, lw=0, orientation='horizontal')
+        ax_histx.hist(x, bins=bins, color=color, lw=0, alpha=0.5)
+        ax_histy.hist(y, bins=bins, color=color, lw=0, alpha=0.5, orientation='horizontal')
 
     ###############
     # hist_cprops #
