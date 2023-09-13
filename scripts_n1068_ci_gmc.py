@@ -480,9 +480,9 @@ class ToolsCIGMC():
         ax1.text(0.03, 0.93, "CO(1-0) Clouds", color="deepskyblue", transform=ax1.transAxes, weight="bold", fontsize=24)
         ax1.text(0.03, 0.88, "[CI](1-0) Clouds", color="tomato", transform=ax1.transAxes, weight="bold", fontsize=24)
 
-        # fill
-        ax1.plot(xlim, [np.log10(2.39),np.log10(2.39)], color='grey', alpha=.5, lw=2)
-        ax1.plot([np.log10(55),np.log10(55)], ylim, color='grey', alpha=.5, lw=2)
+        # line
+        ax1.plot(xlim, [np.log10(2.39),np.log10(2.39)], linestyle='dashed', color='grey', alpha=.5, lw=2)
+        ax1.plot([np.log10(55),np.log10(55)], ylim, linestyle='dashed', color='grey', alpha=.5, lw=2)
 
         # save
         os.system("rm -rf " + self.outpng_cico_larson_1st)
