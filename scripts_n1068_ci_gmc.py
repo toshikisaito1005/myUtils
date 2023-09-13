@@ -473,7 +473,7 @@ class ToolsCIGMC():
         ax1.contour(X, Y, Z, colors="red", linewidths=[3], alpha=0.2)
 
         # scatterhist
-        self._scatter_hist(x_co10, y_co10, ax1, ax2, ax3, "deepskyblue")
+        self._scatter_hist(x_co10, y_co10, ax1, ax2, ax3, "deepskyblue", "s")
         self._scatter_hist(x_ci10, y_ci10, ax1, ax2, ax3, "tomato")
 
         # text
@@ -488,13 +488,13 @@ class ToolsCIGMC():
         os.system("rm -rf " + self.outpng_cico_larson_1st)
         plt.savefig(self.outpng_cico_larson_1st, dpi=self.fig_dpi)
 
-    def _scatter_hist(self, x, y, ax, ax_histx, ax_histy, color):
+    def _scatter_hist(self, x, y, ax, ax_histx, ax_histy, color, marker):
         # no labels
         ax_histx.tick_params(axis="x", labelbottom=False)
         ax_histy.tick_params(axis="y", labelleft=False)
 
         # the scatter plot:
-        ax.scatter(x, y, c=color, lw=0, s=50)
+        ax.scatter(x, y, c=color, lw=0, s=50, marker=".")
 
         # now determine nice limits by hand:
         binwidth = 0.05
