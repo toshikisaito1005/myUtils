@@ -477,8 +477,8 @@ class ToolsCIGMC():
         self._scatter_hist(x_ci10, y_ci10, ax1, ax2, ax3, "tomato")
 
         # text
-        ax1.text(0.03, 0.93, "CO(1-0)", color="deepskyblue", transform=ax1.transAxes, weight="bold", fontsize=24)
-        ax1.text(0.03, 0.88, "[CI](1-0)", color="tomato", transform=ax1.transAxes, weight="bold", fontsize=24)
+        ax1.text(0.03, 0.93, "CO(1-0) Clouds", color="deepskyblue", transform=ax1.transAxes, weight="bold", fontsize=24)
+        ax1.text(0.03, 0.88, "[CI](1-0) Clouds", color="tomato", transform=ax1.transAxes, weight="bold", fontsize=24)
 
         # fill
         ax1.plot(xlim, [np.log10(2.39),np.log10(2.39)], color='grey', alpha=.5, lw=2)
