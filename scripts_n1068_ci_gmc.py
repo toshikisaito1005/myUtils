@@ -516,7 +516,7 @@ class ToolsCIGMC():
         ykde = stats.gaussian_kde(y)
         y2 = ykde(y_grid)
         ax_histy.plot(y2, y_grid, color=color, lw=1)
-        ax_histy.fill_between(0, y2, y_grid, color=color, alpha=0.5)
+        #ax_histy.fill_between(0, y2, y_grid, color=color, alpha=0.5)
 
         ax_histx.set_xlim(xlim)
         ax_histy.set_ylim(ylim)
