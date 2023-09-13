@@ -436,19 +436,24 @@ class ToolsCIGMC():
         # plot
         fig = plt.figure(figsize=(13,10))
         gs  = gridspec.GridSpec(nrows=10, ncols=10)
-        ax1 = plt.subplot(gs[0:10,0:10])
+        ax1 = plt.subplot(gs[0:8,0:8])
+        ax2 = plt.subplot(gs[0:8,8:10])
+        ax3 = plt.subplot(gs[8:10,0:8])
         ad  = [0.215,0.83,0.10,0.90]
         myax_set(ax1, None, xlim, ylim, title, xlabel, ylabel, adjust=ad)
 
         # co10
-        ax1.scatter(x_co10, y_co10, lw=0, s=size, color="deepskyblue", alpha=1.0)
+        #ax1.scatter(x_co10, y_co10, lw=0, s=size, color="deepskyblue", alpha=1.0)
         X, Y, Z = density_estimation(x_co10, y_co10, xlim, ylim)
         ax1.contour(X, Y, Z, colors="blue", linewidths=[3], alpha=0.2)
 
         # ci10
-        ax1.scatter(x_ci10, y_ci10, lw=0, s=size, color="tomato", alpha=1.0)
+        #ax1.scatter(x_ci10, y_ci10, lw=0, s=size, color="tomato", alpha=1.0)
         X, Y, Z = density_estimation(x_ci10, y_ci10, xlim, ylim)
         ax1.contour(X, Y, Z, colors="red", linewidths=[3], alpha=0.2)
+
+        # scatterhist
+        self._scatter_hist(x_co10, y_co10, ax1, ax2, ax3)
 
         # text
         ax1.text(0.03, 0.93, "CO(1-0)", color="deepskyblue", transform=ax1.transAxes, weight="bold", fontsize=24)
@@ -462,68 +467,22 @@ class ToolsCIGMC():
         os.system("rm -rf " + self.outpng_cico_larson_1st)
         plt.savefig(self.outpng_cico_larson_1st, dpi=self.fig_dpi)
 
-        """
-        ####################
-        # plot: larson 2nd #
-        ####################
-        xlim   = self.xlim_larson_2nd
-        ylim   = self.ylim_larson_2nd
-        title  = "Larson's 2nd law"
-        xlabel = "log M(H$_2$) ($M_{\odot}$)"
-        ylabel = "log velocity dispersion (km s$^{-1}$)"
+    def _scatter_hist(self, x, y, ax, ax_histx, ax_histy):
+        # no labels
+        ax_histx.tick_params(axis="x", labelbottom=False)
+        ax_histy.tick_params(axis="y", labelleft=False)
 
-        fig = plt.figure(figsize=(13,10))
-        gs  = gridspec.GridSpec(nrows=10, ncols=10)
-        ax1 = plt.subplot(gs[0:10,0:10])
-        ad  = [0.215,0.83,0.10,0.90]
-        myax_set(ax1, "both", xlim, ylim, title, xlabel, ylabel, adjust=ad)
+        # the scatter plot:
+        ax.scatter(x, y)
 
-        ax1.scatter(np.log10(lci_co_cone*self.alpha_co), np.log10(sigv_co_cone), lw=0, s=200, color="deepskyblue", alpha=1.0)
-        ax1.scatter(np.log10(lci_co_nocone*self.alpha_co), np.log10(sigv_co_nocone), lw=0, s=100, color="deepskyblue", alpha=0.3)
-        ax1.scatter(np.log10(lci_co_sbr*self.alpha_co), np.log10(sigv_co_sbr), lw=0, s=100, color="deepskyblue", alpha=0.3)
+        # now determine nice limits by hand:
+        binwidth = 0.25
+        xymax = max(np.max(np.abs(x)), np.max(np.abs(y)))
+        lim = (int(xymax/binwidth) + 1) * binwidth
 
-        ax1.scatter(np.log10(lci_ci_cone*self.alpha_ci), np.log10(sigv_ci_cone), lw=0, s=200, color="tomato", alpha=1.0)
-        ax1.scatter(np.log10(lci_ci_nocone*self.alpha_ci), np.log10(sigv_ci_nocone), lw=0, s=100, color="tomato", alpha=0.3)
-        ax1.scatter(np.log10(lci_ci_sbr*self.alpha_ci), np.log10(sigv_ci_sbr), lw=0, s=100, color="tomato", alpha=0.3)
-
-        # save
-        os.system("rm -rf " + self.outpng_cico_larson_2nd)
-        plt.savefig(self.outpng_cico_larson_2nd, dpi=self.fig_dpi)
-
-        ####################
-        # plot: larson 3rd #
-        ####################
-        density_co_cone   = lci_co_cone*self.alpha_co/(4./3.*np.pi*radius_co_cone**3)
-        density_co_nocone = lci_co_nocone*self.alpha_co/(4./3.*np.pi*radius_co_nocone**3)
-        density_co_sbr    = lci_co_sbr*self.alpha_co/(4./3.*np.pi*radius_co_sbr**3)
-        density_ci_cone   = lci_ci_cone*self.alpha_ci/(4./3.*np.pi*radius_ci_cone**3)
-        density_ci_nocone = lci_ci_nocone*self.alpha_ci/(4./3.*np.pi*radius_ci_nocone**3)
-        density_ci_sbr    = lci_ci_sbr*self.alpha_ci/(4./3.*np.pi*radius_ci_sbr**3)
-
-        xlim   = self.xlim_larson_3rd
-        ylim   = self.ylim_larson_3rd
-        title  = "Larson's 3rd law"
-        xlabel = "log Diameter (pc)"
-        ylabel = "log Volume density (cm$^{-3}$)"
-
-        fig = plt.figure(figsize=(13,10))
-        gs  = gridspec.GridSpec(nrows=10, ncols=10)
-        ax1 = plt.subplot(gs[0:10,0:10])
-        ad  = [0.215,0.83,0.10,0.90]
-        myax_set(ax1, "both", xlim, ylim, title, xlabel, ylabel, adjust=ad)
-
-        ax1.scatter(np.log10(radius_co_cone*2.0), np.log10(density_co_cone), lw=0, s=200, color="deepskyblue", alpha=1.0)
-        ax1.scatter(np.log10(radius_co_nocone*2.0), np.log10(density_co_nocone), lw=0, s=100, color="deepskyblue", alpha=0.3)
-        ax1.scatter(np.log10(radius_co_sbr*2.0), np.log10(density_co_sbr), lw=0, s=100, color="deepskyblue", alpha=0.3)
-
-        ax1.scatter(np.log10(radius_ci_cone*2.0), np.log10(density_ci_cone), lw=0, s=200, color="tomato", alpha=1.0)
-        ax1.scatter(np.log10(radius_ci_nocone*2.0), np.log10(density_ci_nocone), lw=0, s=100, color="tomato", alpha=0.3)
-        ax1.scatter(np.log10(radius_ci_sbr*2.0), np.log10(density_ci_sbr), lw=0, s=100, color="tomato", alpha=0.3)
-
-        # save
-        os.system("rm -rf " + self.outpng_cico_larson_3rd)
-        plt.savefig(self.outpng_cico_larson_3rd, dpi=self.fig_dpi)
-        """
+        bins = np.arange(-lim, lim + binwidth, binwidth)
+        ax_histx.hist(x, bins=bins)
+        ax_histy.hist(y, bins=bins, orientation='horizontal')
 
     ###############
     # hist_cprops #
