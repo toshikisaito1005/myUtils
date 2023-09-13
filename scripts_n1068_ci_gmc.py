@@ -432,7 +432,6 @@ class ToolsCIGMC():
         ylabel = "log Velocity Dispersion (km s$^{-1}$)"
         alpha  = 1.0
         size   = 50
-        levels = np.arange(0.5, 10+2, 2)
 
         # plot
         fig = plt.figure(figsize=(13,10))
@@ -1207,6 +1206,7 @@ class ToolsCIGMC():
             ra_cnt    = str(self.ra_agn) + "deg",
             dec_cnt   = str(self.dec_agn) + "deg",
             numann    = "ci-gmc2",
+            textann   = False,
             txtfiles  = [this_tb1,this_tb2],
             set_title = linename + " Cloud Catalog",
             scalebar  = scalebar,
