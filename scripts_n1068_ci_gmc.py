@@ -444,13 +444,27 @@ class ToolsCIGMC():
         myax_set(ax2, None, xlim, None, None, None, None)
         myax_set(ax3, None, None, ylim, None, None, None)
 
+        # ax2 ticks
+        ax2.spines['right'].set_visible(False)
+        ax2.spines['top'].set_visible(False)
+        ax2.spines['bottom'].set_visible(False)
+        ax2.spines['left'].set_visible(False)
+        ax2.tick_params('x', length=0, which='major')
+        ax2.tick_params('y', length=0, which='major')
+
+        # ax3 ticks
+        ax3.spines['right'].set_visible(False)
+        ax3.spines['top'].set_visible(False)
+        ax3.spines['bottom'].set_visible(False)
+        ax3.spines['left'].set_visible(False)
+        ax3.tick_params('x', length=0, which='major')
+        ax3.tick_params('y', length=0, which='major')
+
         # co10
-        #ax1.scatter(x_co10, y_co10, lw=0, s=size, color="deepskyblue", alpha=1.0)
         X, Y, Z = density_estimation(x_co10, y_co10, xlim, ylim)
         ax1.contour(X, Y, Z, colors="blue", linewidths=[3], alpha=0.2)
 
         # ci10
-        #ax1.scatter(x_ci10, y_ci10, lw=0, s=size, color="tomato", alpha=1.0)
         X, Y, Z = density_estimation(x_ci10, y_ci10, xlim, ylim)
         ax1.contour(X, Y, Z, colors="red", linewidths=[3], alpha=0.2)
 
@@ -475,7 +489,7 @@ class ToolsCIGMC():
         ax_histy.tick_params(axis="y", labelleft=False)
 
         # the scatter plot:
-        ax.scatter(x, y, c=color, lw=0)
+        ax.scatter(x, y, c=color, lw=0, s=50)
 
         # now determine nice limits by hand:
         binwidth = 0.05
