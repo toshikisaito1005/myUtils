@@ -179,7 +179,7 @@ class ToolsCIGMC():
         self.imsize_as  = 18
 
         self.xlim_larson_1st = [1.1,2.7]
-        self.ylim_larson_1st = [0.3,1.9]
+        self.ylim_larson_1st = [0.35,1.95]
         self.xlim_larson_2nd = [6.5,9.0]
         self.ylim_larson_2nd = [0.4,1.6]
         self.xlim_larson_3rd = [1.9,2.65]
