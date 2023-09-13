@@ -42,6 +42,7 @@ Toshiki Saito@Nichidai/NAOJ
 import os, sys, glob
 import numpy as np
 from scipy import stats
+import matplotlib.patheffects as PathEffects
 
 from mycasa_tasks import *
 from mycasa_plots import *
