@@ -455,7 +455,7 @@ class ToolsCIGMC():
         ax1.contour(X, Y, Z, colors="red", linewidths=[3], alpha=0.2)
 
         # scatterhist
-        self._scatter_hist(x_co10, y_co10, ax1, ax2, ax3)
+        self._scatter_hist(x_co10, y_co10, ax1, ax2, ax3, "deepskyblue")
 
         # text
         ax1.text(0.03, 0.93, "CO(1-0)", color="deepskyblue", transform=ax1.transAxes, weight="bold", fontsize=24)
@@ -469,22 +469,22 @@ class ToolsCIGMC():
         os.system("rm -rf " + self.outpng_cico_larson_1st)
         plt.savefig(self.outpng_cico_larson_1st, dpi=self.fig_dpi)
 
-    def _scatter_hist(self, x, y, ax, ax_histx, ax_histy):
+    def _scatter_hist(self, x, y, ax, ax_histx, ax_histy, color):
         # no labels
         ax_histx.tick_params(axis="x", labelbottom=False)
         ax_histy.tick_params(axis="y", labelleft=False)
 
         # the scatter plot:
-        ax.scatter(x, y)
+        ax.scatter(x, y, c=color)
 
         # now determine nice limits by hand:
-        binwidth = 0.25
+        binwidth = 0.05
         xymax = max(np.max(np.abs(x)), np.max(np.abs(y)))
         lim = (int(xymax/binwidth) + 1) * binwidth
 
         bins = np.arange(-lim, lim + binwidth, binwidth)
-        ax_histx.hist(x, bins=bins)
-        ax_histy.hist(y, bins=bins, orientation='horizontal')
+        ax_histx.hist(x, bins=bins, c=color, lw=0)
+        ax_histy.hist(y, bins=bins, c=color, lw=0, orientation='horizontal')
 
     ###############
     # hist_cprops #
