@@ -496,8 +496,8 @@ class ToolsCIGMC():
         txt.set_path_effects([PathEffects.withStroke(linewidth=4, foreground='w')])
 
         # line
-        ax1.plot(xlim, [np.log10(2.39),np.log10(2.39)], linestyle='dashed', color='grey', alpha=.5, lw=2)
-        ax1.plot([np.log10(55),np.log10(55)], ylim, linestyle='dashed', color='grey', alpha=.5, lw=2)
+        ax1.plot(xlim, [np.log10(2.39),np.log10(2.39)], color='grey', alpha=.5, lw=1)
+        ax1.plot([np.log10(55),np.log10(55)], ylim, color='grey', alpha=.5, lw=1)
 
         # const surface density lines (e.g., Leroy+15)
         G = 6.674*10**-11
