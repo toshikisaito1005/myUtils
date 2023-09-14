@@ -598,6 +598,8 @@ class ToolsCIGMC():
         ax_histx.set_xlim(xlim)
         ax_histy.set_ylim(ylim)
 
+        ax_histx.text(0.03, 0.93, "16$^{th}$-50$^{th}$-84$^{th}$ pctls.", color="black", transform=ax_histx.transAxes, weight="bold", fontsize=16)
+
     ###############
     # hist_cprops #
     ###############
