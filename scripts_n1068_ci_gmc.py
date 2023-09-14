@@ -597,8 +597,7 @@ class ToolsCIGMC():
         plt.savefig(self.outpng_cico_larson_1st, dpi=self.fig_dpi)
 
         fig = plt.figure(figsize=(10,10))
-        plt.scatter(x_ci10_cone, y_ci10_cone, c="tomato", lw=2, s=100)
-        plt.scatter(x_ci10, y_ci10, c="black", lw=0, s=20)
+        plt.scatter(x_fov1_ci10[cut_cone], y_fov1_ci10[cut_cone], c="black", lw=0, s=20)
         plt.savefig("test.png", dpi=self.fig_dpi)
 
         #########################
