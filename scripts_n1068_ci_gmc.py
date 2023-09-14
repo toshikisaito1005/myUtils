@@ -452,7 +452,7 @@ class ToolsCIGMC():
         x2_co10 = np.log10(x2_co10)
         y2_co10 = dyn_co10[s2n_co10>self.snr_cprops]
         y2_co10 = np.log10(y2_co10)
-        cut = np.where((~np.isnan(x2_co10)) & (~np.isnan(y2_co10)))
+        cut = np.where((~np.isnan(x2_co10)) & (~np.isnan(y2_co10)) & (x2_co10!=0) & (y2_co10!=0))
         x2_co10 = x2_co10[cut]
         y2_co10 = y2_co10[cut]
 
@@ -460,7 +460,7 @@ class ToolsCIGMC():
         x2_ci10 = np.log10(x2_ci10)
         y2_ci10 = dyn_ci10[s2n_ci10>self.snr_cprops]
         y2_ci10 = np.log10(y2_ci10)
-        cut = np.where((~np.isnan(x2_ci10)) & (~np.isnan(y2_ci10)))
+        cut = np.where((~np.isnan(x2_ci10)) & (~np.isnan(y2_ci10)) & (x2_ci10!=0) & (y2_cii10!=0))
         x2_ci10 = x2_ci10[cut]
         y2_ci10 = y2_ci10[cut]
 
@@ -645,10 +645,6 @@ class ToolsCIGMC():
         txt.set_path_effects([PathEffects.withStroke(linewidth=4, foreground='w')])
         txt = ax1.text(0.03, 0.83, "Clouds with peak S/N > 5", color="black", transform=ax1.transAxes, fontsize=16)
         txt.set_path_effects([PathEffects.withStroke(linewidth=4, foreground='w')])
-
-        # line
-        ax1.plot(xlim, [np.log10(2.39),np.log10(2.39)], color='grey', alpha=.5, lw=1, zorder=0)
-        ax1.plot([np.log10(55),np.log10(55)], ylim, color='grey', alpha=.5, lw=1, zorder=0)
 
         # save
         os.system("rm -rf " + self.outpng_cico_dyn)
