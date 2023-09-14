@@ -577,8 +577,8 @@ class ToolsCIGMC():
         # plot: dynamical state #
         #########################
 
-        xlim   = None # self.xlim_larson_1st
-        ylim   = None # self.ylim_larson_1st
+        xlim   = [0,5] # self.xlim_larson_1st
+        ylim   = [-2,3] # self.ylim_larson_1st
         title  = "Dynamical state"
         xlabel = "log$_{10}$ $\Sigma$ ($M_{\odot}$ pc$^{-2}$)"
         ylabel = "log$_{10}$ $\sigma^2$/$r$"
