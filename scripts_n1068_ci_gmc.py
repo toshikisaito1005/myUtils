@@ -460,7 +460,7 @@ class ToolsCIGMC():
         x2_ci10 = np.log10(x2_ci10)
         y2_ci10 = dyn_ci10[s2n_ci10>self.snr_cprops]
         y2_ci10 = np.log10(y2_ci10)
-        cut = np.where((~np.isnan(x2_ci10)) & (~np.isnan(y2_ci10)) & (x2_ci10!=0) & (y2_cii10!=0))
+        cut = np.where((~np.isnan(x2_ci10)) & (~np.isnan(y2_ci10)) & (x2_ci10!=0) & (y2_ci10!=0))
         x2_ci10 = x2_ci10[cut]
         y2_ci10 = y2_ci10[cut]
 
