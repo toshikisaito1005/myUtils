@@ -418,7 +418,7 @@ class ToolsCIGMC():
         radius_co10  = tb["RAD_PC"]
         sigv_co10    = tb["SIGV_KMS"]
         mvir_co10    = tb["MVIR_MSUN"]
-        density_co10 = tb["MLUM_MSUN"] / radius_co10 / radius_co10
+        density_co10 = tb["MLUM_MSUN"] / radius_co10 / radius_co10 * 4.0 / 6.7
         tpeak_co10   = tb["TMAX_K"]
         dyn_co10     = tb["SIGV_KMS"] * tb["SIGV_KMS"] / tb["RAD_PC"]
 
@@ -433,7 +433,7 @@ class ToolsCIGMC():
         radius_ci10  = tb["RAD_PC"]
         sigv_ci10    = tb["SIGV_KMS"]
         mvir_ci10    = tb["MVIR_MSUN"]
-        density_ci10 = tb["MLUM_MSUN"] / radius_ci10 / radius_ci10
+        density_ci10 = tb["MLUM_MSUN"] / radius_ci10 / radius_ci10 * 20. / 6.7
         tpeak_ci10   = tb["TMAX_K"]
         dyn_ci10     = tb["SIGV_KMS"] * tb["SIGV_KMS"] / tb["RAD_PC"]
 
