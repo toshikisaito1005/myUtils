@@ -417,8 +417,6 @@ class ToolsCIGMC():
         sigv_co10    = tb["SIGV_KMS"]
         mvir_co10    = tb["MVIR_MSUN"]
         tpeak_co10   = tb["TMAX_K"]
-        eradius_co10 = np.array(radius_co10) / 10.
-        esigv_co10   = tb["SIGV_UC"]
 
         # import cprops table
         f = pyfits.open(self.cprops_ci10)
@@ -432,28 +430,16 @@ class ToolsCIGMC():
         sigv_ci10    = tb["SIGV_KMS"]
         mvir_ci10    = tb["MVIR_MSUN"]
         tpeak_ci10   = tb["TMAX_K"]
-        eradius_ci10 = np.array(radius_ci10) / 10.
-        esigv_ci10   = tb["SIGV_UC"]
 
         x_co10 = radius_co10[s2n_co10>self.snr_cprops]
         y_co10 = sigv_co10[s2n_co10>self.snr_cprops]
         x_co10 = np.nan_to_num(np.log10(x_co10))
         y_co10 = np.nan_to_num(np.log10(y_co10))
 
-        xerr_co10 = eradius_co10[s2n_co10>self.snr_cprops]
-        xerr_co10 = np.nan_to_num(np.log10(xerr_co10))
-        yerr_co10 = esigv_co10[s2n_co10>self.snr_cprops]
-        yerr_co10 = np.nan_to_num(np.log10(yerr_co10))
-
         x_ci10 = radius_ci10[s2n_ci10>self.snr_cprops]
         y_ci10 = sigv_ci10[s2n_ci10>self.snr_cprops]
         x_ci10 = np.nan_to_num(np.log10(x_ci10))
         y_ci10 = np.nan_to_num(np.log10(y_ci10))
-
-        xerr_ci10 = eradius_ci10[s2n_ci10>self.snr_cprops]
-        xerr_ci10 = np.nan_to_num(np.log10(xerr_ci10))
-        yerr_ci10 = esigv_ci10[s2n_ci10>self.snr_cprops]
-        yerr_ci10 = np.nan_to_num(np.log10(yerr_ci10))
 
         ########################
         # extract outflow data #
@@ -538,10 +524,7 @@ class ToolsCIGMC():
         # scatter for outflow data
         ax1.scatter(x_co10_cone, y_co10_cone, c="deepskyblue", lw=2, s=100, marker="s")
         ax1.scatter(x_ci10_cone, y_ci10_cone, c="tomato", lw=2, s=100)
-
-        # errorbar
-        ax1.errorbar(x_co10, y_co10, xerr=xerr_co10, yerr=yerr_co10, c="grey", lw=1, s=0, capsize=0)
-
+        
         # text
         txt = ax1.text(0.03, 0.93, "CO(1-0) Clouds", color="deepskyblue", transform=ax1.transAxes, weight="bold", fontsize=24)
         txt.set_path_effects([PathEffects.withStroke(linewidth=4, foreground='w')])
