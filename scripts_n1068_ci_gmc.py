@@ -412,10 +412,6 @@ class ToolsCIGMC():
         # extract parameters
         x_fov1_co10 = (tb["XCTR_DEG"] - self.ra_agn) * -3600.
         y_fov1_co10 = (tb["YCTR_DEG"] - self.dec_agn) * 3600.
-        x_fov2_co10 = (tb["XCTR_DEG"] - self.ra_fov2) * -3600.
-        y_fov2_co10 = (tb["YCTR_DEG"] - self.dec_fov2) * -3600.
-        x_fov3_co10 = (tb["XCTR_DEG"] - self.ra_fov3) * -3600.
-        y_fov3_co10 = (tb["YCTR_DEG"] - self.dec_fov3) * -3600.
         s2n_co10    = tb["S2N"]
         radius_co10 = tb["RAD_PC"]
         sigv_co10   = tb["SIGV_KMS"]
@@ -429,10 +425,6 @@ class ToolsCIGMC():
         # extract parameters
         x_fov1_ci10 = (tb["XCTR_DEG"] - self.ra_agn) * -3600.
         y_fov1_ci10 = (tb["YCTR_DEG"] - self.dec_agn) * 3600.
-        x_fov2_ci10 = (tb["XCTR_DEG"] - self.ra_fov2) * -3600.
-        y_fov2_ci10 = (tb["YCTR_DEG"] - self.dec_fov2) * -3600.
-        x_fov3_ci10 = (tb["XCTR_DEG"] - self.ra_fov3) * -3600.
-        y_fov3_ci10 = (tb["YCTR_DEG"] - self.dec_fov3) * -3600.
         s2n_ci10    = tb["S2N"]
         radius_ci10 = tb["RAD_PC"]
         sigv_ci10   = tb["SIGV_KMS"]
@@ -453,13 +445,7 @@ class ToolsCIGMC():
         # extract outflow data #
         ########################
         r_fov1_co10 = np.sqrt(x_fov1_co10**2 + y_fov1_co10**2)
-        r_fov2_co10 = np.sqrt(x_fov2_co10**2 + y_fov2_co10**2)
-        r_fov3_co10 = np.sqrt(x_fov3_co10**2 + y_fov3_co10**2)
-
         r_fov1_ci10 = np.sqrt(x_fov1_ci10**2 + y_fov1_ci10**2)
-        r_fov2_ci10 = np.sqrt(x_fov2_ci10**2 + y_fov2_ci10**2)
-        r_fov3_ci10 = np.sqrt(x_fov3_ci10**2 + y_fov3_ci10**2)
-
         theta = np.degrees(np.arctan2(x_fov1_co10, y_fov1_co10)) + 90
         theta = np.where(theta>0, theta, theta+360)
 
@@ -469,6 +455,8 @@ class ToolsCIGMC():
         y_co10_cone = sigv_co10[cut_cone]
         x_co10_cone = np.nan_to_num(np.log10(x_co10))
         y_co10_cone = np.nan_to_num(np.log10(y_co10))
+
+        print(x_co10_cone)
 
         ####################
         # plot: larson 1st #
