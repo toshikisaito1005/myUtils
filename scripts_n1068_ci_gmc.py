@@ -173,7 +173,7 @@ class ToolsCIGMC():
         self.theta2      = -1 * 70.0  + 90.0 # 20
         self.fov_diamter = 16.5
 
-        self.snr_cprops = 7.0
+        self.snr_cprops = 5.0
         self.alpha_ci   = 12.0
         self.alpha_co   = 1.0
 
@@ -522,8 +522,8 @@ class ToolsCIGMC():
         self._scatter_hist(x_ci10, y_ci10, ax1, ax2, ax3, "tomato", xlim, ylim)
 
         # scatter for outflow data
-        ax1.scatter(x_co10_cone, y_co10_cone, c="deepskyblue", lw=2, s=70, marker="s")
-        ax1.scatter(x_ci10_cone, y_ci10_cone, c="tomato", lw=2, s=70)
+        ax1.scatter(x_co10_cone, y_co10_cone, c="deepskyblue", lw=2, s=100, marker="s")
+        ax1.scatter(x_ci10_cone, y_ci10_cone, c="tomato", lw=2, s=100)
 
         # text
         txt = ax1.text(0.03, 0.93, "CO(1-0) Clouds", color="deepskyblue", transform=ax1.transAxes, weight="bold", fontsize=24)
@@ -566,7 +566,7 @@ class ToolsCIGMC():
         ax_histy.tick_params(axis="y", labelleft=False)
 
         # the scatter plot:
-        ax.scatter(x, y, c=color, lw=0, s=70, marker=marker)
+        ax.scatter(x, y, c=color, lw=0, s=100, marker=marker)
 
         # now determine nice limits by hand:
         binwidth = 0.05
