@@ -502,7 +502,8 @@ class ToolsCIGMC():
         # const surface density lines (e.g., Leroy+15)
         Cnst = np.log10((np.pi*6.674*10**-11/5.)**0.5*(10**-3)**1.5*(5.0279*10**-31)**0.5*(3.086*10**13)**-1*(3.086*10**13)**0.5)
         y_285 = [0.5*np.log10(285)+0.5*np.log10(xlim[0])+Cnst, 0.5*np.log10(285)+0.5*np.log10(xlim[1])+Cnst]
-        
+
+        print(xlim, y_285)
         ax1.plot(xlim, y_285, linestyle='dashed', color='grey', alpha=.5, lw=2)
 
         # save
