@@ -409,7 +409,7 @@ class ToolsCIGMC():
         f = pyfits.open(self.cprops_co10)
         tb = f[1].data
 
-        print(tb
+        print(tb)
 
         # extract parameters
         x_fov1_co10  = (tb["XCTR_DEG"] - self.ra_agn) * -3600.
