@@ -600,7 +600,7 @@ class ToolsCIGMC():
 
         ax_histx.text(0.02, 0.85, "16$^{th}$-50$^{th}$-84$^{th}$ pctls.", color="black", transform=ax_histx.transAxes, fontsize=16)
 
-        this_txt = str(np.round(10**np.percentile(x,16),2))+"-"+np.round(10**np.percentile(x,50),2)+"-"+np.round(10**np.percentile(x,84),2)+" (pc)"
+        this_txt = srt(int(10**np.percentile(x,16)))+"-"+srt(int(10**np.percentile(x,50)))+"-"+srt(int(10**np.percentile(x,84)))+" (pc)"
         ax_histx.text(0.02, 0.55-offset, this_txt, color=color, transform=ax_histx.transAxes, weight="bold", fontsize=16)
 
     ###############
