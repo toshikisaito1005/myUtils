@@ -598,12 +598,13 @@ class ToolsCIGMC():
         ax_histx.set_xlim(xlim)
         ax_histy.set_ylim(ylim)
 
-        ax_histx.text(0.77, 0.85, "16$^{th}$-50$^{th}$-84$^{th}$ pctls.", color="black", transform=ax_histx.transAxes, fontsize=14)
-
+        # stats of xhist
+        ax_histx.text(0.74, 0.85, "16$^{th}$-50$^{th}$-84$^{th}$ pctls.", color="black", transform=ax_histx.transAxes, fontsize=14)
         this_txt = str(int(10**np.percentile(x,16)))+"-"+str(int(10**np.percentile(x,50)))+"-"+str(int(10**np.percentile(x,84)))+" (pc)"
-        ax_histx.text(0.77, 0.70-offset, this_txt, color=color, transform=ax_histx.transAxes, fontsize=14)
+        ax_histx.text(0.74, 0.70-offset, this_txt, color=color, transform=ax_histx.transAxes, fontsize=14)
 
-        ax_histx.text(0.85, 0.77, "16$^{th}$-50$^{th}$-84$^{th}$ pctls.", color="black", transform=ax_histx.transAxes, fontsize=14, rotation=90)
+        # stats of yhist
+        ax_histy.text(0.85, 0.74, "16$^{th}$-50$^{th}$-84$^{th}$ pctls.", color="black", transform=ax_histx.transAxes, fontsize=14, rotation=-90)
 
     ###############
     # hist_cprops #
