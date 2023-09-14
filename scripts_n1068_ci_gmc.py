@@ -253,13 +253,13 @@ class ToolsCIGMC():
         do_prepare   = False,
         print_cprops = False,
         data_stats   = False,
+        meas_ratio   = False,
         # plot figures in paper
         plot_cprops  = False,
         map_cprops   = False,
         plot_larson  = False,
         # supplement
         do_stack     = False,
-        plot_map     = False,
         ):
         """
         This method runs all the methods which will create figures in the paper.
@@ -321,6 +321,9 @@ class ToolsCIGMC():
         if data_stats==True:
             self.data_stats()
 
+        if meas_ratio==True:
+            self.meas_ratio()
+
         if plot_cprops==True:
             self.hist_cprops()
 
@@ -333,18 +336,6 @@ class ToolsCIGMC():
         """
         if do_stack==True:
             self.do_stack()
-
-        if plot_cprops==True:
-            self.plot_ci_cprops()
-            self.plot_co_cprops()
-
-        if plot_larson==True:
-            self.plot_ci_larson()
-            self.plot_co_larson()
-            self.plot_cico_larson()
-
-        if plot_map==True:
-            self.plot_map()
         """
 
     ####################
@@ -377,6 +368,25 @@ class ToolsCIGMC():
             delin=delin,
             )
         """
+
+    ##############
+    # meas_ratio #
+    ##############
+
+    def meas_ratio(
+        self,
+        ):
+        """
+        """
+
+        taskname = self.modname + sys._getframe().f_code.co_name
+        check_first(self.cprops_co10,taskname)
+
+        # extract catalog positions and ellipses
+
+        # measure averaged CO and CI mom0 and emom0 values at each position
+
+        # export catalog (CLOUDNUM, COm0, COerr, CIm0, CIerr)
 
     ###############
     # plot_larson #
@@ -437,9 +447,9 @@ class ToolsCIGMC():
         # plot
         fig = plt.figure(figsize=(10,10))
         gs  = gridspec.GridSpec(nrows=20, ncols=20)
-        ax1 = plt.subplot(gs[4:20,0:16])
-        ax2 = plt.subplot(gs[0:4,0:16])
-        ax3 = plt.subplot(gs[4:20,16:20])
+        ax1 = plt.subplot(gs[3:20,0:17])
+        ax2 = plt.subplot(gs[0:3,0:17])
+        ax3 = plt.subplot(gs[3:20,17:20])
         ad  = [0.215,0.83,0.10,0.90]
         myax_set(ax1, None, xlim, ylim, None, xlabel, ylabel, adjust=ad)
         myax_set(ax2, None, xlim, None, None, None, None)
@@ -489,9 +499,19 @@ class ToolsCIGMC():
         ax1.plot(xlim, [np.log10(2.39),np.log10(2.39)], linestyle='dashed', color='grey', alpha=.5, lw=2)
         ax1.plot([np.log10(55),np.log10(55)], ylim, linestyle='dashed', color='grey', alpha=.5, lw=2)
 
+        # const surface density lines (e.g., Leroy+15)
+        Cnst = np.log10((np.pi*6.674*10**-11/5.)**0.5*(10**-3)**1.5*(5.0279*10**-31)**0.5*(3.086*10**13)**-1*(3.086*10**13)**0.5)
+        y_285 = [0.5*np.log10(285)+0.5*np.log10(xlim[0])+Cnst, 0.5*np.log10(285)+0.5*np.log10(xlim[1])+Cnst]
+        
+        ax1.plot(xlim, y_285, linestyle='dashed', color='grey', alpha=.5, lw=2)
+
         # save
         os.system("rm -rf " + self.outpng_cico_larson_1st)
         plt.savefig(self.outpng_cico_larson_1st, dpi=self.fig_dpi)
+
+    #################
+    # _scatter_hist #
+    #################
 
     def _scatter_hist(self, x, y, ax, ax_histx, ax_histy, color, xlim, ylim, marker="o"):
         # no labels
@@ -1256,715 +1276,6 @@ class ToolsCIGMC():
             set_grid  = None,
             )
 
-    #########################################################
-
-    ##################
-    # plot_co_cprops #
-    ##################
-
-    def plot_co_cprops(
-        self,
-        ):
-        """
-        """
-
-        taskname = self.modname + sys._getframe().f_code.co_name
-        check_first(self.cprops_co10,taskname)
-
-        cone_list, nocone_list, sbr_list = self._import_cprops_table(self.cprops_co10)
-
-        #############
-        # plot: snr #
-        #############
-        xlim   = [5,100]
-        ylim   = None
-        title  = "Cloud SNR"
-        xlabel = "SNR"
-        ylabel = "Count density"
-
-        h = np.histogram(cone_list[10], bins=10, range=xlim)
-        x_rad_cone, y_rad_cone = h[1][:-1], h[0]/float(np.sum(h[0]))
-        h = np.histogram(nocone_list[10], bins=10, range=xlim)
-        x_rad_nocone, y_rad_nocone = h[1][:-1], h[0]/float(np.sum(h[0]))
-        h = np.histogram(sbr_list[10], bins=10, range=xlim)
-        x_rad_sbr, y_rad_sbr = h[1][:-1], h[0]/float(np.sum(h[0]))
-
-        fig = plt.figure(figsize=(13,10))
-        gs  = gridspec.GridSpec(nrows=10, ncols=10)
-        ax1 = plt.subplot(gs[0:10,0:10])
-        ad  = [0.215,0.83,0.10,0.90]
-        myax_set(ax1, "x", xlim, ylim, title, xlabel, ylabel, adjust=ad)
-
-        ax1.bar(x_rad_cone, y_rad_cone, lw=0, color="red", width=x_rad_cone[1]-x_rad_cone[0], alpha=0.5)
-        ax1.bar(x_rad_nocone, y_rad_nocone, lw=0, color="blue", width=x_rad_nocone[1]-x_rad_nocone[0], alpha=0.5)
-        ax1.bar(x_rad_sbr, y_rad_sbr, lw=0, color="grey", width=x_rad_sbr[1]-x_rad_sbr[0], alpha=0.5)
-
-        # save
-        os.system("rm -rf " + self.outpng_co_hist_snr)
-        plt.savefig(self.outpng_co_hist_snr, dpi=self.fig_dpi)
-
-        ################
-        # plot: radius #
-        ################
-        xlim   = [60,200]
-        ylim   = None
-        title  = "Cloud radius"
-        xlabel = "Radius (pc)"
-        ylabel = "Count density"
-
-        h = np.histogram(cone_list[3], bins=10, range=xlim)
-        x_rad_cone, y_rad_cone = h[1][:-1], h[0]/float(np.sum(h[0]))
-        h = np.histogram(nocone_list[3], bins=10, range=xlim)
-        x_rad_nocone, y_rad_nocone = h[1][:-1], h[0]/float(np.sum(h[0]))
-        h = np.histogram(sbr_list[3], bins=10, range=xlim)
-        x_rad_sbr, y_rad_sbr = h[1][:-1], h[0]/float(np.sum(h[0]))
-
-        fig = plt.figure(figsize=(13,10))
-        gs  = gridspec.GridSpec(nrows=10, ncols=10)
-        ax1 = plt.subplot(gs[0:10,0:10])
-        ad  = [0.215,0.83,0.10,0.90]
-        myax_set(ax1, "x", xlim, ylim, title, xlabel, ylabel, adjust=ad)
-
-        ax1.bar(x_rad_cone, y_rad_cone, lw=0, color="red", width=x_rad_cone[1]-x_rad_cone[0], alpha=0.5)
-        ax1.bar(x_rad_nocone, y_rad_nocone, lw=0, color="blue", width=x_rad_nocone[1]-x_rad_nocone[0], alpha=0.5)
-        ax1.bar(x_rad_sbr, y_rad_sbr, lw=0, color="grey", width=x_rad_sbr[1]-x_rad_sbr[0], alpha=0.5)
-
-        # save
-        os.system("rm -rf " + self.outpng_co_hist_rad)
-        plt.savefig(self.outpng_co_hist_rad, dpi=self.fig_dpi)
-
-        ###############
-        # plot: sigma #
-        ###############
-        xlim   = [0,35]
-        ylim   = None
-        title  = "Cloud velocity dispersion"
-        xlabel = "Velocity dispersion (km s$^{-1}$)"
-        ylabel = "Count density"
-
-        h = np.histogram(cone_list[4], bins=10, range=xlim)
-        x_sigv_cone, y_sigv_cone = h[1][:-1], h[0]/float(np.sum(h[0]))
-        h = np.histogram(nocone_list[4], bins=10, range=xlim)
-        x_sigv_nocone, y_sigv_nocone = h[1][:-1], h[0]/float(np.sum(h[0]))
-        h = np.histogram(sbr_list[4], bins=10, range=xlim)
-        x_sigv_sbr, y_sigv_sbr = h[1][:-1], h[0]/float(np.sum(h[0]))
-
-        fig = plt.figure(figsize=(13,10))
-        gs  = gridspec.GridSpec(nrows=10, ncols=10)
-        ax1 = plt.subplot(gs[0:10,0:10])
-        ad  = [0.215,0.83,0.10,0.90]
-        myax_set(ax1, "x", xlim, ylim, title, xlabel, ylabel, adjust=ad)
-
-        ax1.bar(x_sigv_cone, y_sigv_cone, lw=0, color="red", width=x_sigv_cone[1]-x_sigv_cone[0], alpha=0.5)
-        ax1.bar(x_sigv_nocone, y_sigv_nocone, lw=0, color="blue", width=x_sigv_nocone[1]-x_sigv_nocone[0], alpha=0.5)
-        ax1.bar(x_sigv_sbr, y_sigv_sbr, lw=0, color="grey", width=x_sigv_sbr[1]-x_sigv_sbr[0], alpha=0.5)
-
-        # save
-        os.system("rm -rf " + self.outpng_co_hist_sigv)
-        plt.savefig(self.outpng_co_hist_sigv, dpi=self.fig_dpi)
-
-        ##############
-        # plot: mvir #
-        ##############
-        xlim   = [6.0,9.0]
-        ylim   = None
-        title  = "Cloud virial mass"
-        xlabel = "Virial mass ($M_{\odot}$)"
-        ylabel = "Count density"
-
-        h = np.histogram(cone_list[5], bins=10, range=xlim)
-        x_mvir_cone, y_mvir_cone = h[1][:-1], h[0]/float(np.sum(h[0]))
-        h = np.histogram(nocone_list[5], bins=10, range=xlim)
-        x_mvir_nocone, y_mvir_nocone = h[1][:-1], h[0]/float(np.sum(h[0]))
-        h = np.histogram(sbr_list[5], bins=10, range=xlim)
-        x_mvir_sbr, y_mvir_sbr = h[1][:-1], h[0]/float(np.sum(h[0]))
-
-        fig = plt.figure(figsize=(13,10))
-        gs  = gridspec.GridSpec(nrows=10, ncols=10)
-        ax1 = plt.subplot(gs[0:10,0:10])
-        ad  = [0.215,0.83,0.10,0.90]
-        myax_set(ax1, "x", xlim, ylim, title, xlabel, ylabel, adjust=ad)
-
-        ax1.bar(x_mvir_cone, y_mvir_cone, lw=0, color="red", width=x_mvir_cone[1]-x_mvir_cone[0], alpha=0.5)
-        ax1.bar(x_mvir_nocone, y_mvir_nocone, lw=0, color="blue", width=x_mvir_nocone[1]-x_mvir_nocone[0], alpha=0.5)
-        ax1.bar(x_mvir_sbr, y_mvir_sbr, lw=0, color="grey", width=x_mvir_sbr[1]-x_mvir_sbr[0], alpha=0.5)
-
-        # save
-        os.system("rm -rf " + self.outpng_co_hist_mvir)
-        plt.savefig(self.outpng_co_hist_mvir, dpi=self.fig_dpi)
-
-    ##################
-    # plot_ci_cprops #
-    ##################
-
-    def plot_ci_cprops(
-        self,
-        ):
-        """
-        """
-
-        taskname = self.modname + sys._getframe().f_code.co_name
-        check_first(self.cprops_ci10,taskname)
-
-        cone_list, nocone_list, sbr_list = self._import_cprops_table(self.cprops_ci10)
-        # [x_cone, y_cone, v_cone, radius_cone, sigv_cone, mvir_cone, tpeak_cone, mci_cone, xdeg_cone, ydeg_cone, s2n_cone]
-
-        #############
-        # plot: snr #
-        #############
-        xlim   = [5,100]
-        ylim   = None
-        title  = "Cloud SNR"
-        xlabel = "SNR"
-        ylabel = "Count density"
-
-        h = np.histogram(cone_list[10], bins=10, range=xlim)
-        x_rad_cone, y_rad_cone = h[1][:-1], h[0]/float(np.sum(h[0]))
-        h = np.histogram(nocone_list[10], bins=10, range=xlim)
-        x_rad_nocone, y_rad_nocone = h[1][:-1], h[0]/float(np.sum(h[0]))
-        h = np.histogram(sbr_list[10], bins=10, range=xlim)
-        x_rad_sbr, y_rad_sbr = h[1][:-1], h[0]/float(np.sum(h[0]))
-
-        fig = plt.figure(figsize=(13,10))
-        gs  = gridspec.GridSpec(nrows=10, ncols=10)
-        ax1 = plt.subplot(gs[0:10,0:10])
-        ad  = [0.215,0.83,0.10,0.90]
-        myax_set(ax1, "x", xlim, ylim, title, xlabel, ylabel, adjust=ad)
-
-        ax1.bar(x_rad_cone, y_rad_cone, lw=0, color="red", width=x_rad_cone[1]-x_rad_cone[0], alpha=0.5)
-        ax1.bar(x_rad_nocone, y_rad_nocone, lw=0, color="blue", width=x_rad_nocone[1]-x_rad_nocone[0], alpha=0.5)
-        ax1.bar(x_rad_sbr, y_rad_sbr, lw=0, color="grey", width=x_rad_sbr[1]-x_rad_sbr[0], alpha=0.5)
-
-        # save
-        os.system("rm -rf " + self.outpng_ci_hist_snr)
-        plt.savefig(self.outpng_ci_hist_snr, dpi=self.fig_dpi)
-
-        ################
-        # plot: radius #
-        ################
-        xlim   = [0.4*72-10,2.0*72+10]
-        ylim   = None
-        title  = "Cloud radius"
-        xlabel = "Radius (pc)"
-        ylabel = "Count density"
-
-        h = np.histogram(cone_list[3], bins=10, range=xlim)
-        x_rad_cone, y_rad_cone = h[1][:-1], h[0]/float(np.sum(h[0]))
-        h = np.histogram(nocone_list[3], bins=10, range=xlim)
-        x_rad_nocone, y_rad_nocone = h[1][:-1], h[0]/float(np.sum(h[0]))
-        h = np.histogram(sbr_list[3], bins=10, range=xlim)
-        x_rad_sbr, y_rad_sbr = h[1][:-1], h[0]/float(np.sum(h[0]))
-
-        fig = plt.figure(figsize=(13,10))
-        gs  = gridspec.GridSpec(nrows=10, ncols=10)
-        ax1 = plt.subplot(gs[0:10,0:10])
-        ad  = [0.215,0.83,0.10,0.90]
-        myax_set(ax1, "x", xlim, ylim, title, xlabel, ylabel, adjust=ad)
-
-        ax1.bar(x_rad_cone, y_rad_cone, lw=0, color="red", width=x_rad_cone[1]-x_rad_cone[0], alpha=0.5)
-        ax1.bar(x_rad_nocone, y_rad_nocone, lw=0, color="blue", width=x_rad_nocone[1]-x_rad_nocone[0], alpha=0.5)
-        ax1.bar(x_rad_sbr, y_rad_sbr, lw=0, color="grey", width=x_rad_sbr[1]-x_rad_sbr[0], alpha=0.5)
-
-        # save
-        os.system("rm -rf " + self.outpng_ci_hist_rad)
-        plt.savefig(self.outpng_ci_hist_rad, dpi=self.fig_dpi)
-
-        ###############
-        # plot: sigma #
-        ###############
-        xlim   = [0,35]
-        ylim   = None
-        title  = "Cloud velocity dispersion"
-        xlabel = "Velocity dispersion (km s$^{-1}$)"
-        ylabel = "Count density"
-
-        h = np.histogram(cone_list[4], bins=10, range=xlim)
-        x_sigv_cone, y_sigv_cone = h[1][:-1], h[0]/float(np.sum(h[0]))
-        h = np.histogram(nocone_list[4], bins=10, range=xlim)
-        x_sigv_nocone, y_sigv_nocone = h[1][:-1], h[0]/float(np.sum(h[0]))
-        h = np.histogram(sbr_list[4], bins=10, range=xlim)
-        x_sigv_sbr, y_sigv_sbr = h[1][:-1], h[0]/float(np.sum(h[0]))
-
-        fig = plt.figure(figsize=(13,10))
-        gs  = gridspec.GridSpec(nrows=10, ncols=10)
-        ax1 = plt.subplot(gs[0:10,0:10])
-        ad  = [0.215,0.83,0.10,0.90]
-        myax_set(ax1, "x", xlim, ylim, title, xlabel, ylabel, adjust=ad)
-
-        ax1.bar(x_sigv_cone, y_sigv_cone, lw=0, color="red", width=x_sigv_cone[1]-x_sigv_cone[0], alpha=0.5)
-        ax1.bar(x_sigv_nocone, y_sigv_nocone, lw=0, color="blue", width=x_sigv_nocone[1]-x_sigv_nocone[0], alpha=0.5)
-        ax1.bar(x_sigv_sbr, y_sigv_sbr, lw=0, color="grey", width=x_sigv_sbr[1]-x_sigv_sbr[0], alpha=0.5)
-
-        # save
-        os.system("rm -rf " + self.outpng_ci_hist_sigv)
-        plt.savefig(self.outpng_ci_hist_sigv, dpi=self.fig_dpi)
-
-        ##############
-        # plot: mvir #
-        ##############
-        xlim   = [5.4,8.0]
-        ylim   = None
-        title  = "Cloud virial mass"
-        xlabel = "Virial mass ($M_{\odot}$)"
-        ylabel = "Count density"
-
-        h = np.histogram(cone_list[5], bins=10, range=xlim)
-        x_mvir_cone, y_mvir_cone = h[1][:-1], h[0]/float(np.sum(h[0]))
-        h = np.histogram(nocone_list[5], bins=10, range=xlim)
-        x_mvir_nocone, y_mvir_nocone = h[1][:-1], h[0]/float(np.sum(h[0]))
-        h = np.histogram(sbr_list[5], bins=10, range=xlim)
-        x_mvir_sbr, y_mvir_sbr = h[1][:-1], h[0]/float(np.sum(h[0]))
-
-        fig = plt.figure(figsize=(13,10))
-        gs  = gridspec.GridSpec(nrows=10, ncols=10)
-        ax1 = plt.subplot(gs[0:10,0:10])
-        ad  = [0.215,0.83,0.10,0.90]
-        myax_set(ax1, "x", xlim, ylim, title, xlabel, ylabel, adjust=ad)
-
-        ax1.bar(x_mvir_cone, y_mvir_cone, lw=0, color="red", width=x_mvir_cone[1]-x_mvir_cone[0], alpha=0.5)
-        ax1.bar(x_mvir_nocone, y_mvir_nocone, lw=0, color="blue", width=x_mvir_nocone[1]-x_mvir_nocone[0], alpha=0.5)
-        ax1.bar(x_mvir_sbr, y_mvir_sbr, lw=0, color="grey", width=x_mvir_sbr[1]-x_mvir_sbr[0], alpha=0.5)
-
-        # save
-        os.system("rm -rf " + self.outpng_ci_hist_mvir)
-        plt.savefig(self.outpng_ci_hist_mvir, dpi=self.fig_dpi)
-
-    ########################
-    # _import_cprops_table #
-    ########################
-
-    def _import_cprops_table(
-        self,
-        table,
-        ):
-        """
-        """
-
-        # import cprops table
-        f = pyfits.open(table)
-        tb = f[1].data
-
-        # extract parameters
-        x      = (tb["XCTR_DEG"] - self.ra_agn) * -3600.
-        y      = (tb["YCTR_DEG"] - self.dec_agn) * 3600.
-        v      = tb["VCTR_KMS"]
-        s2n    = tb["S2N"]
-        radius = tb["RAD_PC"] # tb["RAD_NODC_NOEX"]
-        sigv   = tb["SIGV_KMS"] # tb["SIGV_NODC_NOEX"]
-        mvir   = tb["MVIR_MSUN"]
-        tpeak  = tb["TMAX_K"]
-        mci    = tb["MLUM_MSUN"]
-        xdeg   = tb["XCTR_DEG"]
-        ydeg   = tb["YCTR_DEG"]
-        x_fov2 = (tb["XCTR_DEG"] - self.ra_fov2) * -3600.
-        y_fov2 = (tb["YCTR_DEG"] - self.dec_fov2) * -3600.
-        x_fov3 = (tb["XCTR_DEG"] - self.ra_fov3) * -3600.
-        y_fov3 = (tb["YCTR_DEG"] - self.dec_fov3) * -3600.
-
-        cut    = np.where(~np.isnan(radius) & ~np.isnan(sigv) & ~np.isnan(mvir) & ~np.isnan(tpeak))
-        x      = x[cut]
-        y      = y[cut]
-        s2n    = s2n[cut]
-        radius = radius[cut]
-        sigv   = sigv[cut]
-        mvir   = np.log10(mvir[cut])
-        tpeak  = tpeak[cut]
-        mci    = mci[cut]
-        r_fov2 = np.sqrt(x_fov2[cut]**2 + y_fov2[cut]**2)
-        r_fov3 = np.sqrt(x_fov3[cut]**2 + y_fov3[cut]**2)
-
-        # bicone definition
-        r          = np.sqrt(x**2 + y**2)
-        theta      = np.degrees(np.arctan2(x, y)) + 90
-        theta      = np.where(theta>0,theta,theta+360)
-        cut_cone   = np.where((s2n>=self.snr_cprops) & (r<self.fov_diamter/2.0) & (theta>=self.theta2) & (theta<self.theta1) | (s2n>=self.snr_cprops) & (r<self.fov_diamter/2.0) & (theta>=self.theta2+180) & (theta<self.theta1+180))
-        cut_nocone = np.where((s2n>=self.snr_cprops) & (r<self.fov_diamter/2.0) & (theta>=self.theta1) & (theta<self.theta2+180) | (s2n>=self.snr_cprops) & (r<self.fov_diamter/2.0) & (theta>=self.theta1+180) & (theta<self.theta2+360) | (s2n>=self.snr_cprops) & (r<self.fov_diamter/2.0) & (theta<self.theta1+180) & (theta<self.theta2))
-        cut_sbr    = np.where((s2n>=self.snr_cprops) & (r>=self.fov_diamter/2.0) & (r_fov2<=self.fov_diamter/2.0) | (s2n>=self.snr_cprops) & (r>=self.fov_diamter/2.0) & (r_fov3<=self.fov_diamter/2.0))
-
-        # data
-        x_cone      = x[cut_cone]
-        y_cone      = y[cut_cone]
-        v_cone      = v[cut_cone]
-        radius_cone = radius[cut_cone]
-        sigv_cone   = sigv[cut_cone]
-        mvir_cone   = mvir[cut_cone]
-        tpeak_cone  = tpeak[cut_cone]
-        mci_cone    = mci[cut_cone]
-        xdeg_cone   = xdeg[cut_cone]
-        ydeg_cone   = ydeg[cut_cone]
-        s2n_cone    = s2n[cut_cone]
-        cone_list = [x_cone, y_cone, v_cone, radius_cone, sigv_cone, mvir_cone, tpeak_cone, mci_cone, xdeg_cone, ydeg_cone, s2n_cone]
-
-        x_nocone      = x[cut_nocone]
-        y_nocone      = y[cut_nocone]
-        v_nocone      = v[cut_nocone]
-        radius_nocone = radius[cut_nocone]
-        sigv_nocone   = sigv[cut_nocone]
-        mvir_nocone   = mvir[cut_nocone]
-        tpeak_nocone  = tpeak[cut_nocone]
-        mci_nocone    = mci[cut_nocone]
-        xdeg_nocone   = xdeg[cut_nocone]
-        ydeg_nocone   = ydeg[cut_nocone]
-        s2n_nocone    = s2n[cut_nocone]
-        nocone_list = [x_nocone, y_nocone, v_nocone, radius_nocone, sigv_nocone, mvir_nocone, tpeak_nocone, mci_nocone, xdeg_nocone, ydeg_nocone, s2n_nocone]
-
-        x_sbr      = x[cut_sbr]
-        y_sbr      = y[cut_sbr]
-        v_sbr      = v[cut_sbr]
-        radius_sbr = radius[cut_sbr]
-        sigv_sbr   = sigv[cut_sbr]
-        mvir_sbr   = mvir[cut_sbr]
-        tpeak_sbr  = tpeak[cut_sbr]
-        mci_sbr    = mci[cut_sbr]
-        xdeg_sbr   = xdeg[cut_sbr]
-        ydeg_sbr   = ydeg[cut_sbr]
-        s2n_sbr    = s2n[cut_sbr]
-        sbr_list = [x_sbr, y_sbr, v_sbr, radius_sbr, sigv_sbr, mvir_sbr, tpeak_sbr, mci_sbr, xdeg_sbr, ydeg_sbr, s2n_sbr]
-
-        return cone_list, nocone_list, sbr_list
-
-    ###################
-    # _gaussfit_noise #
-    ###################
-
-    def _gaussfit_noise(
-        self,
-        data,
-        bins=500,
-        snr=0.5,
-        ):
-        """
-        plot_noise
-        """
-
-        data[np.isnan(data)] = 0
-        data[np.isinf(data)] = 0
-        data = data[data!=0]
-
-        # data
-        histrange    = [data.min(), data.max()]
-        p84_data     = np.percentile(data, 16) * -1  # 84th percentile of the inversed histogram
-        histogram    = np.histogram(data, bins=bins, range=histrange)
-        histx, histy = histogram[1][:-1], histogram[0]
-        histx4fit    = histx[histx<p84_data*snr]
-        histy4fit    = histy[histx<p84_data*snr]
-
-        # fit
-        x_bestfit    = np.linspace(histrange[0], histrange[1], bins)
-        popt,_       = curve_fit(self._func1, histx4fit, histy4fit, p0=[np.max(histy4fit),p84_data], maxfev=10000)
-        peak         = popt[0]
-        rms          = abs(np.round(popt[1], 5))
-        y_bestfit    = self._func1(x_bestfit, peak, rms)
-
-        return histx, histy, histrange, peak, rms, x_bestfit, y_bestfit, p84_data
-
-    def _func1(self, x, a, c):
-        """
-        """
-        return a*np.exp(-(x)**2/(2*c**2))
-
-    ############
-    # do_stack #
-    ############
-
-    def do_stack(
-        self,
-        ):
-        """
-        """
-
-        taskname = self.modname + sys._getframe().f_code.co_name
-        check_first(self.cprops_co10,taskname)
-
-        x_co_cone, y_co_cone, v_co_cone, radius_co_cone, sigv_co_cone, \
-        x_co_nocone, y_co_nocone, v_co_nocone, radius_co_nocone, sigv_co_nocone, \
-        x_co_sbr, y_co_sbr, v_co_sbr, radius_co_sbr, sigv_co_sbr \
-            = self._import_cprops_table(self.cprops_co10,addv=True)
-
-        x_ci_cone, y_ci_cone, v_ci_cone, radius_ci_cone, sigv_ci_cone, \
-        x_ci_nocone, y_ci_nocone, v_ci_nocone, radius_ci_nocone, sigv_ci_nocone, \
-        x_ci_sbr, y_ci_sbr, v_ci_sbr, radius_ci_sbr, sigv_ci_sbr \
-            = self._import_cprops_table(self.cprops_ci10,addv=True)
-
-        shape   = imhead(self.cube_co10,mode="list")["shape"]
-        box     = "0,0," + str(shape[0]-1) + "," + str(shape[1]-1)
-        data    = imval(self.cube_co10,box=box)
-        coords  = data["coords"]
-        co_data = data["data"]
-        co_x    = coords[:,0,0,0]
-        co_y    = coords[0,:,0,1]
-        co_freq = coords[0,0,:,2]
-
-        """
-        shape   = imhead(self.cube_ci10,mode="list")["shape"]
-        box     = "0,0," + str(shape[0]-1) + "," + str(shape[1]-1)
-        data    = imval(self.cube_ci10,box=box)
-        coords  = data["coords"]
-        ci_data = data["data"]
-        ci_x    = coords[:,0,0,0]
-        ci_y    = coords[0,:,0,1]
-        ci_freq = coords[0,0,:,2]
-        """
-
-        #
-        for i in range(len(x_co_cone)):
-            this_x_co_cone = x_co_cone[i]
-            this_y_co_cone = y_co_cone[i]
-            this_v_co_cone = v_co_cone[i]
-            this_r_co_cone = int(radius_co_cone[i] / self.scale_pc)
-            this_s_co_cone = sigv_co_cone[i]
-
-            x_center = np.argmin(np.abs((co_x-this_x_co_cone)))
-            x_left   = x_center - this_r_co_cone*2
-            x_right  = x_center + this_r_co_cone*2 + 2
-            y_center = np.argmin(np.abs((co_y-this_y_co_cone)))
-            y_left   = y_center - this_r_co_cone*2
-            y_right  = y_center + this_r_co_cone*2 + 2
-
-            print(this_x_co_cone)
-            print(this_y_co_cone)
-            print(x_center)
-            print(y_center)
-            print([x_left,x_right,y_left,y_right])
-
-    ############
-    # plot_map #
-    ############
-
-    def plot_map(
-        self,
-        ):
-        """
-        """
-
-        taskname = self.modname + sys._getframe().f_code.co_name
-        check_first(self.outfits_mom0_ci10,taskname)
-
-        #
-        myfig_fits2png(
-            imcolor=self.outfits_mom0_ratio,
-            outfile=self.outpng_map_ratio,
-            imcontour1=self.outfits_mom0_co10,
-            imsize_as=self.imsize_as,
-            ra_cnt=str(self.ra_agn)+"deg",
-            dec_cnt=str(self.dec_agn)+"deg",
-            #unit_cont1=rms_vla,
-            #levels_cont1=[-3,3,6,12,24,48],
-            width_cont1=[1.0],
-            set_title="ratio",
-            colorlog=True,
-            #scalebar=scalebar,
-            #label_scalebar=label_scalebar,
-            set_cbar=True,
-            label_cbar="",
-            clim=[0.1,1],
-            #set_bg_color=set_bg_color,
-            )
-
-    ##################
-    # plot_co_larson #
-    ##################
-
-    def plot_co_larson(
-        self,
-        ):
-        """
-        """
-
-        taskname = self.modname + sys._getframe().f_code.co_name
-        check_first(self.cprops_co10,taskname)
-
-        x_cone, y_cone, radius_cone, sigv_cone, mvir_cone, tpeak_cone, lci_cone, \
-            x_nocone, y_nocone, radius_nocone, sigv_nocone, mvir_nocone, tpeak_nocone, lci_nocone, \
-            x_sbr, y_sbr, radius_sbr, sigv_sbr, mvir_sbr, tpeak_sbr, lci_sbr = self._import_cprops_table(self.cprops_co10)
-
-        mvir_cone   = 10**mvir_cone
-        mvir_nocone = 10**mvir_nocone
-        mvir_sbr    = 10**mvir_sbr
-
-        ####################
-        # plot: larson 1st #
-        ####################
-        xlim   = self.xlim_larson_1st
-        ylim   = self.ylim_larson_1st
-        title  = "Larson's 1st law"
-        xlabel = "log Diameter (pc)"
-        ylabel = "log velocity dispersion (km s$^{-1}$)"
-
-        fig = plt.figure(figsize=(13,10))
-        gs  = gridspec.GridSpec(nrows=10, ncols=10)
-        ax1 = plt.subplot(gs[0:10,0:10])
-        ad  = [0.215,0.83,0.10,0.90]
-        myax_set(ax1, "both", xlim, ylim, title, xlabel, ylabel, adjust=ad)
-
-        ax1.scatter(np.log10(radius_cone*2.0), np.log10(sigv_cone), lw=0, s=160, color="red", alpha=0.5)
-        ax1.scatter(np.log10(radius_nocone*2.0), np.log10(sigv_nocone), lw=0, s=160, color="blue", alpha=0.5)
-        ax1.scatter(np.log10(radius_sbr*2.0), np.log10(sigv_sbr), lw=0, s=160, color="grey", alpha=0.5)
-
-        # save
-        os.system("rm -rf " + self.outpng_co_larson_1st)
-        plt.savefig(self.outpng_co_larson_1st, dpi=self.fig_dpi)
-
-        ####################
-        # plot: larson 2nd #
-        ####################
-        xlim   = self.xlim_larson_2nd
-        ylim   = self.ylim_larson_2nd
-        title  = "Larson's 2nd law"
-        xlabel = "log M(H$_2$) ($M_{\odot}$)"
-        ylabel = "log velocity dispersion (km s$^{-1}$)"
-
-        fig = plt.figure(figsize=(13,10))
-        gs  = gridspec.GridSpec(nrows=10, ncols=10)
-        ax1 = plt.subplot(gs[0:10,0:10])
-        ad  = [0.215,0.83,0.10,0.90]
-        myax_set(ax1, "both", xlim, ylim, title, xlabel, ylabel, adjust=ad)
-
-        ax1.scatter(np.log10(lci_cone*self.alpha_co), np.log10(sigv_cone), lw=0, s=160, color="red", alpha=0.5)
-        ax1.scatter(np.log10(lci_nocone*self.alpha_co), np.log10(sigv_nocone), lw=0, s=160, color="blue", alpha=0.5)
-        ax1.scatter(np.log10(lci_sbr*self.alpha_co), np.log10(sigv_sbr), lw=0, s=160, color="grey", alpha=0.5)
-
-        # save
-        os.system("rm -rf " + self.outpng_co_larson_2nd)
-        plt.savefig(self.outpng_co_larson_2nd, dpi=self.fig_dpi)
-
-        ####################
-        # plot: larson 3rd #
-        ####################
-        density_cone   = lci_cone*self.alpha_co/(4./3.*np.pi*radius_cone**3)
-        density_nocone = lci_nocone*self.alpha_co/(4./3.*np.pi*radius_nocone**3)
-        density_sbr    = lci_sbr*self.alpha_co/(4./3.*np.pi*radius_sbr**3)
-
-        rvir_cone   = mvir_cone / (lci_cone*self.alpha_co)
-        rvir_nocone = mvir_nocone / (lci_nocone*self.alpha_co)
-        rvir_sbr    = mvir_sbr / (lci_sbr*self.alpha_co)
-
-        xlim   = self.xlim_larson_3rd
-        ylim   = self.ylim_larson_3rd
-        title  = "Larson's 3rd law"
-        xlabel = "log Diameter (pc)"
-        ylabel = "log Volume density (cm$^{-3}$)"
-
-        fig = plt.figure(figsize=(13,10))
-        gs  = gridspec.GridSpec(nrows=10, ncols=10)
-        ax1 = plt.subplot(gs[0:10,0:10])
-        ad  = [0.215,0.83,0.10,0.90]
-        myax_set(ax1, "both", xlim, ylim, title, xlabel, ylabel, adjust=ad)
-
-        ax1.scatter(np.log10(radius_cone*2.0)[rvir_cone>=np.median(rvir_cone)], np.log10(density_cone)[rvir_cone>=np.median(rvir_cone)], lw=0, s=40, color="red", alpha=0.5)
-        ax1.scatter(np.log10(radius_nocone*2.0)[rvir_nocone>=np.median(rvir_nocone)], np.log10(density_nocone)[rvir_nocone>=np.median(rvir_nocone)], lw=0, s=40, color="blue", alpha=0.5)
-        ax1.scatter(np.log10(radius_sbr*2.0)[rvir_sbr>=np.median(rvir_sbr)], np.log10(density_sbr)[rvir_sbr>=np.median(rvir_sbr)], lw=0, s=40, color="grey", alpha=0.5)
-
-        ax1.scatter(np.log10(radius_cone*2.0)[rvir_cone<np.median(rvir_cone)], np.log10(density_cone)[rvir_cone<np.median(rvir_cone)], lw=0, s=160, color="red", alpha=0.5)
-        ax1.scatter(np.log10(radius_nocone*2.0)[rvir_nocone<np.median(rvir_nocone)], np.log10(density_nocone)[rvir_nocone<np.median(rvir_nocone)], lw=0, s=160, color="blue", alpha=0.5)
-        ax1.scatter(np.log10(radius_sbr*2.0)[rvir_sbr<np.median(rvir_sbr)], np.log10(density_sbr)[rvir_sbr<np.median(rvir_sbr)], lw=0, s=160, color="grey", alpha=0.5)
-
-        # save
-        os.system("rm -rf " + self.outpng_co_larson_3rd)
-        plt.savefig(self.outpng_co_larson_3rd, dpi=self.fig_dpi)
-
-    ##################
-    # plot_ci_larson #
-    ##################
-
-    def plot_ci_larson(
-        self,
-        ):
-        """
-        """
-
-        taskname = self.modname + sys._getframe().f_code.co_name
-        check_first(self.cprops_ci10,taskname)
-
-        x_cone, y_cone, radius_cone, sigv_cone, mvir_cone, tpeak_cone, lci_cone, \
-            x_nocone, y_nocone, radius_nocone, sigv_nocone, mvir_nocone, tpeak_nocone, lci_nocone, \
-            x_sbr, y_sbr, radius_sbr, sigv_sbr, mvir_sbr, tpeak_sbr, lci_sbr = self._import_cprops_table(self.cprops_ci10)
-
-        mvir_cone   = 10**mvir_cone
-        mvir_nocone = 10**mvir_nocone
-        mvir_sbr    = 10**mvir_sbr
-
-        ####################
-        # plot: larson 1st #
-        ####################
-        xlim   = self.xlim_larson_1st
-        ylim   = self.ylim_larson_1st
-        title  = "Larson's 1st law"
-        xlabel = "log Diameter (pc)"
-        ylabel = "log velocity dispersion (km s$^{-1}$)"
-
-        fig = plt.figure(figsize=(13,10))
-        gs  = gridspec.GridSpec(nrows=10, ncols=10)
-        ax1 = plt.subplot(gs[0:10,0:10])
-        ad  = [0.215,0.83,0.10,0.90]
-        myax_set(ax1, "both", xlim, ylim, title, xlabel, ylabel, adjust=ad)
-
-        ax1.scatter(np.log10(radius_cone*2.0), np.log10(sigv_cone), lw=0, s=160, color="red", alpha=0.5)
-        ax1.scatter(np.log10(radius_nocone*2.0), np.log10(sigv_nocone), lw=0, s=160, color="blue", alpha=0.5)
-        ax1.scatter(np.log10(radius_sbr*2.0), np.log10(sigv_sbr), lw=0, s=160, color="grey", alpha=0.5)
-
-        # save
-        os.system("rm -rf " + self.outpng_ci_larson_1st)
-        plt.savefig(self.outpng_ci_larson_1st, dpi=self.fig_dpi)
-
-        ####################
-        # plot: larson 2nd #
-        ####################
-        xlim   = self.xlim_larson_2nd
-        ylim   = self.ylim_larson_2nd
-        title  = "Larson's 2nd law"
-        xlabel = "log M(H$_2$) ($M_{\odot}$)"
-        ylabel = "log velocity dispersion (km s$^{-1}$)"
-
-        fig = plt.figure(figsize=(13,10))
-        gs  = gridspec.GridSpec(nrows=10, ncols=10)
-        ax1 = plt.subplot(gs[0:10,0:10])
-        ad  = [0.215,0.83,0.10,0.90]
-        myax_set(ax1, "both", xlim, ylim, title, xlabel, ylabel, adjust=ad)
-
-        ax1.scatter(np.log10(lci_cone*self.alpha_ci), np.log10(sigv_cone), lw=0, s=160, color="red", alpha=0.5)
-        ax1.scatter(np.log10(lci_nocone*self.alpha_ci), np.log10(sigv_nocone), lw=0, s=160, color="blue", alpha=0.5)
-        ax1.scatter(np.log10(lci_sbr*self.alpha_ci), np.log10(sigv_sbr), lw=0, s=160, color="grey", alpha=0.5)
-
-        # save
-        os.system("rm -rf " + self.outpng_ci_larson_2nd)
-        plt.savefig(self.outpng_ci_larson_2nd, dpi=self.fig_dpi)
-
-        ####################
-        # plot: larson 3rd #
-        ####################
-        density_cone   = lci_cone*self.alpha_ci/(4./3.*np.pi*radius_cone**3)
-        density_nocone = lci_nocone*self.alpha_ci/(4./3.*np.pi*radius_nocone**3)
-        density_sbr    = lci_sbr*self.alpha_ci/(4./3.*np.pi*radius_sbr**3)
-
-        rvir_cone   = mvir_cone / (lci_cone*self.alpha_ci)
-        rvir_nocone = mvir_nocone / (lci_nocone*self.alpha_ci)
-        rvir_sbr    = mvir_sbr / (lci_sbr*self.alpha_ci)
-
-        xlim   = self.xlim_larson_3rd
-        ylim   = self.ylim_larson_3rd
-        title  = "Larson's 3rd law"
-        xlabel = "log Diameter (pc)"
-        ylabel = "log Volume density (cm$^{-3}$)"
-
-        fig = plt.figure(figsize=(13,10))
-        gs  = gridspec.GridSpec(nrows=10, ncols=10)
-        ax1 = plt.subplot(gs[0:10,0:10])
-        ad  = [0.215,0.83,0.10,0.90]
-        myax_set(ax1, "both", xlim, ylim, title, xlabel, ylabel, adjust=ad)
-
-        ax1.scatter(np.log10(radius_cone*2.0)[rvir_cone>=np.median(rvir_cone)], np.log10(density_cone)[rvir_cone>=np.median(rvir_cone)], lw=0, s=40, color="red", alpha=0.5)
-        ax1.scatter(np.log10(radius_nocone*2.0)[rvir_nocone>=np.median(rvir_nocone)], np.log10(density_nocone)[rvir_nocone>=np.median(rvir_nocone)], lw=0, s=40, color="blue", alpha=0.5)
-        ax1.scatter(np.log10(radius_sbr*2.0)[rvir_sbr>=np.median(rvir_sbr)], np.log10(density_sbr)[rvir_sbr>=np.median(rvir_sbr)], lw=0, s=40, color="grey", alpha=0.5)
-
-        ax1.scatter(np.log10(radius_cone*2.0)[rvir_cone<np.median(rvir_cone)], np.log10(density_cone)[rvir_cone<np.median(rvir_cone)], lw=0, s=160, color="red", alpha=0.5)
-        ax1.scatter(np.log10(radius_nocone*2.0)[rvir_nocone<np.median(rvir_nocone)], np.log10(density_nocone)[rvir_nocone<np.median(rvir_nocone)], lw=0, s=160, color="blue", alpha=0.5)
-        ax1.scatter(np.log10(radius_sbr*2.0)[rvir_sbr<np.median(rvir_sbr)], np.log10(density_sbr)[rvir_sbr<np.median(rvir_sbr)], lw=0, s=160, color="grey", alpha=0.5)
-
-        # save
-        os.system("rm -rf " + self.outpng_ci_larson_3rd)
-        plt.savefig(self.outpng_ci_larson_3rd, dpi=self.fig_dpi)
-
     #################
     # do_align_cube #
     #################
@@ -2340,6 +1651,192 @@ class ToolsCIGMC():
         # save
         os.system("rm -rf " + outpng)
         plt.savefig(outpng, dpi=300)
+
+    def _import_cprops_table(
+        self,
+        table,
+        ):
+        """
+        """
+
+        # import cprops table
+        f = pyfits.open(table)
+        tb = f[1].data
+
+        # extract parameters
+        x      = (tb["XCTR_DEG"] - self.ra_agn) * -3600.
+        y      = (tb["YCTR_DEG"] - self.dec_agn) * 3600.
+        v      = tb["VCTR_KMS"]
+        s2n    = tb["S2N"]
+        radius = tb["RAD_PC"] # tb["RAD_NODC_NOEX"]
+        sigv   = tb["SIGV_KMS"] # tb["SIGV_NODC_NOEX"]
+        mvir   = tb["MVIR_MSUN"]
+        tpeak  = tb["TMAX_K"]
+        mci    = tb["MLUM_MSUN"]
+        xdeg   = tb["XCTR_DEG"]
+        ydeg   = tb["YCTR_DEG"]
+        x_fov2 = (tb["XCTR_DEG"] - self.ra_fov2) * -3600.
+        y_fov2 = (tb["YCTR_DEG"] - self.dec_fov2) * -3600.
+        x_fov3 = (tb["XCTR_DEG"] - self.ra_fov3) * -3600.
+        y_fov3 = (tb["YCTR_DEG"] - self.dec_fov3) * -3600.
+
+        cut    = np.where(~np.isnan(radius) & ~np.isnan(sigv) & ~np.isnan(mvir) & ~np.isnan(tpeak))
+        x      = x[cut]
+        y      = y[cut]
+        s2n    = s2n[cut]
+        radius = radius[cut]
+        sigv   = sigv[cut]
+        mvir   = np.log10(mvir[cut])
+        tpeak  = tpeak[cut]
+        mci    = mci[cut]
+        r_fov2 = np.sqrt(x_fov2[cut]**2 + y_fov2[cut]**2)
+        r_fov3 = np.sqrt(x_fov3[cut]**2 + y_fov3[cut]**2)
+
+        # bicone definition
+        r          = np.sqrt(x**2 + y**2)
+        theta      = np.degrees(np.arctan2(x, y)) + 90
+        theta      = np.where(theta>0,theta,theta+360)
+        cut_cone   = np.where((s2n>=self.snr_cprops) & (r<self.fov_diamter/2.0) & (theta>=self.theta2) & (theta<self.theta1) | (s2n>=self.snr_cprops) & (r<self.fov_diamter/2.0) & (theta>=self.theta2+180) & (theta<self.theta1+180))
+        cut_nocone = np.where((s2n>=self.snr_cprops) & (r<self.fov_diamter/2.0) & (theta>=self.theta1) & (theta<self.theta2+180) | (s2n>=self.snr_cprops) & (r<self.fov_diamter/2.0) & (theta>=self.theta1+180) & (theta<self.theta2+360) | (s2n>=self.snr_cprops) & (r<self.fov_diamter/2.0) & (theta<self.theta1+180) & (theta<self.theta2))
+        cut_sbr    = np.where((s2n>=self.snr_cprops) & (r>=self.fov_diamter/2.0) & (r_fov2<=self.fov_diamter/2.0) | (s2n>=self.snr_cprops) & (r>=self.fov_diamter/2.0) & (r_fov3<=self.fov_diamter/2.0))
+
+        # data
+        x_cone      = x[cut_cone]
+        y_cone      = y[cut_cone]
+        v_cone      = v[cut_cone]
+        radius_cone = radius[cut_cone]
+        sigv_cone   = sigv[cut_cone]
+        mvir_cone   = mvir[cut_cone]
+        tpeak_cone  = tpeak[cut_cone]
+        mci_cone    = mci[cut_cone]
+        xdeg_cone   = xdeg[cut_cone]
+        ydeg_cone   = ydeg[cut_cone]
+        s2n_cone    = s2n[cut_cone]
+        cone_list = [x_cone, y_cone, v_cone, radius_cone, sigv_cone, mvir_cone, tpeak_cone, mci_cone, xdeg_cone, ydeg_cone, s2n_cone]
+
+        x_nocone      = x[cut_nocone]
+        y_nocone      = y[cut_nocone]
+        v_nocone      = v[cut_nocone]
+        radius_nocone = radius[cut_nocone]
+        sigv_nocone   = sigv[cut_nocone]
+        mvir_nocone   = mvir[cut_nocone]
+        tpeak_nocone  = tpeak[cut_nocone]
+        mci_nocone    = mci[cut_nocone]
+        xdeg_nocone   = xdeg[cut_nocone]
+        ydeg_nocone   = ydeg[cut_nocone]
+        s2n_nocone    = s2n[cut_nocone]
+        nocone_list = [x_nocone, y_nocone, v_nocone, radius_nocone, sigv_nocone, mvir_nocone, tpeak_nocone, mci_nocone, xdeg_nocone, ydeg_nocone, s2n_nocone]
+
+        x_sbr      = x[cut_sbr]
+        y_sbr      = y[cut_sbr]
+        v_sbr      = v[cut_sbr]
+        radius_sbr = radius[cut_sbr]
+        sigv_sbr   = sigv[cut_sbr]
+        mvir_sbr   = mvir[cut_sbr]
+        tpeak_sbr  = tpeak[cut_sbr]
+        mci_sbr    = mci[cut_sbr]
+        xdeg_sbr   = xdeg[cut_sbr]
+        ydeg_sbr   = ydeg[cut_sbr]
+        s2n_sbr    = s2n[cut_sbr]
+        sbr_list = [x_sbr, y_sbr, v_sbr, radius_sbr, sigv_sbr, mvir_sbr, tpeak_sbr, mci_sbr, xdeg_sbr, ydeg_sbr, s2n_sbr]
+
+        return cone_list, nocone_list, sbr_list
+
+    def _gaussfit_noise(
+        self,
+        data,
+        bins=500,
+        snr=0.5,
+        ):
+        """
+        plot_noise
+        """
+
+        data[np.isnan(data)] = 0
+        data[np.isinf(data)] = 0
+        data = data[data!=0]
+
+        # data
+        histrange    = [data.min(), data.max()]
+        p84_data     = np.percentile(data, 16) * -1  # 84th percentile of the inversed histogram
+        histogram    = np.histogram(data, bins=bins, range=histrange)
+        histx, histy = histogram[1][:-1], histogram[0]
+        histx4fit    = histx[histx<p84_data*snr]
+        histy4fit    = histy[histx<p84_data*snr]
+
+        # fit
+        x_bestfit    = np.linspace(histrange[0], histrange[1], bins)
+        popt,_       = curve_fit(self._func1, histx4fit, histy4fit, p0=[np.max(histy4fit),p84_data], maxfev=10000)
+        peak         = popt[0]
+        rms          = abs(np.round(popt[1], 5))
+        y_bestfit    = self._func1(x_bestfit, peak, rms)
+
+        return histx, histy, histrange, peak, rms, x_bestfit, y_bestfit, p84_data
+
+    def _func1(self, x, a, c):
+        """
+        """
+        return a*np.exp(-(x)**2/(2*c**2))
+
+    def do_stack(
+        self,
+        ):
+        """
+        """
+
+        taskname = self.modname + sys._getframe().f_code.co_name
+        check_first(self.cprops_co10,taskname)
+
+        x_co_cone, y_co_cone, v_co_cone, radius_co_cone, sigv_co_cone, \
+        x_co_nocone, y_co_nocone, v_co_nocone, radius_co_nocone, sigv_co_nocone, \
+        x_co_sbr, y_co_sbr, v_co_sbr, radius_co_sbr, sigv_co_sbr \
+            = self._import_cprops_table(self.cprops_co10,addv=True)
+
+        x_ci_cone, y_ci_cone, v_ci_cone, radius_ci_cone, sigv_ci_cone, \
+        x_ci_nocone, y_ci_nocone, v_ci_nocone, radius_ci_nocone, sigv_ci_nocone, \
+        x_ci_sbr, y_ci_sbr, v_ci_sbr, radius_ci_sbr, sigv_ci_sbr \
+            = self._import_cprops_table(self.cprops_ci10,addv=True)
+
+        shape   = imhead(self.cube_co10,mode="list")["shape"]
+        box     = "0,0," + str(shape[0]-1) + "," + str(shape[1]-1)
+        data    = imval(self.cube_co10,box=box)
+        coords  = data["coords"]
+        co_data = data["data"]
+        co_x    = coords[:,0,0,0]
+        co_y    = coords[0,:,0,1]
+        co_freq = coords[0,0,:,2]
+
+        """
+        shape   = imhead(self.cube_ci10,mode="list")["shape"]
+        box     = "0,0," + str(shape[0]-1) + "," + str(shape[1]-1)
+        data    = imval(self.cube_ci10,box=box)
+        coords  = data["coords"]
+        ci_data = data["data"]
+        ci_x    = coords[:,0,0,0]
+        ci_y    = coords[0,:,0,1]
+        ci_freq = coords[0,0,:,2]
+        """
+
+        #
+        for i in range(len(x_co_cone)):
+            this_x_co_cone = x_co_cone[i]
+            this_y_co_cone = y_co_cone[i]
+            this_v_co_cone = v_co_cone[i]
+            this_r_co_cone = int(radius_co_cone[i] / self.scale_pc)
+            this_s_co_cone = sigv_co_cone[i]
+
+            x_center = np.argmin(np.abs((co_x-this_x_co_cone)))
+            x_left   = x_center - this_r_co_cone*2
+            x_right  = x_center + this_r_co_cone*2 + 2
+            y_center = np.argmin(np.abs((co_y-this_y_co_cone)))
+            y_left   = y_center - this_r_co_cone*2
+            y_right  = y_center + this_r_co_cone*2 + 2
+
+            print(this_x_co_cone)
+            print(this_y_co_cone)
+            print(x_center)
+            print(y_center)
+            print([x_left,x_right,y_left,y_right])
 
 #####################
 # end of ToolsCIGMC #
