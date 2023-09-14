@@ -453,8 +453,8 @@ class ToolsCIGMC():
 
         x_co10_cone = radius_co10[cut_cone]
         y_co10_cone = sigv_co10[cut_cone]
-        x_co10_cone = np.nan_to_num(np.log10(x_co10))
-        y_co10_cone = np.nan_to_num(np.log10(y_co10))
+        x_co10_cone = np.nan_to_num(np.log10(x_co10_cone))
+        y_co10_cone = np.nan_to_num(np.log10(y_co10_cone))
 
         print(x_co10_cone)
 
