@@ -704,12 +704,12 @@ class ToolsCIGMC():
 
         # stats of xhist
         ax_histx.text(0.74, 0.85, "16$^{th}$-50$^{th}$-84$^{th}$ pctls.", color="black", transform=ax_histx.transAxes, fontsize=15)
-        this_txt = str(int(10**np.percentile(x,16)))+"-"+str(int(10**np.percentile(x,50)))+"-"+str(int(10**np.percentile(x,84)))+" (pc)"
+        this_txt = str(int(10**np.percentile(x,16)))+"-"+str(int(10**np.percentile(x,50)))+"-"+str(int(10**np.percentile(x,84)))+" ($M_{\odot}$ pc$^{-2}$)"
         ax_histx.text(0.74, 0.70-offset, this_txt, color=color, transform=ax_histx.transAxes, fontsize=15)
 
         # stats of yhist
         ax_histy.text(0.74, 0.95, "16$^{th}$-50$^{th}$-84$^{th}$ pctls.", color="black", transform=ax_histy.transAxes, fontsize=15, rotation=-90)
-        this_txt = str(int(10**np.percentile(y,16)))+"-"+str(int(10**np.percentile(y,50)))+"-"+str(int(10**np.percentile(y,84)))+" (km s$^{-1}$)"
+        this_txt = str(int(10**np.percentile(y,16)))+"-"+str(int(10**np.percentile(y,50)))+"-"+str(int(10**np.percentile(y,84)))
         ax_histy.text(0.59-offset, 0.95, this_txt, color=color, transform=ax_histy.transAxes, fontsize=15, rotation=-90)
 
     ###############
