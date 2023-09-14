@@ -657,7 +657,7 @@ class ToolsCIGMC():
         self._scatter_hist(x2_ci10, y2_ci10, ax1, ax2, ax3, "tomato", xlim, ylim, offset=0.15)
 
         # scatter for outflow data
-        ax1.scatter(x2_co10_cone, y2_co10_cone, c="deepskyblue", lw=2, s=100, marker="s")
+        #ax1.scatter(x2_co10_cone, y2_co10_cone, c="deepskyblue", lw=2, s=100, marker="s")
         ax1.scatter(x2_ci10_cone, y2_ci10_cone, c="tomato", lw=2, s=100)
 
         # text
