@@ -51,17 +51,20 @@ outfits_mom0_ratio ,,,n1068_ratio_mom0.fits
 # text files
 
 # png giles: noise stats
-outpng_hist_co10_pix  ,,,outpng_stats_co10_pix.png
-outpng_hist_ci10_pix  ,,,outpng_stats_ci10_pix.png
-outpng_hist_ratio_pix ,,,outpng_stats_ratio_pix.png
-outpng_hist_co10_snr  ,,,outpng_stats_co10_snr.png
-outpng_hist_ci10_snr  ,,,outpng_stats_ci10_snr.png
-outpng_hist_ratio_snr ,,,outpng_stats_ratio_snr.png
+outpng_hist_co10_pix   ,,,outpng_stats_co10_pix.png
+outpng_hist_ci10_pix   ,,,outpng_stats_ci10_pix.png
+outpng_hist_ratio_pix  ,,,outpng_stats_ratio_pix.png
+outpng_hist_co10_snr   ,,,outpng_stats_co10_snr.png
+outpng_hist_ci10_snr   ,,,outpng_stats_ci10_snr.png
+outpng_hist_ratio_snr  ,,,outpng_stats_ratio_snr.png
 # png files: cprops stats
-outpng_hist_snr       ,,,outpng_hist_snr.png
-outpng_hist_sigv      ,,,outpng_hist_sigv.png
-outpng_hist_rad       ,,,outpng_hist_rad.png
-outpng_hist_tpeak     ,,,outpng_hist_tpeak.png
+outpng_hist_snr        ,,,outpng_hist_snr.png
+outpng_hist_sigv       ,,,outpng_hist_sigv.png
+outpng_hist_rad        ,,,outpng_hist_rad.png
+outpng_hist_tpeak      ,,,outpng_hist_tpeak.png
+#
+outpng_cico_larson_1st ,,,outpng_cico_larson_1st.png
+outpng_cico_dyn        ,,,outpng_cico_dyn.png
 
 
 # png files: cprops stats (ci10)
@@ -90,7 +93,6 @@ outpng_ci_larson_3rd         ,,,outpng_ci_larson_3rd.png
 outpng_co_larson_1st         ,,,outpng_co_larson_1st.png
 outpng_co_larson_2nd         ,,,outpng_co_larson_2nd.png
 outpng_co_larson_3rd         ,,,outpng_co_larson_3rd.png
-outpng_cico_larson_1st       ,,,outpng_cico_larson_1st.png
 outpng_cico_larson_2nd       ,,,outpng_cico_larson_2nd.png
 outpng_cico_larson_3rd       ,,,outpng_cico_larson_3rd.png
 outpng_map_ratio             ,,,outpng_map_ratio.png

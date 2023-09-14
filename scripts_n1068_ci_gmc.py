@@ -203,6 +203,9 @@ class ToolsCIGMC():
         self.outpng_hist_rad       = self.dir_products + self._read_key("outpng_hist_rad")
         self.outpng_hist_tpeak     = self.dir_products + self._read_key("outpng_hist_tpeak")
 
+        self.outpng_cico_larson_1st = self.dir_products + self._read_key("outpng_cico_larson_1st")
+        self.outpng_cico_dyn        = self.dir_products + self._read_key("outpng_cico_dyn")
+
         # supplement
         self.outpng_ci_hist_rad           = self.dir_products + self._read_key("outpng_ci_hist_rad")
         self.outpng_ci_hist_sigv          = self.dir_products + self._read_key("outpng_ci_hist_sigv")
@@ -234,7 +237,6 @@ class ToolsCIGMC():
         self.outpng_co_larson_2nd         = self.dir_products + self._read_key("outpng_co_larson_2nd")
         self.outpng_co_larson_3rd         = self.dir_products + self._read_key("outpng_co_larson_3rd")
 
-        self.outpng_cico_larson_1st       = self.dir_products + self._read_key("outpng_cico_larson_1st")
         self.outpng_cico_larson_2nd       = self.dir_products + self._read_key("outpng_cico_larson_2nd")
         self.outpng_cico_larson_3rd       = self.dir_products + self._read_key("outpng_cico_larson_3rd")
 
@@ -416,7 +418,9 @@ class ToolsCIGMC():
         radius_co10  = tb["RAD_PC"]
         sigv_co10    = tb["SIGV_KMS"]
         mvir_co10    = tb["MVIR_MSUN"]
+        density_co10 = tb["MLUM_MSUN"] / radius_co10 / radius_co10
         tpeak_co10   = tb["TMAX_K"]
+        dyn_co10     = tb["SIGV_KMS"] * tb["SIGV_KMS"] / tb["RAD_PC"]
 
         # import cprops table
         f = pyfits.open(self.cprops_ci10)
@@ -429,7 +433,9 @@ class ToolsCIGMC():
         radius_ci10  = tb["RAD_PC"]
         sigv_ci10    = tb["SIGV_KMS"]
         mvir_ci10    = tb["MVIR_MSUN"]
+        density_ci10 = tb["MLUM_MSUN"] / radius_ci10 / radius_ci10
         tpeak_ci10   = tb["TMAX_K"]
+        dyn_ci10     = tb["SIGV_KMS"] * tb["SIGV_KMS"] / tb["RAD_PC"]
 
         x_co10 = radius_co10[s2n_co10>self.snr_cprops]
         y_co10 = sigv_co10[s2n_co10>self.snr_cprops]
@@ -440,6 +446,17 @@ class ToolsCIGMC():
         y_ci10 = sigv_ci10[s2n_ci10>self.snr_cprops]
         x_ci10 = np.nan_to_num(np.log10(x_ci10))
         y_ci10 = np.nan_to_num(np.log10(y_ci10))
+
+
+        x2_co10 = density_co10[s2n_co10>self.snr_cprops]
+        x2_co10 = np.nan_to_num(np.log10(x2_co10))
+        y2_co10 = dyn_co10[s2n_co10>self.snr_cprops]
+        y2_co10 = np.nan_to_num(np.log10(y2_co10))
+
+        x2_ci10 = density_ci10[s2n_ci10>self.snr_cprops]
+        x2_ci10 = np.nan_to_num(np.log10(x2_ci10))
+        y2_ci10 = dyn_ci10[s2n_ci10>self.snr_cprops]
+        y2_ci10 = np.nan_to_num(np.log10(y2_ci10))
 
         ########################
         # extract outflow data #
@@ -555,6 +572,81 @@ class ToolsCIGMC():
         # save
         os.system("rm -rf " + self.outpng_cico_larson_1st)
         plt.savefig(self.outpng_cico_larson_1st, dpi=self.fig_dpi)
+
+        #########################
+        # plot: dynamical state #
+        #########################
+
+        xlim   = None # self.xlim_larson_1st
+        ylim   = None # self.ylim_larson_1st
+        title  = "Dynamical state"
+        xlabel = "log$_{10}$ $\Sigma$ ($M_{\odot}$ pc$^{-2}$)"
+        ylabel = "log$_{10}$ $\sigma^2$/$r$"
+        alpha  = 1.0
+        size   = 30
+
+        # plot
+        fig = plt.figure(figsize=(10,10))
+        gs  = gridspec.GridSpec(nrows=200, ncols=200)
+        ax1 = plt.subplot(gs[30:200,0:170])
+        ax2 = plt.subplot(gs[0:30,0:170])
+        ax3 = plt.subplot(gs[30:200,170:200])
+        ad  = [0.215,0.83,0.10,0.90]
+        myax_set(ax1, None, xlim, ylim, None, xlabel, ylabel, adjust=ad)
+        myax_set(ax2, None, xlim, None, None, None, None)
+        myax_set(ax3, None, None, ylim, None, None, None)
+
+        # ax2 ticks
+        ax2.spines['right'].set_visible(False)
+        ax2.spines['top'].set_visible(False)
+        ax2.spines['bottom'].set_visible(False)
+        ax2.spines['left'].set_visible(False)
+        ax2.tick_params('x', length=0, which='major')
+        ax2.tick_params('y', length=0, which='major')
+        ax2.set_xticks([])
+        ax2.set_yticks([])
+
+        # ax3 ticks
+        ax3.spines['right'].set_visible(False)
+        ax3.spines['top'].set_visible(False)
+        ax3.spines['bottom'].set_visible(False)
+        ax3.spines['left'].set_visible(False)
+        ax3.tick_params('x', length=0, which='major')
+        ax3.tick_params('y', length=0, which='major')
+        ax3.set_xticks([])
+        ax3.set_yticks([])
+
+        # co10
+        X, Y, Z = density_estimation(x2_co10, y2_co10, xlim, ylim)
+        ax1.contour(X, Y, Z, colors="blue", linewidths=[2], alpha=0.2)
+
+        # ci10
+        X, Y, Z = density_estimation(x2_ci10, y2_ci10, xlim, ylim)
+        ax1.contour(X, Y, Z, colors="red", linewidths=[2], alpha=0.2)
+
+        # scatterhist
+        self._scatter_hist(x2_co10, y2_co10, ax1, ax2, ax3, "deepskyblue", xlim, ylim, "s")
+        self._scatter_hist(x2_ci10, y2_ci10, ax1, ax2, ax3, "tomato", xlim, ylim, offset=0.15)
+
+        # scatter for outflow data
+        #ax1.scatter(x_co10_cone, y_co10_cone, c="deepskyblue", lw=2, s=100, marker="s")
+        #ax1.scatter(x_ci10_cone, y_ci10_cone, c="tomato", lw=2, s=100)
+
+        # text
+        txt = ax1.text(0.03, 0.93, "CO(1-0) Clouds", color="deepskyblue", transform=ax1.transAxes, weight="bold", fontsize=24)
+        txt.set_path_effects([PathEffects.withStroke(linewidth=4, foreground='w')])
+        txt = ax1.text(0.03, 0.88, "[CI](1-0) Clouds", color="tomato", transform=ax1.transAxes, weight="bold", fontsize=24)
+        txt.set_path_effects([PathEffects.withStroke(linewidth=4, foreground='w')])
+        txt = ax1.text(0.03, 0.83, "Clouds with peak S/N > 5", color="black", transform=ax1.transAxes, fontsize=16)
+        txt.set_path_effects([PathEffects.withStroke(linewidth=4, foreground='w')])
+
+        # line
+        ax1.plot(xlim, [np.log10(2.39),np.log10(2.39)], color='grey', alpha=.5, lw=1, zorder=0)
+        ax1.plot([np.log10(55),np.log10(55)], ylim, color='grey', alpha=.5, lw=1, zorder=0)
+
+        # save
+        os.system("rm -rf " + self.outpng_cico_dyn)
+        plt.savefig(self.outpng_cico_dyn, dpi=self.fig_dpi)
 
     #################
     # _scatter_hist #
