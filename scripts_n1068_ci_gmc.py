@@ -606,7 +606,7 @@ class ToolsCIGMC():
         # stats of yhist
         ax_histy.text(0.74, 0.26, "16$^{th}$-50$^{th}$-84$^{th}$ pctls.", color="black", transform=ax_histy.transAxes, fontsize=14, rotation=-90)
         this_txt = str(int(10**np.percentile(y,16)))+"-"+str(int(10**np.percentile(y,50)))+"-"+str(int(10**np.percentile(y,84)))+" (pc)"
-        ax_histy.text(0.74-offset, 0.26, this_txt, color=color, transform=ax_histy.transAxes, fontsize=14)
+        ax_histy.text(0.74-offset, 0.26, this_txt, color=color, transform=ax_histy.transAxes, fontsize=14, rotation=-90)
 
     ###############
     # hist_cprops #
