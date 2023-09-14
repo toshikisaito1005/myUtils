@@ -596,7 +596,7 @@ class ToolsCIGMC():
         xlim   = [0.5,5] # self.xlim_larson_1st
         ylim   = [-1,2] # self.ylim_larson_1st
         title  = "Dynamical state"
-        xlabel = "log$_{10}$ $\Sigma_{\rm H_2}$ ($M_{\odot}$ pc$^{-2}$)"
+        xlabel = "log$_{10}$ $\Sigma_{H_2}$ ($M_{\odot}$ pc$^{-2}$)"
         ylabel = "log$_{10}$ $\sigma^2$/$r$"
         alpha  = 1.0
         size   = 30
