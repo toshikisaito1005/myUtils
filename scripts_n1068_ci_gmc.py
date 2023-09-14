@@ -514,8 +514,8 @@ class ToolsCIGMC():
         # plot
         fig = plt.figure(figsize=(10,10))
         gs  = gridspec.GridSpec(nrows=200, ncols=200)
-        ax1 = plt.subplot(gs[30:200,0:170])
-        ax2 = plt.subplot(gs[0:30,0:170])
+        ax1 = plt.subplot(gs[30:200,10:170])
+        ax2 = plt.subplot(gs[0:30,10:170])
         ax3 = plt.subplot(gs[30:200,170:200])
         ad  = [0.215,0.83,0.10,0.90]
         myax_set(ax1, None, xlim, ylim, None, xlabel, ylabel, adjust=ad)
