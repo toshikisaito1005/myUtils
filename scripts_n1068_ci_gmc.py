@@ -449,14 +449,20 @@ class ToolsCIGMC():
 
 
         x2_co10 = density_co10[s2n_co10>self.snr_cprops]
-        x2_co10 = np.nan_to_num(np.log10(x2_co10))
+        x2_co10 = np.log10(x2_co10)
         y2_co10 = dyn_co10[s2n_co10>self.snr_cprops]
-        y2_co10 = np.nan_to_num(np.log10(y2_co10))
+        y2_co10 = np.log10(y2_co10)
+        cut = np.where((~np.isnan(x2_co10)) & (~np.isnan(y2_co10)))
+        x2_co10 = x2_co10[cut]
+        y2_co10 = y2_co10[cut]
 
         x2_ci10 = density_ci10[s2n_ci10>self.snr_cprops]
-        x2_ci10 = np.nan_to_num(np.log10(x2_ci10))
+        x2_ci10 = np.log10(x2_ci10)
         y2_ci10 = dyn_ci10[s2n_ci10>self.snr_cprops]
-        y2_ci10 = np.nan_to_num(np.log10(y2_ci10))
+        y2_ci10 = np.log10(y2_ci10)
+        cut = np.where((~np.isnan(x2_ci10)) & (~np.isnan(y2_ci10)))
+        x2_ci10 = x2_ci10[cut]
+        y2_ci10 = y2_ci10[cut]
 
         ########################
         # extract outflow data #
