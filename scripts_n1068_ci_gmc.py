@@ -522,8 +522,8 @@ class ToolsCIGMC():
         self._scatter_hist(x_ci10, y_ci10, ax1, ax2, ax3, "tomato", xlim, ylim)
 
         # scatter for outflow data
-        ax1.scatter(x_co10_cone, y_co10_cone, c="deepskyblue", lw=1, s=50, marker="s")
-        ax1.scatter(x_ci10_cone, y_ci10_cone, c="tomato", lw=1, s=50, marker="s")
+        ax1.scatter(x_co10_cone, y_co10_cone, c="deepskyblue", lw=2, s=50, marker="s")
+        ax1.scatter(x_ci10_cone, y_ci10_cone, c="tomato", lw=2, s=50)
 
         # text
         txt = ax1.text(0.03, 0.93, "CO(1-0) Clouds", color="deepskyblue", transform=ax1.transAxes, weight="bold", fontsize=24)
