@@ -598,6 +598,7 @@ class ToolsCIGMC():
 
         fig = plt.figure(figsize=(10,10))
         plt.scatter(x_ci10_cone, y_ci10_cone, c="tomato", lw=2, s=100)
+        plt.scatter(x_ci10, y_ci10, c="black", lw=0, s=20)
         plt.savefig("test.png", dpi=self.fig_dpi)
 
         #########################
