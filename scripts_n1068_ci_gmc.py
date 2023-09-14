@@ -463,7 +463,7 @@ class ToolsCIGMC():
         theta = np.degrees(np.arctan2(x_fov1_co10, y_fov1_co10)) + 90
         theta = np.where(theta>0, theta, theta+360)
 
-        cut_cone = np.where((s2n>=self.snr_cprops) & (r_fov1_co10<self.fov_diamter/2.0) & (theta>=self.theta2) & (theta<self.theta1) | (s2n>=self.snr_cprops) & (r_fov1_co10<self.fov_diamter/2.0) & (theta>=self.theta2+180) & (theta<self.theta1+180))
+        cut_cone = np.where((s2n_co10>=self.snr_cprops) & (r_fov1_co10<self.fov_diamter/2.0) & (theta>=self.theta2) & (theta<self.theta1) | (s2n_co10>=self.snr_cprops) & (r_fov1_co10<self.fov_diamter/2.0) & (theta>=self.theta2+180) & (theta<self.theta1+180))
 
         x_co10_cone = radius_co10[cut_cone]
         y_co10_cone = sigv_co10[cut_cone]
