@@ -480,10 +480,10 @@ class ToolsCIGMC():
 
         # plot
         fig = plt.figure(figsize=(10,10))
-        gs  = gridspec.GridSpec(nrows=20, ncols=20)
-        ax1 = plt.subplot(gs[3:20,0:17])
-        ax2 = plt.subplot(gs[0:3,0:17])
-        ax3 = plt.subplot(gs[3:20,17:20])
+        gs  = gridspec.GridSpec(nrows=200, ncols=200)
+        ax1 = plt.subplot(gs[30:200,0:170])
+        ax2 = plt.subplot(gs[0:30,0:170])
+        ax3 = plt.subplot(gs[30:200,170:200])
         ad  = [0.215,0.83,0.10,0.90]
         myax_set(ax1, None, xlim, ylim, None, xlabel, ylabel, adjust=ad)
         myax_set(ax2, None, xlim, None, None, None, None)
@@ -524,7 +524,7 @@ class ToolsCIGMC():
         # scatter for outflow data
         ax1.scatter(x_co10_cone, y_co10_cone, c="deepskyblue", lw=2, s=100, marker="s")
         ax1.scatter(x_ci10_cone, y_ci10_cone, c="tomato", lw=2, s=100)
-        
+
         # text
         txt = ax1.text(0.03, 0.93, "CO(1-0) Clouds", color="deepskyblue", transform=ax1.transAxes, weight="bold", fontsize=24)
         txt.set_path_effects([PathEffects.withStroke(linewidth=4, foreground='w')])
