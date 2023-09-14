@@ -445,7 +445,6 @@ class ToolsCIGMC():
         # extract outflow data #
         ########################
         r_fov1_co10 = np.sqrt(x_fov1_co10**2 + y_fov1_co10**2)
-        r_fov1_ci10 = np.sqrt(x_fov1_ci10**2 + y_fov1_ci10**2)
         theta = np.degrees(np.arctan2(x_fov1_co10, y_fov1_co10)) + 90
         theta = np.where(theta>0, theta, theta+360)
 
@@ -456,7 +455,16 @@ class ToolsCIGMC():
         x_co10_cone = np.nan_to_num(np.log10(x_co10_cone))
         y_co10_cone = np.nan_to_num(np.log10(y_co10_cone))
 
-        print(x_co10_cone)
+        r_fov1_ci10 = np.sqrt(x_fov1_ci10**2 + y_fov1_ci10**2)
+        theta = np.degrees(np.arctan2(x_fov1_ci10, y_fov1_ci10)) + 90
+        theta = np.where(theta>0, theta, theta+360)
+
+        cut_cone = np.where((s2n_ci10>=self.snr_cprops) & (r_fov1_ci10<self.fov_diamter/2.0) & (theta>=self.theta2) & (theta<self.theta1) | (s2n_ci10>=self.snr_cprops) & (r_fov1_ci10<self.fov_diamter/2.0) & (theta>=self.theta2+180) & (theta<self.theta1+180))
+
+        x_ci10_cone = radius_ci10[cut_cone]
+        y_ci10_cone = sigv_ci10[cut_cone]
+        x_ci10_cone = np.nan_to_num(np.log10(x_ci10_cone))
+        y_ci10_cone = np.nan_to_num(np.log10(y_ci10_cone))
 
         ####################
         # plot: larson 1st #
@@ -514,7 +522,8 @@ class ToolsCIGMC():
         self._scatter_hist(x_ci10, y_ci10, ax1, ax2, ax3, "tomato", xlim, ylim)
 
         # scatter for outflow data
-        ax1.scatter(x_co10_cone, y_co10_cone, c="deepskyblue", lw=0, s=300, marker="s")
+        ax1.scatter(x_co10_cone, y_co10_cone, c="deepskyblue", lw=1, s=50, marker="s")
+        ax1.scatter(x_ci10_cone, y_ci10_cone, c="tomato", lw=1, s=50, marker="s")
 
         # text
         txt = ax1.text(0.03, 0.93, "CO(1-0) Clouds", color="deepskyblue", transform=ax1.transAxes, weight="bold", fontsize=24)
