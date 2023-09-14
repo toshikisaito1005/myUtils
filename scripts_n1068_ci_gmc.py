@@ -534,8 +534,8 @@ class ToolsCIGMC():
         txt.set_path_effects([PathEffects.withStroke(linewidth=4, foreground='w')])
 
         # line
-        ax1.plot(xlim, [np.log10(2.39),np.log10(2.39)], color='grey', alpha=.5, lw=1)
-        ax1.plot([np.log10(55),np.log10(55)], ylim, color='grey', alpha=.5, lw=1)
+        ax1.plot(xlim, [np.log10(2.39),np.log10(2.39)], color='grey', alpha=.5, lw=1, zorder=0)
+        ax1.plot([np.log10(55),np.log10(55)], ylim, color='grey', alpha=.5, lw=1, zorder=0)
 
         # const surface density lines (e.g., Leroy+15)
         G = 6.674*10**-11
@@ -548,9 +548,9 @@ class ToolsCIGMC():
         y_285x5 = [0.5*np.log10(285*5.)+0.5*xlim[0]+Cnst, 0.5*np.log10(285*5.)+0.5*xlim[1]+Cnst]
         y_285w5 = [0.5*np.log10(285/5.)+0.5*xlim[0]+Cnst, 0.5*np.log10(285/5.)+0.5*xlim[1]+Cnst]
 
-        ax1.plot(xlim, y_285x5, linestyle='dashed', color='grey', alpha=.5, lw=1)
-        ax1.plot(xlim, y_285, linestyle='dashed', color='black', alpha=.5, lw=2)
-        ax1.plot(xlim, y_285w5, linestyle='dashed', color='grey', alpha=.5, lw=1)
+        ax1.plot(xlim, y_285x5, linestyle='dashed', color='grey', alpha=.5, lw=1, zorder=0)
+        ax1.plot(xlim, y_285, linestyle='dashed', color='black', alpha=.5, lw=2, zorder=0)
+        ax1.plot(xlim, y_285w5, linestyle='dashed', color='grey', alpha=.5, lw=1, zorder=0)
 
         # save
         os.system("rm -rf " + self.outpng_cico_larson_1st)
