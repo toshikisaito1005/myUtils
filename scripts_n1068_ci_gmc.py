@@ -385,6 +385,13 @@ class ToolsCIGMC():
         check_first(self.cprops_co10,taskname)
 
         # extract catalog positions and ellipses
+        x_fov1_co10 = (tb["XCTR_DEG"] - self.ra_agn) * -3600.
+        y_fov1_co10 = (tb["YCTR_DEG"] - self.dec_agn) * 3600.
+        x_fov2_co10 = (tb["XCTR_DEG"] - self.ra_fov2) * -3600.
+        y_fov2_co10 = (tb["YCTR_DEG"] - self.dec_fov2) * -3600.
+        x_fov3_co10 = (tb["XCTR_DEG"] - self.ra_fov3) * -3600.
+        y_fov3_co10 = (tb["YCTR_DEG"] - self.dec_fov3) * -3600.
+        s2n_co10    = tb["S2N"]
 
         # measure averaged CO and CI mom0 and emom0 values at each position
 
@@ -588,6 +595,10 @@ class ToolsCIGMC():
         # save
         os.system("rm -rf " + self.outpng_cico_larson_1st)
         plt.savefig(self.outpng_cico_larson_1st, dpi=self.fig_dpi)
+
+        fig = plt.figure(figsize=(10,10))
+        plt.scatter(x_ci10_cone, y_ci10_cone, c="tomato", lw=2, s=100)
+        plt.savefig("test.png", dpi=self.fig_dpi)
 
         #########################
         # plot: dynamical state #
