@@ -401,11 +401,21 @@ class ToolsCIGMC():
         taskname = self.modname + sys._getframe().f_code.co_name
         check_first(self.cprops_co10,taskname)
 
+        ####################
+        # extract all data #
+        ####################
+
         # import cprops table
         f = pyfits.open(self.cprops_co10)
         tb = f[1].data
 
         # extract parameters
+        x_fov1_co10 = (tb["XCTR_DEG"] - self.ra_agn) * -3600.
+        y_fov1_co10 = (tb["YCTR_DEG"] - self.dec_agn) * 3600.
+        x_fov2_co10 = (tb["XCTR_DEG"] - self.ra_fov2) * -3600.
+        y_fov2_co10 = (tb["YCTR_DEG"] - self.dec_fov2) * -3600.
+        x_fov3_co10 = (tb["XCTR_DEG"] - self.ra_fov3) * -3600.
+        y_fov3_co10 = (tb["YCTR_DEG"] - self.dec_fov3) * -3600.
         s2n_co10    = tb["S2N"]
         radius_co10 = tb["RAD_PC"]
         sigv_co10   = tb["SIGV_KMS"]
@@ -417,15 +427,18 @@ class ToolsCIGMC():
         tb = f[1].data
 
         # extract parameters
+        x_fov1_ci10 = (tb["XCTR_DEG"] - self.ra_agn) * -3600.
+        y_fov1_ci10 = (tb["YCTR_DEG"] - self.dec_agn) * 3600.
+        x_fov2_ci10 = (tb["XCTR_DEG"] - self.ra_fov2) * -3600.
+        y_fov2_ci10 = (tb["YCTR_DEG"] - self.dec_fov2) * -3600.
+        x_fov3_ci10 = (tb["XCTR_DEG"] - self.ra_fov3) * -3600.
+        y_fov3_ci10 = (tb["YCTR_DEG"] - self.dec_fov3) * -3600.
         s2n_ci10    = tb["S2N"]
         radius_ci10 = tb["RAD_PC"]
         sigv_ci10   = tb["SIGV_KMS"]
         mvir_ci10   = tb["MVIR_MSUN"]
         tpeak_ci10  = tb["TMAX_K"]
 
-        ####################
-        # plot: larson 1st #
-        ####################
         x_co10 = radius_co10[s2n_co10>self.snr_cprops]
         y_co10 = sigv_co10[s2n_co10>self.snr_cprops]
         x_co10 = np.nan_to_num(np.log10(x_co10))
@@ -435,6 +448,31 @@ class ToolsCIGMC():
         y_ci10 = sigv_ci10[s2n_ci10>self.snr_cprops]
         x_ci10 = np.nan_to_num(np.log10(x_ci10))
         y_ci10 = np.nan_to_num(np.log10(y_ci10))
+
+        ########################
+        # extract outflow data #
+        ########################
+        r_fov1_co10 = np.sqrt(x_fov1_co10**2 + y_fov1_co10**2)
+        r_fov2_co10 = np.sqrt(x_fov2_co10**2 + y_fov2_co10**2)
+        r_fov3_co10 = np.sqrt(x_fov3_co10**2 + y_fov3_co10**2)
+
+        r_fov1_ci10 = np.sqrt(x_fov1_ci10**2 + y_fov1_ci10**2)
+        r_fov2_ci10 = np.sqrt(x_fov2_ci10**2 + y_fov2_ci10**2)
+        r_fov3_ci10 = np.sqrt(x_fov3_ci10**2 + y_fov3_ci10**2)
+
+        theta = np.degrees(np.arctan2(x_fov1_co10, y_fov1_co10)) + 90
+        theta = np.where(theta>0, theta, theta+360)
+
+        cut_cone = np.where((s2n>=self.snr_cprops) & (r_fov1_co10<self.fov_diamter/2.0) & (theta>=self.theta2) & (theta<self.theta1) | (s2n>=self.snr_cprops) & (r_fov1_co10<self.fov_diamter/2.0) & (theta>=self.theta2+180) & (theta<self.theta1+180))
+
+        x_co10_cone = radius_co10[cut_cone]
+        y_co10_cone = sigv_co10[cut_cone]
+        x_co10_cone = np.nan_to_num(np.log10(x_co10))
+        y_co10_cone = np.nan_to_num(np.log10(y_co10))
+
+        ####################
+        # plot: larson 1st #
+        ####################
 
         xlim   = self.xlim_larson_1st
         ylim   = self.ylim_larson_1st
@@ -486,6 +524,9 @@ class ToolsCIGMC():
         # scatterhist
         self._scatter_hist(x_co10, y_co10, ax1, ax2, ax3, "deepskyblue", xlim, ylim, "s")
         self._scatter_hist(x_ci10, y_ci10, ax1, ax2, ax3, "tomato", xlim, ylim)
+
+        # scatter for outflow data
+        ax.scatter(x_co10_cone, y_co10_cone, c="deepskyblue", lw=0, s=100, marker="s")
 
         # text
         txt = ax1.text(0.03, 0.93, "CO(1-0) Clouds", color="deepskyblue", transform=ax1.transAxes, weight="bold", fontsize=24)
