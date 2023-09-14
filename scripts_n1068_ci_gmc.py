@@ -519,7 +519,7 @@ class ToolsCIGMC():
 
         # scatterhist
         self._scatter_hist(x_co10, y_co10, ax1, ax2, ax3, "deepskyblue", xlim, ylim, "s")
-        self._scatter_hist(x_ci10, y_ci10, ax1, ax2, ax3, "tomato", xlim, ylim)
+        self._scatter_hist(x_ci10, y_ci10, ax1, ax2, ax3, "tomato", xlim, ylim, offset=0.3)
 
         # scatter for outflow data
         ax1.scatter(x_co10_cone, y_co10_cone, c="deepskyblue", lw=2, s=100, marker="s")
@@ -560,7 +560,7 @@ class ToolsCIGMC():
     # _scatter_hist #
     #################
 
-    def _scatter_hist(self, x, y, ax, ax_histx, ax_histy, color, xlim, ylim, marker="o"):
+    def _scatter_hist(self, x, y, ax, ax_histx, ax_histy, color, xlim, ylim, marker="o", offset=0):
         # no labels
         ax_histx.tick_params(axis="x", labelbottom=False)
         ax_histy.tick_params(axis="y", labelleft=False)
@@ -598,7 +598,10 @@ class ToolsCIGMC():
         ax_histx.set_xlim(xlim)
         ax_histy.set_ylim(ylim)
 
-        ax_histx.text(0.03, 0.93, "16$^{th}$-50$^{th}$-84$^{th}$ pctls.", color="black", transform=ax_histx.transAxes, weight="bold", fontsize=16)
+        ax_histx.text(0.02, 0.85, "16$^{th}$-50$^{th}$-84$^{th}$ pctls.", color="black", transform=ax_histx.transAxes, fontsize=16)
+
+        this_txt = str(np.round(10**np.percentile(x,16),2))+"-"+np.round(10**np.percentile(x,50),2)+"-"+np.round(10**np.percentile(x,84),2)+" (pc)"
+        ax_histx.text(0.02, 0.55-offset, this_txt, color=color, transform=ax_histx.transAxes, weight="bold", fontsize=16)
 
     ###############
     # hist_cprops #
