@@ -477,11 +477,11 @@ class ToolsCIGMC():
 
         # co10
         X, Y, Z = density_estimation(x_co10, y_co10, xlim, ylim)
-        ax1.contour(X, Y, Z, colors="blue", linewidths=[3], alpha=0.2)
+        ax1.contour(X, Y, Z, colors="blue", linewidths=[2], alpha=0.2)
 
         # ci10
         X, Y, Z = density_estimation(x_ci10, y_ci10, xlim, ylim)
-        ax1.contour(X, Y, Z, colors="red", linewidths=[3], alpha=0.2)
+        ax1.contour(X, Y, Z, colors="red", linewidths=[2], alpha=0.2)
 
         # scatterhist
         self._scatter_hist(x_co10, y_co10, ax1, ax2, ax3, "deepskyblue", xlim, ylim, "s")
@@ -505,10 +505,14 @@ class ToolsCIGMC():
         kg2msun = 5.02785e-31
         pc2kms = 3.086*10**13
         Cnst = np.log10((np.pi*G/5.)**0.5*m2km**1.5*kg2msun**-0.5*pc2kms**-1*pc2kms**0.5)
-        y_285 = [0.5*np.log10(285)+0.5*xlim[0]+Cnst, 0.5*np.log10(285)+0.5*xlim[1]+Cnst]
 
-        print(xlim, y_285)
-        ax1.plot(xlim, y_285, linestyle='dashed', color='grey', alpha=.5, lw=2)
+        y_285   = [0.5*np.log10(285*1.)+0.5*xlim[0]+Cnst, 0.5*np.log10(285*1.)+0.5*xlim[1]+Cnst]
+        y_285x5 = [0.5*np.log10(285*5.)+0.5*xlim[0]+Cnst, 0.5*np.log10(285*5.)+0.5*xlim[1]+Cnst]
+        y_285w5 = [0.5*np.log10(285/5.)+0.5*xlim[0]+Cnst, 0.5*np.log10(285/5.)+0.5*xlim[1]+Cnst]
+
+        ax1.plot(xlim, y_285x5, linestyle='dashed', color='grey', alpha=.5, lw=1)
+        ax1.plot(xlim, y_285, linestyle='dashed', color='black', alpha=.5, lw=2)
+        ax1.plot(xlim, y_285w5, linestyle='dashed', color='grey', alpha=.5, lw=1)
 
         # save
         os.system("rm -rf " + self.outpng_cico_larson_1st)
