@@ -478,6 +478,11 @@ class ToolsCIGMC():
         x_co10_cone = np.nan_to_num(np.log10(x_co10_cone))
         y_co10_cone = np.nan_to_num(np.log10(y_co10_cone))
 
+        x2_co10_cone = density_co10[cut_cone]
+        y2_co10_cone = dyn_co10[cut_cone]
+        x2_co10_cone = np.nan_to_num(np.log10(x2_co10_cone))
+        y2_co10_cone = np.nan_to_num(np.log10(y2_co10_cone))
+
         r_fov1_ci10 = np.sqrt(x_fov1_ci10**2 + y_fov1_ci10**2)
         theta = np.degrees(np.arctan2(x_fov1_ci10, y_fov1_ci10)) + 90
         theta = np.where(theta>0, theta, theta+360)
@@ -488,6 +493,11 @@ class ToolsCIGMC():
         y_ci10_cone = sigv_ci10[cut_cone]
         x_ci10_cone = np.nan_to_num(np.log10(x_ci10_cone))
         y_ci10_cone = np.nan_to_num(np.log10(y_ci10_cone))
+
+        x2_ci10_cone = density_ci10[cut_cone]
+        y2_ci10_cone = dyn_ci10[cut_cone]
+        x2_ci10_cone = np.nan_to_num(np.log10(x2_ci10_cone))
+        y2_ci10_cone = np.nan_to_num(np.log10(y2_ci10_cone))
 
         ####################
         # plot: larson 1st #
@@ -623,20 +633,20 @@ class ToolsCIGMC():
         ax3.set_yticks([])
 
         # co10
-        #X, Y, Z = density_estimation(x2_co10, y2_co10, xlim, ylim)
-        #ax1.contour(X, Y, Z, colors="blue", linewidths=[2], alpha=0.2)
+        X, Y, Z = density_estimation(x2_co10, y2_co10, xlim, ylim)
+        ax1.contour(X, Y, Z, colors="blue", linewidths=[2], alpha=0.2)
 
         # ci10
-        #X, Y, Z = density_estimation(x2_ci10, y2_ci10, xlim, ylim)
-        #ax1.contour(X, Y, Z, colors="red", linewidths=[2], alpha=0.2)
+        X, Y, Z = density_estimation(x2_ci10, y2_ci10, xlim, ylim)
+        ax1.contour(X, Y, Z, colors="red", linewidths=[2], alpha=0.2)
 
         # scatterhist
         self._scatter_hist(x2_co10, y2_co10, ax1, ax2, ax3, "deepskyblue", xlim, ylim, "s")
         self._scatter_hist(x2_ci10, y2_ci10, ax1, ax2, ax3, "tomato", xlim, ylim, offset=0.15)
 
         # scatter for outflow data
-        #ax1.scatter(x_co10_cone, y_co10_cone, c="deepskyblue", lw=2, s=100, marker="s")
-        #ax1.scatter(x_ci10_cone, y_ci10_cone, c="tomato", lw=2, s=100)
+        ax1.scatter(x2_co10_cone, y2_co10_cone, c="deepskyblue", lw=2, s=100, marker="s")
+        ax1.scatter(x2_ci10_cone, y2_ci10_cone, c="tomato", lw=2, s=100)
 
         # text
         txt = ax1.text(0.03, 0.93, "CO(1-0) Clouds", color="deepskyblue", transform=ax1.transAxes, weight="bold", fontsize=24)
