@@ -409,8 +409,6 @@ class ToolsCIGMC():
         f = pyfits.open(self.cprops_co10)
         tb = f[1].data
 
-        print(tb)
-
         # extract parameters
         x_fov1_co10  = (tb["XCTR_DEG"] - self.ra_agn) * -3600.
         y_fov1_co10  = (tb["YCTR_DEG"] - self.dec_agn) * 3600.
@@ -419,7 +417,7 @@ class ToolsCIGMC():
         sigv_co10    = tb["SIGV_KMS"]
         mvir_co10    = tb["MVIR_MSUN"]
         tpeak_co10   = tb["TMAX_K"]
-        eradius_co10 = tb["RAD_UC"]
+        eradius_co10 = np.array(radius_co10) / 10.
         esigv_co10   = tb["SIGV_UC"]
 
         # import cprops table
@@ -434,7 +432,7 @@ class ToolsCIGMC():
         sigv_ci10    = tb["SIGV_KMS"]
         mvir_ci10    = tb["MVIR_MSUN"]
         tpeak_ci10   = tb["TMAX_K"]
-        eradius_ci10 = tb["RAD_UC"]
+        eradius_ci10 = np.array(radius_ci10) / 10.
         esigv_ci10   = tb["SIGV_UC"]
 
         x_co10 = radius_co10[s2n_co10>self.snr_cprops]
