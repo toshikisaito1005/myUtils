@@ -617,12 +617,12 @@ class ToolsCIGMC():
         ax3.set_yticks([])
 
         # co10
-        X, Y, Z = density_estimation(x2_co10, y2_co10, xlim, ylim)
-        ax1.contour(X, Y, Z, colors="blue", linewidths=[2], alpha=0.2)
+        #X, Y, Z = density_estimation(x2_co10, y2_co10, xlim, ylim)
+        #ax1.contour(X, Y, Z, colors="blue", linewidths=[2], alpha=0.2)
 
         # ci10
-        X, Y, Z = density_estimation(x2_ci10, y2_ci10, xlim, ylim)
-        ax1.contour(X, Y, Z, colors="red", linewidths=[2], alpha=0.2)
+        #X, Y, Z = density_estimation(x2_ci10, y2_ci10, xlim, ylim)
+        #ax1.contour(X, Y, Z, colors="red", linewidths=[2], alpha=0.2)
 
         # scatterhist
         self._scatter_hist(x2_co10, y2_co10, ax1, ax2, ax3, "deepskyblue", xlim, ylim, "s")
