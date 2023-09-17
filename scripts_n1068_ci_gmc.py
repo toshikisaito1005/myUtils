@@ -140,6 +140,9 @@ class ToolsCIGMC():
         self.cprops_co10 = self.dir_raw + self._read_key("cprops_co10")
         self.cprops_ci10 = self.dir_raw + self._read_key("cprops_ci10")
 
+        self.asgn_co10 = self.dir_raw + self._read_key("asgn_co10")
+        self.asgn_ci10 = self.dir_raw + self._read_key("asgn_ci10")
+
     def _set_output_fits(self):
         """
         """
@@ -384,21 +387,31 @@ class ToolsCIGMC():
         taskname = self.modname + sys._getframe().f_code.co_name
         check_first(self.cprops_co10,taskname)
 
-        # extract catalog positions and ellipses
-        x_co10      = tb["XCTR_PIX"]
-        y_co10      = tb["TCTR_PIX"]
-        s2n_co10    = tb["S2N"]
-        pos_co10    = tb["POSANG"] * 180 / np.pi
-        major_co10  = tb["RAD_PC"] / 72.
-        minor_co10  = tb["MOMMINPIX"] / yb["MOMMAJPIX"] * tb["RAD_PC"] / 72.
+        # import cprops table
+        f = pyfits.open(self.cprops_co10)
+        tb = f[1].data
+        cnum_co10 = tb["XCTR_PIX"]
 
-        # measure averaged CO and CI mom0 and emom0 values at each position
-        hdu        = pyfits.open(imagename)
-        image_data = hdu[0].data[:,:]
-        image_data = np.where(~np.isnan(image_data), image_data, 0)
-        pix_ra_as  = hdu[0].header["CDELT1"] * 3600
+        # import
+        f,_ = imval_all(self.asgn_ci10)
+        mask_ci10 = f["data"].flatten()
 
-        # export catalog (CLOUDNUM, COm0, COerr, CIm0, CIerr)
+        f,_ = imval_all(self.cube_co10.replace(".fits","_aligned.fits"))
+        data_co10 = f["data"].flatten()
+        f,_ = imval_all(self.ncube_co10.replace(".fits","_aligned.fits"))
+        ndata_co10 = f["data"].flatten()
+
+        f,_ = imval_all(self.cube_ci10)
+        data_ci10 = f["data"].flatten()
+        f,_ = imval_all(self.ncube_ci10)
+        ndata_ci10 = f["data"].flatten()
+
+        this_co10  = data_co10[mask_ci10==1]
+        this_nco10 = ndata_co10[mask_ci10==1]
+        this_ci10  = data_ci10[mask_ci10==1]
+        this_nci10 = ndata_ci10[mask_ci10==1]
+
+        print(np.nanmean(this_ci10/this_co10))
 
     ###############
     # plot_larson #

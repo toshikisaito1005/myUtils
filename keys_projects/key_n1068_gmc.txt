@@ -37,6 +37,8 @@ tpeak_ci10         ,,,ngc1068_b8_12m+7m_ci10_0p8as_broad_tpeak.fits
 # cprops fits table
 cprops_co10        ,,,ngc1068_co10_cprops.fits
 cprops_ci10        ,,,ngc1068_ci10_cprops.fits
+asgn_co10          ,,,ngc1068_co10_asgn.fits
+asgn_ci10          ,,,ngc1068_ci10_asgn.fits
 
 ###############
 # output maps #
