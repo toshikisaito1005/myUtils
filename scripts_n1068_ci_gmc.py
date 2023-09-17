@@ -412,22 +412,17 @@ class ToolsCIGMC():
 
         # measure line ratio for ci10 clouds
         for i in range(len(cnum_ci10)):
-            this_co10  = data_co10[mask_ci10==i]
-            this_nco10 = ndata_co10[mask_ci10==i]
-            this_ci10  = data_ci10[mask_ci10==i]
-            this_nci10 = ndata_ci10[mask_ci10==i]
+            this_co10  = np.nan_to_num(data_co10[mask_ci10==i])
+            this_nco10 = np.nan_to_num(ndata_co10[mask_ci10==i])
+            this_ci10  = np.nan_to_num(data_ci10[mask_ci10==i])
+            this_nci10 = np.nan_to_num(ndata_ci10[mask_ci10==i])
 
-            this_co10  = np.nan_to_num(this_co10)
-            this_nco10 = np.nan_to_num(this_nco10)
-            this_ci10  = np.nan_to_num(this_ci10)
-            this_nci10 = np.nan_to_num(this_nci10)
-
-            mask = np.where((this_co10>this_nco10*3) & (this_ci10>this_nci10*3))
+            mask = np.where((this_co10>this_nco10*2.5) & (this_ci10>this_nci10*2.5))
             this_co10   = np.sum(this_co10[mask])
             this_nco10  = np.sqrt(np.sum((this_nco10[mask])**2))
             this_ci10   = np.sum(this_ci10[mask])
             this_nci10  = np.sqrt(np.sum((this_nci10[mask])**2))
-            print(this_co10,this_nco10,this_ci10,this_nci10)
+            #print(this_co10,this_nco10,this_ci10,this_nci10)
 
             this_ratio  = this_ci10 / this_co10
             this_nratio = this_ratio * np.sqrt((this_nco10/this_co10)**2 + (this_nci10/this_ci10)**2)
@@ -436,12 +431,12 @@ class ToolsCIGMC():
 
         # measure line ratio for co10 clouds
         for i in range(len(cnum_co10)):
-            this_co10  = data_co10[mask_co10==i]
-            this_nco10 = ndata_co10[mask_co10==i]
-            this_ci10  = data_ci10[mask_co10==i]
-            this_nci10 = ndata_ci10[mask_co10==i]
+            this_co10  = np.nan_to_num(data_co10[mask_co10==i])
+            this_nco10 = np.nan_to_num(ndata_co10[mask_co10==i])
+            this_ci10  = np.nan_to_num(data_ci10[mask_co10==i])
+            this_nci10 = np.nan_to_num(ndata_ci10[mask_co10==i])
 
-            mask = np.where((this_co10>=this_nco10*3) & (this_ci10>=this_nci10*3))
+            mask = np.where((this_co10>this_nco10*2.5) & (this_ci10>this_nci10*2.5))
             this_co10   = np.sum(this_co10[mask])
             this_nco10  = np.sqrt(np.sum((this_nco10[mask])**2))
             this_ci10   = np.sum(this_ci10[mask])
