@@ -406,10 +406,10 @@ class ToolsCIGMC():
         f,_ = imval_all(self.ncube_ci10)
         ndata_ci10 = f["data"].flatten()
 
-        this_co10  = data_co10[mask_ci10==1]
-        this_nco10 = ndata_co10[mask_ci10==1]
-        this_ci10  = data_ci10[mask_ci10==1]
-        this_nci10 = ndata_ci10[mask_ci10==1]
+        this_co10  = data_co10[mask_ci10==0]
+        this_nco10 = ndata_co10[mask_ci10==0]
+        this_ci10  = data_ci10[mask_ci10==0]
+        this_nci10 = ndata_ci10[mask_ci10==0]
 
         print(np.nanmean(this_ci10/this_co10))
 
