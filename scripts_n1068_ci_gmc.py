@@ -392,6 +392,10 @@ class ToolsCIGMC():
         tb = f[1].data
         cnum_co10 = tb["XCTR_PIX"]
 
+        f = pyfits.open(self.cprops_ci10)
+        tb = f[1].data
+        cnum_ci10 = tb["XCTR_PIX"]
+
         # import
         f,_ = imval_all(self.asgn_ci10)
         mask_ci10 = f["data"].flatten()
@@ -407,7 +411,7 @@ class ToolsCIGMC():
         ndata_ci10 = f["data"].flatten()
 
         # measure line ratio for ci10 clouds
-        for i in range(len(cnum_co10)):
+        for i in range(len(cnum_ci10)):
             this_co10  = data_co10[mask_ci10==i]
             this_nco10 = ndata_co10[mask_ci10==i]
             this_ci10  = data_ci10[mask_ci10==i]
@@ -423,6 +427,7 @@ class ToolsCIGMC():
             this_nco10  = np.sqrt(np.sum((this_nco10[mask])**2))
             this_ci10   = np.sum(this_ci10[mask])
             this_nci10  = np.sqrt(np.sum((this_nci10[mask])**2))
+            print(this_co10,this_nco10,this_ci10,this_nci10)
 
             this_ratio  = this_ci10 / this_co10
             this_nratio = this_ratio * np.sqrt((this_nco10/this_co10)**2 + (this_nci10/this_ci10)**2)
@@ -430,7 +435,7 @@ class ToolsCIGMC():
             print(i, np.round(this_ratio,2), np.round(this_nratio,2))
 
         # measure line ratio for co10 clouds
-        for i in range(len(cnum_ci10)):
+        for i in range(len(cnum_co10)):
             this_co10  = data_co10[mask_co10==i]
             this_nco10 = ndata_co10[mask_co10==i]
             this_ci10  = data_ci10[mask_co10==i]
