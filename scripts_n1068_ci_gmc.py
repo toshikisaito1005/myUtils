@@ -434,10 +434,9 @@ class ToolsCIGMC():
                 scalebar  = scalebar,
                 label_scalebar = label_scalebar,
                 colorlog  = False, #True,
-                set_cmap  = "rainbow", # "Greys",
+                set_cmap  = "prism", # "Greys",
                 textann   = False,
                 set_title = 'channel ' + str(i),
-                clim      = [150,300],
                 )
 
         os.system('rm -rf ci10.subimage')
