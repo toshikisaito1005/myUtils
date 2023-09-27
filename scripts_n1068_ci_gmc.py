@@ -397,23 +397,25 @@ class ToolsCIGMC():
         taskname = self.modname + sys._getframe().f_code.co_name
         check_first(self.outtxt_catalog_ci,taskname)
 
-        data = np.loadtxt(self.outtxt_catalog_ci)
-        x    = data[:,2]
-        y    = data[:,4]
-        z    = data[:,3]
-        yerr = data[:,5]
-        s2n  = data[:,1]
-        r    = data[:,6]
+        data  = np.loadtxt(self.outtxt_catalog_ci)
+        x     = data[:,2]
+        y     = data[:,4]
+        z     = data[:,3]
+        yerr  = data[:,5]
+        s2n   = data[:,1]
+        r     = data[:,6]
         theta = data[:,7]
-        xpos = data[:,8]
-        ypos = data[:,9]
+        xpos  = data[:,8]
+        ypos  = data[:,9]
 
-        x    = np.log10(x[s2n>5])
-        y    = np.log10(y[s2n>5])
-        z    = np.log10(z[s2n>5])
-        yerr = np.log10(yerr[s2n>5])
-        r    = r[s2n>5]
+        x     = np.log10(x[s2n>5])
+        y     = np.log10(y[s2n>5])
+        z     = np.log10(z[s2n>5])
+        yerr  = np.log10(yerr[s2n>5])
+        r     = r[s2n>5]
         theta = theta[s2n>5]
+        xpos  = xpos[s2n>5]
+        ypos  = ypos[s2n>5]
 
         cut   = np.where(~np.isnan(x) & ~np.isnan(y) & ~np.isnan(yerr))
         x_all = x[cut]
