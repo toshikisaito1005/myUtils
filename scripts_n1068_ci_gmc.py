@@ -422,10 +422,10 @@ class ToolsCIGMC():
                 chans     = str(i),
                 )
 
-            os.system('rm -rf channel_' + str(i) + '.png')
+            os.system('rm -rf channel_' + str(i).zfill(2) + '.png')
             myfig_fits2png(
                 'this_ci10.subimage',
-                'channel_' + str(i) + '.png',
+                'channel_' + str(i).zfill(2) + '.png',
                 imsize_as = 5.0,
                 ra_cnt    = str(this_ra) + "deg",
                 dec_cnt   = str(this_dec) + "deg",
@@ -435,7 +435,11 @@ class ToolsCIGMC():
                 label_scalebar = label_scalebar,
                 colorlog  = True,
                 set_cmap  = "Greys",
+                textann   = False,
                 )
+
+        os.system('rm -rf this_ci10.subimage')
+        os.system('rm -rf this_ci10.subimage.fits')
 
     ##############
     # plot_ratio #

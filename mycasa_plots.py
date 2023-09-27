@@ -900,7 +900,7 @@ def myax_fig2png_ann(ax,number,ra_cnt,dec_cnt,add_text=True,txtfiles=None):
                     width=this_w,
                     height=this_h,
                     angle=this_pos,
-                    fill=True,#False,
+                    fill=False,
                     edgecolor="red",
                     facecolor="red",
                     alpha=1.0,
