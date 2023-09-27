@@ -464,7 +464,7 @@ class ToolsCIGMC():
             co_catalog_ratio.append([i, s2n_co10[i], sigv_co10[i], dyn_co10[i], this_ratio, this_nratio])
 
         co_catalog_ratio = np.array(co_catalog_ratio)
-        np.savetxt(self.outtxt_catalog_ci, co_catalog_ratio)
+        np.savetxt(self.outtxt_catalog_co, co_catalog_ratio)
 
     ###############
     # plot_larson #
