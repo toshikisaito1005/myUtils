@@ -437,8 +437,8 @@ class ToolsCIGMC():
         y2    = np.log10(y2[s2n2>5])
         z2    = np.log10(z2[s2n2>5])
         y2err = np.log10(y2err[s2n2>5])
-        r2    = r2[s2n>5]
-        theta2 = theta2[s2n>5]
+        r2    = r2[s2n2>5]
+        theta2 = theta2[s2n2>5]
 
         cut    = np.where(~np.isnan(x2) & ~np.isnan(y2) & ~np.isnan(y2err))
         x2_all = x2[cut]
