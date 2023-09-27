@@ -212,6 +212,8 @@ class ToolsCIGMC():
         self.outtxt_catalog_ci = self.dir_products + self._read_key("outtxt_catalog_ci")
         self.outtxt_catalog_co = self.dir_products + self._read_key("outtxt_catalog_co")
 
+        self.outpng_ci_sigv_v_ratio = self.dir_products + self._read_key("outpng_ci_sigv_v_ratio")
+
         # supplement
         self.outpng_ci_hist_rad           = self.dir_products + self._read_key("outpng_ci_hist_rad")
         self.outpng_ci_hist_sigv          = self.dir_products + self._read_key("outpng_ci_hist_sigv")
@@ -266,6 +268,7 @@ class ToolsCIGMC():
         plot_cprops  = False,
         map_cprops   = False,
         plot_larson  = False,
+        plot_ratio   = False,
         # supplement
         do_stack     = False,
         ):
@@ -341,6 +344,9 @@ class ToolsCIGMC():
         if plot_larson==True:
             self.plot_larson()
 
+        if plot_ratio==True:
+            self.plot_ratio()
+
         """
         if do_stack==True:
             self.do_stack()
@@ -376,6 +382,53 @@ class ToolsCIGMC():
             delin=delin,
             )
         """
+
+    ##############
+    # plot_ratio #
+    ##############
+
+    def plot_ratio(
+        self,
+        ):
+        """
+        """
+
+        taskname = self.modname + sys._getframe().f_code.co_name
+        check_first(self.outtxt_catalog_ci,taskname)
+
+        data = np.loadtxt(self.outtxt_catalog_ci)
+        x    = data[:,2]
+        y    = data[:,4]
+        yerr = data[:,5]
+        s2n  = data[:,1]
+
+        x    = np.log10(x[s2n>3])
+        y    = np.log10(y[s2n>3])
+        yerr = np.log10(yerr[s2n>3])
+
+        cut = np.where(~np.isnan(x) & ~np.isnan(y) & ~np.isnan(yerr))
+        x   = x[cut]
+        y   = y[cut]
+
+        ########
+        # plot #
+        ########
+
+        xlim   = None
+        ylim   = None
+        xlabel = "log$_{10}$ Velocity Dispersion (km s$^{-1}$)"
+        ylabel = "log$_{10}$ Ratio"
+
+        # plot
+        fig = plt.figure(figsize=(10,10))
+        gs  = gridspec.GridSpec(nrows=10, ncols=10)
+        ax1 = plt.subplot(gs[0:10,0:10])
+        ad  = [0.215,0.83,0.10,0.90]
+        myax_set(ax1, None, xlim, ylim, None, xlabel, ylabel, adjust=ad)
+
+        ax1.scatter(x, y, c="tomato", lw=2, s=100)
+
+        plt.savefig(self.outpng_ci_sigv_v_ratio, dpi=self.fig_dpi)
 
     ##############
     # meas_ratio #

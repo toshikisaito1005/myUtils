@@ -69,6 +69,8 @@ outpng_hist_tpeak      ,,,outpng_hist_tpeak.png
 #
 outpng_cico_larson_1st ,,,outpng_cico_larson_1st.png
 outpng_cico_dyn        ,,,outpng_cico_dyn.png
+#
+outpng_ci_sigv_v_ratio ,,,outpng_ci_sigv_v_ratio.png
 
 
 # png files: cprops stats (ci10)
