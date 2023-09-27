@@ -436,10 +436,13 @@ class ToolsCIGMC():
                 colorlog  = True,
                 set_cmap  = "Greys",
                 textann   = False,
+                set_title = 'channel ' + str(i),
                 )
 
+        os.system('rm -rf ci10.subimage')
         os.system('rm -rf this_ci10.subimage')
         os.system('rm -rf this_ci10.subimage.fits')
+        os.system('convert -delay 10 -loop 0 channel_*.png movie.gif')
 
     ##############
     # plot_ratio #
