@@ -437,6 +437,7 @@ class ToolsCIGMC():
                 set_cmap  = "rainbow", # "Greys",
                 textann   = False,
                 set_title = 'channel ' + str(i),
+                clim      = [150,300],
                 )
 
         os.system('rm -rf ci10.subimage')
