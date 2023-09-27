@@ -429,7 +429,7 @@ class ToolsCIGMC():
         z_cone = z[cut_cone]
 
         fig = plt.figure(figsize=(10,10))
-        plt.scatter(xpos, ypos, c=y, cmap="rainbow", lw=0, s=20)
+        plt.scatter(xpos, ypos, c=y, cmap="rainbow", lw=0, s=100)
         plt.xlim([-40,20])
         plt.ylim([-25,10])
         plt.savefig("test.png", dpi=self.fig_dpi)
