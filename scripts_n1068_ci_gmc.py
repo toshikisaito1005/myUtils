@@ -212,7 +212,8 @@ class ToolsCIGMC():
         self.outtxt_catalog_ci = self.dir_products + self._read_key("outtxt_catalog_ci")
         self.outtxt_catalog_co = self.dir_products + self._read_key("outtxt_catalog_co")
 
-        self.outpng_ci_sigv_v_ratio = self.dir_products + self._read_key("outpng_ci_sigv_v_ratio")
+        self.outpng_ci_sigv_v_ratio  = self.dir_products + self._read_key("outpng_ci_sigv_v_ratio")
+        self.outpng_ci_coeff_v_ratio = self.dir_products + self._read_key("outpng_ci_coeff_v_ratio")
 
         # supplement
         self.outpng_ci_hist_rad           = self.dir_products + self._read_key("outpng_ci_hist_rad")
@@ -397,32 +398,38 @@ class ToolsCIGMC():
         check_first(self.outtxt_catalog_ci,taskname)
 
         data = np.loadtxt(self.outtxt_catalog_ci)
-        x    = data[:,2] # 2 or 3
+        x    = data[:,2]
         y    = data[:,4]
+        z    = data[:,3]
         yerr = data[:,5]
         s2n  = data[:,1]
 
         x    = np.log10(x[s2n>5])
         y    = np.log10(y[s2n>5])
+        z    = np.log10(z[s2n>5])
         yerr = np.log10(yerr[s2n>5])
 
         cut = np.where(~np.isnan(x) & ~np.isnan(y) & ~np.isnan(yerr))
         x   = x[cut]
         y   = y[cut]
+        z   = z[cut]
 
         data = np.loadtxt(self.outtxt_catalog_co)
-        x2    = data[:,2] # 2 or 3
+        x2    = data[:,2]
         y2    = data[:,4]
+        z2    = data[:,3]
         y2err = data[:,5]
         s2n2  = data[:,1]
 
         x2    = np.log10(x2[s2n2>5])
         y2    = np.log10(y2[s2n2>5])
+        z2    = np.log10(z2[s2n2>5])
         y2err = np.log10(y2err[s2n2>5])
 
         cut = np.where(~np.isnan(x2) & ~np.isnan(y2) & ~np.isnan(y2err))
         x2  = x2[cut]
         y2  = y2[cut]
+        z2  = z2[cut]
 
         ########
         # plot #
@@ -444,6 +451,23 @@ class ToolsCIGMC():
         ax1.scatter(x2, y2, c="deepskyblue", lw=1, s=100)
 
         plt.savefig(self.outpng_ci_sigv_v_ratio, dpi=self.fig_dpi)
+
+        xlim   = None
+        ylim   = None
+        xlabel = "log$_{10}$ $\sigma^2$/$r$"
+        ylabel = "log$_{10}$ Ratio"
+
+        # plot
+        fig = plt.figure(figsize=(13,10))
+        gs  = gridspec.GridSpec(nrows=10, ncols=10)
+        ax1 = plt.subplot(gs[0:10,0:10])
+        ad  = [0.215,0.83,0.10,0.90]
+        myax_set(ax1, None, xlim, ylim, None, xlabel, ylabel, adjust=ad)
+
+        ax1.scatter(x, z, c="tomato", lw=1, s=100)
+        ax1.scatter(x2, z2, c="deepskyblue", lw=1, s=100)
+
+        plt.savefig(self.outpng_ci_coeff_v_ratio, dpi=self.fig_dpi)
 
     ##############
     # meas_ratio #
