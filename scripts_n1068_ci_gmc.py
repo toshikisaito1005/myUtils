@@ -394,6 +394,9 @@ class ToolsCIGMC():
         f = pyfits.open(self.cprops_co10)
         tb = f[1].data
         cnum_co10 = tb["XCTR_PIX"]
+        s2n_co10   = tb["S2N"]
+        sigv_co10  = tb["SIGV_KMS"]
+        dyn_co10   = tb["SIGV_KMS"] * tb["SIGV_KMS"] / tb["RAD_PC"]
 
         f = pyfits.open(self.cprops_ci10)
         tb = f[1].data
@@ -441,8 +444,8 @@ class ToolsCIGMC():
         ci_catalog_ratio = np.array(ci_catalog_ratio)
         np.savetxt(self.outtxt_catalog_ci, ci_catalog_ratio)
 
-        """
         # measure line ratio for co10 clouds
+        co_catalog_ratio = []
         for i in range(len(cnum_co10)):
             this_co10  = np.nan_to_num(data_co10[mask_co10==i])
             this_nco10 = np.nan_to_num(ndata_co10[mask_co10==i])
@@ -457,7 +460,11 @@ class ToolsCIGMC():
 
             this_ratio  = this_ci10 / this_co10
             this_nratio = this_ratio * np.sqrt((this_nco10/this_co10)**2 + (this_nci10/this_ci10)**2)
-        """
+
+            co_catalog_ratio.append([i, s2n_co10[i], sigv_co10[i], dyn_co10[i], this_ratio, this_nratio])
+
+        co_catalog_ratio = np.array(co_catalog_ratio)
+        np.savetxt(self.outtxt_catalog_ci, co_catalog_ratio)
 
     ###############
     # plot_larson #
