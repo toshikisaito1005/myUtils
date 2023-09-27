@@ -394,6 +394,45 @@ class ToolsCIGMC():
         taskname = self.modname + sys._getframe().f_code.co_name
         check_first(self.outtxt_catalog_ci,taskname)
 
+        scalebar = 100. / self.scale_pc
+        label_scalebar = "100 pc"
+
+        chans  = '50~139'
+        chans2 = '0~89'
+        this_ra = 40.66900417
+        this_dec = -0.01395556
+
+        os.system('rm -rf ci10.subimage')
+        imsubimage(
+            imagename = self.cube_ci10,
+            outfile   = 'ci10.subimage',
+            chans     = chans,
+            )
+
+        for i in range(90):
+            print('# loop ' + str(i))
+            os.system('rm -rf this_ci10.subimage')
+            imsubimage(
+                imagename = 'ci10.subimage',
+                outfile   = 'this_ci10.subimage',
+                chans     = str(i),
+                )
+
+            os.system('rm -rf channel_' + str(i) + '.png')
+            myfig_fits2png(
+                'this_ci10.subimage',
+                'channel_' + str(i) + '.png',
+                imsize_as = 5.0,
+                ra_cnt    = str(this_ra) + "deg",
+                dec_cnt   = str(this_dec) + "deg",
+                numann    = "ci-gmc",
+                txtfiles  = this_tb,
+                scalebar  = scalebar,
+                label_scalebar = label_scalebar,
+                colorlog  = True,
+                set_cmap  = "Greys",
+                )
+
     ##############
     # plot_ratio #
     ##############
