@@ -514,7 +514,7 @@ class ToolsCIGMC():
         dyn_co10   = tb["SIGV_KMS"] * tb["SIGV_KMS"] / tb["RAD_PC"]
 
         r_co10     = np.sqrt(x_co10**2 + y_co10**2)
-        theta_co10 = np.degrees(np.arctan2(x_co10, y_co10)) + 90
+        theta      = np.degrees(np.arctan2(x_co10, y_co10)) + 90
         theta_co10 = np.where(theta>0, theta, theta+360)
 
         f = pyfits.open(self.cprops_ci10)
@@ -527,7 +527,7 @@ class ToolsCIGMC():
         dyn_ci10   = tb["SIGV_KMS"] * tb["SIGV_KMS"] / tb["RAD_PC"]
 
         r_ci10     = np.sqrt(x_ci10**2 + y_ci10**2)
-        theta_ci10 = np.degrees(np.arctan2(x_co10, y_co10)) + 90
+        theta      = np.degrees(np.arctan2(x_co10, y_co10)) + 90
         theta_ci10 = np.where(theta>0, theta, theta+360)
 
         # import
