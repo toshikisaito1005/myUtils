@@ -475,7 +475,7 @@ class ToolsCIGMC():
         ax1.scatter(x2_all, y2_all, c="deepskyblue", lw=0, s=100)
 
         ax1.scatter(x_cone, y_cone, c="tomato", lw=2, s=100)
-        ax1.scatter(x2_cone, y2_cone, c="deepskyblue", lw=2, s=100)
+        #ax1.scatter(x2_cone, y2_cone, c="deepskyblue", lw=2, s=100)
 
         plt.savefig(self.outpng_ci_sigv_v_ratio, dpi=self.fig_dpi)
 
@@ -495,7 +495,7 @@ class ToolsCIGMC():
         ax1.scatter(z2_all, y2_all, c="deepskyblue", lw=0, s=100)
 
         ax1.scatter(z_cone, y_cone, c="tomato", lw=2, s=100)
-        ax1.scatter(z2_cone, y2_cone, c="deepskyblue", lw=2, s=100)
+        #ax1.scatter(z2_cone, y2_cone, c="deepskyblue", lw=2, s=100)
 
         plt.savefig(self.outpng_ci_coeff_v_ratio, dpi=self.fig_dpi)
 
