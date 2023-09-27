@@ -418,9 +418,9 @@ class ToolsCIGMC():
 
         x2    = np.log10(x2[s2n2>3])
         y2    = np.log10(y2[s2n2>3])
-        yerr2 = np.log10(yerr2[s2n2>3])
+        y2err = np.log10(y2err[s2n2>3])
 
-        cut = np.where(~np.isnan(x2) & ~np.isnan(y2) & ~np.isnan(yerr2))
+        cut = np.where(~np.isnan(x2) & ~np.isnan(y2) & ~np.isnan(y2err))
         x2  = x2[cut]
         y2  = y2[cut]
 
