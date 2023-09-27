@@ -420,7 +420,7 @@ class ToolsCIGMC():
         y_all = y[cut]
         z_all = z[cut]
 
-        cut_cone = np.where(~np.isnan(x) & ~np.isnan(y) & ~np.isnan(yerr) & (r<self.fov_diamter/2.0) & (theta>=self.theta2) & (theta<self.theta1) | ~np.isnan(x) & ~np.isnan(y) & ~np.isnan(yerr) & (r<self.fov_diamter/2.0) & (theta>=self.theta2+180) & (theta<self.theta1+180))
+        #cut_cone = np.where(~np.isnan(x) & ~np.isnan(y) & ~np.isnan(yerr) & (r<self.fov_diamter/2.0) & (theta>=self.theta2) & (theta<self.theta1) | ~np.isnan(x) & ~np.isnan(y) & ~np.isnan(yerr) & (r<self.fov_diamter/2.0) & (theta>=self.theta2+180) & (theta<self.theta1+180))
         cut_cone = np.where(~np.isnan(x) & ~np.isnan(y) & ~np.isnan(yerr) & (xpos>0) & (xpos<4) & (ypos<-1.5) & (ypos>-4) & (r<self.fov_diamter/2.0) & (theta>=self.theta2+180) & (theta<self.theta1+180))
         x_cone = x[cut_cone]
         y_cone = y[cut_cone]
