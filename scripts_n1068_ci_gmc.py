@@ -420,7 +420,7 @@ class ToolsCIGMC():
         ylabel = "log$_{10}$ Ratio"
 
         # plot
-        fig = plt.figure(figsize=(10,10))
+        fig = plt.figure(figsize=(13,10))
         gs  = gridspec.GridSpec(nrows=10, ncols=10)
         ax1 = plt.subplot(gs[0:10,0:10])
         ad  = [0.215,0.83,0.10,0.90]
