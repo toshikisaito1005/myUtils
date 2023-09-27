@@ -527,7 +527,7 @@ class ToolsCIGMC():
         dyn_ci10   = tb["SIGV_KMS"] * tb["SIGV_KMS"] / tb["RAD_PC"]
 
         r_ci10     = np.sqrt(x_ci10**2 + y_ci10**2)
-        theta      = np.degrees(np.arctan2(x_co10, y_co10)) + 90
+        theta      = np.degrees(np.arctan2(x_ci10, y_ci10)) + 90
         theta_ci10 = np.where(theta>0, theta, theta+360)
 
         # import
