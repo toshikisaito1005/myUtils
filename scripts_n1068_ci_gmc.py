@@ -426,7 +426,6 @@ class ToolsCIGMC():
                 ra_cnt    = str(this_ra) + "deg",
                 dec_cnt   = str(this_dec) + "deg",
                 numann    = "ci-gmc",
-                txtfiles  = this_tb,
                 scalebar  = scalebar,
                 label_scalebar = label_scalebar,
                 colorlog  = True,
