@@ -410,6 +410,20 @@ class ToolsCIGMC():
         x   = x[cut]
         y   = y[cut]
 
+        data = np.loadtxt(self.outtxt_catalog_co)
+        x2    = data[:,2] # 2 or 3
+        y2    = data[:,4]
+        y2err = data[:,5]
+        s2n2  = data[:,1]
+
+        x2    = np.log10(x2[s2n2>3])
+        y2    = np.log10(y2[s2n2>3])
+        yerr2 = np.log10(yerr[s2n2>3])
+
+        cut = np.where(~np.isnan(x2) & ~np.isnan(y2) & ~np.isnan(yerr2))
+        x2  = x2[cut]
+        y2  = y2[cut]
+
         ########
         # plot #
         ########
@@ -426,7 +440,8 @@ class ToolsCIGMC():
         ad  = [0.215,0.83,0.10,0.90]
         myax_set(ax1, None, xlim, ylim, None, xlabel, ylabel, adjust=ad)
 
-        ax1.scatter(x, y, c="tomato", lw=2, s=100)
+        ax1.scatter(x, y, c="tomato", lw=1, s=100)
+        ax1.scatter(x2, y2, c="deepskyblue", lw=1, s=100)
 
         plt.savefig(self.outpng_ci_sigv_v_ratio, dpi=self.fig_dpi)
 
