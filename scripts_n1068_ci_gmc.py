@@ -397,7 +397,7 @@ class ToolsCIGMC():
         check_first(self.outtxt_catalog_ci,taskname)
 
         data = np.loadtxt(self.outtxt_catalog_ci)
-        x    = data[:,2]
+        x    = data[:,3] # 2 or 3
         y    = data[:,4]
         yerr = data[:,5]
         s2n  = data[:,1]
