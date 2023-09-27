@@ -442,7 +442,46 @@ class ToolsCIGMC():
         os.system('rm -rf ci10.subimage')
         os.system('rm -rf this_ci10.subimage')
         os.system('rm -rf this_ci10.subimage.fits')
-        os.system('convert -delay 10 -loop 0 channel_*.png movie.gif')
+        os.system('convert -delay 10 -loop 0 channel_*.png movie_ci10.gif')
+
+        #
+        os.system('rm -rf co10.subimage')
+        imsubimage(
+            imagename = self.cube_co10,
+            outfile   = 'co10.subimage',
+            chans     = chans,
+            )
+
+        for i in range(90):
+            print('# loop ' + str(i))
+            os.system('rm -rf this_co10.subimage')
+            imsubimage(
+                imagename = 'co10.subimage',
+                outfile   = 'this_co10.subimage',
+                chans     = str(i),
+                )
+
+            os.system('rm -rf channel_' + str(i).zfill(2) + '.png')
+            myfig_fits2png(
+                'this_co10.subimage',
+                'channel_' + str(i).zfill(2) + '.png',
+                imsize_as = 5.0,
+                ra_cnt    = str(this_ra) + "deg",
+                dec_cnt   = str(this_dec) + "deg",
+                numann    = "ci-gmc",
+                txtfiles  = tb_ci10,
+                scalebar  = scalebar,
+                label_scalebar = label_scalebar,
+                colorlog  = True,
+                set_cmap  = "Greys",
+                textann   = False,
+                set_title = 'channel ' + str(i),
+                )
+
+        os.system('rm -rf co10.subimage')
+        os.system('rm -rf this_co10.subimage')
+        os.system('rm -rf this_co10.subimage.fits')
+        os.system('convert -delay 10 -loop 0 channel_*.png movie_co10.gif')
 
     ##############
     # plot_ratio #
