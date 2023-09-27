@@ -51,6 +51,8 @@ outfits_mom0_ratio ,,,n1068_ratio_mom0.fits
 # output png and txt #
 ######################
 # text files
+outtxt_catalog_ci ,,,outtxt_catalog_ci.txt
+outtxt_catalog_co ,,,outtxt_catalog_co.txt
 
 # png giles: noise stats
 outpng_hist_co10_pix   ,,,outpng_stats_co10_pix.png

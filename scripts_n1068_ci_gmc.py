@@ -209,6 +209,9 @@ class ToolsCIGMC():
         self.outpng_cico_larson_1st = self.dir_products + self._read_key("outpng_cico_larson_1st")
         self.outpng_cico_dyn        = self.dir_products + self._read_key("outpng_cico_dyn")
 
+        self.outtxt_catalog_ci = self.dir_products + self._read_key("outtxt_catalog_ci")
+        self.outtxt_catalog_co = self.dir_products + self._read_key("outtxt_catalog_co")
+
         # supplement
         self.outpng_ci_hist_rad           = self.dir_products + self._read_key("outpng_ci_hist_rad")
         self.outpng_ci_hist_sigv          = self.dir_products + self._read_key("outpng_ci_hist_sigv")
@@ -394,7 +397,10 @@ class ToolsCIGMC():
 
         f = pyfits.open(self.cprops_ci10)
         tb = f[1].data
-        cnum_ci10 = tb["XCTR_PIX"]
+        cnum_ci10  = tb["XCTR_PIX"]
+        s2n_ci10   = tb["S2N"]
+        sigv_ci10  = tb["SIGV_KMS"]
+        dyn_ci10   = tb["SIGV_KMS"] * tb["SIGV_KMS"] / tb["RAD_PC"]
 
         # import
         f,_ = imval_all(self.asgn_ci10)
@@ -414,6 +420,7 @@ class ToolsCIGMC():
         ndata_ci10 = f["data"].flatten()
 
         # measure line ratio for ci10 clouds
+        ci_catalog_ratio = []
         for i in range(len(cnum_ci10)):
             this_co10  = np.nan_to_num(data_co10[mask_ci10==i])
             this_nco10 = np.nan_to_num(ndata_co10[mask_ci10==i])
@@ -429,13 +436,10 @@ class ToolsCIGMC():
             this_ratio  = this_ci10 / this_co10
             this_nratio = this_ratio * np.sqrt((this_nco10/this_co10)**2 + (this_nci10/this_ci10)**2)
 
-            if i==0:
-                print(i, np.round(this_ratio,2), np.round(this_nratio,2))
-                maximum = this_ratio
-            else:
-                if this_ratio>maximum:
-                    print(i, np.round(this_ratio,2), np.round(this_nratio,2))
-                    maximum = this_ratio
+            ci_catalog_ratio.append([i, s2n_ci10[i], sigv_ci10[i], dyn_ci10[i], this_ratio, this_nratio])
+
+        ci_catalog_ratio = np.array(ci_catalog_ratio)
+        np.savetxt(self.outtxt_catalog_ci, ci_catalog_ratio)
 
         """
         # measure line ratio for co10 clouds
