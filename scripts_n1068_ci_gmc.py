@@ -425,7 +425,6 @@ class ToolsCIGMC():
             this_nco10  = np.sqrt(np.sum((this_nco10[mask])**2))
             this_ci10   = np.sum(this_ci10[mask])
             this_nci10  = np.sqrt(np.sum((this_nci10[mask])**2))
-            #print(this_co10,this_nco10,this_ci10,this_nci10)
 
             this_ratio  = this_ci10 / this_co10
             this_nratio = this_ratio * np.sqrt((this_nco10/this_co10)**2 + (this_nci10/this_ci10)**2)
@@ -438,6 +437,7 @@ class ToolsCIGMC():
                     print(i, np.round(this_ratio,2), np.round(this_nratio,2))
                     maximum = this_ratio
 
+        """
         # measure line ratio for co10 clouds
         for i in range(len(cnum_co10)):
             this_co10  = np.nan_to_num(data_co10[mask_co10==i])
@@ -453,14 +453,7 @@ class ToolsCIGMC():
 
             this_ratio  = this_ci10 / this_co10
             this_nratio = this_ratio * np.sqrt((this_nco10/this_co10)**2 + (this_nci10/this_ci10)**2)
-
-            if i==0:
-                print(i, np.round(this_ratio,2), np.round(this_nratio,2))
-                maximum = this_ratio
-            else:
-                if this_ratio>maximum:
-                    print(i, np.round(this_ratio,2), np.round(this_nratio,2))
-                    maximum = this_ratio
+        """
 
     ###############
     # plot_larson #
