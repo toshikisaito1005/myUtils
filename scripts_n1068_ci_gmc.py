@@ -434,7 +434,7 @@ class ToolsCIGMC():
                 scalebar  = scalebar,
                 label_scalebar = label_scalebar,
                 colorlog  = True,
-                set_cmap  = "Greys",
+                set_cmap  = "rainbow", # "Greys",
                 textann   = False,
                 set_title = 'channel ' + str(i),
                 )
