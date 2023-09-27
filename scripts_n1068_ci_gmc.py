@@ -403,33 +403,48 @@ class ToolsCIGMC():
         z    = data[:,3]
         yerr = data[:,5]
         s2n  = data[:,1]
+        r    = data[:,6]
+        theta = data[:,7]
 
         x    = np.log10(x[s2n>5])
         y    = np.log10(y[s2n>5])
         z    = np.log10(z[s2n>5])
         yerr = np.log10(yerr[s2n>5])
 
-        cut = np.where(~np.isnan(x) & ~np.isnan(y) & ~np.isnan(yerr))
-        x   = x[cut]
-        y   = y[cut]
-        z   = z[cut]
+        cut   = np.where(~np.isnan(x) & ~np.isnan(y) & ~np.isnan(yerr))
+        x_all = x[cut]
+        y_all = y[cut]
+        z_all = z[cut]
 
+        cut_cone = np.where(~np.isnan(x) & ~np.isnan(y) & ~np.isnan(yerr) & (r<self.fov_diamter/2.0) & (theta>=self.theta2) & (theta<self.theta1) | ~np.isnan(x) & ~np.isnan(y) & ~np.isnan(yerr) & (r<self.fov_diamter/2.0) & (theta>=self.theta2+180) & (theta<self.theta1+180))
+        x_cone = x[cut_cone]
+        y_cone = y[cut_cone]
+        z_cone = z[cut_cone]
+
+        #
         data = np.loadtxt(self.outtxt_catalog_co)
         x2    = data[:,2]
         y2    = data[:,4]
         z2    = data[:,3]
         y2err = data[:,5]
         s2n2  = data[:,1]
+        r2    = data[:,6]
+        theta2 = data[:,7]
 
         x2    = np.log10(x2[s2n2>5])
         y2    = np.log10(y2[s2n2>5])
         z2    = np.log10(z2[s2n2>5])
         y2err = np.log10(y2err[s2n2>5])
 
-        cut = np.where(~np.isnan(x2) & ~np.isnan(y2) & ~np.isnan(y2err))
-        x2  = x2[cut]
-        y2  = y2[cut]
-        z2  = z2[cut]
+        cut    = np.where(~np.isnan(x2) & ~np.isnan(y2) & ~np.isnan(y2err))
+        x2_all = x2[cut]
+        y2_all = y2[cut]
+        z2_all = z2[cut]
+
+        cut_cone = np.where(~np.isnan(x2) & ~np.isnan(y2) & ~np.isnan(y2err) & (r2<self.fov_diamter/2.0) & (theta2>=self.theta2) & (theta2<self.theta1) | ~np.isnan(x2) & ~np.isnan(y2) & ~np.isnan(y2err) & (r2<self.fov_diamter/2.0) & (theta2>=self.theta2+180) & (theta2<self.theta1+180))
+        x2_cone = x2[cut_cone]
+        y2_cone = y2[cut_cone]
+        z2_cone = z2[cut_cone]
 
         ########
         # plot #
@@ -447,8 +462,11 @@ class ToolsCIGMC():
         ad  = [0.215,0.83,0.10,0.90]
         myax_set(ax1, None, xlim, ylim, None, xlabel, ylabel, adjust=ad)
 
-        ax1.scatter(x, y, c="tomato", lw=1, s=100)
-        ax1.scatter(x2, y2, c="deepskyblue", lw=1, s=100)
+        ax1.scatter(x_all, y_all, c="tomato", lw=0, s=100)
+        ax1.scatter(x2_all, y2_all, c="deepskyblue", lw=0, s=100)
+
+        ax1.scatter(x_cone, y_cone, c="tomato", lw=0, s=100)
+        ax1.scatter(x2_cone, y2_cone, c="deepskyblue", lw=0, s=100)
 
         plt.savefig(self.outpng_ci_sigv_v_ratio, dpi=self.fig_dpi)
 
@@ -464,8 +482,11 @@ class ToolsCIGMC():
         ad  = [0.215,0.83,0.10,0.90]
         myax_set(ax1, None, xlim, ylim, None, xlabel, ylabel, adjust=ad)
 
-        ax1.scatter(z, y, c="tomato", lw=1, s=100)
-        ax1.scatter(z2, y2, c="deepskyblue", lw=1, s=100)
+        ax1.scatter(z_all, y_all, c="tomato", lw=0, s=100)
+        ax1.scatter(z2_all, y2_all, c="deepskyblue", lw=0, s=100)
+
+        ax1.scatter(z_cone, y_cone, c="tomato", lw=0, s=100)
+        ax1.scatter(z2_cone, y2_cone, c="deepskyblue", lw=0, s=100)
 
         plt.savefig(self.outpng_ci_coeff_v_ratio, dpi=self.fig_dpi)
 
@@ -485,17 +506,29 @@ class ToolsCIGMC():
         # import cprops table
         f = pyfits.open(self.cprops_co10)
         tb = f[1].data
-        cnum_co10 = tb["XCTR_PIX"]
+        cnum_co10  = tb["XCTR_PIX"]
+        x_co10     = (tb["XCTR_DEG"] - self.ra_agn) * -3600.
+        y_co10     = (tb["YCTR_DEG"] - self.dec_agn) * 3600.
         s2n_co10   = tb["S2N"]
         sigv_co10  = tb["SIGV_KMS"]
         dyn_co10   = tb["SIGV_KMS"] * tb["SIGV_KMS"] / tb["RAD_PC"]
 
+        r_co10     = np.sqrt(x_co10**2 + y_co10**2)
+        theta_co10 = np.degrees(np.arctan2(x_co10, y_co10)) + 90
+        theta_co10 = np.where(theta>0, theta, theta+360)
+
         f = pyfits.open(self.cprops_ci10)
         tb = f[1].data
         cnum_ci10  = tb["XCTR_PIX"]
+        x_ci10     = (tb["XCTR_DEG"] - self.ra_agn) * -3600.
+        y_ci10     = (tb["YCTR_DEG"] - self.dec_agn) * 3600.
         s2n_ci10   = tb["S2N"]
         sigv_ci10  = tb["SIGV_KMS"]
         dyn_ci10   = tb["SIGV_KMS"] * tb["SIGV_KMS"] / tb["RAD_PC"]
+
+        r_ci10     = np.sqrt(x_ci10**2 + y_ci10**2)
+        theta_ci10 = np.degrees(np.arctan2(x_co10, y_co10)) + 90
+        theta_ci10 = np.where(theta>0, theta, theta+360)
 
         # import
         f,_ = imval_all(self.asgn_ci10)
@@ -531,7 +564,7 @@ class ToolsCIGMC():
             this_ratio  = this_ci10 / this_co10
             this_nratio = this_ratio * np.sqrt((this_nco10/this_co10)**2 + (this_nci10/this_ci10)**2)
 
-            ci_catalog_ratio.append([i, s2n_ci10[i], sigv_ci10[i], dyn_ci10[i], this_ratio, this_nratio])
+            ci_catalog_ratio.append([i, s2n_ci10[i], sigv_ci10[i], dyn_ci10[i], this_ratio, this_nratio, r_ci10[i], theta_ci10[i]])
 
         ci_catalog_ratio = np.array(ci_catalog_ratio)
         np.savetxt(self.outtxt_catalog_ci, ci_catalog_ratio)
@@ -553,7 +586,7 @@ class ToolsCIGMC():
             this_ratio  = this_ci10 / this_co10
             this_nratio = this_ratio * np.sqrt((this_nco10/this_co10)**2 + (this_nci10/this_ci10)**2)
 
-            co_catalog_ratio.append([i, s2n_co10[i], sigv_co10[i], dyn_co10[i], this_ratio, this_nratio])
+            co_catalog_ratio.append([i, s2n_co10[i], sigv_co10[i], dyn_co10[i], this_ratio, this_nratio, r_co10[i], theta_co10[i]])
 
         co_catalog_ratio = np.array(co_catalog_ratio)
         np.savetxt(self.outtxt_catalog_co, co_catalog_ratio)
