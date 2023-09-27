@@ -408,7 +408,7 @@ class ToolsCIGMC():
 
         os.system('rm -rf ci10.subimage')
         imsubimage(
-            imagename = self.cube_ci10,
+            imagename = self.asgn_ci10, #self.cube_ci10,
             outfile   = 'ci10.subimage',
             chans     = chans,
             )
@@ -444,6 +444,7 @@ class ToolsCIGMC():
         os.system('rm -rf this_ci10.subimage.fits')
         os.system('convert -delay 10 -loop 0 channel_*.png movie_ci10.gif')
 
+        """
         #
         os.system('rm -rf co10.subimage')
         imsubimage(
@@ -482,6 +483,7 @@ class ToolsCIGMC():
         os.system('rm -rf this_co10.subimage')
         os.system('rm -rf this_co10.subimage.fits')
         os.system('convert -delay 10 -loop 0 channel_*.png movie_co10.gif')
+        """
 
     ##############
     # plot_ratio #
