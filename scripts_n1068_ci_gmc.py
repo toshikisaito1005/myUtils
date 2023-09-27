@@ -265,13 +265,12 @@ class ToolsCIGMC():
         print_cprops = False,
         data_stats   = False,
         meas_ratio   = False,
-        # plot figures in paper
+        # plot
         plot_cprops  = False,
         map_cprops   = False,
         plot_larson  = False,
         plot_ratio   = False,
-        # supplement
-        do_stack     = False,
+        map_ratio    = False,
         ):
         """
         This method runs all the methods which will create figures in the paper.
@@ -348,10 +347,8 @@ class ToolsCIGMC():
         if plot_ratio==True:
             self.plot_ratio()
 
-        """
-        if do_stack==True:
-            self.do_stack()
-        """
+        if map_ratio==True:
+            self.map_ratio()
 
     ####################
     # immagick_figures #
@@ -383,6 +380,19 @@ class ToolsCIGMC():
             delin=delin,
             )
         """
+
+    #############
+    # map_ratio #
+    #############
+
+    def map_ratio(
+        self,
+        ):
+        """
+        """
+
+        taskname = self.modname + sys._getframe().f_code.co_name
+        check_first(self.outtxt_catalog_ci,taskname)
 
     ##############
     # plot_ratio #
@@ -427,12 +437,6 @@ class ToolsCIGMC():
         x_cone = x[cut_cone]
         y_cone = y[cut_cone]
         z_cone = z[cut_cone]
-
-        fig = plt.figure(figsize=(10,10))
-        plt.scatter(xpos, ypos, c=y, cmap="rainbow", lw=0, s=100)
-        plt.xlim([-40,20])
-        plt.ylim([-25,10])
-        plt.savefig("test.png", dpi=self.fig_dpi)
 
         #
         data = np.loadtxt(self.outtxt_catalog_co)
