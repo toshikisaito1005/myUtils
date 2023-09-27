@@ -433,7 +433,7 @@ class ToolsCIGMC():
                 txtfiles  = tb_ci10,
                 scalebar  = scalebar,
                 label_scalebar = label_scalebar,
-                colorlog  = True,
+                colorlog  = False, #True,
                 set_cmap  = "rainbow", # "Greys",
                 textann   = False,
                 set_title = 'channel ' + str(i),
