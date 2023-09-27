@@ -464,8 +464,8 @@ class ToolsCIGMC():
         ad  = [0.215,0.83,0.10,0.90]
         myax_set(ax1, None, xlim, ylim, None, xlabel, ylabel, adjust=ad)
 
-        ax1.scatter(x, z, c="tomato", lw=1, s=100)
-        ax1.scatter(x2, z2, c="deepskyblue", lw=1, s=100)
+        ax1.scatter(z, y, c="tomato", lw=1, s=100)
+        ax1.scatter(z2, y2, c="deepskyblue", lw=1, s=100)
 
         plt.savefig(self.outpng_ci_coeff_v_ratio, dpi=self.fig_dpi)
 
