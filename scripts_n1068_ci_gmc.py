@@ -392,7 +392,11 @@ class ToolsCIGMC():
         """
 
         taskname = self.modname + sys._getframe().f_code.co_name
-        check_first(self.outtxt_catalog_ci,taskname)
+        check_first(self.cprops_co10,taskname)
+
+        # import fits table
+        f = pyfits.open(self.cprops_ci10)
+        tb_ci10 = f[1].data
 
         scalebar = 100. / self.scale_pc
         label_scalebar = "100 pc"
@@ -426,6 +430,7 @@ class ToolsCIGMC():
                 ra_cnt    = str(this_ra) + "deg",
                 dec_cnt   = str(this_dec) + "deg",
                 numann    = "ci-gmc",
+                txtfiles  = tb_ci10,
                 scalebar  = scalebar,
                 label_scalebar = label_scalebar,
                 colorlog  = True,
