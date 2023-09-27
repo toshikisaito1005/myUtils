@@ -428,6 +428,10 @@ class ToolsCIGMC():
         y_cone = y[cut_cone]
         z_cone = z[cut_cone]
 
+        fig = plt.figure(figsize=(10,10))
+        plt.scatter(xpos, ypos, c=y, cmap="rainbow", lw=0, s=20)
+        plt.savefig("test.png", dpi=self.fig_dpi)
+
         #
         data = np.loadtxt(self.outtxt_catalog_co)
         x2    = data[:,2]
@@ -799,10 +803,6 @@ class ToolsCIGMC():
         # save
         os.system("rm -rf " + self.outpng_cico_larson_1st)
         plt.savefig(self.outpng_cico_larson_1st, dpi=self.fig_dpi)
-
-        fig = plt.figure(figsize=(10,10))
-        plt.scatter(x_fov1_ci10[cut_cone], y_fov1_ci10[cut_cone], c="black", lw=0, s=20)
-        plt.savefig("test.png", dpi=self.fig_dpi)
 
         #########################
         # plot: dynamical state #
