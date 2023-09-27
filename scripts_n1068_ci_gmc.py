@@ -405,6 +405,8 @@ class ToolsCIGMC():
         s2n  = data[:,1]
         r    = data[:,6]
         theta = data[:,7]
+        xpos = data[:,8]
+        ypos = data[:,9]
 
         x    = np.log10(x[s2n>5])
         y    = np.log10(y[s2n>5])
@@ -419,6 +421,7 @@ class ToolsCIGMC():
         z_all = z[cut]
 
         cut_cone = np.where(~np.isnan(x) & ~np.isnan(y) & ~np.isnan(yerr) & (r<self.fov_diamter/2.0) & (theta>=self.theta2) & (theta<self.theta1) | ~np.isnan(x) & ~np.isnan(y) & ~np.isnan(yerr) & (r<self.fov_diamter/2.0) & (theta>=self.theta2+180) & (theta<self.theta1+180))
+        cut_cone = np.where(~np.isnan(x) & ~np.isnan(y) & ~np.isnan(yerr) & (xpos>0) & (xpos<4) & (ypos<-1.5) & (ypos>-4) & (r<self.fov_diamter/2.0) & (theta>=self.theta2+180) & (theta<self.theta1+180))
         x_cone = x[cut_cone]
         y_cone = y[cut_cone]
         z_cone = z[cut_cone]
@@ -568,7 +571,7 @@ class ToolsCIGMC():
             this_ratio  = this_ci10 / this_co10
             this_nratio = this_ratio * np.sqrt((this_nco10/this_co10)**2 + (this_nci10/this_ci10)**2)
 
-            ci_catalog_ratio.append([i, s2n_ci10[i], sigv_ci10[i], dyn_ci10[i], this_ratio, this_nratio, r_ci10[i], theta_ci10[i]])
+            ci_catalog_ratio.append([i, s2n_ci10[i], sigv_ci10[i], dyn_ci10[i], this_ratio, this_nratio, r_ci10[i], theta_ci10[i], x_ci10[i], y_ci10[i]])
 
         ci_catalog_ratio = np.array(ci_catalog_ratio)
         np.savetxt(self.outtxt_catalog_ci, ci_catalog_ratio)
