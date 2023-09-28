@@ -17,6 +17,17 @@ final_             ,,,fig_.png
 ############
 # raw maps #
 ############
+mom0_co10  ,,,ngc1068_b3_12m+7m_co10_0p8as_strict_mom0.fits
+mom0_ci10  ,,,ngc1068_b8_12m+7m_ci10_0p8as_strict_mom0.fits
+emom0_co10 ,,,ngc1068_b3_12m+7m_co10_0p8as_strict_emom0.fits
+emom0_ci10 ,,,ngc1068_b8_12m+7m_ci10_0p8as_strict_emom0.fits
+mom2_co10  ,,,ngc1068_b3_12m+7m_co10_0p8as_strict_mom2.fits
+mom2_ci10  ,,,ngc1068_b8_12m+7m_ci10_0p8as_strict_mom2.fits
+emom2_co10 ,,,ngc1068_b3_12m+7m_co10_0p8as_strict_emom2.fits
+emom2_ci10 ,,,ngc1068_b8_12m+7m_ci10_0p8as_strict_emom2.fits
+#
+#
+#
 cube_co10          ,,,ngc1068_b3_12m+7m_co10_0p8as.fits
 cube_ci10          ,,,ngc1068_b8_12m+7m_ci10_0p8as.fits
 #
@@ -26,11 +37,6 @@ ncube_ci10         ,,,ngc1068_b8_12m+7m_ci10_0p8as_noise.fits
 mask_co10          ,,,ngc1068_b3_12m+7m_co10_0p8as_strictmask.fits
 mask_ci10          ,,,ngc1068_b8_12m+7m_ci10_0p8as_strictmask.fits
 #
-mom0_co10          ,,,ngc1068_b3_12m+7m_co10_0p8as_strict_mom2.fits
-mom0_ci10          ,,,ngc1068_b8_12m+7m_ci10_0p8as_strict_mom2.fits
-#
-emom0_co10         ,,,ngc1068_b3_12m+7m_co10_0p8as_strict_emom2.fits
-emom0_ci10         ,,,ngc1068_b8_12m+7m_ci10_0p8as_strict_emom2.fits
 #
 tpeak_co10         ,,,ngc1068_b3_12m+7m_co10_0p8as_broad_tpeak.fits
 tpeak_ci10         ,,,ngc1068_b8_12m+7m_ci10_0p8as_broad_tpeak.fits
@@ -43,6 +49,9 @@ asgn_ci10          ,,,ngc1068_ci10_asgn.fits
 ###############
 # output maps #
 ###############
+#
+#
+#
 outfits_mom0_co10  ,,,n1068_co10_mom0.fits
 outfits_mom0_ci10  ,,,n1068_ci10_mom0.fits
 outfits_mom0_ratio ,,,n1068_ratio_mom0.fits
@@ -50,6 +59,9 @@ outfits_mom0_ratio ,,,n1068_ratio_mom0.fits
 ######################
 # output png and txt #
 ######################
+#
+#
+#
 # text files
 outtxt_catalog_ci ,,,outtxt_catalog_ci.txt
 outtxt_catalog_co ,,,outtxt_catalog_co.txt

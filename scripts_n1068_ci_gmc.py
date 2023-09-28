@@ -122,11 +122,14 @@ class ToolsCIGMC():
         """
         """
 
-        self.mom0_co10   = self.dir_raw + self._read_key("mom0_co10")
-        self.mom0_ci10   = self.dir_raw + self._read_key("mom0_ci10")
-
-        self.emom0_co10  = self.dir_raw + self._read_key("emom0_co10")
-        self.emom0_ci10  = self.dir_raw + self._read_key("emom0_ci10")
+        self.mom0_co10  = self.dir_raw + self._read_key("mom0_co10")
+        self.mom0_ci10  = self.dir_raw + self._read_key("mom0_ci10")
+        self.emom0_co10 = self.dir_raw + self._read_key("emom0_co10")
+        self.emom0_ci10 = self.dir_raw + self._read_key("emom0_ci10")
+        self.mom2_co10  = self.dir_raw + self._read_key("mom2_co10")
+        self.mom2_ci10  = self.dir_raw + self._read_key("mom2_ci10")
+        self.emom2_co10 = self.dir_raw + self._read_key("emom2_co10")
+        self.emom2_ci10 = self.dir_raw + self._read_key("emom2_ci10")
 
         #
         self.cube_co10   = self.dir_raw + self._read_key("cube_co10")
@@ -413,6 +416,7 @@ class ToolsCIGMC():
         taskname = self.modname + sys._getframe().f_code.co_name
         check_first(self.mom0_co10,taskname)
 
+        # mom0
         hexx_co10_mom0, hexy_co10_mom0, hexc_co10_mom0 = hexbin_sampling(
             self.mom0_co10,
             self.ra_agn,
@@ -443,6 +447,45 @@ class ToolsCIGMC():
             )
         hexx_ci10_emom0, hexy_ci10_emom0, hexc_ci10_emom0 = hexbin_sampling(
             self.emom0_ci10,
+            self.ra_agn,
+            self.dec_agn,
+            beam=55/72.,
+            gridsize=70,
+            err=True,
+            stats="mean",
+            )
+
+        # mom2
+        hexx_co10_mom2, hexy_co10_mom2, hexc_co10_mom2 = hexbin_sampling(
+            self.mom2_co10,
+            self.ra_agn,
+            self.dec_agn,
+            beam=55/72.,
+            gridsize=70,
+            err=False,
+            stats="mean",
+            )
+        hexx_co10_emom2, hexy_co10_emom2, hexc_co10_emom2 = hexbin_sampling(
+            self.emom2_co10,
+            self.ra_agn,
+            self.dec_agn,
+            beam=55/72.,
+            gridsize=70,
+            err=True,
+            stats="mean",
+            )
+
+        hexx_ci10_mom2, hexy_ci10_mom2, hexc_ci10_mom2 = hexbin_sampling(
+            self.mom2_ci10,
+            self.ra_agn,
+            self.dec_agn,
+            beam=55/72.,
+            gridsize=70,
+            err=False,
+            stats="mean",
+            )
+        hexx_ci10_emom2, hexy_ci10_emom2, hexc_ci10_emom2 = hexbin_sampling(
+            self.emom2_ci10,
             self.ra_agn,
             self.dec_agn,
             beam=55/72.,
