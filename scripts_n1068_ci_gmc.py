@@ -437,7 +437,7 @@ class ToolsCIGMC():
         mom2_co10  = data_co10[:,4]
         emom2_co10 = data_co10[:,5]
 
-        cut = np.where(mom0_co10>emom0_co10*self.snr_mom)
+        cut = np.where((mom0_co10>emom0_co10*self.snr_mom) & (mom2_co10>emom2_co10))
         x_co10     = x_co10[cut]
         y_co10     = y_co10[cut]
         emom0_co10 = emom0_co10[cut] / mom0_co10[cut] / np.log(10)
@@ -450,8 +450,8 @@ class ToolsCIGMC():
         ########
         # plot #
         ########
-        x = mom0_co10
-        y = mom2_co10
+        x_co10 = mom0_co10
+        y_co10 = mom2_co10
 
         xlim   = [np.nanmin(x)-0.1,np.nanmax(x)+0.1]
         ylim   = [np.nanmin(y)-0.1,np.nanmax(y)+0.1]
@@ -493,11 +493,11 @@ class ToolsCIGMC():
         ax3.set_yticks([])
 
         # contour
-        X, Y, Z = density_estimation(x, y, xlim, ylim)
+        X, Y, Z = density_estimation(x_co10, y_co10, xlim, ylim)
         ax1.contour(X, Y, Z, colors="blue", linewidths=[2], alpha=0.2)
 
         # scatter + histograms
-        self._scatter_hist(x, y, ax1, ax2, ax3, "deepskyblue", xlim, ylim, "s")
+        self._scatter_hist(x_co10, y_co10, ax1, ax2, ax3, "deepskyblue", xlim, ylim, "s")
 
         # save
         os.system("rm -rf " + self.outpng_r_vs_disp)
