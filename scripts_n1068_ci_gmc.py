@@ -413,7 +413,7 @@ class ToolsCIGMC():
         taskname = self.modname + sys._getframe().f_code.co_name
         check_first(self.mom0_co10,taskname)
 
-        hexx_co10, hexy_co10, hexc_co10 = hexbin_sampling(
+        hexx_co10_mom0, hexy_co10_mom0, hexc_co10_mom0 = hexbin_sampling(
             self.mom0_co10,
             self.ra_agn,
             self.dec_agn,
@@ -422,8 +422,17 @@ class ToolsCIGMC():
             err=False,
             stats="mean",
             )
+        hexx_co10_emom0, hexy_co10_emom0, hexc_co10_emom0 = hexbin_sampling(
+            self.emom0_co10,
+            self.ra_agn,
+            self.dec_agn,
+            beam=55/72.,
+            gridsize=70,
+            err=True,
+            stats="mean",
+            )
 
-        hexx_ci10, hexy_ci10, hexc_ci10 = hexbin_sampling(
+        hexx_ci10_mom0, hexy_ci10_mom0, hexc_ci10_mom0 = hexbin_sampling(
             self.mom0_ci10,
             self.ra_agn,
             self.dec_agn,
@@ -432,17 +441,15 @@ class ToolsCIGMC():
             err=False,
             stats="mean",
             )
-
-        fig = plt.figure(figsize=(13,10))
-        gs  = gridspec.GridSpec(nrows=10, ncols=10)
-        ax1 = plt.subplot(gs[0:10,0:10])
-        ad  = [0.215,0.83,0.10,0.90]
-        myax_set(ax1, None, None, None, None, None, None, adjust=ad)
-
-        ax1.scatter(hexx_co10, hexy_co10, c="deepskyblue", lw=0, s=50, alpha=0.3)
-        ax1.scatter(hexx_ci10, hexy_ci10, c="tomato", lw=0, s=50, alpha=0.3)
-
-        plt.savefig('test.png', dpi=self.fig_dpi)
+        hexx_ci10_emom0, hexy_ci10_emom0, hexc_ci10_emom0 = hexbin_sampling(
+            self.emom0_ci10,
+            self.ra_agn,
+            self.dec_agn,
+            beam=55/72.,
+            gridsize=70,
+            err=True,
+            stats="mean",
+            )
 
     #########################
     #########################
