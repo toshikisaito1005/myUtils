@@ -469,12 +469,12 @@ class ToolsCIGMC():
         emom2_ci10 = data_ci10[:,5]
 
         cut = np.where((mom0_ci10>emom0_ci10*self.snr_mom) & (mom2_ci10>emom2_ci10*self.snr_mom))
-        x_ci10     = x_ci10[cut]
-        y_ci10     = y_ci10[cut]
-        emom0_ci10 = emom0_ci10[cut] / mom0_ci10[cut] / np.log(10)
-        mom0_ci10  = np.log10(mom0_ci10[cut])
-        emom2_ci10 = emom2_ci10[cut] / mom2_ci10[cut] / np.log(10)
-        mom2_ci10  = np.log10(mom2_ci10[cut])
+        x_ci10_all     = x_ci10[cut]
+        y_ci10_all     = y_ci10[cut]
+        emom0_ci10_all = emom0_ci10[cut] / mom0_ci10[cut] / np.log(10)
+        mom0_ci10_all  = np.log10(mom0_ci10[cut])
+        emom2_ci10_all = emom2_ci10[cut] / mom2_ci10[cut] / np.log(10)
+        mom2_ci10_all  = np.log10(mom2_ci10[cut])
 
         ########
         # plot #
