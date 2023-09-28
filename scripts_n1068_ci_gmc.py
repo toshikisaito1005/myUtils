@@ -162,11 +162,12 @@ class ToolsCIGMC():
         """
         """
 
-        # ngc1068 properties
-        self.ra_agn    = float(self._read_key("ra_agn", "gal").split("deg")[0])
-        self.dec_agn   = float(self._read_key("dec_agn", "gal").split("deg")[0])
-
         #
+        self.ra_agn  = float(self._read_key("ra_agn", "gal").split("deg")[0])
+        self.dec_agn = float(self._read_key("dec_agn", "gal").split("deg")[0])
+        self.snr_mom = 4.0
+
+        ### old
         self.ra_fov2   = float(self._read_key("ra_fov2", "gal").split("deg")[0])
         self.dec_fov2  = float(self._read_key("dec_fov2", "gal").split("deg")[0])
         self.ra_fov3   = float(self._read_key("ra_fov3", "gal").split("deg")[0])
@@ -175,7 +176,6 @@ class ToolsCIGMC():
         self.scale_kpc = self.scale_pc / 1000.
 
         self.beam      = 0.8
-        self.snr_mom   = 4.0
         self.r_cnd     = 3.0 * self.scale_pc / 1000. # kpc
         self.r_cnd_as  = 3.0
         self.r_sbr     = 10.0 * self.scale_pc / 1000. # kpc
@@ -430,15 +430,29 @@ class ToolsCIGMC():
 
         data_co10 = np.loadtxt(self.outtxt_hexcat_ci10)
 
-        ####################
-        # plot: larson 1st #
-        ####################
-        x = data_co10[:,0]
-        y = data_co10[:,1]
-        z = data_co10[:,2]
+        x_co10     = data_co10[:,0]
+        y_co10     = data_co10[:,1]
+        mom0_co10  = data_co10[:,2]
+        emom0_co10 = data_co10[:,3]
+        mom2_co10  = data_co10[:,4]
+        emom2_co10 = data_co10[:,5]
 
-        xlim   = [-30,30]
-        ylim   = [-30,30]
+        cut = np.where((mom0_co10>emom0_co10*self.snr_mom) & (mom2_co10>emom2_co10*self.snr_mom))
+        x_co10     = x_co10[cut]
+        y_co10     = y_co10[cut]
+        mom0_co10  = mom0_co10[cut]
+        emom0_co10 = emom0_co10[cut]
+        mom2_co10  = mom2_co10[cut]
+        emom2_co10 = emom2_co10[cut]
+
+        ########
+        # plot #
+        ########
+        x = mom0_co10
+        y = mom2_co10
+
+        xlim   = [np.nanmin(x)-0.1,np.nanmax(x)+0.1]
+        ylim   = [np.nanmin(y)-0.1,np.nanmax(y)+0.1]
         title  = "None"
         xlabel = "None"
         ylabel = "None"
