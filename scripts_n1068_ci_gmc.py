@@ -438,6 +438,15 @@ class ToolsCIGMC():
         mom2_co10  = data_co10[:,4]
         emom2_co10 = data_co10[:,5]
 
+        fig = plt.figure(figsize=(13,10))
+        gs  = gridspec.GridSpec(nrows=10, ncols=10)
+        ax1 = plt.subplot(gs[0:10,0:10])
+        ad  = [0.215,0.83,0.10,0.90]
+        myax_set(ax1, None, None, None, None, None, None, adjust=ad)
+        cax = ax1.scatter(x_co10*-1, y_co10, c=emom2_co10, cmap="rainbow", lw=0, s=100)
+        fig.colorbar(cax)
+        plt.savefig("test.png", dpi=self.fig_dpi)
+
         print(np.max(mom2_co10), np.max(emom2_co10))
 
         cut = np.where((mom0_co10>emom0_co10*self.snr_mom) & (mom2_co10>emom2_co10))
@@ -447,15 +456,6 @@ class ToolsCIGMC():
         mom0_co10  = np.log10(mom0_co10[cut])
         emom2_co10 = emom2_co10[cut] / mom2_co10[cut] / np.log(10)
         mom2_co10  = np.log10(mom2_co10[cut])
-
-        fig = plt.figure(figsize=(13,10))
-        gs  = gridspec.GridSpec(nrows=10, ncols=10)
-        ax1 = plt.subplot(gs[0:10,0:10])
-        ad  = [0.215,0.83,0.10,0.90]
-        myax_set(ax1, None, None, None, None, None, None, adjust=ad)
-        cax = ax1.scatter(x_co10*-1, y_co10, c=emom2_co10, cmap="rainbow", lw=0, s=100)
-        fig.colorbar(cax)
-        plt.savefig("test.png", dpi=self.fig_dpi)
 
         # import ci10
         data_ci10 = np.loadtxt(self.outtxt_hexcat_ci10)
