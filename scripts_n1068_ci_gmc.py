@@ -470,7 +470,7 @@ class ToolsCIGMC():
         x_co10 = mom0_co10
         y_co10 = emom2_co10
         x_ci10 = mom0_ci10
-        y_ci10 = mom2_ci10
+        y_ci10 = emom2_ci10
 
         xlim   = [np.min([np.nanmin(x_co10),np.nanmin(x_ci10)])-0.2,np.max([np.nanmax(x_co10),np.nanmax(x_ci10)])+0.2]
         ylim   = [np.min([np.nanmin(y_co10),np.nanmin(y_ci10)])-0.2,np.max([np.nanmax(y_co10),np.nanmax(y_ci10)])+0.2]
