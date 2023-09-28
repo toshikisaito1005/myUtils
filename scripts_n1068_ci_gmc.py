@@ -202,6 +202,10 @@ class ToolsCIGMC():
         """
         """
 
+        self.outtxt_hexcat_co10 = self.dir_products + self._read_key("outtxt_hexcat_co10")
+        self.outtxt_hexcat_ci10 = self.dir_products + self._read_key("outtxt_hexcat_ci10")
+
+        ### old
         self.outpng_hist_co10_pix  = self.dir_products + self._read_key("outpng_hist_co10_pix")
         self.outpng_hist_ci10_pix  = self.dir_products + self._read_key("outpng_hist_ci10_pix")
         self.outpng_hist_ratio_pix = self.dir_products + self._read_key("outpng_hist_ratio_pix")
@@ -417,7 +421,7 @@ class ToolsCIGMC():
         check_first(self.mom0_co10,taskname)
 
         # mom0
-        hexx_co10_mom0, hexy_co10_mom0, hexc_co10_mom0 = hexbin_sampling(
+        hexx_co10, hexy_co10, hexc_co10_mom0 = hexbin_sampling(
             self.mom0_co10,
             self.ra_agn,
             self.dec_agn,
@@ -426,7 +430,7 @@ class ToolsCIGMC():
             err=False,
             stats="mean",
             )
-        hexx_co10_emom0, hexy_co10_emom0, hexc_co10_emom0 = hexbin_sampling(
+        _, _, hexc_co10_emom0 = hexbin_sampling(
             self.emom0_co10,
             self.ra_agn,
             self.dec_agn,
@@ -436,7 +440,7 @@ class ToolsCIGMC():
             stats="mean",
             )
 
-        hexx_ci10_mom0, hexy_ci10_mom0, hexc_ci10_mom0 = hexbin_sampling(
+        hexx_ci10, hexy_ci10, hexc_ci10_mom0 = hexbin_sampling(
             self.mom0_ci10,
             self.ra_agn,
             self.dec_agn,
@@ -445,7 +449,7 @@ class ToolsCIGMC():
             err=False,
             stats="mean",
             )
-        hexx_ci10_emom0, hexy_ci10_emom0, hexc_ci10_emom0 = hexbin_sampling(
+        _, _, hexc_ci10_emom0 = hexbin_sampling(
             self.emom0_ci10,
             self.ra_agn,
             self.dec_agn,
@@ -456,7 +460,7 @@ class ToolsCIGMC():
             )
 
         # mom2
-        hexx_co10_mom2, hexy_co10_mom2, hexc_co10_mom2 = hexbin_sampling(
+        _, _, hexc_co10_mom2 = hexbin_sampling(
             self.mom2_co10,
             self.ra_agn,
             self.dec_agn,
@@ -465,7 +469,7 @@ class ToolsCIGMC():
             err=False,
             stats="mean",
             )
-        hexx_co10_emom2, hexy_co10_emom2, hexc_co10_emom2 = hexbin_sampling(
+        _, _, hexc_co10_emom2 = hexbin_sampling(
             self.emom2_co10,
             self.ra_agn,
             self.dec_agn,
@@ -475,7 +479,7 @@ class ToolsCIGMC():
             stats="mean",
             )
 
-        hexx_ci10_mom2, hexy_ci10_mom2, hexc_ci10_mom2 = hexbin_sampling(
+        _, _, hexc_ci10_mom2 = hexbin_sampling(
             self.mom2_ci10,
             self.ra_agn,
             self.dec_agn,
@@ -484,7 +488,7 @@ class ToolsCIGMC():
             err=False,
             stats="mean",
             )
-        hexx_ci10_emom2, hexy_ci10_emom2, hexc_ci10_emom2 = hexbin_sampling(
+        _, _, hexc_ci10_emom2 = hexbin_sampling(
             self.emom2_ci10,
             self.ra_agn,
             self.dec_agn,
@@ -493,6 +497,12 @@ class ToolsCIGMC():
             err=True,
             stats="mean",
             )
+
+        # combine
+        data_co10 = np.c_[hexx_co10, hexy_co10, hexc_co10_mom0, hexc_co10_emom0, hexc_co10_mom2, hexc_co10_emom2]
+        np.savetxt(self.outtxt_hexcat_co10, data_co10)
+        data_ci10 = np.c_[hexx_ci10, hexy_ci10, hexc_ci10_mom0, hexc_ci10_emom0, hexc_ci10_mom2, hexc_ci10_emom2]
+        np.savetxt(self.outtxt_hexcat_ci10, data_ci10)
 
     #########################
     #########################
