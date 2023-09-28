@@ -413,8 +413,18 @@ class ToolsCIGMC():
         taskname = self.modname + sys._getframe().f_code.co_name
         check_first(self.mom0_co10,taskname)
 
-        hexx, hexy, hexc = hexbin_sampling(
+        hexx_co10, hexy_co10, hexc_co10 = hexbin_sampling(
             self.mom0_co10,
+            self.ra_agn,
+            self.dec_agn,
+            beam=55/72.,
+            gridsize=70,
+            err=False,
+            stats="mean",
+            )
+
+        hexx_ci10, hexy_ci10, hexc_ci10 = hexbin_sampling(
+            self.mom0_ci10,
             self.ra_agn,
             self.dec_agn,
             beam=55/72.,
@@ -1909,7 +1919,9 @@ class ToolsCIGMC():
         return value
 
     #########################
+    #########################
     # will be decomissioned #
+    #########################
     #########################
 
     def do_align_old(
