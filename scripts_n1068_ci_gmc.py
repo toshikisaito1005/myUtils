@@ -472,8 +472,8 @@ class ToolsCIGMC():
         x_ci10 = mom0_ci10
         y_ci10 = mom2_ci10
 
-        xlim   = [np.min([np.nanmin(x_co10),np.nanmin(x_ci10)])-0.2,np.min([np.nanmax(x_co10),np.nanmax(x_ci10)])+0.2]
-        ylim   = [np.min([np.nanmin(y_co10),np.nanmin(y_ci10)])-0.2,np.min([np.nanmax(y_co10),np.nanmax(y_ci10)])+0.2]
+        xlim   = [np.min([np.nanmin(x_co10),np.nanmin(x_ci10)])-0.2,np.max([np.nanmax(x_co10),np.nanmax(x_ci10)])+0.2]
+        ylim   = [np.min([np.nanmin(y_co10),np.nanmin(y_ci10)])-0.2,np.max([np.nanmax(y_co10),np.nanmax(y_ci10)])+0.2]
         title  = "None"
         xlabel = "None"
         ylabel = "None"
@@ -518,7 +518,7 @@ class ToolsCIGMC():
 
         # plot ci10
         X, Y, Z = density_estimation(x_ci10, y_ci10, xlim, ylim)
-        ax1.contour(X, Y, Z, colors="blue", linewidths=[2], alpha=0.2)
+        ax1.contour(X, Y, Z, colors="red", linewidths=[2], alpha=0.2)
         self._scatter_hist(x_ci10, y_ci10, ax1, ax2, ax3, "tomato", xlim, ylim, "o", offset=0.15)
 
         # save
@@ -576,7 +576,6 @@ class ToolsCIGMC():
         ax_histy.text(0.74, 0.95, "16$^{th}$-50$^{th}$-84$^{th}$ pctls.", color="black", transform=ax_histy.transAxes, fontsize=15, rotation=-90)
         this_txt = str(int(10**np.percentile(y,16)))+"-"+str(int(10**np.percentile(y,50)))+"-"+str(int(10**np.percentile(y,84)))
         ax_histy.text(0.59-offset, 0.95, this_txt, color=color, transform=ax_histy.transAxes, fontsize=15, rotation=-90)
-
 
     ###############
     # do_sampling #
