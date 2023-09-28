@@ -76,33 +76,28 @@ def hexbin_sampling(
     Y    = y.reshape(-1)
     C    = c.reshape(-1)
 
-    cut = np.where(C!=0)
-    X = X[cut]
-    Y = Y[cut]
-    C = C[cut]
-
     # determine sampling grid
     size   = 0.5 * gridsize * beam
     extent = [size, -size, -size, size]
-
-    # hex sampling
-    fig = plt.figure(figsize=(9,9))
-    gs  = gridspec.GridSpec(nrows=1,ncols=1)
-    ax  = plt.subplot(gs[0:1,0:1])
-    
-    hexdata = ax.hexbin(X, Y, C=C, gridsize=gridsize, extent=extent)
-    hexc    = np.array(hexdata.get_array())
-    hexdata = ax.hexbin(X, Y, C=X, gridsize=gridsize, extent=extent)
-    hexx    = np.array(hexdata.get_array())
-    hexdata = ax.hexbin(X, Y, C=Y, gridsize=gridsize, extent=extent)
-    hexy    = np.array(hexdata.get_array())
-    hexdata = ax.hexbin(X, Y, gridsize=gridsize, extent=extent)
 
     # pixel per hex
     s      = np.sqrt(3.0)/2.0 * beam**2.0
     cdelt1 = imhead(imagename,mode="list")["cdelt1"]
     pix    = abs(float(cdelt1)) * (3600.0*180.0)/np.pi
     n      = s / pix**2.0
+
+    # hex sampling
+    fig = plt.figure(figsize=(9,9))
+    gs  = gridspec.GridSpec(nrows=1,ncols=1)
+    ax  = plt.subplot(gs[0:1,0:1])
+    
+    hexdata = ax.hexbin(X, Y, C=C, gridsize=gridsize, extent=extent, mincnt=int(n/2.))
+    hexc    = np.array(hexdata.get_array())
+    hexdata = ax.hexbin(X, Y, C=X, gridsize=gridsize, extent=extent, mincnt=int(n/2.))
+    hexx    = np.array(hexdata.get_array())
+    hexdata = ax.hexbin(X, Y, C=Y, gridsize=gridsize, extent=extent, mincnt=int(n/2.))
+    hexy    = np.array(hexdata.get_array())
+    hexdata = ax.hexbin(X, Y, gridsize=gridsize, extent=extent, mincnt=int(n/2.))
 
     # apply pixel per beam
     barea_pix = beam_area(imagename)
