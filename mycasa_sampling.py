@@ -76,6 +76,11 @@ def hexbin_sampling(
     Y    = y.reshape(-1)
     C    = c.reshape(-1)
 
+    cut = np.where(C!=0)
+    X = X[cut]
+    Y = Y[cut]
+    C = C[cut]
+
     # determine sampling grid
     size   = 0.5 * gridsize * beam
     extent = [size, -size, -size, size]
