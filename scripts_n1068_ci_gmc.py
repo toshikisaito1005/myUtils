@@ -611,7 +611,6 @@ class ToolsCIGMC():
             beam=55/72.,
             gridsize=70,
             err=False,
-            stats="mean",
             )
         _, _, hexc_co10_emom0 = hexbin_sampling(
             self.emom0_co10,
@@ -620,7 +619,6 @@ class ToolsCIGMC():
             beam=55/72.,
             gridsize=70,
             err=True,
-            stats="mean",
             )
 
         hexx_ci10, hexy_ci10, hexc_ci10_mom0 = hexbin_sampling(
@@ -630,7 +628,6 @@ class ToolsCIGMC():
             beam=55/72.,
             gridsize=70,
             err=False,
-            stats="mean",
             )
         _, _, hexc_ci10_emom0 = hexbin_sampling(
             self.emom0_ci10,
@@ -639,7 +636,6 @@ class ToolsCIGMC():
             beam=55/72.,
             gridsize=70,
             err=True,
-            stats="mean",
             )
 
         # mom2
@@ -650,7 +646,6 @@ class ToolsCIGMC():
             beam=55/72.,
             gridsize=70,
             err=False,
-            stats="mean",
             )
         _, _, hexc_co10_emom2 = hexbin_sampling(
             self.emom2_co10,
@@ -659,7 +654,6 @@ class ToolsCIGMC():
             beam=55/72.,
             gridsize=70,
             err=True,
-            stats="mean",
             )
 
         _, _, hexc_ci10_mom2 = hexbin_sampling(
@@ -669,7 +663,6 @@ class ToolsCIGMC():
             beam=55/72.,
             gridsize=70,
             err=False,
-            stats="mean",
             )
         _, _, hexc_ci10_emom2 = hexbin_sampling(
             self.emom2_ci10,
@@ -678,7 +671,6 @@ class ToolsCIGMC():
             beam=55/72.,
             gridsize=70,
             err=True,
-            stats="mean",
             )
 
         # combine
