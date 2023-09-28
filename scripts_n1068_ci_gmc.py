@@ -531,7 +531,7 @@ class ToolsCIGMC():
         self._scatter_hist(x_co10, y_co10, ax1, ax2, ax3, "deepskyblue", xlim, ylim, "s")
 
         # plot co10 cone
-        self._scatter_hist(x2_co10, y2_co10, ax1, ax2, ax3, "deepskyblue", xlim, ylim, "s", lw=2)
+        ax.scatter(x2_co10, y2_co10, c="deepskyblue", lw=2, s=70, marker="s", alpha=0.5)
 
         # plot ci10 all
         X, Y, Z = density_estimation(x_ci10, y_ci10, xlim, ylim)
