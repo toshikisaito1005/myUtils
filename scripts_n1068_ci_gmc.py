@@ -51,7 +51,7 @@ from mycasa_plots import *
 from mycasa_sampling import *
 
 def density_estimation(m1, m2, xlim, ylim):
-    X, Y = np.mgrid[xlim[0]:xlim[1]:3j, ylim[0]:ylim[1]:3j]
+    X, Y = np.mgrid[xlim[0]:xlim[1]:10j, ylim[0]:ylim[1]:10j]
     positions = np.vstack([X.ravel(), Y.ravel()])
     values = np.vstack([m1, m2])
     kernel = stats.gaussian_kde(values)
