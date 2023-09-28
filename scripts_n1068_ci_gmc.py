@@ -48,6 +48,7 @@ import matplotlib.patheffects as PathEffects
 
 from mycasa_tasks import *
 from mycasa_plots import *
+from mycasa_sampling import *
 
 def density_estimation(m1, m2, xlim, ylim):
     X, Y = np.mgrid[xlim[0]:xlim[1]:100j, ylim[0]:ylim[1]:100j]
