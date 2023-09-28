@@ -445,6 +445,8 @@ class ToolsCIGMC():
         emom2_co10 = emom2_co10[cut] / mom2_co10[cut] / np.log(10)
         mom2_co10  = np.log10(mom2_co10[cut])
 
+        print(len(mom2_co10))
+
         ########
         # plot #
         ########
