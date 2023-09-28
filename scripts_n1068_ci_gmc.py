@@ -433,6 +433,8 @@ class ToolsCIGMC():
             stats="mean",
             )
 
+        print(hexc_ci10.flatten())
+
     #########################
     #########################
     # run_ngc1068_cigmc_old #
