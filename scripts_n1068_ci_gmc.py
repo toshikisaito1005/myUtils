@@ -442,7 +442,7 @@ class ToolsCIGMC():
         theta      = np.degrees(np.arctan2(x_co10, y_co10)) + 90
         theta_co10 = np.where(theta>0, theta, theta+360)
 
-        cut = np.where((mom0_co10>emom0_co10*self.snr_mom) & (mom2_co10>emom2_co10*self.snr_mom))
+        cut = np.where((mom0_co10>emom0_co10*self.snr_mom) & (mom2_co10>emom2_co10))
         x_co10_all     = x_co10[cut]
         y_co10_all     = y_co10[cut]
         emom0_co10_all = emom0_co10[cut] / mom0_co10[cut] / np.log(10)
@@ -450,7 +450,7 @@ class ToolsCIGMC():
         emom2_co10_all = emom2_co10[cut] / mom2_co10[cut] / np.log(10)
         mom2_co10_all  = np.log10(mom2_co10[cut])
 
-        cut = np.where((mom0_co10>emom0_co10*self.snr_mom) & (mom2_co10>emom2_co10*self.snr_mom) & (r_co10<self.fov_diamter/2.0) & (theta_co10>=self.theta2) & (theta_co10<self.theta1) | (mom0_co10>emom0_co10*self.snr_mom) & (mom2_co10>emom2_co10*self.snr_mom) & (r_co10<self.fov_diamter/2.0) & (theta_co10>=self.theta2+180) & (theta_co10<self.theta1+180))
+        cut = np.where((mom0_co10>emom0_co10*self.snr_mom) & (mom2_co10>emom2_co10) & (r_co10<self.fov_diamter/2.0) & (theta_co10>=self.theta2) & (theta_co10<self.theta1) | (mom0_co10>emom0_co10*self.snr_mom) & (mom2_co10>emom2_co10*self.snr_mom) & (r_co10<self.fov_diamter/2.0) & (theta_co10>=self.theta2+180) & (theta_co10<self.theta1+180))
         x_co10_cone     = x_co10[cut]
         y_co10_cone     = y_co10[cut]
         emom0_co10_cone = emom0_co10[cut] / mom0_co10[cut] / np.log(10)
@@ -468,7 +468,7 @@ class ToolsCIGMC():
         mom2_ci10  = data_ci10[:,4]
         emom2_ci10 = data_ci10[:,5]
 
-        cut = np.where((mom0_ci10>emom0_ci10*self.snr_mom) & (mom2_ci10>emom2_ci10*self.snr_mom))
+        cut = np.where((mom0_ci10>emom0_ci10*self.snr_mom) & (mom2_ci10>emom2_ci10))
         x_ci10_all     = x_ci10[cut]
         y_ci10_all     = y_ci10[cut]
         emom0_ci10_all = emom0_ci10[cut] / mom0_ci10[cut] / np.log(10)
@@ -531,7 +531,7 @@ class ToolsCIGMC():
         self._scatter_hist(x_co10, y_co10, ax1, ax2, ax3, "deepskyblue", xlim, ylim, "s")
 
         # plot co10 cone
-        ax.scatter(x2_co10, y2_co10, c="deepskyblue", lw=2, s=70, marker="s", alpha=0.5)
+        ax1.scatter(x2_co10, y2_co10, c="deepskyblue", lw=2, s=70, marker="s", alpha=0.5)
 
         # plot ci10 all
         X, Y, Z = density_estimation(x_ci10, y_ci10, xlim, ylim)
