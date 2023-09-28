@@ -438,13 +438,25 @@ class ToolsCIGMC():
         mom2_co10  = data_co10[:,4]
         emom2_co10 = data_co10[:,5]
 
-        cut = np.where((mom0_co10>emom0_co10*self.snr_mom) & (mom2_co10>emom2_co10))
-        x_co10     = x_co10[cut]
-        y_co10     = y_co10[cut]
-        emom0_co10 = emom0_co10[cut] / mom0_co10[cut] / np.log(10)
-        mom0_co10  = np.log10(mom0_co10[cut])
-        emom2_co10 = emom2_co10[cut] / mom2_co10[cut] / np.log(10)
-        mom2_co10  = np.log10(mom2_co10[cut])
+        r_co10     = np.sqrt(x_co10**2 + y_co10**2)
+        theta      = np.degrees(np.arctan2(x_co10, y_co10)) + 90
+        theta_co10 = np.where(theta>0, theta, theta+360)
+
+        cut = np.where((mom0_co10>emom0_co10*self.snr_mom) & (mom2_co10>emom2_co10*self.snr_mom))
+        x_co10_all     = x_co10[cut]
+        y_co10_all     = y_co10[cut]
+        emom0_co10_all = emom0_co10[cut] / mom0_co10[cut] / np.log(10)
+        mom0_co10_all  = np.log10(mom0_co10[cut])
+        emom2_co10_all = emom2_co10[cut] / mom2_co10[cut] / np.log(10)
+        mom2_co10_all  = np.log10(mom2_co10[cut])
+
+        cut = np.where((mom0_co10>emom0_co10*self.snr_mom) & (mom2_co10>emom2_co10*self.snr_mom) & (r_co10<self.fov_diamter/2.0) & (theta_co10>=self.theta2) & (theta_co10<self.theta1) | (mom0_co10>emom0_co10*self.snr_mom) & (mom2_co10>emom2_co10*self.snr_mom) & (r_co10<self.fov_diamter/2.0) & (theta_co10>=self.theta2+180) & (theta_co10<self.theta1+180))
+        x_co10_cone     = x_co10[cut]
+        y_co10_cone     = y_co10[cut]
+        emom0_co10_cone = emom0_co10[cut] / mom0_co10[cut] / np.log(10)
+        mom0_co10_cone  = np.log10(mom0_co10[cut])
+        emom2_co10_cone = emom2_co10[cut] / mom2_co10[cut] / np.log(10)
+        mom2_co10_cone  = np.log10(mom2_co10[cut])
 
         # import ci10
         data_ci10 = np.loadtxt(self.outtxt_hexcat_ci10)
@@ -456,16 +468,7 @@ class ToolsCIGMC():
         mom2_ci10  = data_ci10[:,4]
         emom2_ci10 = data_ci10[:,5]
 
-        fig = plt.figure(figsize=(13,10))
-        gs  = gridspec.GridSpec(nrows=10, ncols=10)
-        ax1 = plt.subplot(gs[0:10,0:10])
-        ad  = [0.215,0.83,0.10,0.90]
-        myax_set(ax1, None, None, None, None, None, None, adjust=ad)
-        cax = ax1.scatter(x_ci10[mom0_ci10!=0]*-1, y_ci10[mom0_ci10!=0], c=mom0_ci10[mom0_ci10!=0], cmap="rainbow", lw=0, s=100)
-        fig.colorbar(cax)
-        plt.savefig("test.png", dpi=self.fig_dpi)
-
-        cut = np.where((mom0_ci10>emom0_ci10*self.snr_mom) & (mom2_ci10>emom2_ci10))
+        cut = np.where((mom0_ci10>emom0_ci10*self.snr_mom) & (mom2_ci10>emom2_ci10*self.snr_mom))
         x_ci10     = x_ci10[cut]
         y_ci10     = y_ci10[cut]
         emom0_ci10 = emom0_ci10[cut] / mom0_ci10[cut] / np.log(10)
@@ -476,10 +479,14 @@ class ToolsCIGMC():
         ########
         # plot #
         ########
-        x_co10 = mom0_co10
-        y_co10 = mom2_co10
-        x_ci10 = mom0_ci10
-        y_ci10 = mom2_ci10
+        x_co10 = mom0_co10_all
+        y_co10 = mom2_co10_all
+        x_ci10 = mom0_ci10_all
+        y_ci10 = mom2_ci10_all
+        x2_co10 = mom0_co10_cone
+        y2_co10 = mom2_co10_cone
+        x2_ci10 = mom0_ci10_cone
+        y2_ci10 = mom2_ci10_cone
 
         xlim   = [np.min([np.nanmin(x_co10),np.nanmin(x_ci10)])-0.2,np.max([np.nanmax(x_co10),np.nanmax(x_ci10)])+0.2]
         ylim   = [np.min([np.nanmin(y_co10),np.nanmin(y_ci10)])-0.2,np.max([np.nanmax(y_co10),np.nanmax(y_ci10)])+0.2]
@@ -520,12 +527,15 @@ class ToolsCIGMC():
         ax3.set_xticks([])
         ax3.set_yticks([])
 
-        # plot co10
+        # plot co10 all
         X, Y, Z = density_estimation(x_co10, y_co10, xlim, ylim)
         ax1.contour(X, Y, Z, colors="blue", linewidths=[2], alpha=0.2)
         self._scatter_hist(x_co10, y_co10, ax1, ax2, ax3, "deepskyblue", xlim, ylim, "s")
 
-        # plot ci10
+        # plot co10 cone
+        self._scatter_hist(x2_co10, y2_co10, ax1, ax2, ax3, "deepskyblue", xlim, ylim, "s", lw=2)
+
+        # plot ci10 all
         X, Y, Z = density_estimation(x_ci10, y_ci10, xlim, ylim)
         ax1.contour(X, Y, Z, colors="red", linewidths=[2], alpha=0.2)
         self._scatter_hist(x_ci10, y_ci10, ax1, ax2, ax3, "tomato", xlim, ylim, "o", offset=0.15)
@@ -538,13 +548,13 @@ class ToolsCIGMC():
     # _scatter_hist #
     #################
 
-    def _scatter_hist(self, x, y, ax, ax_histx, ax_histy, color, xlim, ylim, marker="o", offset=0):
+    def _scatter_hist(self, x, y, ax, ax_histx, ax_histy, color, xlim, ylim, marker="o", offset=0, lw=0):
         # no labels
         ax_histx.tick_params(axis="x", labelbottom=False)
         ax_histy.tick_params(axis="y", labelleft=False)
 
         # the scatter plot:
-        ax.scatter(x, y, c=color, lw=0, s=70, marker=marker, alpha=0.5)
+        ax.scatter(x, y, c=color, lw=lw, s=70, marker=marker, alpha=0.5)
 
         # now determine nice limits by hand:
         binwidth = 0.05
