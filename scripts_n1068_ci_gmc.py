@@ -553,7 +553,7 @@ class ToolsCIGMC():
         ax1.scatter(x2_co10, y2_co10, c="deepskyblue", lw=2, s=70, marker="s", alpha=0.5)
 
         # plot ci10 cone
-        ax1.scatter(x2_ci10, y2_ci10, c="tomato", lw=2, s=70, marker="s", alpha=0.5)
+        ax1.scatter(x2_ci10, y2_ci10, c="tomato", lw=2, s=70, marker="o", alpha=0.5)
 
         # save
         os.system("rm -rf " + self.outpng_r_vs_disp)
