@@ -428,7 +428,8 @@ class ToolsCIGMC():
         taskname = self.modname + sys._getframe().f_code.co_name
         check_first(self.outtxt_hexcat_ci10,taskname)
 
-        data_co10 = np.loadtxt(self.outtxt_hexcat_ci10)
+        # import co10
+        data_co10 = np.loadtxt(self.outtxt_hexcat_co10)
 
         x_co10     = data_co10[:,0]
         y_co10     = data_co10[:,1]
@@ -445,16 +446,34 @@ class ToolsCIGMC():
         emom2_co10 = emom2_co10[cut] / mom2_co10[cut] / np.log(10)
         mom2_co10  = np.log10(mom2_co10[cut])
 
-        print(len(mom2_co10))
+        # import ci10
+        data_ci10 = np.loadtxt(self.outtxt_hexcat_ci10)
+
+        x_ci10     = data_ci10[:,0]
+        y_ci10     = data_ci10[:,1]
+        mom0_ci10  = data_ci10[:,2]
+        emom0_ci10 = data_ci10[:,3]
+        mom2_ci10  = data_ci10[:,4]
+        emom2_ci10 = data_ci10[:,5]
+
+        cut = np.where((mom0_ci10>emom0_ci10*self.snr_mom) & (mom2_ci10>emom2_ci10))
+        x_ci10     = x_ci10[cut]
+        y_ci10     = y_ci10[cut]
+        emom0_ci10 = emom0_ci10[cut] / mom0_ci10[cut] / np.log(10)
+        mom0_ci10  = np.log10(mom0_ci10[cut])
+        emom2_ci10 = emom2_ci10[cut] / mom2_ci10[cut] / np.log(10)
+        mom2_ci10  = np.log10(mom2_ci10[cut])
 
         ########
         # plot #
         ########
         x_co10 = mom0_co10
         y_co10 = mom2_co10
+        x_ci10 = mom0_ci10
+        y_ci10 = mom2_ci10
 
-        xlim   = [np.nanmin(x_co10)-0.1,np.nanmax(x_co10)+0.1]
-        ylim   = [np.nanmin(y_co10)-0.1,np.nanmax(y_co10)+0.1]
+        xlim   = [np.min([np.nanmin(x_co10),np.nanmin(x_ci10)])-0.2,np.min([np.nanmax(x_co10),np.nanmax(x_ci10)])+0.2]
+        ylim   = [np.min([np.nanmin(y_co10),np.nanmin(y_ci10)])-0.2,np.min([np.nanmax(y_co10),np.nanmax(y_ci10)])+0.2]
         title  = "None"
         xlabel = "None"
         ylabel = "None"
