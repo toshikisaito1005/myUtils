@@ -36,6 +36,8 @@ https://qiita.com/Shinji_Fujita/items/7463038f70401040aedc
 
 history:
 2021-12-05   created (in Sinkansen!)
+2023-09-27   gave up procpros because of inconsistency between CI and CO catalog
+2023-09-28   started beamwise measurement
 Toshiki Saito@Nichidai/NAOJ
 """
 
@@ -397,11 +399,11 @@ class ToolsCIGMC():
             )
         """
 
-    #############
-    # map_ratio #
-    #############
+    ###############
+    # do_sampling #
+    ###############
 
-    def map_ratio(
+    def do_sampling(
         self,
         ):
         """
