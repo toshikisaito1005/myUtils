@@ -439,8 +439,8 @@ class ToolsCIGMC():
         ad  = [0.215,0.83,0.10,0.90]
         myax_set(ax1, None, None, None, None, None, None, adjust=ad)
 
-        ax1.scatter(hexx_co10, hexy_co10, c="tomato", lw=0, s=50, alpha=0.3)
-        ax1.scatter(hexx_ci10, hexy_ci10, c="tomato", lw=0, s=100, alpha=0.3)
+        ax1.scatter(hexx_co10, hexy_co10, c="deepskyblue", lw=0, s=50, alpha=0.3)
+        ax1.scatter(hexx_ci10, hexy_ci10, c="tomato", lw=0, s=50, alpha=0.3)
 
         plt.savefig('test.png', dpi=self.fig_dpi)
 
