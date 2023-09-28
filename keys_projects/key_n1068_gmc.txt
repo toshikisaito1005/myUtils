@@ -61,6 +61,7 @@ outfits_mom0_ratio ,,,n1068_ratio_mom0.fits
 ######################
 outtxt_hexcat_co10 ,,,outtxt_hexcat_co10.txt
 outtxt_hexcat_ci10 ,,,outtxt_hexcat_ci10.txt
+outpng_r_vs_disp   ,,,outpng_r_vs_disp.ng
 #
 #
 #

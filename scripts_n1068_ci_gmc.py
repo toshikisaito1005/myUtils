@@ -204,6 +204,8 @@ class ToolsCIGMC():
 
         self.outtxt_hexcat_co10 = self.dir_products + self._read_key("outtxt_hexcat_co10")
         self.outtxt_hexcat_ci10 = self.dir_products + self._read_key("outtxt_hexcat_ci10")
+        self.outpng_r_vs_disp   = self.dir_products + self._read_key("outpng_r_vs_disp")
+
 
         ### old
         self.outpng_hist_co10_pix  = self.dir_products + self._read_key("outpng_hist_co10_pix")
@@ -274,7 +276,9 @@ class ToolsCIGMC():
     def run_ngc1068_cigmc(
         self,
         # analysis
-        do_sampling = False,
+        do_sampling  = False,
+        # plot
+        plot_scatter = False,
         ):
         """
         This method runs all the methods which will create figures in the paper.
@@ -282,7 +286,11 @@ class ToolsCIGMC():
 
         # analysis
         if do_sampling==True:
-            self.do_sampling()
+            self.do_sampling() # 2023-09-28: created
+
+        # plot
+        if plot_scatter==True:
+            self.plot_scatter() # 2023-09-28: created
 
     def run_ngc1068_cigmc_old(
         self,
@@ -406,6 +414,78 @@ class ToolsCIGMC():
             delin=delin,
             )
         """
+
+    ################
+    # plot_scatter #
+    ################
+
+    def plot_scatter(
+        self,
+        ):
+        """
+        """
+
+        taskname = self.modname + sys._getframe().f_code.co_name
+        check_first(self.outtxt_hexcat_ci10,taskname)
+
+        data_co10 = np.loadtxt(self.outtxt_hexcat_ci10)
+
+        ####################
+        # plot: larson 1st #
+        ####################
+        x = data_co10[:,0]
+        y = data_co10[:,1]
+        z = data_co10[:,2]
+
+        xlim   = [-30,30]
+        ylim   = [-30,30]
+        title  = "None"
+        xlabel = "None"
+        ylabel = "None"
+        alpha  = 1.0
+        size   = 30
+
+        # plot
+        fig = plt.figure(figsize=(10,10))
+        gs  = gridspec.GridSpec(nrows=200, ncols=200)
+        ax1 = plt.subplot(gs[30:200,10:170])
+        ax2 = plt.subplot(gs[0:30,10:170])
+        ax3 = plt.subplot(gs[30:200,170:200])
+        ad  = [0.215,0.83,0.10,0.90]
+        myax_set(ax1, None, xlim, ylim, None, xlabel, ylabel, adjust=ad)
+        myax_set(ax2, None, xlim, None, None, None, None)
+        myax_set(ax3, None, None, ylim, None, None, None)
+
+        # ax2 ticks
+        ax2.spines['right'].set_visible(False)
+        ax2.spines['top'].set_visible(False)
+        ax2.spines['bottom'].set_visible(False)
+        ax2.spines['left'].set_visible(False)
+        ax2.tick_params('x', length=0, which='major')
+        ax2.tick_params('y', length=0, which='major')
+        ax2.set_xticks([])
+        ax2.set_yticks([])
+
+        # ax3 ticks
+        ax3.spines['right'].set_visible(False)
+        ax3.spines['top'].set_visible(False)
+        ax3.spines['bottom'].set_visible(False)
+        ax3.spines['left'].set_visible(False)
+        ax3.tick_params('x', length=0, which='major')
+        ax3.tick_params('y', length=0, which='major')
+        ax3.set_xticks([])
+        ax3.set_yticks([])
+
+        # contour
+        X, Y, Z = density_estimation(x, y, xlim, ylim)
+        ax1.contour(X, Y, Z, colors="blue", linewidths=[2], alpha=0.2)
+
+        # scatter + histograms
+        self._scatter_hist(x, y, ax1, ax2, ax3, "deepskyblue", xlim, ylim, "s")
+
+        # save
+        os.system("rm -rf " + self.outpng_r_vs_disp)
+        plt.savefig(self.outpng_r_vs_disp, dpi=self.fig_dpi)
 
     ###############
     # do_sampling #
