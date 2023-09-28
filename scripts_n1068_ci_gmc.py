@@ -442,7 +442,7 @@ class ToolsCIGMC():
         y_co10     = y_co10[cut]
         emom0_co10 = emom0_co10[cut] / mom0_co10[cut] / np.log(10)
         mom0_co10  = np.log10(mom0_co10[cut])
-        emom2_co10 = emom2_co10[cut] / mom2s_co10[cut] / np.log(10)
+        emom2_co10 = emom2_co10[cut] / mom2_co10[cut] / np.log(10)
         mom2_co10  = np.log10(mom2_co10[cut])
 
         ########
