@@ -453,8 +453,8 @@ class ToolsCIGMC():
         x_co10 = mom0_co10
         y_co10 = mom2_co10
 
-        xlim   = [np.nanmin(x)-0.1,np.nanmax(x)+0.1]
-        ylim   = [np.nanmin(y)-0.1,np.nanmax(y)+0.1]
+        xlim   = [np.nanmin(x_co10)-0.1,np.nanmax(x_co10)+0.1]
+        ylim   = [np.nanmin(y_co10)-0.1,np.nanmax(y_co10)+0.1]
         title  = "None"
         xlabel = "None"
         ylabel = "None"
