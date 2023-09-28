@@ -438,6 +438,8 @@ class ToolsCIGMC():
         mom2_co10  = data_co10[:,4]
         emom2_co10 = data_co10[:,5]
 
+        print(np.median(mom2_co10), np.median(emom2_co10))
+
         cut = np.where((mom0_co10>emom0_co10*self.snr_mom) & (mom2_co10>emom2_co10))
         x_co10     = x_co10[cut]
         y_co10     = y_co10[cut]
