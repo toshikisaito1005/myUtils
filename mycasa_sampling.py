@@ -12,6 +12,7 @@ Toshiki Saito@NAOJ
 
 import os, sys, glob, copy, inspect
 import numpy as np
+from functools import partial
 import pyfits
 import matplotlib.pyplot as plt
 import matplotlib.gridspec as gridspec
