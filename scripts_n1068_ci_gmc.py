@@ -476,6 +476,14 @@ class ToolsCIGMC():
         emom2_ci10_all = emom2_ci10[cut] / mom2_ci10[cut] / np.log(10)
         mom2_ci10_all  = np.log10(mom2_ci10[cut])
 
+        cut = np.where((mom0_ci10>emom0_ci10*self.snr_mom) & (mom2_ci10>emom2_ci10) & (r_ci10<self.fov_diamter/2.0) & (r_ci10>self.r_cnd_as) & (theta_ci10>=self.theta2) & (theta_ci10<self.theta1) | (mom0_ci10>emom0_ci10*self.snr_mom) & (mom2_ci10>emom2_ci10*self.snr_mom) & (r_ci10<self.fov_diamter/2.0) & (r_ci10>self.r_cnd_as) & (theta_ci10>=self.theta2+180) & (theta_ci10<self.theta1+180))
+        x_ci10_cone     = x_ci10[cut]
+        y_ci10_cone     = y_ci10[cut]
+        emom0_ci10_cone = emom0_ci10[cut] / mom0_ci10[cut] / np.log(10)
+        mom0_ci10_cone  = np.log10(mom0_ci10[cut])
+        emom2_ci10_cone = emom2_ci10[cut] / mom2_ci10[cut] / np.log(10)
+        mom2_ci10_cone  = np.log10(mom2_ci10[cut])
+
         ########
         # plot #
         ########
@@ -485,6 +493,8 @@ class ToolsCIGMC():
         y_ci10 = mom2_ci10_all
         x2_co10 = mom0_co10_cone
         y2_co10 = mom2_co10_cone
+        x2_ci10 = mom0_ci10_cone
+        y2_ci10 = mom2_ci10_cone
 
         xlim   = [np.min([np.nanmin(x_co10),np.nanmin(x_ci10)])-0.2,np.max([np.nanmax(x_co10),np.nanmax(x_ci10)])+0.2]
         ylim   = [np.min([np.nanmin(y_co10),np.nanmin(y_ci10)])-0.2,np.max([np.nanmax(y_co10),np.nanmax(y_ci10)])+0.2]
@@ -530,13 +540,16 @@ class ToolsCIGMC():
         ax1.contour(X, Y, Z, colors="blue", linewidths=[2], alpha=0.2)
         self._scatter_hist(x_co10, y_co10, ax1, ax2, ax3, "deepskyblue", xlim, ylim, "s")
 
-        # plot co10 cone
-        ax1.scatter(x2_co10, y2_co10, c="deepskyblue", lw=2, s=70, marker="s", alpha=0.5)
-
         # plot ci10 all
         X, Y, Z = density_estimation(x_ci10, y_ci10, xlim, ylim)
         ax1.contour(X, Y, Z, colors="red", linewidths=[2], alpha=0.2)
         self._scatter_hist(x_ci10, y_ci10, ax1, ax2, ax3, "tomato", xlim, ylim, "o", offset=0.15)
+
+        # plot co10 cone
+        ax1.scatter(x2_co10, y2_co10, c="deepskyblue", lw=2, s=70, marker="s", alpha=0.5)
+
+        # plot ci10 cone
+        ax1.scatter(x2_ci10, y2_ci10, c="tomato", lw=2, s=70, marker="s", alpha=0.5)
 
         # save
         os.system("rm -rf " + self.outpng_r_vs_disp)
