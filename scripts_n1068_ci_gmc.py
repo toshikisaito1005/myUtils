@@ -440,10 +440,10 @@ class ToolsCIGMC():
         cut = np.where((mom0_co10>emom0_co10*self.snr_mom) & (mom2_co10>emom2_co10*self.snr_mom))
         x_co10     = x_co10[cut]
         y_co10     = y_co10[cut]
-        mom0_co10  = mom0_co10[cut]
-        emom0_co10 = emom0_co10[cut]
-        mom2_co10  = mom2_co10[cut]
-        emom2_co10 = emom2_co10[cut]
+        mom0_co10  = np.log10(mom0_co10[cut])
+        emom0_co10 = emom0_co10[cut] / mom0_co10[cut] / np.log(10)
+        mom2_co10  = np.log10(mom2_co10[cut])
+        emom2_co10 = emom2_co10[cut] / mom2_co10[cut] / np.log(10)
 
         ########
         # plot #
