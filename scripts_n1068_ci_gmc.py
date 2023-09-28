@@ -503,8 +503,8 @@ class ToolsCIGMC():
         xlim   = [np.min([np.nanmin(x_co10),np.nanmin(x_ci10)])-0.2,np.max([np.nanmax(x_co10),np.nanmax(x_ci10)])+0.2]
         ylim   = [np.min([np.nanmin(y_co10),np.nanmin(y_ci10)])-0.2,np.max([np.nanmax(y_co10),np.nanmax(y_ci10)])+0.2]
         title  = "None"
-        xlabel = "None"
-        ylabel = "None"
+        xlabel = "log$_{10}$ H$_2$ Surface Density ($M_{\odot}$ pc$^{-2}$)"
+        ylabel = "log$_{10}$ Velocity Dispersion (km s$^{-1}$)"
         alpha  = 1.0
         size   = 30
 
