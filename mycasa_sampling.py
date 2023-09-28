@@ -27,10 +27,10 @@ def hexbin_sampling(
     imagename,
     ra,
     dec,
-    beam=0.8,
+    beam =0.8,
     gridsize=70,
     err=False,
-    stats="mean",
+    units="K", #or other
     ):
     """
     Run hexagonal re-sampling with CASA. Sampling area is gridsize*beam x
@@ -66,12 +66,19 @@ def hexbin_sampling(
     check_first(imagename, taskname)
 
     # FITS/CASA image to numpy array
-    data,_ = imval_all(imagename)
-    x    = (data["coords"][:,:,0] * 180/np.pi - ra) * 3600 # arcsec
-    y    = (data["coords"][:,:,1] * 180/np.pi - dec) * 3600 # arcsec
-    c    = np.nan_to_num(data["data"]) # K.km/s
-    if err==True:
-        c = c**2
+    data, _ = imval_all(imagename)
+    x       = (data["coords"][:,:,0] * 180/np.pi - ra) * 3600 # arcsec
+    y       = (data["coords"][:,:,1] * 180/np.pi - dec) * 3600 # arcsec
+    c       = np.nan_to_num(data["data"]) # K.km/s
+
+    # error or not
+    if units=="K":
+        if err==True:
+            barea_pix = beam_area(imagename)
+            c = c**2 * barea_pix
+    elif units=="other":
+        if err==True:
+            c = c**2
 
     X    = x.reshape(-1)
     Y    = y.reshape(-1)
@@ -81,49 +88,38 @@ def hexbin_sampling(
     size   = 0.5 * gridsize * beam
     extent = [size, -size, -size, size]
 
+    # hex sampling
+    fig = plt.figure(figsize=(9,9))
+    gs  = gridspec.GridSpec(nrows=1,ncols=1)
+    ax  = plt.subplot(gs[0:1,0:1])
+
+    hexdata = ax.hexbin(X, Y, C=C, gridsize=gridsize, extent=extent)
+    hexc    = np.array(hexdata.get_array())
+    hexdata = ax.hexbin(X, Y, C=X, gridsize=gridsize, extent=extent)
+    hexx    = np.array(hexdata.get_array())
+    hexdata = ax.hexbin(X, Y, C=Y, gridsize=gridsize, extent=extent)
+    hexy    = np.array(hexdata.get_array())
+    hexdata = ax.hexbin(X, Y, gridsize=gridsize, extent=extent)
+
     # pixel per hex
     s      = np.sqrt(3.0)/2.0 * beam**2.0
     cdelt1 = imhead(imagename,mode="list")["cdelt1"]
     pix    = abs(float(cdelt1)) * (3600.0*180.0)/np.pi
     n      = s / pix**2.0
 
-    # hex sampling
-    fig = plt.figure(figsize=(9,9))
-    gs  = gridspec.GridSpec(nrows=1,ncols=1)
-    ax  = plt.subplot(gs[0:1,0:1])
-
-    """
-    def func1(z):
-        return np.nanmean(z[z!=0])
-
-    reduce_function = partial(func1)
-    """
-    
-    hexdata = ax.hexbin(X, Y, C=C, gridsize=gridsize, extent=extent)#, mincnt=int(n/2.), reduce_C_function=reduce_function)
-    hexc    = np.array(hexdata.get_array())
-    hexdata = ax.hexbin(X, Y, C=X, gridsize=gridsize, extent=extent)#, mincnt=int(n/2.), reduce_C_function=reduce_function)
-    hexx    = np.array(hexdata.get_array())
-    hexdata = ax.hexbin(X, Y, C=Y, gridsize=gridsize, extent=extent)#, mincnt=int(n/2.), reduce_C_function=reduce_function)
-    hexy    = np.array(hexdata.get_array())
-    hexdata = ax.hexbin(X, Y, gridsize=gridsize, extent=extent)#, mincnt=int(n/2.), reduce_C_function=reduce_function)
-
-    # apply pixel per beam
-    barea_pix = beam_area(imagename)
-    if err==True:
-        hexc = hexc / np.sqrt(barea_pix)
-    else:
-        hexc = hexc / barea_pix
+    print(" s :{}\n".format(s))
+    print(" pix :{}\n".format(pix))
+    print(" n :{}\n".format(n))
 
     # error case
     if err==True:
         hexc = np.sqrt(hexc)*(1.0/np.sqrt(n))
 
-    plt.clf()
-
     # choose stats
-    if stats=="mean":
+    if units=="K":
         pass
-    elif stats=="sum":
+    elif units=="other":
         hexc = hexc * n
 
+    plt.clf()
     return hexx, hexy, hexc
