@@ -461,7 +461,7 @@ class ToolsCIGMC():
         ax1 = plt.subplot(gs[0:10,0:10])
         ad  = [0.215,0.83,0.10,0.90]
         myax_set(ax1, None, None, None, None, None, None, adjust=ad)
-        cax = ax1.scatter(x_co10[mom0_ci10!=0]*-1, y_ci10[mom0_ci10!=0], c=mom0_ci10[mom0_ci10!=0], cmap="rainbow", lw=0, s=100)
+        cax = ax1.scatter(x_ci10[mom0_ci10!=0]*-1, y_ci10[mom0_ci10!=0], c=mom0_ci10[mom0_ci10!=0], cmap="rainbow", lw=0, s=100)
         fig.colorbar(cax)
         plt.savefig("test.png", dpi=self.fig_dpi)
 
