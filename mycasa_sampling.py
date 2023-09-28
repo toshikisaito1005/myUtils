@@ -90,14 +90,19 @@ def hexbin_sampling(
     fig = plt.figure(figsize=(9,9))
     gs  = gridspec.GridSpec(nrows=1,ncols=1)
     ax  = plt.subplot(gs[0:1,0:1])
+
+    def func1(z):
+        return np.nanmean(z)
+
+    reduce_function = partial(func1)
     
-    hexdata = ax.hexbin(X, Y, C=C, gridsize=gridsize, extent=extent, mincnt=int(n/2.))
+    hexdata = ax.hexbin(X, Y, C=C, gridsize=gridsize, extent=extent, mincnt=int(n/2.), reduce_C_function=reduce_function)
     hexc    = np.array(hexdata.get_array())
-    hexdata = ax.hexbin(X, Y, C=X, gridsize=gridsize, extent=extent, mincnt=int(n/2.))
+    hexdata = ax.hexbin(X, Y, C=X, gridsize=gridsize, extent=extent, mincnt=int(n/2.), reduce_C_function=reduce_function)
     hexx    = np.array(hexdata.get_array())
-    hexdata = ax.hexbin(X, Y, C=Y, gridsize=gridsize, extent=extent, mincnt=int(n/2.))
+    hexdata = ax.hexbin(X, Y, C=Y, gridsize=gridsize, extent=extent, mincnt=int(n/2.), reduce_C_function=reduce_function)
     hexy    = np.array(hexdata.get_array())
-    hexdata = ax.hexbin(X, Y, gridsize=gridsize, extent=extent, mincnt=int(n/2.))
+    hexdata = ax.hexbin(X, Y, gridsize=gridsize, extent=extent, mincnt=int(n/2.), reduce_C_function=reduce_function)
 
     # apply pixel per beam
     barea_pix = beam_area(imagename)
