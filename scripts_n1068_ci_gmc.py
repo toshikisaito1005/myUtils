@@ -468,7 +468,7 @@ class ToolsCIGMC():
         # plot #
         ########
         x_co10 = mom0_co10
-        y_co10 = mom2_co10
+        y_co10 = emom2_co10
         x_ci10 = mom0_ci10
         y_ci10 = mom2_ci10
 
