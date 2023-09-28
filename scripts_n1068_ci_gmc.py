@@ -485,8 +485,6 @@ class ToolsCIGMC():
         y_ci10 = mom2_ci10_all
         x2_co10 = mom0_co10_cone
         y2_co10 = mom2_co10_cone
-        x2_ci10 = mom0_ci10_cone
-        y2_ci10 = mom2_ci10_cone
 
         xlim   = [np.min([np.nanmin(x_co10),np.nanmin(x_ci10)])-0.2,np.max([np.nanmax(x_co10),np.nanmax(x_ci10)])+0.2]
         ylim   = [np.min([np.nanmin(y_co10),np.nanmin(y_ci10)])-0.2,np.max([np.nanmax(y_co10),np.nanmax(y_ci10)])+0.2]
