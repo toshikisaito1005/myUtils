@@ -511,16 +511,72 @@ class ToolsCIGMC():
         ax3.set_xticks([])
         ax3.set_yticks([])
 
-        # contour
+        # plot co10
         X, Y, Z = density_estimation(x_co10, y_co10, xlim, ylim)
         ax1.contour(X, Y, Z, colors="blue", linewidths=[2], alpha=0.2)
-
-        # scatter + histograms
         self._scatter_hist(x_co10, y_co10, ax1, ax2, ax3, "deepskyblue", xlim, ylim, "s")
+
+        # plot ci10
+        X, Y, Z = density_estimation(x_ci10, y_ci10, xlim, ylim)
+        ax1.contour(X, Y, Z, colors="blue", linewidths=[2], alpha=0.2)
+        self._scatter_hist(x_ci10, y_ci10, ax1, ax2, ax3, "tomato", xlim, ylim, "o", offset=0.15)
 
         # save
         os.system("rm -rf " + self.outpng_r_vs_disp)
         plt.savefig(self.outpng_r_vs_disp, dpi=self.fig_dpi)
+
+    #################
+    # _scatter_hist #
+    #################
+
+    def _scatter_hist(self, x, y, ax, ax_histx, ax_histy, color, xlim, ylim, marker="o", offset=0):
+        # no labels
+        ax_histx.tick_params(axis="x", labelbottom=False)
+        ax_histy.tick_params(axis="y", labelleft=False)
+
+        # the scatter plot:
+        ax.scatter(x, y, c=color, lw=0, s=70, marker=marker, alpha=0.5)
+
+        # now determine nice limits by hand:
+        binwidth = 0.05
+        xymax = max(np.max(np.abs(x)), np.max(np.abs(y)))
+        lim = (int(xymax/binwidth) + 1) * binwidth
+
+        # hist
+        #bins = np.arange(-lim, lim + binwidth, binwidth)
+        #ax_histx.hist(x, bins=bins, color=color, lw=0, alpha=0.5)
+        #x_histy.hist(y, bins=bins, color=color, lw=0, alpha=0.5, orientation='horizontal')
+
+        # kde
+        x_grid = np.arange(xlim[0], xlim[1], (xlim[1]-xlim[0])/70.)
+        xkde = stats.gaussian_kde(x)
+        x2 = xkde(x_grid)
+        x2[0] = 0
+        x2[-1] = 0
+        ax_histx.plot(x_grid, x2, color=color, lw=1)
+        ax_histx.fill_between(x_grid, 0, x2, color=color, alpha=0.5)
+
+        y_grid = np.arange(ylim[0], ylim[1], (ylim[1]-ylim[0])/70.)
+        ykde = stats.gaussian_kde(y)
+        y2 = ykde(y_grid)
+        y2[0] = 0
+        y2[-1] = 0
+        ax_histy.plot(y2, y_grid, color=color, lw=1)
+        ax_histy.fill_between(y2, 0, y_grid, color=color, alpha=0.5)
+
+        ax_histx.set_xlim(xlim)
+        ax_histy.set_ylim(ylim)
+
+        # stats of xhist
+        ax_histx.text(0.74, 0.85, "16$^{th}$-50$^{th}$-84$^{th}$ pctls.", color="black", transform=ax_histx.transAxes, fontsize=15)
+        this_txt = str(int(10**np.percentile(x,16)))+"-"+str(int(10**np.percentile(x,50)))+"-"+str(int(10**np.percentile(x,84)))
+        ax_histx.text(0.74, 0.70-offset, this_txt, color=color, transform=ax_histx.transAxes, fontsize=15)
+
+        # stats of yhist
+        ax_histy.text(0.74, 0.95, "16$^{th}$-50$^{th}$-84$^{th}$ pctls.", color="black", transform=ax_histy.transAxes, fontsize=15, rotation=-90)
+        this_txt = str(int(10**np.percentile(y,16)))+"-"+str(int(10**np.percentile(y,50)))+"-"+str(int(10**np.percentile(y,84)))
+        ax_histy.text(0.59-offset, 0.95, this_txt, color=color, transform=ax_histy.transAxes, fontsize=15, rotation=-90)
+
 
     ###############
     # do_sampling #
@@ -1215,58 +1271,6 @@ class ToolsCIGMC():
         # save
         os.system("rm -rf " + self.outpng_cico_dyn)
         plt.savefig(self.outpng_cico_dyn, dpi=self.fig_dpi)
-
-    #################
-    # _scatter_hist #
-    #################
-
-    def _scatter_hist(self, x, y, ax, ax_histx, ax_histy, color, xlim, ylim, marker="o", offset=0):
-        # no labels
-        ax_histx.tick_params(axis="x", labelbottom=False)
-        ax_histy.tick_params(axis="y", labelleft=False)
-
-        # the scatter plot:
-        ax.scatter(x, y, c=color, lw=0, s=100, marker=marker)
-
-        # now determine nice limits by hand:
-        binwidth = 0.05
-        xymax = max(np.max(np.abs(x)), np.max(np.abs(y)))
-        lim = (int(xymax/binwidth) + 1) * binwidth
-
-        # hist
-        #bins = np.arange(-lim, lim + binwidth, binwidth)
-        #ax_histx.hist(x, bins=bins, color=color, lw=0, alpha=0.5)
-        #x_histy.hist(y, bins=bins, color=color, lw=0, alpha=0.5, orientation='horizontal')
-
-        # kde
-        x_grid = np.arange(xlim[0], xlim[1], (xlim[1]-xlim[0])/70.)
-        xkde = stats.gaussian_kde(x)
-        x2 = xkde(x_grid)
-        x2[0] = 0
-        x2[-1] = 0
-        ax_histx.plot(x_grid, x2, color=color, lw=1)
-        ax_histx.fill_between(x_grid, 0, x2, color=color, alpha=0.5)
-
-        y_grid = np.arange(ylim[0], ylim[1], (ylim[1]-ylim[0])/70.)
-        ykde = stats.gaussian_kde(y)
-        y2 = ykde(y_grid)
-        y2[0] = 0
-        y2[-1] = 0
-        ax_histy.plot(y2, y_grid, color=color, lw=1)
-        ax_histy.fill_between(y2, 0, y_grid, color=color, alpha=0.5)
-
-        ax_histx.set_xlim(xlim)
-        ax_histy.set_ylim(ylim)
-
-        # stats of xhist
-        ax_histx.text(0.74, 0.85, "16$^{th}$-50$^{th}$-84$^{th}$ pctls.", color="black", transform=ax_histx.transAxes, fontsize=15)
-        this_txt = str(int(10**np.percentile(x,16)))+"-"+str(int(10**np.percentile(x,50)))+"-"+str(int(10**np.percentile(x,84)))
-        ax_histx.text(0.74, 0.70-offset, this_txt, color=color, transform=ax_histx.transAxes, fontsize=15)
-
-        # stats of yhist
-        ax_histy.text(0.74, 0.95, "16$^{th}$-50$^{th}$-84$^{th}$ pctls.", color="black", transform=ax_histy.transAxes, fontsize=15, rotation=-90)
-        this_txt = str(int(10**np.percentile(y,16)))+"-"+str(int(10**np.percentile(y,50)))+"-"+str(int(10**np.percentile(y,84)))
-        ax_histy.text(0.59-offset, 0.95, this_txt, color=color, transform=ax_histy.transAxes, fontsize=15, rotation=-90)
 
     ###############
     # hist_cprops #
