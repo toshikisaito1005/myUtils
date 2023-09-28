@@ -119,6 +119,13 @@ class ToolsCIGMC():
         """
         """
 
+        self.mom0_co10   = self.dir_raw + self._read_key("mom0_co10")
+        self.mom0_ci10   = self.dir_raw + self._read_key("mom0_ci10")
+
+        self.emom0_co10  = self.dir_raw + self._read_key("emom0_co10")
+        self.emom0_ci10  = self.dir_raw + self._read_key("emom0_ci10")
+
+        #
         self.cube_co10   = self.dir_raw + self._read_key("cube_co10")
         self.cube_ci10   = self.dir_raw + self._read_key("cube_ci10")
 
@@ -127,12 +134,6 @@ class ToolsCIGMC():
 
         self.mask_co10   = self.dir_raw + self._read_key("mask_co10")
         self.mask_ci10   = self.dir_raw + self._read_key("mask_ci10")
-
-        self.mom0_co10   = self.dir_raw + self._read_key("mom0_co10")
-        self.mom0_ci10   = self.dir_raw + self._read_key("mom0_ci10")
-
-        self.emom0_co10  = self.dir_raw + self._read_key("emom0_co10")
-        self.emom0_ci10  = self.dir_raw + self._read_key("emom0_ci10")
 
         self.tpeak_co10  = self.dir_raw + self._read_key("tpeak_co10")
         self.tpeak_ci10  = self.dir_raw + self._read_key("tpeak_ci10")
@@ -158,6 +159,8 @@ class ToolsCIGMC():
         # ngc1068 properties
         self.ra_agn    = float(self._read_key("ra_agn", "gal").split("deg")[0])
         self.dec_agn   = float(self._read_key("dec_agn", "gal").split("deg")[0])
+
+        #
         self.ra_fov2   = float(self._read_key("ra_fov2", "gal").split("deg")[0])
         self.dec_fov2  = float(self._read_key("dec_fov2", "gal").split("deg")[0])
         self.ra_fov3   = float(self._read_key("ra_fov3", "gal").split("deg")[0])
@@ -259,6 +262,19 @@ class ToolsCIGMC():
     #####################
 
     def run_ngc1068_cigmc(
+        self,
+        # analysis
+        do_sampling = False,
+        ):
+        """
+        This method runs all the methods which will create figures in the paper.
+        """
+
+        # analysis
+        if do_sampling==True:
+            self.do_sampling()
+
+    def run_ngc1068_cigmc_old(
         self,
         # analysis
         do_prepare   = False,
@@ -380,6 +396,35 @@ class ToolsCIGMC():
             delin=delin,
             )
         """
+
+    #############
+    # map_ratio #
+    #############
+
+    def map_ratio(
+        self,
+        ):
+        """
+        """
+
+        taskname = self.modname + sys._getframe().f_code.co_name
+        check_first(self.mom0_co10,taskname)
+
+        hexx, hexy, hexc = hexbin_sampling(
+            self.mom0_co10,
+            self.ra_agn,
+            self.dec_agn,
+            beam=55/72.,
+            gridsize=70,
+            err=False,
+            stats="mean",
+            )
+
+    #########################
+    #########################
+    # run_ngc1068_cigmc_old #
+    #########################
+    #########################
 
     #############
     # map_ratio #
