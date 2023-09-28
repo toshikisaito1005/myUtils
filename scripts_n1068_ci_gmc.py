@@ -433,8 +433,16 @@ class ToolsCIGMC():
             stats="mean",
             )
 
-        print(hexx_co10.flatten())
-        print(hexx_ci10.flatten())
+        fig = plt.figure(figsize=(13,10))
+        gs  = gridspec.GridSpec(nrows=10, ncols=10)
+        ax1 = plt.subplot(gs[0:10,0:10])
+        ad  = [0.215,0.83,0.10,0.90]
+        myax_set(ax1, None, xlim, ylim, None, xlabel, ylabel, adjust=ad)
+
+        ax1.scatter(hexx_co10, hexy_co10, c="tomato", lw=0, s=50, alpha=0.3)
+        ax1.scatter(hexx_ci10, hexy_ci10, c="tomato", lw=0, s=100, alpha=0.3)
+
+        plt.savefig('test.png', dpi=self.fig_dpi)
 
     #########################
     #########################
