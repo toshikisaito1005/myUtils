@@ -69,7 +69,7 @@ def hexbin_sampling(
     data,_ = imval_all(imagename)
     x    = (data["coords"][:,:,0] * 180/np.pi - ra) * 3600 # arcsec
     y    = (data["coords"][:,:,1] * 180/np.pi - dec) * 3600 # arcsec
-    c    = data["data"] # np.nan_to_num(data["data"]) # K.km/s
+    c    = np.nan_to_num(data["data"]) # K.km/s
     if err==True:
         c = c**2
 
@@ -93,7 +93,7 @@ def hexbin_sampling(
     ax  = plt.subplot(gs[0:1,0:1])
 
     def func1(z):
-        return np.nanmean(z)
+        return np.nanmean(z[z!=0])
 
     reduce_function = partial(func1)
     
