@@ -433,7 +433,8 @@ class ToolsCIGMC():
             stats="mean",
             )
 
-        print(len(hexc_co10.flatten()), len(hexc_ci10.flatten()))
+        print(hexx_co10.flatten())
+        print(hexx_ci10.flatten())
 
     #########################
     #########################
