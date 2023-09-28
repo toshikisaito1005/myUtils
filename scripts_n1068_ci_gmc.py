@@ -468,6 +468,10 @@ class ToolsCIGMC():
         mom2_ci10  = data_ci10[:,4]
         emom2_ci10 = data_ci10[:,5]
 
+        r_ci10     = np.sqrt(x_ci10**2 + y_ci10**2)
+        theta      = np.degrees(np.arctan2(x_ci10, y_ci10)) + 90
+        theta_ci10 = np.where(theta>0, theta, theta+360)
+
         cut = np.where((mom0_ci10>emom0_ci10*self.snr_mom) & (mom2_ci10>emom2_ci10))
         x_ci10_all     = x_ci10[cut]
         y_ci10_all     = y_ci10[cut]
