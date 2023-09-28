@@ -438,7 +438,7 @@ class ToolsCIGMC():
         mom2_co10  = data_co10[:,4]
         emom2_co10 = data_co10[:,5]
 
-        print(np.median(mom2_co10), np.median(emom2_co10))
+        print(np.max(mom2_co10), np.max(emom2_co10))
 
         cut = np.where((mom0_co10>emom0_co10*self.snr_mom) & (mom2_co10>emom2_co10))
         x_co10     = x_co10[cut]
@@ -458,7 +458,7 @@ class ToolsCIGMC():
         mom2_ci10  = data_ci10[:,4]
         emom2_ci10 = data_ci10[:,5]
 
-        print(np.median(mom2_ci10), np.median(emom2_ci10))
+        print(np.max(mom2_ci10), np.max(emom2_ci10))
 
         cut = np.where((mom0_ci10>emom0_ci10*self.snr_mom) & (mom2_ci10>emom2_ci10))
         x_ci10     = x_ci10[cut]
