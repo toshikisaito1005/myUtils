@@ -438,6 +438,14 @@ class ToolsCIGMC():
         mom2_co10  = data_co10[:,4]
         emom2_co10 = data_co10[:,5]
 
+        fig = plt.figure(figsize=(13,10))
+        gs  = gridspec.GridSpec(nrows=10, ncols=10)
+        ax1 = plt.subplot(gs[0:10,0:10])
+        ad  = [0.215,0.83,0.10,0.90]
+        myax_set(ax1, None, None, None, None, None, None, adjust=ad)
+        ax1.scatter(x_co10, y_co10, c=mom2_co10, cmap="rainbow", lw=2, s=100)
+        plt.savefig("test.png", dpi=self.fig_dpi)
+
         print(np.max(mom2_co10), np.max(emom2_co10))
 
         cut = np.where((mom0_co10>emom0_co10*self.snr_mom) & (mom2_co10>emom2_co10))
