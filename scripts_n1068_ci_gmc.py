@@ -601,7 +601,7 @@ class ToolsCIGMC():
         ax1.scatter(xpos, np.percentile(y2_co10,50), marker='o', s=100, facecolor='lightgrey', edgecolor='blue', lw=2, zorder=1e9)
 
         # plot ac4
-        ax4.scatter(x2_co10, y2_co10, c=c_co10, cmap='gnuplot', lw=2, s=70, marker="s", alpha=1.0)
+        ax4.scatter(x_co10, y_co10, c=c_co10, cmap='gnuplot', lw=2, s=70, marker="s", alpha=1.0)
 
         # save
         os.system("rm -rf " + self.outpng_r_vs_disp)
