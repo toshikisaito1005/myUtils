@@ -542,7 +542,7 @@ class ToolsCIGMC():
 
         # ax4
         ax4 = plt.axes([0, 0, 1, 1])
-        position = InsetPosition(ax4, [0.6, 0.15, 0.225, 0.225])
+        position = InsetPosition(ax4, [0.6, 0.125, 0.225, 0.225])
         ax4.set_axes_locator(position)
         ax4.tick_params(labelbottom=False, labelleft=False, labelright=False, labeltop=False)
 
