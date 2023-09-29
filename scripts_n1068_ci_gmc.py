@@ -551,10 +551,10 @@ class ToolsCIGMC():
         self._scatter_hist(x_ci10, y_ci10, ax1, ax2, ax3, "tomato", xlim, ylim, "o", offset=0.15)
 
         # plot co10 cone
-        ax1.scatter(x2_co10, y2_co10, facecolor='none', edgecolor='blue', lw=2, s=70, marker="s", alpha=1.0, zorder=1e9)
+        ax1.scatter(x2_co10, y2_co10, facecolor='grey', edgecolor='blue', lw=2, s=70, marker="s", alpha=1.0, zorder=1e9)
 
         # plot ci10 cone
-        ax1.scatter(x2_ci10, y2_ci10, facecolor='none', edgecolor='red', lw=2, s=70, marker="o", alpha=1.0, zorder=1e9)
+        ax1.scatter(x2_ci10, y2_ci10, facecolor='grey', edgecolor='red', lw=2, s=70, marker="o", alpha=1.0, zorder=1e9)
 
         # save
         os.system("rm -rf " + self.outpng_r_vs_disp)
@@ -602,6 +602,7 @@ class ToolsCIGMC():
         ax_histx.set_xlim(xlim)
         ax_histy.set_ylim(ylim)
 
+        """
         # stats of xhist
         ax_histx.text(0.74, 0.85, "16$^{th}$-50$^{th}$-84$^{th}$ pctls.", color="black", transform=ax_histx.transAxes, fontsize=15)
         this_txt = str(np.round(np.percentile(x,16),2))+"-"+str(np.round(np.percentile(x,50),2))+"-"+str(np.round(np.percentile(x,84),2))
@@ -611,6 +612,7 @@ class ToolsCIGMC():
         ax_histy.text(0.74, 0.95, "16$^{th}$-50$^{th}$-84$^{th}$ pctls.", color="black", transform=ax_histy.transAxes, fontsize=15, rotation=-90)
         this_txt = str(np.round(np.percentile(y,16),2))+"-"+str(np.round(np.percentile(y,50),2))+"-"+str(np.round(np.percentile(y,84),2))
         ax_histy.text(0.59-offset, 0.95, this_txt, color=color, transform=ax_histy.transAxes, fontsize=15, rotation=-90)
+        """
 
     ###############
     # do_sampling #
