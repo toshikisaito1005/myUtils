@@ -567,11 +567,11 @@ class ToolsCIGMC():
 
         ypos = 0.93 * (ylim[1] - ylim[0]) + ylim[0]
         ax1.plot([np.percentile(x2_ci10,16),np.percentile(x2_ci10,84)], [ypos,ypos], '-', color="red", lw=2)
-        ax1.scatter(np.percentile(x2_ci10,50), ypos, marker='o', s=100, facecolor='lightgrey', edgecolor='red', zorder=1e9)
+        ax1.scatter(np.percentile(x2_ci10,50), ypos, marker='o', s=100, facecolor='lightgrey', edgecolor='red', lw=2, zorder=1e9)
 
         ypos = 0.91 * (ylim[1] - ylim[0]) + ylim[0]
         ax1.plot([np.percentile(x2_co10,16),np.percentile(x2_co10,84)], [ypos,ypos], '-', color="blue", lw=2)
-        ax1.scatter(np.percentile(x2_co10,50), ypos, marker='o', s=100, facecolor='lightgrey', edgecolor='blue', zorder=1e9)
+        ax1.scatter(np.percentile(x2_co10,50), ypos, marker='o', s=100, facecolor='lightgrey', edgecolor='blue', lw=2, zorder=1e9)
 
         # save
         os.system("rm -rf " + self.outpng_r_vs_disp)
