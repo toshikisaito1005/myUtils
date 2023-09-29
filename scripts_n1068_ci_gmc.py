@@ -51,7 +51,7 @@ from mycasa_plots import *
 from mycasa_sampling import *
 
 def density_estimation(m1, m2, xlim, ylim):
-    X, Y = np.mgrid[xlim[0]:xlim[1]:30j, ylim[0]:ylim[1]:30j]
+    X, Y = np.mgrid[xlim[0]:xlim[1]:40j, ylim[0]:ylim[1]:40j]
     positions = np.vstack([X.ravel(), Y.ravel()])
     values = np.vstack([m1, m2])
     kernel = stats.gaussian_kde(values)
@@ -542,19 +542,19 @@ class ToolsCIGMC():
 
         # plot co10 all
         X, Y, Z = density_estimation(x_co10, y_co10, xlim, ylim)
-        ax1.contour(X, Y, Z, colors="blue", linewidths=[2], alpha=0.2)
+        ax1.contour(X, Y, Z, colors="blue", linewidths=[1], alpha=1.0)
         self._scatter_hist(x_co10, y_co10, ax1, ax2, ax3, "deepskyblue", xlim, ylim, "s")
 
         # plot ci10 all
         X, Y, Z = density_estimation(x_ci10, y_ci10, xlim, ylim)
-        ax1.contour(X, Y, Z, colors="red", linewidths=[2], alpha=0.2)
+        ax1.contour(X, Y, Z, colors="red", linewidths=[1], alpha=1.0)
         self._scatter_hist(x_ci10, y_ci10, ax1, ax2, ax3, "tomato", xlim, ylim, "o", offset=0.15)
 
         # plot co10 cone
-        ax1.scatter(x2_co10, y2_co10, facecolor='none', c="deepskyblue", lw=2, s=70, marker="s", alpha=0.5)
+        ax1.scatter(x2_co10, y2_co10, facecolor='none', lw=2, s=70, marker="s", alpha=1.0)
 
         # plot ci10 cone
-        ax1.scatter(x2_ci10, y2_ci10, facecolor='none', c="tomato", lw=2, s=70, marker="o", alpha=0.5)
+        ax1.scatter(x2_ci10, y2_ci10, facecolor='none', lw=2, s=70, marker="o", alpha=1.0)
 
         # save
         os.system("rm -rf " + self.outpng_r_vs_disp)
