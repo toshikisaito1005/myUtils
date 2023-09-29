@@ -551,10 +551,15 @@ class ToolsCIGMC():
         self._scatter_hist(x_ci10, y_ci10, ax1, ax2, ax3, "tomato", xlim, ylim, "o", offset=0.15)
 
         # plot co10 cone
-        ax1.scatter(x2_co10, y2_co10, facecolor='grey', edgecolor='blue', lw=2, s=70, marker="s", alpha=1.0, zorder=1e9)
+        ax1.scatter(x2_co10, y2_co10, facecolor='lightgrey', edgecolor='blue', lw=2, s=70, marker="s", alpha=1.0, zorder=1e9)
 
         # plot ci10 cone
-        ax1.scatter(x2_ci10, y2_ci10, facecolor='grey', edgecolor='red', lw=2, s=70, marker="o", alpha=1.0, zorder=1e9)
+        ax1.scatter(x2_ci10, y2_ci10, facecolor='lightgrey', edgecolor='red', lw=2, s=70, marker="o", alpha=1.0, zorder=1e9)
+
+        # pctl bar
+        ypos = 0.95 * (ylim[1] - ylim[0]) + ylim[0]
+        ax1.plot([np.percentile(y2_ci10,16),np.percentile(y2_ci10,84)], [ypos,ypos], '-', color="tomato", lw=2)
+        ax1.scatter(np.percentile(y2_ci10,50), ypos, marker='o', size=100, color="tomato")
 
         # save
         os.system("rm -rf " + self.outpng_r_vs_disp)
