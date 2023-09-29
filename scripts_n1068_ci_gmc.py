@@ -559,7 +559,7 @@ class ToolsCIGMC():
         # pctl bar
         ypos = 0.95 * (ylim[1] - ylim[0]) + ylim[0]
         ax1.plot([np.percentile(y2_ci10,16),np.percentile(y2_ci10,84)], [ypos,ypos], '-', color="tomato", lw=2)
-        ax1.scatter(np.percentile(y2_ci10,50), ypos, marker='o', size=100, color="tomato")
+        ax1.scatter(np.percentile(y2_ci10,50), ypos, marker='o', s=100, color="tomato")
 
         # save
         os.system("rm -rf " + self.outpng_r_vs_disp)
