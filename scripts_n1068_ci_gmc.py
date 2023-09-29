@@ -507,6 +507,7 @@ class ToolsCIGMC():
 
         xlim   = [np.min([np.nanmin(x_co10),np.nanmin(x_ci10)])-0.3,np.max([np.nanmax(x_co10),np.nanmax(x_ci10)])+0.3]
         ylim   = [np.min([np.nanmin(y_co10),np.nanmin(y_ci10)])-0.3,np.max([np.nanmax(y_co10),np.nanmax(y_ci10)])+0.3]
+        vmax   = np.max(r_co10)
         title  = "None"
         xlabel = "log$_{10}$ Integrated Intensity (K km s$^{-1}$)" # "log$_{10}$ H$_2$ Surface Density ($M_{\odot}$ pc$^{-2}$)"
         ylabel = "log$_{10}$ Velocity Dispersion (km s$^{-1}$)"
@@ -603,8 +604,8 @@ class ToolsCIGMC():
         ax1.scatter(xpos, np.percentile(y2_co10,50), marker='o', s=100, facecolor='lightgrey', edgecolor='blue', lw=2, zorder=1e9)
 
         # plot ac4
-        ax4.scatter(x_co10, y_co10, c=c_co10, cmap='gnuplot', lw=0, s=30, marker="s", alpha=1.0)
-        ax4.scatter(x_ci10, y_ci10, c=c_ci10, cmap='gnuplot', lw=0, s=30, marker="o", alpha=1.0)
+        ax4.scatter(x_co10, y_co10, c=c_co10, cmap='gnuplot', lw=0, s=30, marker="s", alpha=1.0, vmin=0, vmax=vmax)
+        ax4.scatter(x_ci10, y_ci10, c=c_ci10, cmap='gnuplot', lw=0, s=30, marker="o", alpha=1.0, vmin=0, vmax=vmax)
 
         # save
         os.system("rm -rf " + self.outpng_r_vs_disp)
