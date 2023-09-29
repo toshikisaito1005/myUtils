@@ -292,6 +292,7 @@ class ToolsCIGMC():
         if plot_scatter==True:
             self.plot_scatter() # 2023-09-28: created
 
+    # this is basically pycprops
     def run_ngc1068_cigmc_old(
         self,
         # analysis
@@ -550,10 +551,10 @@ class ToolsCIGMC():
         self._scatter_hist(x_ci10, y_ci10, ax1, ax2, ax3, "tomato", xlim, ylim, "o", offset=0.15)
 
         # plot co10 cone
-        ax1.scatter(x2_co10, y2_co10, c="deepskyblue", lw=2, s=70, marker="s", alpha=0.5)
+        ax1.scatter(x2_co10, y2_co10, facecolor='none', c="deepskyblue", lw=2, s=70, marker="s", alpha=0.5)
 
         # plot ci10 cone
-        ax1.scatter(x2_ci10, y2_ci10, c="tomato", lw=2, s=70, marker="o", alpha=0.5)
+        ax1.scatter(x2_ci10, y2_ci10, facecolor='none', c="tomato", lw=2, s=70, marker="o", alpha=0.5)
 
         # save
         os.system("rm -rf " + self.outpng_r_vs_disp)
