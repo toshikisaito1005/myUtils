@@ -507,7 +507,7 @@ class ToolsCIGMC():
 
         xlim   = [np.min([np.nanmin(x_co10),np.nanmin(x_ci10)])-0.3,np.max([np.nanmax(x_co10),np.nanmax(x_ci10)])+0.3]
         ylim   = [np.min([np.nanmin(y_co10),np.nanmin(y_ci10)])-0.3,np.max([np.nanmax(y_co10),np.nanmax(y_ci10)])+0.3]
-        vmax   = np.max(r_co10)
+        vmax   = np.max(r_ci10)
         title  = "None"
         xlabel = "log$_{10}$ Integrated Intensity (K km s$^{-1}$)" # "log$_{10}$ H$_2$ Surface Density ($M_{\odot}$ pc$^{-2}$)"
         ylabel = "log$_{10}$ Velocity Dispersion (km s$^{-1}$)"
