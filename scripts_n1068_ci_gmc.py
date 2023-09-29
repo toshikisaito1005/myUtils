@@ -550,7 +550,7 @@ class ToolsCIGMC():
         ax4.set_axes_locator(position)
         ax4.tick_params(labelbottom=False, labelleft=False, labelright=False, labeltop=False)
         ax4.set_xlim(xlim)
-        ax4.set_xlim(ylim)
+        ax4.set_ylim(ylim)
 
         # plot co10 all
         X, Y, Z = density_estimation(x_co10, y_co10, xlim, ylim)
