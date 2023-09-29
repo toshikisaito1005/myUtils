@@ -63,6 +63,7 @@ outtxt_hexcat_co10 ,,,outtxt_hexcat_co10.txt
 outtxt_hexcat_ci10 ,,,outtxt_hexcat_ci10.txt
 outpng_r_vs_disp   ,,,outpng_r_vs_disp.png
 outpng_radial_disp ,,,outpng_radial_disp.png
+outpng_radial_mom0 ,,,outpng_radial_mom0.png
 #
 #
 #
