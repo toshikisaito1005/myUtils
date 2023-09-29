@@ -463,7 +463,7 @@ class ToolsCIGMC():
         mom0_co10_cone  = np.log10(mom0_co10[cut])
         emom2_co10_cone = emom2_co10[cut] / mom2_co10[cut] / np.log(10)
         mom2_co10_cone  = np.log10(mom2_co10[cut])
-        r_co10_cone     = r_co10[cut]
+        r_co10_cone     = np.sqrt(x_co10_cone**2 + y_co10_cone**2)
 
         # import ci10
         data_ci10 = np.loadtxt(self.outtxt_hexcat_ci10)
@@ -495,7 +495,7 @@ class ToolsCIGMC():
         mom0_ci10_cone  = np.log10(mom0_ci10[cut])
         emom2_ci10_cone = emom2_ci10[cut] / mom2_ci10[cut] / np.log(10)
         mom2_ci10_cone  = np.log10(mom2_ci10[cut])
-        r_ci10_cone     = r_co10[cut]
+        r_ci10_cone     = np.sqrt(x_ci10_cone**2 + y_ci10_cone**2)
 
         ########
         # plot #
