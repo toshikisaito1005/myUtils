@@ -604,8 +604,8 @@ class ToolsCIGMC():
         ax1.scatter(xpos, np.percentile(y2_co10,50), marker='o', s=100, facecolor='lightgrey', edgecolor='blue', lw=2, zorder=1e9)
 
         # plot ac4
-        #ax4.scatter(x_co10, y_co10, c=c_co10, cmap='rainbow', lw=0, s=30, marker="s", alpha=1.0, vmin=0, vmax=vmax)
-        ax4.scatter(x_ci10, y_ci10, c=c_ci10, cmap='rainbow', lw=0, s=30, marker="o", alpha=1.0, vmin=0, vmax=vmax)
+        #ax4.scatter(x_co10, y_co10, c=c_co10, cmap='rainbow_r', lw=0, s=30, marker="s", alpha=1.0, vmin=0, vmax=vmax)
+        ax4.scatter(x_ci10, y_ci10, c=c_ci10, cmap='rainbow_r', lw=0, s=30, marker="o", alpha=1.0, vmin=0, vmax=vmax)
 
         # save
         os.system("rm -rf " + self.outpng_r_vs_disp)
