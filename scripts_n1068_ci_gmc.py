@@ -522,7 +522,7 @@ class ToolsCIGMC():
 
         # ax4
         ax4 = plt.axes([0, 0, 1, 1])
-        position = InsetPosition(ax4, [0.6, 0.1, 0.25, 0.25])
+        position = InsetPosition(ax4, [0.6, 0.5, 0.225, 0.225])
         ax4.set_axes_locator(position)
 
         # ax2 ticks
