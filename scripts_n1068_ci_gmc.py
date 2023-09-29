@@ -520,6 +520,11 @@ class ToolsCIGMC():
         myax_set(ax2, None, xlim, None, None, None, None)
         myax_set(ax3, None, None, ylim, None, None, None)
 
+        # ax4
+        ax4 = plt.axes([0, 0, 1, 1])
+        position = InsetPosition(ax, [0.6, 0.1, 0.3, 0.3])
+        ax4.set_axes_locator(position)
+
         # ax2 ticks
         ax2.spines['right'].set_visible(False)
         ax2.spines['top'].set_visible(False)
