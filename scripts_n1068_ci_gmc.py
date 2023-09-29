@@ -481,6 +481,7 @@ class ToolsCIGMC():
         mom0_ci10_all  = np.log10(mom0_ci10[cut])
         emom2_ci10_all = emom2_ci10[cut] / mom2_ci10[cut] / np.log(10)
         mom2_ci10_all  = np.log10(mom2_ci10[cut])
+        r_ci10_all     = r_ci10[cut]
 
         cut = np.where((mom0_ci10>emom0_ci10*self.snr_mom) & (mom2_ci10>emom2_ci10) & (r_ci10<self.fov_diamter/2.0) & (r_ci10>self.r_cnd_as) & (theta_ci10>=self.theta2) & (theta_ci10<self.theta1) | (mom0_ci10>emom0_ci10*self.snr_mom) & (mom2_ci10>emom2_ci10*self.snr_mom) & (r_ci10<self.fov_diamter/2.0) & (r_ci10>self.r_cnd_as) & (theta_ci10>=self.theta2+180) & (theta_ci10<self.theta1+180))
         x_ci10_cone     = x_ci10[cut]
@@ -498,6 +499,7 @@ class ToolsCIGMC():
         c_co10 = r_co10_all
         x_ci10 = mom0_ci10_all
         y_ci10 = mom2_ci10_all
+        c_ci10 = r_ci10_all
         x2_co10 = mom0_co10_cone
         y2_co10 = mom2_co10_cone
         x2_ci10 = mom0_ci10_cone
@@ -547,8 +549,8 @@ class ToolsCIGMC():
         position = InsetPosition(ax4, [0.6, 0.125, 0.225, 0.225])
         ax4.set_axes_locator(position)
         ax4.tick_params(labelbottom=False, labelleft=False, labelright=False, labeltop=False)
-        ax3.set_xlim(xlim)
-        ax3.set_xlim(ylim)
+        ax4.set_xlim(xlim)
+        ax4.set_xlim(ylim)
 
         # plot co10 all
         X, Y, Z = density_estimation(x_co10, y_co10, xlim, ylim)
@@ -601,7 +603,8 @@ class ToolsCIGMC():
         ax1.scatter(xpos, np.percentile(y2_co10,50), marker='o', s=100, facecolor='lightgrey', edgecolor='blue', lw=2, zorder=1e9)
 
         # plot ac4
-        ax4.scatter(x_co10, y_co10, c=c_co10, cmap='gnuplot', lw=2, s=70, marker="s", alpha=1.0)
+        ax4.scatter(x_co10, y_co10, c=c_co10, cmap='gnuplot', lw=0, s=30, marker="s", alpha=1.0)
+        ax4.scatter(x_ci10, y_ci10, c=c_ci10, cmap='gnuplot', lw=0, s=30, marker="o", alpha=1.0)
 
         # save
         os.system("rm -rf " + self.outpng_r_vs_disp)
