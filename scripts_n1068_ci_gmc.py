@@ -501,8 +501,8 @@ class ToolsCIGMC():
         x2_ci10 = mom0_ci10_cone
         y2_ci10 = mom2_ci10_cone
 
-        xlim   = [np.min([np.nanmin(x_co10),np.nanmin(x_ci10)])-0.2,np.max([np.nanmax(x_co10),np.nanmax(x_ci10)])+0.2]
-        ylim   = [np.min([np.nanmin(y_co10),np.nanmin(y_ci10)])-0.2,np.max([np.nanmax(y_co10),np.nanmax(y_ci10)])+0.2]
+        xlim   = [np.min([np.nanmin(x_co10),np.nanmin(x_ci10)])-0.3,np.max([np.nanmax(x_co10),np.nanmax(x_ci10)])+0.3]
+        ylim   = [np.min([np.nanmin(y_co10),np.nanmin(y_ci10)])-0.3,np.max([np.nanmax(y_co10),np.nanmax(y_ci10)])+0.3]
         title  = "None"
         xlabel = "log$_{10}$ Integrated Intensity (K km s$^{-1}$)" # "log$_{10}$ H$_2$ Surface Density ($M_{\odot}$ pc$^{-2}$)"
         ylabel = "log$_{10}$ Velocity Dispersion (km s$^{-1}$)"
@@ -516,7 +516,7 @@ class ToolsCIGMC():
         ax2 = plt.subplot(gs[0:30,10:170])
         ax3 = plt.subplot(gs[30:200,170:200])
         ad  = [0.215,0.83,0.10,0.90]
-        myax_set(ax1, "both", xlim, ylim, None, xlabel, ylabel, adjust=ad)
+        myax_set(ax1, None, xlim, ylim, None, xlabel, ylabel, adjust=ad)
         myax_set(ax2, None, xlim, None, None, None, None)
         myax_set(ax3, None, None, ylim, None, None, None)
 
