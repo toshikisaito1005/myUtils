@@ -891,6 +891,11 @@ class ToolsCIGMC():
         #ax4.scatter(x_co10, y_co10, c=c_co10, cmap='rainbow_r', lw=0, s=30, marker="s", alpha=1.0, vmin=0, vmax=vmax)
         #ax4.scatter(x_ci10, y_ci10, c=c_ci10, cmap='rainbow_r', lw=0, s=30, marker="o", alpha=1.0, vmin=0, vmax=vmax)
 
+        txt = ax1.text(0.03, 0.93, "CO(1-0) Clouds", color="deepskyblue", transform=ax1.transAxes, weight="bold", fontsize=24)
+        txt.set_path_effects([PathEffects.withStroke(linewidth=4, foreground='w')])
+        txt = ax1.text(0.03, 0.88, "[CI](1-0) Clouds", color="deepskyblue", transform=ax1.transAxes, weight="bold", fontsize=24)
+        txt.set_path_effects([PathEffects.withStroke(linewidth=4, foreground='w')])
+
         # save
         os.system("rm -rf " + self.outpng_r_vs_disp)
         plt.savefig(self.outpng_r_vs_disp, dpi=self.fig_dpi)
