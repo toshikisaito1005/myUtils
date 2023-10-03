@@ -855,37 +855,37 @@ class ToolsCIGMC():
 
         # pctl bar xaxis
         ypos = 0.97 * (ylim[1] - ylim[0]) + ylim[0]
-        ax1.plot([np.percentile(x_ci10,16),np.percentile(x_ci10,84)], [ypos,ypos], '-', color="tomato", lw=2)
+        ax1.plot([np.percentile(x_ci10,16),np.percentile(x_ci10,84)], [ypos,ypos], '-', color="tomato", lw=3)
         ax1.scatter(np.percentile(x_ci10,50), ypos, marker='o', s=100, color="tomato", zorder=1e9)
 
         ypos = 0.95 * (ylim[1] - ylim[0]) + ylim[0]
-        ax1.plot([np.percentile(x_co10,16),np.percentile(x_co10,84)], [ypos,ypos], '-', color="deepskyblue", lw=2)
+        ax1.plot([np.percentile(x_co10,16),np.percentile(x_co10,84)], [ypos,ypos], '-', color="deepskyblue", lw=3)
         ax1.scatter(np.percentile(x_co10,50), ypos, marker='o', s=100, color="deepskyblue", zorder=1e9)
 
         ypos = 0.93 * (ylim[1] - ylim[0]) + ylim[0]
-        ax1.plot([np.percentile(x2_ci10,16),np.percentile(x2_ci10,84)], [ypos,ypos], '-', color="red", lw=2)
-        ax1.scatter(np.percentile(x2_ci10,50), ypos, marker='o', s=100, facecolor='lightgrey', edgecolor='red', lw=2, zorder=1e9)
+        ax1.plot([np.percentile(x2_ci10,16),np.percentile(x2_ci10,84)], [ypos,ypos], '-', color="red", lw=3)
+        ax1.scatter(np.percentile(x2_ci10,50), ypos, marker='o', s=100, facecolor='lightgrey', edgecolor='red', lw=3, zorder=1e9)
 
         ypos = 0.91 * (ylim[1] - ylim[0]) + ylim[0]
-        ax1.plot([np.percentile(x2_co10,16),np.percentile(x2_co10,84)], [ypos,ypos], '-', color="blue", lw=2)
-        ax1.scatter(np.percentile(x2_co10,50), ypos, marker='o', s=100, facecolor='lightgrey', edgecolor='blue', lw=2, zorder=1e9)
+        ax1.plot([np.percentile(x2_co10,16),np.percentile(x2_co10,84)], [ypos,ypos], '-', color="blue", lw=3)
+        ax1.scatter(np.percentile(x2_co10,50), ypos, marker='o', s=100, facecolor='lightgrey', edgecolor='blue', lw=3, zorder=1e9)
 
         # pctl bar yaxis
         xpos = 0.97 * (xlim[1] - xlim[0]) + xlim[0]
-        ax1.plot([xpos,xpos], [np.percentile(y_ci10,16),np.percentile(y_ci10,84)], '-', color="tomato", lw=2)
+        ax1.plot([xpos,xpos], [np.percentile(y_ci10,16),np.percentile(y_ci10,84)], '-', color="tomato", lw=3)
         ax1.scatter(xpos, np.percentile(y_ci10,50), marker='o', s=100, color="tomato", zorder=1e9)
 
         xpos = 0.95 * (xlim[1] - xlim[0]) + xlim[0]
-        ax1.plot([xpos,xpos], [np.percentile(y_co10,16),np.percentile(y_co10,84)], '-', color="deepskyblue", lw=2)
+        ax1.plot([xpos,xpos], [np.percentile(y_co10,16),np.percentile(y_co10,84)], '-', color="deepskyblue", lw=3)
         ax1.scatter(xpos, np.percentile(y_co10,50), marker='o', s=100, color="deepskyblue", zorder=1e9)
 
         xpos = 0.93 * (xlim[1] - xlim[0]) + xlim[0]
-        ax1.plot([xpos,xpos], [np.percentile(y2_ci10,16),np.percentile(y2_ci10,84)], '-', color="red", lw=2)
-        ax1.scatter(xpos, np.percentile(y2_ci10,50), marker='o', s=100, facecolor='lightgrey', edgecolor='red', lw=2, zorder=1e9)
+        ax1.plot([xpos,xpos], [np.percentile(y2_ci10,16),np.percentile(y2_ci10,84)], '-', color="red", lw=3)
+        ax1.scatter(xpos, np.percentile(y2_ci10,50), marker='o', s=100, facecolor='lightgrey', edgecolor='red', lw=3, zorder=1e9)
 
         xpos = 0.91 * (xlim[1] - xlim[0]) + xlim[0]
-        ax1.plot([xpos,xpos], [np.percentile(y2_co10,16),np.percentile(y2_co10,84)], '-', color="blue", lw=2)
-        ax1.scatter(xpos, np.percentile(y2_co10,50), marker='o', s=100, facecolor='lightgrey', edgecolor='blue', lw=2, zorder=1e9)
+        ax1.plot([xpos,xpos], [np.percentile(y2_co10,16),np.percentile(y2_co10,84)], '-', color="blue", lw=3)
+        ax1.scatter(xpos, np.percentile(y2_co10,50), marker='o', s=100, facecolor='lightgrey', edgecolor='blue', lw=3, zorder=1e9)
 
         # plot ac4
         #ax4.scatter(x_co10, y_co10, c=c_co10, cmap='rainbow_r', lw=0, s=30, marker="s", alpha=1.0, vmin=0, vmax=vmax)
