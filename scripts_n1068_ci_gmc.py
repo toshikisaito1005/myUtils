@@ -891,10 +891,14 @@ class ToolsCIGMC():
         #ax4.scatter(x_co10, y_co10, c=c_co10, cmap='rainbow_r', lw=0, s=30, marker="s", alpha=1.0, vmin=0, vmax=vmax)
         #ax4.scatter(x_ci10, y_ci10, c=c_ci10, cmap='rainbow_r', lw=0, s=30, marker="o", alpha=1.0, vmin=0, vmax=vmax)
 
-        txt = ax1.text(0.03, 0.86, "CO(1-0) Clouds", color="deepskyblue", transform=ax1.transAxes, weight="bold", fontsize=20)
-        txt.set_path_effects([PathEffects.withStroke(linewidth=4, foreground='w')])
-        txt = ax1.text(0.03, 0.81, "[CI](1-0) Clouds", color="tomato", transform=ax1.transAxes, weight="bold", fontsize=20)
-        txt.set_path_effects([PathEffects.withStroke(linewidth=4, foreground='w')])
+        txt = ax1.text(0.03, 0.86, "CO Clouds", color="deepskyblue", transform=ax1.transAxes, weight="bold", fontsize=20)
+        txt.set_path_effects([PathEffects.withStroke(linewidth=3, foreground='w')])
+        txt = ax1.text(0.03, 0.82, "[CI] Clouds", color="tomato", transform=ax1.transAxes, weight="bold", fontsize=20)
+        txt.set_path_effects([PathEffects.withStroke(linewidth=3, foreground='w')])
+        txt = ax1.text(0.03, 0.78, "CO Clouds (Outflow)", color="lightgrey", transform=ax1.transAxes, weight="bold", fontsize=20)
+        txt.set_path_effects([PathEffects.withStroke(linewidth=3, foreground='blue')])
+        txt = ax1.text(0.03, 0.74, "[CI] Clouds (Outflow)", color="lightgrey", transform=ax1.transAxes, weight="bold", fontsize=20)
+        txt.set_path_effects([PathEffects.withStroke(linewidth=3, foreground='red')])
 
         # save
         os.system("rm -rf " + self.outpng_r_vs_disp)
