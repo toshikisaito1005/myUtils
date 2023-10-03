@@ -921,7 +921,7 @@ class ToolsCIGMC():
         ax_histy.tick_params(axis="y", labelleft=False)
 
         # the scatter plot:
-        ax.scatter(x, y, c=color, lw=lw, s=70, marker=marker, alpha=0.5, zorder=1e8)
+        ax.scatter(x, y, c=color, lw=lw, s=70, marker=marker, alpha=1.0, zorder=1e8)
 
         # now determine nice limits by hand:
         binwidth = 0.05
