@@ -784,13 +784,19 @@ class ToolsCIGMC():
         x_ci10 = mom0_ci10_all
         y_ci10 = mom2_ci10_all
         c_ci10 = r_ci10_all
+
+        xerr_co10 = emom0_co10_all
+        yerr_co10 = emom2_co10_all
+        xerr_ci10 = emom0_ci10_all
+        yerr_ci10 = emom2_ci10_all
+
         x2_co10 = mom0_co10_cone
         y2_co10 = mom2_co10_cone
         x2_ci10 = mom0_ci10_cone
         y2_ci10 = mom2_ci10_cone
 
-        xlim   = [np.min([np.nanmin(x_co10),np.nanmin(x_ci10)])-0.3,np.max([np.nanmax(x_co10),np.nanmax(x_ci10)])+0.3]
-        ylim   = [np.min([np.nanmin(y_co10),np.nanmin(y_ci10)])-0.3,np.max([np.nanmax(y_co10),np.nanmax(y_ci10)])+0.3]
+        xlim   = [np.min([np.nanmin(x_co10),np.nanmin(x_ci10)])-0.4,np.max([np.nanmax(x_co10),np.nanmax(x_ci10)])+0.4]
+        ylim   = [np.min([np.nanmin(y_co10),np.nanmin(y_ci10)])-0.4,np.max([np.nanmax(y_co10),np.nanmax(y_ci10)])+0.4]
         vmax   = np.max(r_ci10)
         title  = "None"
         xlabel = "log$_{10}$ Integrated Intensity (K km s$^{-1}$)" # "log$_{10}$ H$_2$ Surface Density ($M_{\odot}$ pc$^{-2}$)"
@@ -849,6 +855,7 @@ class ToolsCIGMC():
 
         # plot co10 cone
         ax1.scatter(x2_co10, y2_co10, facecolor='lightgrey', edgecolor='blue', lw=2, s=70, marker="s", alpha=1.0, zorder=1e9)
+        ax1.errorbar(x_co10, y_co10, xerr=xerr_co10, yerr=yerr_co10, color='grey', zorder=0, lw=1, s=0)
 
         # plot ci10 cone
         ax1.scatter(x2_ci10, y2_ci10, facecolor='lightgrey', edgecolor='red', lw=2, s=70, marker="o", alpha=1.0, zorder=1e9)
