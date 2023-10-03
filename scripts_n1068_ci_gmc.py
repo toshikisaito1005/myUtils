@@ -893,11 +893,11 @@ class ToolsCIGMC():
 
         txt = ax1.text(0.03, 0.90, "[CI] Clouds", color="tomato", transform=ax1.transAxes, weight="bold", fontsize=20)
         txt.set_path_effects([PathEffects.withStroke(linewidth=3, foreground='w')])
-        txt = ax1.text(0.03, 0.86, "CO Clouds", color="deepskyblue", transform=ax1.transAxes, weight="bold", fontsize=20)
+        txt = ax1.text(0.03, 0.85, "CO Clouds", color="deepskyblue", transform=ax1.transAxes, weight="bold", fontsize=20)
         txt.set_path_effects([PathEffects.withStroke(linewidth=3, foreground='w')])
-        txt = ax1.text(0.03, 0.82, "[CI] Clouds (Outflow)", color="lightgrey", transform=ax1.transAxes, weight="bold", fontsize=20)
+        txt = ax1.text(0.03, 0.80, "[CI] Clouds (Outflow)", color="lightgrey", transform=ax1.transAxes, weight="bold", fontsize=20)
         txt.set_path_effects([PathEffects.withStroke(linewidth=3, foreground='red')])
-        txt = ax1.text(0.03, 0.78, "CO Clouds (Outflow)", color="lightgrey", transform=ax1.transAxes, weight="bold", fontsize=20)
+        txt = ax1.text(0.03, 0.75, "CO Clouds (Outflow)", color="lightgrey", transform=ax1.transAxes, weight="bold", fontsize=20)
         txt.set_path_effects([PathEffects.withStroke(linewidth=3, foreground='blue')])
 
         # save
