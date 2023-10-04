@@ -948,7 +948,7 @@ class ToolsCIGMC():
         os.system("rm -rf template.image test.image")
         os.system("cp -r " + self.mom0_ci10 + " template.image")
         imregrid(
-            imgaename = self.mom0_co10,
+            imagename = self.mom0_co10,
             template = "template.image",
             output = "test.image",
             )
@@ -963,7 +963,7 @@ class ToolsCIGMC():
         os.system("rm -rf template.image test.image")
         os.system("cp -r " + self.emom0_ci10 + " template.image")
         imregrid(
-            imgaename = self.mom0_co10,
+            imagename = self.mom0_co10,
             template = "template.image",
             output = "test.image",
             )
@@ -997,7 +997,7 @@ class ToolsCIGMC():
         os.system("rm -rf template.image test.image")
         os.system("cp -r " + self.mom2_ci10 + " template.image")
         imregrid(
-            imgaename = self.mom0_co10,
+            imagename = self.mom0_co10,
             template = "template.image",
             output = "test.image",
             )
@@ -1012,7 +1012,7 @@ class ToolsCIGMC():
         os.system("rm -rf template.image test.image")
         os.system("cp -r " + self.emom2_ci10 + " template.image")
         imregrid(
-            imgaename = self.mom0_co10,
+            imagename = self.mom0_co10,
             template = "template.image",
             output = "test.image",
             )
