@@ -26,6 +26,9 @@ mom2_ci10  ,,,ngc1068_b8_12m+7m_ci10_0p8as_strict_mom2.fits
 emom2_co10 ,,,ngc1068_b3_12m+7m_co10_0p8as_strict_emom2.fits
 emom2_ci10 ,,,ngc1068_b8_12m+7m_ci10_0p8as_strict_emom2.fits
 #
+vla        ,,,ngc1068_c-band_spwgood_ite3.image.tt0.fits
+paa        ,,,NGC1068_11080_NIC3_Paalpha_flux-recentered-reproject-units.fits
+#
 #
 #
 cube_co10          ,,,ngc1068_b3_12m+7m_co10_0p8as.fits
