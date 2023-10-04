@@ -458,7 +458,7 @@ class ToolsCIGMC():
             ann      = True,
             add_text = False,
             lim      = 10,
-            size     = 80,
+            size     = 800,
             bgcolor  = "black",
             textcolor= "white",
             label    = "(K km s$^{-1}$)",
