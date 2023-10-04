@@ -450,9 +450,9 @@ class ToolsCIGMC():
 
         self._plot_hexmap(
             self.outpng_map_ci_mom0,
-            data_ci10[:,0],
-            data_ci10[:,1],
-            data_ci10[:,2],
+            data_ci10[:,0][data_ci10[:,2]>data_ci10[:,3]*self.snr_mom],
+            data_ci10[:,1][data_ci10[:,2]>data_ci10[:,3]*self.snr_mom],
+            data_ci10[:,2][data_ci10[:,2]>data_ci10[:,3]*self.snr_mom],
             "[CI] Integrated Intensity",
             cmap     = "Reds",
             ann      = True,
