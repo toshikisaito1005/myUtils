@@ -852,7 +852,7 @@ class ToolsCIGMC():
         # plot ci10 all
         X, Y, Z = density_estimation(x_ci10, y_ci10, xlim, ylim)
         ax1.contour(X, Y, Z, colors="red", linewidths=[1], alpha=1.0, zorder=5e8)
-        self._scatter_hist(x_ci10, y_ci10, ax1, ax2, ax3, "lightcoral", xlim, ylim, "o", offset=0.15)
+        self._scatter_hist(x_ci10, y_ci10, ax1, ax2, ax3, "maroon", xlim, ylim, "o", offset=0.15)
         ax1.errorbar(x_ci10, y_ci10, xerr=xerr_ci10, yerr=yerr_ci10, fmt='.', color='grey', zorder=0, lw=1, capsize=0, markersize=0)
 
         # plot co10 cone
@@ -863,8 +863,8 @@ class ToolsCIGMC():
 
         # pctl bar xaxis
         ypos = 0.97 * (ylim[1] - ylim[0]) + ylim[0]
-        ax1.plot([np.percentile(x_ci10,16),np.percentile(x_ci10,84)], [ypos,ypos], '-', color="lightcoral", lw=3)
-        ax1.scatter(np.percentile(x_ci10,50), ypos, marker='o', s=100, color="lightcoral", zorder=1e9)
+        ax1.plot([np.percentile(x_ci10,16),np.percentile(x_ci10,84)], [ypos,ypos], '-', color="maroon", lw=3)
+        ax1.scatter(np.percentile(x_ci10,50), ypos, marker='o', s=100, color="maroon", zorder=1e9)
 
         ypos = 0.95 * (ylim[1] - ylim[0]) + ylim[0]
         ax1.plot([np.percentile(x_co10,16),np.percentile(x_co10,84)], [ypos,ypos], '-', color="deepskyblue", lw=3)
@@ -880,8 +880,8 @@ class ToolsCIGMC():
 
         # pctl bar yaxis
         xpos = 0.97 * (xlim[1] - xlim[0]) + xlim[0]
-        ax1.plot([xpos,xpos], [np.percentile(y_ci10,16),np.percentile(y_ci10,84)], '-', color="lightcoral", lw=3)
-        ax1.scatter(xpos, np.percentile(y_ci10,50), marker='o', s=100, color="lightcoral", zorder=1e9)
+        ax1.plot([xpos,xpos], [np.percentile(y_ci10,16),np.percentile(y_ci10,84)], '-', color="maroon", lw=3)
+        ax1.scatter(xpos, np.percentile(y_ci10,50), marker='o', s=100, color="maroon", zorder=1e9)
 
         xpos = 0.95 * (xlim[1] - xlim[0]) + xlim[0]
         ax1.plot([xpos,xpos], [np.percentile(y_co10,16),np.percentile(y_co10,84)], '-', color="deepskyblue", lw=3)
@@ -899,7 +899,7 @@ class ToolsCIGMC():
         #ax4.scatter(x_co10, y_co10, c=c_co10, cmap='rainbow_r', lw=0, s=30, marker="s", alpha=1.0, vmin=0, vmax=vmax)
         #ax4.scatter(x_ci10, y_ci10, c=c_ci10, cmap='rainbow_r', lw=0, s=30, marker="o", alpha=1.0, vmin=0, vmax=vmax)
 
-        txt = ax1.text(0.03, 0.90, "[CI] Clouds", color="lightcoral", transform=ax1.transAxes, weight="bold", fontsize=20)
+        txt = ax1.text(0.03, 0.90, "[CI] Clouds", color="maroon", transform=ax1.transAxes, weight="bold", fontsize=20)
         txt.set_path_effects([PathEffects.withStroke(linewidth=3, foreground='w')])
         txt = ax1.text(0.03, 0.85, "CO Clouds", color="deepskyblue", transform=ax1.transAxes, weight="bold", fontsize=20)
         txt.set_path_effects([PathEffects.withStroke(linewidth=3, foreground='w')])
