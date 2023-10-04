@@ -464,7 +464,7 @@ class ToolsCIGMC():
         data_co10 = np.loadtxt(self.outtxt_hexcat_co10)
 
         # all
-        cut = np.where((data_ci10[:,2]>1) & (data_ci10[:,2]>data_ci10[:,3]*self.snr_mom) & (data_co10[:,2]>data_co10[:,3]*self.snr_mom))
+        cut = np.where((data_ci10[:,2]>1) & (data_co10[:,2]>0) & (data_ci10[:,4]>0) & (data_co10[:,4]>0) & (data_ci10[:,2]>data_ci10[:,3]*self.snr_mom) & (data_co10[:,2]>data_co10[:,3]*self.snr_mom))
 
         # mom0
         mom0_co10  = data_co10[:,2][cut]
@@ -488,7 +488,7 @@ class ToolsCIGMC():
         emom2_ci10 = emom2_ci10 / mom2_ci10 / np.log(10)
         mom2_ci10  = np.log10(mom2_ci10)
 
-        # all
+        # cone
         cut = np.where((data_ci10[:,2]>data_co10[:,2]) & (data_ci10[:,2]>data_ci10[:,3]*self.snr_mom) & (data_co10[:,2]>data_co10[:,3]*self.snr_mom) & (data_ci10[:,4]>data_ci10[:,5]) & (data_co10[:,4]>data_co10[:,5]))
 
         # mom0
