@@ -602,7 +602,7 @@ class ToolsCIGMC():
         im = ax.scatter(x, y, s=size, c=c, cmap=cmap, marker="h", linewidths=0)
 
         # cbar
-        cbar = plt.colorbar(im, vmin=vmin)
+        cbar = plt.colorbar(im)
         cbar.set_label(label, color="black")
 
         # scale bar
