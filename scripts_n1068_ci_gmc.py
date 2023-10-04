@@ -525,8 +525,8 @@ class ToolsCIGMC():
         x2 = mom0_co10_cone
         y2 = mom0_ci10_cone
 
-        xlim   = [np.min([np.nanmin(x_co10),np.nanmin(x_ci10)])-0.4,np.max([np.nanmax(x_co10),np.nanmax(x_ci10)])+0.4]
-        ylim   = [np.min([np.nanmin(y_co10),np.nanmin(y_ci10)])-0.4,np.max([np.nanmax(y_co10),np.nanmax(y_ci10)])+0.4]
+        xlim   = [np.min([np.nanmin(x),np.nanmin(x)])-0.4,np.max([np.nanmax(x),np.nanmax(x)])+0.4]
+        ylim   = [np.min([np.nanmin(y),np.nanmin(y)])-0.4,np.max([np.nanmax(y),np.nanmax(y)])+0.4]
         vmax   = np.max(r_ci10)
         title  = "None"
         xlabel = "log$_{10}$ CO Integrated Intensity (K km s$^{-1}$)" # "log$_{10}$ H$_2$ Surface Density ($M_{\odot}$ pc$^{-2}$)"
