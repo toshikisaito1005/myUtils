@@ -452,13 +452,13 @@ class ToolsCIGMC():
             self.outpng_map_ci_mom0,
             data_ci10[:,0][data_ci10[:,2]>data_ci10[:,3]*self.snr_mom],
             data_ci10[:,1][data_ci10[:,2]>data_ci10[:,3]*self.snr_mom],
-            np.log10(data_ci10[:,2][data_ci10[:,2]>data_ci10[:,3]*self.snr_mom]),
+            data_ci10[:,2][data_ci10[:,2]>data_ci10[:,3]*self.snr_mom],
             "[CI] Integrated Intensity",
             cmap     = "Reds",
             ann      = True,
             add_text = False,
             lim      = 10,
-            size     = 1000,
+            size     = 700,
             label    = "(K km s$^{-1}$)",
             )
 
