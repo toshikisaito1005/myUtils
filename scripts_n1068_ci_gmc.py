@@ -446,8 +446,8 @@ class ToolsCIGMC():
         taskname = self.modname + sys._getframe().f_code.co_name
         check_first(self.outtxt_hexcat_ci10,taskname)
 
+        # ci10
         data_ci10 = np.loadtxt(self.outtxt_hexcat_ci10)
-
         self._plot_hexmap(
             self.outpng_map_ci_mom0,
             data_ci10[:,0][data_ci10[:,2]>data_ci10[:,3]*self.snr_mom],
@@ -462,6 +462,21 @@ class ToolsCIGMC():
             bgcolor  = "white",
             textcolor= "black",
             label    = "(K km s$^{-1}$)",
+            )
+        self._plot_hexmap(
+            self.outpng_map_ci_mom2,
+            data_ci10[:,0][data_ci10[:,2]>data_ci10[:,3]*self.snr_mom],
+            data_ci10[:,1][data_ci10[:,2]>data_ci10[:,3]*self.snr_mom],
+            data_ci10[:,4][data_ci10[:,2]>data_ci10[:,3]*self.snr_mom],
+            "[CI] Integrated Intensity",
+            cmap     = "Reds",
+            ann      = True,
+            add_text = False,
+            lim      = 9.9,
+            size     = 820,
+            bgcolor  = "white",
+            textcolor= "black",
+            label    = "(km s$^{-1}$)",
             )
 
     ################
