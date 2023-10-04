@@ -214,6 +214,7 @@ class ToolsCIGMC():
         self.outpng_map_co_mom2 = self.dir_products + self._read_key("outpng_map_co_mom2")
         self.outpng_map_vla     = self.dir_products + self._read_key("outpng_map_vla")
         self.outpng_map_paa     = self.dir_products + self._read_key("outpng_map_paa")
+        self.outpng_map_ratio   = self.dir_products + self._read_key("outpng_map_ratio")
 
         # supplement
         self.outpng_radial_disp = self.dir_products + self._read_key("outpng_radial_disp")
@@ -521,7 +522,7 @@ class ToolsCIGMC():
         r = data_ci10[:,2]/data_co10[:,2]
         r[r>1] = 1
         self._plot_hexmap(
-            self.outpng_map_co_mom0,
+            self.outpng_map_ratio,
             data_co10[:,0][r>0],
             data_co10[:,1][r>0],
             r[r>0],
@@ -734,9 +735,9 @@ class ToolsCIGMC():
         mom2_ci10_all  = np.log10(mom2_ci10[cut])
         r_ci10_all     = r_ci10[cut]
 
-        fig = plt.figure(figsize=(10,10))
-        plt.scatter(-1*x_co10_cone, y_co10_cone, color='grey')
-        plt.savefig("test.png", dpi=self.fig_dpi)
+        #fig = plt.figure(figsize=(10,10))
+        #plt.scatter(-1*x_co10_cone, y_co10_cone, color='grey')
+        #plt.savefig("test.png", dpi=self.fig_dpi)
 
         #cut = np.where((mom0_ci10>emom0_ci10*self.snr_mom) & (mom2_ci10>emom2_ci10) & (r_ci10<self.fov_diamter/2.0) & (r_ci10>self.r_cnd_as) & (theta_ci10>=self.theta2) & (theta_ci10<self.theta1) | (mom0_ci10>emom0_ci10*self.snr_mom) & (mom2_ci10>emom2_ci10*self.snr_mom) & (r_ci10<self.fov_diamter/2.0) & (r_ci10>self.r_cnd_as) & (theta_ci10>=self.theta2+180) & (theta_ci10<self.theta1+180))
         cut = np.where((mom0_ci10>mom0_co10) & (mom0_co10>emom0_co10*self.snr_mom) & (mom2_co10>emom2_co10) & (mom0_ci10>emom0_ci10*self.snr_mom) & (mom2_ci10>emom2_ci10))
