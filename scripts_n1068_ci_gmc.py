@@ -518,21 +518,6 @@ class ToolsCIGMC():
             )
 
         # ratio
-        self._plot_hexmap(
-            self.outpng_map_co_mom0,
-            data_co10[:,0],
-            data_co10[:,1],
-            data_ci10[:,2]/data_co10[:,2],
-            "CO Integrated Intensity",
-            cmap     = "Blues",
-            ann      = True,
-            add_text = False,
-            lim      = 9.9,
-            size     = 820,
-            bgcolor  = "white",
-            textcolor= "black",
-            label    = "(K km s$^{-1}$)",
-            )
 
         # other
         self._plot_hexmap(
@@ -960,16 +945,30 @@ class ToolsCIGMC():
             err=True,
             )
 
+        os.system("rm -rf template.image test.image")
+        os.system("cp -r " + self.mom0_ci10 + " template.image")
+        imregrid(
+            imgaename = self.mom0_co10,
+            template = "template.image",
+            output = "test.image",
+            )
         hexx_ci10, hexy_ci10, hexc_ci10_mom0 = hexbin_sampling(
-            self.mom0_ci10,
+            "test.image", #self.mom0_ci10,
             self.ra_agn,
             self.dec_agn,
             beam=55/72.,
             gridsize=70,
             err=False,
             )
+        os.system("rm -rf template.image test.image")
+        os.system("cp -r " + self.emom0_ci10 + " template.image")
+        imregrid(
+            imgaename = self.mom0_co10,
+            template = "template.image",
+            output = "test.image",
+            )
         _, _, hexc_ci10_emom0 = hexbin_sampling(
-            self.emom0_ci10,
+            "test.image", # self.emom0_ci10,
             self.ra_agn,
             self.dec_agn,
             beam=55/72.,
@@ -995,16 +994,30 @@ class ToolsCIGMC():
             err=True,
             )
 
+        os.system("rm -rf template.image test.image")
+        os.system("cp -r " + self.mom2_ci10 + " template.image")
+        imregrid(
+            imgaename = self.mom0_co10,
+            template = "template.image",
+            output = "test.image",
+            )
         _, _, hexc_ci10_mom2 = hexbin_sampling(
-            self.mom2_ci10,
+            "test.image", # self.mom2_ci10,
             self.ra_agn,
             self.dec_agn,
             beam=55/72.,
             gridsize=70,
             err=False,
             )
+        os.system("rm -rf template.image test.image")
+        os.system("cp -r " + self.emom2_ci10 + " template.image")
+        imregrid(
+            imgaename = self.mom0_co10,
+            template = "template.image",
+            output = "test.image",
+            )
         _, _, hexc_ci10_emom2 = hexbin_sampling(
-            self.emom2_ci10,
+            "test.image", #self.emom2_ci10,
             self.ra_agn,
             self.dec_agn,
             beam=55/72.,
@@ -1013,14 +1026,19 @@ class ToolsCIGMC():
             )
 
         # other
-        os.system("rm -rf test.image")
+        os.system("rm -rf test.image test.image2")
         imsmooth(
             imagename = self.fits_vla,
             targetres = True,
             major="0.8arcsec",
             minor="0.8arcsec",
             pa="0deg",
-            outfile="test.image")
+            outfile="test.image2")
+        imregrid(
+            imgaename = "test.image2",
+            template = "template.image",
+            output = "test.image",
+            )
         _, _, hexc_vla = hexbin_sampling(
             "test.image",
             self.ra_agn,
@@ -1029,14 +1047,19 @@ class ToolsCIGMC():
             gridsize=70,
             err=False,
             )
-        os.system("rm -rf test.image")
+        os.system("rm -rf test.image test.image2")
         imsmooth(
             imagename = self.fits_paa,
             targetres = False,
             major="0.8arcsec",
             minor="0.8arcsec",
             pa="0deg",
-            outfile="test.image")
+            outfile="test.image2")
+        imregrid(
+            imgaename = "test.image2",
+            template = "template.image",
+            output = "test.image",
+            )
         _, _, hexc_paa = hexbin_sampling(
             self.fits_paa,
             self.ra_agn,
@@ -1045,7 +1068,7 @@ class ToolsCIGMC():
             gridsize=70,
             err=False,
             )
-        os.system("rm -rf test.image")
+        os.system("rm -rf template.image test.image test.image2")
 
         # combine
         data_co10 = np.c_[hexx_co10, hexy_co10, hexc_co10_mom0, hexc_co10_emom0, hexc_co10_mom2, hexc_co10_emom2, hexc_vla, hexc_paa]
