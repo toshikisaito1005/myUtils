@@ -540,12 +540,11 @@ class ToolsCIGMC():
             label    = "",
             )
         r = data_ci10[:,4] - data_co10[:,4]
-        r[r>1] = 1
         self._plot_hexmap(
             self.outpng_map_ratio_m2,
-            data_co10[:,0][r>0],
-            data_co10[:,1][r>0],
-            r[r>0],
+            data_co10[:,0],
+            data_co10[:,1],
+            r,
             "[CI]/CO Dispersion Difference",
             cmap     = "rainbow",
             ann      = True,
