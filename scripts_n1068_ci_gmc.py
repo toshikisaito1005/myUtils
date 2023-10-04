@@ -532,7 +532,7 @@ class ToolsCIGMC():
             bgcolor  = "white",
             textcolor= "black",
             label    = "",
-            vmin     = 0,
+            vmin     = 0.8,
             )
         self._plot_hexmap(
             self.outpng_map_paa,
@@ -548,7 +548,7 @@ class ToolsCIGMC():
             bgcolor  = "white",
             textcolor= "black",
             label    = "",
-            vmin     = -4.0,
+            vmin     = -3.0,
             )
 
     ################
@@ -600,7 +600,7 @@ class ToolsCIGMC():
             im = ax.scatter(x, y, s=size, c=c, cmap=cmap, marker="h", linewidths=0, vmin=vmin)
 
         # cbar
-        cbar = plt.colorbar(im)
+        cbar = plt.colorbar(im, vmin=vmin)
         cbar.set_label(label, color="black")
 
         # scale bar
