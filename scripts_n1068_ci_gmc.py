@@ -474,7 +474,6 @@ class ToolsCIGMC():
         x,y,c,
         title,
         cmap="rainbow",
-        plot_cbar=False,
         ann=False,
         lim=29.5,
         size=690,
@@ -518,24 +517,12 @@ class ToolsCIGMC():
         # cbar
         cbar = plt.colorbar(im)
         cbar.set_label(label, color="black")
-        if plot_cbar==True:
-            cax = fig.add_axes([0.19, 0.12, 0.025, 0.35])
-            cb  = fig.colorbar(im, cax=cax)
-            cb.set_label(label, color=textcolor)
-            cb.ax.yaxis.set_tick_params(color=textcolor)
-            cb.outline.set_color(textcolor)
-            plt.setp(plt.getp(cb.ax.axes, 'yticklabels'), color=textcolor)
 
         # scale bar
         if scalebar=="100pc":
             bar = 100 / self.scale_pc
             ax.plot([-8,-8+bar],[-8,-8],"-",color=textcolor,lw=4)
             ax.text(-8, -8.5, "100 pc", color=textcolor,
-                    horizontalalignment="right", verticalalignment="top")
-        elif scalebar=="500pc":
-            bar = 500 / self.scale_pc
-            ax.plot([-22,-22+bar],[-22,-22],"-",color=textcolor,lw=4)
-            ax.text(-22, -22.5, "500 pc", color=textcolor,
                     horizontalalignment="right", verticalalignment="top")
 
         # text
@@ -549,7 +536,7 @@ class ToolsCIGMC():
 
             fov_diamter = 16.5
             efov1 = patches.Ellipse(xy=(-0,0), width=fov_diamter,
-                height=fov_diamter, angle=0, fill=False, edgecolor="black",
+                height=fov_diamter, angle=0, fill=False, edgecolor=textcolor,
                 alpha=1.0, lw=3.5)
 
             ax.add_patch(efov1)
