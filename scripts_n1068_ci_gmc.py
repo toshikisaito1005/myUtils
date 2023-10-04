@@ -540,7 +540,7 @@ class ToolsCIGMC():
             data_co10[:,1],
             np.log10(data_co10[:,7]),
             "HST Paschen alpha",
-            cmap     = "Reds",
+            cmap     = "Greens",
             ann      = True,
             add_text = False,
             lim      = 9.9,
@@ -594,10 +594,12 @@ class ToolsCIGMC():
         ax.set_aspect('equal', adjustable='box')
 
         # plot
-        if vmin==False:
-            im = ax.scatter(x, y, s=size, c=c, cmap=cmap, marker="h", linewidths=0)
-        else:
-            im = ax.scatter(x, y, s=size, c=c, cmap=cmap, marker="h", linewidths=0, vmin=vmin)
+        if vmin!=False:
+            x = x[c>vmin]
+            y = y[c>vmin]
+            c = c[c>vmin]
+
+        im = ax.scatter(x, y, s=size, c=c, cmap=cmap, marker="h", linewidths=0)
 
         # cbar
         cbar = plt.colorbar(im, vmin=vmin)
