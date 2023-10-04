@@ -208,6 +208,9 @@ class ToolsCIGMC():
         self.outtxt_hexcat_co10 = self.dir_products + self._read_key("outtxt_hexcat_co10")
         self.outtxt_hexcat_ci10 = self.dir_products + self._read_key("outtxt_hexcat_ci10")
         self.outpng_r_vs_disp   = self.dir_products + self._read_key("outpng_r_vs_disp")
+        self.outpng_map_ci_mom0 = self.dir_products + self._read_key("outpng_map_ci_mom0")
+        self.outpng_map_ci_mom2 = self.dir_products + self._read_key("outpng_map_ci_mom2")
+        # supplement
         self.outpng_radial_disp = self.dir_products + self._read_key("outpng_radial_disp")
         self.outpng_radial_mom0 = self.dir_products + self._read_key("outpng_radial_mom0")
 
@@ -442,6 +445,131 @@ class ToolsCIGMC():
 
         taskname = self.modname + sys._getframe().f_code.co_name
         check_first(self.outtxt_hexcat_ci10,taskname)
+
+        data_ci10 = np.loadtxt(self.outtxt_hexcat_ci10)
+
+        self._plot_hexmap(
+            self.outpng_map_ci_mom0,
+            data_ci10[:,0],
+            data_ci10[:,1],
+            data_ci10[:,2],
+            "[CI] Integrated Intensity",
+            ann      = True,
+            add_text = False,
+            lim      = 13,
+            size     = 3600,
+            label    = "(K km s$^{-1}$)",
+            )
+
+    ################
+    # _plot_hexmap #
+    ################
+
+    def _plot_hexmap(
+        self,
+        outpng,
+        x,y,c,
+        title,
+        cmap="rainbow",
+        plot_cbar=True,
+        ann=False,
+        lim=29.5,
+        size=690,
+        add_text=False,
+        label="(K km s$^{-1}$)",
+        bgcolor="white",
+        scalebar="100pc",
+        textcolor="black",
+        ):
+        """
+        """
+
+        # set plt, ax
+        fig = plt.figure(figsize=(13,10))
+        gs = gridspec.GridSpec(nrows=10, ncols=10)
+        ax = plt.subplot(gs[0:10,0:10])
+        fig.patch.set_facecolor(bgcolor)
+
+        # set ax parameter
+        myax_set(
+        ax,
+        grid=None,
+        xlim=[lim, -lim],
+        ylim=[-lim, lim],
+        xlabel="R.A. offset (arcsec)",
+        ylabel="Decl. offset (arcsec)",
+        adjust=[0.10,0.99,0.10,0.93],
+        fsize=25,
+        )
+        ax.set_aspect('equal', adjustable='box')
+
+        # plot
+        if add_text!="env":
+            im = ax.scatter(x, y, s=size, c=c, cmap=cmap, marker="h", linewidths=0)#, vmin=0)
+        else:
+            ax.scatter(x[c==3], y[c==3], s=size, c="tomato", marker="h", linewidths=0)
+            ax.scatter(x[c==2], y[c==2], s=size, c="deepskyblue", marker="h", linewidths=0)
+            ax.scatter(x[c==1], y[c==1], s=size, c="grey", marker="h", linewidths=0)
+            im = ax.scatter(np.array(x)*1000, np.array(y)*1000, s=0, c=c, cmap=cmap, marker="h", linewidths=0, vmin=0)
+
+        # cbar
+        cbar = plt.colorbar(im)
+        if plot_cbar==True:
+            cax = fig.add_axes([0.19, 0.12, 0.025, 0.35])
+            cb  = fig.colorbar(im, cax=cax)
+            cb.set_label(label, color=textcolor)
+            cb.ax.yaxis.set_tick_params(color=textcolor)
+            cb.outline.set_color(textcolor)
+            plt.setp(plt.getp(cb.ax.axes, 'yticklabels'), color=textcolor)
+
+        # scale bar
+        if scalebar=="100pc":
+            bar = 100 / self.scale_pc
+            ax.plot([-10,-10+bar],[-10,-10],"-",color=textcolor,lw=4)
+            ax.text(-10, -10.5, "100 pc", color=textcolor,
+                    horizontalalignment="right", verticalalignment="top")
+        elif scalebar=="500pc":
+            bar = 500 / self.scale_pc
+            ax.plot([-22,-22+bar],[-22,-22],"-",color=textcolor,lw=4)
+            ax.text(-22, -22.5, "500 pc", color=textcolor,
+                    horizontalalignment="right", verticalalignment="top")
+
+        # text
+        ax.text(0.03, 0.93, title, color=textcolor, transform=ax.transAxes, weight="bold", fontsize=32)
+
+        # ann
+        if ann==True:
+            theta1      = -10.0 # degree
+            theta2      = 70.0 # degree
+            fov_diamter = 16.5 # arcsec (12m+7m Band 8)
+
+            fov_diamter = 16.5
+            efov1 = patches.Ellipse(xy=(-0,0), width=fov_diamter,
+                height=fov_diamter, angle=0, fill=False, edgecolor="black",
+                alpha=1.0, lw=3.5)
+
+            ax.add_patch(efov1)
+
+            # plot NGC 1068 AGN and outflow geometry
+            x1 = fov_diamter/2.0 * np.cos(np.radians(-1*theta1+90))
+            y1 = fov_diamter/2.0 * np.sin(np.radians(-1*theta1+90))
+            ax.plot([x1, -x1], [y1, -y1], "--", c="black", lw=3.5)
+            x2 = fov_diamter/2.0 * np.cos(np.radians(-1*theta2+90))
+            y2 = fov_diamter/2.0 * np.sin(np.radians(-1*theta2+90))
+            ax.plot([x2, -x2], [y2, -y2], "--", c="black", lw=3.5)
+
+        # add annotation comment
+        if add_text==True:
+            ax.plot([0,-7], [0,10], lw=3, c="black")
+            ax.text(-10.5, 10.5, "AGN position", ha="right", va="center", weight="bold")
+        elif add_text=="env":
+            ax.text(12, -10, "CND", ha="left", va="center", color="tomato", weight="bold")
+            ax.text(12, -11, "Outflow", ha="left", va="center", color="deepskyblue", weight="bold")
+            ax.text(12, -12, "Non-outflow", ha="left", va="center", color="grey", weight="bold")
+
+        # save
+        os.system("rm -rf " + outpng)
+        plt.savefig(outpng, dpi=300)
 
     ################
     # plot_scatter #
@@ -813,7 +941,7 @@ class ToolsCIGMC():
         # combine
         data_co10 = np.c_[hexx_co10, hexy_co10, hexc_co10_mom0, hexc_co10_emom0, hexc_co10_mom2, hexc_co10_emom2, hexc_vla, hexc_paa]
         np.savetxt(self.outtxt_hexcat_co10, data_co10)
-        data_ci10 = np.c_[hexx_ci10, hexy_ci10, hexc_ci10_mom0, hexc_ci10_emom0, hexc_ci10_mom2, hexc_ci10_emom2, hexc_vla, hexc_paa]
+        data_ci10 = np.c_[hexx_ci10, hexy_ci10, hexc_ci10_mom0, hexc_ci10_emom0, hexc_ci10_mom2, hexc_ci10_emom2]
         np.savetxt(self.outtxt_hexcat_ci10, data_ci10)
 
     #########################
