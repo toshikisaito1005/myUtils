@@ -460,7 +460,7 @@ class ToolsCIGMC():
             lim      = 10,
             size     = 80,
             bgcolor  = "black",
-            textcolor= "white"
+            textcolor= "white",
             label    = "(K km s$^{-1}$)",
             )
 
