@@ -454,7 +454,7 @@ class ToolsCIGMC():
             data_ci10[:,1][data_ci10[:,2]>data_ci10[:,3]*self.snr_mom],
             data_ci10[:,2][data_ci10[:,2]>data_ci10[:,3]*self.snr_mom],
             "[CI] Integrated Intensity",
-            cmap     = "gnuplot",
+            cmap     = "rainbow",
             ann      = True,
             add_text = True,
             lim      = 9.9,
@@ -546,7 +546,7 @@ class ToolsCIGMC():
         # add annotation comment
         if add_text==True:
             ax.plot([0,-7], [0,7], lw=3, c=textcolor)
-            ax.text(-7.5, 7.5, "AGN", ha="right", va="center", weight="bold", color=textcolor)
+            ax.text(-8.5, 7.5, "AGN", ha="right", va="center", weight="bold", color=textcolor)
 
         # save
         os.system("rm -rf " + outpng)
