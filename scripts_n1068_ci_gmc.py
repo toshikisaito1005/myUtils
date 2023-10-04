@@ -532,7 +532,7 @@ class ToolsCIGMC():
             bgcolor  = "white",
             textcolor= "black",
             label    = "",
-            vmin     = -3.0,
+            vmin     = -4.0,
             )
         self._plot_hexmap(
             self.outpng_map_paa,
@@ -548,7 +548,7 @@ class ToolsCIGMC():
             bgcolor  = "white",
             textcolor= "black",
             label    = "",
-            vmin     = 0.8,
+            vmin     = 0.0,
             )
 
     ################
