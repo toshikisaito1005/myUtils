@@ -523,7 +523,7 @@ class ToolsCIGMC():
             data_co10[:,0],
             data_co10[:,1],
             np.log10(data_co10[:,6]),
-            "VLA C-Band",
+            "VLA 6 GHz Continuum",
             cmap     = "Greens",
             ann      = True,
             add_text = False,
