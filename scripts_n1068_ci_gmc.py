@@ -548,7 +548,7 @@ class ToolsCIGMC():
             cmap     = "rainbow",
             ann      = True,
             add_text = False,
-            lim      = 9.9,
+            lim      = 30, #9.9,
             size     = 820,
             bgcolor  = "white",
             textcolor= "black",
