@@ -540,9 +540,9 @@ class ToolsCIGMC():
             label    = "",
             )
         r = data_ci10[:,4] - data_co10[:,4]
-        x = data_co10[:,0][data_ci10[:,4]>data_ci10[:,5]]
-        y = data_co10[:,1][data_ci10[:,4]>data_ci10[:,5]]
-        r = r[data_ci10[:,4]>data_ci10[:,5]]
+        x = data_co10[:,0][data_ci10[:,2]>data_ci10[:,3]*self.snr_mom]
+        y = data_co10[:,1][data_ci10[:,2]>data_ci10[:,3]*self.snr_mom]
+        r = r[data_ci10[:,2]>data_ci10[:,3]*self.snr_mom]
         r[r>10] = 10
         self._plot_hexmap(
             self.outpng_map_ratio_m2,
