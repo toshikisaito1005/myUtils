@@ -212,6 +212,9 @@ class ToolsCIGMC():
         self.outpng_map_ci_mom2 = self.dir_products + self._read_key("outpng_map_ci_mom2")
         self.outpng_map_co_mom0 = self.dir_products + self._read_key("outpng_map_co_mom0")
         self.outpng_map_co_mom2 = self.dir_products + self._read_key("outpng_map_co_mom2")
+        self.outpng_map_vla     = self.dir_products + self._read_key("outpng_map_vla")
+        self.outpng_map_paa     = self.dir_products + self._read_key("outpng_map_paa")
+
         # supplement
         self.outpng_radial_disp = self.dir_products + self._read_key("outpng_radial_disp")
         self.outpng_radial_mom0 = self.dir_products + self._read_key("outpng_radial_mom0")
@@ -491,7 +494,7 @@ class ToolsCIGMC():
             "CO Integrated Intensity",
             cmap     = "Blues",
             ann      = True,
-            add_text = True,
+            add_text = False,
             lim      = 9.9,
             size     = 820,
             bgcolor  = "white",
@@ -512,6 +515,38 @@ class ToolsCIGMC():
             bgcolor  = "white",
             textcolor= "black",
             label    = "(km s$^{-1}$)",
+            )
+
+        # other
+        self._plot_hexmap(
+            self.outpng_map_vla,
+            data_co10[:,0],
+            data_co10[:,1],
+            data_co10[:,6],
+            "VLA C-Band",
+            cmap     = "Greens",
+            ann      = True,
+            add_text = False,
+            lim      = 9.9,
+            size     = 820,
+            bgcolor  = "white",
+            textcolor= "black",
+            label    = "",
+            )
+        self._plot_hexmap(
+            self.outpng_map_paa,
+            data_co10[:,0],
+            data_co10[:,1],
+            data_co10[:,7],
+            "HST Paschen alpha",
+            cmap     = "Reds",
+            ann      = True,
+            add_text = False,
+            lim      = 9.9,
+            size     = 820,
+            bgcolor  = "white",
+            textcolor= "black",
+            label    = "",
             )
 
     ################
