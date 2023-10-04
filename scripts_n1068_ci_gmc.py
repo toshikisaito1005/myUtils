@@ -454,11 +454,11 @@ class ToolsCIGMC():
             data_ci10[:,1][data_ci10[:,2]>data_ci10[:,3]*self.snr_mom],
             data_ci10[:,2][data_ci10[:,2]>data_ci10[:,3]*self.snr_mom],
             "[CI] Integrated Intensity",
-            cmap     = "Reds",
+            cmap     = "viridis",
             ann      = True,
             add_text = False,
             lim      = 10,
-            size     = 700,
+            size     = 750,
             label    = "(K km s$^{-1}$)",
             )
 
@@ -477,7 +477,7 @@ class ToolsCIGMC():
         lim=29.5,
         size=690,
         add_text=False,
-        label="(K km s$^{-1}$ in log$_{10}$)",
+        label="(K km s$^{-1}$)",
         bgcolor="white",
         scalebar="100pc",
         textcolor="black",
@@ -527,8 +527,8 @@ class ToolsCIGMC():
         # scale bar
         if scalebar=="100pc":
             bar = 100 / self.scale_pc
-            ax.plot([-10,-10+bar],[-10,-10],"-",color=textcolor,lw=4)
-            ax.text(-10, -10.5, "100 pc", color=textcolor,
+            ax.plot([-8,-8+bar],[-8,-8],"-",color=textcolor,lw=4)
+            ax.text(-8, -8.5, "100 pc", color=textcolor,
                     horizontalalignment="right", verticalalignment="top")
         elif scalebar=="500pc":
             bar = 500 / self.scale_pc
