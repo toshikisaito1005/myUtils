@@ -489,7 +489,7 @@ class ToolsCIGMC():
         mom2_ci10  = np.log10(mom2_ci10)
 
         # all
-        cut = np.where((data_ci10[:,2]>data_co10[:,2]) & (data_ci10[:,2]>data_ci10[:,3]*self.snr_mom) & (data_co10[:,2]>data_co10[:,3]*self.snr_mom) & (data_ci10[:,4]>data_ci10[:,5]) & (data_co10[:,4]>data_co10[:,5]) & (data_ci10[:,4]>1))
+        cut = np.where((data_ci10[:,2]>data_co10[:,2]) & (data_ci10[:,2]>data_ci10[:,3]*self.snr_mom) & (data_co10[:,2]>data_co10[:,3]*self.snr_mom) & (data_ci10[:,4]>data_ci10[:,5]) & (data_co10[:,4]>data_co10[:,5]) & (data_ci10[:,2]>1))
 
         # mom0
         mom0_co10_cone  = data_co10[:,2][cut]
