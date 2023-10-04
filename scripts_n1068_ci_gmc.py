@@ -546,7 +546,7 @@ class ToolsCIGMC():
         # add annotation comment
         if add_text==True:
             ax.plot([0,-7], [0,7], lw=3, c=textcolor)
-            ax.text(-10.5, 7.5, "AGN", ha="right", va="center", weight="bold", color=textcolor)
+            ax.text(-7.5, 7.5, "AGN", ha="right", va="center", weight="bold", color=textcolor)
 
         # save
         os.system("rm -rf " + outpng)
