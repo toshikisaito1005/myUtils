@@ -456,8 +456,8 @@ class ToolsCIGMC():
             "[CI] Integrated Intensity",
             ann      = True,
             add_text = False,
-            lim      = 13,
-            size     = 3600,
+            lim      = 19,
+            size     = 1800,
             label    = "(K km s$^{-1}$)",
             )
 
@@ -471,7 +471,7 @@ class ToolsCIGMC():
         x,y,c,
         title,
         cmap="rainbow",
-        plot_cbar=True,
+        plot_cbar=False,
         ann=False,
         lim=29.5,
         size=690,
@@ -514,6 +514,7 @@ class ToolsCIGMC():
 
         # cbar
         cbar = plt.colorbar(im)
+        cbar.set_label(label, color=textcolor)
         if plot_cbar==True:
             cax = fig.add_axes([0.19, 0.12, 0.025, 0.35])
             cb  = fig.colorbar(im, cax=cax)
