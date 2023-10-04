@@ -456,7 +456,7 @@ class ToolsCIGMC():
             "[CI] Integrated Intensity",
             ann      = True,
             add_text = False,
-            lim      = 19,
+            lim      = 9,
             size     = 1800,
             label    = "(K km s$^{-1}$)",
             )
