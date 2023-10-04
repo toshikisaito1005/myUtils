@@ -454,7 +454,7 @@ class ToolsCIGMC():
             data_ci10[:,1][data_ci10[:,2]>data_ci10[:,3]*self.snr_mom],
             data_ci10[:,2][data_ci10[:,2]>data_ci10[:,3]*self.snr_mom],
             "[CI] Integrated Intensity",
-            cmap     = "viridis",
+            cmap     = "gnuplot",
             ann      = True,
             add_text = False,
             lim      = 10,
