@@ -517,6 +517,23 @@ class ToolsCIGMC():
             label    = "(km s$^{-1}$)",
             )
 
+        # ratio
+        self._plot_hexmap(
+            self.outpng_map_co_mom0,
+            data_co10[:,0],
+            data_co10[:,1],
+            data_ci10[:,2]/data_co10[:,2],
+            "CO Integrated Intensity",
+            cmap     = "Blues",
+            ann      = True,
+            add_text = False,
+            lim      = 9.9,
+            size     = 820,
+            bgcolor  = "white",
+            textcolor= "black",
+            label    = "(K km s$^{-1}$)",
+            )
+
         # other
         self._plot_hexmap(
             self.outpng_map_vla,
