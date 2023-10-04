@@ -525,8 +525,8 @@ class ToolsCIGMC():
         x2 = mom0_co10_cone
         y2 = mom0_ci10_cone
 
-        xlim   = [np.min([np.nanmin(x),np.nanmin(x)])-0.4,np.max([np.nanmax(x),np.nanmax(x)])+0.4]
-        ylim   = [np.min([np.nanmin(y),np.nanmin(y)])-0.4,np.max([np.nanmax(y),np.nanmax(y)])+0.4]
+        xlim   = [np.min([np.nanmin(x),np.nanmin(x),np.nanmin(y),np.nanmin(y)])-0.4,np.max([np.nanmax(x),np.nanmax(x),np.nanmax(y),np.nanmax(y)])+0.4]
+        ylim   = [np.min([np.nanmin(x),np.nanmin(x),np.nanmin(y),np.nanmin(y)])-0.4,np.max([np.nanmax(x),np.nanmax(x),np.nanmax(y),np.nanmax(y)])+0.4]
         title  = "None"
         xlabel = "log$_{10}$ CO Integrated Intensity (K km s$^{-1}$)" # "log$_{10}$ H$_2$ Surface Density ($M_{\odot}$ pc$^{-2}$)"
         ylabel = "log$_{10}$ [CI] Integrated Intensity (K km s$^{-1}$)"
@@ -612,8 +612,8 @@ class ToolsCIGMC():
         x2 = mom2_co10_cone
         y2 = mom2_ci10_cone
 
-        xlim   = [np.min([np.nanmin(x),np.nanmin(x)])-0.4,np.max([np.nanmax(x),np.nanmax(x)])+0.4]
-        ylim   = [np.min([np.nanmin(y),np.nanmin(y)])-0.4,np.max([np.nanmax(y),np.nanmax(y)])+0.4]
+        xlim   = [np.min([np.nanmin(x),np.nanmin(x),np.nanmin(y),np.nanmin(y)])-0.4,np.max([np.nanmax(x),np.nanmax(x),np.nanmax(y),np.nanmax(y)])+0.4]
+        ylim   = [np.min([np.nanmin(x),np.nanmin(x),np.nanmin(y),np.nanmin(y)])-0.4,np.max([np.nanmax(x),np.nanmax(x),np.nanmax(y),np.nanmax(y)])+0.4]
         title  = "None"
         xlabel = "log$_{10}$ CO Velocity Dispersion (km s$^{-1}$)" # "log$_{10}$ H$_2$ Surface Density ($M_{\odot}$ pc$^{-2}$)"
         ylabel = "log$_{10}$ [CI] Velocity Dispersion (km s$^{-1}$)"
