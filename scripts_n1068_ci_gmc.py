@@ -675,7 +675,7 @@ class ToolsCIGMC():
         theta      = np.degrees(np.arctan2(x_co10, y_co10)) + 90
         theta_co10 = np.where(theta>0, theta, theta+360)
 
-        cut = np.where((mom0_co10>emom0_co10*self.snr_mom) & (mom2_co10>emom2_co10))
+        cut = np.where((mom0_co10>emom0_co10*self.snr_mom) & (mom2_co10>emom2_co10*2))
         x_co10_all     = x_co10[cut]
         y_co10_all     = y_co10[cut]
         emom0_co10_all = emom0_co10[cut] / mom0_co10[cut] / np.log(10)
@@ -706,7 +706,7 @@ class ToolsCIGMC():
         theta      = np.degrees(np.arctan2(x_ci10, y_ci10)) + 90
         theta_ci10 = np.where(theta>0, theta, theta+360)
 
-        cut = np.where((mom0_ci10>emom0_ci10*self.snr_mom) & (mom2_ci10>emom2_ci10))
+        cut = np.where((mom0_ci10>emom0_ci10*self.snr_mom) & (mom2_ci10>emom2_ci10*2))
         x_ci10_all     = x_ci10[cut]
         y_ci10_all     = y_ci10[cut]
         emom0_ci10_all = emom0_ci10[cut] / mom0_ci10[cut] / np.log(10)
