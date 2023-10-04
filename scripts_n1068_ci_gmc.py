@@ -457,7 +457,7 @@ class ToolsCIGMC():
             cmap     = "Reds",
             ann      = True,
             add_text = False,
-            lim      = 9,
+            lim      = 10,
             size     = 1000,
             label    = "(K km s$^{-1}$)",
             )
