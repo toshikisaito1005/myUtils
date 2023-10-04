@@ -735,7 +735,7 @@ class ToolsCIGMC():
         r_ci10_all     = r_ci10[cut]
 
         fig = plt.figure(figsize=(10,10))
-        fig.scatter(x_co10_cone, y_co10_cone, color='grey')
+        plt.scatter(x_co10_cone, y_co10_cone, color='grey')
         plt.savefig("test.png", dpi=self.fig_dpi)
 
         #cut = np.where((mom0_ci10>emom0_ci10*self.snr_mom) & (mom2_ci10>emom2_ci10) & (r_ci10<self.fov_diamter/2.0) & (r_ci10>self.r_cnd_as) & (theta_ci10>=self.theta2) & (theta_ci10<self.theta1) | (mom0_ci10>emom0_ci10*self.snr_mom) & (mom2_ci10>emom2_ci10*self.snr_mom) & (r_ci10<self.fov_diamter/2.0) & (r_ci10>self.r_cnd_as) & (theta_ci10>=self.theta2+180) & (theta_ci10<self.theta1+180))
