@@ -692,23 +692,6 @@ class ToolsCIGMC():
         theta      = np.degrees(np.arctan2(x_co10, y_co10)) + 90
         theta_co10 = np.where(theta>0, theta, theta+360)
 
-        cut = np.where((mom0_co10>emom0_co10*self.snr_mom) & (mom2_co10>emom2_co10*2))
-        x_co10_all     = x_co10[cut]
-        y_co10_all     = y_co10[cut]
-        emom0_co10_all = emom0_co10[cut] / mom0_co10[cut] / np.log(10)
-        mom0_co10_all  = np.log10(mom0_co10[cut])
-        emom2_co10_all = emom2_co10[cut] / mom2_co10[cut] / np.log(10)
-        mom2_co10_all  = np.log10(mom2_co10[cut])
-        r_co10_all     = r_co10[cut]
-
-        cut = np.where((mom0_co10>emom0_co10*self.snr_mom) & (mom2_co10>emom2_co10) & (r_co10<self.fov_diamter/2.0) & (r_co10>self.r_cnd_as) & (theta_co10>=self.theta2) & (theta_co10<self.theta1) | (mom0_co10>emom0_co10*self.snr_mom) & (mom2_co10>emom2_co10*self.snr_mom) & (r_co10<self.fov_diamter/2.0) & (r_co10>self.r_cnd_as) & (theta_co10>=self.theta2+180) & (theta_co10<self.theta1+180))
-        x_co10_cone     = x_co10[cut]
-        y_co10_cone     = y_co10[cut]
-        emom0_co10_cone = emom0_co10[cut] / mom0_co10[cut] / np.log(10)
-        mom0_co10_cone  = np.log10(mom0_co10[cut])
-        emom2_co10_cone = emom2_co10[cut] / mom2_co10[cut] / np.log(10)
-        mom2_co10_cone  = np.log10(mom2_co10[cut])
-
         # import ci10
         data_ci10 = np.loadtxt(self.outtxt_hexcat_ci10)
 
@@ -723,6 +706,25 @@ class ToolsCIGMC():
         theta      = np.degrees(np.arctan2(x_ci10, y_ci10)) + 90
         theta_ci10 = np.where(theta>0, theta, theta+360)
 
+        # calc
+        cut = np.where((mom0_co10>emom0_co10*self.snr_mom) & (mom2_co10>emom2_co10*2))
+        x_co10_all     = x_co10[cut]
+        y_co10_all     = y_co10[cut]
+        emom0_co10_all = emom0_co10[cut] / mom0_co10[cut] / np.log(10)
+        mom0_co10_all  = np.log10(mom0_co10[cut])
+        emom2_co10_all = emom2_co10[cut] / mom2_co10[cut] / np.log(10)
+        mom2_co10_all  = np.log10(mom2_co10[cut])
+        r_co10_all     = r_co10[cut]
+
+        cut = np.where((mom0_co10>emom0_co10*self.snr_mom) & (mom2_co10>emom2_co10) & (r_co10<self.fov_diamter/2.0) & (r_co10>self.r_cnd_as) & (theta_co10>=self.theta2) & (theta_co10<self.theta1) | (mom0_co10>emom0_co10*self.snr_mom) & (mom2_co10>emom2_co10*self.snr_mom) & (r_co10<self.fov_diamter/2.0) & (r_co10>self.r_cnd_as) & (theta_co10>=self.theta2+180) & (theta_co10<self.theta1+180))
+        cut = np.where((mom0_ci10>mom2_co10) & (mom0_co10>emom0_co10*self.snr_mom) & (mom2_co10>emom2_co10) & (mom0_ci10>emom0_ci10*self.snr_mom) & (mom2_ci10>emom2_ci10))
+        x_co10_cone     = x_co10[cut]
+        y_co10_cone     = y_co10[cut]
+        emom0_co10_cone = emom0_co10[cut] / mom0_co10[cut] / np.log(10)
+        mom0_co10_cone  = np.log10(mom0_co10[cut])
+        emom2_co10_cone = emom2_co10[cut] / mom2_co10[cut] / np.log(10)
+        mom2_co10_cone  = np.log10(mom2_co10[cut])
+
         cut = np.where((mom0_ci10>emom0_ci10*self.snr_mom) & (mom2_ci10>emom2_ci10*2))
         x_ci10_all     = x_ci10[cut]
         y_ci10_all     = y_ci10[cut]
@@ -733,6 +735,7 @@ class ToolsCIGMC():
         r_ci10_all     = r_ci10[cut]
 
         cut = np.where((mom0_ci10>emom0_ci10*self.snr_mom) & (mom2_ci10>emom2_ci10) & (r_ci10<self.fov_diamter/2.0) & (r_ci10>self.r_cnd_as) & (theta_ci10>=self.theta2) & (theta_ci10<self.theta1) | (mom0_ci10>emom0_ci10*self.snr_mom) & (mom2_ci10>emom2_ci10*self.snr_mom) & (r_ci10<self.fov_diamter/2.0) & (r_ci10>self.r_cnd_as) & (theta_ci10>=self.theta2+180) & (theta_ci10<self.theta1+180))
+        cut = np.where((mom0_ci10>mom2_co10) & (mom0_co10>emom0_co10*self.snr_mom) & (mom2_co10>emom2_co10) & (mom0_ci10>emom0_ci10*self.snr_mom) & (mom2_ci10>emom2_ci10))
         x_ci10_cone     = x_ci10[cut]
         y_ci10_cone     = y_ci10[cut]
         emom0_ci10_cone = emom0_ci10[cut] / mom0_ci10[cut] / np.log(10)
