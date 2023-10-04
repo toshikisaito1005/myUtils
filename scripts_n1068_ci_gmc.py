@@ -520,7 +520,7 @@ class ToolsCIGMC():
             )
 
         # ratio
-        cut = np.wher(([data_ci10[:,2]>data_ci10[:,3]*self.snr_mom]) & (data_co10[:,2]>data_co10[:,3]*self.snr_mom) & (r>0))
+        cut = np.where(([data_ci10[:,2]>data_ci10[:,3]*self.snr_mom]) & (data_co10[:,2]>data_co10[:,3]*self.snr_mom) & (r>0))
         r = data_ci10[:,2]/data_co10[:,2]
         r[r>1] = 1
         self._plot_hexmap(
