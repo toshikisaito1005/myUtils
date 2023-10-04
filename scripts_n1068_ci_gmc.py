@@ -532,6 +532,7 @@ class ToolsCIGMC():
             bgcolor  = "white",
             textcolor= "black",
             label    = "",
+            vmin     = False,
             )
         self._plot_hexmap(
             self.outpng_map_paa,
@@ -547,6 +548,7 @@ class ToolsCIGMC():
             bgcolor  = "white",
             textcolor= "black",
             label    = "",
+            vmin     = False,
             )
 
     ################
@@ -567,6 +569,7 @@ class ToolsCIGMC():
         bgcolor="white",
         scalebar="100pc",
         textcolor="black",
+        vmin=True,
         ):
         """
         """
@@ -591,7 +594,10 @@ class ToolsCIGMC():
         ax.set_aspect('equal', adjustable='box')
 
         # plot
-        im = ax.scatter(x, y, s=size, c=c, cmap=cmap, marker="h", linewidths=0, vmin=0)
+        if vmin==True:
+            im = ax.scatter(x, y, s=size, c=c, cmap=cmap, marker="h", linewidths=0, vmin=0)
+        else:
+            im = ax.scatter(x, y, s=size, c=c, cmap=cmap, marker="h", linewidths=0)
 
         # cbar
         cbar = plt.colorbar(im)
