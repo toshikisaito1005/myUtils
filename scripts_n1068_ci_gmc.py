@@ -845,13 +845,13 @@ class ToolsCIGMC():
 
         # plot co10 all
         X, Y, Z = density_estimation(x_co10, y_co10, xlim, ylim)
-        ax1.contour(X, Y, Z, colors="blue", linewidths=[1], alpha=1.0, zorder=1e8.5)
+        ax1.contour(X, Y, Z, colors="blue", linewidths=[1], alpha=1.0, zorder=5e8)
         self._scatter_hist(x_co10, y_co10, ax1, ax2, ax3, "deepskyblue", xlim, ylim, "s")
         ax1.errorbar(x_co10, y_co10, xerr=xerr_co10, yerr=yerr_co10, fmt='.', color='grey', zorder=0, lw=1, capsize=0, markersize=0)
 
         # plot ci10 all
         X, Y, Z = density_estimation(x_ci10, y_ci10, xlim, ylim)
-        ax1.contour(X, Y, Z, colors="red", linewidths=[1], alpha=1.0, zorder=1e8.5)
+        ax1.contour(X, Y, Z, colors="red", linewidths=[1], alpha=1.0, zorder=5e8)
         self._scatter_hist(x_ci10, y_ci10, ax1, ax2, ax3, "tomato", xlim, ylim, "o", offset=0.15)
         ax1.errorbar(x_ci10, y_ci10, xerr=xerr_ci10, yerr=yerr_ci10, fmt='.', color='grey', zorder=0, lw=1, capsize=0, markersize=0)
 
