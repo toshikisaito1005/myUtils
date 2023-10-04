@@ -948,7 +948,7 @@ class ToolsCIGMC():
         os.system("rm -rf template.image test.image")
         importfits(
             fitsimage = self.mom0_ci10,
-            imagename = " template.image",
+            imagename = "template.image",
             )
         imregrid(
             imagename = self.mom0_co10,
