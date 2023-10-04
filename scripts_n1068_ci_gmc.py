@@ -946,7 +946,7 @@ class ToolsCIGMC():
             )
 
         os.system("rm -rf template.image test.image")
-        os.system("cp -r " + self.mom0_ci10 + " template.image")
+        os.system("cp " + self.mom0_ci10 + " template.image")
         imregrid(
             imagename = self.mom0_co10,
             template = "template.image",
