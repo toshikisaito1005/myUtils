@@ -520,7 +520,7 @@ class ToolsCIGMC():
         y = mom0_ci10
 
         xerr = emom0_co10
-        yerr = emomo_ci10
+        yerr = emom0_ci10
 
         x2 = mom0_co10_cone
         y2 = mom0_ci10_cone
