@@ -460,7 +460,7 @@ class ToolsCIGMC():
             lim      = 9.9,
             size     = 790,
             bgcolor  = "black",
-            textcolor= "black",
+            textcolor= "white",
             label    = "(K km s$^{-1}$)",
             )
 
@@ -490,6 +490,7 @@ class ToolsCIGMC():
         fig = plt.figure(figsize=(13,10))
         gs = gridspec.GridSpec(nrows=10, ncols=10)
         ax = plt.subplot(gs[0:10,0:10])
+        fig.patch.set_facecolor(bgcolor)
 
         # set ax parameter
         myax_set(
@@ -505,13 +506,7 @@ class ToolsCIGMC():
         ax.set_aspect('equal', adjustable='box')
 
         # plot
-        if add_text!="env":
-            im = ax.scatter(x, y, s=size, c=c, cmap=cmap, marker="h", linewidths=0)#, vmin=0)
-        else:
-            ax.scatter(x[c==3], y[c==3], s=size, c="tomato", marker="h", linewidths=0)
-            ax.scatter(x[c==2], y[c==2], s=size, c="deepskyblue", marker="h", linewidths=0)
-            ax.scatter(x[c==1], y[c==1], s=size, c="grey", marker="h", linewidths=0)
-            im = ax.scatter(np.array(x)*1000, np.array(y)*1000, s=0, c=c, cmap=cmap, marker="h", linewidths=0, vmin=0)
+        im = ax.scatter(x, y, s=size, c=c, cmap=cmap, marker="h", linewidths=0)#, vmin=0)
 
         # cbar
         cbar = plt.colorbar(im)
@@ -552,13 +547,8 @@ class ToolsCIGMC():
         if add_text==True:
             ax.plot([0,-7], [0,10], lw=3, c=textcolor)
             ax.text(-10.5, 10.5, "AGN position", ha="right", va="center", weight="bold", color=textcolor)
-        elif add_text=="env":
-            ax.text(12, -10, "CND", ha="left", va="center", color="tomato", weight="bold")
-            ax.text(12, -11, "Outflow", ha="left", va="center", color="deepskyblue", weight="bold")
-            ax.text(12, -12, "Non-outflow", ha="left", va="center", color="grey", weight="bold")
 
         # save
-        fig.patch.set_facecolor(bgcolor)
         os.system("rm -rf " + outpng)
         plt.savefig(outpng, dpi=300)
 
