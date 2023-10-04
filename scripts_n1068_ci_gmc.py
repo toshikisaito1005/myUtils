@@ -947,11 +947,11 @@ class ToolsCIGMC():
 
         os.system("rm -rf template.image test.image")
         importfits(
-            fitsimage = self.mom0_ci10,
+            fitsimage = self.mom0_co10,
             imagename = "template.image",
             )
         imregrid(
-            imagename = self.mom0_co10,
+            imagename = self.mom0_ci10,
             template = "template.image",
             output = "test.image",
             )
@@ -963,10 +963,9 @@ class ToolsCIGMC():
             gridsize=70,
             err=False,
             )
-        os.system("rm -rf template.image test.image")
-        os.system("cp -r " + self.emom0_ci10 + " template.image")
+        os.system("rm -rf test.image")
         imregrid(
-            imagename = self.mom0_co10,
+            imagename = self.emom0_ci10,
             template = "template.image",
             output = "test.image",
             )
@@ -997,10 +996,9 @@ class ToolsCIGMC():
             err=True,
             )
 
-        os.system("rm -rf template.image test.image")
-        os.system("cp -r " + self.mom2_ci10 + " template.image")
+        os.system("rm -rf test.image")
         imregrid(
-            imagename = self.mom0_co10,
+            imagename = self.mom2_ci10,
             template = "template.image",
             output = "test.image",
             )
@@ -1012,10 +1010,9 @@ class ToolsCIGMC():
             gridsize=70,
             err=False,
             )
-        os.system("rm -rf template.image test.image")
-        os.system("cp -r " + self.emom2_ci10 + " template.image")
+        os.system("rm -rf test.image")
         imregrid(
-            imagename = self.mom0_co10,
+            imagename = self.emom2_ci10,
             template = "template.image",
             output = "test.image",
             )
