@@ -548,7 +548,7 @@ class ToolsCIGMC():
             bgcolor  = "white",
             textcolor= "black",
             label    = "",
-            vmin     = 0.1,
+            vmin     = 0.5,
             )
 
     ################
