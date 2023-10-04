@@ -537,7 +537,7 @@ class ToolsCIGMC():
             size     = 820,
             bgcolor  = "white",
             textcolor= "black",
-            label    = "(K km s$^{-1}$)",
+            label    = "",
             )
         r = data_ci10[:,4]/data_co10[:,4]
         r[r>1] = 1
@@ -554,7 +554,7 @@ class ToolsCIGMC():
             size     = 820,
             bgcolor  = "white",
             textcolor= "black",
-            label    = "(K km s$^{-1}$)",
+            label    = "",
             )
 
         # other
