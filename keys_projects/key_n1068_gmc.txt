@@ -71,7 +71,8 @@ outpng_map_co_mom0 ,,,outpng_map_co_mom0.png
 outpng_map_co_mom2 ,,,outpng_map_co_mom2.png
 outpng_map_vla     ,,,outpng_map_vla.png
 outpng_map_paa     ,,,outpng_map_paa.png
-outpng_map_ratio   ,,,outpng_map_ratio.png
+outpng_map_ratio_m0,,,outpng_map_ratio_m0.png
+outpng_map_ratio_m2,,,outpng_map_ratio_m2.png
 # supplement
 outpng_radial_disp ,,,outpng_radial_disp.png
 outpng_radial_mom0 ,,,outpng_radial_mom0.png

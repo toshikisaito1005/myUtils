@@ -214,7 +214,8 @@ class ToolsCIGMC():
         self.outpng_map_co_mom2 = self.dir_products + self._read_key("outpng_map_co_mom2")
         self.outpng_map_vla     = self.dir_products + self._read_key("outpng_map_vla")
         self.outpng_map_paa     = self.dir_products + self._read_key("outpng_map_paa")
-        self.outpng_map_ratio   = self.dir_products + self._read_key("outpng_map_ratio")
+        self.outpng_map_ratio_m0 = self.dir_products + self._read_key("outpng_map_ratio_m0")
+        self.outpng_map_ratio_m2 = self.dir_products + self._read_key("outpng_map_ratio_m2")
 
         # supplement
         self.outpng_radial_disp = self.dir_products + self._read_key("outpng_radial_disp")
@@ -519,10 +520,27 @@ class ToolsCIGMC():
             )
 
         # ratio
-        r = data_ci10[:,4]/data_co10[:,4] # data_ci10[:,2]/data_co10[:,2]
+        r = data_ci10[:,2]/data_co10[:,2]
         r[r>1] = 1
         self._plot_hexmap(
-            self.outpng_map_ratio,
+            self.outpng_map_ratio_m0,
+            data_co10[:,0][r>0],
+            data_co10[:,1][r>0],
+            r[r>0],
+            "CO Integrated Intensity",
+            cmap     = "rainbow",
+            ann      = True,
+            add_text = False,
+            lim      = 9.9,
+            size     = 820,
+            bgcolor  = "white",
+            textcolor= "black",
+            label    = "(K km s$^{-1}$)",
+            )
+        r = data_ci10[:,4]/data_co10[:,4]
+        r[r>1] = 1
+        self._plot_hexmap(
+            self.outpng_map_ratio_m2,
             data_co10[:,0][r>0],
             data_co10[:,1][r>0],
             r[r>0],
