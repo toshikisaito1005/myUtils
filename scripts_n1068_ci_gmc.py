@@ -210,6 +210,8 @@ class ToolsCIGMC():
         self.outpng_r_vs_disp   = self.dir_products + self._read_key("outpng_r_vs_disp")
         self.outpng_map_ci_mom0 = self.dir_products + self._read_key("outpng_map_ci_mom0")
         self.outpng_map_ci_mom2 = self.dir_products + self._read_key("outpng_map_ci_mom2")
+        self.outpng_map_co_mom0 = self.dir_products + self._read_key("outpng_map_co_mom0")
+        self.outpng_map_co_mom2 = self.dir_products + self._read_key("outpng_map_co_mom2")
         # supplement
         self.outpng_radial_disp = self.dir_products + self._read_key("outpng_radial_disp")
         self.outpng_radial_mom0 = self.dir_products + self._read_key("outpng_radial_mom0")
@@ -468,8 +470,41 @@ class ToolsCIGMC():
             data_ci10[:,0][data_ci10[:,2]>data_ci10[:,3]*self.snr_mom],
             data_ci10[:,1][data_ci10[:,2]>data_ci10[:,3]*self.snr_mom],
             data_ci10[:,4][data_ci10[:,2]>data_ci10[:,3]*self.snr_mom],
-            "[CI] Integrated Intensity",
+            "[CI] Velocity Dispersion",
             cmap     = "Reds",
+            ann      = True,
+            add_text = False,
+            lim      = 9.9,
+            size     = 820,
+            bgcolor  = "white",
+            textcolor= "black",
+            label    = "(km s$^{-1}$)",
+            )
+
+        # ci10
+        data_ci10 = np.loadtxt(self.outtxt_hexcat_ci10)
+        self._plot_hexmap(
+            self.outpng_map_co_mom0,
+            data_co10[:,0][data_co10[:,2]>data_co10[:,3]*self.snr_mom],
+            data_co10[:,1][data_co10[:,2]>data_co10[:,3]*self.snr_mom],
+            data_co10[:,2][data_co10[:,2]>data_co10[:,3]*self.snr_mom],
+            "CO Integrated Intensity",
+            cmap     = "Blues",
+            ann      = True,
+            add_text = True,
+            lim      = 9.9,
+            size     = 820,
+            bgcolor  = "white",
+            textcolor= "black",
+            label    = "(K km s$^{-1}$)",
+            )
+        self._plot_hexmap(
+            self.outpng_map_co_mom2,
+            data_co10[:,0][data_co10[:,2]>data_co10[:,3]*self.snr_mom],
+            data_co10[:,1][data_co10[:,2]>data_co10[:,3]*self.snr_mom],
+            data_co10[:,4][data_co10[:,2]>data_co10[:,3]*self.snr_mom],
+            "CO Velocity Dispersion",
+            cmap     = "Blues",
             ann      = True,
             add_text = False,
             lim      = 9.9,
