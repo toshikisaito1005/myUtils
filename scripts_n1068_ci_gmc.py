@@ -454,6 +454,7 @@ class ToolsCIGMC():
             data_ci10[:,1],
             data_ci10[:,2],
             "[CI] Integrated Intensity",
+            cmap     = "Reds",
             ann      = True,
             add_text = False,
             lim      = 9,
