@@ -458,7 +458,7 @@ class ToolsCIGMC():
             ann      = True,
             add_text = True,
             lim      = 9.9,
-            size     = 800,
+            size     = 810,
             bgcolor  = "black",
             textcolor= "white",
             label    = "(K km s$^{-1}$)",
@@ -545,8 +545,8 @@ class ToolsCIGMC():
 
         # add annotation comment
         if add_text==True:
-            ax.plot([0,-7], [0,10], lw=3, c=textcolor)
-            ax.text(-10.5, 10.5, "AGN position", ha="right", va="center", weight="bold", color=textcolor)
+            ax.plot([0,-7], [0,7], lw=3, c=textcolor)
+            ax.text(-10.5, 7.5, "AGN position", ha="right", va="center", weight="bold", color=textcolor)
 
         # save
         os.system("rm -rf " + outpng)
