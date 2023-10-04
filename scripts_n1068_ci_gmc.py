@@ -993,14 +993,30 @@ class ToolsCIGMC():
             )
 
         # other
+        os.system("rm -rf test.image")
+        imsmooth(
+            imagename = self.fits_vla,
+            targetres = True,
+            major="0.8arcsec",
+            minor="0.8arcsec",
+            pa="0deg",
+            outfile="test.image")
         _, _, hexc_vla = hexbin_sampling(
-            self.fits_vla,
+            "test.image",
             self.ra_agn,
             self.dec_agn,
             beam=55/72.,
             gridsize=70,
             err=False,
             )
+        os.system("rm -rf test.image")
+        imsmooth(
+            imagename = self.fits_paa,
+            targetres = False,
+            major="0.8arcsec",
+            minor="0.8arcsec",
+            pa="0deg",
+            outfile="test.image")
         _, _, hexc_paa = hexbin_sampling(
             self.fits_paa,
             self.ra_agn,
@@ -1009,6 +1025,7 @@ class ToolsCIGMC():
             gridsize=70,
             err=False,
             )
+        os.system("rm -rf test.image")
 
         # combine
         data_co10 = np.c_[hexx_co10, hexy_co10, hexc_co10_mom0, hexc_co10_emom0, hexc_co10_mom2, hexc_co10_emom2, hexc_vla, hexc_paa]
