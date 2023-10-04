@@ -456,7 +456,7 @@ class ToolsCIGMC():
             "[CI] Integrated Intensity",
             cmap     = "gnuplot",
             ann      = True,
-            add_text = False,
+            add_text = True,
             lim      = 10,
             size     = 800,
             bgcolor  = "black",
@@ -517,7 +517,7 @@ class ToolsCIGMC():
 
         # cbar
         cbar = plt.colorbar(im)
-        cbar.set_label(label, color=textcolor)
+        cbar.set_label(label, color="black")
         if plot_cbar==True:
             cax = fig.add_axes([0.19, 0.12, 0.025, 0.35])
             cb  = fig.colorbar(im, cax=cax)
@@ -557,15 +557,15 @@ class ToolsCIGMC():
             # plot NGC 1068 AGN and outflow geometry
             x1 = fov_diamter/2.0 * np.cos(np.radians(-1*theta1+90))
             y1 = fov_diamter/2.0 * np.sin(np.radians(-1*theta1+90))
-            ax.plot([x1, -x1], [y1, -y1], "--", c="black", lw=3.5)
+            ax.plot([x1, -x1], [y1, -y1], "--", c=textcolor, lw=3.5)
             x2 = fov_diamter/2.0 * np.cos(np.radians(-1*theta2+90))
             y2 = fov_diamter/2.0 * np.sin(np.radians(-1*theta2+90))
-            ax.plot([x2, -x2], [y2, -y2], "--", c="black", lw=3.5)
+            ax.plot([x2, -x2], [y2, -y2], "--", c=textcolor, lw=3.5)
 
         # add annotation comment
         if add_text==True:
-            ax.plot([0,-7], [0,10], lw=3, c="black")
-            ax.text(-10.5, 10.5, "AGN position", ha="right", va="center", weight="bold")
+            ax.plot([0,-7], [0,10], lw=3, c=textcolor)
+            ax.text(-10.5, 10.5, "AGN position", ha="right", va="center", weight="bold", color=textcolor)
         elif add_text=="env":
             ax.text(12, -10, "CND", ha="left", va="center", color="tomato", weight="bold")
             ax.text(12, -11, "Outflow", ha="left", va="center", color="deepskyblue", weight="bold")
