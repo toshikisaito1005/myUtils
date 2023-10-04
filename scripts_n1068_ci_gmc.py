@@ -489,7 +489,7 @@ class ToolsCIGMC():
         mom2_ci10  = np.log10(mom2_ci10)
 
         # all
-        cut = np.where((data_ci10[:,2]>data_co10[:,2]) & (data_ci10[:,2]>data_ci10[:,3]*self.snr_mom) & (data_co10[:,2]>data_co10[:,3]*self.snr_mom))
+        cut = np.where((data_ci10[:,2]>data_co10[:,2]) & (data_ci10[:,2]>data_ci10[:,3]*self.snr_mom) & (data_co10[:,2]>data_co10[:,3]*self.snr_mom) & (data_ci10[:,4]>data_ci10[:,5]) & (data_co10[:,4]>data_co10[:,5]))
 
         # mom0
         mom0_co10_cone  = data_co10[:,2][cut]
@@ -575,21 +575,21 @@ class ToolsCIGMC():
 
         # pctl bar xaxis
         ypos = 0.97 * (ylim[1] - ylim[0]) + ylim[0]
-        ax1.plot([np.percentile(x,16),np.percentile(x,84)], [ypos,ypos], '-', color="tomato", lw=3)
-        ax1.scatter(np.percentile(x,50), ypos, marker='o', s=100, color="tomato", zorder=1e9)
+        ax1.plot([np.percentile(x,16),np.percentile(x,84)], [ypos,ypos], '-', color="deepskyblue", lw=3)
+        ax1.scatter(np.percentile(x,50), ypos, marker='o', s=100, color="deepskyblue", zorder=1e9)
 
         ypos = 0.95 * (ylim[1] - ylim[0]) + ylim[0]
-        ax1.plot([np.percentile(x2,16),np.percentile(x2,84)], [ypos,ypos], '-', color="maroon", lw=3)
-        ax1.scatter(np.percentile(x2,50), ypos, marker='o', s=100, facecolor='lightgrey', edgecolor='maroon', lw=3, zorder=1e9)
+        ax1.plot([np.percentile(x2,16),np.percentile(x2,84)], [ypos,ypos], '-', color="blue", lw=3)
+        ax1.scatter(np.percentile(x2,50), ypos, marker='o', s=100, facecolor='lightgrey', edgecolor='blue', lw=3, zorder=1e9)
 
         # pctl bar yaxis
         xpos = 0.97 * (xlim[1] - xlim[0]) + xlim[0]
-        ax1.plot([xpos,xpos], [np.percentile(y,16),np.percentile(y,84)], '-', color="tomato", lw=3)
-        ax1.scatter(xpos, np.percentile(y,50), marker='o', s=100, color="tomato", zorder=1e9)
+        ax1.plot([xpos,xpos], [np.percentile(y,16),np.percentile(y,84)], '-', color="deepskyblue", lw=3)
+        ax1.scatter(xpos, np.percentile(y,50), marker='o', s=100, color="deepskyblue", zorder=1e9)
 
         xpos = 0.95 * (xlim[1] - xlim[0]) + xlim[0]
-        ax1.plot([xpos,xpos], [np.percentile(y2,16),np.percentile(y2,84)], '-', color="maroon", lw=3)
-        ax1.scatter(xpos, np.percentile(y2,50), marker='o', s=100, facecolor='lightgrey', edgecolor='maroon', lw=3, zorder=1e9)
+        ax1.plot([xpos,xpos], [np.percentile(y2,16),np.percentile(y2,84)], '-', color="blue", lw=3)
+        ax1.scatter(xpos, np.percentile(y2,50), marker='o', s=100, facecolor='lightgrey', edgecolor='blue', lw=3, zorder=1e9)
 
         txt = ax1.text(0.03, 0.90, "Clouds", color="deepskyblue", transform=ax1.transAxes, weight="bold", fontsize=20)
         txt.set_path_effects([PathEffects.withStroke(linewidth=3, foreground='w')])
