@@ -600,6 +600,93 @@ class ToolsCIGMC():
         os.system("rm -rf " + self.outpng_scat_mom0)
         plt.savefig(self.outpng_scat_mom0, dpi=self.fig_dpi)
 
+        ########
+        # plot #
+        ########
+        x = mom2_co10
+        y = mom2_ci10
+
+        xerr = emom2_co10
+        yerr = emom2_ci10
+
+        x2 = mom2_co10_cone
+        y2 = mom2_ci10_cone
+
+        xlim   = [np.min([np.nanmin(x),np.nanmin(x)])-0.4,np.max([np.nanmax(x),np.nanmax(x)])+0.4]
+        ylim   = [np.min([np.nanmin(y),np.nanmin(y)])-0.4,np.max([np.nanmax(y),np.nanmax(y)])+0.4]
+        title  = "None"
+        xlabel = "log$_{10}$ CO Velocity Dispersion (km s$^{-1}$)" # "log$_{10}$ H$_2$ Surface Density ($M_{\odot}$ pc$^{-2}$)"
+        ylabel = "log$_{10}$ [CI] Velocity Dispersion (km s$^{-1}$)"
+        alpha  = 1.0
+        size   = 30
+
+        # plot
+        fig = plt.figure(figsize=(10,10))
+        gs  = gridspec.GridSpec(nrows=200, ncols=200)
+        ax1 = plt.subplot(gs[30:200,10:170])
+        ax2 = plt.subplot(gs[0:30,10:170])
+        ax3 = plt.subplot(gs[30:200,170:200])
+        ad  = [0.215,0.83,0.10,0.90]
+        myax_set(ax1, None, xlim, ylim, None, xlabel, ylabel, adjust=ad)
+        myax_set(ax2, None, xlim, None, None, None, None)
+        myax_set(ax3, None, None, ylim, None, None, None)
+
+        # ax2 ticks
+        ax2.spines['right'].set_visible(False)
+        ax2.spines['top'].set_visible(False)
+        ax2.spines['bottom'].set_visible(False)
+        ax2.spines['left'].set_visible(False)
+        ax2.tick_params('x', length=0, which='major')
+        ax2.tick_params('y', length=0, which='major')
+        ax2.set_xticks([])
+        ax2.set_yticks([])
+
+        # ax3 ticks
+        ax3.spines['right'].set_visible(False)
+        ax3.spines['top'].set_visible(False)
+        ax3.spines['bottom'].set_visible(False)
+        ax3.spines['left'].set_visible(False)
+        ax3.tick_params('x', length=0, which='major')
+        ax3.tick_params('y', length=0, which='major')
+        ax3.set_xticks([])
+        ax3.set_yticks([])
+
+        # plot
+        X, Y, Z = density_estimation(x, y, xlim, ylim)
+        ax1.contour(X, Y, Z, colors="blue", linewidths=[1], alpha=1.0, zorder=5e8)
+        self._scatter_hist(x, y, ax1, ax2, ax3, "deepskyblue", xlim, ylim, "s")
+        ax1.errorbar(x, y, xerr=xerr, yerr=yerr, fmt='.', color='grey', zorder=0, lw=1, capsize=0, markersize=0)
+
+        # plot co10 cone
+        ax1.scatter(x2, y2, facecolor='lightgrey', edgecolor='blue', lw=2, s=70, marker="s", alpha=1.0, zorder=1e9)
+
+        # pctl bar xaxis
+        ypos = 0.97 * (ylim[1] - ylim[0]) + ylim[0]
+        ax1.plot([np.percentile(x,16),np.percentile(x,84)], [ypos,ypos], '-', color="deepskyblue", lw=3)
+        ax1.scatter(np.percentile(x,50), ypos, marker='o', s=100, color="deepskyblue", zorder=1e9)
+
+        ypos = 0.95 * (ylim[1] - ylim[0]) + ylim[0]
+        ax1.plot([np.percentile(x2,16),np.percentile(x2,84)], [ypos,ypos], '-', color="blue", lw=3)
+        ax1.scatter(np.percentile(x2,50), ypos, marker='o', s=100, facecolor='lightgrey', edgecolor='blue', lw=3, zorder=1e9)
+
+        # pctl bar yaxis
+        xpos = 0.97 * (xlim[1] - xlim[0]) + xlim[0]
+        ax1.plot([xpos,xpos], [np.percentile(y,16),np.percentile(y,84)], '-', color="deepskyblue", lw=3)
+        ax1.scatter(xpos, np.percentile(y,50), marker='o', s=100, color="deepskyblue", zorder=1e9)
+
+        xpos = 0.95 * (xlim[1] - xlim[0]) + xlim[0]
+        ax1.plot([xpos,xpos], [np.percentile(y2,16),np.percentile(y2,84)], '-', color="blue", lw=3)
+        ax1.scatter(xpos, np.percentile(y2,50), marker='o', s=100, facecolor='lightgrey', edgecolor='blue', lw=3, zorder=1e9)
+
+        txt = ax1.text(0.03, 0.90, "Clouds", color="deepskyblue", transform=ax1.transAxes, weight="bold", fontsize=20)
+        txt.set_path_effects([PathEffects.withStroke(linewidth=3, foreground='w')])
+        txt = ax1.text(0.03, 0.85, "Clouds (Outflow)", color="lightgrey", transform=ax1.transAxes, weight="bold", fontsize=20)
+        txt.set_path_effects([PathEffects.withStroke(linewidth=3, foreground='blue')])
+
+        # save
+        os.system("rm -rf " + self.outpng_scat_mom2)
+        plt.savefig(self.outpng_scat_mom2, dpi=self.fig_dpi)
+
     ###############
     # plot_hexmap #
     ###############
