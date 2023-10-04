@@ -454,7 +454,7 @@ class ToolsCIGMC():
             data_ci10[:,1][data_ci10[:,2]>data_ci10[:,3]*self.snr_mom],
             data_ci10[:,2][data_ci10[:,2]>data_ci10[:,3]*self.snr_mom],
             "[CI] Integrated Intensity",
-            cmap     = "rainbow",
+            cmap     = "Reds",
             ann      = True,
             add_text = True,
             lim      = 9.9,
