@@ -526,9 +526,9 @@ class ToolsCIGMC():
         r[r>1] = 1
         self._plot_hexmap(
             self.outpng_map_ratio_m0,
-            x,
-            y,
-            r,
+            x[r>0],
+            y[r>0],
+            r[r>0],
             "[CI]/CO Intensity Ratio",
             cmap     = "rainbow",
             ann      = True,
