@@ -519,11 +519,13 @@ class ToolsCIGMC():
 
         # ratio
         r = data_ci10[:,2]/data_co10[:,2]
+        r[r<0] = 0
+        r[r>2] = 2
         self._plot_hexmap(
             self.outpng_map_co_mom0,
-            data_co10[:,0][np.where((r>0) & (r<3))],
-            data_co10[:,1][np.where((r>0) & (r<3))],
-            r[np.where((r>0) & (r<3))],
+            data_co10[:,0],
+            data_co10[:,1],
+            r,
             "CO Integrated Intensity",
             cmap     = "Blues",
             ann      = True,
