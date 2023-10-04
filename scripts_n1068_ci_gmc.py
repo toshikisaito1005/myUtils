@@ -1035,7 +1035,7 @@ class ToolsCIGMC():
             pa="0deg",
             outfile="test.image2")
         imregrid(
-            imgaename = "test.image2",
+            imagename = "test.image2",
             template = "template.image",
             output = "test.image",
             )
@@ -1056,7 +1056,7 @@ class ToolsCIGMC():
             pa="0deg",
             outfile="test.image2")
         imregrid(
-            imgaename = "test.image2",
+            imagename = "test.image2",
             template = "template.image",
             output = "test.image",
             )
