@@ -519,7 +519,7 @@ class ToolsCIGMC():
 
         # ratio
         r = data_ci10[:,2]/data_co10[:,2]
-        r[r>2] = 2
+        r[r>1] = 1
         self._plot_hexmap(
             self.outpng_map_co_mom0,
             data_co10[:,0][r>0],
