@@ -459,7 +459,7 @@ class ToolsCIGMC():
             add_text = True,
             lim      = 9.9,
             size     = 780,
-            bgcolor  = "black",
+            bgcolor  = "white",
             textcolor= "white",
             label    = "(K km s$^{-1}$)",
             )
