@@ -520,13 +520,15 @@ class ToolsCIGMC():
             )
 
         # ratio
+        x = data_co10[:,0]
+        y = data_co10[:,1]
         r = data_ci10[:,2]/data_co10[:,2]
         r[r>1] = 1
         cut = np.where(([data_ci10[:,2]>data_ci10[:,3]*self.snr_mom]) & (data_co10[:,2]>data_co10[:,3]*self.snr_mom) & (r>0))
         self._plot_hexmap(
             self.outpng_map_ratio_m0,
-            data_co10[:,0][cut],
-            data_co10[:,1][cut],
+            x[cut],
+            y[cut],
             r[cut],
             "[CI]/CO Intensity Ratio",
             cmap     = "rainbow",
