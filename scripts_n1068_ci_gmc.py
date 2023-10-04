@@ -457,8 +457,8 @@ class ToolsCIGMC():
             cmap     = "gnuplot",
             ann      = True,
             add_text = True,
-            lim      = 10,
-            size     = 800,
+            lim      = 9.9,
+            size     = 780,
             bgcolor  = "black",
             textcolor= "white",
             label    = "(K km s$^{-1}$)",
@@ -490,7 +490,6 @@ class ToolsCIGMC():
         fig = plt.figure(figsize=(13,10))
         gs = gridspec.GridSpec(nrows=10, ncols=10)
         ax = plt.subplot(gs[0:10,0:10])
-        fig.patch.set_facecolor(bgcolor)
 
         # set ax parameter
         myax_set(
@@ -559,6 +558,7 @@ class ToolsCIGMC():
             ax.text(12, -12, "Non-outflow", ha="left", va="center", color="grey", weight="bold")
 
         # save
+        fig.patch.set_facecolor(bgcolor)
         os.system("rm -rf " + outpng)
         plt.savefig(outpng, dpi=300)
 
