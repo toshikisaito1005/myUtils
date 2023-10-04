@@ -490,7 +490,7 @@ class ToolsCIGMC():
         fig = plt.figure(figsize=(13,10))
         gs = gridspec.GridSpec(nrows=10, ncols=10)
         ax = plt.subplot(gs[0:10,0:10])
-        ax.axhspan([-lim, lim], [-lim, lim], color=bgcolor)
+        ax.axhspan(-lim, lim, color=bgcolor)
 
         # set ax parameter
         myax_set(
