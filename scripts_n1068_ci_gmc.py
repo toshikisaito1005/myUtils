@@ -540,6 +540,7 @@ class ToolsCIGMC():
             label    = "",
             )
         r = data_ci10[:,4] - data_co10[:,4]
+        r[r>20] = 20
         self._plot_hexmap(
             self.outpng_map_ratio_m2,
             data_co10[:,0],
@@ -554,6 +555,7 @@ class ToolsCIGMC():
             bgcolor  = "white",
             textcolor= "black",
             label    = "",
+            vmin     = -20.0,
             )
 
         # other
