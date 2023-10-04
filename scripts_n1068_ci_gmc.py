@@ -524,7 +524,6 @@ class ToolsCIGMC():
         y = data_co10[:,1]
         r = data_ci10[:,2]/data_co10[:,2]
         r[r>1] = 1
-        cut = np.where(([data_ci10[:,2]>data_ci10[:,3]*self.snr_mom]) & (r>0))
         self._plot_hexmap(
             self.outpng_map_ratio_m0,
             x[cut],
@@ -534,8 +533,8 @@ class ToolsCIGMC():
             cmap     = "rainbow",
             ann      = True,
             add_text = False,
-            lim      = 30, #9.9,
-            size     = 273, #820,
+            lim      = 9.9,
+            size     = 820,
             bgcolor  = "white",
             textcolor= "black",
             label    = "(K km s$^{-1}$)",
@@ -551,8 +550,8 @@ class ToolsCIGMC():
             cmap     = "rainbow",
             ann      = True,
             add_text = False,
-            lim      = 30, #9.9,
-            size     = 273, #820,
+            lim      = 9.9,
+            size     = 820,
             bgcolor  = "white",
             textcolor= "black",
             label    = "(K km s$^{-1}$)",
