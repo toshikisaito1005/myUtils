@@ -557,7 +557,7 @@ class ToolsCIGMC():
             size     = 820,
             bgcolor  = "white",
             textcolor= "black",
-            label    = "",
+            label    = "(km s$^{-1}$)",
             vmin     = -10.0,
             )
 
