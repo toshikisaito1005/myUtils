@@ -482,7 +482,7 @@ class ToolsCIGMC():
             )
 
         # ci10
-        data_ci10 = np.loadtxt(self.outtxt_hexcat_ci10)
+        data_co10 = np.loadtxt(self.outtxt_hexcat_co10)
         self._plot_hexmap(
             self.outpng_map_co_mom0,
             data_co10[:,0][data_co10[:,2]>data_co10[:,3]*self.snr_mom],
