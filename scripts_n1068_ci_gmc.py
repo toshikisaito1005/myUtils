@@ -489,7 +489,7 @@ class ToolsCIGMC():
         mom2_ci10  = np.log10(mom2_ci10)
 
         # all
-        cut = np.where((data_ci10[:,2]>data_co10[:,2]) & (data_ci10[:,2]>data_ci10[:,3]*self.snr_mom) & (data_co10[:,2]>data_co10[:,3]*self.snr_mom) & (data_ci10[:,4]>data_ci10[:,5]) & (data_co10[:,4]>data_co10[:,5]))
+        cut = np.where((data_ci10[:,2]>data_co10[:,2]) & (data_ci10[:,2]>data_ci10[:,3]*self.snr_mom) & (data_co10[:,2]>data_co10[:,3]*self.snr_mom) & (data_ci10[:,4]>data_ci10[:,5]) & (data_co10[:,4]>data_co10[:,5]) & (data_ci10[:,4]>1))
 
         # mom0
         mom0_co10_cone  = data_co10[:,2][cut]
@@ -526,7 +526,7 @@ class ToolsCIGMC():
         y2 = mom0_ci10_cone
 
         xlim   = [np.min([np.nanmin(x),np.nanmin(x)])-0.4,np.max([np.nanmax(x),np.nanmax(x)])+0.4]
-        ylim   = [0,np.max([np.nanmax(y),np.nanmax(y)])+0.4]
+        ylim   = [np.min([np.nanmin(y),np.nanmin(y)])-0.4,np.max([np.nanmax(y),np.nanmax(y)])+0.4]
         title  = "None"
         xlabel = "log$_{10}$ CO Integrated Intensity (K km s$^{-1}$)" # "log$_{10}$ H$_2$ Surface Density ($M_{\odot}$ pc$^{-2}$)"
         ylabel = "log$_{10}$ [CI] Integrated Intensity (K km s$^{-1}$)"
