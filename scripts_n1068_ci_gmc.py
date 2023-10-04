@@ -593,6 +593,7 @@ class ToolsCIGMC():
         )
         ax.set_aspect('equal', adjustable='box')
 
+        c[np.isnan(c)] = -1e7
         # plot
         if vmin!=False:
             x = x[c>vmin]
