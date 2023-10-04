@@ -216,6 +216,8 @@ class ToolsCIGMC():
         self.outpng_map_paa     = self.dir_products + self._read_key("outpng_map_paa")
         self.outpng_map_ratio_m0 = self.dir_products + self._read_key("outpng_map_ratio_m0")
         self.outpng_map_ratio_m2 = self.dir_products + self._read_key("outpng_map_ratio_m2")
+        self.outpng_scat_mom0   = self.dir_products + self._read_key("outpng_scat_mom0")
+        self.outpng_scat_mom2   = self.dir_products + self._read_key("outpng_scat_mom2")
 
         # supplement
         self.outpng_radial_disp = self.dir_products + self._read_key("outpng_radial_disp")
@@ -294,6 +296,7 @@ class ToolsCIGMC():
         # plot
         plot_scatter = False,
         plot_hexmap  = False,
+        plot_compare = False,
         # supplement
         plot_radial  = False,
         ):
@@ -311,6 +314,9 @@ class ToolsCIGMC():
 
         if plot_hexmap==True:
             self.plot_hexmap() # 2023-10-04: created
+
+        if plot_compare==True:
+            self.plot_compare() # 2023-10-04: created
 
         # supplement
         if plot_radial==True:
@@ -441,8 +447,163 @@ class ToolsCIGMC():
         """
 
     ################
-    # plot_hexmap #
+    # plot_compare #
     ################
+
+    def plot_compare(
+        self,
+        ):
+        """
+        """
+
+        taskname = self.modname + sys._getframe().f_code.co_name
+        check_first(self.outtxt_hexcat_ci10,taskname)
+
+        # import
+        data_ci10 = np.loadtxt(self.outtxt_hexcat_ci10)
+        data_co10 = np.loadtxt(self.outtxt_hexcat_co10)
+
+        # all
+        cut = np.where((data_ci10[:,2]>data_ci10[:,3]*self.snr_mom) & (data_co10[:,2]>data_co10[:,3]*self.snr_mom))
+
+        # mom0
+        mom0_co10  = data_co10[:,2][cut]
+        emom0_co10 = data_ci10[:,3][cut]
+        mom0_ci10  = data_ci10[:,2][cut]
+        emom0_ci10 = data_ci10[:,3][cut]
+
+        emom0_co10 = emom0_co10 / mom0_co10 / np.log(10)
+        mom0_co10  = np.log10(mom0_co10)
+        emom0_ci10 = emom0_ci10 / mom0_ci10 / np.log(10)
+        mom0_ci10  = np.log10(mom0_ci10)
+
+        # mom2
+        mom2_co10  = data_co10[:,4][cut]
+        emom2_co10 = data_co10[:,5][cut]
+        mom2_ci10  = data_ci10[:,4][cut]
+        emom2_ci10 = data_ci10[:,5][cut]
+
+        emom2_co10 = emom2_co10 / mom2_co10 / np.log(10)
+        mom2_co10  = np.log10(mom2_co10)
+        emom2_ci10 = emom2_ci10 / mom2_ci10 / np.log(10)
+        mom2_ci10  = np.log10(mom2_ci10)
+
+        # all
+        cut = np.where((data_ci10[:,2]>data_co10[:,2]) & (data_ci10[:,2]>data_ci10[:,3]*self.snr_mom) & (data_co10[:,2]>data_co10[:,3]*self.snr_mom))
+
+        # mom0
+        mom0_co10_cone  = data_co10[:,2][cut]
+        emom0_co10_cone = data_ci10[:,3][cut]
+        mom0_ci10_cone  = data_ci10[:,2][cut]
+        emom0_ci10_cone = data_ci10[:,3][cut]
+
+        emom0_co10_cone = emom0_co10_cone / mom0_co10_cone / np.log(10)
+        mom0_co10_cone  = np.log10(mom0_co10_cone)
+        emom0_ci10_cone = emom0_ci10_cone / mom0_ci10_cone / np.log(10)
+        mom0_ci10_cone  = np.log10(mom0_ci10_cone)
+
+        # mom2
+        mom2_co10_cone  = data_co10[:,4][cut]
+        emom2_co10_cone = data_co10[:,5][cut]
+        mom2_ci10_cone  = data_ci10[:,4][cut]
+        emom2_ci10_cone = data_ci10[:,5][cut]
+
+        emom2_co10_cone = emom2_co10_cone / mom2_co10_cone / np.log(10)
+        mom2_co10_cone  = np.log10(mom2_co10_cone)
+        emom2_ci10_cone = emom2_ci10_cone / mom2_ci10_cone / np.log(10)
+        mom2_ci10_cone  = np.log10(mom2_ci10_cone)
+
+        ########
+        # plot #
+        ########
+        x = mom0_co10
+        y = mom0_ci10
+
+        xerr = emom0_co10
+        yerr = emomo_ci10
+
+        x2 = mom0_co10_cone
+        y2 = mom0_ci10_cone
+
+        xlim   = [np.min([np.nanmin(x_co10),np.nanmin(x_ci10)])-0.4,np.max([np.nanmax(x_co10),np.nanmax(x_ci10)])+0.4]
+        ylim   = [np.min([np.nanmin(y_co10),np.nanmin(y_ci10)])-0.4,np.max([np.nanmax(y_co10),np.nanmax(y_ci10)])+0.4]
+        vmax   = np.max(r_ci10)
+        title  = "None"
+        xlabel = "log$_{10}$ CO Integrated Intensity (K km s$^{-1}$)" # "log$_{10}$ H$_2$ Surface Density ($M_{\odot}$ pc$^{-2}$)"
+        ylabel = "log$_{10}$ [CI] Integrated Intensity (K km s$^{-1}$)"
+        alpha  = 1.0
+        size   = 30
+
+        # plot
+        fig = plt.figure(figsize=(10,10))
+        gs  = gridspec.GridSpec(nrows=200, ncols=200)
+        ax1 = plt.subplot(gs[30:200,10:170])
+        ax2 = plt.subplot(gs[0:30,10:170])
+        ax3 = plt.subplot(gs[30:200,170:200])
+        ad  = [0.215,0.83,0.10,0.90]
+        myax_set(ax1, None, xlim, ylim, None, xlabel, ylabel, adjust=ad)
+        myax_set(ax2, None, xlim, None, None, None, None)
+        myax_set(ax3, None, None, ylim, None, None, None)
+
+        # ax2 ticks
+        ax2.spines['right'].set_visible(False)
+        ax2.spines['top'].set_visible(False)
+        ax2.spines['bottom'].set_visible(False)
+        ax2.spines['left'].set_visible(False)
+        ax2.tick_params('x', length=0, which='major')
+        ax2.tick_params('y', length=0, which='major')
+        ax2.set_xticks([])
+        ax2.set_yticks([])
+
+        # ax3 ticks
+        ax3.spines['right'].set_visible(False)
+        ax3.spines['top'].set_visible(False)
+        ax3.spines['bottom'].set_visible(False)
+        ax3.spines['left'].set_visible(False)
+        ax3.tick_params('x', length=0, which='major')
+        ax3.tick_params('y', length=0, which='major')
+        ax3.set_xticks([])
+        ax3.set_yticks([])
+
+        # plot
+        X, Y, Z = density_estimation(x, y, xlim, ylim)
+        ax1.contour(X, Y, Z, colors="blue", linewidths=[1], alpha=1.0, zorder=5e8)
+        self._scatter_hist(x, y, ax1, ax2, ax3, "deepskyblue", xlim, ylim, "s")
+        ax1.errorbar(x, y, xerr=xerr, yerr=yerr, fmt='.', color='grey', zorder=0, lw=1, capsize=0, markersize=0)
+
+        # plot co10 cone
+        ax1.scatter(x2, y2, facecolor='lightgrey', edgecolor='blue', lw=2, s=70, marker="s", alpha=1.0, zorder=1e9)
+
+        # pctl bar xaxis
+        ypos = 0.97 * (ylim[1] - ylim[0]) + ylim[0]
+        ax1.plot([np.percentile(x,16),np.percentile(x,84)], [ypos,ypos], '-', color="tomato", lw=3)
+        ax1.scatter(np.percentile(x,50), ypos, marker='o', s=100, color="tomato", zorder=1e9)
+
+        ypos = 0.95 * (ylim[1] - ylim[0]) + ylim[0]
+        ax1.plot([np.percentile(x2,16),np.percentile(x2,84)], [ypos,ypos], '-', color="maroon", lw=3)
+        ax1.scatter(np.percentile(x2,50), ypos, marker='o', s=100, facecolor='lightgrey', edgecolor='maroon', lw=3, zorder=1e9)
+
+        # pctl bar yaxis
+        xpos = 0.97 * (xlim[1] - xlim[0]) + xlim[0]
+        ax1.plot([xpos,xpos], [np.percentile(y,16),np.percentile(y,84)], '-', color="tomato", lw=3)
+        ax1.scatter(xpos, np.percentile(y,50), marker='o', s=100, color="tomato", zorder=1e9)
+
+        xpos = 0.95 * (xlim[1] - xlim[0]) + xlim[0]
+        ax1.plot([xpos,xpos], [np.percentile(y2,16),np.percentile(y2,84)], '-', color="maroon", lw=3)
+        ax1.scatter(xpos, np.percentile(y2,50), marker='o', s=100, facecolor='lightgrey', edgecolor='maroon', lw=3, zorder=1e9)
+
+        txt = ax1.text(0.03, 0.90, "Clouds", color="deepskyblue", transform=ax1.transAxes, weight="bold", fontsize=20)
+        txt.set_path_effects([PathEffects.withStroke(linewidth=3, foreground='w')])
+        txt = ax1.text(0.03, 0.85, "Clouds (Outflow)", color="lightgrey", transform=ax1.transAxes, weight="bold", fontsize=20)
+        txt.set_path_effects([PathEffects.withStroke(linewidth=3, foreground='blue')])
+
+        # save
+        os.system("rm -rf " + self.outpng_scat_mom0)
+        plt.savefig(self.outpng_scat_mom0, dpi=self.fig_dpi)
+
+    ###############
+    # plot_hexmap #
+    ###############
 
     def plot_hexmap(
         self,
