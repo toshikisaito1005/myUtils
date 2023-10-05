@@ -658,7 +658,7 @@ class ToolsCIGMC():
         ax1.errorbar(x, y, xerr=xerr, yerr=yerr, fmt='.', color='grey', zorder=0, lw=1, capsize=0, markersize=0)
 
         # plot co10 cone
-        ax1.scatter(x2, y2, facecolor='lightgrey', edgecolor='blue', lw=2, s=70, marker="s", alpha=1.0, zorder=1e9)
+        ax1.scatter(x2, y2, facecolor='lightgrey', edgecolor='red', lw=2, s=70, marker="s", alpha=1.0, zorder=1e9)
 
         # pctl bar xaxis
         ypos = 0.97 * (ylim[1] - ylim[0]) + ylim[0]
@@ -666,8 +666,8 @@ class ToolsCIGMC():
         ax1.scatter(np.percentile(x,50), ypos, marker='o', s=100, color="deepskyblue", zorder=1e9)
 
         ypos = 0.95 * (ylim[1] - ylim[0]) + ylim[0]
-        ax1.plot([np.percentile(x2,16),np.percentile(x2,84)], [ypos,ypos], '-', color="blue", lw=3)
-        ax1.scatter(np.percentile(x2,50), ypos, marker='o', s=100, facecolor='lightgrey', edgecolor='blue', lw=3, zorder=1e9)
+        ax1.plot([np.percentile(x2,16),np.percentile(x2,84)], [ypos,ypos], '-', color="red", lw=3)
+        ax1.scatter(np.percentile(x2,50), ypos, marker='o', s=100, facecolor='lightgrey', edgecolor='red', lw=3, zorder=1e9)
 
         # pctl bar yaxis
         xpos = 0.97 * (xlim[1] - xlim[0]) + xlim[0]
@@ -675,13 +675,13 @@ class ToolsCIGMC():
         ax1.scatter(xpos, np.percentile(y,50), marker='o', s=100, color="deepskyblue", zorder=1e9)
 
         xpos = 0.95 * (xlim[1] - xlim[0]) + xlim[0]
-        ax1.plot([xpos,xpos], [np.percentile(y2,16),np.percentile(y2,84)], '-', color="blue", lw=3)
-        ax1.scatter(xpos, np.percentile(y2,50), marker='o', s=100, facecolor='lightgrey', edgecolor='blue', lw=3, zorder=1e9)
+        ax1.plot([xpos,xpos], [np.percentile(y2,16),np.percentile(y2,84)], '-', color="red", lw=3)
+        ax1.scatter(xpos, np.percentile(y2,50), marker='o', s=100, facecolor='lightgrey', edgecolor='red', lw=3, zorder=1e9)
 
         txt = ax1.text(0.03, 0.90, "Clouds", color="deepskyblue", transform=ax1.transAxes, weight="bold", fontsize=20)
         txt.set_path_effects([PathEffects.withStroke(linewidth=3, foreground='w')])
         txt = ax1.text(0.03, 0.85, "Clouds (Outflow)", color="lightgrey", transform=ax1.transAxes, weight="bold", fontsize=20)
-        txt.set_path_effects([PathEffects.withStroke(linewidth=3, foreground='blue')])
+        txt.set_path_effects([PathEffects.withStroke(linewidth=3, foreground='red')])
 
         # save
         os.system("rm -rf " + self.outpng_scat_mom2)
