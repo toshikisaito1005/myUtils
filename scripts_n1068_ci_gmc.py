@@ -797,7 +797,7 @@ class ToolsCIGMC():
             y,
             r,
             "[CI]/CO Dispersion Difference",
-            cmap     = "bwr",
+            cmap     = "rainbow",
             ann      = True,
             add_text = False,
             lim      = 9.9,
