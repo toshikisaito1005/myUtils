@@ -603,14 +603,12 @@ class ToolsCIGMC():
         ########
         # plot #
         ########
-        x = mom2_co10
-        y = mom2_ci10
-
+        x    = mom2_co10
+        y    = mom2_ci10
         xerr = emom2_co10
         yerr = emom2_ci10
-
-        x2 = mom2_co10_cone
-        y2 = mom2_ci10_cone
+        x2   = mom2_co10_cone
+        y2   = mom2_ci10_cone
 
         xlim   = [np.min([np.nanmin(x),np.nanmin(x),np.nanmin(y),np.nanmin(y)])-0.4,np.max([np.nanmax(x),np.nanmax(x),np.nanmax(y),np.nanmax(y)])+0.4]
         ylim   = [np.min([np.nanmin(x),np.nanmin(x),np.nanmin(y),np.nanmin(y)])-0.4,np.max([np.nanmax(x),np.nanmax(x),np.nanmax(y),np.nanmax(y)])+0.4]
@@ -896,6 +894,16 @@ class ToolsCIGMC():
         # cbar
         cbar = plt.colorbar(im)
         cbar.set_label(label, color="black")
+
+        # cbar
+        cbar = plt.colorbar(im)
+        if plot_cbar==True:
+            cax = fig.add_axes([0.19, 0.12, 0.025, 0.35])
+            cb  = fig.colorbar(im, cax=cax)
+            cb.set_label(label, color=textcolor)
+            cb.ax.yaxis.set_tick_params(color=textcolor)
+            cb.outline.set_color(textcolor)
+            plt.setp(plt.getp(cb.ax.axes, 'yticklabels'), color=textcolor)
 
         # scale bar
         if scalebar=="100pc":
