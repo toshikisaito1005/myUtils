@@ -897,6 +897,7 @@ class ToolsCIGMC():
 
         # cbar
         cbar = plt.colorbar(im)
+        plot_cbar=True
         if plot_cbar==True:
             cax = fig.add_axes([0.19, 0.12, 0.025, 0.35])
             cb  = fig.colorbar(im, cax=cax)
