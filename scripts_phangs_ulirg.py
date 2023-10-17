@@ -206,7 +206,7 @@ class ToolsULIRG():
         ########
         # plot #
         ########
-        fig = plt.figure(figsize=(13,10))
+        fig = plt.figure(figsize=(15,10))
         gs  = gridspec.GridSpec(nrows=10, ncols=10)
         ax1 = plt.subplot(gs[0:10,0:10])
         ad  = [0.10,0.95,0.10,0.95] # [0.215,0.83,0.10,0.90]
