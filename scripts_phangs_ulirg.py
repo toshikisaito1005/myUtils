@@ -212,11 +212,11 @@ class ToolsULIRG():
         label_scalebar = "500 pc"
 
         # achieved s/n ratio
-        mom0  = imval_all(imcolor)
-        emom0 = imval_all(imcolornoise)
-        mom0  = mom0["data"]
-        emom0 = emom0["data"]
-        emom0 = emom0[mom0>0]
+        mom0._  = imval_all(imcolor)
+        emom0._ = imval_all(imcolornoise)
+        mom0    = mom0["data"].flatten()
+        emom0   = emom0["data"].flatten()
+        emom0   = emom0[mom0>0]
 
         rms = np.median(emom0)
         rms_norm = rms / np.nanmax(mom0)
