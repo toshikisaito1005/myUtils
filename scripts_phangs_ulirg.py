@@ -209,12 +209,12 @@ class ToolsULIRG():
         fig = plt.figure(figsize=(13,10))
         gs  = gridspec.GridSpec(nrows=10, ncols=10)
         ax1 = plt.subplot(gs[0:10,0:10])
-        ad  = [0.215,0.83,0.10,0.90]
+        ad  = [0.10,0.95,0.10,0.95] # [0.215,0.83,0.10,0.90]
         myax_set(
             ax1,
             None,
-            None,#[0.0,1.3],
-            None,#[-1.3,0.8],
+            [0.5,3.5],
+            [0.1,2.2],
             None,
             "<$\Sigma_{H_2,150pc}$> ($M_{\odot}$ pc$^{-1}$)",
             "<$\sigma_{v,150pc}$> (km s$^{-1}$)",
