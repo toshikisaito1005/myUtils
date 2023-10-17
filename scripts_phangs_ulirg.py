@@ -117,6 +117,14 @@ class ToolsULIRG():
         self.list_emom0_150pc = glob.glob(this.replace("XXX","*"))
         self.list_emom0_150pc.sort()
 
+        this = self.dir_raw + self._read_key("mom2_150pc")
+        self.list_mom2_150pc = glob.glob(this.replace("XXX","*"))
+        self.list_mom2_150pc.sort()
+
+        this = self.dir_raw + self._read_key("emom2_150pc")
+        self.list_emom2_150pc = glob.glob(this.replace("XXX","*"))
+        self.list_emom2_150pc.sort()
+
     def _set_output_fits(self):
         """
         """
@@ -124,6 +132,8 @@ class ToolsULIRG():
     def _set_input_param(self):
         """
         """
+
+        self.snr = 4.0
 
     def _set_output_txt_png(self):
         """
@@ -140,6 +150,7 @@ class ToolsULIRG():
         do_prepare    = False,
         # plot figures in paper
         plot_showcase = False,
+        plot_scatter  = False,
         # supplement
         ):
         """
@@ -173,7 +184,18 @@ class ToolsULIRG():
         taskname = self.modname + sys._getframe().f_code.co_name
         check_first(self.list_mom0_150pc[0],taskname)
 
+        for i in range(len(self.list_mom0_150pc)):
+            this_mom0,_  = imval_all(self.list_mom0_150pc[i])
+            this_mom2,_  = imval_all(self.list_mom2_150pc[i])
+            this_emom0,_ = imval_all(self.list_emom0_150pc[i])
+            this_emom2,_ = imval_all(self.list_emom2_150pc[i])
+            name         = self.list_mom0_150pc[i].split("/")[-1].split("_")[0]
 
+            cut = np.where((this_mom0>=this_emom0*self.snr) & (this_mom2>=this_emom2*self.snr))
+            this_mom0 = this_mom0[cut]
+            this_mom2 = this_mom2[cut]
+
+            print(name, np.log10(np.mean(this_mom0)), np.log10(np.mean(this_mom2)))
 
     ############
     # showcase #
