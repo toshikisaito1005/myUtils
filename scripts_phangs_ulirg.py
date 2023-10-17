@@ -117,6 +117,14 @@ class ToolsULIRG():
         self.list_emom0_150pc = glob.glob(this.replace("XXX","*"))
         self.list_emom0_150pc.sort()
 
+        this = self.dir_raw + self._read_key("mom1_150pc")
+        self.list_mom1_150pc = glob.glob(this.replace("XXX","*"))
+        self.list_mom1_150pc.sort()
+
+        this = self.dir_raw + self._read_key("emom1_150pc")
+        self.list_emom1_150pc = glob.glob(this.replace("XXX","*"))
+        self.list_emom1_150pc.sort()
+
         this = self.dir_raw + self._read_key("mom2_150pc")
         self.list_mom2_150pc = glob.glob(this.replace("XXX","*"))
         self.list_mom2_150pc.sort()
@@ -241,13 +249,14 @@ class ToolsULIRG():
 
         for i in range(len(self.list_mom0_150pc)):
             this_mom0    = self.list_mom0_150pc[i]
+            this_mom1    = self.list_mom1_150pc[i]
             this_emom0   = self.list_emom0_150pc[i]
             this_outfile = this_mom0.replace("data_raw","products_png").replace(".fits",".png")
             self._one_showcase(
-                this_mom0,
+                this_mom1,
                 this_mom0,
                 this_emom0,
-                "(K km s$^{-1}$)",
+                "(km s$^{-1}$)",
                 this_outfile,
                 )
 
@@ -311,7 +320,7 @@ class ToolsULIRG():
             set_cbar=True,
             label_cbar=label_cbar,
             set_grid=None,
-            set_cmap="Reds",
+            set_cmap="bwr",
             #clim=clim,
             set_bg_color=set_bg_color,
             )
