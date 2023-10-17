@@ -15,7 +15,7 @@ dir_final    ,,,images/
 ##############
 # input maps #
 ##############
-mom0_150pc ,,,XXX_co21_150pc_strict_emom1.fits
+mom0_150pc ,,,XXX_co21_150pc_strict_mom0.fits
 
 
 ###############

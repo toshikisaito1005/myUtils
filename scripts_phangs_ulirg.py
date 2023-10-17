@@ -110,7 +110,7 @@ class ToolsULIRG():
         """
 
         this = self.dir_raw + self._read_key("mom0_150pc")
-        self.list_mom0_150pc = glob.glob(replace("XXX","*"))
+        self.list_mom0_150pc = glob.glob(this.replace("XXX","*"))
 
     def _set_output_fits(self):
         """
