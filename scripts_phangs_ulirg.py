@@ -157,6 +157,24 @@ class ToolsULIRG():
         if plot_showcase==True:
             self.showcase()
 
+        if plot_scatter==True:
+            self.plot_mom0_vs_mom2()
+
+    #####################
+    # plot_mom0_vs_mom2 #
+    #####################
+
+    def plot_mom0_vs_mom2(
+        self,
+        ):
+        """
+        """
+
+        taskname = self.modname + sys._getframe().f_code.co_name
+        check_first(self.list_mom0_150pc[0],taskname)
+
+
+
     ############
     # showcase #
     ############
@@ -222,7 +240,7 @@ class ToolsULIRG():
         rms_norm = rms / np.nanmax(mom0)
 
         levels_cont1 = rms_norm * np.array([2,4,8,16,32,64,128,256]) # [0.05, 0.1, 0.2, 0.4, 0.8, 0.96]
-        width_cont1  = [1.0]
+        width_cont1  = [0.5]
         set_bg_color = "white" # cm.rainbow(0)
 
         # plot
