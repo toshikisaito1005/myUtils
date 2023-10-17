@@ -167,7 +167,12 @@ class ToolsULIRG():
 
         for this_mom0 in self.list_mom0_150pc:
             this_outfile = this_mom0.replace("data_raw","products_png").replace(".fits",".png")
-            self._one_showcase(this_mom0,this_mom0,this_outfile)
+            self._one_showcase(
+                this_mom0,
+                this_mom0,
+                "(K km s$^{-1}$)",
+                this_outfile,
+                )
 
     #################
     # _one_showcase #
@@ -177,6 +182,7 @@ class ToolsULIRG():
         self,
         imcolor,
         imcontour1,
+        label_cbar,
         outfile,
         ):
         """
