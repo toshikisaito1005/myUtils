@@ -165,7 +165,9 @@ class ToolsULIRG():
         taskname = self.modname + sys._getframe().f_code.co_name
         check_first(self.list_mom0_150pc[0],taskname)
 
-        print(len(self.list_mom0_150pc))
+        for this_mom0 in self.list_mom0_150pc:
+            this_outfile = this_mom0.replace("data_raw","products_png").replace(".fits",".png")
+            self._one_showcase(this_mom0,this_mom0,this_outfile)
 
     #################
     # _one_showcase #
@@ -173,6 +175,9 @@ class ToolsULIRG():
 
     def _one_showcase(
         self,
+        imcolor,
+        imcontour1,
+        outfile,
         ):
         """
         """
@@ -187,25 +192,33 @@ class ToolsULIRG():
         width_cont1  = [1.0]
         set_bg_color = "white" # cm.rainbow(0)
 
+        # get header
+        header = imhead(imcolor,mode="list")
+        beam   = header["beammajor"]["value"]
+        imsize = beam * 67 # 10kpc size
+        imsize = [imsize, imsize]
+        ra     = header["crval1"] * 180 / np.pi
+        dec    = header["crval2"] * 180 / np.pi
+        title  = imcolor.split("_")[0].split("/")[-1]
+
         # plot
         myfig_fits2png(
             imcolor=imcolor,
             outfile=outfile,
             imcontour1=imcontour1,
-            imsize_as=self.imsize,
-            ra_cnt=self.ra_agn_str,
-            dec_cnt=self.dec_agn_str,
+            imsize_as=imsize,
+            ra_cnt=ra,
+            dec_cnt=dec,
             levels_cont1=levels_cont1,
             width_cont1=width_cont1,
-            set_title=set_title,
+            set_title=title,
             colorlog=False,
             scalebar=scalebar,
             label_scalebar=label_scalebar,
             set_cbar=True,
             label_cbar=label_cbar,
-            clim=clim,
+            #clim=clim,
             set_bg_color=set_bg_color,
-            numann="13co",
             )
 
     ###############
