@@ -201,10 +201,10 @@ class ToolsULIRG():
         imsize = beam * 67 # 10kpc size
         ra     = str(header["crval1"] * 180 / np.pi)
         dec    = str(header["crval2"] * 180 / np.pi)
-        title  = imcolor.split("_")[0].split("/")[-1]
+        title  = imcolor.split("/")[-1].split("_")[0]
 
-        scalebar = 150. / header["beammajor"]["value"]
-        label_scalebar = "150 pc"
+        scalebar = header["beammajor"]["value"] * 500. / 150.
+        label_scalebar = "500 pc"
 
         # plot
         myfig_fits2png(
