@@ -212,8 +212,8 @@ class ToolsULIRG():
         label_scalebar = "500 pc"
 
         # achieved s/n ratio
-        mom0._  = imval_all(imcolor)
-        emom0._ = imval_all(imcolornoise)
+        mom0,_  = imval_all(imcolor)
+        emom0,_ = imval_all(imcolornoise)
         mom0    = mom0["data"].flatten()
         emom0   = emom0["data"].flatten()
         emom0   = emom0[mom0>0]
