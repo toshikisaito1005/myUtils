@@ -165,7 +165,7 @@ class ToolsULIRG():
         taskname = self.modname + sys._getframe().f_code.co_name
         check_first(self.list_mom0_150pc[0],taskname)
 
-        print(self.list_mom0_150pc)
+        print(len(self.list_mom0_150pc))
 
     #################
     # _one_showcase #
