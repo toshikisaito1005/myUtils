@@ -222,6 +222,7 @@ class ToolsULIRG():
             label_scalebar=label_scalebar,
             set_cbar=True,
             label_cbar=label_cbar,
+            set_cmap="Reds",
             #clim=clim,
             set_bg_color=set_bg_color,
             )
