@@ -111,6 +111,11 @@ class ToolsULIRG():
 
         this = self.dir_raw + self._read_key("mom0_150pc")
         self.list_mom0_150pc = glob.glob(this.replace("XXX","*"))
+        self.list_mom0_150pc.sort()
+
+        this = self.dir_raw + self._read_key("emom0_150pc")
+        self.list_emom0_150pc = glob.glob(this.replace("XXX","*"))
+        self.list_emom0_150pc.sort()
 
     def _set_output_fits(self):
         """
@@ -165,11 +170,14 @@ class ToolsULIRG():
         taskname = self.modname + sys._getframe().f_code.co_name
         check_first(self.list_mom0_150pc[0],taskname)
 
-        for this_mom0 in self.list_mom0_150pc:
+        for i in range(len(self.list_mom0_150pc)):
+            this_mom0    = self.list_mom0_150pc[i]
+            this_emom0   = self.list_emom0_150pc[i]
             this_outfile = this_mom0.replace("data_raw","products_png").replace(".fits",".png")
             self._one_showcase(
                 this_mom0,
                 this_mom0,
+                this_emom0,
                 "(K km s$^{-1}$)",
                 this_outfile,
                 )
@@ -182,6 +190,7 @@ class ToolsULIRG():
         self,
         imcolor,
         imcontour1,
+        imcolornoise,
         label_cbar,
         outfile,
         ):
@@ -190,10 +199,6 @@ class ToolsULIRG():
 
         taskname = self.modname + sys._getframe().f_code.co_name
         check_first(self.list_mom0_150pc[0],taskname)
-
-        levels_cont1 = [0.05, 0.1, 0.2, 0.4, 0.8, 0.96]
-        width_cont1  = [1.0]
-        set_bg_color = "white" # cm.rainbow(0)
 
         # get header
         header = imhead(imcolor,mode="list")
@@ -205,6 +210,18 @@ class ToolsULIRG():
 
         scalebar = header["beammajor"]["value"] * 500. / 150.
         label_scalebar = "500 pc"
+
+        # achieved s/n ratio
+        mom0  = imval_all(imcolor)
+        emom0 = imval_all(imcolornoise)
+        emom0 = emom0[mom0>0]
+
+        rms = np.median(emom0)
+        rms_norm = rms / np.nanmax(mom0)
+
+        levels_cont1 = rms_norm * np.array([2,4,8,16,32,64,128,256]) # [0.05, 0.1, 0.2, 0.4, 0.8, 0.96]
+        width_cont1  = [1.0]
+        set_bg_color = "white" # cm.rainbow(0)
 
         # plot
         myfig_fits2png(
