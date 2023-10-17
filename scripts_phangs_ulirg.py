@@ -109,8 +109,8 @@ class ToolsULIRG():
         """
         """
 
-        self.mom0_150pc_maps = self.dir_raw + self._read_key("mom0_maps")
-        self.ew_150pc_maps   = self.dir_raw + self._read_key("ew_150pc_maps")
+        this = self.dir_raw + self._read_key("mom0_150pc")
+        self.list_mom0_150pc = glob.glob(replace("XXX","*"))
 
     def _set_output_fits(self):
         """
@@ -209,9 +209,29 @@ class ToolsULIRG():
     # showcase #
     ############
 
+    def showcase(
+        self,
+        ):
+        """
+        """
+
+        taskname = self.modname + sys._getframe().f_code.co_name
+        check_first(self.list_mom0_150pc[0],taskname)
+
+        print(self.list_mom0_150pc)
+
     #################
     # _one_showcase #
     #################
+
+    def _one_showcase(
+        self,
+        ):
+        """
+        """
+
+        taskname = self.modname + sys._getframe().f_code.co_name
+        check_first(self.list_mom0_150pc[0],taskname)
 
         scalebar = 100. / self.scale_pc
         label_scalebar = "100 pc"

@@ -1,0 +1,37 @@
+###############
+# directories #
+###############
+dir_proj     ,,,/lfs13/saitots/proj_phangs_ulirg/
+dir_raw      ,,,data_raw/
+dir_ready    ,,,data_ready/
+dir_products ,,,products_png/
+dir_final    ,,,images/
+
+##################
+# final products #
+##################
+# main
+
+##############
+# input maps #
+##############
+mom0_150pc ,,,XXX_co21_150pc_strict_emom1.fits
+
+
+###############
+# output maps #
+###############
+
+
+##############
+# parameters #
+##############
+
+######################
+# output png and txt #
+######################
+
+
+#######
+# end #
+#######
