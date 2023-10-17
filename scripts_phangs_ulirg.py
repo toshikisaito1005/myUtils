@@ -214,10 +214,12 @@ class ToolsULIRG():
         # achieved s/n ratio
         mom0  = imval_all(imcolor)
         emom0 = imval_all(imcolornoise)
-        emom0 = emom0["data"][mom0["data"]>0]
+        mom0  = mom0["data"]
+        emom0 = emom0["data"]
+        emom0 = emom0[mom0>0]
 
         rms = np.median(emom0)
-        rms_norm = rms / np.nanmax(mom0["data"])
+        rms_norm = rms / np.nanmax(mom0)
 
         levels_cont1 = rms_norm * np.array([2,4,8,16,32,64,128,256]) # [0.05, 0.1, 0.2, 0.4, 0.8, 0.96]
         width_cont1  = [1.0]
