@@ -32,6 +32,7 @@ emom2_150pc ,,,XXX_co21_150pc_strict_emom2.fits
 ######################
 # output png and txt #
 ######################
+outpng_mom0_vs_mom2 ,,,outpng_mom0_vs_mom2.png
 
 
 #######

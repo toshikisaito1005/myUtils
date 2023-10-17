@@ -139,6 +139,8 @@ class ToolsULIRG():
         """
         """
 
+        self.outpng_mom0_vs_mom2 = self.dir_products + self._read_key("outpng_mom0_vs_mom2")
+
     ####################
     # run_phangs_ulirg #
     ####################
@@ -184,6 +186,8 @@ class ToolsULIRG():
         taskname = self.modname + sys._getframe().f_code.co_name
         check_first(self.list_mom0_150pc[0],taskname)
 
+        x_lirg = []
+        y_lirg = []
         for i in range(len(self.list_mom0_150pc)):
             this_mom0,_  = imval_all(self.list_mom0_150pc[i])
             this_mom2,_  = imval_all(self.list_mom2_150pc[i])
@@ -195,7 +199,32 @@ class ToolsULIRG():
             this_mom0 = this_mom0["data"][cut]
             this_mom2 = this_mom2["data"][cut]
 
-            print(name, np.log10(np.mean(this_mom0)), np.log10(np.mean(this_mom2)))
+            x_lirg.append(np.log10(np.mean(this_mom0)))
+            y_lirg.append(np.log10(np.mean(this_mom2)))
+            print(name, np.round(np.log10(np.mean(this_mom0)),2), np.round(np.log10(np.mean(this_mom2)),2))
+
+        ########
+        # plot #
+        ########
+        fig = plt.figure(figsize=(13,10))
+        gs  = gridspec.GridSpec(nrows=10, ncols=10)
+        ax1 = plt.subplot(gs[0:10,0:10])
+        ad  = [0.215,0.83,0.10,0.90]
+        myax_set(
+            ax1,
+            None,
+            None,#[0.0,1.3],
+            None,#[-1.3,0.8],
+            None,
+            "<$\Sigma$_{H_2,150pc}> ($M_{\odot}$ pc$^{-1}$)",
+            "<$\sigma$_{v,150pc}> (km s$^{-1}$)",
+            adjust=ad,
+            )
+
+        ax1.scatter(x_lirg, y_lirg, c="tomato", lw=0, s=40, zorder=1e9)
+
+        os.system("rm -rf " + self.outpng_mom0_vs_mom2)
+        plt.savefig(self.outpng_mom0_vs_mom2, dpi=self.fig_dpi)
 
     ############
     # showcase #
