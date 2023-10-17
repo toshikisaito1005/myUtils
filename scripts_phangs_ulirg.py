@@ -200,8 +200,8 @@ class ToolsULIRG():
         beam   = header["beammajor"]["value"]
         imsize = beam * 67 # 10kpc size
         imsize = [imsize, imsize]
-        ra     = header["crval1"] * 180 / np.pi
-        dec    = header["crval2"] * 180 / np.pi
+        ra     = str(header["crval1"] * 180 / np.pi)
+        dec    = str(header["crval2"] * 180 / np.pi)
         title  = imcolor.split("_")[0].split("/")[-1]
 
         scalebar = 150. / header["beammajor"]["value"]
