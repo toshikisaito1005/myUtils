@@ -201,7 +201,7 @@ class ToolsULIRG():
 
             x_lirg.append(np.log10(np.mean(this_mom0)))
             y_lirg.append(np.log10(np.mean(this_mom2)))
-            print(name, np.round(np.log10(np.mean(this_mom0)),2), np.round(np.log10(np.mean(this_mom2)),2))
+            print(name, str(np.round(np.log10(np.mean(this_mom0)),2)), str(np.round(np.log10(np.mean(this_mom2)),2)))
 
         ########
         # plot #
