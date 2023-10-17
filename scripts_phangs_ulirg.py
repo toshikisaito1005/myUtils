@@ -191,9 +191,9 @@ class ToolsULIRG():
             this_emom2,_ = imval_all(self.list_emom2_150pc[i])
             name         = self.list_mom0_150pc[i].split("/")[-1].split("_")[0]
 
-            cut = np.where((this_mom0>=this_emom0*self.snr) & (this_mom2>=this_emom2*self.snr))
-            this_mom0 = this_mom0[cut]
-            this_mom2 = this_mom2[cut]
+            cut = np.where((this_mom0["data"]>=this_emom0["data"]*self.snr) & (this_mom2["data"]>=this_emom2["data"]*self.snr))
+            this_mom0 = this_mom0["data"][cut]
+            this_mom2 = this_mom2["data"][cut]
 
             print(name, np.log10(np.mean(this_mom0)), np.log10(np.mean(this_mom2)))
 
