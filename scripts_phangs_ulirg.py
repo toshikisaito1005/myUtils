@@ -185,9 +185,6 @@ class ToolsULIRG():
         taskname = self.modname + sys._getframe().f_code.co_name
         check_first(self.list_mom0_150pc[0],taskname)
 
-        scalebar = 100. / self.scale_pc
-        label_scalebar = "100 pc"
-
         levels_cont1 = [0.05, 0.1, 0.2, 0.4, 0.8, 0.96]
         width_cont1  = [1.0]
         set_bg_color = "white" # cm.rainbow(0)
@@ -200,6 +197,9 @@ class ToolsULIRG():
         ra     = header["crval1"] * 180 / np.pi
         dec    = header["crval2"] * 180 / np.pi
         title  = imcolor.split("_")[0].split("/")[-1]
+
+        scalebar = 150. / header["beammajor"]["value"]
+        label_scalebar = "150 pc"
 
         # plot
         myfig_fits2png(
