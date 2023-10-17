@@ -216,8 +216,8 @@ class ToolsULIRG():
             [0.5,3.5],
             [0.1,2.2],
             None,
-            "<$\Sigma_{H_2,150pc}$> ($M_{\odot}$ pc$^{-1}$)",
-            "<$\sigma_{v,150pc}$> (km s$^{-1}$)",
+            "<$\Sigma$$_{\mathrm{H_2,150pc}}$> ($M_{\odot}$ pc$^{-1}$)",
+            "<$\sigma$$_{\mathrm{v,150pc}}$> (km s$^{-1}$)",
             adjust=ad,
             )
 
