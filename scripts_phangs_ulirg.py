@@ -203,7 +203,7 @@ class ToolsULIRG():
         # get header
         header = imhead(imcolor,mode="list")
         beam   = header["beammajor"]["value"]
-        imsize = beam * 67 # 10kpc size
+        imsize = beam * 87 # 10kpc size
         ra     = str(header["crval1"] * 180 / np.pi)
         dec    = str(header["crval2"] * 180 / np.pi)
         title  = imcolor.split("/")[-1].split("_")[0]
@@ -241,6 +241,7 @@ class ToolsULIRG():
             label_scalebar=label_scalebar,
             set_cbar=True,
             label_cbar=label_cbar,
+            set_grid=None,
             set_cmap="Reds",
             #clim=clim,
             set_bg_color=set_bg_color,
