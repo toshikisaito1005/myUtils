@@ -215,9 +215,22 @@ class ToolsULIRG():
             print(name, str(np.round(np.log10(np.mean(this_mom0)),2)), str(np.round(np.log10(np.mean(this_mom2)),2)))
         """
 
+        x_phangs = []
+        y_phangs = []
         data = np.loadtxt(self.Sun22_phangs_150pc, dtype = "unicode")
         list_galname = np.unique(data[:,0])
-        print(list_galname)
+        list_name    = data[:,0]
+        list_mom0    = data[;,7]
+        list_mom2    = data[;,8]
+
+        for i in range(len(list_galname)):
+            this_name = list_galname[i]
+            this_mom0 = list_mom0[list_name==this_name]
+            this_mom2 = list_mom2[list_name==this_name]
+
+            x_phangs.append(np.log10(np.mean(this_mom0)))
+            y_phangs.append(np.log10(np.mean(this_mom2)))
+            print(this_name, str(np.round(np.log10(np.mean(this_mom0)),2)), str(np.round(np.log10(np.mean(this_mom2)),2)))
 
         ########
         # plot #
