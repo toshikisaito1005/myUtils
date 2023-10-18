@@ -214,8 +214,10 @@ class ToolsULIRG():
             y_lirg.append(np.log10(np.mean(this_mom2)))
             print(name, str(np.round(np.log10(np.mean(this_mom0)),2)), str(np.round(np.log10(np.mean(this_mom2)),2)))
         """
-        
+
         data = np.loadtxt(self.Sun22_phangs_150pc, dtype = "unicode")
+        list_galname = np.unique(data[:,0])
+        print(list_galname)
 
         ########
         # plot #
