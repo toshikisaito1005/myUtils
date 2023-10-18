@@ -196,7 +196,6 @@ class ToolsULIRG():
         taskname = self.modname + sys._getframe().f_code.co_name
         check_first(self.list_mom0_150pc[0],taskname)
 
-        """
         x_lirg = []
         y_lirg = []
         for i in range(len(self.list_mom0_150pc)):
@@ -213,7 +212,6 @@ class ToolsULIRG():
             x_lirg.append(np.log10(np.mean(this_mom0)))
             y_lirg.append(np.log10(np.mean(this_mom2)))
             print(name, str(np.round(np.log10(np.mean(this_mom0)),2)), str(np.round(np.log10(np.mean(this_mom2)),2)))
-        """
 
         x_phangs = []
         y_phangs = []
@@ -251,6 +249,7 @@ class ToolsULIRG():
             )
 
         ax1.scatter(x_lirg, y_lirg, c="tomato", lw=0, s=40, zorder=1e9)
+        ax1.scatter(x_phangs, y_phangs, c="deepskyblue", lw=0, s=40, zorder=1e9)
 
         os.system("rm -rf " + self.outpng_mom0_vs_mom2)
         plt.savefig(self.outpng_mom0_vs_mom2, dpi=self.fig_dpi)
