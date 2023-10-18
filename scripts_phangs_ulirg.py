@@ -215,7 +215,7 @@ class ToolsULIRG():
             print(name, str(np.round(np.log10(np.mean(this_mom0)),2)), str(np.round(np.log10(np.mean(this_mom2)),2)))
         """
         
-        data = np.loadtxt(self.Sun22_phangs_150pc)
+        data = np.loadtxt(self.Sun22_phangs_150pc, dtype = "unicode")
 
         ########
         # plot #
