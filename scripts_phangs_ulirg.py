@@ -283,6 +283,7 @@ class ToolsULIRG():
         taskname = self.modname + sys._getframe().f_code.co_name
         check_first(self.list_mom0_150pc[0],taskname)
 
+        """
         for i in range(len(self.list_mom0_150pc)):
             this_mom0    = self.list_mom0_150pc[i]
             this_mom1    = self.list_mom1_150pc[i]
@@ -295,6 +296,7 @@ class ToolsULIRG():
                 "(km s$^{-1}$)",
                 this_outfile,
                 )
+        """
 
         for i in range(len(self.list_mom0_phangs_150pc)):
             this_mom0    = self.list_mom0_phangs_150pc[i]
