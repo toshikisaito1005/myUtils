@@ -300,7 +300,7 @@ class ToolsULIRG():
             this_mom0    = self.list_mom0_phangs_150pc[i]
             #this_mom1    = self.list_mom1_phangs_150pc[i]
             this_emom0   = self.list_emom0_phangs_150pc[i]
-            this_outfile = this_mom0.replace("data_raw","products_png").replace("phangs_v4p0_release/","").replace(".fits",".png")
+            this_outfile = this_mom0.replace("data_raw","products_png").replace("phangs_v4p0_release/","phangs_").replace(".fits",".png")
             self._one_showcase(
                 this_mom0,
                 this_mom0,
