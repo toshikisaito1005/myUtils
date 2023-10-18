@@ -307,6 +307,7 @@ class ToolsULIRG():
                 this_emom0,
                 "(K km s$^{-1}$)",
                 this_outfile,
+                color="Blues",
                 )
 
     #################
@@ -320,6 +321,7 @@ class ToolsULIRG():
         imcolornoise,
         label_cbar,
         outfile,
+        color="Reds",
         ):
         """
         """
@@ -369,7 +371,7 @@ class ToolsULIRG():
             set_cbar=True,
             label_cbar=label_cbar,
             set_grid=None,
-            set_cmap="bwr",
+            set_cmap=color,
             #clim=clim,
             set_bg_color=set_bg_color,
             )
