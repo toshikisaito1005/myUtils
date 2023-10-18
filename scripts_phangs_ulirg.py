@@ -133,6 +133,8 @@ class ToolsULIRG():
         self.list_emom2_150pc = glob.glob(this.replace("XXX","*"))
         self.list_emom2_150pc.sort()
 
+        self.Sun22_phangs_150pc = self.dir_raw + self._read_key("Sun22_phangs_150pc")
+
     def _set_output_fits(self):
         """
         """
@@ -194,6 +196,7 @@ class ToolsULIRG():
         taskname = self.modname + sys._getframe().f_code.co_name
         check_first(self.list_mom0_150pc[0],taskname)
 
+        """
         x_lirg = []
         y_lirg = []
         for i in range(len(self.list_mom0_150pc)):
@@ -210,6 +213,9 @@ class ToolsULIRG():
             x_lirg.append(np.log10(np.mean(this_mom0)))
             y_lirg.append(np.log10(np.mean(this_mom2)))
             print(name, str(np.round(np.log10(np.mean(this_mom0)),2)), str(np.round(np.log10(np.mean(this_mom2)),2)))
+        """
+        
+        data = np.loadtxt(self.Sun22_phangs_150pc)
 
         ########
         # plot #
