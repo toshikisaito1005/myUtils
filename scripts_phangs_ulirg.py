@@ -220,8 +220,8 @@ class ToolsULIRG():
         data = np.loadtxt(self.Sun22_phangs_150pc, dtype = "unicode")
         list_galname = np.unique(data[:,0])
         list_name    = data[:,0]
-        list_mom0    = data[;,7]
-        list_mom2    = data[;,8]
+        list_mom0    = data[:,7]
+        list_mom2    = data[:,8]
 
         for i in range(len(list_galname)):
             this_name = list_galname[i]
