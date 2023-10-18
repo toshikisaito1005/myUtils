@@ -135,6 +135,22 @@ class ToolsULIRG():
 
         self.Sun22_phangs_150pc = self.dir_raw + self._read_key("Sun22_phangs_150pc")
 
+        this = self.dir_raw + self._read_key("mom0_phangs_150pc")
+        self.list_mom0_phangs_150pc = glob.glob(this.replace("XXX","*"))
+        self.list_mom0_phangs_150pc.sort()
+
+        this = self.dir_raw + self._read_key("emom0_phangs_150pc")
+        self.list_emom0_phangs_150pc = glob.glob(this.replace("XXX","*"))
+        self.list_emom0_phangs_150pc.sort()
+
+        this = self.dir_raw + self._read_key("mom2_phangs_150pc")
+        self.list_mom2_phangs_150pc = glob.glob(this.replace("XXX","*"))
+        self.list_mom2_phangs_150pc.sort()
+
+        this = self.dir_raw + self._read_key("emom2_phangs_150pc")
+        self.list_emom2_phangs_150pc = glob.glob(this.replace("XXX","*"))
+        self.list_emom2_phangs_150pc.sort()
+
     def _set_output_fits(self):
         """
         """
@@ -277,6 +293,19 @@ class ToolsULIRG():
                 this_mom0,
                 this_emom0,
                 "(km s$^{-1}$)",
+                this_outfile,
+                )
+
+        for i in range(len(self.list_mom0_phangs_150pc)):
+            this_mom0    = self.list_mom0_phangs_150pc[i]
+            this_mom1    = self.list_mom1_phangs_150pc[i]
+            this_emom0   = self.list_emom0_phangs_150pc[i]
+            this_outfile = this_mom0.replace("data_raw","products_png").replace("phangs_v4p0_release/","").replace(".fits",".png")
+            self._one_showcase(
+                this_mom0,
+                this_mom0,
+                this_emom0,
+                "(K km s$^{-1}$)",
                 this_outfile,
                 )
 
