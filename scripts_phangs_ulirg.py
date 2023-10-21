@@ -308,7 +308,7 @@ class ToolsULIRG():
         for i in range(len(self.list_mom0_phangs_150pc)):
             this_mom0    = self.list_mom0_phangs_150pc[i]
             this_emom0   = self.list_emom0_phangs_150pc[i]
-            this_name    = imcolor.split("/")[-1].split("_")[0]
+            this_name    = this_mom0.split("/")[-1].split("_")[0]
             print(np.where(galaxy_cat==this_name))
 
             """
