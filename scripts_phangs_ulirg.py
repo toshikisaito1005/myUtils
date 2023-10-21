@@ -310,6 +310,7 @@ class ToolsULIRG():
             this_emom0   = self.list_emom0_phangs_150pc[i]
             this_name    = this_mom0.split("/")[-1].split("_")[0]
             print(np.array(galaxy_cat[:,0]))
+            print(this_name)
             print(np.where(np.array(galaxy_cat[:,0])==this_name))
 
             """
