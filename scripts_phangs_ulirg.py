@@ -361,6 +361,8 @@ class ToolsULIRG():
 
         scalebar = beam * 500. / beam_pc
 
+        print(title, dist, beam, beam_pc)
+
         # achieved s/n ratio
         mom0,_  = imval_all(imcolor)
         emom0,_ = imval_all(imcolornoise)
