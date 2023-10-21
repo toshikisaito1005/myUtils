@@ -310,12 +310,9 @@ class ToolsULIRG():
             this_emom0 = self.list_emom0_phangs_150pc[i]
             this_name  = this_mom0.split("/")[-1].split("_")[0]
             index      = np.where(np.array(galaxy_cat[:,0])==this_name.replace("ngc","NGC").replace("ic","IC").replace("a","A"))[0]
-            dist       = galaxy_cat[index,4].astype(float)[0]
 
-            print(this_name, dist)
-
-            """
             if index:
+                dist       = galaxy_cat[index,4].astype(float)[0]
                 this_outfile = this_mom0.replace("data_raw","products_png").replace("phangs_v4p0_release/","phangs_").replace(".fits",".png")
                 self._one_showcase(
                     this_mom0,
@@ -326,7 +323,6 @@ class ToolsULIRG():
                     color="Blues",
                     dist=dist,
                     )
-            """
 
     #################
     # _one_showcase #
