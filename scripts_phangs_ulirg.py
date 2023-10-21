@@ -312,7 +312,7 @@ class ToolsULIRG():
             index      = np.where(np.array(galaxy_cat[:,0])==this_name.replace("ngc","NGC").replace("ic","IC").replace("a","A"))[0]
 
             if index:
-                dist       = galaxy_cat[index,4].astype(float)[0]
+                dist         = galaxy_cat[index,4].astype(float)[0]
                 this_outfile = this_mom0.replace("data_raw","products_png").replace("phangs_v4p0_release/","phangs_").replace(".fits",".png")
                 self._one_showcase(
                     this_mom0,
@@ -356,7 +356,10 @@ class ToolsULIRG():
             scalebar = header["beammajor"]["value"] * 500. / 150.
             label_scalebar = "500 pc"
         else:
-            imsize = 20000. / (dist *1000000. * np.tan(np.radians(beam/3600.)))
+            beam_pc = dist *1000000. * np.tan(np.radians(beam/3600.))
+            imsize = 20000. / beam_pc
+            scalebar = header["beammajor"]["value"] * 500. / beam_pc
+            label_scalebar = "500 pc"
 
         # achieved s/n ratio
         mom0,_  = imval_all(imcolor)
