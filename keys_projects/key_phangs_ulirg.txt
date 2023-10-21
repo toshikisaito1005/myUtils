@@ -21,13 +21,14 @@ mom2_150pc  ,,,XXX_co21_150pc_strict_mom2.fits
 emom0_150pc ,,,XXX_co21_150pc_strict_emom0.fits
 emom1_150pc ,,,XXX_co21_150pc_strict_emom1.fits
 emom2_150pc ,,,XXX_co21_150pc_strict_emom2.fits
+Sun22_phangs_catalog ,,,J_ApJ_901_L8/tablea1.dat
 Sun22_phangs_150pc ,,,J_ApJ_901_L8/tableb1.dat.gz
-mom0_phangs_150pc  ,,,phangs_v4p0_release/XXX_co21_2as_strict_mom0.fits
-mom1_phangs_150pc  ,,,phangs_v4p0_release/XXX_co21_2as_strict_mom1.fits
-mom2_phangs_150pc  ,,,phangs_v4p0_release/XXX_co21_2as_strict_mom2.fits
-emom0_phangs_150pc ,,,phangs_v4p0_release/XXX_co21_2as_strict_emom0.fits
-emom1_phangs_150pc ,,,phangs_v4p0_release/XXX_co21_2as_strict_emom1.fits
-emom2_phangs_150pc ,,,phangs_v4p0_release/XXX_co21_2as_strict_emom2.fits
+mom0_phangs_150pc  ,,,phangs_v4p0_release/XXX_co21_strict_mom0.fits
+mom1_phangs_150pc  ,,,phangs_v4p0_release/XXX_co21_strict_mom1.fits
+mom2_phangs_150pc  ,,,phangs_v4p0_release/XXX_co21_strict_mom2.fits
+emom0_phangs_150pc ,,,phangs_v4p0_release/XXX_co21_strict_emom0.fits
+emom1_phangs_150pc ,,,phangs_v4p0_release/XXX_co21_strict_emom1.fits
+emom2_phangs_150pc ,,,phangs_v4p0_release/XXX_co21_strict_emom2.fits
 
 ###############
 # output maps #

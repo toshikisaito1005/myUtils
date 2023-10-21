@@ -109,6 +109,7 @@ class ToolsULIRG():
         """
         """
 
+        # (U)LIRG data
         this = self.dir_raw + self._read_key("mom0_150pc")
         self.list_mom0_150pc = glob.glob(this.replace("XXX","*"))
         self.list_mom0_150pc.sort()
@@ -133,6 +134,8 @@ class ToolsULIRG():
         self.list_emom2_150pc = glob.glob(this.replace("XXX","*"))
         self.list_emom2_150pc.sort()
 
+        # PHANGS catalog
+        self.phangs_catalog = self.dir_raw + self._read_key("Sun22_phangs_catalog")
         self.Sun22_phangs_150pc = self.dir_raw + self._read_key("Sun22_phangs_150pc")
 
         this = self.dir_raw + self._read_key("mom0_phangs_150pc")
@@ -231,7 +234,7 @@ class ToolsULIRG():
 
         x_phangs = []
         y_phangs = []
-        data = np.loadtxt(self.Sun22_phangs_150pc, dtype = "unicode")
+        data = np.loadtxt(self.Sun22_phangs_150pc, dtype="unicode")
         list_galname = np.unique(data[:,0])
         list_name    = data[:,0]
         list_mom0    = data[:,7].astype(float)
@@ -284,6 +287,7 @@ class ToolsULIRG():
         check_first(self.list_mom0_150pc[0],taskname)
 
         """
+        # (U)LIRG
         for i in range(len(self.list_mom0_150pc)):
             this_mom0    = self.list_mom0_150pc[i]
             this_mom1    = self.list_mom1_150pc[i]
@@ -298,10 +302,16 @@ class ToolsULIRG():
                 )
         """
 
+        # PHANGS
+        galaxy_cat = np.loadtxt(self.phangs_catalog, dtype="unicode")
+
         for i in range(len(self.list_mom0_phangs_150pc)):
             this_mom0    = self.list_mom0_phangs_150pc[i]
-            #this_mom1    = self.list_mom1_phangs_150pc[i]
             this_emom0   = self.list_emom0_phangs_150pc[i]
+            this_name    = imcolor.split("/")[-1].split("_")[0]
+            print(np.where(galaxy_cat==this_name))
+
+            """
             this_outfile = this_mom0.replace("data_raw","products_png").replace("phangs_v4p0_release/","phangs_").replace(".fits",".png")
             self._one_showcase(
                 this_mom0,
@@ -311,6 +321,7 @@ class ToolsULIRG():
                 this_outfile,
                 color="Blues",
                 )
+            """
 
     #################
     # _one_showcase #
@@ -324,6 +335,7 @@ class ToolsULIRG():
         label_cbar,
         outfile,
         color="Reds",
+        dist=None,
         ):
         """
         """
@@ -334,13 +346,16 @@ class ToolsULIRG():
         # get header
         header = imhead(imcolor,mode="list")
         beam   = header["beammajor"]["value"]
-        imsize = beam * 133 # 20kpc size
         ra     = str(header["crval1"] * 180 / np.pi)
         dec    = str(header["crval2"] * 180 / np.pi)
         title  = imcolor.split("/")[-1].split("_")[0]
 
-        scalebar = header["beammajor"]["value"] * 500. / 150.
-        label_scalebar = "500 pc"
+        if dist==None:
+            imsize = beam * 133 # 20kpc size
+            scalebar = header["beammajor"]["value"] * 500. / 150.
+            label_scalebar = "500 pc"
+        else:
+            imsize = 20000. / (dist *1000000. * np.tan(np.radians(beam/3600.)))
 
         # achieved s/n ratio
         mom0,_  = imval_all(imcolor)
