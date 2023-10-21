@@ -312,7 +312,7 @@ class ToolsULIRG():
             index      = np.where(np.array(galaxy_cat[:,0])==this_name.replace("ngc","NGC").replace("ic","IC").replace("a","A"))[0]
 
             if index:
-                dist         = galaxy_cat[index,4].astype(float)[0]
+                dist         = galaxy_cat[index,3].astype(float)[0]
                 this_outfile = this_mom0.replace("data_raw","products_png").replace("phangs_v4p0_release/","phangs_").replace(".fits",".png")
                 self._one_showcase(
                     this_mom0,
