@@ -259,8 +259,8 @@ class ToolsULIRG():
         myax_set(
             ax1,
             None,
-            [0.5,3.5],
-            [0.1,2.2],
+            [0.8,3.5],
+            [0.3,2.2],
             None,
             "<$\Sigma$$_{\mathrm{H_2,150pc}}$> ($M_{\odot}$ pc$^{-1}$)",
             "<$\sigma$$_{\mathrm{v,150pc}}$> (km s$^{-1}$)",
@@ -286,7 +286,6 @@ class ToolsULIRG():
         taskname = self.modname + sys._getframe().f_code.co_name
         check_first(self.list_mom0_150pc[0],taskname)
 
-        """
         # (U)LIRG
         for i in range(len(self.list_mom0_150pc)):
             this_mom0    = self.list_mom0_150pc[i]
@@ -300,7 +299,6 @@ class ToolsULIRG():
                 "(km s$^{-1}$)",
                 this_outfile,
                 )
-        """
 
         # PHANGS
         galaxy_cat = np.loadtxt(self.phangs_catalog, dtype="unicode")
