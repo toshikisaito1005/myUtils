@@ -312,7 +312,7 @@ class ToolsULIRG():
             index      = np.where(np.array(galaxy_cat[:,0])==this_name.replace("ngc","NGC").replace("ic","IC").replace("a","A"))[0]
             dist       = galaxy_cat[index,4]
 
-            print(this_name, dist)
+            print(this_name, float(dist))
 
             """
             if index:
