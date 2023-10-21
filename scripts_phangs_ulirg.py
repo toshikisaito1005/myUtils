@@ -350,16 +350,16 @@ class ToolsULIRG():
         ra     = str(header["crval1"] * 180 / np.pi)
         dec    = str(header["crval2"] * 180 / np.pi)
         title  = imcolor.split("/")[-1].split("_")[0]
+        label_scalebar = "500 pc"
 
         if dist==None:
-            imsize = beam * 133 # 20kpc size
-            scalebar = header["beammajor"]["value"] * 500. / 150.
-            label_scalebar = "500 pc"
+            beam_pc = 150
+            imsize = beam * 20000. / beam_pc # 20kpc size in arcsec
         else:
-            beam_pc = dist *1000000. * np.tan(np.radians(beam/3600.))
-            imsize = 20000. / beam_pc
-            scalebar = header["beammajor"]["value"] * 500. / beam_pc
-            label_scalebar = "500 pc"
+            beam_pc = dist * 1000000. * np.tan(np.radians(beam/3600.))
+            imsize = beam * 20000. / beam_pc # 20kpc size in arcsec
+
+        scalebar = beam * 500. / beam_pc
 
         # achieved s/n ratio
         mom0,_  = imval_all(imcolor)
