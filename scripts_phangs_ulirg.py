@@ -306,21 +306,26 @@ class ToolsULIRG():
         galaxy_cat = np.loadtxt(self.phangs_catalog, dtype="unicode")
 
         for i in range(len(self.list_mom0_phangs_150pc)):
-            this_mom0    = self.list_mom0_phangs_150pc[i]
-            this_emom0   = self.list_emom0_phangs_150pc[i]
-            this_name    = this_mom0.split("/")[-1].split("_")[0]
-            print(np.where(np.array(galaxy_cat[:,0])==this_name.replace("ngc","NGC").replace("ic","IC").replace("a","A"))[0][0])
+            this_mom0  = self.list_mom0_phangs_150pc[i]
+            this_emom0 = self.list_emom0_phangs_150pc[i]
+            this_name  = this_mom0.split("/")[-1].split("_")[0]
+            index      = np.where(np.array(galaxy_cat[:,0])==this_name.replace("ngc","NGC").replace("ic","IC").replace("a","A"))[0]
+            dist       = galaxy_cat[index,4]
+
+            print(this_name, dist)
 
             """
-            this_outfile = this_mom0.replace("data_raw","products_png").replace("phangs_v4p0_release/","phangs_").replace(".fits",".png")
-            self._one_showcase(
-                this_mom0,
-                this_mom0,
-                this_emom0,
-                "(K km s$^{-1}$)",
-                this_outfile,
-                color="Blues",
-                )
+            if index:
+                this_outfile = this_mom0.replace("data_raw","products_png").replace("phangs_v4p0_release/","phangs_").replace(".fits",".png")
+                self._one_showcase(
+                    this_mom0,
+                    this_mom0,
+                    this_emom0,
+                    "(K km s$^{-1}$)",
+                    this_outfile,
+                    color="Blues",
+                    dist=dist,
+                    )
             """
 
     #################
