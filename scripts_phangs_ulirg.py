@@ -309,7 +309,7 @@ class ToolsULIRG():
             this_mom0    = self.list_mom0_phangs_150pc[i]
             this_emom0   = self.list_emom0_phangs_150pc[i]
             this_name    = this_mom0.split("/")[-1].split("_")[0]
-            print(np.where(np.array(galaxy_cat[:,0])==this_name.replace("ngc","NGC").replace("ic","IC").replace("a","A"))[0])
+            print(np.where(np.array(galaxy_cat[:,0])==this_name.replace("ngc","NGC").replace("ic","IC").replace("a","A"))[0][0])
 
             """
             this_outfile = this_mom0.replace("data_raw","products_png").replace("phangs_v4p0_release/","phangs_").replace(".fits",".png")
