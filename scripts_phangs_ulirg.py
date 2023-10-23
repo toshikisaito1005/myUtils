@@ -293,8 +293,8 @@ class ToolsULIRG():
         myax_set(
             ax1,
             None,
-            None, #[0.8,3.5],
-            None, #[0.3,2.2],
+            [3.5,9.0],
+            [0.0,1.6],
             None,
             "<$P_{\mathrm{turb,150pc}}/k_{\mathrm{B}}$> (K cm$^{-3}$)",
             None, # "<$\alpha$$_{\mathrm{vir,150pc}}$>",
