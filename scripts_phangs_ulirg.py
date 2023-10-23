@@ -293,7 +293,7 @@ class ToolsULIRG():
             None, #[0.3,2.2],
             None,
             "<$P_{\mathrm{turb,150pc}}/k_{\mathrm{B}}$> (K cm$^{-3}$)",
-            "<$\alpha$$_{\mathrm{vir,150pc}}$>",
+            None, # "<$\alpha$$_{\mathrm{vir,150pc}}$>",
             adjust=ad,
             )
 
