@@ -277,10 +277,10 @@ class ToolsULIRG():
         ########
         # plot #
         ########
-        x2_lirg   = 61.3 * x_lirg * y_lirg**2 * (75/40.)**-1
-        y2_lirg   = 5.77 * y_lirg**2 * x_lirg**-1 * (75/40.)**-1
-        x2_phangs = 61.3 * x_phangs * y_phangs**2 * (75/40.)**-1
-        y2_phangs = 5.77 * y_phangs**2 * x_phangs**-1 * (75/40.)**-1
+        x2_lirg   = 61.3 * np.array(x_lirg) * np.array(y_lirg)**2 * (75/40.)**-1
+        y2_lirg   = 5.77 * np.array(y_lirg)**2 * np.array(x_lirg)**-1 * (75/40.)**-1
+        x2_phangs = 61.3 * np.array(x_phangs) * np.array(y_phangs)**2 * (75/40.)**-1
+        y2_phangs = 5.77 * np.array(y_phangs)**2 * np.array(x_phangs)**-1 * (75/40.)**-1
 
         fig = plt.figure(figsize=(15,10))
         gs  = gridspec.GridSpec(nrows=10, ncols=10)
