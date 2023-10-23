@@ -168,7 +168,8 @@ class ToolsULIRG():
         """
         """
 
-        self.outpng_mom0_vs_mom2 = self.dir_products + self._read_key("outpng_mom0_vs_mom2")
+        self.outpng_mom0_vs_mom2  = self.dir_products + self._read_key("outpng_mom0_vs_mom2")
+        self.outpng_pturb_vs_avir = self.dir_products + self._read_key("outpng_pturb_vs_avir")
 
     ####################
     # run_phangs_ulirg #
@@ -272,6 +273,35 @@ class ToolsULIRG():
 
         os.system("rm -rf " + self.outpng_mom0_vs_mom2)
         plt.savefig(self.outpng_mom0_vs_mom2, dpi=self.fig_dpi)
+
+        ########
+        # plot #
+        ########
+        x2_lirg   = 61.3 * x_lirg * y_lirg**2 * (75/40.)**-1
+        y2_lirg   = 5.77 * y_lirg**2 * x_lirg**-1 * (75/40.)**-1
+        x2_phangs = 61.3 * x_phangs * y_phangs**2 * (75/40.)**-1
+        y2_phangs = 5.77 * y_phangs**2 * x_phangs**-1 * (75/40.)**-1
+
+        fig = plt.figure(figsize=(15,10))
+        gs  = gridspec.GridSpec(nrows=10, ncols=10)
+        ax1 = plt.subplot(gs[0:10,0:10])
+        ad  = [0.10,0.95,0.10,0.95] # [0.215,0.83,0.10,0.90]
+        myax_set(
+            ax1,
+            None,
+            None, #[0.8,3.5],
+            None, #[0.3,2.2],
+            None,
+            "<$P_{\mathrm{turb,150pc}}/k_{\mathrm{B}}$> (K cm$^{-3}$)",
+            "<$\alpha$$_{\mathrm{vir,150pc}}$>",
+            adjust=ad,
+            )
+
+        ax1.scatter(x2_lirg, y2_lirg, c="tomato", lw=0, s=40, zorder=1e9)
+        ax1.scatter(x2_phangs, y2_phangs, c="deepskyblue", lw=0, s=40, zorder=1e9)
+
+        os.system("rm -rf " + self.outpng_pturb_vs_avir)
+        plt.savefig(self.outpng_pturb_vs_avir, dpi=self.fig_dpi)
 
     ############
     # showcase #

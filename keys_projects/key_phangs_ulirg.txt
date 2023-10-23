@@ -42,7 +42,8 @@ emom2_phangs_150pc ,,,phangs_v4p0_release/XXX_co21_strict_emom2.fits
 ######################
 # output png and txt #
 ######################
-outpng_mom0_vs_mom2 ,,,outpng_mom0_vs_mom2.png
+outpng_mom0_vs_mom2  ,,,outpng_mom0_vs_mom2.png
+outpng_pturb_vs_avir ,,,outpng_pturb_vs_avir.png
 
 
 #######
