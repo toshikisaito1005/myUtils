@@ -296,8 +296,8 @@ class ToolsULIRG():
             [3.5,9.0],
             [0.0,1.6],
             None,
-            "<$P_{\mathrm{turb,150pc}}/k_{\mathrm{B}}$> (K cm$^{-3}$) \propto <\Sigma\sigma^2>",
-            r"<$\alpha_{\mathrm{vir,150pc}}$> \propto <\sigma^2/\Sigma>",
+            "<$P_{\mathrm{turb,150pc}}/k_{\mathrm{B}}$> (K cm$^{-3}$) $\propto$ <$\Sigma\sigma^2$>",
+            r"<$\alpha_{\mathrm{vir,150pc}}$> $\propto$ <$\sigma^2/\Sigma$>",
             adjust=ad,
             )
 
