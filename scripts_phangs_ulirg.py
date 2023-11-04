@@ -392,7 +392,7 @@ class ToolsULIRG():
         if title=="arp220":
             clim=[4950, 5600]
         elif title=="eso297g011":
-            clim=[4960, 5200]
+            clim=[4960, 5150]
         elif title=="eso319":
             clim=[4640, 4920]
         elif title=="ic4518w":
@@ -401,8 +401,10 @@ class ToolsULIRG():
             clim=[8800,9200]
         elif title=="ngc6240":
             clim=[6800,7400]
+        elif title=="ngc3110":
+            clim=[4800, 5200]
         elif title=="ngc7130":
-            clim=[4700,4900]
+            clim=[4700,4850]
 
         if dist==None:
             beam_pc = 150
