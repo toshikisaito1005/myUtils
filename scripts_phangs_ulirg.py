@@ -332,6 +332,7 @@ class ToolsULIRG():
                 this_emom0,
                 "(km s$^{-1}$)",
                 this_outfile,
+                color="bwr",
                 )
 
         """
