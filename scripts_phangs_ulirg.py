@@ -332,7 +332,7 @@ class ToolsULIRG():
                 this_emom0,
                 "(km s$^{-1}$)",
                 this_outfile,
-                color="bwr",
+                color="rainbow",
                 )
 
         """
@@ -387,6 +387,20 @@ class ToolsULIRG():
         title  = imcolor.split("/")[-1].split("_")[0]
         label_scalebar = "500 pc"
 
+        clim=None
+        if title="arp220":
+            clim=[4950, 5700]
+        elif title="eso297g011":
+            clim=[4960, 5280]
+        elif title="ic4518w":
+            clim=[4400, 4800]
+        elif title="iras13120":
+            clim=[8800,9200]
+        elif title="ngc6240":
+            clim=[6600,7600]
+        elif title="ngc7130":
+            clim=[4750,4800]
+
         if dist==None:
             beam_pc = 150
             imsize = beam * 20000. / beam_pc # 20kpc size in arcsec
@@ -430,7 +444,7 @@ class ToolsULIRG():
             label_cbar=label_cbar,
             set_grid=None,
             set_cmap=color,
-            #clim=clim,
+            clim=clim,
             set_bg_color=set_bg_color,
             )
 
