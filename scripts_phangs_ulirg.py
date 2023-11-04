@@ -387,18 +387,19 @@ class ToolsULIRG():
         title  = imcolor.split("/")[-1].split("_")[0]
         label_scalebar = "500 pc"
 
-        clim=None
-        if title="arp220":
+        clim = None
+
+        if title=="arp220":
             clim=[4950, 5700]
-        elif title="eso297g011":
+        elif title=="eso297g011":
             clim=[4960, 5280]
-        elif title="ic4518w":
+        elif title=="ic4518w":
             clim=[4400, 4800]
-        elif title="iras13120":
+        elif title=="iras13120":
             clim=[8800,9200]
-        elif title="ngc6240":
+        elif title=="ngc6240":
             clim=[6600,7600]
-        elif title="ngc7130":
+        elif title=="ngc7130":
             clim=[4750,4800]
 
         if dist==None:
