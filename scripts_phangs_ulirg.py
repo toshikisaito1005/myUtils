@@ -334,6 +334,7 @@ class ToolsULIRG():
                 this_outfile,
                 )
 
+        """
         # PHANGS
         galaxy_cat = np.loadtxt(self.phangs_catalog, dtype="unicode")
 
@@ -355,6 +356,7 @@ class ToolsULIRG():
                     color="Blues",
                     dist=dist,
                     )
+        """
 
     #################
     # _one_showcase #
