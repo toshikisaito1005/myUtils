@@ -1019,8 +1019,8 @@ class ToolsCIGMC():
         cut = np.where((mom0_ci10>emom0_ci10*self.snr_mom) & (mom2_ci10>emom2_ci10*2))
         x_ci10_all     = x_ci10[cut]
         y_ci10_all     = y_ci10[cut]
-        emom0_ci10_all = emom0_ci10[cut] * 8
-        mom0_ci10_all  = mom0_ci10[cut] * 8
+        emom0_ci10_all = emom0_ci10[cut] * 30
+        mom0_ci10_all  = mom0_ci10[cut] * 30
         emom2_ci10_all = emom2_ci10[cut]
         mom2_ci10_all  = mom2_ci10[cut]
         r_ci10_all     = r_ci10[cut]
@@ -1036,8 +1036,8 @@ class ToolsCIGMC():
         cut = np.where((mom0_ci10>mom0_co10) & (mom0_co10>emom0_co10*self.snr_mom) & (mom2_co10>emom2_co10) & (mom0_ci10>emom0_ci10*self.snr_mom) & (mom2_ci10>emom2_ci10))
         x_ci10_cone     = x_ci10[cut]
         y_ci10_cone     = y_ci10[cut]
-        emom0_ci10_cone = emom0_ci10[cut] * 8
-        mom0_ci10_cone  = mom0_ci10[cut] * 8
+        emom0_ci10_cone = emom0_ci10[cut] * 30
+        mom0_ci10_cone  = mom0_ci10[cut] * 30
         emom2_ci10_cone = emom2_ci10[cut]
         mom2_ci10_cone  = mom2_ci10[cut]
 
