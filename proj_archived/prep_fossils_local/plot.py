@@ -24,7 +24,7 @@ data_dist = np.loadtxt(keyfile_dist, delimiter=',', dtype = 'str')
 
 for i in range(len(data_dist)):
     this_gal    = data_dist[i,0]
-    fitsimage   = glob.glob(this_gal+'_12m_cont_400pc.fits')
+    fitsimage   = glob.glob(this_gal+'_12m_cont.image')#'_12m_cont_400pc.fits')
 
     if not fitsimage:
         continue

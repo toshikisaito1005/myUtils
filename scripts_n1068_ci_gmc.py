@@ -208,6 +208,7 @@ class ToolsCIGMC():
         self.outtxt_hexcat_co10 = self.dir_products + self._read_key("outtxt_hexcat_co10")
         self.outtxt_hexcat_ci10 = self.dir_products + self._read_key("outtxt_hexcat_ci10")
         self.outpng_r_vs_disp   = self.dir_products + self._read_key("outpng_r_vs_disp")
+        self.outpng_pturb_vs_avir = self.dir_products + self._read_key("outpng_pturb_vs_avir")
         self.outpng_map_ci_mom0 = self.dir_products + self._read_key("outpng_map_ci_mom0")
         self.outpng_map_ci_mom2 = self.dir_products + self._read_key("outpng_map_ci_mom2")
         self.outpng_map_co_mom0 = self.dir_products + self._read_key("outpng_map_co_mom0")
@@ -292,13 +293,14 @@ class ToolsCIGMC():
     def run_ngc1068_cigmc(
         self,
         # analysis
-        do_sampling  = False,
+        do_sampling   = False,
         # plot
-        plot_scatter = False,
-        plot_hexmap  = False,
-        plot_compare = False,
+        plot_scatter  = False,
+        plot_scatter2 = False,
+        plot_hexmap   = False,
+        plot_compare  = False,
         # supplement
-        plot_radial  = False,
+        plot_radial   = False,
         ):
         """
         This method runs all the methods which will create figures in the paper.
@@ -311,6 +313,9 @@ class ToolsCIGMC():
         # plot
         if plot_scatter==True:
             self.plot_scatter() # 2023-09-28: created
+
+        if plot_scatter2==True:
+            self.plot_scatter2() # 2023-11-14: created
 
         if plot_hexmap==True:
             self.plot_hexmap() # 2023-10-04: created
@@ -944,6 +949,237 @@ class ToolsCIGMC():
         # save
         os.system("rm -rf " + outpng)
         plt.savefig(outpng, dpi=300)
+
+    #################
+    # plot_scatter2 #
+    #################
+
+    def plot_scatter2(
+        self,
+        ):
+        """
+        """
+
+        taskname = self.modname + sys._getframe().f_code.co_name
+        check_first(self.outtxt_hexcat_ci10,taskname)
+
+        # import co10
+        data_co10 = np.loadtxt(self.outtxt_hexcat_co10)
+
+        x_co10     = data_co10[:,0]
+        y_co10     = data_co10[:,1]
+        mom0_co10  = data_co10[:,2]
+        emom0_co10 = data_co10[:,3]
+        mom2_co10  = data_co10[:,4]
+        emom2_co10 = data_co10[:,5]
+
+        r_co10     = np.sqrt(x_co10**2 + y_co10**2)
+        theta      = np.degrees(np.arctan2(x_co10, y_co10)) + 90
+        theta_co10 = np.where(theta>0, theta, theta+360)
+
+        # import ci10
+        data_ci10 = np.loadtxt(self.outtxt_hexcat_ci10)
+
+        x_ci10     = data_ci10[:,0]
+        y_ci10     = data_ci10[:,1]
+        mom0_ci10  = data_ci10[:,2]
+        emom0_ci10 = data_ci10[:,3]
+        mom2_ci10  = data_ci10[:,4]
+        emom2_ci10 = data_ci10[:,5]
+
+        r_ci10     = np.sqrt(x_ci10**2 + y_ci10**2)
+        theta      = np.degrees(np.arctan2(x_ci10, y_ci10)) + 90
+        theta_ci10 = np.where(theta>0, theta, theta+360)
+
+        # calc
+        cut = np.where((mom0_co10>emom0_co10*self.snr_mom) & (mom2_co10>emom2_co10*2))
+        x_co10_all     = x_co10[cut]
+        y_co10_all     = y_co10[cut]
+        emom0_co10_all = emom0_co10[cut]
+        mom0_co10_all  = mom0_co10[cut]
+        emom2_co10_all = emom2_co10[cut]
+        mom2_co10_all  = mom2_co10[cut]
+        r_co10_all     = r_co10[cut]
+
+        pturb_co10_all = 61.3 * mom0_co10_all * mom2_co10_all**2 * (27.5/40.)**-1
+        avir_co10_all  = 5.77 * mom2_co10_all**2 * mom0_co10_all**-1 * (27.5/40.)**-1
+
+        #cut = np.where((mom0_co10>emom0_co10*self.snr_mom) & (mom2_co10>emom2_co10) & (r_co10<self.fov_diamter/2.0) & (r_co10>self.r_cnd_as) & (theta_co10>=self.theta2) & (theta_co10<self.theta1) | (mom0_co10>emom0_co10*self.snr_mom) & (mom2_co10>emom2_co10*self.snr_mom) & (r_co10<self.fov_diamter/2.0) & (r_co10>self.r_cnd_as) & (theta_co10>=self.theta2+180) & (theta_co10<self.theta1+180))
+        cut = np.where((mom0_ci10>mom0_co10) & (mom0_co10>emom0_co10*self.snr_mom) & (mom2_co10>emom2_co10) & (mom0_ci10>emom0_ci10*self.snr_mom) & (mom2_ci10>emom2_ci10))
+        x_co10_cone     = x_co10[cut]
+        y_co10_cone     = y_co10[cut]
+        emom0_co10_cone = emom0_co10[cut]
+        mom0_co10_cone  = mom0_co10[cut]
+        emom2_co10_cone = emom2_co10[cut]
+        mom2_co10_cone  = mom2_co10[cut]
+
+        pturb_co10_cone = 61.3 * mom0_co10_cone * mom2_co10_cone**2 * (27.5/40.)**-1
+        avir_co10_cone  = 5.77 * mom2_co10_cone**2 * mom0_co10_cone**-1 * (27.5/40.)**-1
+
+        cut = np.where((mom0_ci10>emom0_ci10*self.snr_mom) & (mom2_ci10>emom2_ci10*2))
+        x_ci10_all     = x_ci10[cut]
+        y_ci10_all     = y_ci10[cut]
+        emom0_ci10_all = emom0_ci10[cut] * 10
+        mom0_ci10_all  = mom0_ci10[cut] * 10
+        emom2_ci10_all = emom2_ci10[cut]
+        mom2_ci10_all  = mom2_ci10[cut]
+        r_ci10_all     = r_ci10[cut]
+
+        pturb_ci10_all = 61.3 * mom0_ci10_all * mom2_ci10_all**2 * (27.5/40.)**-1
+        avir_ci10_all  = 5.77 * mom2_ci10_all**2 * mom0_ci10_all**-1 * (27.5/40.)**-1
+
+        #fig = plt.figure(figsize=(10,10))
+        #plt.scatter(-1*x_co10_cone, y_co10_cone, color='grey')
+        #plt.savefig("test.png", dpi=self.fig_dpi)
+
+        #cut = np.where((mom0_ci10>emom0_ci10*self.snr_mom) & (mom2_ci10>emom2_ci10) & (r_ci10<self.fov_diamter/2.0) & (r_ci10>self.r_cnd_as) & (theta_ci10>=self.theta2) & (theta_ci10<self.theta1) | (mom0_ci10>emom0_ci10*self.snr_mom) & (mom2_ci10>emom2_ci10*self.snr_mom) & (r_ci10<self.fov_diamter/2.0) & (r_ci10>self.r_cnd_as) & (theta_ci10>=self.theta2+180) & (theta_ci10<self.theta1+180))
+        cut = np.where((mom0_ci10>mom0_co10) & (mom0_co10>emom0_co10*self.snr_mom) & (mom2_co10>emom2_co10) & (mom0_ci10>emom0_ci10*self.snr_mom) & (mom2_ci10>emom2_ci10))
+        x_ci10_cone     = x_ci10[cut]
+        y_ci10_cone     = y_ci10[cut]
+        emom0_ci10_cone = emom0_ci10[cut] * 10
+        mom0_ci10_cone  = mom0_ci10[cut] * 10
+        emom2_ci10_cone = emom2_ci10[cut]
+        mom2_ci10_cone  = mom2_ci10[cut]
+
+        pturb_ci10_cone = 61.3 * mom0_ci10_cone * mom2_ci10_cone**2 * (27.5/40.)**-1
+        avir_ci10_cone  = 5.77 * mom2_ci10_cone**2 * mom0_ci10_cone**-1 * (27.5/40.)**-1
+
+        ########
+        # plot #
+        ########
+        x_co10 = pturb_co10_all
+        y_co10 = avir_co10_all
+        c_co10 = r_co10_all
+        x_ci10 = pturb_ci10_all
+        y_ci10 = avir_ci10_all
+        c_ci10 = r_ci10_all
+
+        xerr_co10 = emom0_co10_all
+        yerr_co10 = emom2_co10_all
+        xerr_ci10 = emom0_ci10_all
+        yerr_ci10 = emom2_ci10_all
+
+        x2_co10 = pturb_co10_cone
+        y2_co10 = avir_co10_cone
+        x2_ci10 = pturb_ci10_cone
+        y2_ci10 = avir_ci10_cone
+
+        xlim   = [np.min([np.nanmin(x_co10),np.nanmin(x_ci10)])-0.4,np.max([np.nanmax(x_co10),np.nanmax(x_ci10)])+0.4]
+        ylim   = [np.min([np.nanmin(y_co10),np.nanmin(y_ci10)])-0.4,np.max([np.nanmax(y_co10),np.nanmax(y_ci10)])+0.4]
+        vmax   = np.max(r_ci10)
+        title  = "None"
+        xlabel = "log$_{10}$ <$P_{\mathrm{turb,55pc}}/k_{\mathrm{B}}$> (K cm$^{-3}$) $\propto$ log$_{10}$ <$\Sigma\sigma^2$>"
+        ylabel = r"log$_{10}$ <$\alpha_{\mathrm{vir,55pc}}$> $\propto$ log$_{10}$ <$\sigma^2/\Sigma$>"
+        alpha  = 1.0
+        size   = 30
+
+        # plot
+        fig = plt.figure(figsize=(10,10))
+        gs  = gridspec.GridSpec(nrows=200, ncols=200)
+        ax1 = plt.subplot(gs[30:200,10:170])
+        ax2 = plt.subplot(gs[0:30,10:170])
+        ax3 = plt.subplot(gs[30:200,170:200])
+        ad  = [0.215,0.83,0.10,0.90]
+        myax_set(ax1, None, xlim, ylim, None, xlabel, ylabel, adjust=ad)
+        myax_set(ax2, None, xlim, None, None, None, None)
+        myax_set(ax3, None, None, ylim, None, None, None)
+
+        # ax2 ticks
+        ax2.spines['right'].set_visible(False)
+        ax2.spines['top'].set_visible(False)
+        ax2.spines['bottom'].set_visible(False)
+        ax2.spines['left'].set_visible(False)
+        ax2.tick_params('x', length=0, which='major')
+        ax2.tick_params('y', length=0, which='major')
+        ax2.set_xticks([])
+        ax2.set_yticks([])
+
+        # ax3 ticks
+        ax3.spines['right'].set_visible(False)
+        ax3.spines['top'].set_visible(False)
+        ax3.spines['bottom'].set_visible(False)
+        ax3.spines['left'].set_visible(False)
+        ax3.tick_params('x', length=0, which='major')
+        ax3.tick_params('y', length=0, which='major')
+        ax3.set_xticks([])
+        ax3.set_yticks([])
+
+        # ax4
+        #ax4 = plt.axes([0, 0, 1, 1])
+        #position = InsetPosition(ax4, [0.6, 0.125, 0.225, 0.225])
+        #ax4.set_axes_locator(position)
+        #ax4.tick_params(labelbottom=False, labelleft=False, labelright=False, labeltop=False)
+        #ax4.set_xlim(xlim)
+        #ax4.set_ylim(ylim)
+
+        # plot co10 all
+        X, Y, Z = density_estimation(x_co10, y_co10, xlim, ylim)
+        ax1.contour(X, Y, Z, colors="blue", linewidths=[1], alpha=1.0, zorder=5e8)
+        self._scatter_hist(x_co10, y_co10, ax1, ax2, ax3, "deepskyblue", xlim, ylim, "s")
+        ax1.errorbar(x_co10, y_co10, xerr=xerr_co10, yerr=yerr_co10, fmt='.', color='grey', zorder=0, lw=1, capsize=0, markersize=0)
+
+        # plot ci10 all
+        X, Y, Z = density_estimation(x_ci10, y_ci10, xlim, ylim)
+        ax1.contour(X, Y, Z, colors="red", linewidths=[1], alpha=1.0, zorder=5e8)
+        self._scatter_hist(x_ci10, y_ci10, ax1, ax2, ax3, "tomato", xlim, ylim, "o", offset=0.15)
+        ax1.errorbar(x_ci10, y_ci10, xerr=xerr_ci10, yerr=yerr_ci10, fmt='.', color='grey', zorder=0, lw=1, capsize=0, markersize=0)
+
+        # plot co10 cone
+        ax1.scatter(x2_co10, y2_co10, facecolor='lightgrey', edgecolor='blue', lw=2, s=70, marker="s", alpha=1.0, zorder=1e9)
+
+        # plot ci10 cone
+        ax1.scatter(x2_ci10, y2_ci10, facecolor='lightgrey', edgecolor='maroon', lw=2, s=70, marker="o", alpha=1.0, zorder=1e9)
+
+        # pctl bar xaxis
+        ypos = 0.97 * (ylim[1] - ylim[0]) + ylim[0]
+        ax1.plot([np.percentile(x_ci10,16),np.percentile(x_ci10,84)], [ypos,ypos], '-', color="tomato", lw=3)
+        ax1.scatter(np.percentile(x_ci10,50), ypos, marker='o', s=100, color="tomato", zorder=1e9)
+
+        ypos = 0.95 * (ylim[1] - ylim[0]) + ylim[0]
+        ax1.plot([np.percentile(x_co10,16),np.percentile(x_co10,84)], [ypos,ypos], '-', color="deepskyblue", lw=3)
+        ax1.scatter(np.percentile(x_co10,50), ypos, marker='o', s=100, color="deepskyblue", zorder=1e9)
+
+        ypos = 0.93 * (ylim[1] - ylim[0]) + ylim[0]
+        ax1.plot([np.percentile(x2_ci10,16),np.percentile(x2_ci10,84)], [ypos,ypos], '-', color="maroon", lw=3)
+        ax1.scatter(np.percentile(x2_ci10,50), ypos, marker='o', s=100, facecolor='lightgrey', edgecolor='maroon', lw=3, zorder=1e9)
+
+        ypos = 0.91 * (ylim[1] - ylim[0]) + ylim[0]
+        ax1.plot([np.percentile(x2_co10,16),np.percentile(x2_co10,84)], [ypos,ypos], '-', color="blue", lw=3)
+        ax1.scatter(np.percentile(x2_co10,50), ypos, marker='o', s=100, facecolor='lightgrey', edgecolor='blue', lw=3, zorder=1e9)
+
+        # pctl bar yaxis
+        xpos = 0.97 * (xlim[1] - xlim[0]) + xlim[0]
+        ax1.plot([xpos,xpos], [np.percentile(y_ci10,16),np.percentile(y_ci10,84)], '-', color="tomato", lw=3)
+        ax1.scatter(xpos, np.percentile(y_ci10,50), marker='o', s=100, color="tomato", zorder=1e9)
+
+        xpos = 0.95 * (xlim[1] - xlim[0]) + xlim[0]
+        ax1.plot([xpos,xpos], [np.percentile(y_co10,16),np.percentile(y_co10,84)], '-', color="deepskyblue", lw=3)
+        ax1.scatter(xpos, np.percentile(y_co10,50), marker='o', s=100, color="deepskyblue", zorder=1e9)
+
+        xpos = 0.93 * (xlim[1] - xlim[0]) + xlim[0]
+        ax1.plot([xpos,xpos], [np.percentile(y2_ci10,16),np.percentile(y2_ci10,84)], '-', color="maroon", lw=3)
+        ax1.scatter(xpos, np.percentile(y2_ci10,50), marker='o', s=100, facecolor='lightgrey', edgecolor='maroon', lw=3, zorder=1e9)
+
+        xpos = 0.91 * (xlim[1] - xlim[0]) + xlim[0]
+        ax1.plot([xpos,xpos], [np.percentile(y2_co10,16),np.percentile(y2_co10,84)], '-', color="blue", lw=3)
+        ax1.scatter(xpos, np.percentile(y2_co10,50), marker='o', s=100, facecolor='lightgrey', edgecolor='blue', lw=3, zorder=1e9)
+
+        # plot ac4
+        #ax4.scatter(x_co10, y_co10, c=c_co10, cmap='rainbow_r', lw=0, s=30, marker="s", alpha=1.0, vmin=0, vmax=vmax)
+        #ax4.scatter(x_ci10, y_ci10, c=c_ci10, cmap='rainbow_r', lw=0, s=30, marker="o", alpha=1.0, vmin=0, vmax=vmax)
+
+        txt = ax1.text(0.03, 0.90, "[CI] Clouds", color="tomato", transform=ax1.transAxes, weight="bold", fontsize=20)
+        txt.set_path_effects([PathEffects.withStroke(linewidth=3, foreground='w')])
+        txt = ax1.text(0.03, 0.85, "CO Clouds", color="deepskyblue", transform=ax1.transAxes, weight="bold", fontsize=20)
+        txt.set_path_effects([PathEffects.withStroke(linewidth=3, foreground='w')])
+        txt = ax1.text(0.03, 0.80, "[CI] Clouds (Outflow)", color="lightgrey", transform=ax1.transAxes, weight="bold", fontsize=20)
+        txt.set_path_effects([PathEffects.withStroke(linewidth=3, foreground='maroon')])
+        txt = ax1.text(0.03, 0.75, "CO Clouds (Outflow)", color="lightgrey", transform=ax1.transAxes, weight="bold", fontsize=20)
+        txt.set_path_effects([PathEffects.withStroke(linewidth=3, foreground='blue')])
+
+        # save
+        os.system("rm -rf " + self.outpng_pturb_vs_avir)
+        plt.savefig(self.outpng_pturb_vs_avir, dpi=self.fig_dpi)
 
     ################
     # plot_scatter #
