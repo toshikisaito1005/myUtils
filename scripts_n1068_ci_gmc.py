@@ -1001,8 +1001,8 @@ class ToolsCIGMC():
         mom2_co10_all  = mom2_co10[cut]
         r_co10_all     = r_co10[cut]
 
-        pturb_co10_all = 61.3 * mom0_co10_all * mom2_co10_all**2 * (27.5/40.)**-1
-        avir_co10_all  = 5.77 * mom2_co10_all**2 * mom0_co10_all**-1 * (27.5/40.)**-1
+        pturb_co10_all = np.log10(61.3 * mom0_co10_all * mom2_co10_all**2 * (27.5/40.)**-1)
+        avir_co10_all  = np.log10(5.77 * mom2_co10_all**2 * mom0_co10_all**-1 * (27.5/40.)**-1)
 
         #cut = np.where((mom0_co10>emom0_co10*self.snr_mom) & (mom2_co10>emom2_co10) & (r_co10<self.fov_diamter/2.0) & (r_co10>self.r_cnd_as) & (theta_co10>=self.theta2) & (theta_co10<self.theta1) | (mom0_co10>emom0_co10*self.snr_mom) & (mom2_co10>emom2_co10*self.snr_mom) & (r_co10<self.fov_diamter/2.0) & (r_co10>self.r_cnd_as) & (theta_co10>=self.theta2+180) & (theta_co10<self.theta1+180))
         cut = np.where((mom0_ci10>mom0_co10) & (mom0_co10>emom0_co10*self.snr_mom) & (mom2_co10>emom2_co10) & (mom0_ci10>emom0_ci10*self.snr_mom) & (mom2_ci10>emom2_ci10))
@@ -1013,8 +1013,8 @@ class ToolsCIGMC():
         emom2_co10_cone = emom2_co10[cut]
         mom2_co10_cone  = mom2_co10[cut]
 
-        pturb_co10_cone = 61.3 * mom0_co10_cone * mom2_co10_cone**2 * (27.5/40.)**-1
-        avir_co10_cone  = 5.77 * mom2_co10_cone**2 * mom0_co10_cone**-1 * (27.5/40.)**-1
+        pturb_co10_cone = np.log10(61.3 * mom0_co10_cone * mom2_co10_cone**2 * (27.5/40.)**-1)
+        avir_co10_cone  = np.log10(5.77 * mom2_co10_cone**2 * mom0_co10_cone**-1 * (27.5/40.)**-1)
 
         cut = np.where((mom0_ci10>emom0_ci10*self.snr_mom) & (mom2_ci10>emom2_ci10*2))
         x_ci10_all     = x_ci10[cut]
@@ -1025,8 +1025,8 @@ class ToolsCIGMC():
         mom2_ci10_all  = mom2_ci10[cut]
         r_ci10_all     = r_ci10[cut]
 
-        pturb_ci10_all = 61.3 * mom0_ci10_all * mom2_ci10_all**2 * (27.5/40.)**-1
-        avir_ci10_all  = 5.77 * mom2_ci10_all**2 * mom0_ci10_all**-1 * (27.5/40.)**-1
+        pturb_ci10_all = np.log10(61.3 * mom0_ci10_all * mom2_ci10_all**2 * (27.5/40.)**-1)
+        avir_ci10_all  = np.log10(5.77 * mom2_ci10_all**2 * mom0_ci10_all**-1 * (27.5/40.)**-1)
 
         #fig = plt.figure(figsize=(10,10))
         #plt.scatter(-1*x_co10_cone, y_co10_cone, color='grey')
@@ -1041,8 +1041,8 @@ class ToolsCIGMC():
         emom2_ci10_cone = emom2_ci10[cut]
         mom2_ci10_cone  = mom2_ci10[cut]
 
-        pturb_ci10_cone = 61.3 * mom0_ci10_cone * mom2_ci10_cone**2 * (27.5/40.)**-1
-        avir_ci10_cone  = 5.77 * mom2_ci10_cone**2 * mom0_ci10_cone**-1 * (27.5/40.)**-1
+        pturb_ci10_cone = np.log10(61.3 * mom0_ci10_cone * mom2_ci10_cone**2 * (27.5/40.)**-1)
+        avir_ci10_cone  = np.log10(5.77 * mom2_ci10_cone**2 * mom0_ci10_cone**-1 * (27.5/40.)**-1)
 
         ########
         # plot #
